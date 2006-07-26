@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.ops4j</groupId>
+    <artifactId>pax</artifactId>
+    <version>1.1.0</version>
+  </parent>
+  <groupId>org.ops4j.pax</groupId>
+  <artifactId>gobilator</artifactId>
+  <name>Pax Runner</name>
+  <version>0.2.0-SNAPSHOT</version>
+  <url>http://wiki.ops4j.org/dokuwiki/doku.php?id=pax:gobilator</url>
+  <contributors>
+    <contributor>
+      <name>Niclas Hedhman</name>
+    </contributor>
+  </contributors>
+  <scm>
+    <connection>scm:svn:https://scm.ops4j.org/repos/ops4j/projects/pax/gobilator</connection>
+    <developerConnection>scm:svn:https://scm.ops4j.org/repos/ops4j/projects/pax/gobilator</developerConnection>
+  </scm>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.0-beta-3</version>
+        <configuration>
+          <tagBase>https://scm.ops4j.org/repos/ops4j/qa/pax/gobilator</tagBase>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>org.ops4j.pax.gobilator.Run</mainClass>
+              <packageName>org.ops4j.pax.gobilator</packageName>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
