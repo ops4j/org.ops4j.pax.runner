@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package org.ops4j.pax.gobilator;
+package org.ops4j.pax.runner;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -63,6 +63,7 @@ public class PomManager
         }
 
         String filename = artifact + "_" + version + ".pom";
+        filename = PropertyResolver.resolve( System.getProperties(), filename );
         File dest = new File( "lib/", filename );
         m_downloader.download( url, dest, false );
         FileInputStream fis = new FileInputStream( dest );
@@ -71,11 +72,6 @@ public class PomManager
             BufferedInputStream in = new BufferedInputStream( fis );
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-
-            if( ! ( in instanceof BufferedInputStream ) )
-            {
-                in = new BufferedInputStream( in );
-            }
             InputSource source = new InputSource( in );
             Document document = builder.parse( source );
             return document;

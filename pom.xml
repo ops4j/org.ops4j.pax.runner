@@ -8,18 +8,18 @@
     <version>1.2</version>
   </parent>
   <groupId>org.ops4j.pax</groupId>
-  <artifactId>gobilator</artifactId>
+  <artifactId>runner</artifactId>
   <name>Pax Runner</name>
   <version>0.2.0-SNAPSHOT</version>
-  <url>http://wiki.ops4j.org/dokuwiki/doku.php?id=pax:gobilator</url>
+  <url>http://wiki.ops4j.org/dokuwiki/doku.php?id=pax:runner</url>
   <contributors>
     <contributor>
       <name>Niclas Hedhman</name>
     </contributor>
   </contributors>
   <scm>
-    <connection>scm:svn:https://scm.ops4j.org/repos/ops4j/projects/pax/gobilator</connection>
-    <developerConnection>scm:svn:https://scm.ops4j.org/repos/ops4j/projects/pax/gobilator</developerConnection>
+    <connection>scm:svn:https://scm.ops4j.org/repos/ops4j/projects/pax/runner</connection>
+    <developerConnection>scm:svn:https://scm.ops4j.org/repos/ops4j/projects/pax/runner</developerConnection>
   </scm>
   <build>
     <plugins>
@@ -27,7 +27,7 @@
         <artifactId>maven-release-plugin</artifactId>
         <version>2.0-beta-3</version>
         <configuration>
-          <tagBase>https://scm.ops4j.org/repos/ops4j/qa/pax/gobilator</tagBase>
+          <tagBase>https://scm.ops4j.org/repos/ops4j/qa/pax/runner</tagBase>
         </configuration>
       </plugin>
       <plugin>
@@ -35,8 +35,8 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>org.ops4j.pax.gobilator.Run</mainClass>
-              <packageName>org.ops4j.pax.gobilator</packageName>
+              <mainClass>org.ops4j.pax.runner.Run</mainClass>
+              <packageName>org.ops4j.pax.runner</packageName>
             </manifest>
           </archive>
         </configuration>

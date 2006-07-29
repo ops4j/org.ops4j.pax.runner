@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package org.ops4j.pax.gobilator;
+package org.ops4j.pax.runner;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -55,6 +55,7 @@ public class CmdLine
                 String lookup = arg.substring( 1 );
                 arg = "--" + shortcuts.get( lookup ) + "=" + args[ i + 1 ];
                 i++;
+                parseOption( arg );
             }
             else
             {

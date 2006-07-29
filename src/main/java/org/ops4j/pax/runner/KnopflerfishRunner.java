@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package org.ops4j.pax.gobilator;
+package org.ops4j.pax.runner;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -36,9 +36,8 @@ public class KnopflerfishRunner
     private File m_systemBundle;
     private List<File> m_bundles;
     private static final String FRAMEWORK_GROUPID = "org.knopflerfish.osgi";
-    private static final String VERSION = "2.0-RC1";
     private static final String BUNDLES_GROUPID = "org.knopflerfish.bundle";
-    private static final String[] SYSTEM_BUNDLE =  { FRAMEWORK_GROUPID, "framework", "2.0-RC1" };
+    private static final String[] SYSTEM_BUNDLE =  { FRAMEWORK_GROUPID, "framework", "2.0.0" };
 
     private static final String[][] DEFAULT_BUNDLES =
         {
@@ -48,7 +47,8 @@ public class KnopflerfishRunner
             { BUNDLES_GROUPID + ".console", "console", "1.0.0" },
             { BUNDLES_GROUPID + ".console", "console_api", "1.0.0" },
             { BUNDLES_GROUPID + ".logcommands", "logcommands", "1.0.1" },
-            { "org.ops4j.pax.logging", "pax-logging-service", "0.8.1" },
+            { "org.ops4j.pax.logging", "api", "0.9.2" },
+            { "org.ops4j.pax.logging", "service", "0.9.2" },
             { BUNDLES_GROUPID + ".cm", "cm_api", "1.0.1" }
         };
     private static final String[][] GUI_BUNDLES =

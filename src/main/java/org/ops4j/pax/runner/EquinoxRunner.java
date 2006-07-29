@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package org.ops4j.pax.gobilator;
+package org.ops4j.pax.runner;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +41,7 @@ public class EquinoxRunner
         m_cmdLine = cmdLine;
         m_bundles = bundles;
         m_props = props;
-        m_system = bundleManager.getBundle( "org.eclipse", "osgi", "3.2.0.200606061318" );
+        m_system = bundleManager.getBundle( "org.eclipse", "osgi", "3.2.1.R32x_v20060717" );
         File services = bundleManager.getBundle( "org.eclipse.osgi", "services", "3.1.100.v20060601" );
         bundles.add( services );
         File util = bundleManager.getBundle( "org.eclipse.osgi", "util", "3.1.100.v20060601" );

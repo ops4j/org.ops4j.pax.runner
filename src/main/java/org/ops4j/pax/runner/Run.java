@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package org.ops4j.pax.gobilator;
+package org.ops4j.pax.runner;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,11 +46,11 @@ public class Run
         {
             System.err.println( e.getMessage() );
             System.err.println();
-            System.err.println( "java -jar gobilator.jar [options] <groupId> <artifactId> <version>" );
+            System.err.println( "java -jar pax-runner.jar [options] <groupId> <artifactId> <version>" );
             System.err.println( "  or" );
-            System.err.println( "java -jar gobilator.jar [options] <URL>" );
+            System.err.println( "java -jar pax-runner.jar [options] <URL>" );
             System.err.println( "  or" );
-            System.err.println( "java -jar gobilator.jar [options]" );
+            System.err.println( "java -jar pax-runner.jar [options]" );
             System.err.println( "\nOptions;" );
             System.err.println( "--platform=<platform>  -  The OSGi platform to use. Default: equinox" );
             System.err.println( "--clean                -  Do not load persisted state." );

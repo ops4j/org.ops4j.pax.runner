@@ -15,11 +15,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package org.ops4j.pax.gobilator;
+package org.ops4j.pax.runner;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.IOException;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 
 public class Pipe
     implements Runnable
@@ -32,39 +34,52 @@ public class Pipe
 
     public Pipe( InputStream in, OutputStream pipe )
     {
-        m_in = in;
-        m_pipe = pipe;
+        m_in = new BufferedInputStream( in );
+        m_pipe = new BufferedOutputStream( pipe );
     }
 
     public void start()
     {
-        m_thread = new Thread( this );
-        m_thread.start();
+        synchronized( this )
+        {
+            m_thread = new Thread( this );
+            m_thread.start();
+        }
     }
 
     public void stop()
     {
-        m_loop = false;
-        m_thread.interrupt();
+        synchronized( this )
+        {
+            m_loop = false;
+            m_thread.interrupt();
+        }
     }
 
     public void run()
     {
-        m_loop = true;
-        while( m_loop )
+        synchronized( this )
         {
-            try
+            m_loop = true;
+            while( m_loop )
             {
-                int ch = m_in.read();
-                if( ch == -1 )
+                try
                 {
-                    break;
-                }
-                m_pipe.write( ch );
-                m_pipe.flush();
-            } catch( IOException e )
-            {
-                if( m_loop )
+                    int ch = m_in.read();
+                    if( ch == -1 )
+                    {
+                        break;
+                    }
+                    m_pipe.write( ch );
+                    m_pipe.flush();
+                    wait(1);
+                } catch( IOException e )
+                {
+                    if( m_loop )
+                    {
+                        e.printStackTrace();
+                    }
+                } catch( InterruptedException e )
                 {
                     e.printStackTrace();
                 }
