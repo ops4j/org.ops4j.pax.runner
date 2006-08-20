@@ -26,6 +26,9 @@ import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import org.ops4j.pax.runner.pom.BundleManager;
+import org.xml.sax.SAXException;
+import javax.xml.parsers.ParserConfigurationException;
 
 public class EquinoxRunner
     implements Runnable
@@ -36,7 +39,7 @@ public class EquinoxRunner
     private File m_system;
 
     public EquinoxRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager )
-        throws IOException
+        throws IOException, ParserConfigurationException, SAXException
     {
         m_cmdLine = cmdLine;
         m_bundles = bundles;

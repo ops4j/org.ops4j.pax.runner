@@ -26,6 +26,7 @@ import java.util.Properties;
 import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.provisioning.Provisioning;
 import org.ops4j.pax.runner.pom.PomManager;
+import org.ops4j.pax.runner.pom.BundleManager;
 import org.xml.sax.SAXException;
 
 /**
@@ -58,6 +59,7 @@ public class Run
             System.err.println( "--platform=<platform>  -  The OSGi platform to use. Default: equinox" );
             System.err.println( "--clean                -  Do not load persisted state." );
             System.err.println( "--gui                  -  Load GUI (if supported by platform)" );
+            System.err.println( "--no-md5               -  Disable MD5 checksum checks for downloads." );
             System.err.println( "--dir=<workdir>        -  Which directory to use. Default: runner/" );
             System.err.println( "--profile=<profile>    -  Which profile to run (if supported by platform)" );
             System.err.println( "--repository=<repo>    -  Which repository to download from." );
@@ -109,7 +111,8 @@ public class Run
         {
             repo = repo + "/";
         }
-        Downloader downloader = new Downloader( repo );
+        boolean noCheckMD5 = m_cmdLine.isSet( "no-md5" );
+        Downloader downloader = new Downloader( repo, noCheckMD5 );
         List<File> bundles;
         Properties props;
         String urlValue = m_cmdLine.getValue( "url" );

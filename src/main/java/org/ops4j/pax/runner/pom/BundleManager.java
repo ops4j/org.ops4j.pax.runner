@@ -15,12 +15,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package org.ops4j.pax.runner;
+package org.ops4j.pax.runner.pom;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import javax.xml.parsers.ParserConfigurationException;
+import org.ops4j.pax.runner.Downloader;
+import org.ops4j.pax.runner.Run;
+import org.xml.sax.SAXException;
 
 public class BundleManager
 {
@@ -32,9 +36,13 @@ public class BundleManager
     }
 
     public File getBundle( String group, String artifact, String version )
-        throws IOException
+        throws IOException, ParserConfigurationException, SAXException
     {
         URL url = composeURL( group, artifact, version );
+        if( "LATEST".equalsIgnoreCase( version ) )
+        {
+            version = MavenUtils.getLatestVersion( group, artifact, m_downloader );
+        }
         version = version.replace( "-SNAPSHOT", ".SNAPSHOT" );
         File dest = new File( Run.WORK_DIR, "lib/" + group.replace('.','/' ));
         dest = new File( dest, artifact + "_" + version + ".jar" );

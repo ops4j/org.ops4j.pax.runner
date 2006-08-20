@@ -26,6 +26,9 @@ import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import org.ops4j.pax.runner.pom.BundleManager;
+import org.xml.sax.SAXException;
+import javax.xml.parsers.ParserConfigurationException;
 
 public class FelixRunner
     implements Runnable
@@ -167,7 +170,7 @@ public class FelixRunner
     private File m_framework;
 
     public FelixRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager )
-        throws IOException
+        throws IOException, ParserConfigurationException, SAXException
     {
         m_cmdLine = cmdLine;
         m_bundles = bundles;

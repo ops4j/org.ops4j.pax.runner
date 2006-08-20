@@ -25,16 +25,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class Downloader
 {
 
     private String m_repository;
+    private boolean m_noCheckMD5;
 
-    public Downloader( String repository )
+    public Downloader( String repository, boolean noCheckMD5 )
     {
         m_repository = repository;
+        m_noCheckMD5 = noCheckMD5;
     }
 
     public void download( URL source, File destination, boolean force )
@@ -45,35 +50,140 @@ public class Downloader
             return;
         }
         File localRepo = new File( System.getProperty( "user.home" ), ".m2/repository" );
-        String path = source.toExternalForm().substring( m_repository.length() );
+        String sourceString = source.toExternalForm();
+        String path = sourceString.substring( m_repository.length() );
         File localCache = new File( localRepo, path );
-        if( localCache.exists() )
+        File md5File = getMD5File( localCache );
+        int count = 3;
+        while( count > 0 && (! localCache.exists() || ! verifyMD5( localCache, md5File ) ) )
         {
-            copyFile( localCache, destination );
-            return;
+            downloadFile( localCache, source );
+            URL md5source = new URL( getMd5Filename( sourceString ) );
+            try
+            {
+                downloadFile( md5File, md5source );
+            } catch( FileNotFoundException e )
+            {
+                System.out.println( "MD5 not present on server. Creating locally: " + md5File.getName() );
+                createMD5Locally( localCache, md5File );
+            }
+            count--;
         }
-        File parentDir = destination.getParentFile();
-        parentDir.mkdirs();
+        copyFile( localCache, destination );
+    }
 
-        FileOutputStream fos = null;
-        InputStream in = source.openStream();
+    private void createMD5Locally( File localCache, File md5File )
+        throws IOException
+    {
+        String md5 = computeMD5( localCache );
+        FileUtils.writeTextContent( md5File, md5 );
+    }
+
+    private boolean verifyMD5( File fileToCheck, File md5File )
+        throws IOException
+    {
+        if( m_noCheckMD5 )
+        {
+            return true;
+        }
+        if( ! md5File.exists() )
+        {
+            return false;
+        }
+        String md5Master = FileUtils.getTextContent( md5File ).trim();
+        String md5Value = computeMD5( fileToCheck );
+        return md5Value.equalsIgnoreCase( md5Master );
+    }
+
+    private String computeMD5( File fileToCheck )
+        throws IOException
+    {
+        BufferedInputStream in = null;
         try
         {
-            fos = new FileOutputStream( destination );
-            BufferedOutputStream out = new BufferedOutputStream( fos );
+            MessageDigest digest = MessageDigest.getInstance( "MD5" );
+            FileInputStream fis = new FileInputStream( fileToCheck );
+            in = new BufferedInputStream( fis );
+            int b = in.read();
+                while( b != -1 )
+                {
+                    digest.update( (byte) b );
+                    b = in.read();
+                }
+                byte[] result = digest.digest();
+                String md5Value = convertToHexString( result );
+                return md5Value;
+        } catch( NoSuchAlgorithmException e )
+        {
+            // MD5 is always present
+            e.printStackTrace();
+            return null;
+        } finally
+        {
+            if( in != null )
+            {
+                in.close();
+            }
+        }
+    }
+
+    private String convertToHexString( byte[] data )
+    {
+        StringBuffer buf = new StringBuffer();
+        for( byte b : data )
+        {
+            int d = b & 0xFF;
+            String s = Integer.toHexString( d );
+            if( d < 16 )
+            {
+                buf.append( "0" );
+            }
+            buf.append( s.toLowerCase() );
+        }
+        return buf.toString();
+    }
+
+    private File getMD5File( File fileToCheck )
+    {
+        String path = fileToCheck.getAbsolutePath();
+        String md5filename = getMd5Filename( path );
+        File md5File = new File( md5filename );
+        return md5File;
+    }
+
+    private String getMd5Filename( String path )
+    {
+        String md5filename = path + ".md5";
+        return md5filename;
+    }
+
+    private void downloadFile( File localCache, URL source )
+        throws IOException
+    {
+        InputStream in = null;
+        BufferedOutputStream out = null;
+        try
+        {
+            in = source.openStream();
+            File parentDir = localCache.getParentFile();
+            parentDir.mkdirs();
+            FileOutputStream fos = new FileOutputStream( localCache );
+            out = new BufferedOutputStream( fos );
             if( ! ( in instanceof BufferedInputStream ) )
             {
                 in = new BufferedInputStream( in );
             }
             streamCopy( in, out, "Downloading " + composeFileName( source ) );
             out.flush();
-            copyFile( destination, localCache );
         } finally
         {
-            in.close();
-            if( fos != null )
+            if( in != null )
             {
-                fos.close();
+                in.close();
+            }
+            if( out != null )
+            {
+                out.close();
             }
         }
     }
@@ -143,6 +253,7 @@ public class Downloader
         int b = in.read();
         int counter = 0;
         int bytes = 0;
+        boolean printed = false;
         while( b != -1 )
         {
             out.write( b );
@@ -157,8 +268,13 @@ public class Downloader
                 }
                 long kbps = bytes / time;
                 System.out.print( title + " : " + bytes + " bytes @ [ " + kbps + "kBps ]\r" );
+                printed = true;
             }
             bytes++;
+        }
+        if( ! printed )
+        {
+            System.out.print( title + " : " + bytes + " bytes\r" );
         }
         System.out.println();
     }

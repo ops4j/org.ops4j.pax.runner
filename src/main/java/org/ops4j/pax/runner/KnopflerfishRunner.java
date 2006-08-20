@@ -26,6 +26,9 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import org.ops4j.pax.runner.pom.BundleManager;
+import org.xml.sax.SAXException;
+import javax.xml.parsers.ParserConfigurationException;
 
 public class KnopflerfishRunner
     implements Runnable
@@ -63,7 +66,7 @@ public class KnopflerfishRunner
 
 
     public KnopflerfishRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager )
-        throws IOException
+        throws IOException, ParserConfigurationException, SAXException
     {
         m_cmdLine = cmdLine;
         m_props = props;

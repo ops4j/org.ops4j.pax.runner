@@ -37,7 +37,6 @@ import org.xml.sax.SAXException;
 import org.ops4j.pax.runner.Downloader;
 import org.ops4j.pax.runner.CmdLine;
 import org.ops4j.pax.runner.PropertyResolver;
-import org.ops4j.pax.runner.BundleManager;
 import org.ops4j.pax.runner.Run;
 
 public class PomManager
@@ -58,7 +57,7 @@ public class PomManager
         String version = cmdLine.getValue( "version" );
         if( "LATEST".equals( version) )
         {
-            version = getLatestVersion( groupId, artifact );
+            version = MavenUtils.getLatestVersion( groupId, artifact, m_downloader );
         }
 
         URL url;
@@ -109,7 +108,7 @@ public class PomManager
     }
 
     public List<File> getBundles( Element dependencies )
-        throws IOException
+        throws IOException, ParserConfigurationException, SAXException
     {
         List<File> bundles = new ArrayList<File>();
         NodeList nl = dependencies.getElementsByTagName( "dependency" );
@@ -136,31 +135,7 @@ public class PomManager
         return bundles;
     }
 
-    private String getLatestVersion( String group, String artifact )
-        throws IOException, ParserConfigurationException, SAXException
-    {
-
-        String metaLocation =  m_downloader.getRepository() + group.replace( '.', '/') + "/" + artifact + "/maven-metadata.xml";
-        URL metaUrl = new URL( metaLocation );
-        File dest = new File( Run.WORK_DIR, "latest.pom" );
-        try
-        {
-            m_downloader.download( metaUrl, dest, true );
-        } catch( IOException e )
-        {
-            IOException ioException = new IOException( "Unable to retrieve LATEST version of [" + group + ":" + artifact + "]" );
-            ioException.initCause( e );
-            throw ioException;
-
-        }
-        Document doc = parseDoc( dest );
-        Element root = doc.getDocumentElement();
-        NodeList children = root.getElementsByTagName( "version" );
-        Element latestVersion = (Element) children.item( 0 );
-        return latestVersion.getTextContent();
-    }
-
-    private Document parseDoc( File docFile )
+    static Document parseDoc( File docFile )
         throws ParserConfigurationException, SAXException, IOException
     {
         FileInputStream fis = new FileInputStream( docFile );
