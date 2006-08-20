@@ -69,9 +69,11 @@ public class CmdLine
         }
         if( count == 0 )
         {
-            throw new IllegalArgumentException( "At least the artifactId is needed." );
+            m_values.put( "group", "org.ops4j.pax.wicket.samples.departmentstore" );
+            m_values.put( "artifact", "demo" );
+            m_values.put( "version", "LATEST" );
         }
-        if( count == 1 )
+        else if( count == 1 )
         {
             try
             {
@@ -100,6 +102,7 @@ public class CmdLine
     private void populateDefaults()
     {
         m_values.put( "platform", "equinox" );
+        m_values.put( "dir", System.getProperty( "user.dir" ) + "/runner" );
         m_values.put( "group", "org.ops4j.pax.apps" );
         m_values.put( "repository", "http://repository.ops4j.org/maven2/" );
         m_values.put( "proxy-username", System.getProperty( "user.name" ) );

@@ -212,7 +212,7 @@ public class FelixRunner
     private void createConfigFile()
         throws IOException
     {
-        File confDir = new File( "conf" );
+        File confDir = new File( Run.WORK_DIR, "conf" );
         confDir.mkdirs();
         File file = new File( confDir, "config.properties" );
         Writer out = FileUtils.openPropertyFile( file );
@@ -259,7 +259,6 @@ public class FelixRunner
     {
         Runtime runtime = Runtime.getRuntime();
 
-        File cwd = new File( System.getProperty( "user.dir" ) );
         String javaHome = System.getProperty( "java.home" );
         if( javaHome == null )
         {
@@ -274,11 +273,11 @@ public class FelixRunner
             String[] cmd =
                 {
                     javaHome + "/bin/java",
-                    "-Dfelix.config.properties=" + System.getProperty( "user.dir" ) + "conf/config.properties",
+                    "-Dfelix.config.properties=" + Run.WORK_DIR + "conf/config.properties",
                     "-jar",
                     m_main.getAbsolutePath(),
                 };
-            Process process = runtime.exec( cmd, null, cwd );
+            Process process = runtime.exec( cmd, null, Run.WORK_DIR );
             InputStream err = process.getErrorStream();
             InputStream out = process.getInputStream();
             OutputStream in = process.getOutputStream();

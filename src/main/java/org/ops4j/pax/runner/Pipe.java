@@ -17,11 +17,11 @@
  */
 package org.ops4j.pax.runner;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 
 public class Pipe
     implements Runnable
@@ -49,37 +49,34 @@ public class Pipe
 
     public void stop()
     {
-        synchronized( this )
+        m_loop = false;
+        m_thread.interrupt();
+        try
         {
-            m_loop = false;
-            m_thread.interrupt();
+            m_in.close();
+        } catch( IOException e )
+        {
+            e.printStackTrace();
         }
     }
 
     public void run()
     {
-        synchronized( this )
+        m_loop = true;
+        while( m_loop )
         {
-            m_loop = true;
-            while( m_loop )
+            try
             {
-                try
+                int ch = m_in.read();
+                if( ch == -1 )
                 {
-                    int ch = m_in.read();
-                    if( ch == -1 )
-                    {
-                        break;
-                    }
-                    m_pipe.write( ch );
-                    m_pipe.flush();
-                    wait(1);
-                } catch( IOException e )
-                {
-                    if( m_loop )
-                    {
-                        e.printStackTrace();
-                    }
-                } catch( InterruptedException e )
+                    break;
+                }
+                m_pipe.write( ch );
+                m_pipe.flush();
+            } catch( IOException e )
+            {
+                if( m_loop )
                 {
                     e.printStackTrace();
                 }

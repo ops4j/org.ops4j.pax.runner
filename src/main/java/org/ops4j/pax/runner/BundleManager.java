@@ -21,11 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 public class BundleManager
 {
@@ -36,39 +31,12 @@ public class BundleManager
         m_downloader = downloader;
     }
 
-    List<File> getBundles( Element dependencies )
-        throws IOException
-    {
-        List<File> bundles = new ArrayList<File>();
-        NodeList nl = dependencies.getElementsByTagName( "dependency" );
-        for( int i = 0; i < nl.getLength(); i++ )
-        {
-            Node node = nl.item( i );
-            if( node.getNodeType() == Node.ELEMENT_NODE )
-            {
-                String artifact = DomUtils.getElement( node, "artifactId" );
-                String group = DomUtils.getElement( node, "groupId" );
-                String version = DomUtils.getElement( node, "version" );
-                String scope = DomUtils.getElement( node, "scope" );
-                if( ! "test".equals( scope ) )
-                {
-                    File dest = getBundle( group, artifact, version );
-                    if( ! "provided".equals( scope ) )
-                    {
-                        bundles.add( dest );
-                    }
-                }
-            }
-        }
-        return bundles;
-    }
-
-    File getBundle( String group, String artifact, String version )
+    public File getBundle( String group, String artifact, String version )
         throws IOException
     {
         URL url = composeURL( group, artifact, version );
         version = version.replace( "-SNAPSHOT", ".SNAPSHOT" );
-        File dest = new File( "lib/", group.replace('.','/' ));
+        File dest = new File( Run.WORK_DIR, "lib/" + group.replace('.','/' ));
         dest = new File( dest, artifact + "_" + version + ".jar" );
         m_downloader.download( url, dest, false );
         return dest;

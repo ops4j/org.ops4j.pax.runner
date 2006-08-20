@@ -37,7 +37,7 @@ public class Downloader
         m_repository = repository;
     }
 
-    void download( URL source, File destination, boolean force )
+    public void download( URL source, File destination, boolean force )
         throws IOException
     {
         if( destination.exists() && ! force )
@@ -67,6 +67,7 @@ public class Downloader
             }
             streamCopy( in, out, "Downloading " + composeFileName( source ) );
             out.flush();
+            copyFile( destination, localCache );
         } finally
         {
             in.close();

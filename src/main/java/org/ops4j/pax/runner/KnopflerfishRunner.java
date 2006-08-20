@@ -104,7 +104,7 @@ public class KnopflerfishRunner
     private void createConfigFile( File packageFile )
         throws IOException
     {
-        File confDir = new File( System.getProperty( "user.dir" ) );
+        File confDir = Run.WORK_DIR;
         File file = new File( confDir, "init.xargs" );
         if( file.exists() )
         {
@@ -203,7 +203,6 @@ public class KnopflerfishRunner
     {
         Runtime runtime = Runtime.getRuntime();
 
-        File cwd = new File( System.getProperty( "user.dir" ) );
         String javaHome = System.getProperty( "java.home" );
         if( javaHome == null )
         {
@@ -223,7 +222,7 @@ public class KnopflerfishRunner
                     "-jar",
                     m_systemBundle.getAbsolutePath()
                 };
-            Process process = runtime.exec( cmd, null, cwd );
+            Process process = runtime.exec( cmd, null, Run.WORK_DIR );
             InputStream err = process.getErrorStream();
             InputStream out = process.getInputStream();
             OutputStream in = process.getOutputStream();
@@ -252,7 +251,7 @@ public class KnopflerfishRunner
         {
             throw new IllegalStateException( "Resource not found in jar: " + resource );
         }
-        File f = new File( "system-packages.list" );
+        File f = new File( Run.WORK_DIR, "system-packages.list" );
         FileOutputStream out = new FileOutputStream( f );
         try
         {

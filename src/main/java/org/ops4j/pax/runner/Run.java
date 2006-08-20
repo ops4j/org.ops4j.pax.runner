@@ -24,8 +24,8 @@ import java.net.PasswordAuthentication;
 import java.util.List;
 import java.util.Properties;
 import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import org.ops4j.pax.runner.provisioning.Provisioning;
+import org.ops4j.pax.runner.pom.PomManager;
 import org.xml.sax.SAXException;
 
 /**
@@ -33,6 +33,7 @@ import org.xml.sax.SAXException;
  */
 public class Run
 {
+    public static File WORK_DIR;
 
     private static CmdLine m_cmdLine;
 
@@ -48,14 +49,17 @@ public class Run
             System.err.println();
             System.err.println( "java -jar pax-runner.jar [options] <groupId> <artifactId> <version>" );
             System.err.println( "  or" );
-            System.err.println( "java -jar pax-runner.jar [options] <URL>" );
+            System.err.println( "java -jar pax-runner.jar [options] <pom-URL>" );
+            System.err.println( "  or" );
+            System.err.println( "java -jar pax-runner.jar [options] <provisioning-URL> (not support yet)" );
             System.err.println( "  or" );
             System.err.println( "java -jar pax-runner.jar [options]" );
             System.err.println( "\nOptions;" );
             System.err.println( "--platform=<platform>  -  The OSGi platform to use. Default: equinox" );
             System.err.println( "--clean                -  Do not load persisted state." );
             System.err.println( "--gui                  -  Load GUI (if supported by platform)" );
-            System.err.println( "--profile              -  Which profile to run (if supported by platform)" );
+            System.err.println( "--dir=<workdir>        -  Which directory to use. Default: runner/" );
+            System.err.println( "--profile=<profile>    -  Which profile to run (if supported by platform)" );
             System.err.println( "--repository=<repo>    -  Which repository to download from." );
             System.err.println( "--proxy-username=<pwd> -  Username for the proxy." );
             System.err.println( "--proxy-password=<pwd> -  Username for the proxy." );
@@ -74,7 +78,10 @@ public class Run
         System.out.println( "--------------------------------------------" );
         System.out.println();
 
-        System.out.println( "Current Dir: " + System.getProperty( "user.dir" ) );
+        String workDir = m_cmdLine.getValue( "dir" );
+        WORK_DIR = new File( workDir );
+        WORK_DIR.mkdirs();
+        System.out.println( "Working Dir: " + WORK_DIR );
 
         Authenticator auth = new Authenticator()
         {
@@ -96,21 +103,30 @@ public class Run
             }
         };
         Authenticator.setDefault( auth );
-        
+
         String repo = m_cmdLine.getValue( "repository" );
         if( ! repo.endsWith( "/" ) )
         {
             repo = repo + "/";
         }
         Downloader downloader = new Downloader( repo );
-        PomManager pomManager = new PomManager( downloader );
-
-        Document pom = pomManager.retrievePom( m_cmdLine );
-        pomManager.info( pom );
-        Properties props = DomUtils.parseProperties( pom );
-        Element dependencies = DomUtils.getElement( pom, "dependencies" );
+        List<File> bundles;
+        Properties props;
+        String urlValue = m_cmdLine.getValue( "url" );
+        boolean useProvisioning = urlValue != null && urlValue.endsWith( ".jar" );
+        if( useProvisioning )
+        {
+            Provisioning provisioning = new Provisioning( downloader );
+            bundles = provisioning.getBundles( m_cmdLine );
+            props = provisioning.getProperties( m_cmdLine );
+        }
+        else
+        {
+            PomManager pomManager = new PomManager( downloader );
+            bundles = pomManager.getBundles( m_cmdLine );
+            props = pomManager.getProperties( m_cmdLine );
+        }
         BundleManager bundleManager = new BundleManager( downloader );
-        List<File> bundles = bundleManager.getBundles( dependencies );
         String platform = m_cmdLine.getValue( "platform" ).toLowerCase();
         System.out.println( "\n   Platform: " + platform );
         if( "equinox".equals( platform ) )

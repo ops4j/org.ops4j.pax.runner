@@ -69,7 +69,7 @@ public class EquinoxRunner
     private void createConfigIniFile()
         throws IOException
     {
-        File confDir = new File( "configuration" );
+        File confDir = new File( Run.WORK_DIR, "configuration" );
         confDir.mkdirs();
         File file = new File( confDir, "config.ini" );
         Writer out = FileUtils.openPropertyFile( file );
@@ -140,9 +140,9 @@ public class EquinoxRunner
                     m_system.toString(),
                     "-console",
                     "-configuration",
-                    System.getProperty("user.dir") + "/configuration",
+                    Run.WORK_DIR + "/configuration",
                     "-install",
-                    System.getProperty("user.dir")
+                    Run.WORK_DIR.getAbsolutePath()
                 };
             Process process = runtime.exec( cmd, null, cwd );
             InputStream err = process.getErrorStream();
