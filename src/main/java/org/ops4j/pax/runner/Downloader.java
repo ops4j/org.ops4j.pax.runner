@@ -173,7 +173,7 @@ public class Downloader
             {
                 in = new BufferedInputStream( in );
             }
-            streamCopy( in, out, "Downloading " + composeFileName( source ) );
+            StreamUtils.streamCopy( in, out, "Downloading " + composeFileName( source ) );
             out.flush();
         } finally
         {
@@ -246,38 +246,6 @@ public class Downloader
         return path;
     }
 
-    private void streamCopy( InputStream in, BufferedOutputStream out, String title )
-        throws IOException
-    {
-        long start = System.currentTimeMillis();
-        int b = in.read();
-        int counter = 0;
-        int bytes = 0;
-        boolean printed = false;
-        while( b != -1 )
-        {
-            out.write( b );
-            b = in.read();
-            counter = ( counter + 1 ) % 1024;
-            if( counter == 0 )
-            {
-                long time = System.currentTimeMillis() - start;
-                if( time <= 0 )
-                {
-                    time = 1;
-                }
-                long kbps = bytes / time;
-                System.out.print( title + " : " + bytes + " bytes @ [ " + kbps + "kBps ]\r" );
-                printed = true;
-            }
-            bytes++;
-        }
-        if( ! printed )
-        {
-            System.out.print( title + " : " + bytes + " bytes\r" );
-        }
-        System.out.println();
-    }
 
     public String getRepository()
     {

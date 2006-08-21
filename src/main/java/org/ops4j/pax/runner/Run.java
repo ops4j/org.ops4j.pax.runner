@@ -116,7 +116,7 @@ public class Run
         List<File> bundles;
         Properties props;
         String urlValue = m_cmdLine.getValue( "url" );
-        boolean useProvisioning = urlValue != null && urlValue.endsWith( ".jar" );
+        boolean useProvisioning = urlValue != null && urlValue.endsWith( ".zip" );
         if( useProvisioning )
         {
             Provisioning provisioning = new Provisioning( downloader );
