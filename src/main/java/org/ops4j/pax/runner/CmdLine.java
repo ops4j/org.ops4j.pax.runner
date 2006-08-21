@@ -127,6 +127,10 @@ public class CmdLine
         int equalPos = key.indexOf( '=' );
         if( equalPos <= 0 )
         {
+            if( "help".equals(key))
+            {
+                throw new IllegalArgumentException( (String) null );
+            }
             m_values.put( key, key );
             return;
         }

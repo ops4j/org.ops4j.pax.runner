@@ -46,7 +46,11 @@ public class Run
             m_cmdLine = new CmdLine( args );
         } catch( IllegalArgumentException e )
         {
-            System.err.println( e.getMessage() );
+            String message = e.getMessage();
+            if( message != null )
+            {
+                System.err.println( message );
+            }
             System.err.println();
             System.err.println( "java -jar pax-runner.jar [options] <groupId> <artifactId> <version>" );
             System.err.println( "  or" );
@@ -67,6 +71,7 @@ public class Run
             System.err.println( "--proxy-password=<pwd> -  Username for the proxy." );
             System.err.println( "--repository-username=<pwd> -  Username for the repository server." );
             System.err.println( "--repository-password=<pwd> -  Username for the repository server." );
+            System.err.println( "--help                 -  This message." );
             System.exit( 1 );
         }
 
