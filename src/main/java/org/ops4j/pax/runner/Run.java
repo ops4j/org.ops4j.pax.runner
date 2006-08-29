@@ -167,9 +167,9 @@ public class Run
         while( st.hasMoreTokens() )
         {
             String repo = st.nextToken();
-            if( ! repoValue.endsWith( "/" ) )
+            if( ! repo.endsWith( "/" ) )
             {
-                repoValue = repoValue + "/";
+                repo = repo + "/";
             }
             repos.add( repo );
         }
