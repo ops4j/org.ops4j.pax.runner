@@ -21,23 +21,22 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URL;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 import org.ops4j.pax.runner.CmdLine;
 import org.ops4j.pax.runner.PropertyResolver;
-import org.ops4j.pax.runner.Run;
 import org.ops4j.pax.runner.Repository;
+import org.ops4j.pax.runner.Run;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 public class PomManager
 {
@@ -60,26 +59,24 @@ public class PomManager
             version = MavenUtils.getLatestVersion( groupId, artifact, m_repository );
         }
 
-        URL url;
+        String path;
         if( artifact == null )
         {
-            url = new URL( cmdLine.getValue( "url" ) );
-            System.out.println( "   Starting: " + url.toString() );
+            path = cmdLine.getValue( "url" );
+            System.out.println( "   Starting: " + path );
         }
         else
         {
             System.out.println( "   Starting: " + groupId + ", " + artifact + ", " + version );
             String filename = artifact + "-" + version + ".pom";
             groupId = groupId.replace( '.', '/' );
-            url = new URL(
-                m_repository.getRepository() + groupId + "/" + artifact + "/" + version + "/" + filename
-            );
+            path = groupId + "/" + artifact + "/" + version + "/" + filename;
         }
 
         String filename = artifact + "_" + version + ".pom";
         filename = PropertyResolver.resolve( System.getProperties(), filename );
         File dest = new File( Run.WORK_DIR, "lib/" + filename );
-        m_repository.download( url, dest, false );
+        m_repository.download( path, dest, false );
         return parseDoc( dest );
     }
 

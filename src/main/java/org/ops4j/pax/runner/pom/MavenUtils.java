@@ -17,28 +17,26 @@
  */
 package org.ops4j.pax.runner.pom;
 
-import org.ops4j.pax.runner.Run;
+import java.io.File;
+import java.io.IOException;
+import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.Repository;
-import org.xml.sax.SAXException;
+import org.ops4j.pax.runner.Run;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import java.io.IOException;
-import java.io.File;
-import java.net.URL;
-import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 public class MavenUtils
 {
     static String getLatestVersion( String group, String artifact, Repository repository )
         throws IOException, ParserConfigurationException, SAXException
     {
-        String metaLocation = repository.getRepository() + group.replace( '.', '/') + "/" + artifact + "/maven-metadata.xml";
-        URL metaUrl = new URL( metaLocation );
+        String metaLocation = group.replace( '.', '/') + "/" + artifact + "/maven-metadata.xml";
         File dest = new File( Run.WORK_DIR, "latest.pom" );
         try
         {
-            repository.download( metaUrl, dest, true );
+            repository.download( metaLocation, dest, true );
         } catch( IOException e )
         {
             IOException ioException = new IOException( "Unable to retrieve LATEST version of [" + group + ":" + artifact + "]" );

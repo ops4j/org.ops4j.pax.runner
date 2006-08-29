@@ -19,9 +19,9 @@ package org.ops4j.pax.runner;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.net.URL;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 public class RepositoryAggregator
     implements Repository
@@ -29,6 +29,7 @@ public class RepositoryAggregator
     private List<Downloader> m_downloaders;
 
     public RepositoryAggregator( String[] repositories, boolean noCheckMD5 )
+        throws MalformedURLException
     {
         m_downloaders = new ArrayList<Downloader>();
         for( String repository : repositories )
@@ -37,7 +38,7 @@ public class RepositoryAggregator
         }
     }
 
-    public void download( URL source, File destination, boolean force )
+    public void download( String relativePath, File destination, boolean force )
         throws IOException
     {
         // Better algorithm than a simple try each sequentially.
@@ -45,13 +46,13 @@ public class RepositoryAggregator
         {
             try
             {
-                repo.download( source, destination, force );
+                repo.download( relativePath, destination, force );
                 return;
             } catch( IOException e )
             {
                 // Ok, try next.
             }
         }
-        throw new IOException( "Unable to find " + source );
+        throw new IOException( "Unable to find " + relativePath );
     }
 }

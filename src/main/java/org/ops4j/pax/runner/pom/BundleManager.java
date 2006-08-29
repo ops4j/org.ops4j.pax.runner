@@ -20,10 +20,9 @@ package org.ops4j.pax.runner.pom;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import javax.xml.parsers.ParserConfigurationException;
-import org.ops4j.pax.runner.Run;
 import org.ops4j.pax.runner.Repository;
+import org.ops4j.pax.runner.Run;
 import org.xml.sax.SAXException;
 
 public class BundleManager
@@ -38,7 +37,7 @@ public class BundleManager
     public File getBundle( String group, String artifact, String version )
         throws IOException, ParserConfigurationException, SAXException
     {
-        URL url = composeURL( group, artifact, version );
+        String path = composeURL( group, artifact, version );
         if( "LATEST".equalsIgnoreCase( version ) )
         {
             version = MavenUtils.getLatestVersion( group, artifact, m_repository );
@@ -46,17 +45,17 @@ public class BundleManager
         version = version.replace( "-SNAPSHOT", ".SNAPSHOT" );
         File dest = new File( Run.WORK_DIR, "lib/" + group.replace('.','/' ));
         dest = new File( dest, artifact + "_" + version + ".jar" );
-        m_repository.download( url, dest, false );
+        m_repository.download( path, dest, false );
         return dest;
     }
 
-    private URL composeURL( String group, String artifact, String version )
+    private String composeURL( String group, String artifact, String version )
         throws MalformedURLException
     {
         String filename = artifact + "-" + version + ".jar";
         group = group.replace( '.', '/' );
-        String url = m_repository.getRepository() + group + "/" + artifact + "/" + version + "/" + filename;
-        return new URL( url );
+        String url = group + "/" + artifact + "/" + version + "/" + filename;
+        return url;
     }
 
 }

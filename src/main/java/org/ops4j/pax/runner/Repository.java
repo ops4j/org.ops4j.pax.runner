@@ -25,7 +25,7 @@ import java.io.IOException;
 public interface Repository
 {
 
-    void download( URL source, File destination, boolean force )
+    void download( String relativePath, File destination, boolean force )
         throws IOException;
 
 }

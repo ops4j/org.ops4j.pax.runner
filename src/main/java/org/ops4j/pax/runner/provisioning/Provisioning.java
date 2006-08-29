@@ -24,7 +24,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -33,9 +32,9 @@ import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import org.ops4j.pax.runner.CmdLine;
+import org.ops4j.pax.runner.Repository;
 import org.ops4j.pax.runner.Run;
 import org.ops4j.pax.runner.StreamUtils;
-import org.ops4j.pax.runner.Repository;
 
 /* WARNING!!! This is not correct code, and should be deleted. Kept as reference for future
               Initial Provisioning bundle to commence later. */
@@ -51,9 +50,9 @@ public class Provisioning
     public List<File> getBundles( CmdLine m_cmdLine )
         throws IOException
     {
-        URL zipURL = new URL( m_cmdLine.getValue( "url" ) );
+        String zipPath = m_cmdLine.getValue( "url" );
         File destination = new File( Run.WORK_DIR, "initial-provisioning.zip" );
-        m_repository.download( zipURL, destination, false );
+        m_repository.download( zipPath, destination, false );
         ZipFile zipFile = new ZipFile( destination );
         Dictionary provisioningDictionary = new Hashtable();
         extractEntries( zipFile, provisioningDictionary );

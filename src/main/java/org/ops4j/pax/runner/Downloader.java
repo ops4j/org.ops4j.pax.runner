@@ -27,6 +27,7 @@ import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.net.MalformedURLException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -36,14 +37,17 @@ public class Downloader
 
     private String m_repository;
     private boolean m_noCheckMD5;
+    private URL m_context;
 
     public Downloader( String repository, boolean noCheckMD5 )
+        throws MalformedURLException
     {
+        m_context = new URL( repository );
         m_repository = repository;
         m_noCheckMD5 = noCheckMD5;
     }
 
-    public void download( URL source, File destination, boolean force )
+    public void download( String sourceURL, File destination, boolean force )
         throws IOException
     {
         if( destination.exists() && ! force )
@@ -51,6 +55,7 @@ public class Downloader
             return;
         }
         File localRepo = new File( System.getProperty( "user.home" ), ".m2/repository" );
+        URL source = new URL( m_context, sourceURL );
         String sourceString = source.toExternalForm();
         String path = sourceString.substring( m_repository.length() );
         File localCache = new File( localRepo, path );
