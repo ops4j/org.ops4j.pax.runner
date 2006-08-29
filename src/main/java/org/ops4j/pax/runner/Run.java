@@ -117,7 +117,7 @@ public class Run
         boolean noCheckMD5 = m_cmdLine.isSet( "no-md5" );
 
         Repository repository = new RepositoryAggregator( repositories, noCheckMD5 );
-        List<File> bundles;
+        List<Bundle> bundles;
         Properties props;
         String urlValue = m_cmdLine.getValue( "url" );
         boolean useProvisioning = urlValue != null && urlValue.endsWith( ".zip" );

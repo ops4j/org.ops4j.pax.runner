@@ -35,20 +35,20 @@ public class EquinoxRunner
 {
     private Properties m_props;
     private CmdLine m_cmdLine;
-    private List<File> m_bundles;
+    private List<Bundle> m_bundles;
     private File m_system;
 
-    public EquinoxRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager )
+    public EquinoxRunner( CmdLine cmdLine, Properties props, List<Bundle> bundles, BundleManager bundleManager )
         throws IOException, ParserConfigurationException, SAXException
     {
         m_cmdLine = cmdLine;
         m_bundles = bundles;
         m_props = props;
-        m_system = bundleManager.getBundle( "org.eclipse", "osgi", "3.2.1.R32x_v20060717" );
-        File services = bundleManager.getBundle( "org.eclipse.osgi", "services", "3.1.100.v20060601" );
-        bundles.add( services );
-        File util = bundleManager.getBundle( "org.eclipse.osgi", "util", "3.1.100.v20060601" );
-        bundles.add(  util );
+        m_system = bundleManager.getBundleFile( "org.eclipse", "osgi", "3.2.1.R32x_v20060717" );
+        File services = bundleManager.getBundleFile( "org.eclipse.osgi", "services", "3.1.100.v20060601" );
+        bundles.add( new Bundle( services, 1, BundleState.START ));
+        File util = bundleManager.getBundleFile( "org.eclipse.osgi", "util", "3.1.100.v20060601" );
+        bundles.add(  new Bundle( util, 1, BundleState.START ));
     }
 
     public void run()
@@ -86,17 +86,19 @@ public class EquinoxRunner
             }
             out.write( "\neclipse.ignoreApp=true\n" );
             out.write( "\nosgi.bundles=\\\n" );
-            for( File bundle : m_bundles )
+            for( Bundle bundle : m_bundles )
             {
                 if( ! first )
                 {
                     out.write( ",\\\n" );
                 }
                 first = false;
-                String urlString = bundle.toURL().toString();
+                String urlString = bundle.getFile().toURL().toString();
                 out.write( "reference:" );
                 out.write( urlString );
-                out.write( "@5:start" );
+                out.write( "@" + bundle.getStartLevel()  );
+                out.write( ":" );
+                out.write( bundle.getTargetState().toString().toLowerCase() );
             }
             out.write( '\n' );
             out.write( '\n' );

@@ -34,7 +34,7 @@ public class BundleManager
         m_repository = repository;
     }
 
-    public File getBundle( String group, String artifact, String version )
+    public File getBundleFile( String group, String artifact, String version )
         throws IOException, ParserConfigurationException, SAXException
     {
         String path = composeURL( group, artifact, version );

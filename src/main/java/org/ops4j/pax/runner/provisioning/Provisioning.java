@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+import org.ops4j.pax.runner.Bundle;
 import org.ops4j.pax.runner.CmdLine;
 import org.ops4j.pax.runner.Repository;
 import org.ops4j.pax.runner.Run;
@@ -47,7 +49,7 @@ public class Provisioning
         m_repository = repository;
     }
 
-    public List<File> getBundles( CmdLine m_cmdLine )
+    public List<Bundle> getBundles( CmdLine m_cmdLine )
         throws IOException
     {
         String zipPath = m_cmdLine.getValue( "url" );

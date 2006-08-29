@@ -37,7 +37,7 @@ public class KnopflerfishRunner
     private CmdLine m_cmdLine;
     private Properties m_props;
     private File m_systemBundle;
-    private List<File> m_bundles;
+    private List<Bundle> m_bundles;
     private static final String FRAMEWORK_GROUPID = "org.knopflerfish.osgi";
     private static final String BUNDLES_GROUPID = "org.knopflerfish.bundle";
     private static final String[] SYSTEM_BUNDLE =  { FRAMEWORK_GROUPID, "framework", "2.0.0" };
@@ -65,26 +65,26 @@ public class KnopflerfishRunner
         };
 
 
-    public KnopflerfishRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager )
+    public KnopflerfishRunner( CmdLine cmdLine, Properties props, List<Bundle> bundles, BundleManager bundleManager )
         throws IOException, ParserConfigurationException, SAXException
     {
         m_cmdLine = cmdLine;
         m_props = props;
         m_bundles = bundles;
-        m_systemBundle = bundleManager.getBundle( SYSTEM_BUNDLE[ 0 ], SYSTEM_BUNDLE[ 1 ], SYSTEM_BUNDLE[ 2 ] );
+        m_systemBundle = bundleManager.getBundleFile( SYSTEM_BUNDLE[ 0 ], SYSTEM_BUNDLE[ 1 ], SYSTEM_BUNDLE[ 2 ] );
         if( m_cmdLine.isSet( "gui" ) )
         {
             for( String[] bundle : GUI_BUNDLES )
             {
-                File gui = bundleManager.getBundle( bundle[0], bundle[1], bundle[2] );
-                m_bundles.add( 0, gui );
+                File gui = bundleManager.getBundleFile( bundle[0], bundle[1], bundle[2] );
+                m_bundles.add( new Bundle(gui, 0, BundleState.START) );
             }
         }
         for( int i = 0; i < DEFAULT_BUNDLES.length; i++ )
         {
             String[] bundle = DEFAULT_BUNDLES[ i ];
-            File file = bundleManager.getBundle( bundle[ 0 ], bundle[ 1 ], bundle[ 2 ] );
-            m_bundles.add( 0, file );
+            File file = bundleManager.getBundleFile( bundle[ 0 ], bundle[ 1 ], bundle[ 2 ] );
+            m_bundles.add( new Bundle(file, 0, BundleState.START) );
         }
     }
 
@@ -181,17 +181,18 @@ public class KnopflerfishRunner
             out.write( "-Dorg.knopflerfish.gosg.jars=file://" + confDir.getAbsolutePath() + "/lib/\n\n" );
             out.write( "-init\n" );
             out.write( "-initlevel 1\n" );
-            for( File bundle : m_bundles )
+            //TODO fix right start levels from bundle info
+            for( Bundle bundle : m_bundles )
             {
                 out.write( "-install " );
-                out.write( bundle.getAbsolutePath() );
+                out.write( bundle.getFile().getAbsolutePath() );
                 out.write( "\n" );
             }
             out.write( "-startlevel 7\n" );
-            for( File bundle : m_bundles )
+            for( Bundle bundle : m_bundles )
             {
                 out.write( "-start " );
-                out.write( bundle.getAbsolutePath() );
+                out.write( bundle.getFile().getAbsolutePath() );
                 out.write( "\n" );
             }
             out.flush();

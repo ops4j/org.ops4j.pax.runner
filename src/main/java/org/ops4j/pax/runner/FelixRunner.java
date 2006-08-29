@@ -40,7 +40,7 @@ public class FelixRunner
 
     private Properties m_props;
     private CmdLine m_cmdLine;
-    private List<File> m_bundles;
+    private List<Bundle> m_bundles;
     private static final String SYSTEM_PACKAGES = "javax.accessibility, " +
                                                   "javax.activity, " +
                                                   "javax.crypto, " +
@@ -169,28 +169,28 @@ public class FelixRunner
     private File m_osgi;
     private File m_framework;
 
-    public FelixRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager )
+    public FelixRunner( CmdLine cmdLine, Properties props, List<Bundle> bundles, BundleManager bundleManager )
         throws IOException, ParserConfigurationException, SAXException
     {
         m_cmdLine = cmdLine;
         m_bundles = bundles;
         m_props = props;
-        File system1 = bundleManager.getBundle( GROUPID, "org.apache.felix.shell", VERSION );
-        bundles.add( system1 );
-        File system2 = bundleManager.getBundle( GROUPID, "org.apache.felix.bundlerepository", VERSION );
-        bundles.add( system2 );
-        File system3 = bundleManager.getBundle( GROUPID, "org.apache.felix.shell.tui", VERSION );
-        bundles.add( system3 );
+        File system1 = bundleManager.getBundleFile( GROUPID, "org.apache.felix.shell", VERSION );
+        bundles.add( new Bundle(system1, 0, BundleState.START) );
+        File system2 = bundleManager.getBundleFile( GROUPID, "org.apache.felix.bundlerepository", VERSION );
+        bundles.add( new Bundle(system2, 0, BundleState.START) );
+        File system3 = bundleManager.getBundleFile( GROUPID, "org.apache.felix.shell.tui", VERSION );
+        bundles.add( new Bundle(system3, 0, BundleState.START) );
         if( m_cmdLine.isSet( "gui" ) )
         {
-            File system4 = bundleManager.getBundle( GROUPID, "org.apache.felix.shell.gui", VERSION );
-            bundles.add( system4 );
-            File system5 = bundleManager.getBundle( GROUPID, "org.apache.felix.shell.gui.plugin", VERSION );
-            bundles.add( system5 );
+            File system4 = bundleManager.getBundleFile( GROUPID, "org.apache.felix.shell.gui", VERSION );
+            bundles.add( new Bundle(system4, 0, BundleState.START) );
+            File system5 = bundleManager.getBundleFile( GROUPID, "org.apache.felix.shell.gui.plugin", VERSION );
+            bundles.add( new Bundle(system5, 0, BundleState.START) );
         }
-        m_main = bundleManager.getBundle( GROUPID, "org.apache.felix.main", VERSION );
-        m_framework = bundleManager.getBundle( GROUPID, "org.osgi.felix.framework", VERSION );
-        m_osgi = bundleManager.getBundle( GROUPID, "org.osgi.core", VERSION );
+        m_main = bundleManager.getBundleFile( GROUPID, "org.apache.felix.main", VERSION );
+        m_framework = bundleManager.getBundleFile( GROUPID, "org.osgi.felix.framework", VERSION );
+        m_osgi = bundleManager.getBundleFile( GROUPID, "org.osgi.core", VERSION );
     }
 
     public void run()
@@ -234,14 +234,14 @@ public class FelixRunner
             );
             boolean first = true;
             StringBuffer buf = new StringBuffer();
-            for( File bundle : m_bundles )
+            for( Bundle bundle : m_bundles )
             {
                 if( ! first )
                 {
                     buf.append( ", \\\n    " );
                 }
                 first = false;
-                buf.append( bundle.getAbsolutePath() );
+                buf.append( bundle.getFile().getAbsolutePath() );
             }
             FileUtils.writeProperty( out, "felix.auto.start.3", buf.toString() );
             for( Map.Entry entry : m_props.entrySet() )
