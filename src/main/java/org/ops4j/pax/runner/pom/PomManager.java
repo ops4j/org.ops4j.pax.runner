@@ -34,19 +34,19 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.ops4j.pax.runner.Downloader;
 import org.ops4j.pax.runner.CmdLine;
 import org.ops4j.pax.runner.PropertyResolver;
 import org.ops4j.pax.runner.Run;
+import org.ops4j.pax.runner.Repository;
 
 public class PomManager
 {
 
-    private Downloader m_downloader;
+    private Repository m_repository;
 
-    public PomManager( Downloader downloader )
+    public PomManager( Repository repository )
     {
-        m_downloader = downloader;
+        m_repository = repository;
     }
 
     public Document retrievePom( CmdLine cmdLine )
@@ -57,7 +57,7 @@ public class PomManager
         String version = cmdLine.getValue( "version" );
         if( "LATEST".equals( version) )
         {
-            version = MavenUtils.getLatestVersion( groupId, artifact, m_downloader );
+            version = MavenUtils.getLatestVersion( groupId, artifact, m_repository );
         }
 
         URL url;
@@ -72,14 +72,14 @@ public class PomManager
             String filename = artifact + "-" + version + ".pom";
             groupId = groupId.replace( '.', '/' );
             url = new URL(
-                m_downloader.getRepository() + groupId + "/" + artifact + "/" + version + "/" + filename
+                m_repository.getRepository() + groupId + "/" + artifact + "/" + version + "/" + filename
             );
         }
 
         String filename = artifact + "_" + version + ".pom";
         filename = PropertyResolver.resolve( System.getProperties(), filename );
         File dest = new File( Run.WORK_DIR, "lib/" + filename );
-        m_downloader.download( url, dest, false );
+        m_repository.download( url, dest, false );
         return parseDoc( dest );
     }
 
@@ -129,7 +129,7 @@ public class PomManager
                 String scope = DomUtils.getElement( node, "scope" );
                 if( ! "test".equals( scope ) && ! "compile".equals( scope ) )
                 {
-                    BundleManager bundleManager = new BundleManager( m_downloader );
+                    BundleManager bundleManager = new BundleManager( m_repository );
                     File dest = bundleManager.getBundle( group, artifact, version );
                     if( ! "provided".equals( scope ) )
                     {

@@ -31,6 +31,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Downloader
+    implements Repository
 {
 
     private String m_repository;

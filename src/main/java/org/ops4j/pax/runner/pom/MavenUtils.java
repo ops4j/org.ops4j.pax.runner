@@ -17,8 +17,8 @@
  */
 package org.ops4j.pax.runner.pom;
 
-import org.ops4j.pax.runner.Downloader;
 import org.ops4j.pax.runner.Run;
+import org.ops4j.pax.runner.Repository;
 import org.xml.sax.SAXException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -30,15 +30,15 @@ import javax.xml.parsers.ParserConfigurationException;
 
 public class MavenUtils
 {
-    static String getLatestVersion( String group, String artifact, Downloader downloader )
+    static String getLatestVersion( String group, String artifact, Repository repository )
         throws IOException, ParserConfigurationException, SAXException
     {
-        String metaLocation = downloader.getRepository() + group.replace( '.', '/') + "/" + artifact + "/maven-metadata.xml";
+        String metaLocation = repository.getRepository() + group.replace( '.', '/') + "/" + artifact + "/maven-metadata.xml";
         URL metaUrl = new URL( metaLocation );
         File dest = new File( Run.WORK_DIR, "latest.pom" );
         try
         {
-            downloader.download( metaUrl, dest, true );
+            repository.download( metaUrl, dest, true );
         } catch( IOException e )
         {
             IOException ioException = new IOException( "Unable to retrieve LATEST version of [" + group + ":" + artifact + "]" );

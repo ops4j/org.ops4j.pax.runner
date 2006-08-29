@@ -33,19 +33,19 @@ import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import org.ops4j.pax.runner.CmdLine;
-import org.ops4j.pax.runner.Downloader;
 import org.ops4j.pax.runner.Run;
 import org.ops4j.pax.runner.StreamUtils;
+import org.ops4j.pax.runner.Repository;
 
 /* WARNING!!! This is not correct code, and should be deleted. Kept as reference for future
               Initial Provisioning bundle to commence later. */
 public class Provisioning
 {
-    private Downloader m_downloader;
+    private Repository m_repository;
 
-    public Provisioning( Downloader downloader )
+    public Provisioning( Repository repository )
     {
-        m_downloader = downloader;
+        m_repository = repository;
     }
 
     public List<File> getBundles( CmdLine m_cmdLine )
@@ -53,7 +53,7 @@ public class Provisioning
     {
         URL zipURL = new URL( m_cmdLine.getValue( "url" ) );
         File destination = new File( Run.WORK_DIR, "initial-provisioning.zip" );
-        m_downloader.download( zipURL, destination, false );
+        m_repository.download( zipURL, destination, false );
         ZipFile zipFile = new ZipFile( destination );
         Dictionary provisioningDictionary = new Hashtable();
         extractEntries( zipFile, provisioningDictionary );

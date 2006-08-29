@@ -22,17 +22,17 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import javax.xml.parsers.ParserConfigurationException;
-import org.ops4j.pax.runner.Downloader;
 import org.ops4j.pax.runner.Run;
+import org.ops4j.pax.runner.Repository;
 import org.xml.sax.SAXException;
 
 public class BundleManager
 {
-    private Downloader m_downloader;
+    private Repository m_repository;
 
-    public BundleManager( Downloader downloader )
+    public BundleManager( Repository repository )
     {
-        m_downloader = downloader;
+        m_repository = repository;
     }
 
     public File getBundle( String group, String artifact, String version )
@@ -41,12 +41,12 @@ public class BundleManager
         URL url = composeURL( group, artifact, version );
         if( "LATEST".equalsIgnoreCase( version ) )
         {
-            version = MavenUtils.getLatestVersion( group, artifact, m_downloader );
+            version = MavenUtils.getLatestVersion( group, artifact, m_repository );
         }
         version = version.replace( "-SNAPSHOT", ".SNAPSHOT" );
         File dest = new File( Run.WORK_DIR, "lib/" + group.replace('.','/' ));
         dest = new File( dest, artifact + "_" + version + ".jar" );
-        m_downloader.download( url, dest, false );
+        m_repository.download( url, dest, false );
         return dest;
     }
 
@@ -55,7 +55,7 @@ public class BundleManager
     {
         String filename = artifact + "-" + version + ".jar";
         group = group.replace( '.', '/' );
-        String url = m_downloader.getRepository() + group + "/" + artifact + "/" + version + "/" + filename;
+        String url = m_repository.getRepository() + group + "/" + artifact + "/" + version + "/" + filename;
         return new URL( url );
     }
 

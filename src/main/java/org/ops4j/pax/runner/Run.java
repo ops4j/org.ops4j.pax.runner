@@ -23,6 +23,8 @@ import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 import java.util.List;
 import java.util.Properties;
+import java.util.StringTokenizer;
+import java.util.ArrayList;
 import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.provisioning.Provisioning;
 import org.ops4j.pax.runner.pom.PomManager;
@@ -66,7 +68,7 @@ public class Run
             System.err.println( "--no-md5               -  Disable MD5 checksum checks for downloads." );
             System.err.println( "--dir=<workdir>        -  Which directory to use. Default: runner/" );
             System.err.println( "--profile=<profile>    -  Which profile to run (if supported by platform)" );
-            System.err.println( "--repository=<repo>    -  Which repository to download from." );
+            System.err.println( "--repository=<repositories> - Which repositories to download from. Comma-separated." );
             System.err.println( "--proxy-username=<pwd> -  Username for the proxy." );
             System.err.println( "--proxy-password=<pwd> -  Username for the proxy." );
             System.err.println( "--repository-username=<pwd> -  Username for the repository server." );
@@ -111,30 +113,27 @@ public class Run
         };
         Authenticator.setDefault( auth );
 
-        String repo = m_cmdLine.getValue( "repository" );
-        if( ! repo.endsWith( "/" ) )
-        {
-            repo = repo + "/";
-        }
+        String[] repositories = extractRepositories();
         boolean noCheckMD5 = m_cmdLine.isSet( "no-md5" );
-        Downloader downloader = new Downloader( repo, noCheckMD5 );
+
+        Repository repository = new RepositoryAggregator( repositories, noCheckMD5 );
         List<File> bundles;
         Properties props;
         String urlValue = m_cmdLine.getValue( "url" );
         boolean useProvisioning = urlValue != null && urlValue.endsWith( ".zip" );
         if( useProvisioning )
         {
-            Provisioning provisioning = new Provisioning( downloader );
+            Provisioning provisioning = new Provisioning( repository );
             bundles = provisioning.getBundles( m_cmdLine );
             props = provisioning.getProperties( m_cmdLine );
         }
         else
         {
-            PomManager pomManager = new PomManager( downloader );
+            PomManager pomManager = new PomManager( repository );
             bundles = pomManager.getBundles( m_cmdLine );
             props = pomManager.getProperties( m_cmdLine );
         }
-        BundleManager bundleManager = new BundleManager( downloader );
+        BundleManager bundleManager = new BundleManager( repository );
         String platform = m_cmdLine.getValue( "platform" ).toLowerCase();
         System.out.println( "\n   Platform: " + platform );
         if( "equinox".equals( platform ) )
@@ -158,5 +157,24 @@ public class Run
             System.exit( 2 );
         }
         System.exit(0);
+    }
+
+    private static String[] extractRepositories()
+    {
+        String repoValue = m_cmdLine.getValue( "repository" );
+        StringTokenizer st = new StringTokenizer( repoValue, ", ", false );
+        ArrayList repos = new ArrayList();
+        while( st.hasMoreTokens() )
+        {
+            String repo = st.nextToken();
+            if( ! repoValue.endsWith( "/" ) )
+            {
+                repoValue = repoValue + "/";
+            }
+            repos.add( repo );
+        }
+        String[] result = new String[ repos.size() ];
+        repos.toArray( result );
+        return result;
     }
 }
