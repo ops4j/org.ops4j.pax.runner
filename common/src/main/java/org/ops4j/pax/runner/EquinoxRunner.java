@@ -26,7 +26,7 @@ import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import org.ops4j.pax.runner.pom.BundleManager;
+import org.ops4j.pax.runner.maven2.BundleManager;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -34,14 +34,14 @@ public class EquinoxRunner
     implements Runnable
 {
     private Properties m_props;
-    private CmdLine m_cmdLine;
+    private RunnerOptions m_options;
     private List<Bundle> m_bundles;
     private File m_system;
 
-    public EquinoxRunner( CmdLine cmdLine, Properties props, List<Bundle> bundles, BundleManager bundleManager )
+    public EquinoxRunner( RunnerOptions cmdLine, Properties props, List<Bundle> bundles, BundleManager bundleManager )
         throws IOException, ParserConfigurationException, SAXException
     {
-        m_cmdLine = cmdLine;
+        m_options = cmdLine;
         m_bundles = bundles;
         m_props = props;
         m_system = bundleManager.getBundleFile( "org.eclipse", "osgi", "3.2.1.R32x_v20060717" );
@@ -72,14 +72,14 @@ public class EquinoxRunner
     private void createConfigIniFile()
         throws IOException
     {
-        File confDir = new File( Run.WORK_DIR, "configuration" );
+        File confDir = new File( m_options.getWorkDir(), "configuration" );
         confDir.mkdirs();
         File file = new File( confDir, "config.ini" );
         Writer out = FileUtils.openPropertyFile( file );
         try
         {
             boolean first = true;
-            boolean clean = m_cmdLine.isSet( "clean" );
+            boolean clean = m_options.isRunClean();
             if( clean )
             {
                 out.write( "\nosgi.clean=true\n" );
@@ -138,6 +138,7 @@ public class EquinoxRunner
         }
         else
         {
+            File workDir = m_options.getWorkDir();
             String[] cmd =
                 {
                     javaHome + "/bin/java",
@@ -145,9 +146,9 @@ public class EquinoxRunner
                     m_system.toString(),
                     "-console",
                     "-configuration",
-                    Run.WORK_DIR + "/configuration",
+                    workDir.getAbsolutePath() + "/configuration",
                     "-install",
-                    Run.WORK_DIR.getAbsolutePath()
+                    workDir.getAbsolutePath()
                 };
             Process process = runtime.exec( cmd, null, cwd );
             InputStream err = process.getErrorStream();

@@ -13,25 +13,27 @@
  * implied.
  *
  * See the License for the specific language governing permissions and
- * limitations under the License. 
+ * limitations under the License.
  */
-package org.ops4j.pax.runner.pom;
+package org.ops4j.pax.runner.maven2;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.Repository;
-import org.ops4j.pax.runner.Run;
+import org.ops4j.pax.runner.RunnerOptions;
 import org.xml.sax.SAXException;
 
 public class BundleManager
 {
     private Repository m_repository;
+    private RunnerOptions m_options;
 
-    public BundleManager( Repository repository )
+    public BundleManager( Repository repository, RunnerOptions options )
     {
         m_repository = repository;
+        m_options = options;
     }
 
     public File getBundleFile( String group, String artifact, String version )
@@ -40,10 +42,10 @@ public class BundleManager
         String path = composeURL( group, artifact, version );
         if( "LATEST".equalsIgnoreCase( version ) )
         {
-            version = MavenUtils.getLatestVersion( group, artifact, m_repository );
+            version = MavenUtils.getLatestVersion( group, artifact, m_repository, m_options );
         }
         version = version.replace( "-SNAPSHOT", ".SNAPSHOT" );
-        File dest = new File( Run.WORK_DIR, "lib/" + group.replace('.','/' ));
+        File dest = new File( m_options.getWorkDir(), "lib/" + group.replace('.','/' ));
         dest = new File( dest, artifact + "_" + version + ".jar" );
         m_repository.download( path, dest, false );
         return dest;
@@ -54,8 +56,7 @@ public class BundleManager
     {
         String filename = artifact + "-" + version + ".jar";
         group = group.replace( '.', '/' );
-        String url = group + "/" + artifact + "/" + version + "/" + filename;
-        return url;
+        return group + "/" + artifact + "/" + version + "/" + filename;
     }
 
 }

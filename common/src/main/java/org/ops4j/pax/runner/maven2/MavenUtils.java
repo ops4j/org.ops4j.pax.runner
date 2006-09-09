@@ -13,15 +13,15 @@
  * implied.
  *
  * See the License for the specific language governing permissions and
- * limitations under the License. 
+ * limitations under the License.
  */
-package org.ops4j.pax.runner.pom;
+package org.ops4j.pax.runner.maven2;
 
 import java.io.File;
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.Repository;
-import org.ops4j.pax.runner.Run;
+import org.ops4j.pax.runner.RunnerOptions;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -29,11 +29,15 @@ import org.xml.sax.SAXException;
 
 public class MavenUtils
 {
-    static String getLatestVersion( String group, String artifact, Repository repository )
+
+    private static RunnerOptions m_options;
+
+    static String getLatestVersion( String group, String artifact, Repository repository, RunnerOptions options )
         throws IOException, ParserConfigurationException, SAXException
     {
+        MavenUtils.m_options = options;
         String metaLocation = group.replace( '.', '/') + "/" + artifact + "/maven-metadata.xml";
-        File dest = new File( Run.WORK_DIR, "latest.pom" );
+        File dest = new File( m_options.getWorkDir() , "latest.pom" );
         try
         {
             repository.download( metaLocation, dest, true );

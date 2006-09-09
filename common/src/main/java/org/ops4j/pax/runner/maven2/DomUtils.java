@@ -13,9 +13,9 @@
  * implied.
  *
  * See the License for the specific language governing permissions and
- * limitations under the License. 
+ * limitations under the License.
  */
-package org.ops4j.pax.runner.pom;
+package org.ops4j.pax.runner.maven2;
 
 import java.util.Properties;
 import java.util.StringTokenizer;

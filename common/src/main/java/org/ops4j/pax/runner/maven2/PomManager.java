@@ -13,9 +13,9 @@
  * implied.
  *
  * See the License for the specific language governing permissions and
- * limitations under the License. 
+ * limitations under the License.
  */
-package org.ops4j.pax.runner.pom;
+package org.ops4j.pax.runner.maven2;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -31,10 +31,9 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.ops4j.pax.runner.Bundle;
 import org.ops4j.pax.runner.BundleState;
-import org.ops4j.pax.runner.CmdLine;
 import org.ops4j.pax.runner.PropertyResolver;
 import org.ops4j.pax.runner.Repository;
-import org.ops4j.pax.runner.Run;
+import org.ops4j.pax.runner.RunnerOptions;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -48,40 +47,42 @@ public class PomManager
 
     private static final int STARTLEVEL_DEFAULT = 5;
 	private Repository m_repository;
+    private RunnerOptions m_options;
 
-    public PomManager( Repository repository )
+    private PomManager( Repository repository, RunnerOptions options )
     {
         m_repository = repository;
+        m_options = options;
     }
 
-    public Document retrievePom( CmdLine cmdLine )
+    public Document retrievePom( PomInfo pomInfo )
         throws IOException, ParserConfigurationException, SAXException
     {
-        String artifact = cmdLine.getValue( "artifact" );
-        String groupId = cmdLine.getValue( "group" );
-        String version = cmdLine.getValue( "version" );
+        String artifact = pomInfo.getArtifact();
+        String groupId = pomInfo.getGroup();
+        String version = pomInfo.getVersion();
         if( "LATEST".equals( version) )
         {
-            version = MavenUtils.getLatestVersion( groupId, artifact, m_repository );
+            version = MavenUtils.getLatestVersion( groupId, artifact, m_repository, m_options );
         }
 
         String path;
         if( artifact == null )
         {
-            path = cmdLine.getValue( "url" );
+            path = m_options.getURL();
             System.out.println( "   Starting: " + path );
         }
         else
         {
             System.out.println( "   Starting: " + groupId + ", " + artifact + ", " + version );
-            String filename = artifact + "-" + version + ".pom";
+            String filename = artifact + "-" + version + ".pomInfo";
             groupId = groupId.replace( '.', '/' );
             path = groupId + "/" + artifact + "/" + version + "/" + filename;
         }
 
-        String filename = artifact + "_" + version + ".pom";
+        String filename = artifact + "_" + version + ".pomInfo";
         filename = PropertyResolver.resolve( System.getProperties(), filename );
-        File dest = new File( Run.WORK_DIR, "lib/" + filename );
+        File dest = new File( m_options.getWorkDir(), "lib/" + filename );
         m_repository.download( path, dest, false );
         return parseDoc( dest );
     }
@@ -100,25 +101,25 @@ public class PomManager
         }
     }
 
-    public List<Bundle> getBundles( CmdLine cmdLine )
+    public List<Bundle> getBundles( PomInfo pomInfo )
         throws IOException, ParserConfigurationException, SAXException
     {
-        Document pom = retrievePom( cmdLine );
-        info( pom );
-        Element dependencies = DomUtils.getElement( pom, "dependencies" );
+        Document pomDoc = retrievePom( pomInfo );
+        info( pomDoc );
+        Element dependencies = DomUtils.getElement( pomDoc, "dependencies" );
         return getBundles( dependencies );
     }
 
-    public Properties getProperties( CmdLine cmdLine )
+    public Properties getProperties( PomInfo pomInfo )
         throws IOException, ParserConfigurationException, SAXException
     {
-        Document pom = retrievePom( cmdLine );
-        return DomUtils.parseProperties( pom );
+        Document pomDoc = retrievePom( pomInfo );
+        return DomUtils.parseProperties( pomDoc );
     }
 
     /**
-     * 
-     * @param dependencies of type 
+     *
+     * @param dependencies of type
      * &lt;dependency startlevel="3" targetstate="resolved"&gt;
      * &lt;groupId&gt;org.ops4j.pax.wicket.samples.departmentstore.view
      * &lt;/groupId&gt;
@@ -160,7 +161,7 @@ public class PomManager
                 }
                 if( ! "test".equals( scope ) && ! "compile".equals( scope ) )
                 {
-                    BundleManager bundleManager = new BundleManager( m_repository );
+                    BundleManager bundleManager = new BundleManager( m_repository, m_options );
                     File bundleFile = bundleManager.getBundleFile( group, artifact, version );
                     Bundle dest = new Bundle(bundleFile, startLevel, targetState );
                     if( ! "provided".equals( scope ) )
@@ -189,6 +190,11 @@ public class PomManager
         {
             fis.close();
         }
+    }
+
+    public static PomManager getInstance( Repository repository, RunnerOptions options )
+    {
+        return new PomManager( repository, options );
     }
 
 }

@@ -13,7 +13,7 @@
  * implied.
  *
  * See the License for the specific language governing permissions and
- * limitations under the License. 
+ * limitations under the License.
  */
 package org.ops4j.pax.runner;
 
@@ -26,7 +26,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import org.ops4j.pax.runner.pom.BundleManager;
+import org.ops4j.pax.runner.maven2.BundleManager;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -34,7 +34,7 @@ public class KnopflerfishRunner
     implements Runnable
 {
 
-    private CmdLine m_cmdLine;
+    private RunnerOptions m_options;
     private Properties m_props;
     private File m_systemBundle;
     private List<Bundle> m_bundles;
@@ -65,14 +65,14 @@ public class KnopflerfishRunner
         };
 
 
-    public KnopflerfishRunner( CmdLine cmdLine, Properties props, List<Bundle> bundles, BundleManager bundleManager )
+    public KnopflerfishRunner( RunnerOptions runnerOptions, Properties props, List<Bundle> bundles, BundleManager bundleManager )
         throws IOException, ParserConfigurationException, SAXException
     {
-        m_cmdLine = cmdLine;
+        m_options = runnerOptions;
         m_props = props;
         m_bundles = bundles;
         m_systemBundle = bundleManager.getBundleFile( SYSTEM_BUNDLE[ 0 ], SYSTEM_BUNDLE[ 1 ], SYSTEM_BUNDLE[ 2 ] );
-        if( m_cmdLine.isSet( "gui" ) )
+        if( m_options.isStartGui() )
         {
             for( String[] bundle : GUI_BUNDLES )
             {
@@ -107,7 +107,7 @@ public class KnopflerfishRunner
     private void createConfigFile( File packageFile )
         throws IOException
     {
-        File confDir = Run.WORK_DIR;
+        File confDir = m_options.getWorkDir();
         File file = new File( confDir, "init.xargs" );
         if( file.exists() )
         {
@@ -226,7 +226,7 @@ public class KnopflerfishRunner
                     "-jar",
                     m_systemBundle.getAbsolutePath()
                 };
-            Process process = runtime.exec( cmd, null, Run.WORK_DIR );
+            Process process = runtime.exec( cmd, null, m_options.getWorkDir() );
             InputStream err = process.getErrorStream();
             InputStream out = process.getInputStream();
             OutputStream in = process.getOutputStream();
@@ -255,7 +255,7 @@ public class KnopflerfishRunner
         {
             throw new IllegalStateException( "Resource not found in jar: " + resource );
         }
-        File f = new File( Run.WORK_DIR, "system-packages.list" );
+        File f = new File( m_options.getWorkDir(), "system-packages.list" );
         FileOutputStream out = new FileOutputStream( f );
         try
         {

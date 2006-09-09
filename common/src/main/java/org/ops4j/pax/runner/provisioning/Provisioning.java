@@ -13,7 +13,7 @@
  * implied.
  *
  * See the License for the specific language governing permissions and
- * limitations under the License. 
+ * limitations under the License.
  */
 package org.ops4j.pax.runner.provisioning;
 
@@ -33,28 +33,30 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import org.ops4j.pax.runner.Bundle;
-import org.ops4j.pax.runner.CmdLine;
 import org.ops4j.pax.runner.Repository;
-import org.ops4j.pax.runner.Run;
 import org.ops4j.pax.runner.StreamUtils;
+import org.ops4j.pax.runner.RunnerOptions;
 
 /* WARNING!!! This is not correct code, and should be deleted. Kept as reference for future
               Initial Provisioning bundle to commence later. */
 public class Provisioning
 {
     private Repository m_repository;
+    private RunnerOptions m_options;
+    private String m_zipPath;
 
-    public Provisioning( Repository repository )
+    public Provisioning( Repository repository, RunnerOptions options  )
     {
         m_repository = repository;
+        m_options = options;
+//        m_zipPath = m_options.getURL();
     }
 
-    public List<Bundle> getBundles( CmdLine m_cmdLine )
+    public List<Bundle> getBundles()
         throws IOException
     {
-        String zipPath = m_cmdLine.getValue( "url" );
-        File destination = new File( Run.WORK_DIR, "initial-provisioning.zip" );
-        m_repository.download( zipPath, destination, false );
+        File destination = new File( m_options.getWorkDir(), "initial-provisioning.zip" );
+        m_repository.download( m_zipPath, destination, false );
         ZipFile zipFile = new ZipFile( destination );
         Dictionary provisioningDictionary = new Hashtable();
         extractEntries( zipFile, provisioningDictionary );
@@ -136,7 +138,7 @@ public class Provisioning
         return result;
     }
 
-    public Properties getProperties( CmdLine m_cmdLine )
+    public Properties getProperties()
     {
         return new Properties();
     }

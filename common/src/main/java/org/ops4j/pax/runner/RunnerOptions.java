@@ -45,6 +45,9 @@ public class RunnerOptions
     protected Map<String, String> m_systemProperties;
     protected ArrayList<BundleObserver> m_bundleObservers;
     protected ArrayList<RepositoryObserver> m_repositoryObservers;
+    private String m_profile;
+    private String m_URL;
+    private boolean m_noMd5Checks;
 
     public RunnerOptions()
     {
@@ -263,5 +266,35 @@ public class RunnerOptions
     public void setBundles( List<BundleInfo> bundles )
     {
         m_bundles = bundles;
+    }
+
+    public String getProfile()
+    {
+        return m_profile;
+    }
+
+    public void setProfile( String profile )
+    {
+        m_profile = profile;
+    }
+
+    public String getURL()
+    {
+        return m_URL;
+    }
+
+    public void setNoMd5Checks( boolean noMd5Checks )
+    {
+        m_noMd5Checks = noMd5Checks;
+    }
+
+    public boolean isNoMd5Checks()
+    {
+        return m_noMd5Checks;
+    }
+
+    public void setURL( String URL )
+    {
+        m_URL = URL;
     }
 }

@@ -13,11 +13,10 @@
  * implied.
  *
  * See the License for the specific language governing permissions and
- * limitations under the License. 
+ * limitations under the License.
  */
 package org.ops4j.pax.runner;
 
-import java.net.URL;
 import java.io.File;
 import java.io.IOException;
 

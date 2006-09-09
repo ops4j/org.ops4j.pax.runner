@@ -15,13 +15,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ops4j.pax.runner.repositories;
+package org.ops4j.pax.runner.maven2;
 
-public interface Repository
+public class PomInfo
 {
-    RepositoryInfo getInfo();
 
-    void download( BundleInfo bundle );
+    private String m_artifact;
+    private String m_group;
+    private String m_version;
 
-    
+    public PomInfo( String artifact, String group, String version )
+    {
+        m_artifact = artifact;
+        m_group = group;
+        m_version = version;
+    }
+
+    public String getArtifact()
+    {
+        return m_artifact;
+    }
+
+    public String getGroup()
+    {
+        return m_group;
+    }
+
+    public String getVersion()
+    {
+        return m_version;
+    }
 }

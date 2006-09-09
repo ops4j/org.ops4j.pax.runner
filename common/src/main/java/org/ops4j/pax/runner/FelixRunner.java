@@ -13,7 +13,7 @@
  * implied.
  *
  * See the License for the specific language governing permissions and
- * limitations under the License. 
+ * limitations under the License.
  */
 package org.ops4j.pax.runner;
 
@@ -26,7 +26,7 @@ import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import org.ops4j.pax.runner.pom.BundleManager;
+import org.ops4j.pax.runner.maven2.BundleManager;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -39,7 +39,7 @@ public class FelixRunner
     private static final String VERSION = "0.8.0";
 
     private Properties m_props;
-    private CmdLine m_cmdLine;
+    private RunnerOptions m_runnerOptions;
     private List<Bundle> m_bundles;
     private static final String SYSTEM_PACKAGES = "javax.accessibility, " +
                                                   "javax.activity, " +
@@ -169,10 +169,10 @@ public class FelixRunner
     private File m_osgi;
     private File m_framework;
 
-    public FelixRunner( CmdLine cmdLine, Properties props, List<Bundle> bundles, BundleManager bundleManager )
+    public FelixRunner( RunnerOptions runnerOptions, Properties props, List<Bundle> bundles, BundleManager bundleManager )
         throws IOException, ParserConfigurationException, SAXException
     {
-        m_cmdLine = cmdLine;
+        m_runnerOptions = runnerOptions;
         m_bundles = bundles;
         m_props = props;
         File system1 = bundleManager.getBundleFile( GROUPID, "org.apache.felix.shell", VERSION );
@@ -181,7 +181,7 @@ public class FelixRunner
         bundles.add( new Bundle(system2, 0, BundleState.START) );
         File system3 = bundleManager.getBundleFile( GROUPID, "org.apache.felix.shell.tui", VERSION );
         bundles.add( new Bundle(system3, 0, BundleState.START) );
-        if( m_cmdLine.isSet( "gui" ) )
+        if( m_runnerOptions.isStartGui() )
         {
             File system4 = bundleManager.getBundleFile( GROUPID, "org.apache.felix.shell.gui", VERSION );
             bundles.add( new Bundle(system4, 0, BundleState.START) );
@@ -215,14 +215,14 @@ public class FelixRunner
     private void createConfigFile()
         throws IOException
     {
-        File confDir = new File( Run.WORK_DIR, "conf" );
+        File confDir = new File( m_runnerOptions.getWorkDir(), "conf" );
         confDir.mkdirs();
         File file = new File( confDir, "config.properties" );
         Writer out = FileUtils.openPropertyFile( file );
         try
         {
             FileUtils.writeProperty( out, "org.osgi.framework.system.packages", SYSTEM_PACKAGES );
-            String profile = m_cmdLine.getValue( "profile" );
+            String profile = m_runnerOptions.getProfile();
             if( profile != null )
             {
                 FileUtils.writeProperty( out, "felix.cache.profile", profile );
@@ -273,14 +273,15 @@ public class FelixRunner
         }
         else
         {
+            File workDir = m_runnerOptions.getWorkDir();
             String[] cmd =
                 {
                     javaHome + "/bin/java",
-                    "-Dfelix.config.properties=" + Run.WORK_DIR + "conf/config.properties",
+                    "-Dfelix.config.properties=" + workDir.getAbsolutePath() + "conf/config.properties",
                     "-jar",
                     m_main.getAbsolutePath(),
                 };
-            Process process = runtime.exec( cmd, null, Run.WORK_DIR );
+            Process process = runtime.exec( cmd, null, m_runnerOptions.getWorkDir() );
             InputStream err = process.getErrorStream();
             InputStream out = process.getInputStream();
             OutputStream in = process.getOutputStream();

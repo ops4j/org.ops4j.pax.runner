@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.ops4j</groupId>
+    <artifactId>pax</artifactId>
+    <version>1.2</version>
+  </parent>
+  <groupId>org.ops4j.pax</groupId>
+  <artifactId>runner</artifactId>
+  <name>Pax Runner</name>
+  <version>0.3.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <url>http://wiki.ops4j.org/dokuwiki/doku.php?id=pax:runner</url>
+  <scm>
+    <connection>scm:svn:https://scm.ops4j.org/repos/ops4j/projects/pax/runner</connection>
+    <developerConnection>scm:svn:https://scm.ops4j.org/repos/ops4j/projects/pax/runner</developerConnection>
+  </scm>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-release-plugin</artifactId>
+        <configuration>
+          <tagBase>https://scm.ops4j.org/repos/ops4j/qa/pax/runner</tagBase>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <repositories>
+    <repository>
+      <id>ops4j-repository</id>
+      <name>The OPS4J Repository</name>
+      <url>http://repository.ops4j.org/maven2/</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>central</id>
+      <name>Maven Repository Switchboard</name>
+      <url>http://repo1.maven.org/maven2</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+  <modules>
+    <module>common</module>
+    <module>cmdline</module>
+    <!--
+      <module>idea</module>
+      <module>eclipse</module>
+    -->
+  </modules>
+</project>
+

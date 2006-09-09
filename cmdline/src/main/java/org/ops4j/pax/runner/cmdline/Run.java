@@ -13,39 +13,46 @@
  * implied.
  *
  * See the License for the specific language governing permissions and
- * limitations under the License. 
+ * limitations under the License.
  */
-package org.ops4j.pax.runner;
+package org.ops4j.pax.runner.cmdline;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
-import java.util.ArrayList;
 import javax.xml.parsers.ParserConfigurationException;
+import org.ops4j.pax.runner.Bundle;
+import org.ops4j.pax.runner.EquinoxRunner;
+import org.ops4j.pax.runner.FelixRunner;
+import org.ops4j.pax.runner.KnopflerfishRunner;
+import org.ops4j.pax.runner.Repository;
+import org.ops4j.pax.runner.RepositoryAggregator;
+import org.ops4j.pax.runner.RunnerOptions;
+import org.ops4j.pax.runner.maven2.BundleManager;
+import org.ops4j.pax.runner.maven2.PomInfo;
+import org.ops4j.pax.runner.maven2.PomManager;
 import org.ops4j.pax.runner.provisioning.Provisioning;
-import org.ops4j.pax.runner.pom.PomManager;
-import org.ops4j.pax.runner.pom.BundleManager;
 import org.xml.sax.SAXException;
 
 /**
- * This class will download a Maven POM run that definition inside a OSGi container.
+ * This class will download a Maven PomInfo run that definition inside a OSGi container.
  */
 public class Run
 {
     public static File WORK_DIR;
 
-    private static CmdLine m_cmdLine;
-
     public static void main( String[] args )
         throws IOException, ParserConfigurationException, SAXException
     {
+        CmdLine cmdLine = null;
         try
         {
-            m_cmdLine = new CmdLine( args );
+            cmdLine = new CmdLine( args );
         } catch( IllegalArgumentException e )
         {
             String message = e.getMessage();
@@ -87,25 +94,26 @@ public class Run
         System.out.println( "--------------------------------------------" );
         System.out.println();
 
-        String workDir = m_cmdLine.getValue( "dir" );
-        WORK_DIR = new File( workDir );
-        WORK_DIR.mkdirs();
-        System.out.println( "Working Dir: " + WORK_DIR );
+        RunnerOptions options = new RunnerOptions();
+        String workDir = cmdLine.getValue( "dir" );
+        options.setWorkDir( new File( workDir ) );
+        System.out.println( "Working Dir: " + workDir );
 
+        final CmdLine cmdLine2 = cmdLine;
         Authenticator auth = new Authenticator()
         {
             protected PasswordAuthentication getPasswordAuthentication()
             {
-                if( getRequestorType() == Authenticator.RequestorType.PROXY )
+                if( getRequestorType() == RequestorType.PROXY )
                 {
-                    String userName = m_cmdLine.getValue( "proxy-username" );
-                    char[] password = m_cmdLine.getValue( "proxy-password" ).toCharArray();
+                    String userName = cmdLine2.getValue( "proxy-username" );
+                    char[] password = cmdLine2.getValue( "proxy-password" ).toCharArray();
                     return new PasswordAuthentication( userName, password );
                 }
-                if( getRequestorType() == Authenticator.RequestorType.SERVER )
+                if( getRequestorType() == RequestorType.SERVER )
                 {
-                    String userName = m_cmdLine.getValue( "repository-username" );
-                    char[] password = m_cmdLine.getValue( "repository-password" ).toCharArray();
+                    String userName = cmdLine2.getValue( "repository-username" );
+                    char[] password = cmdLine2.getValue( "repository-password" ).toCharArray();
                     return new PasswordAuthentication( userName, password );
                 }
                 return null;
@@ -113,42 +121,48 @@ public class Run
         };
         Authenticator.setDefault( auth );
 
-        String[] repositories = extractRepositories();
-        boolean noCheckMD5 = m_cmdLine.isSet( "no-md5" );
+        String[] repositories = extractRepositories( cmdLine );
+        boolean noCheckMD5 = cmdLine.isSet( "no-md5" );
+        options.setNoMd5Checks( noCheckMD5 );
 
         Repository repository = new RepositoryAggregator( repositories, noCheckMD5 );
         List<Bundle> bundles;
         Properties props;
-        String urlValue = m_cmdLine.getValue( "url" );
+        String urlValue = cmdLine.getValue( "url" );
         boolean useProvisioning = urlValue != null && urlValue.endsWith( ".zip" );
+
         if( useProvisioning )
         {
-            Provisioning provisioning = new Provisioning( repository );
-            bundles = provisioning.getBundles( m_cmdLine );
-            props = provisioning.getProperties( m_cmdLine );
+            Provisioning provisioning = new Provisioning( repository, options );
+            bundles = provisioning.getBundles();
+            props = provisioning.getProperties();
         }
         else
         {
-            PomManager pomManager = new PomManager( repository );
-            bundles = pomManager.getBundles( m_cmdLine );
-            props = pomManager.getProperties( m_cmdLine );
+            String version = cmdLine.getValue( "version" );
+            String group = cmdLine.getValue( "group" );
+            String artifact = cmdLine.getValue( "artifact" );
+            PomInfo pomInfo = new PomInfo( artifact, group, version );
+            PomManager pomManager = PomManager.getInstance( repository, options );
+            bundles = pomManager.getBundles( pomInfo );
+            props = pomManager.getProperties( pomInfo );
         }
-        BundleManager bundleManager = new BundleManager( repository );
-        String platform = m_cmdLine.getValue( "platform" ).toLowerCase();
+        BundleManager bundleManager = new BundleManager( repository, options );
+        String platform = cmdLine.getValue( "platform" ).toLowerCase();
         System.out.println( "\n   Platform: " + platform );
         if( "equinox".equals( platform ) )
         {
-            Runnable wrapper = new EquinoxRunner( m_cmdLine, props, bundles, bundleManager );
+            Runnable wrapper = new EquinoxRunner( options, props, bundles, bundleManager );
             wrapper.run();
         }
         else if( "felix".equals( platform ) )
         {
-            Runnable wrapper = new FelixRunner( m_cmdLine, props, bundles, bundleManager );
+            Runnable wrapper = new FelixRunner( options, props, bundles, bundleManager );
             wrapper.run();
         }
         else if( "knopflerfish".equals( platform ) )
         {
-            Runnable wrapper = new KnopflerfishRunner( m_cmdLine, props, bundles, bundleManager );
+            Runnable wrapper = new KnopflerfishRunner( options, props, bundles, bundleManager );
             wrapper.run();
         }
         else
@@ -159,9 +173,9 @@ public class Run
         System.exit(0);
     }
 
-    private static String[] extractRepositories()
+    private static String[] extractRepositories( CmdLine cmdLine )
     {
-        String repoValue = m_cmdLine.getValue( "repository" );
+        String repoValue = cmdLine.getValue( "repository" );
         StringTokenizer st = new StringTokenizer( repoValue, ", ", false );
         ArrayList repos = new ArrayList();
         while( st.hasMoreTokens() )
