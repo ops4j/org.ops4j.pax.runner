@@ -1,0 +1,1399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="repository.xsl"?>
+
+<!--<!DOCTYPE bundles SYSTEM "bundlerepository10.dtd">-->
+<bundles>
+  <dtd-version>1.0</dtd-version>
+
+  <repository>
+    <name>Oscar Bundle Repository</name>
+    <url>http://oscar-osgi.sourceforge.net/</url>
+    <date>Fri May 07 16:45:07 CEST 2004</date>
+    <extern-repositories>
+      <!-- Stefano Lenzi (kismet@interfree.it) -->
+      <url>http://domoware.isti.cnr.it/osgi-obr/niche-osgi-obr.xml</url>
+      <!-- Manuel Palencia (santillan@dit.upm.es) -->
+      <!-- <url>http://jmood.forge.os4os.org/repository.xml</url> -->
+      <!-- Enrique Rodriguez (erodriguez@apache.org) -->
+      <url>http://update.cainenable.org/repository.xml</url>
+    </extern-repositories>
+  </repository>
+
+<bundle>
+  <bundle-name>Bundle Repository</bundle-name>
+  <bundle-description>
+     A bundle repository service for Oscar.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/bundlerepository/bundlerepository.jar
+        </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/bundlerepository/bundlerepository-src.jar
+  </bundle-sourceurl>
+  <bundle-version>1.1.3</bundle-version>
+  <bundle-docurl>
+     http://oscar-osgi.sf.net/repo/bundlerepository/
+  </bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <export-package package="org.ungoverned.osgi.service.bundlerepository"
+     specification-version="1.1.0"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Content Handler</bundle-name>
+  <bundle-description>
+     An example content handler for URL Handlers service.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/contenthandler/contenthandler.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/contenthandler/contenthandler-src.jar
+  </bundle-sourceurl>
+        <bundle-version>1.0.0</bundle-version>
+  <bundle-docurl>http://oscar-osgi.sf.net/repo/contenthandler/</bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <import-package package="org.osgi.service.url"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Data Stream Handler</bundle-name>
+  <bundle-description>
+     An example stream handler for URL Handlers service.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/datastreamhandler/datastreamhandler.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/datastreamhandler/datastreamhandler-src.jar
+  </bundle-sourceurl>
+        <bundle-version>1.0.0</bundle-version>
+
+  <bundle-docurl>http://oscar-osgi.sf.net/repo/datastreamhandler/</bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <import-package package="org.osgi.service.url"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Device Manager</bundle-name>
+  <bundle-description>
+    Manages the core service for the device access specification
+  </bundle-description>
+  <bundle-version>1.0.0</bundle-version>
+  <bundle-updatelocation>
+    http://ares.insa-lyon.fr/~sfrenot/devel/osgidev/bundles/devicemanager.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/osgidev/insadev-1.0.1-src.jar
+  </bundle-sourceurl>
+  <bundle-docurl>
+     http://ares.insa-lyon.fr/~sfrenot/devel/osgidev/doc/
+  </bundle-docurl>
+  <bundle-category>Standard Service</bundle-category>
+  <import-package package="org.osgi.service.device"/>
+  <import-package package="org.osgi.service.log"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Handler Test</bundle-name>
+  <bundle-description>
+     Tests the OSGi URL Handlers service.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/handlertest/handlertest.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/handlertest/handlertest-src.jar
+  </bundle-sourceurl>
+        <bundle-version>1.0.0</bundle-version>
+
+  <bundle-docurl>http://oscar-osgi.sf.net/repo/handlertest/</bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <import-package package="org.osgi.service.url"/>
+</bundle>
+
+<bundle>
+  <bundle-name>HTTP Admin</bundle-name>
+  <bundle-description>
+     A simple HTTP-based bundle administrator.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/httpadmin/httpadmin.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/httpadmin/httpadmin-src.jar
+  </bundle-sourceurl>
+        <bundle-version>1.0.0</bundle-version>
+
+  <bundle-docurl>http://oscar-osgi.sf.net/repo/httpadmin/</bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <import-package package="org.osgi.service.http"/>
+  <import-package package="javax.servlet"/>
+  <import-package package="javax.servlet.http"/>
+</bundle>
+
+<bundle>
+  <bundle-name>HTTP Driver Locator</bundle-name>
+  <bundle-description>
+    Implements the Driver locator service through a simple http access
+  </bundle-description>
+  <bundle-version>1.0.0</bundle-version>
+  <bundle-updatelocation>
+    http://ares.insa-lyon.fr/~sfrenot/devel/osgidev/bundles/driverlocator.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/osgidev/insadev-1.0.1-src.jar
+  </bundle-sourceurl>
+  <bundle-docurl>
+     http://ares.insa-lyon.fr/~sfrenot/devel/osgidev/doc/
+  </bundle-docurl>
+  <bundle-category>Standard Service</bundle-category>
+  <import-package package="org.osgi.service.device"/>
+  <import-package package="org.osgi.service.log"/>
+</bundle>
+
+<bundle>
+  <bundle-name>HTTP Driver Resource</bundle-name>
+  <bundle-description>
+    Registers a specific context for drivers downloading through an httpserver
+  </bundle-description>
+  <bundle-version>1.0.0</bundle-version>
+  <bundle-updatelocation>
+    http://ares.insa-lyon.fr/~sfrenot/devel/osgidev/bundles/httpresources.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/osgidev/insadev-1.0.1-src.jar
+  </bundle-sourceurl>
+  <bundle-docurl>
+     http://ares.insa-lyon.fr/~sfrenot/devel/osgidev/doc/
+  </bundle-docurl>
+  <bundle-category>Tool</bundle-category>
+  <import-package package="org.osgi.service.log"/>
+  <import-package package="org.osgi.service.http"/>
+  <import-package package="javax.servlet"/>
+
+</bundle>
+
+<bundle>
+  <bundle-name>HTTP Service</bundle-name>
+  <bundle-description>
+     An implementation of the OSGi HTTP Service using Jetty.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/http/http.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/http/http-src.jar
+  </bundle-sourceurl>
+  <bundle-version>1.1.2</bundle-version>
+
+  <bundle-docurl>http://oscar-osgi.sf.net/repo/http/</bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <import-package package="javax.servlet"/>
+  <import-package package="javax.servlet.http"/>
+  <export-package package="org.osgi.service.http" specification-version="1.1.0"/>
+</bundle>
+
+<bundle>
+  <bundle-name>HTTP Shell</bundle-name>
+  <bundle-description>
+   HTTP-based admin (bundle, shell, orb, with basic auth).
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/httpshell/httpshell.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/httpshell/httpshell-src.jar
+  </bundle-sourceurl>
+  <bundle-version>1.0.1</bundle-version>
+  <bundle-docurl>http://oscar-osgi.sf.net/repo/httpshell/</bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <import-package package="org.osgi.service.http"/>
+  <import-package package="javax.servlet"/>
+  <import-package package="javax.servlet.http"/>
+  <import-package package="org.ungoverned.osgi.service.shell" /> 
+  <import-package package="org.ungoverned.osgi.service.bundlerepository" />
+</bundle>
+
+<bundle>
+  <bundle-name>HTTP Test</bundle-name>
+  <bundle-description>
+     Simple test bundle for the HTTP Service.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/httptest/httptest.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/httptest/httptest-src.jar
+  </bundle-sourceurl>
+        <bundle-version>1.0.0</bundle-version>
+
+  <bundle-docurl>http://oscar-osgi.sf.net/repo/httptest/</bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <import-package package="org.osgi.service.http"/>
+  <import-package package="javax.servlet"/>
+  <import-package package="javax.servlet.http"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Log Reader</bundle-name>
+  <bundle-description>
+    Reads log events from log service
+  </bundle-description>
+  <bundle-version>1.0.0</bundle-version>
+  <bundle-updatelocation>
+    http://ares.insa-lyon.fr/~sfrenot/devel/osgidev/bundles/logger.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/osgidev/insadev-1.0.1-src.jar
+  </bundle-sourceurl>
+  <bundle-docurl>
+     http://ares.insa-lyon.fr/~sfrenot/devel/osgidev/doc/
+  </bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.service.log"/>
+
+</bundle>
+
+<bundle>
+  <bundle-name>Log Service</bundle-name>
+  <bundle-description>
+     OSGi compliant log service.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/log/log.jar
+  </bundle-updatelocation> 
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/log/log-src.jar
+  </bundle-sourceurl>
+        <bundle-version>1.0.0</bundle-version>
+
+  <bundle-docurl>http://oscar-osgi.sf.net/repo/log/</bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <export-package package="org.osgi.service.log" specification-version="1.1.0"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Messenger</bundle-name>
+  <bundle-description>
+     A simple instant messenger.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/messenger/messenger.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/messenger/messenger-src.jar
+  </bundle-sourceurl>
+        <bundle-version>0.7.0</bundle-version>
+
+  <bundle-docurl>http://oscar-osgi.sf.net/repo/messenger/</bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <import-package package="org.osgi.util.tracker"/>
+  <import-package package="siena"/>
+  <import-package package="org.ungoverned.osgi.bundle.notification"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Module Manager</bundle-name>
+  <bundle-description>
+    Manages linux modules through insmod/rmmod calls
+  </bundle-description>
+  <bundle-version>1.0.0</bundle-version>
+  <bundle-updatelocation>
+    http://ares.insa-lyon.fr/~sfrenot/devel/osgiprov/bundles/modulemanager.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/osgiprov/insaprov-1.0.0.jar
+  </bundle-sourceurl>
+  <bundle-docurl>
+     http://ares.insa-lyon.fr/~sfrenot/devel/osgiprov/doc/
+  </bundle-docurl>
+  <bundle-category>Tool</bundle-category>
+  <import-package package="org.osgi.service.log"/>
+  <export-package package="insa.device.services.modulemanager"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Notification Service</bundle-name>
+  <bundle-description>
+     Notification service based on the Siena event system.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/notification/notification.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/notification/notification-src.jar
+  </bundle-sourceurl>
+        <bundle-version>0.5.0</bundle-version>
+
+  <bundle-docurl>http://oscar-osgi.sf.net/repo/notification/</bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <export-package package="siena"/>
+  <export-package package="org.ungoverned.osgi.bundle.notification"/>
+</bundle>
+
+<bundle>
+  <bundle-name>OSGi Service</bundle-name>
+  <bundle-description>
+     Library for all org.osgi.service packages.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/osgi-service/osgi-service.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/osgi-service/osgi-service-src.jar
+  </bundle-sourceurl>
+  <bundle-version>1.0.2</bundle-version>
+
+  <bundle-docurl>http://oscar-osgi.sf.net/repo/osgi-service/</bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <export-package package="org.osgi.service.packageadmin" specification-version="1.1.0"/>
+  <export-package package="org.osgi.service.permissionadmin" specification-version="1.1.0"/>
+  <export-package package="org.osgi.service.log" specification-version="1.2.0"/>
+  <export-package package="org.osgi.service.http" specification-version="1.1.0"/>
+  <export-package package="org.osgi.service.device" specification-version="1.1.0"/>
+  <export-package package="org.osgi.service.cm" specification-version="1.1.0"/>
+  <export-package package="org.osgi.service.metatype" specification-version="1.0.0"/>
+  <export-package package="org.osgi.service.prefs" specification-version="1.0.0"/>
+  <export-package package="org.osgi.service.upnp" specification-version="1.0.0"/>
+  <export-package package="org.osgi.service.url" specification-version="1.0.0"/>
+  <export-package package="org.osgi.service.useradmin" specification-version="1.0.0"/>
+  <export-package package="org.osgi.service.wireadmin" specification-version="1.0.0"/>
+</bundle>
+
+<bundle>
+  <bundle-name>OSGi Util</bundle-name>
+  <bundle-description>
+     Library for all org.osgi.util packages.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/osgi-util/osgi-util.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/osgi-util/osgi-util-src.jar
+  </bundle-sourceurl>
+        <bundle-version>1.0.0</bundle-version>
+
+  <bundle-docurl>http://oscar-osgi.sf.net/repo/osgi-util/</bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <export-package package="org.osgi.util.tracker" specification-version="1.2.0"/>
+  <export-package package="org.osgi.util.measurement" specification-version="1.0.0"/>
+  <export-package package="org.osgi.util.position" specification-version="1.0.0"/>
+  <export-package package="org.osgi.util.xml" specification-version="1.0.0"/>
+</bundle>
+
+<bundle>
+  <bundle-name>PCMCIA Device service</bundle-name>
+  <bundle-description>
+    Defines a simple pcmcia device bridge (a base driver)
+  </bundle-description>
+  <bundle-version>1.0.0</bundle-version>
+  <bundle-updatelocation>
+    http://ares.insa-lyon.fr/~sfrenot/devel/osgiprov/devices/pcmciadevice.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/osgiprov/insaprov-1.0.0.jar
+  </bundle-sourceurl>
+  <bundle-docurl>
+     http://ares.insa-lyon.fr/~sfrenot/devel/osgiprov/doc/
+  </bundle-docurl>
+  <bundle-category>Device</bundle-category>
+  <import-package package="org.osgi.service.log"/>
+  <import-package package="org.osgi.service.device"/>
+  <import-package package="org.ungoverned.osgi.service.shell"/>
+  <export-package package="insa.device.provider.pcmcia.device"/>
+  <export-package package="insa.device.provider.wlan.device"/>
+  <export-package package="insa.device.provider.wlan.driver"/>
+
+</bundle>
+
+<bundle>
+  <bundle-name>Permission Admin</bundle-name>
+  <bundle-description>
+     An implementation of the OSGi permission administrator service. Check also "Permz Setter"
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/permissionadmin/PermissionAdmin.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/permissionadmin/PermissionAdmin-src.jar
+  </bundle-sourceurl>
+  <bundle-version>1.0.0</bundle-version>
+  <bundle-docurl>
+     http://oscar-osgi.sf.net/repo/permissionadmin/
+  </bundle-docurl>
+  <bundle-category>Framework</bundle-category>
+  <import-package package="org.osgi.service.permissionadmin" version="1.1.0"/>
+  <export-package package="org.osgi.service.permissionadmin.PermissionAdmin" version="1.1.0"/>
+  <!-- provide-service package="org.osgi.service.permissionadmin.PermissionAdmin" version="1.1.0"/ -->
+</bundle>
+
+<bundle>
+  <bundle-name>Permission Manager</bundle-name>
+  <bundle-description>
+     A simple bundle to modify permissions.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/permissionmanager/permissionmanager.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/permissionmanager/permissionmanager-src.jar
+  </bundle-sourceurl>
+        <bundle-version>1.0.0</bundle-version>
+
+  <bundle-docurl>http://oscar-osgi.sf.net/repo/permissionmanager/</bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <import-package package="info.clearthought.layout"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Permz Setter</bundle-name>
+  <bundle-description>
+     Shell commands to set and remove Permissions in the PermissionAdmin service.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/permissionadmincommands/PermissionAdminCommands.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/permissionadmincommands/PermissionAdminCommands-src.jar
+  </bundle-sourceurl>
+  <bundle-version>1.0.0</bundle-version>
+  <bundle-docurl>
+     http://oscar-osgi.sf.net/repo/permissionadmincommands/
+  </bundle-docurl>
+  <bundle-category>Shell</bundle-category>
+  <import-package package="org.osgi.service.permissionadmin.PermissionAdmin" version="1.1.0"/>
+  <!-- require-service package="org.osgi.service.permissionadmin.PermissionAdmin" version="1.1.0"/ -->
+  <import-package package="org.ungoverned.osgi.service.shell"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Preferences</bundle-name>
+  <bundle-description>
+     An implementation of the OSGi Preferences service.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/preferences/Preferences.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/preferences/Preferences-src.jar
+  </bundle-sourceurl>
+  <bundle-version>1.0.0</bundle-version>
+  <bundle-docurl>
+     http://oscar-osgi.sf.net/repo/preferences/readme.txt
+  </bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.service.prefs" version="1.0.0"/>
+  <import-package package="org.osgi.util.tracker" version="1.2.0"/>
+  <import-package package="org.osgi.service.log"/>
+  <!--provide-service package="org.osgi.service.prefs.PreferencesService" version="1.0.0"/-->
+  <export-package package="org.osgi.service.prefs.PreferencesService" version="1.0.0"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Preferences Test</bundle-name>
+  <bundle-description>
+     A shell command to test the OSGi Preferences service.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/preferences/PrefsTest.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/preferences/Preferences-src.jar
+  </bundle-sourceurl>
+  <bundle-version>1.0.0</bundle-version>
+  <bundle-docurl>
+     http://oscar-osgi.sf.net/repo/preferences/readme.txt
+  </bundle-docurl>
+  <bundle-category>Test</bundle-category>
+  <import-package package="org.osgi.service.prefs.PreferencesService" version="1.0.0"/>
+  <!--require-service package="org.osgi.service.prefs.PreferencesService" version="1.0.0"/-->
+  <import-package package="org.osgi.util.tracker" version="1.2.0"/>
+  <import-package package="org.ungoverned.osgi.service.shell" version="1.0.0"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Service Binder</bundle-name>
+  <bundle-description>
+    Mechanism that automates service dependency management.
+  </bundle-description>
+  <bundle-version>1.1.2</bundle-version>
+  <bundle-updatelocation>
+    http://gravity.sf.net/servicebinder/jar/servicebinder.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+    http://gravity.sf.net/servicebinder/jar/servicebinder-src.jar
+  </bundle-sourceurl>
+  <bundle-docurl>
+    http://gravity.sf.net/servicebinder/
+  </bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <export-package package="org.ungoverned.gravity.servicebinder"
+    specification-version="1.1.0"/>
+  <export-package package="org.ungoverned.gravity.servicebinder.architecture"
+    specification-version="1.1.0"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Service Lookup</bundle-name>
+  <bundle-description>
+     A simple bundle to test service lookup permissions.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/servicelookup/servicelookup.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/servicelookup/servicelookup-src.jar
+  </bundle-sourceurl>
+  <bundle-version>1.0.0</bundle-version>
+  <bundle-docurl>http://oscar-osgi.sf.net/repo/servicelookup/</bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <import-package package="org.ungoverned.osgi.bundle.serviceregister"/>
+  <import-package package="info.clearthought.layout"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Service Register</bundle-name>
+  <bundle-description>
+     A simple bundle to test service registration permissions.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/serviceregister/serviceregister.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/serviceregister/serviceregister-src.jar
+  </bundle-sourceurl>
+  <bundle-version>1.0.0</bundle-version>
+
+  <bundle-docurl>http://oscar-osgi.sf.net/repo/serviceregister/</bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <import-package package="info.clearthought.layout"/>
+  <export-package package="org.ungoverned.osgi.bundle.serviceregister"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Servlet</bundle-name>
+  <bundle-description>
+     A library bundle javax.servlet packages.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/servlet/servlet.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/servlet/servlet-src.jar
+  </bundle-sourceurl>
+        <bundle-version>1.0.0</bundle-version>
+
+  <bundle-docurl>http://oscar-osgi.sf.net/repo/servlet/</bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <export-package package="javax.servlet"/>
+  <export-package package="javax.servlet.http"/>
+  <export-package package="javax.servlet.jsp"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Shell Extra</bundle-name>
+  <bundle-description>
+     Extra shell commands for Oscar's shell.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/shellextra/shellextra.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/shellextra/shellextra-src.jar
+  </bundle-sourceurl>
+        <bundle-version>1.0.0</bundle-version>
+  <bundle-docurl>
+     http://oscar-osgi.sf.net/repo/shellextra/
+  </bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <import-package package="org.ungoverned.osgi.service.shell"
+     specification-version="1.0.0"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Shell Service</bundle-name>
+  <bundle-description>
+     Simple shell service for interacting with Oscar.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/shell/shell.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/shell/shell-src.jar
+  </bundle-sourceurl>
+        <bundle-version>1.0.1</bundle-version>
+  <bundle-docurl>
+     http://oscar-osgi.sf.net/repo/shell/
+  </bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <export-package package="org.ungoverned.osgi.service.shell"
+     specification-version="1.0.0"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Shell Plugin</bundle-name>
+  <bundle-description>
+     Bundle list, console, and OBR plugins for Shell GUI.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/shellplugin/shellplugin.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/shellplugin/shellplugin-src.jar
+  </bundle-sourceurl>
+        <bundle-version>1.0.3</bundle-version>
+  <bundle-docurl>
+     http://oscar-osgi.sf.net/repo/shellplugin/
+  </bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <import-package package="org.ungoverned.osgi.service.shell"/>
+  <import-package package="org.ungoverned.osgi.service.shellgui"/>
+  <import-package package="org.ungoverned.osgi.service.bundlerepository"/>
+  <import-package package="info.clearthought.layout"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Shell GUI</bundle-name>
+  <bundle-description>
+     Simple GUI shell for Oscar (use with Shell Plugin).
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/shellgui/shellgui.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/shellgui/shellgui-src.jar
+  </bundle-sourceurl>
+        <bundle-version>1.0.0</bundle-version>
+  <bundle-docurl>
+     http://oscar-osgi.sf.net/repo/shellgui/
+  </bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <import-package package="info.clearthought.layout"/>
+  <export-package package="org.ungoverned.osgi.service.shellgui"
+     specification-version="1.0.0"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Shell TUI</bundle-name>
+  <bundle-description>
+     Simple text-based shell for Oscar.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/shelltui/shelltui.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/shelltui/shelltui-src.jar
+  </bundle-sourceurl>
+        <bundle-version>1.0.0</bundle-version>
+  <bundle-docurl>
+     http://oscar-osgi.sf.net/repo/shelltui/
+  </bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <import-package package="org.ungoverned.osgi.service.shell"
+     specification-version="1.0.0"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Simple</bundle-name>
+  <bundle-description>
+     Example bundle that demonstates OSGi features.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/simple/simple.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/simple/simple-src.jar
+  </bundle-sourceurl>
+        <bundle-version>1.0.0</bundle-version>
+
+  <bundle-docurl>http://oscar-osgi.sf.net/repo/simple/</bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Table Layout</bundle-name>
+  <bundle-description>
+     Table layout library bundle.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/tablelayout/tablelayout.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/tablelayout/tablelayout-src.jar
+  </bundle-sourceurl>
+        <bundle-version>1.0.0</bundle-version>
+
+  <bundle-docurl>http://oscar-osgi.sf.net/repo/tablelayout/</bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <export-package package="info.clearthought.layout"/>
+</bundle>
+
+<bundle>
+  <bundle-name>Telnet Service</bundle-name>
+  <bundle-description>
+     General telnet daemon service bundle for OSGi.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/telnetd/telnetd.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/telnetd/telnetd-src.jar
+  </bundle-sourceurl>
+        <bundle-version>1.0.0</bundle-version>
+
+  <bundle-docurl>http://oscar-osgi.sf.net/repo/telnetd/</bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.ungoverned.osgi.service.shell"/>
+  <import-package package="org.osgi.framework"/>
+  <export-package package="com.softsell.open.osgi.telnetd"/>
+  <export-package package="dtw.telnetd"/>
+</bundle>
+
+<bundle>
+  <bundle-name>URL Handlers</bundle-name>
+  <bundle-description>
+     Implementation of the OSGi Handlers service.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/urlhandlers/urlhandlers.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/urlhandlers/urlhandlers-src.jar
+  </bundle-sourceurl>
+        <bundle-version>1.1.0</bundle-version>
+
+  <bundle-docurl>http://oscar-osgi.sf.net/repo/urlhandlers/</bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <import-package package="org.osgi.util.tracker" specification-version="1.2.0"/>
+  <export-package package="org.osgi.service.url" specification-version="1.1.0"/>
+</bundle>
+
+<bundle>
+  <bundle-name>XML RPC</bundle-name>
+  <bundle-description>
+     General XML/RPC server bundle.
+  </bundle-description>
+  <bundle-updatelocation>
+     http://oscar-osgi.sf.net/repo/xmlrpc/xmlrpc.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+     http://oscar-osgi.sf.net/repo/xmlrpc/xmlrpc-src.jar
+  </bundle-sourceurl>
+        <bundle-version>1.0.0</bundle-version>
+
+  <bundle-docurl>http://oscar-osgi.sf.net/repo/xmlrpc/</bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.framework"/>
+  <import-package package="org.osgi.service.http"/>
+  <import-package package="javax.servlet"/>
+  <import-package package="org.osgi.util.tracker"/>
+  <export-package package="com.softsell.open.osgi.xmlrpc"/>
+  <export-package package="org.apache.xmlrpc"/>
+</bundle>
+
+<!-- jmxwrapper -->
+<!-- bundle>
+  <bundle-name>JMX Bundle</bundle-name>
+  <bundle-description>
+    A bundle that starts a JMX agent (mx4j).
+  </bundle-description>
+  <bundle-version>1.0.0</bundle-version>
+  <bundle-updatelocation>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/bundles/jmxwrapper.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/jmxosgi-1.0.0-src.jar
+  </bundle-sourceurl>
+  <bundle-docurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/doc/api/
+  </bundle-docurl>
+  <bundle-category>Wrapper</bundle-category>
+  <export-package package="insa.jmxosgi.jmxwrapper.service"
+                  specification-version="1.0.0"/>
+</bundle -->
+
+<!-- OSGi MBean -->
+<bundle>
+  <bundle-name>OSGi MBean</bundle-name>
+  <bundle-description>
+     A bundle that starts an mbean that represents OSGi
+  </bundle-description>
+  <bundle-version>2.0.5</bundle-version>
+  <bundle-updatelocation>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/bundles/osgimbean.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/jmxosgi-src.jar
+  </bundle-sourceurl>
+  <bundle-docurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/doc/api/
+  </bundle-docurl>
+  <bundle-category>Wrapper</bundle-category>
+  <import-package package="org.osgi.service.log"/>
+  <import-package package="javax.management"/>
+</bundle>
+
+<!-- Remote Logger -->
+<bundle>
+  <bundle-name>Remote Logger</bundle-name>
+  <bundle-description>Notifies log events</bundle-description>
+  <bundle-version>0.1.2</bundle-version>
+  <bundle-updatelocation>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/bundles/remotelogger.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/jmxosgi-src.jar
+  </bundle-sourceurl>
+  <bundle-docurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/doc/api/
+  </bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <import-package package="org.osgi.service.log"/>
+  <import-package package="javax.management"/>
+</bundle>
+
+<!-- introspector -->
+<bundle>
+  <bundle-name>Service Introspector</bundle-name>
+  <bundle-description>
+    A service for introspecting services.
+  </bundle-description>
+  <bundle-version>1.0.0</bundle-version>
+  <bundle-updatelocation>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/bundles/introspector.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/jmxosgi-2.0.0-src.jar
+  </bundle-sourceurl>
+  <bundle-docurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/doc/api/
+  </bundle-docurl>
+  <bundle-category>General</bundle-category>
+  <export-package package="insa.introspector.service"
+                  specification-version="1.0.0"/>
+</bundle>
+
+<!-- mbeanFactory -->
+<bundle>
+  <bundle-name>MBean Factory</bundle-name>
+  <bundle-description>
+    A service that manages MBeans representing services.
+  </bundle-description>
+  <bundle-version>2.0.0</bundle-version>
+  <bundle-updatelocation>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/bundles/mbeanfactory.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/jmxosgi-2.0.0-src.jar
+  </bundle-sourceurl>
+  <bundle-docurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/doc/api/
+  </bundle-docurl>
+  <bundle-category>Management</bundle-category>
+  <import-package package="javax.management"/>
+  <import-package package="org.osgi.service.log"/>
+  <import-package package="insa.introspector.service"
+                  specification-version="1.0.0"/>
+  <export-package package="insa.jmxosgi.mbeanfactory.service"
+                  specification-version="1.0.0"/>
+</bundle>
+
+<!-- serviceNotifier -->
+<bundle>
+  <bundle-name>Service Notifier</bundle-name>
+  <bundle-description>
+    A service that observes service life cycles.
+  </bundle-description>
+  <bundle-version>2.0.0</bundle-version>
+  <bundle-updatelocation>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/bundles/servicenotifier.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/jmxosgi-2.0.0-src.jar
+  </bundle-sourceurl>
+  <bundle-docurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/doc/api/
+  </bundle-docurl>
+  <bundle-category>Management</bundle-category>
+  <import-package package="insa.jmxosgi.mbeanfactory.service"
+                  specification-version="1.0.0"/>
+  <import-package package="javax.management"/>
+  <import-package package="org.osgi.service.log"/>
+  <export-package package="insa.jmxosgi.servicenotifier.service"
+                  specification-version="1.0.0"/>
+
+</bundle>
+
+<!-- shellMBean -->
+<bundle>
+  <bundle-name>Shell MBean</bundle-name>
+  <bundle-description>
+    An MBean to access the shell service.
+  </bundle-description>
+  <bundle-version>1.0.0</bundle-version>
+  <bundle-updatelocation>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/bundles/shellmbean.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/jmxosgi-2.0.0-src.jar
+  </bundle-sourceurl>
+  <bundle-docurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/doc/api/
+  </bundle-docurl>
+  <bundle-category>Management</bundle-category>
+  <import-package package="org.ungoverned.osgi.service.shell"
+                  specification-version="1.0.0"/>
+</bundle>
+
+<!-- shellExtension -->
+<bundle>
+  <bundle-name>MBeanPsCommand</bundle-name>
+  <bundle-description>
+    A shell command service to lists services.
+  </bundle-description>
+  <bundle-version>1.0.1</bundle-version>
+  <bundle-updatelocation>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/bundles/shellextension.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/jmxosgi-2.0.0-src.jar
+  </bundle-sourceurl>
+  <bundle-docurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/jmxosgi/doc/api/
+  </bundle-docurl>
+  <bundle-category>Management</bundle-category>
+  <import-package package="org.ungoverned.osgi.service.shell"
+                  specification-version="1.0.0"/>
+</bundle>
+
+<!-- tiny shell -->
+<bundle>
+  <bundle-name>Tiny Shell GUI</bundle-name>
+  <bundle-description>
+    A Simple Tiny GUI for Oscar
+  </bundle-description>
+  <bundle-version>1.0.0</bundle-version>
+  <bundle-updatelocation>
+    http://ares.insa-lyon.fr/~sfrenot/devel/tinygui/bundles/tinyshell.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/tinygui/tiny-1.0.0-src.jar
+  </bundle-sourceurl>
+  <bundle-docurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/tinygui/doc/api/
+  </bundle-docurl>
+  <bundle-category>Shell</bundle-category>
+  <export-package package="insa.tiny.gui"
+                  specification-version="1.0.0"/>
+  <import-package package="org.ungoverned.osgi.service.shell"/>
+  <import-package package="info.clearthought.layout"/>
+</bundle>
+
+<!-- tiny component -->
+<bundle>
+  <bundle-name>Tiny Shell Component</bundle-name>
+  <bundle-description>
+    Tiny components that implement a GUI interface for Oscar
+  </bundle-description>
+  <bundle-version>1.0.0</bundle-version>
+  <bundle-updatelocation>
+    http://ares.insa-lyon.fr/~sfrenot/devel/tinygui/bundles/tinycomponent.jar
+  </bundle-updatelocation>
+  <bundle-sourceurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/tinygui/tiny-1.0.0-src.jar
+  </bundle-sourceurl>
+  <bundle-docurl>
+    http://ares.insa-lyon.fr/~sfrenot/devel/tinygui/doc/api/
+  </bundle-docurl>
+  <bundle-category>Shell</bundle-category>
+  <import-package package="org.ungoverned.osgi.service.shell"/>
+  <import-package package="insa.tiny.gui"/>
+  <import-package package="info.clearthought.layout"/>
+  <import-package package="org.ungoverned.osgi.service.bundlerepository"/>
+</bundle>
+
+
+  <bundle>
+    <bundle-name>Wire Admin</bundle-name>
+    <bundle-description>
+       Wire Admin service implementation.
+    </bundle-description>
+    <bundle-vendor>
+       Humberto Cervantes, Didier Donsez
+    </bundle-vendor>
+    <bundle-updatelocation>
+       http://oscar-osgi.sf.net/repo/wireadmin/wireadmin.jar
+    </bundle-updatelocation>
+    <bundle-sourceurl>
+       http://oscar-osgi.sf.net/repo/wireadmin/wireadmin-src.jar
+    </bundle-sourceurl>
+    <bundle-version>1.0.0</bundle-version>
+    <bundle-docurl>
+       http://oscar-osgi.sourceforge.net/repo/wireadmin
+    </bundle-docurl>
+    <bundle-category>WireAdmin</bundle-category>
+    <import-package package="org.osgi.framework"/>
+    <export-package package="org.osgi.service.wireadmin" specification-version="1.0.0"/>
+  </bundle>
+
+  <bundle>
+    <bundle-name>Wire Admin Command</bundle-name>
+    <bundle-description>
+       Wire Admin Service commands for Oscar shell.
+    </bundle-description>
+    <bundle-vendor>
+       Didier Donsez, Humberto Cervantes
+    </bundle-vendor>
+    <bundle-updatelocation>
+       http://oscar-osgi.sf.net/repo/wireadmincmd/wireadmincmd.jar
+    </bundle-updatelocation>
+    <bundle-sourceurl>
+       http://oscar-osgi.sf.net/repo/wireadmincmd/wireadmincmd-src.jar
+    </bundle-sourceurl>
+    <bundle-version>1.0.0</bundle-version>
+    <bundle-docurl>
+       http://oscar-osgi.sourceforge.net/repo/wireadmincmd
+    </bundle-docurl>
+    <bundle-category>WireAdmin</bundle-category>
+    <import-package package="org.osgi.framework"/>
+    <import-package package="org.osgi.service.wireadmin" specification-version="1.0.0"/>
+    <import-package package="org.ungoverned.osgi.service.shell" specification-version="1.0.0"/>
+  </bundle>
+   
+  <!-- JMX part -->
+  <bundle>
+    <bundle-name>JMX-MX4J Agent Service</bundle-name>
+    <bundle-description>
+      A bundle that provides a jmx service
+    </bundle-description>
+    <bundle-vendor>
+      Stephane Frenot
+    </bundle-vendor>
+    <bundle-version>2.0.2</bundle-version>
+    <bundle-updatelocation>
+      http://ares.insa-lyon.fr/~sfrenot/devel/insajmx/bundles/agent.jar
+    </bundle-updatelocation>
+    <bundle-sourceurl>
+      http://ares.insa-lyon.fr/~sfrenot/devel/insajmx/insajmx-src.jar
+    </bundle-sourceurl>
+    <bundle-docurl>
+       http://ares.insa-lyon.fr/~sfrenot/devel/insajmx/doc/
+    </bundle-docurl>
+    <bundle-category>Tool</bundle-category>
+    <export-package package="javax.management"/>
+    <export-package package="mx4.server"/>
+    <import-package package="org.osgi.service.log"/>
+  </bundle>
+  <bundle>
+    <bundle-name>JMX-MX4J http connector</bundle-name>
+    <bundle-description>
+      A bundle that provides a jmx http connector (http://localhost:8082)
+    </bundle-description>
+    <bundle-vendor>
+      Stephane Frenot
+    </bundle-vendor>
+    <bundle-version>2.0.3</bundle-version>
+    <bundle-updatelocation>
+      http://ares.insa-lyon.fr/~sfrenot/devel/insajmx/bundles/httpconnector.jar
+    </bundle-updatelocation>
+    <bundle-sourceurl>
+      http://ares.insa-lyon.fr/~sfrenot/devel/insajmx/insajmx-src.jar
+    </bundle-sourceurl>
+    <bundle-docurl>
+       http://ares.insa-lyon.fr/~sfrenot/devel/insajmx/doc/
+    </bundle-docurl>
+    <bundle-category>Tool</bundle-category>
+    <import-package package="javax.management"/>
+    <import-package package="org.osgi.service.log"/>
+  </bundle>
+  <bundle>
+    <bundle-name>RMI registry</bundle-name>
+    <bundle-description>
+      A rmiregistry wrapper
+    </bundle-description>
+    <bundle-vendor>
+      Stephane Frenot
+    </bundle-vendor>
+    <bundle-version>2.0.4</bundle-version>
+    <bundle-updatelocation>
+      http://ares.insa-lyon.fr/~sfrenot/devel/insajmx/bundles/rmiregistry.jar
+    </bundle-updatelocation>
+    <bundle-sourceurl>
+      http://ares.insa-lyon.fr/~sfrenot/devel/insajmx/insajmx-src.jar
+    </bundle-sourceurl>
+    <bundle-docurl>
+       http://ares.insa-lyon.fr/~sfrenot/devel/insajmx/doc/
+    </bundle-docurl>
+    <bundle-category>Wrapper</bundle-category>
+    <export-package package="mx4j.tools.naming"/>
+  </bundle>
+  <bundle>
+    <bundle-name>JMX-MX4J RMI connector</bundle-name>
+    <bundle-description>
+      A jmx rmi remote connector. To be used with MC4J for instance
+    </bundle-description>
+    <bundle-vendor>
+      Stephane Frenot
+    </bundle-vendor>
+    <bundle-version>2.0.5</bundle-version>
+    <bundle-updatelocation>
+      http://ares.insa-lyon.fr/~sfrenot/devel/insajmx/bundles/rmiconnector.jar
+    </bundle-updatelocation>
+    <bundle-sourceurl>
+      http://ares.insa-lyon.fr/~sfrenot/devel/insajmx/insajmx-src.jar
+    </bundle-sourceurl>
+    <bundle-docurl>
+       http://ares.insa-lyon.fr/~sfrenot/devel/insajmx/doc/
+    </bundle-docurl>
+    <bundle-category>Tool</bundle-category>
+    <export-package package="javax.management.remote.rmi"/>
+    <export-package package="mx4j.remote.provider.rmi"/>
+    <import-package package="javax.management"/>
+    <import-package package="org.osgi.service.log"/>
+    <import-package package="javax.management.remote.rmi"/>
+    <import-package package="mx4j.tools.naming"/>
+    <import-package package="mx4j.remote.provider.rmi"/>
+  </bundle>
+
+<!-- JMX console -->
+<!-- gui -->
+ <bundle>
+  <bundle-name>Remote Shell GUI</bundle-name>
+    <bundle-description>
+      A simple remote GUI shell for Oscar
+    </bundle-description>
+    <bundle-vendor>
+      Stephane Frenot
+    </bundle-vendor>
+    <bundle-version>0.1.0</bundle-version>
+    <bundle-updatelocation>
+      http://ares.insa-lyon.fr/~sfrenot/devel/jmxconsole/bundles/remotegui.jar
+    </bundle-updatelocation>
+    <bundle-sourceurl>
+      http://ares.insa-lyon.fr/~sfrenot/devel/jmxconsole/jmxosgi-src.jar
+    </bundle-sourceurl>
+    <bundle-docurl>
+       http://ares.insa-lyon.fr/~sfrenot/devel/jmxconsole/doc/
+    </bundle-docurl>
+    <bundle-category>Tool</bundle-category>
+    <export-package package="insa.jmxconsole.gui.service"/>
+  </bundle>
+<!-- plugs -->
+ <bundle>
+  <bundle-name>Remote Components</bundle-name>
+  <bundle-description> Remote components plugin that implement a GUI interface for Oscar </bundle-description>
+  <bundle-vendor> Stephane Frenot </bundle-vendor>
+  <bundle-version>0.1.0</bundle-version>
+  <bundle-updatelocation> http://ares.insa-lyon.fr/~sfrenot/devel/jmxconsole/bundles/remotecomponent.jar </bundle-updatelocation>
+  <bundle-sourceurl> http://ares.insa-lyon.fr/~sfrenot/devel/jmxconsole/jmxosgi-src.jar </bundle-sourceurl>
+  <bundle-docurl> http://ares.insa-lyon.fr/~sfrenot/devel/jmxconsole/doc/ </bundle-docurl>
+  <bundle-category>Tool</bundle-category>
+  <import-package package="insa.jmxconsole.gui.service"/>
+ </bundle>
+
+ <!-- mp3 player -->
+ <bundle>
+  <bundle-name>MP3 Player</bundle-name>
+  <bundle-description> A bundle that manages an mp3 stream (javazoom wrapper) </bundle-description>
+  <bundle-vendor> Stephane Frenot </bundle-vendor>
+  <bundle-version>0.0.2</bundle-version>
+  <bundle-updatelocation> http://ares.insa-lyon.fr/~sfrenot/devel/mp3player/bundles/mp3player.jar </bundle-updatelocation>
+  <bundle-sourceurl> http://ares.insa-lyon.fr/~sfrenot/devel/mp3player/mp3player-0.0.2-src.jar </bundle-sourceurl>
+  <bundle-docurl> http://ares.insa-lyon.fr/~sfrenot/devel/mp3player/doc/ </bundle-docurl>
+  <bundle-category>Application</bundle-category>
+ </bundle>
+
+<bundle>
+    <bundle-name>TID-InFORM</bundle-name>
+    <bundle-description>
+        OSGi management bundle to manage framework and bundle meta-data.
+    </bundle-description>
+    <bundle-version>1.0.0</bundle-version>
+    <bundle-updatelocation>
+        http://tid-inform.forge.os4os.org/tid-inform.jar
+    </bundle-updatelocation>
+    <bundle-sourceurl>
+        http://forge.os4os.org/frs/download.php/48/tid-inform-src.jar
+    </bundle-sourceurl>
+    <bundle-docurl>
+        http://tid-inform.forge.os4os.org/
+    </bundle-docurl>
+    <bundle-category>General</bundle-category>
+    <import-package package="org.osgi.framework"/>
+    <import-package package="org.osgi.service.packageadmin"/>
+    <export-package package="org.osmose.tid.osgi.mgmt.service" />
+    <export-package package="org.osmose.tid.osgi.mgmt.notification.service" />
+    <export-package package="org.osmose.tid.osgi.mgmt.instrumentation.service" />
+</bundle>
+
+<bundle>
+    <bundle-name>TID-JMA4O</bundle-name>
+    <bundle-description>
+        JMX management bundle to manage framework and bundle meta-data.
+    </bundle-description>
+    <bundle-version>1.0.0</bundle-version>
+    <bundle-updatelocation>
+        http://tid-jma4o.forge.os4os.org/tid-jma4o.jar
+    </bundle-updatelocation>
+    <bundle-sourceurl>
+        http://forge.os4os.org/frs/download.php/50/tid-jma4o-src.jar
+    </bundle-sourceurl>
+    <bundle-docurl>
+        http://tid-jma4o.forge.os4os.org/
+    </bundle-docurl>
+    <bundle-category>General</bundle-category>
+    <import-package package="org.osgi.framework"/>
+    <import-package package="org.osgi.service.packageadmin"/>
+    <import-package package="org.osgi.util.tracker"/>
+    <import-package package="org.osgi.service.permissionadmin"/>
+    <import-package package="org.osgi.service.cm"/>
+    <import-package package="org.osgi.service.useradmin"/>
+    <import-package package="org.osgi.service.log"/>
+    <import-package package="org.osmose.tid.osgi.mgmt.service"/>
+    <import-package package="org.osmose.tid.osgi.mgmt.notification.service"/>
+    <import-package package="org.osmose.tid.osgi.mgmt.instrumentation.service"/>
+    <export-package package="org.osmose.tid.osgi.mgmt.jmxserver.service"/>
+</bundle>
+
+<bundle>
+    <bundle-name>TID-OAM</bundle-name>
+    <bundle-description>
+        OSGi application manager to control installed applications.
+    </bundle-description>
+    <bundle-version>1.0.0</bundle-version>
+    <bundle-updatelocation>
+        http://tid-oam.forge.os4os.org/tid-oam.jar
+    </bundle-updatelocation>
+    <bundle-sourceurl>
+        http://forge.os4os.org/frs/download.php/55/tid-oam-src.jar
+    </bundle-sourceurl>
+    <bundle-docurl>
+        http://tid-oam.forge.os4os.org/
+    </bundle-docurl>
+    <bundle-category>General</bundle-category>
+    <import-package package="org.osgi.framework"/>
+    <import-package package="org.osgi.util.tracker"/>
+    <import-package package="org.ungoverned.osgi.service.shell"/>
+    <export-package package="org.osmose.tid.osgi.deployment.services"/>
+    <export-package package="org.osmose.tid.osgi.deployment.utils.impl"/>
+    <export-package package="org.osmose.tid.osgi.deployment.parse.services" />
+    <export-package package="org.osmose.tid.osgi.deployment.parse.impl"/>
+</bundle>
+
+<bundle>
+    <bundle-name>TIDpema</bundle-name>
+    <bundle-description>
+        PermissionAdmin implementation for the OSGi R3 specification.
+    </bundle-description>
+    <bundle-version>1.0.0</bundle-version>
+    <bundle-updatelocation>
+        http://tid-pema.forge.os4os.org/tidpema-1.0.jar
+    </bundle-updatelocation>
+    <bundle-sourceurl>
+        http://forge.os4os.org/frs/download.php/47/tidpema-1.0-src.jar
+    </bundle-sourceurl>
+    <bundle-docurl>
+        http://tid-pema.forge.os4os.org/
+    </bundle-docurl>
+    <bundle-category>General</bundle-category>
+    <import-package package="org.osgi.framework"/>
+    <import-package package="org.osgi.service.permissionadmin"/>
+    <export-package package="org.osmose.tid.osgi.service.permissionadmin" />
+</bundle>
+
+<bundle>
+    <bundle-name>TIDuma</bundle-name>
+    <bundle-description>
+        UserAdmin implementation for the OSGi R3 specification.
+    </bundle-description>
+    <bundle-version>1.0.0</bundle-version>
+    <bundle-updatelocation>
+        http://tid-uma.forge.os4os.org/tiduma-1.0.jar
+    </bundle-updatelocation>
+    <bundle-sourceurl>
+        http://forge.os4os.org/frs/download.php/44/tiduma-1.0-src.jar
+    </bundle-sourceurl>
+    <bundle-docurl>
+        http://tid-uma.forge.os4os.org/
+    </bundle-docurl>
+    <bundle-category>General</bundle-category>
+    <import-package package="org.osgi.service.log"/>
+    <import-package package="org.osgi.framework"/>
+    <import-package package="org.osgi.service.useradmin"/>
+    <export-package package="org.osmose.tid.osgi.service.um.ipam" />
+    <export-package package="org.osmose.tid.osgi.service.um.useradmin" />
+</bundle>
+
+<bundle>
+  <bundle-name>ECOS</bundle-name>
+  <bundle-description>Extended Commands for Oscar Shell</bundle-description>
+  <bundle-version>1.1.0</bundle-version>
+  <bundle-contactaddress>Alejandro Blanco (alexb@tid.es)</bundle-contactaddress>
+  <bundle-docurl>http://tid-oscarshell.forge.os4os.org/</bundle-docurl>
+  <bundle-vendor>Telefonica I+D</bundle-vendor>
+  <bundle-category>Shell Utils</bundle-category>
+  <bundle-updatelocation>http://tid-oscarshell.forge.os4os.org/ecos.jar</bundle-updatelocation>
+  <bundle-sourceurl>http://tid-oscarshell.forge.os4os.org/ecos_src.jar</bundle-sourceurl>
+  <import-package package="org.osgi.service.cm" specification-version="0.0.0"/>
+  <import-package package="org.osgi.service.http" specification-version="0.0.0"/>
+  <import-package package="org.osgi.util.tracker" specification-version="0.0.0"/>
+  <import-package package="org.ungoverned.osgi.service.shell" specification-version="0.0.0"/>
+</bundle>
+
+<bundle>
+	<bundle-name>RMI Gateway</bundle-name>
+	<Bundle-Vendor>
+    Alexei Krasnopolski
+	</Bundle-Vendor>
+	<Bundle-ContactAddress>
+	  krasnop@bellsouth.net
+	</Bundle-ContactAddress>
+	<Bundle-LicenseURL>
+	  http://www.apache.org/licenses/LICENSE-2.0
+	</Bundle-LicenseURL>
+	<bundle-description>
+		RMI Gateway bundle allows remote frameworks using services from each other.
+	</bundle-description>
+	<bundle-version>1.0.1</bundle-version>
+	<bundle-updatelocation>
+		http://www.crasnopolski.com/download/rmigateway-eqx-osc.jar
+	</bundle-updatelocation>
+	<bundle-sourceurl>
+		http://www.crasnopolski.com/download/rmigateway-eqx-osc.jar
+	</bundle-sourceurl>
+	<bundle-docurl>
+		http://www.crasnopolski.com/javaRMI.show
+	</bundle-docurl>
+	<bundle-category>Service</bundle-category>
+  <import-package package="org.osgi.framework" />
+  <import-package package="org.osgi.util.tracker" />
+  <import-package package="org.osgi.service.log" />
+  <import-package package="org.osgi.service.http" />
+</bundle>
+
+</bundles>
