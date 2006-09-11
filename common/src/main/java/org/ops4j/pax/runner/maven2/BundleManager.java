@@ -21,12 +21,15 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import javax.xml.parsers.ParserConfigurationException;
-import org.ops4j.pax.runner.Repository;
-import org.ops4j.pax.runner.RunnerOptions;
+import org.ops4j.pax.runner.internal.RunnerOptions;
+import org.ops4j.pax.runner.repositories.Repository;
+import org.ops4j.pax.runner.repositories.BundleInfo;
+import org.ops4j.pax.runner.PomInfo;
 import org.xml.sax.SAXException;
 
 public class BundleManager
 {
+
     private Repository m_repository;
     private RunnerOptions m_options;
 
@@ -36,19 +39,24 @@ public class BundleManager
         m_options = options;
     }
 
-    public File getBundleFile( String group, String artifact, String version )
+    public BundleInfo getBundleFile( PomInfo pomInfo )
         throws IOException, ParserConfigurationException, SAXException
     {
+        String group = pomInfo.getGroup();
+        String artifact = pomInfo.getArtifact();
+        String version = pomInfo.getVersion();
         String path = composeURL( group, artifact, version );
-        if( "LATEST".equalsIgnoreCase( version ) )
-        {
-            version = MavenUtils.getLatestVersion( group, artifact, m_repository, m_options );
-        }
+        // TODO: Add back support for LATEST.
+//        if( "LATEST".equalsIgnoreCase( version ) )
+//        {
+//            version = MavenUtils.getLatestVersion( group, artifact, m_repository, m_options );
+//        }
         version = version.replace( "-SNAPSHOT", ".SNAPSHOT" );
-        File dest = new File( m_options.getWorkDir(), "lib/" + group.replace('.','/' ));
+        File dest = new File( m_options.getWorkDir(), "lib/" + group.replace( '.', '/' ) );
         dest = new File( dest, artifact + "_" + version + ".jar" );
-        m_repository.download( path, dest, false );
-        return dest;
+        BundleInfo bundle = new BundleInfo( group + "." + artifact, null, dest );
+        m_repository.download( bundle );
+        return bundle;
     }
 
     private String composeURL( String group, String artifact, String version )

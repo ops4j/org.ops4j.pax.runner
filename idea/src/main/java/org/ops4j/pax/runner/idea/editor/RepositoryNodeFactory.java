@@ -24,10 +24,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.xml.parsers.ParserConfigurationException;
 import org.jetbrains.annotations.NonNls;
 import org.ops4j.pax.runner.idea.config.ConfigBean;
-import org.ops4j.pax.runner.repositories.EclipseUpdateRepository;
-import org.ops4j.pax.runner.repositories.idea.ObrRepository;
-import org.ops4j.pax.runner.repositories.OsgiBundleRepository;
-import org.ops4j.pax.runner.repositories.idea.ProjectRepository;
+import org.ops4j.pax.runner.idea.repositories.ObrRepository;
+import org.ops4j.pax.runner.idea.repositories.ProjectRepository;
 import org.ops4j.pax.runner.repositories.RepositoryInfo;
 import org.ops4j.pax.runner.repositories.RepositoryType;
 import org.xml.sax.SAXException;
@@ -79,14 +77,14 @@ public class RepositoryNodeFactory
             {
                 return createOscarBundleRepositoryNode( repository );
             }
-            if( RepositoryType.EclipseUpdateCenter == type )
-            {
-                return createEclipseUpdateCenterNode( repository );
-            }
-            if( RepositoryType.OSGiBundleRepository == type )
-            {
-                return createOsgiBundleRepositoryNode( repository );
-            }
+//            if( RepositoryType.EclipseUpdateCenter == type )
+//            {
+//                return createEclipseUpdateCenterNode( repository );
+//            }
+//            if( RepositoryType.OSGiBundleRepository == type )
+//            {
+//                return createOsgiBundleRepositoryNode( repository );
+//            }
             if( RepositoryType.ProjectRepository == type )
             {
                 return createProjectRepositoryNode( repository, config );
@@ -107,27 +105,27 @@ public class RepositoryNodeFactory
         }
     }
 
-    private DefaultMutableTreeNode createEclipseUpdateCenterNode( RepositoryInfo repository )
-    {
-        DefaultMutableTreeNode node = m_nodes.get( repository );
-        if( node == null )
-        {
-            node = new EclipseUpdateRepository( repository );
-            m_nodes.put( repository, node );
-        }
-        return node;
-    }
+//    private DefaultMutableTreeNode createEclipseUpdateCenterNode( RepositoryInfo repository )
+//    {
+//        DefaultMutableTreeNode node = m_nodes.get( repository );
+//        if( node == null )
+//        {
+//            node = new EclipseUpdateRepository( repository );
+//            m_nodes.put( repository, node );
+//        }
+//        return node;
+//    }
 
-    private DefaultMutableTreeNode createOsgiBundleRepositoryNode( RepositoryInfo repository )
-    {
-        DefaultMutableTreeNode node = m_nodes.get( repository );
-        if( node == null )
-        {
-            node = new OsgiBundleRepository( repository );
-            m_nodes.put( repository, node );
-        }
-        return node;
-    }
+//    private DefaultMutableTreeNode createOsgiBundleRepositoryNode( RepositoryInfo repository )
+//    {
+//        DefaultMutableTreeNode node = m_nodes.get( repository );
+//        if( node == null )
+//        {
+//            node = new OsgiBundleRepository( repository );
+//            m_nodes.put( repository, node );
+//        }
+//        return node;
+//    }
 
     private DefaultMutableTreeNode createProjectRepositoryNode( RepositoryInfo repository, ConfigBean config )
     {

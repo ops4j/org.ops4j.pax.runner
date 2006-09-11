@@ -20,8 +20,8 @@ package org.ops4j.pax.runner.maven2;
 import java.io.File;
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
-import org.ops4j.pax.runner.Repository;
-import org.ops4j.pax.runner.RunnerOptions;
+import org.ops4j.pax.runner.internal.RunnerOptions;
+import org.ops4j.pax.runner.io.Downloader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -32,22 +32,23 @@ public class MavenUtils
 
     private static RunnerOptions m_options;
 
-    static String getLatestVersion( String group, String artifact, Repository repository, RunnerOptions options )
+    static String getLatestVersion( String group, String artifact, Downloader downloader, RunnerOptions options )
         throws IOException, ParserConfigurationException, SAXException
     {
         MavenUtils.m_options = options;
-        String metaLocation = group.replace( '.', '/') + "/" + artifact + "/maven-metadata.xml";
-        File dest = new File( m_options.getWorkDir() , "latest.pom" );
+        String metaLocation = group.replace( '.', '/' ) + "/" + artifact + "/maven-metadata.xml";
+        File dest = new File( m_options.getWorkDir(), "latest.pom" );
         try
         {
-            repository.download( metaLocation, dest, true );
+            downloader.download( metaLocation, dest, true );
         } catch( IOException e )
         {
-            IOException ioException = new IOException( "Unable to retrieve LATEST version of [" + group + ":" + artifact + "]" );
+            IOException ioException =
+                new IOException( "Unable to retrieve LATEST version of [" + group + ":" + artifact + "]" );
             ioException.initCause( e );
             throw ioException;
         }
-        Document doc = PomManager.parseDoc( dest );
+        Document doc = PomManagerImpl.parseDoc( dest );
         Element root = doc.getDocumentElement();
         NodeList children = root.getElementsByTagName( "version" );
         Element latestVersion = (Element) children.item( 0 );

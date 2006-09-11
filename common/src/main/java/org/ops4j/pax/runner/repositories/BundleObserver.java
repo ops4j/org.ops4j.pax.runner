@@ -19,6 +19,7 @@ package org.ops4j.pax.runner.repositories;
 
 public interface BundleObserver
 {
+
     void bundleAdded( BundleInfo bundle );
 
     void bundleRemoved( BundleInfo bundle );

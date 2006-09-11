@@ -19,9 +19,9 @@ package org.ops4j.pax.runner.repositories;
 
 public interface Repository
 {
+
     RepositoryInfo getInfo();
 
     void download( BundleInfo bundle );
 
-    
 }

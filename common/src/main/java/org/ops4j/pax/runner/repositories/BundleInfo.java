@@ -17,19 +17,23 @@
  */
 package org.ops4j.pax.runner.repositories;
 
+import java.io.File;
+
 public class BundleInfo
 {
+
     private String m_name;
+    private File m_localFile;
     private String m_description;
     private String m_vendor;
     private String m_version;
     private String m_symbolicName;
-
     private RepositoryInfo m_repository;
 
-    public BundleInfo( String name, RepositoryInfo repository )
+    public BundleInfo( String name, RepositoryInfo repository, File localFile )
     {
         m_name = name;
+        m_localFile = localFile;
         m_repository = repository;
     }
 
@@ -86,5 +90,10 @@ public class BundleInfo
     public String toString()
     {
         return m_name;
+    }
+
+    public File getLocalFile()
+    {
+        return m_localFile;
     }
 }

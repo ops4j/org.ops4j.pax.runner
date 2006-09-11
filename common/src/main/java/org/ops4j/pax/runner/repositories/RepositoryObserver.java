@@ -19,6 +19,7 @@ package org.ops4j.pax.runner.repositories;
 
 public interface RepositoryObserver
 {
+
     void repositoryAdded( RepositoryInfo repoInfo );
 
     void repositoryRemoved( RepositoryInfo repoInfo );

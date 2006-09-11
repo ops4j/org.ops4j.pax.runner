@@ -453,7 +453,7 @@
       <module fileurl="file://$PROJECT_DIR$/idea/idea-plugin.iml" filepath="$PROJECT_DIR$/idea/idea-plugin.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="Java 1.5" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="Java 1.5" />
   <component name="ProjectRunConfigurationManager" />
   <component name="RmicSettings">
     <option name="IS_EANABLED" value="false" />
@@ -479,9 +479,54 @@
       <JAVADOC />
       <SOURCES />
     </library>
-    <library name="ops4j-base-0.1.0">
+    <library name="ops4j-base-0.2.1">
       <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base/0.1.0/ops4j-base-0.1.0.jar!/" />
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base/0.2.1/ops4j-base-0.2.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base/0.2.1/ops4j-base-0.2.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base/0.2.1/ops4j-base-0.2.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="jaxb-api-2.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/javax/xml/bind/jaxb-api/2.0/jaxb-api-2.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/javax/xml/bind/jaxb-api/2.0/jaxb-api-2.0-javadoc.zip!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/javax/xml/bind/jaxb-api/2.0/jaxb-api-2.0-sources.zip!/" />
+      </SOURCES>
+    </library>
+    <library name="jsr173_api-1.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/javax/xml/bind/jsr173_api/1.0/jsr173_api-1.0.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="junit-3.8.2">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/junit/junit/3.8.2/junit-3.8.2.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="jaxb-impl-2.0.2">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/javax/xml/bind/jaxb-impl/2.0.2/jaxb-impl-2.0.2.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$M2_REPO$/javax/xml/bind/jaxb-impl/2.0.2/jaxb-impl-2.0.2-sources.zip!/" />
+      </SOURCES>
+    </library>
+    <library name="activation-1.1">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/javax/activation/activation/1.1/activation-1.1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

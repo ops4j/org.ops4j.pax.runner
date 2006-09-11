@@ -21,22 +21,22 @@ import java.io.File;
 import java.io.IOException;
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import javax.xml.parsers.ParserConfigurationException;
-import org.ops4j.pax.runner.Bundle;
-import org.ops4j.pax.runner.EquinoxRunner;
-import org.ops4j.pax.runner.FelixRunner;
-import org.ops4j.pax.runner.KnopflerfishRunner;
-import org.ops4j.pax.runner.Repository;
-import org.ops4j.pax.runner.RepositoryAggregator;
-import org.ops4j.pax.runner.RunnerOptions;
+import org.ops4j.pax.runner.state.Bundle;
+import org.ops4j.pax.runner.exec.EquinoxRunner;
+import org.ops4j.pax.runner.exec.FelixRunner;
+import org.ops4j.pax.runner.exec.KnopflerfishRunner;
+import org.ops4j.pax.runner.RunnerOptionsImpl;
+import org.ops4j.pax.runner.PomInfo;
+import org.ops4j.pax.runner.repositories.Repository;
+import org.ops4j.pax.runner.internal.RunnerOptions;
 import org.ops4j.pax.runner.maven2.BundleManager;
-import org.ops4j.pax.runner.maven2.PomInfo;
-import org.ops4j.pax.runner.maven2.PomManager;
-import org.ops4j.pax.runner.provisioning.Provisioning;
+import org.ops4j.pax.runner.maven2.PomManagerImpl;
 import org.xml.sax.SAXException;
 
 /**
@@ -94,7 +94,7 @@ public class Run
         System.out.println( "--------------------------------------------" );
         System.out.println();
 
-        RunnerOptions options = new RunnerOptions();
+        RunnerOptions options = new RunnerOptionsImpl();
         String workDir = cmdLine.getValue( "dir" );
         options.setWorkDir( new File( workDir ) );
         System.out.println( "Working Dir: " + workDir );
@@ -125,28 +125,20 @@ public class Run
         boolean noCheckMD5 = cmdLine.isSet( "no-md5" );
         options.setNoMd5Checks( noCheckMD5 );
 
-        Repository repository = new RepositoryAggregator( repositories, noCheckMD5 );
         List<Bundle> bundles;
         Properties props;
         String urlValue = cmdLine.getValue( "url" );
-        boolean useProvisioning = urlValue != null && urlValue.endsWith( ".zip" );
 
-        if( useProvisioning )
-        {
-            Provisioning provisioning = new Provisioning( repository, options );
-            bundles = provisioning.getBundles();
-            props = provisioning.getProperties();
-        }
-        else
-        {
-            String version = cmdLine.getValue( "version" );
-            String group = cmdLine.getValue( "group" );
-            String artifact = cmdLine.getValue( "artifact" );
-            PomInfo pomInfo = new PomInfo( artifact, group, version );
-            PomManager pomManager = PomManager.getInstance( repository, options );
-            bundles = pomManager.getBundles( pomInfo );
-            props = pomManager.getProperties( pomInfo );
-        }
+        String version = cmdLine.getValue( "version" );
+        String group = cmdLine.getValue( "group" );
+        String artifact = cmdLine.getValue( "artifact" );
+        PomInfo pomInfo = new PomInfo( artifact, group, version );
+        URL baseUrl = new URL( cmdLine.getValue( "repository" ) );
+        PomManagerImpl pomManager = PomManagerImpl.getInstance( baseUrl, options );
+        bundles = pomManager.getBundles( pomInfo );
+        props = pomManager.getProperties( pomInfo );
+
+        Repository repository = null;
         BundleManager bundleManager = new BundleManager( repository, options );
         String platform = cmdLine.getValue( "platform" ).toLowerCase();
         System.out.println( "\n   Platform: " + platform );

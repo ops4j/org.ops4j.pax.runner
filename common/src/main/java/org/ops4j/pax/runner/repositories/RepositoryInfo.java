@@ -19,6 +19,7 @@ package org.ops4j.pax.runner.repositories;
 
 public class RepositoryInfo
 {
+
     private String m_name;
     private String m_url;
     private RepositoryType m_type;
