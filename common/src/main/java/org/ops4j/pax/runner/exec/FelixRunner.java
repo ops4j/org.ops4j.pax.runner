@@ -27,18 +27,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import javax.xml.parsers.ParserConfigurationException;
+import org.ops4j.pax.runner.DownloadManager;
+import org.ops4j.pax.runner.PomInfo;
+import org.ops4j.pax.runner.Runner;
+import org.ops4j.pax.runner.ServiceException;
+import org.ops4j.pax.runner.ServiceManager;
+import org.ops4j.pax.runner.internal.RunnerOptions;
 import org.ops4j.pax.runner.state.Bundle;
 import org.ops4j.pax.runner.state.BundleState;
-import org.ops4j.pax.runner.internal.RunnerOptions;
-import org.ops4j.pax.runner.repositories.BundleInfo;
 import org.ops4j.pax.runner.utils.FileUtils;
 import org.ops4j.pax.runner.utils.Pipe;
-import org.ops4j.pax.runner.maven2.BundleManager;
-import org.ops4j.pax.runner.PomInfo;
 import org.xml.sax.SAXException;
 
 public class FelixRunner
-    implements Runnable
+    implements Runner
 {
 
     private static final String GROUPID = "org.apache.felix";
@@ -46,8 +48,6 @@ public class FelixRunner
     private static final String VERSION = "0.8.0";
 
     private Properties m_props;
-    private RunnerOptions m_runnerOptions;
-    private List<Bundle> m_bundles;
     private static final String SYSTEM_PACKAGES = "javax.accessibility, " +
                                                   "javax.activity, " +
                                                   "javax.crypto, " +
@@ -172,65 +172,23 @@ public class FelixRunner
                                                   "org.xml.sax.ext, " +
                                                   "org.xml.sax.helpers";
 
-    private BundleInfo m_main;
-    private BundleInfo m_osgi;
-    private BundleInfo m_framework;
-
-    public FelixRunner( RunnerOptions runnerOptions, Properties props, List<Bundle> bundles,
-                        BundleManager bundleManager )
-        throws IOException, ParserConfigurationException, SAXException
+    public FelixRunner( Properties props )
+        throws IOException, ParserConfigurationException, SAXException, ServiceException
     {
-        m_runnerOptions = runnerOptions;
-        m_bundles = bundles;
         m_props = props;
-        BundleInfo system1 = bundleManager.getBundleFile( new PomInfo( GROUPID, "org.apache.felix.shell", VERSION ));
-        bundles.add( new Bundle( system1, 0, BundleState.START ) );
-        BundleInfo system2 = bundleManager.getBundleFile( new PomInfo( GROUPID, "org.apache.felix.bundlerepository", VERSION ));
-        bundles.add( new Bundle( system2, 0, BundleState.START ) );
-        BundleInfo system3 = bundleManager.getBundleFile( new PomInfo( GROUPID, "org.apache.felix.shell.tui", VERSION ));
-        bundles.add( new Bundle( system3, 0, BundleState.START ) );
-        if( m_runnerOptions.isStartGui() )
-        {
-            BundleInfo system4 = bundleManager.getBundleFile( new PomInfo( GROUPID, "org.apache.felix.shell.gui", VERSION ) );
-            bundles.add( new Bundle( system4, 0, BundleState.START ) );
-            BundleInfo system5 = bundleManager.getBundleFile( new PomInfo( GROUPID, "org.apache.felix.shell.gui.plugin", VERSION ) );
-            bundles.add( new Bundle( system5, 0, BundleState.START ) );
-        }
-        m_main = bundleManager.getBundleFile( new PomInfo( GROUPID, "org.apache.felix.main", VERSION ) );
-        m_framework = bundleManager.getBundleFile( new PomInfo( GROUPID, "org.osgi.felix.framework", VERSION ) );
-        m_osgi = bundleManager.getBundleFile( new PomInfo( GROUPID, "org.osgi.core", VERSION ) );
     }
 
-    public void run()
-    {
-        try
-        {
-            createConfigFile();
-            runIt();
-        } catch( MalformedURLException e )
-        {
-            e.printStackTrace();
-        } catch( IOException e )
-        {
-            e.printStackTrace();
-        } catch( InterruptedException e )
-        {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void createConfigFile()
+    private void createConfigFile( RunnerOptions options, List<Bundle> bundles, File osgi, File framework, File system )
         throws IOException
     {
-        File confDir = new File( m_runnerOptions.getWorkDir(), "conf" );
+        File confDir = new File( options.getWorkDir(), "conf" );
         confDir.mkdirs();
         File file = new File( confDir, "config.properties" );
         Writer out = FileUtils.openPropertyFile( file );
         try
         {
             FileUtils.writeProperty( out, "org.osgi.framework.system.packages", SYSTEM_PACKAGES );
-            String profile = m_runnerOptions.getProfile();
+            String profile = options.getProfile();
             if( profile != null )
             {
                 FileUtils.writeProperty( out, "felix.cache.profile", profile );
@@ -242,14 +200,14 @@ public class FelixRunner
             );
             boolean first = true;
             StringBuffer buf = new StringBuffer();
-            for( Bundle bundle : m_bundles )
+            for( Bundle bundle : bundles )
             {
                 if( !first )
                 {
                     buf.append( ", \\\n    " );
                 }
                 first = false;
-                buf.append( bundle.getBundleInfo().getLocalFile().getAbsolutePath() );
+                buf.append( bundle.getBundleData().getAbsolutePath() );
             }
             FileUtils.writeProperty( out, "felix.auto.start.3", buf.toString() );
             for( Map.Entry entry : m_props.entrySet() )
@@ -265,7 +223,7 @@ public class FelixRunner
         }
     }
 
-    private void runIt()
+    private void runIt( RunnerOptions options, File system )
         throws IOException, InterruptedException
     {
         Runtime runtime = Runtime.getRuntime();
@@ -281,15 +239,15 @@ public class FelixRunner
         }
         else
         {
-            File workDir = m_runnerOptions.getWorkDir();
+            File workDir = options.getWorkDir();
             String[] cmd =
                 {
                     javaHome + "/bin/java",
                     "-Dfelix.config.properties=" + workDir.getAbsolutePath() + "conf/config.properties",
                     "-jar",
-                    m_main.getLocalFile().getAbsolutePath(),
+                    system.getAbsolutePath(),
                 };
-            Process process = runtime.exec( cmd, null, m_runnerOptions.getWorkDir() );
+            Process process = runtime.exec( cmd, null, options.getWorkDir() );
             InputStream err = process.getErrorStream();
             InputStream out = process.getInputStream();
             OutputStream in = process.getOutputStream();
@@ -303,6 +261,50 @@ public class FelixRunner
             inPipe.stop();
             outPipe.stop();
             errPipe.stop();
+        }
+    }
+
+    public void execute( RunnerOptions options, List<Bundle> bundles )
+        throws ServiceException, IOException
+    {
+        DownloadManager downloadManager = ServiceManager.getInstance().getService( DownloadManager.class );
+        PomInfo shellPom = new PomInfo( GROUPID, "org.apache.felix.shell", VERSION );
+        File system1 = downloadManager.download( shellPom );
+        bundles.add( new Bundle( system1, 0, BundleState.START ) );
+        PomInfo obrPom = new PomInfo( GROUPID, "org.apache.felix.bundlerepository", VERSION );
+        File system2 = downloadManager.download( obrPom );
+        bundles.add( new Bundle( system2, 0, BundleState.START ) );
+        PomInfo tuiPom = new PomInfo( GROUPID, "org.apache.felix.shell.tui", VERSION );
+        File system3 = downloadManager.download( tuiPom );
+        bundles.add( new Bundle( system3, 0, BundleState.START ) );
+        if( options.isStartGui() )
+        {
+            PomInfo guiPom = new PomInfo( GROUPID, "org.apache.felix.shell.gui", VERSION );
+            File system4 = downloadManager.download( guiPom );
+            bundles.add( new Bundle( system4, 0, BundleState.START ) );
+            PomInfo guiPluginPom = new PomInfo( GROUPID, "org.apache.felix.shell.gui.plugin", VERSION );
+            File system5 = downloadManager.download( guiPluginPom );
+            bundles.add( new Bundle( system5, 0, BundleState.START ) );
+        }
+        PomInfo systemPom = new PomInfo( GROUPID, "org.apache.felix.main", VERSION );
+        File system = downloadManager.download( systemPom );
+        PomInfo frameworkPom = new PomInfo( GROUPID, "org.osgi.felix.framework", VERSION );
+        File framework = downloadManager.download( frameworkPom );
+        PomInfo osgiPom = new PomInfo( GROUPID, "org.osgi.core", VERSION );
+        File osgi = downloadManager.download( osgiPom );
+        try
+        {
+            createConfigFile( options, bundles, osgi, framework, system );
+            runIt( options, system );
+        } catch( MalformedURLException e )
+        {
+            e.printStackTrace();
+        } catch( IOException e )
+        {
+            e.printStackTrace();
+        } catch( InterruptedException e )
+        {
+            e.printStackTrace();
         }
     }
 }

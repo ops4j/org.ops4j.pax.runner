@@ -15,19 +15,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ops4j.pax.runner.io;
+package org.ops4j.pax.runner.internal;
 
-import org.ops4j.pax.runner.FileManager;
-import org.ops4j.pax.runner.internal.RunnerOptions;
-import org.ops4j.pax.runner.utils.FileUtils;
-import org.ops4j.io.StreamUtils;
+import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.IOException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import org.ops4j.io.StreamUtils;
+import org.ops4j.pax.runner.FileManager;
+import org.ops4j.pax.runner.utils.FileUtils;
 
 public class FileManagerImpl
     implements FileManager

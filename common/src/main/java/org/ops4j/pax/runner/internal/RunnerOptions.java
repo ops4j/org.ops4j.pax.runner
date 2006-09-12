@@ -20,141 +20,101 @@ package org.ops4j.pax.runner.internal;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.io.File;
-import org.ops4j.pax.runner.repositories.BundleInfo;
 import org.ops4j.pax.runner.repositories.RepositoryInfo;
 import org.ops4j.pax.runner.repositories.RepositoryObserver;
 import org.ops4j.pax.runner.repositories.BundleObserver;
+import org.ops4j.pax.runner.state.Bundle;
 
 public interface RunnerOptions
 {
 
-    String getProxyHost()
-        ;
+    String getProxyHost();
 
-    void setProxyHost( String proxyHost )
-        ;
+    void setProxyHost( String proxyHost );
 
-    String getProxyPort()
-        ;
+    String getProxyPort();
 
-    void setProxyPort( String proxyPort )
-        ;
+    void setProxyPort( String proxyPort );
 
-    String getProxyUser()
-        ;
+    String getProxyUser();
 
-    void setProxyUser( String proxyUser )
-        ;
+    void setProxyUser( String proxyUser );
 
-    String getProxyPass()
-        ;
+    String getProxyPass();
 
-    void setProxyPass( String proxyPass )
-        ;
+    void setProxyPass( String proxyPass );
 
-    String getSelectedPlatform()
-        ;
+    String getSelectedPlatform();
 
-    void setSelectedPlatform( String selectedPlatform )
-        ;
+    void setSelectedPlatform( String selectedPlatform );
 
-    boolean isRunClean()
-        ;
+    boolean isRunClean();
 
-    void setRunClean( boolean runClean )
-        ;
+    void setRunClean( boolean runClean );
 
-    boolean isStartGui()
-        ;
+    boolean isStartGui();
 
-    void setStartGui( boolean startGui )
-        ;
+    void setStartGui( boolean startGui );
 
-    String getVmArguments()
-        ;
+    String getVmArguments();
 
-    void setVmArguments( String vmArguments )
-        ;
+    void setVmArguments( String vmArguments );
 
-    Map<String, String> getSystemProperties()
-        ;
+    Map<String, String> getSystemProperties();
 
-    void addSystemProperty( String key, String value )
-        ;
+    void addSystemProperty( String key, String value );
 
-    void removeSystemProperty( String key )
-        ;
+    void removeSystemProperty( String key );
 
-    File getWorkDir()
-        ;
+    File getWorkDir();
 
-    void setWorkDir( File workDir )
-        ;
+    void setWorkDir( File workDir );
 
-    ArrayList<String> getPlatforms()
-        ;
+    ArrayList<String> getPlatforms();
 
-    void addPlatform( String platform )
-        ;
+    void addPlatform( String platform );
 
-    void removePlatform( String platform )
-        ;
+    void removePlatform( String platform );
 
-    List<BundleInfo> getBundles()
-        ;
+    List<Bundle> getBundles();
 
-    void addBundle( BundleInfo bundle )
-        ;
+    void addBundle( Bundle bundle );
 
-    void removeBundle( BundleInfo bundle )
-        ;
+    void removeBundle( Bundle bundle );
 
-    List<RepositoryInfo> getRepositories()
-        ;
+    List<RepositoryInfo> getRepositories();
 
-    void setRepositories( List<RepositoryInfo> repositories )
-        ;
+    void setRepositories( List<RepositoryInfo> repositories );
 
-    void addRepository( RepositoryInfo repoInfo )
-        ;
+    void addRepository( RepositoryInfo repoInfo );
 
-    void removeRepository( RepositoryInfo repoInfo )
-        ;
+    void removeRepository( RepositoryInfo repoInfo );
 
-    void addRepositoryObserver( RepositoryObserver observer )
-        ;
+    void addRepositoryObserver( RepositoryObserver observer );
 
-    void removeRepositoryObserver( RepositoryObserver observer )
-        ;
+    void removeRepositoryObserver( RepositoryObserver observer );
 
-    void addBundleObserver( BundleObserver observer )
-        ;
+    void addBundleObserver( BundleObserver observer );
 
-    void removeBundleObserver( BundleObserver observer )
-        ;
+    void removeBundleObserver( BundleObserver observer );
 
-    void setSystemProperties( Map<String, String> systemProperties )
-        ;
+    void setSystemProperties( Map<String, String> systemProperties );
 
-    void setBundles( List<BundleInfo> bundles )
-        ;
+    void setBundles( List<Bundle> bundles );
 
-    String getProfile()
-        ;
+    String getProfile();
 
-    void setProfile( String profile )
-        ;
+    void setProfile( String profile );
 
-    String getURL()
-        ;
+    String getURL();
 
-    void setNoMd5Checks( boolean noMd5Checks )
-        ;
+    void setNoMd5Checks( boolean noMd5Checks );
 
-    boolean isNoMd5Checks()
-        ;
+    boolean isNoMd5Checks();
 
-    void setURL( String URL )
-        ;
+    void setURL( String URL );
+
+    Properties getProperties();
 }

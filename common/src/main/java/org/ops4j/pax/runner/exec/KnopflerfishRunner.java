@@ -23,29 +23,30 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import javax.xml.parsers.ParserConfigurationException;
+import org.ops4j.io.StreamUtils;
+import org.ops4j.pax.runner.DownloadManager;
+import org.ops4j.pax.runner.PomInfo;
+import org.ops4j.pax.runner.Runner;
+import org.ops4j.pax.runner.ServiceException;
+import org.ops4j.pax.runner.ServiceManager;
+import org.ops4j.pax.runner.internal.RunnerOptions;
 import org.ops4j.pax.runner.state.Bundle;
 import org.ops4j.pax.runner.state.BundleState;
-import org.ops4j.pax.runner.internal.RunnerOptions;
-import org.ops4j.pax.runner.repositories.BundleInfo;
 import org.ops4j.pax.runner.utils.FileUtils;
 import org.ops4j.pax.runner.utils.Pipe;
-import org.ops4j.pax.runner.maven2.BundleManager;
-import org.ops4j.pax.runner.PomInfo;
-import org.ops4j.io.StreamUtils;
 import org.xml.sax.SAXException;
 
 public class KnopflerfishRunner
-    implements Runnable
+    implements Runner
 {
 
-    private RunnerOptions m_options;
     private Properties m_props;
-    private BundleInfo m_systemBundle;
-    private List<Bundle> m_bundles;
+
     private static final String FRAMEWORK_GROUPID = "org.knopflerfish.osgi";
     private static final String BUNDLES_GROUPID = "org.knopflerfish.bundle";
     private static final PomInfo SYSTEM_BUNDLE = new PomInfo( FRAMEWORK_GROUPID, "framework", "2.0.0" );
@@ -58,8 +59,8 @@ public class KnopflerfishRunner
              new PomInfo( BUNDLES_GROUPID + ".console", "console", "1.0.0" ),
              new PomInfo( BUNDLES_GROUPID + ".console", "console_api", "1.0.0" ),
              new PomInfo( BUNDLES_GROUPID + ".logcommands", "logcommands", "1.0.1" ),
-             new PomInfo( "org.ops4j.pax.logging", "api", "0.9.2" ),
-             new PomInfo( "org.ops4j.pax.logging", "service", "0.9.2") ,
+             new PomInfo( "org.ops4j.pax.logging", "api", "0.9.4" ),
+             new PomInfo( "org.ops4j.pax.logging", "service", "0.9.4") ,
              new PomInfo( BUNDLES_GROUPID + ".cm", "cm_api", "1.0.1" )
         };
     private static final PomInfo[] GUI_BUNDLES =
@@ -72,36 +73,36 @@ public class KnopflerfishRunner
             new PomInfo(  BUNDLES_GROUPID + ".cm_desktop", "cm_desktop", "1.0.0" )
         };
 
-    public KnopflerfishRunner( RunnerOptions runnerOptions, Properties props, List<Bundle> bundles,
-                               BundleManager bundleManager )
-        throws IOException, ParserConfigurationException, SAXException
+    public KnopflerfishRunner( Properties props )
+        throws IOException, ParserConfigurationException, SAXException, ServiceException
     {
-        m_options = runnerOptions;
         m_props = props;
-        m_bundles = bundles;
-        m_systemBundle = bundleManager.getBundleFile( SYSTEM_BUNDLE );
-        if( m_options.isStartGui() )
+    }
+
+    public void execute( RunnerOptions options, List<Bundle> initialBundles )
+        throws ServiceException, IOException
+    {
+        DownloadManager downloadManager = ServiceManager.getInstance().getService( DownloadManager.class );
+        File systemBundle = downloadManager.download( SYSTEM_BUNDLE );
+        List<Bundle> bundles = new ArrayList<Bundle>();
+        if( options.isStartGui() )
         {
             for( PomInfo bundle : GUI_BUNDLES )
             {
-                BundleInfo gui = bundleManager.getBundleFile( bundle );
-                m_bundles.add( new Bundle( gui, 0, BundleState.START ) );
+                File gui = downloadManager.download( bundle );
+                bundles.add( new Bundle( gui, 2, BundleState.START ) );
             }
         }
         for( PomInfo bundle : DEFAULT_BUNDLES )
         {
-            BundleInfo defBundle = bundleManager.getBundleFile( bundle );
-            m_bundles.add( new Bundle( defBundle, 0, BundleState.START ) );
+            File defBundle = downloadManager.download( bundle );
+            bundles.add( new Bundle( defBundle, 1, BundleState.START ) );
         }
-    }
-
-    public void run()
-    {
         try
         {
-            File f = createPackageListFile();
-            createConfigFile( f );
-            runIt();
+            File f = createPackageListFile( options );
+            createConfigFile( f, options, bundles );
+            runIt( options, systemBundle );
         } catch( IOException e )
         {
             e.printStackTrace();
@@ -111,10 +112,10 @@ public class KnopflerfishRunner
         }
     }
 
-    private void createConfigFile( File packageFile )
+    private void createConfigFile( File packageFile, RunnerOptions options, List<Bundle> bundles )
         throws IOException
     {
-        File confDir = m_options.getWorkDir();
+        File confDir = options.getWorkDir();
         File file = new File( confDir, "init.xargs" );
         if( file.exists() )
         {
@@ -189,14 +190,14 @@ public class KnopflerfishRunner
             out.write( "-init\n" );
             out.write( "-initlevel 1\n" );
             //TODO fix right start levels from bundle info
-            for( Bundle bundle : m_bundles )
+            for( Bundle bundle : bundles )
             {
                 out.write( "-install " );
                 out.write( bundle.toString() );
                 out.write( "\n" );
             }
             out.write( "-startlevel 7\n" );
-            for( Bundle bundle : m_bundles )
+            for( Bundle bundle : bundles )
             {
                 out.write( "-start " );
                 out.write( bundle.toString() );
@@ -209,7 +210,7 @@ public class KnopflerfishRunner
         }
     }
 
-    private void runIt()
+    private void runIt( RunnerOptions options, File systemBundle )
         throws IOException, InterruptedException
     {
         Runtime runtime = Runtime.getRuntime();
@@ -231,9 +232,9 @@ public class KnopflerfishRunner
                     "-Dorg.knopflerfish.framework.usingwrapperscript=false",
                     "-Dorg.knopflerfish.framework.exitonshutdown=true",
                     "-jar",
-                    m_systemBundle.toString()
+                    systemBundle.toString()
                 };
-            Process process = runtime.exec( cmd, null, m_options.getWorkDir() );
+            Process process = runtime.exec( cmd, null, options.getWorkDir() );
             InputStream err = process.getErrorStream();
             InputStream out = process.getInputStream();
             OutputStream in = process.getOutputStream();
@@ -250,7 +251,7 @@ public class KnopflerfishRunner
         }
     }
 
-    private File createPackageListFile()
+    private File createPackageListFile( RunnerOptions options )
         throws IOException
     {
         String javaVersion = System.getProperty( "java.version" );
@@ -262,7 +263,7 @@ public class KnopflerfishRunner
         {
             throw new IllegalStateException( "Resource not found in jar: " + resource );
         }
-        File f = new File( m_options.getWorkDir(), "system-packages.list" );
+        File f = new File( options.getWorkDir(), "system-packages.list" );
         FileOutputStream out = new FileOutputStream( f );
         try
         {
@@ -273,4 +274,5 @@ public class KnopflerfishRunner
         }
         return f;
     }
+
 }

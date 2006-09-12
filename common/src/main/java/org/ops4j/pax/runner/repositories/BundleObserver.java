@@ -17,10 +17,11 @@
  */
 package org.ops4j.pax.runner.repositories;
 
+import org.ops4j.pax.runner.state.Bundle;
+
 public interface BundleObserver
 {
+    void bundleAdded( Bundle bundle );
 
-    void bundleAdded( BundleInfo bundle );
-
-    void bundleRemoved( BundleInfo bundle );
+    void bundleRemoved( Bundle bundle );
 }

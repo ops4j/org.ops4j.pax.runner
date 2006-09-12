@@ -18,25 +18,18 @@
 package org.ops4j.pax.runner.cmdline;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
 import java.util.StringTokenizer;
 import javax.xml.parsers.ParserConfigurationException;
-import org.ops4j.pax.runner.state.Bundle;
-import org.ops4j.pax.runner.exec.EquinoxRunner;
-import org.ops4j.pax.runner.exec.FelixRunner;
-import org.ops4j.pax.runner.exec.KnopflerfishRunner;
-import org.ops4j.pax.runner.RunnerOptionsImpl;
 import org.ops4j.pax.runner.PomInfo;
-import org.ops4j.pax.runner.repositories.Repository;
+import org.ops4j.pax.runner.ServiceException;
+import org.ops4j.pax.runner.PaxRunner;
+import org.ops4j.pax.runner.ServiceManager;
 import org.ops4j.pax.runner.internal.RunnerOptions;
-import org.ops4j.pax.runner.maven2.BundleManager;
-import org.ops4j.pax.runner.maven2.PomManagerImpl;
+import org.ops4j.pax.runner.internal.RunnerOptionsImpl;
+import org.ops4j.pax.runner.repositories.RepositoryInfo;
+import org.ops4j.pax.runner.repositories.RepositoryType;
 import org.xml.sax.SAXException;
 
 /**
@@ -44,10 +37,11 @@ import org.xml.sax.SAXException;
  */
 public class Run
 {
+
     public static File WORK_DIR;
 
     public static void main( String[] args )
-        throws IOException, ParserConfigurationException, SAXException
+        throws Exception, ParserConfigurationException, SAXException, ServiceException
     {
         CmdLine cmdLine = null;
         try
@@ -121,66 +115,58 @@ public class Run
         };
         Authenticator.setDefault( auth );
 
-        String[] repositories = extractRepositories( cmdLine );
+        extractRepositories( cmdLine, options );
         boolean noCheckMD5 = cmdLine.isSet( "no-md5" );
         options.setNoMd5Checks( noCheckMD5 );
-
-        List<Bundle> bundles;
-        Properties props;
-        String urlValue = cmdLine.getValue( "url" );
 
         String version = cmdLine.getValue( "version" );
         String group = cmdLine.getValue( "group" );
         String artifact = cmdLine.getValue( "artifact" );
-        PomInfo pomInfo = new PomInfo( artifact, group, version );
-        URL baseUrl = new URL( cmdLine.getValue( "repository" ) );
-        PomManagerImpl pomManager = PomManagerImpl.getInstance( baseUrl, options );
-        bundles = pomManager.getBundles( pomInfo );
-        props = pomManager.getProperties( pomInfo );
-
-        Repository repository = null;
-        BundleManager bundleManager = new BundleManager( repository, options );
         String platform = cmdLine.getValue( "platform" ).toLowerCase();
-        System.out.println( "\n   Platform: " + platform );
-        if( "equinox".equals( platform ) )
-        {
-            Runnable wrapper = new EquinoxRunner( options, props, bundles, bundleManager );
-            wrapper.run();
-        }
-        else if( "felix".equals( platform ) )
-        {
-            Runnable wrapper = new FelixRunner( options, props, bundles, bundleManager );
-            wrapper.run();
-        }
-        else if( "knopflerfish".equals( platform ) )
-        {
-            Runnable wrapper = new KnopflerfishRunner( options, props, bundles, bundleManager );
-            wrapper.run();
-        }
-        else
-        {
-            System.err.println( "Platform '" + platform + "' is currently not supported." );
-            System.exit( 2 );
-        }
-        System.exit(0);
+        options.setSelectedPlatform( platform );
+        PomInfo pomInfo = new PomInfo( artifact, group, version );
+        PaxRunner paxRunner = ServiceManager.getInstance().getService( PaxRunner.class );
+        paxRunner.fillOptionsWithPomData( pomInfo, options );
+        paxRunner.run( options );
+        System.exit( 0 );
     }
 
-    private static String[] extractRepositories( CmdLine cmdLine )
+    /**
+     * Repository commandline format;
+     *
+     * [type]:[name]:[url]
+     * maven2:Ops4JStd:http://repository.ops4j.org/maven2/
+     *
+     * @param cmdLine
+     * @param options
+     */
+    private static void extractRepositories( CmdLine cmdLine, RunnerOptions options )
     {
         String repoValue = cmdLine.getValue( "repository" );
         StringTokenizer st = new StringTokenizer( repoValue, ", ", false );
-        ArrayList repos = new ArrayList();
         while( st.hasMoreTokens() )
         {
             String repo = st.nextToken();
-            if( ! repo.endsWith( "/" ) )
+            if( !repo.endsWith( "/" ) )
             {
                 repo = repo + "/";
             }
-            repos.add( repo );
+            extractRepoParams( repo, options );
         }
-        String[] result = new String[ repos.size() ];
-        repos.toArray( result );
-        return result;
+    }
+
+    private static void extractRepoParams( String repo, RunnerOptions options )
+    {
+        int pos1 = repo.indexOf( ':' );
+        int pos2 = repo.indexOf( ':', pos1 + 1 );
+        if( pos1 == -1 || pos2 <= pos1 )
+        {
+            throw new IllegalArgumentException( "Repository is specified as [type]:[name]:[url], and not '" + repo );
+        }
+        String type = repo.substring( 0, pos1 );
+        String name = repo.substring( pos1 + 1, pos2 );
+        String url = repo.substring( pos2 + 1 );
+        RepositoryInfo repoInfo = new RepositoryInfo( name, url, RepositoryType.valueOf( type ) );
+        options.addRepository( repoInfo );
     }
 }

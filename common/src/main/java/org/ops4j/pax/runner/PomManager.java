@@ -17,13 +17,12 @@
  */
 package org.ops4j.pax.runner;
 
-import org.ops4j.pax.runner.internal.RunnerOptions;
+import org.ops4j.pax.runner.pom.Model;
+import java.net.URL;
 
-public interface PaxRunner
+public interface PomManager
 {
-    void run( RunnerOptions options )
-        throws Exception;
+    Model getPom( URL url );
 
-    void fillOptionsWithPomData( PomInfo pomInfo, RunnerOptions options )
-        throws Exception;
+    Model getPom( PomInfo pomInfo );
 }

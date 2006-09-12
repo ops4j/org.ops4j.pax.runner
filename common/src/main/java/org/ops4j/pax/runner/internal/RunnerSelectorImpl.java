@@ -15,15 +15,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ops4j.pax.runner;
+package org.ops4j.pax.runner.internal;
 
-import org.ops4j.pax.runner.internal.RunnerOptions;
+import org.ops4j.pax.runner.RunnerSelector;
+import org.ops4j.pax.runner.Runner;
+import java.util.Properties;
 
-public interface PaxRunner
+public class RunnerSelectorImpl
+    implements RunnerSelector
 {
-    void run( RunnerOptions options )
-        throws Exception;
 
-    void fillOptionsWithPomData( PomInfo pomInfo, RunnerOptions options )
-        throws Exception;
+    public Runner select( String name, Properties props )
+    {
+        return null;
+    }
 }

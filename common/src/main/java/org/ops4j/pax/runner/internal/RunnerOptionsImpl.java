@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ops4j.pax.runner;
+package org.ops4j.pax.runner.internal;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,13 +23,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.ops4j.pax.runner.repositories.BundleInfo;
+import java.util.Properties;
 import org.ops4j.pax.runner.repositories.BundleObserver;
 import org.ops4j.pax.runner.repositories.RepositoryInfo;
 import org.ops4j.pax.runner.repositories.RepositoryObserver;
-import org.ops4j.pax.runner.internal.RunnerOptions;
+import org.ops4j.pax.runner.state.Bundle;
 
-public class RunnerOptionsImpl implements RunnerOptions
+public class RunnerOptionsImpl
+    implements RunnerOptions
 {
 
     private boolean m_runClean;
@@ -41,7 +42,7 @@ public class RunnerOptionsImpl implements RunnerOptions
     protected String m_selectedPlatform;
     private String m_vmArguments;
     private File m_workDir;
-    protected List<BundleInfo> m_bundles;
+    protected List<Bundle> m_bundles;
     protected ArrayList<String> m_platforms;
     protected List<RepositoryInfo> m_repositories;
     protected Map<String, String> m_systemProperties;
@@ -50,12 +51,14 @@ public class RunnerOptionsImpl implements RunnerOptions
     private String m_profile;
     private String m_URL;
     private boolean m_noMd5Checks;
+    private Properties m_properties;
 
     public RunnerOptionsImpl()
     {
         m_platforms = new ArrayList<String>();
         m_systemProperties = new HashMap<String, String>();
-        m_bundles = new ArrayList<BundleInfo>();
+        m_bundles = new ArrayList<Bundle>();
+        m_properties = new Properties();
         m_repositories = new ArrayList<RepositoryInfo>();
         m_bundleObservers = new ArrayList<BundleObserver>();
         m_repositoryObservers = new ArrayList<RepositoryObserver>();
@@ -189,12 +192,12 @@ public class RunnerOptionsImpl implements RunnerOptions
         m_platforms.remove( platform );
     }
 
-    public List<BundleInfo> getBundles()
+    public List<Bundle> getBundles()
     {
         return m_bundles;
     }
 
-    public void addBundle( BundleInfo bundle )
+    public void addBundle( Bundle bundle )
     {
         m_bundles.add( bundle );
         for( BundleObserver observer : m_bundleObservers )
@@ -203,7 +206,7 @@ public class RunnerOptionsImpl implements RunnerOptions
         }
     }
 
-    public void removeBundle( BundleInfo bundle )
+    public void removeBundle( Bundle bundle )
     {
         m_bundles.remove( bundle );
         for( BundleObserver observer : m_bundleObservers )
@@ -265,7 +268,7 @@ public class RunnerOptionsImpl implements RunnerOptions
         m_systemProperties = systemProperties;
     }
 
-    public void setBundles( List<BundleInfo> bundles )
+    public void setBundles( List<Bundle> bundles )
     {
         m_bundles = bundles;
     }
@@ -298,5 +301,10 @@ public class RunnerOptionsImpl implements RunnerOptions
     public void setURL( String URL )
     {
         m_URL = URL;
+    }
+
+    public Properties getProperties()
+    {
+        return m_properties;
     }
 }

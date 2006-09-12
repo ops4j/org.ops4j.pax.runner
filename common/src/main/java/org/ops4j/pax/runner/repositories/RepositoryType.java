@@ -19,7 +19,5 @@ package org.ops4j.pax.runner.repositories;
 
 public enum RepositoryType
 {
-
-    ProjectRepository, OscarBundleRepository, EclipseUpdateCenter, OSGiBundleRepository
-
+    project, obr, eclipse, osgi, maven2
 }

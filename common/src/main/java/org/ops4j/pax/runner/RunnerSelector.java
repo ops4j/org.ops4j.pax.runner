@@ -17,13 +17,9 @@
  */
 package org.ops4j.pax.runner;
 
-import org.ops4j.pax.runner.internal.RunnerOptions;
+import java.util.Properties;
 
-public interface PaxRunner
+public interface RunnerSelector
 {
-    void run( RunnerOptions options )
-        throws Exception;
-
-    void fillOptionsWithPomData( PomInfo pomInfo, RunnerOptions options )
-        throws Exception;
+    Runner select( String name, Properties props );
 }

@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ops4j.pax.runner.io;
+package org.ops4j.pax.runner.internal;
 
 import org.ops4j.pax.runner.DownloadManager;
 import org.ops4j.pax.runner.ServiceManager;
@@ -56,6 +56,10 @@ public class DownloadManagerImpl
     {
         CacheHandler cacheHandler = ServiceManager.getInstance().getService( CacheHandler.class );
         File localCache = cacheHandler.getLocalCache( url );
+        if( localCache.exists() )
+        {
+            return localCache;
+        }
         URLConnection urlConnection = url.openConnection();
         int expected = urlConnection.getContentLength();
         InputStream in = urlConnection.getInputStream();

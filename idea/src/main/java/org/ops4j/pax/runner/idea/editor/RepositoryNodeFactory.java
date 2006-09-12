@@ -73,7 +73,7 @@ public class RepositoryNodeFactory
         try
         {
             type = repository.getType();
-            if( RepositoryType.OscarBundleRepository == type )
+            if( RepositoryType.obr == type )
             {
                 return createOscarBundleRepositoryNode( repository );
             }
@@ -85,7 +85,7 @@ public class RepositoryNodeFactory
 //            {
 //                return createOsgiBundleRepositoryNode( repository );
 //            }
-            if( RepositoryType.ProjectRepository == type )
+            if( RepositoryType.project == type )
             {
                 return createProjectRepositoryNode( repository, config );
             }

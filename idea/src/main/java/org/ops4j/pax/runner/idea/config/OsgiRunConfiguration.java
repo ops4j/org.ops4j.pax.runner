@@ -55,9 +55,9 @@ public class OsgiRunConfiguration extends RunConfigurationBase
             m_logger.debug( "OsgiRunConfiguration(" + project + ", " + configFactory + ", " + "\"" + name +"\"" );
         }
         m_configBean = new ConfigBean( project, this );
-        RepositoryInfo info = new RepositoryInfo( "Project", "", RepositoryType.ProjectRepository );
+        RepositoryInfo info = new RepositoryInfo( "Project", "", RepositoryType.project );
         m_configBean.addRepository( info );
-        info = new RepositoryInfo( "Oscar Bundle Repository", "http://oscar-osgi.sourceforge.net/repository.xml", RepositoryType.OscarBundleRepository );
+        info = new RepositoryInfo( "Oscar Bundle Repository", "http://oscar-osgi.sourceforge.net/repository.xml", RepositoryType.obr );
         m_configBean.addRepository( info );
     }
 
