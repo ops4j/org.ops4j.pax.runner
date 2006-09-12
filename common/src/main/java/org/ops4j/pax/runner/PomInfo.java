@@ -25,12 +25,12 @@ public class PomInfo
     private String m_version;
     private String m_type;
 
-    public PomInfo( String artifact, String group, String version )
+    public PomInfo( String group, String artifact, String version )
     {
         this( artifact, group, version, "jar" );
     }
-    
-    public PomInfo( String artifact, String group, String version, String type )
+
+    public PomInfo( String group, String artifact, String version, String type )
     {
         m_type = type;
         m_artifact = artifact;

@@ -1,22 +1,29 @@
 package org.ops4j.pax.runner.state;
 
-import java.io.File;
 import org.ops4j.pax.runner.repositories.BundleInfo;
 
 public final class Bundle
 {
-    private File m_bundleData;
+
     private BundleState m_TargetState;
     private int m_StartLevel;
-    private boolean m_starting;
-    private BundleInfo m_info;
+    private BundleInfo m_bundleInfo;
 
-    public Bundle( File bundleInfo, int startLevel, BundleState targetState )
+    public Bundle( BundleInfo bundleInfo )
     {
-        m_bundleData = bundleInfo;
+        this( bundleInfo, 3 );
+    }
+
+    public Bundle( BundleInfo bundleInfo, int startLevel )
+    {
+        this( bundleInfo, startLevel, BundleState.START );
+    }
+
+    public Bundle( BundleInfo bundleInfo, int startLevel, BundleState targetState )
+    {
+        m_bundleInfo = bundleInfo;
         m_TargetState = targetState;
         m_StartLevel = startLevel;
-        m_starting = true;
     }
 
     public int getStartLevel()
@@ -29,28 +36,8 @@ public final class Bundle
         return m_TargetState;
     }
 
-    public File getBundleData()
+    public BundleInfo getBundleInfo()
     {
-        return m_bundleData;
-    }
-
-    public void setStarting( boolean starting )
-    {
-        m_starting = starting;
-    }
-
-    public boolean isStarting()
-    {
-        return m_starting;
-    }
-
-    public BundleInfo getInfo()
-    {
-        return m_info;
-    }
-
-    public void setInfo( BundleInfo info )
-    {
-        m_info = info;
+        return m_bundleInfo;
     }
 }

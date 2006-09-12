@@ -22,25 +22,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
-import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import javax.xml.parsers.ParserConfigurationException;
-import org.ops4j.pax.runner.DownloadManager;
 import org.ops4j.pax.runner.PomInfo;
-import org.ops4j.pax.runner.Runner;
 import org.ops4j.pax.runner.ServiceException;
-import org.ops4j.pax.runner.ServiceManager;
 import org.ops4j.pax.runner.internal.RunnerOptions;
+import org.ops4j.pax.runner.repositories.BundleRef;
 import org.ops4j.pax.runner.state.Bundle;
-import org.ops4j.pax.runner.state.BundleState;
 import org.ops4j.pax.runner.utils.FileUtils;
 import org.ops4j.pax.runner.utils.Pipe;
 import org.xml.sax.SAXException;
 
-public class FelixRunner
-    implements Runner
+public class FelixRunner extends AbstractRunner
 {
 
     private static final String GROUPID = "org.apache.felix";
@@ -172,13 +167,35 @@ public class FelixRunner
                                                   "org.xml.sax.ext, " +
                                                   "org.xml.sax.helpers";
 
+    private static final PomInfo[] DEFAULT_POMS = new PomInfo[]
+        {
+        new PomInfo( GROUPID, "org.apache.felix.shell", VERSION ),
+        new PomInfo( GROUPID, "org.apache.felix.bundlerepository", VERSION ),
+        new PomInfo( GROUPID, "org.apache.felix.shell.tui", VERSION )
+    };
+
+    private static final PomInfo[] GUI_POMS = new PomInfo[]
+        {
+        new PomInfo( GROUPID, "org.apache.felix.shell.gui.plugin", VERSION ),
+        new PomInfo( GROUPID, "org.apache.felix.shell.gui", VERSION )
+    };
+
+    private static final PomInfo[] SYSTEM_POMS =
+        {
+            new PomInfo( GROUPID, "org.osgi.felix.framework", VERSION ),
+            new PomInfo( GROUPID, "org.apache.felix.main", VERSION ),
+            new PomInfo( GROUPID, "org.osgi.core", VERSION )
+
+        };
+
     public FelixRunner( Properties props )
         throws IOException, ParserConfigurationException, SAXException, ServiceException
     {
         m_props = props;
+
     }
 
-    private void createConfigFile( RunnerOptions options, List<Bundle> bundles, File osgi, File framework, File system )
+    protected void createConfigFile( RunnerOptions options, List<Bundle> bundles )
         throws IOException
     {
         File confDir = new File( options.getWorkDir(), "conf" );
@@ -207,7 +224,7 @@ public class FelixRunner
                     buf.append( ", \\\n    " );
                 }
                 first = false;
-                buf.append( bundle.getBundleData().getAbsolutePath() );
+                buf.append( bundle.getBundleInfo().getReference().getLocation() );
             }
             FileUtils.writeProperty( out, "felix.auto.start.3", buf.toString() );
             for( Map.Entry entry : m_props.entrySet() )
@@ -223,7 +240,7 @@ public class FelixRunner
         }
     }
 
-    private void runIt( RunnerOptions options, File system )
+    protected void runIt( RunnerOptions options, List<Bundle> systemBundles )
         throws IOException, InterruptedException
     {
         Runtime runtime = Runtime.getRuntime();
@@ -239,13 +256,14 @@ public class FelixRunner
         }
         else
         {
+            BundleRef ref = systemBundles.get(0).getBundleInfo().getReference();
             File workDir = options.getWorkDir();
             String[] cmd =
                 {
                     javaHome + "/bin/java",
                     "-Dfelix.config.properties=" + workDir.getAbsolutePath() + "conf/config.properties",
                     "-jar",
-                    system.getAbsolutePath(),
+                    ref.getLocation().getPath()
                 };
             Process process = runtime.exec( cmd, null, options.getWorkDir() );
             InputStream err = process.getErrorStream();
@@ -264,47 +282,19 @@ public class FelixRunner
         }
     }
 
-    public void execute( RunnerOptions options, List<Bundle> bundles )
-        throws ServiceException, IOException
+    protected PomInfo[] getGuiBundles()
     {
-        DownloadManager downloadManager = ServiceManager.getInstance().getService( DownloadManager.class );
-        PomInfo shellPom = new PomInfo( GROUPID, "org.apache.felix.shell", VERSION );
-        File system1 = downloadManager.download( shellPom );
-        bundles.add( new Bundle( system1, 0, BundleState.START ) );
-        PomInfo obrPom = new PomInfo( GROUPID, "org.apache.felix.bundlerepository", VERSION );
-        File system2 = downloadManager.download( obrPom );
-        bundles.add( new Bundle( system2, 0, BundleState.START ) );
-        PomInfo tuiPom = new PomInfo( GROUPID, "org.apache.felix.shell.tui", VERSION );
-        File system3 = downloadManager.download( tuiPom );
-        bundles.add( new Bundle( system3, 0, BundleState.START ) );
-        if( options.isStartGui() )
-        {
-            PomInfo guiPom = new PomInfo( GROUPID, "org.apache.felix.shell.gui", VERSION );
-            File system4 = downloadManager.download( guiPom );
-            bundles.add( new Bundle( system4, 0, BundleState.START ) );
-            PomInfo guiPluginPom = new PomInfo( GROUPID, "org.apache.felix.shell.gui.plugin", VERSION );
-            File system5 = downloadManager.download( guiPluginPom );
-            bundles.add( new Bundle( system5, 0, BundleState.START ) );
-        }
-        PomInfo systemPom = new PomInfo( GROUPID, "org.apache.felix.main", VERSION );
-        File system = downloadManager.download( systemPom );
-        PomInfo frameworkPom = new PomInfo( GROUPID, "org.osgi.felix.framework", VERSION );
-        File framework = downloadManager.download( frameworkPom );
-        PomInfo osgiPom = new PomInfo( GROUPID, "org.osgi.core", VERSION );
-        File osgi = downloadManager.download( osgiPom );
-        try
-        {
-            createConfigFile( options, bundles, osgi, framework, system );
-            runIt( options, system );
-        } catch( MalformedURLException e )
-        {
-            e.printStackTrace();
-        } catch( IOException e )
-        {
-            e.printStackTrace();
-        } catch( InterruptedException e )
-        {
-            e.printStackTrace();
-        }
+        return GUI_POMS;
     }
+
+    protected PomInfo[] getDefaultBundles()
+    {
+        return DEFAULT_POMS;
+    }
+
+    protected PomInfo[] getSystemBundles()
+    {
+        return SYSTEM_POMS;
+    }
+
 }

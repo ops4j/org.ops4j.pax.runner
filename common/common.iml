@@ -18,6 +18,7 @@
     <orderEntry type="library" name="jsr173_api-1.0" level="project" />
     <orderEntry type="library" name="jaxb-impl-2.0.2" level="project" />
     <orderEntry type="library" name="activation-1.1" level="project" />
+    <orderEntry type="library" name="osgi_R4_core-1.0" level="project" />
     <orderEntryProperties />
   </component>
 </module>

@@ -23,25 +23,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.io.StreamUtils;
-import org.ops4j.pax.runner.DownloadManager;
 import org.ops4j.pax.runner.PomInfo;
 import org.ops4j.pax.runner.Runner;
 import org.ops4j.pax.runner.ServiceException;
-import org.ops4j.pax.runner.ServiceManager;
 import org.ops4j.pax.runner.internal.RunnerOptions;
 import org.ops4j.pax.runner.state.Bundle;
-import org.ops4j.pax.runner.state.BundleState;
 import org.ops4j.pax.runner.utils.FileUtils;
 import org.ops4j.pax.runner.utils.Pipe;
 import org.xml.sax.SAXException;
 
-public class KnopflerfishRunner
+public class KnopflerfishRunner extends AbstractRunner
     implements Runner
 {
 
@@ -49,7 +45,11 @@ public class KnopflerfishRunner
 
     private static final String FRAMEWORK_GROUPID = "org.knopflerfish.osgi";
     private static final String BUNDLES_GROUPID = "org.knopflerfish.bundle";
-    private static final PomInfo SYSTEM_BUNDLE = new PomInfo( FRAMEWORK_GROUPID, "framework", "2.0.0" );
+
+    private static final PomInfo[] SYSTEM_BUNDLES =
+        {
+            new PomInfo( FRAMEWORK_GROUPID, "framework", "2.0.0" )
+        };
 
     private static final PomInfo[] DEFAULT_BUNDLES =
         {
@@ -79,37 +79,26 @@ public class KnopflerfishRunner
         m_props = props;
     }
 
-    public void execute( RunnerOptions options, List<Bundle> initialBundles )
-        throws ServiceException, IOException
+    protected PomInfo[] getGuiBundles()
     {
-        DownloadManager downloadManager = ServiceManager.getInstance().getService( DownloadManager.class );
-        File systemBundle = downloadManager.download( SYSTEM_BUNDLE );
-        List<Bundle> bundles = new ArrayList<Bundle>();
-        if( options.isStartGui() )
-        {
-            for( PomInfo bundle : GUI_BUNDLES )
-            {
-                File gui = downloadManager.download( bundle );
-                bundles.add( new Bundle( gui, 2, BundleState.START ) );
-            }
-        }
-        for( PomInfo bundle : DEFAULT_BUNDLES )
-        {
-            File defBundle = downloadManager.download( bundle );
-            bundles.add( new Bundle( defBundle, 1, BundleState.START ) );
-        }
-        try
-        {
-            File f = createPackageListFile( options );
-            createConfigFile( f, options, bundles );
-            runIt( options, systemBundle );
-        } catch( IOException e )
-        {
-            e.printStackTrace();
-        } catch( InterruptedException e )
-        {
-            e.printStackTrace();
-        }
+        return GUI_BUNDLES;
+    }
+
+    protected PomInfo[] getDefaultBundles()
+    {
+        return DEFAULT_BUNDLES;
+    }
+
+    protected PomInfo[] getSystemBundles()
+    {
+        return SYSTEM_BUNDLES;
+    }
+
+    protected void createConfigFile( RunnerOptions options, List<Bundle> bundles )
+        throws IOException
+    {
+        File f = createPackageListFile( options );
+        createConfigFile( f, options, bundles );
     }
 
     private void createConfigFile( File packageFile, RunnerOptions options, List<Bundle> bundles )
@@ -210,7 +199,7 @@ public class KnopflerfishRunner
         }
     }
 
-    private void runIt( RunnerOptions options, File systemBundle )
+    protected void runIt( RunnerOptions options, List<Bundle> systemBundle )
         throws IOException, InterruptedException
     {
         Runtime runtime = Runtime.getRuntime();

@@ -18,91 +18,60 @@
 package org.ops4j.pax.runner.idea.repositories;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.File;
-import java.net.URL;
 import java.util.HashMap;
+import java.util.Properties;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-import org.ops4j.pax.runner.repositories.BundleInfo;
-import org.ops4j.pax.runner.repositories.Repository;
-import org.ops4j.pax.runner.repositories.RepositoryInfo;
 import org.apache.log4j.Logger;
+import org.ops4j.pax.runner.repositories.BundleObserver;
+import org.ops4j.pax.runner.repositories.BundleRef;
+import org.ops4j.pax.runner.repositories.RepositoryInfo;
+import org.xml.sax.SAXException;
 
 public class ObrRepository extends DefaultMutableTreeNode
-    implements MutableTreeNode, Repository
+    implements MutableTreeNode, BundleObserver
 {
+
     private static Logger m_logger = Logger.getLogger( ObrRepository.class );
 
     private RepositoryInfo m_info;
+    private HashMap<String, DefaultMutableTreeNode> m_categories;
 
     public ObrRepository( RepositoryInfo info )
         throws IOException, ParserConfigurationException, SAXException
     {
         super();
+        m_categories = new HashMap<String, DefaultMutableTreeNode>();
         m_info = info;
         setAllowsChildren( true );
-        URL url = new URL( m_info.getUrl() );
-        InputStream in = null;
-        try
-        {
-            in = url.openStream();
-            DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            Document doc = builder.parse( in );
-            Element root = doc.getDocumentElement();
-            Element repository = (Element) root.getElementsByTagName( "repository" ).item( 0 );
-            Element repoName = (Element) repository.getElementsByTagName( "name" ).item( 0 );
-            setUserObject( repoName.getTextContent() );
-            NodeList bundleNodes = root.getElementsByTagName( "bundle" );
-            HashMap<String, DefaultMutableTreeNode> categories = new HashMap<String, DefaultMutableTreeNode>();
-            for( int i = 0; i < bundleNodes.getLength(); i++ )
-            {
-                Element bundleElement = (Element) bundleNodes.item( i );
-                Element nameElement = (Element) bundleElement.getElementsByTagName( "bundle-name" ).item( 0 );
-                Element categoryElement = (Element) bundleElement.getElementsByTagName( "bundle-category" ).item( 0 );
-                String category = categoryElement.getTextContent();
-                DefaultMutableTreeNode categoryNode = categories.get( category );
-                if( categoryNode == null )
-                {
-                    categoryNode = new DefaultMutableTreeNode( category, true );
-                    categories.put( category, categoryNode );
-                    add( categoryNode );
-                }
-                String name = nameElement.getTextContent();
+    }
 
-                File dest = null; // TODO
-                BundleInfo bundle = new BundleInfo( name, this.getInfo(), dest );
-                MutableTreeNode nameNode = new DefaultMutableTreeNode( bundle, false );
-                categoryNode.add( nameNode );
-            }
-        } finally
+    public void bundleAdded( BundleRef bundle )
+    {
+        Properties props = bundle.getProperties();
+        String category = props.getProperty( "bundle-category" );
+        DefaultMutableTreeNode categoryNode = m_categories.get( category );
+        if( categoryNode == null )
         {
-            if( in != null )
-            {
-                try
-                {
-                    in.close();
-                } catch( IOException e )
-                {
-                    e.printStackTrace();  //TODO: Auto-generated, need attention.
-                }
-            }
+            categoryNode = new DefaultMutableTreeNode( category, true );
+            m_categories.put( category, categoryNode );
+            add( categoryNode );
         }
+        MutableTreeNode nameNode = new DefaultMutableTreeNode( bundle, false );
+        categoryNode.add( nameNode );
     }
 
-    public RepositoryInfo getInfo()
+    public void bundleRemoved( BundleRef bundle )
     {
-        return m_info;
-    }
-
-    public void download( BundleInfo bundle )
-    {
+        Properties props = bundle.getProperties();
+        String category = props.getProperty( "bundle-category" );
+        DefaultMutableTreeNode categoryNode = m_categories.get( category );
+        if( categoryNode == null )
+        {
+            return;
+        }
+        MutableTreeNode nameNode = new DefaultMutableTreeNode( bundle, false );
+        categoryNode.remove( nameNode );
     }
 }

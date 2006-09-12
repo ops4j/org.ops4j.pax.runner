@@ -22,64 +22,64 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
-import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import javax.xml.parsers.ParserConfigurationException;
-import org.ops4j.pax.runner.state.Bundle;
-import org.ops4j.pax.runner.state.BundleState;
-import org.ops4j.pax.runner.internal.RunnerOptions;
-import org.ops4j.pax.runner.utils.FileUtils;
-import org.ops4j.pax.runner.utils.Pipe;
 import org.ops4j.pax.runner.PomInfo;
 import org.ops4j.pax.runner.Runner;
-import org.ops4j.pax.runner.ServiceManager;
 import org.ops4j.pax.runner.ServiceException;
-import org.ops4j.pax.runner.DownloadManager;
+import org.ops4j.pax.runner.internal.RunnerOptions;
+import org.ops4j.pax.runner.repositories.BundleRef;
+import org.ops4j.pax.runner.state.Bundle;
+import org.ops4j.pax.runner.utils.FileUtils;
+import org.ops4j.pax.runner.utils.Pipe;
 import org.xml.sax.SAXException;
 
-public class EquinoxRunner
+public class EquinoxRunner extends AbstractRunner
     implements Runner
 {
-    private Properties m_props;
-    private File m_system;
 
-    public EquinoxRunner( Properties props)
+    private static final PomInfo[] DEFAULT_POMS =
+        {
+            new PomInfo( "org.eclipse.osgi", "services", "3.1.100.v20060601" ),
+            new PomInfo( "org.eclipse.osgi", "util", "3.1.100.v20060601" )
+        };
+
+    private static final PomInfo[] SYSTEM_POMS =
+        {
+            new PomInfo( "org.eclipse", "osgi", "3.2.1.R32x_v20060717" )
+        };
+
+    private static final PomInfo[] GUI_POMS =
+        {
+        };
+
+    private Properties m_props;
+
+    public EquinoxRunner( Properties props )
         throws IOException, ParserConfigurationException, SAXException, ServiceException
     {
         m_props = props;
     }
 
-    public void execute( RunnerOptions options, List<Bundle> bundles )
-        throws ServiceException, IOException
+    protected PomInfo[] getGuiBundles()
     {
-        DownloadManager downloadManager = ServiceManager.getInstance().getService( DownloadManager.class );
-        PomInfo systemPom = new PomInfo( "org.eclipse", "osgi", "3.2.1.R32x_v20060717" );
-        m_system = downloadManager.download( systemPom );
-        PomInfo servicesPom = new PomInfo( "org.eclipse.osgi", "services", "3.1.100.v20060601" );
-        File services = downloadManager.download( servicesPom );
-        bundles.add( new Bundle( services, 1, BundleState.START ) );
-        PomInfo utilPom = new PomInfo( "org.eclipse.osgi", "util", "3.1.100.v20060601" );
-        File util = downloadManager.download( utilPom );
-        bundles.add( new Bundle( util, 1, BundleState.START ) );
-        try
-        {
-            createConfigIniFile( options, bundles );
-            runIt( options );
-        } catch( MalformedURLException e )
-        {
-            e.printStackTrace();
-        } catch( IOException e )
-        {
-            e.printStackTrace();
-        } catch( InterruptedException e )
-        {
-            e.printStackTrace();
-        }
+        return GUI_POMS;
     }
 
-    private void createConfigIniFile( RunnerOptions options , List<Bundle> bundles)
+    protected PomInfo[] getDefaultBundles()
+    {
+        return DEFAULT_POMS;
+    }
+
+    protected PomInfo[] getSystemBundles()
+    {
+        return SYSTEM_POMS;
+    }
+
+    protected void createConfigFile( RunnerOptions options, List<Bundle> bundles )
         throws IOException
     {
         File confDir = new File( options.getWorkDir(), "configuration" );
@@ -103,7 +103,7 @@ public class EquinoxRunner
                     out.write( ",\\\n" );
                 }
                 first = false;
-                String urlString = bundle.getBundleData().toURL().toString();
+                String urlString = bundle.getBundleInfo().getReference().getLocation().toString();
                 out.write( "reference:" );
                 out.write( urlString );
                 out.write( "@" + bundle.getStartLevel() );
@@ -131,7 +131,7 @@ public class EquinoxRunner
         }
     }
 
-    private void runIt( RunnerOptions options )
+    protected void runIt( RunnerOptions options, List<Bundle> systemBundles )
         throws IOException, InterruptedException
     {
         Runtime runtime = Runtime.getRuntime();
@@ -149,11 +149,14 @@ public class EquinoxRunner
         else
         {
             File workDir = options.getWorkDir();
+            BundleRef ref = systemBundles.get(0).getBundleInfo().getReference();
+            URL location = ref.getLocation();
+            String jarFile = location.getPath();
             String[] cmd =
                 {
                     javaHome + "/bin/java",
                     "-jar",
-                    m_system.toString(),
+                    jarFile,
                     "-console",
                     "-configuration",
                     workDir.getAbsolutePath() + "/configuration",

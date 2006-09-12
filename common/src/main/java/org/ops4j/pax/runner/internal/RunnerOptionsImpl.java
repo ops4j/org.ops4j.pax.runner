@@ -202,7 +202,7 @@ public class RunnerOptionsImpl
         m_bundles.add( bundle );
         for( BundleObserver observer : m_bundleObservers )
         {
-            observer.bundleAdded( bundle );
+            observer.bundleAdded( bundle.getBundleInfo().getReference() );
         }
     }
 
@@ -211,7 +211,7 @@ public class RunnerOptionsImpl
         m_bundles.remove( bundle );
         for( BundleObserver observer : m_bundleObservers )
         {
-            observer.bundleRemoved( bundle );
+            observer.bundleRemoved( bundle.getBundleInfo().getReference() );
         }
     }
 

@@ -91,11 +91,11 @@ public class AddRepositoryForm extends DialogWrapper
         RepositoryType type;
         if( m_eclipse.isSelected() )
         {
-            type = RepositoryType.EclipseUpdateCenter;
+            type = RepositoryType.eclipse;
         }
         if( m_oscar.isSelected() )
         {
-            type = RepositoryType.OscarBundleRepository;
+            type = RepositoryType.oscar;
         } else
         {
             throw new IllegalStateException( "None of the RadioButtons were selected." );

@@ -73,7 +73,7 @@ public class RepositoryNodeFactory
         try
         {
             type = repository.getType();
-            if( RepositoryType.obr == type )
+            if( RepositoryType.oscar == type )
             {
                 return createOscarBundleRepositoryNode( repository );
             }

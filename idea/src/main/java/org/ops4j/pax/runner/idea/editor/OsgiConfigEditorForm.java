@@ -46,8 +46,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import org.apache.log4j.Logger;
 import org.ops4j.pax.runner.idea.config.ConfigBean;
-import org.ops4j.pax.runner.repositories.BundleInfo;
 import org.ops4j.pax.runner.repositories.BundleObserver;
+import org.ops4j.pax.runner.repositories.BundleRef;
 
 public class OsgiConfigEditorForm
     implements BundleObserver
@@ -131,7 +131,7 @@ public class OsgiConfigEditorForm
     private void updateBundlesList( ConfigBean data )
     {
         m_bundleModel = new DefaultListModel();
-        for( BundleInfo bundle : data.getBundles() )
+        for( BundleRef bundle : data.getBundleRefs() )
         {
             m_bundleModel.addElement( bundle );
         }
@@ -196,14 +196,14 @@ public class OsgiConfigEditorForm
 
     private void retrieveBundles( ConfigBean data )
     {
-        List<BundleInfo> bundles = new ArrayList<BundleInfo>();
+        List<BundleRef> bundles = new ArrayList<BundleRef>();
         int size = m_bundleModel.size();
         for( int i = 0 ; i < size ; i++ )
         {
-            BundleInfo bundle = (BundleInfo) m_bundleModel.get( i );
+            BundleRef bundle = (BundleRef) m_bundleModel.get( i );
             bundles.add( bundle );
         }
-        data.setBundles( bundles );
+        data.setBundleRefs( bundles );
     }
 
     private void retrieveSystemProperties( ConfigBean data )
@@ -263,7 +263,7 @@ public class OsgiConfigEditorForm
         return false;
     }
 
-    public void bundleAdded( BundleInfo bundle )
+    public void bundleAdded( BundleRef bundle )
     {
         if( m_logger.isDebugEnabled() )
         {
@@ -272,7 +272,7 @@ public class OsgiConfigEditorForm
         m_bundleModel.addElement( bundle );
     }
 
-    public void bundleRemoved( BundleInfo bundle )
+    public void bundleRemoved( BundleRef bundle )
     {
         if( m_logger.isDebugEnabled() )
         {

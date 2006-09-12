@@ -124,7 +124,7 @@ public class Run
         String artifact = cmdLine.getValue( "artifact" );
         String platform = cmdLine.getValue( "platform" ).toLowerCase();
         options.setSelectedPlatform( platform );
-        PomInfo pomInfo = new PomInfo( artifact, group, version );
+        PomInfo pomInfo = new PomInfo( group, artifact, version );
         PaxRunner paxRunner = ServiceManager.getInstance().getService( PaxRunner.class );
         paxRunner.fillOptionsWithPomData( pomInfo, options );
         paxRunner.run( options );

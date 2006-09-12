@@ -35,7 +35,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import org.apache.log4j.Logger;
 import org.ops4j.pax.runner.idea.config.ConfigBean;
-import org.ops4j.pax.runner.repositories.BundleInfo;
+import org.ops4j.pax.runner.repositories.BundleRef;
 import org.ops4j.pax.runner.repositories.RepositoryInfo;
 import org.ops4j.pax.runner.repositories.RepositoryObserver;
 
@@ -121,8 +121,8 @@ public class AddBundleForm extends DialogWrapper
         for( TreePath select : selection )
         {
             DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode) select.getLastPathComponent();
-            BundleInfo bundle = (BundleInfo) treeNode.getUserObject();
-            m_config.addBundle( bundle );
+            BundleRef bundle = (BundleRef) treeNode.getUserObject();
+            m_config.addBundleRef( bundle );
         }
         super.doOKAction();
     }

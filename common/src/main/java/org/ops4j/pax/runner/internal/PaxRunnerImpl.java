@@ -20,6 +20,8 @@ package org.ops4j.pax.runner.internal;
 import java.io.File;
 import java.util.List;
 import java.util.Properties;
+import java.util.jar.JarFile;
+import java.util.jar.Manifest;
 import org.ops4j.pax.runner.DownloadManager;
 import org.ops4j.pax.runner.PaxRunner;
 import org.ops4j.pax.runner.PomInfo;
@@ -29,6 +31,8 @@ import org.ops4j.pax.runner.RunnerSelector;
 import org.ops4j.pax.runner.ServiceManager;
 import org.ops4j.pax.runner.pom.Dependency;
 import org.ops4j.pax.runner.pom.Model;
+import org.ops4j.pax.runner.repositories.BundleInfo;
+import org.ops4j.pax.runner.repositories.BundleRef;
 import org.ops4j.pax.runner.state.Bundle;
 import org.ops4j.pax.runner.state.BundleState;
 import org.w3c.dom.Element;
@@ -47,9 +51,17 @@ public class PaxRunnerImpl
         Properties props = options.getProperties();
         for( Dependency dep : pom.getDependencies().getDependency() )
         {
-            PomInfo depInfo = new PomInfo( dep.getArtifactId(), dep.getGroupId(), dep.getVersion() );
+            String artifact = dep.getArtifactId();
+            PomInfo depInfo = new PomInfo( dep.getGroupId(), artifact, dep.getVersion() );
             File bundleFile = downloadManager.download( depInfo );
-            Bundle bundle = new Bundle( bundleFile, 4, BundleState.START );
+            JarFile bundleJar = new JarFile( bundleFile );
+            // TODO: Need to worry about the URL part.
+            BundleRef ref = new BundleRef( artifact, options.getRepositories().get(0), bundleFile.toURL(), null );
+            BundleInfo info = new BundleInfo( ref );
+            Manifest manifest = bundleJar.getManifest();
+            info.extractData( manifest );
+            bundleJar.close();
+            Bundle bundle = new Bundle( info, 4, BundleState.START );
             bundles.add( bundle );
         }
         for( Element elem : pom.getProperties().getAny() )

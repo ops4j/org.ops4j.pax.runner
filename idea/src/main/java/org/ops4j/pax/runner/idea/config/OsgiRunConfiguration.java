@@ -57,7 +57,7 @@ public class OsgiRunConfiguration extends RunConfigurationBase
         m_configBean = new ConfigBean( project, this );
         RepositoryInfo info = new RepositoryInfo( "Project", "", RepositoryType.project );
         m_configBean.addRepository( info );
-        info = new RepositoryInfo( "Oscar Bundle Repository", "http://oscar-osgi.sourceforge.net/repository.xml", RepositoryType.obr );
+        info = new RepositoryInfo( "Oscar Bundle Repository", "http://oscar-osgi.sourceforge.net/repository.xml", RepositoryType.oscar );
         m_configBean.addRepository( info );
     }
 

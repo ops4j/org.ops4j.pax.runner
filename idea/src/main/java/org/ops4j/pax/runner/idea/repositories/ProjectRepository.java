@@ -20,24 +20,20 @@ package org.ops4j.pax.runner.idea.repositories;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
+import java.net.URL;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 import org.ops4j.pax.runner.idea.config.ConfigBean;
-import org.ops4j.pax.runner.repositories.BundleInfo;
-import org.ops4j.pax.runner.repositories.Repository;
+import org.ops4j.pax.runner.repositories.BundleRef;
 import org.ops4j.pax.runner.repositories.RepositoryInfo;
-import java.io.File;
 
 public class ProjectRepository extends DefaultMutableTreeNode
-    implements MutableTreeNode, Repository
+    implements MutableTreeNode
 {
-
-    private RepositoryInfo m_info;
 
     public ProjectRepository( RepositoryInfo info, ConfigBean config )
     {
         super();
-        m_info = info;
         setAllowsChildren( true );
         Project project = config.getProject();
         String projectName = "Project - " + project.getName();
@@ -47,20 +43,10 @@ public class ProjectRepository extends DefaultMutableTreeNode
         for( Module module : modules )
         {
             String moduleName = module.getName();
-            File dest = null; // TODO
-            BundleInfo bundle = new BundleInfo( moduleName,  m_info, dest );
+            URL dest = null; // TODO
+            BundleRef bundle = new BundleRef( moduleName, info, dest, null );
             DefaultMutableTreeNode moduleNode = new DefaultMutableTreeNode( bundle, false );
             add( moduleNode );
         }
     }
-
-    public RepositoryInfo getInfo()
-    {
-        return m_info;
-    }
-
-    public void download( BundleInfo bundle )
-    {
-    }
-
 }

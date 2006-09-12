@@ -22,6 +22,10 @@ public interface Repository
 
     RepositoryInfo getInfo();
 
-    void download( BundleInfo bundle );
+    BundleInfo download( BundleRef bundleReference );
+
+    void addBundleObserver( BundleObserver observer );
+
+    void removeBundleObserver( BundleObserver observer );
 
 }
