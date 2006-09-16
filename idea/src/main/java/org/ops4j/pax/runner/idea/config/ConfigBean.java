@@ -12,7 +12,6 @@ public class ConfigBean extends RunnerOptionsImpl
     private ProjectJdk m_jdk;
     private Project m_project;
     private OsgiRunConfiguration m_osgiRunConfiguration;
-    private List<BundleRef> m_bundleRefs;
 
     public ConfigBean( Project project, OsgiRunConfiguration osgiRunConfiguration )
     {
@@ -42,20 +41,5 @@ public class ConfigBean extends RunnerOptionsImpl
     public Project getProject()
     {
         return m_project;
-    }
-
-    public void setBundleRefs( List<BundleRef> bundleRefs )
-    {
-        m_bundleRefs = bundleRefs;
-    }
-
-    public List<BundleRef> getBundleRefs()
-    {
-        return m_bundleRefs;
-    }
-
-    public void addBundleRef( BundleRef bundle )
-    {
-        m_bundleRefs.add( bundle );
     }
 }

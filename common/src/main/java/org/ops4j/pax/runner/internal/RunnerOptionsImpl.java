@@ -27,6 +27,8 @@ import java.util.Properties;
 import org.ops4j.pax.runner.repositories.BundleObserver;
 import org.ops4j.pax.runner.repositories.RepositoryInfo;
 import org.ops4j.pax.runner.repositories.RepositoryObserver;
+import org.ops4j.pax.runner.repositories.BundleRef;
+import org.ops4j.pax.runner.RunnerOptions;
 import org.ops4j.pax.runner.state.Bundle;
 
 public class RunnerOptionsImpl
@@ -42,7 +44,7 @@ public class RunnerOptionsImpl
     protected String m_selectedPlatform;
     private String m_vmArguments;
     private File m_workDir;
-    protected List<Bundle> m_bundles;
+    protected List<BundleRef> m_bundleRefs;
     protected ArrayList<String> m_platforms;
     protected List<RepositoryInfo> m_repositories;
     protected Map<String, String> m_systemProperties;
@@ -52,12 +54,13 @@ public class RunnerOptionsImpl
     private String m_URL;
     private boolean m_noMd5Checks;
     private Properties m_properties;
+    private List<BundleRef> m_systemBundles;
 
     public RunnerOptionsImpl()
     {
         m_platforms = new ArrayList<String>();
         m_systemProperties = new HashMap<String, String>();
-        m_bundles = new ArrayList<Bundle>();
+        m_bundleRefs = new ArrayList<BundleRef>();
         m_properties = new Properties();
         m_repositories = new ArrayList<RepositoryInfo>();
         m_bundleObservers = new ArrayList<BundleObserver>();
@@ -192,26 +195,26 @@ public class RunnerOptionsImpl
         m_platforms.remove( platform );
     }
 
-    public List<Bundle> getBundles()
+    public List<BundleRef> getBundleRefs()
     {
-        return m_bundles;
+        return m_bundleRefs;
     }
 
-    public void addBundle( Bundle bundle )
+    public void addBundleRef( BundleRef ref )
     {
-        m_bundles.add( bundle );
+        m_bundleRefs.add( ref );
         for( BundleObserver observer : m_bundleObservers )
         {
-            observer.bundleAdded( bundle.getBundleInfo().getReference() );
+            observer.bundleAdded( ref );
         }
     }
 
-    public void removeBundle( Bundle bundle )
+    public void removeBundleRef( BundleRef ref )
     {
-        m_bundles.remove( bundle );
+        m_bundleRefs.remove( ref );
         for( BundleObserver observer : m_bundleObservers )
         {
-            observer.bundleRemoved( bundle.getBundleInfo().getReference() );
+            observer.bundleRemoved( ref );
         }
     }
 
@@ -268,9 +271,9 @@ public class RunnerOptionsImpl
         m_systemProperties = systemProperties;
     }
 
-    public void setBundles( List<Bundle> bundles )
+    public void setBundleRefs( List<BundleRef> bundles )
     {
-        m_bundles = bundles;
+        m_bundleRefs = bundles;
     }
 
     public String getProfile()
@@ -306,5 +309,20 @@ public class RunnerOptionsImpl
     public Properties getProperties()
     {
         return m_properties;
+    }
+
+    public BundleRef getSystemBundle()
+    {
+        return m_systemBundles.get(0);
+    }
+
+    public void setSystemBundles( List<BundleRef> systemBundles )
+    {
+        m_systemBundles = systemBundles;
+    }
+
+    public List<BundleRef> getSystemBundles()
+    {
+        return m_systemBundles;
     }
 }

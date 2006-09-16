@@ -19,24 +19,18 @@ package org.ops4j.pax.runner.exec;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.PomInfo;
-import org.ops4j.pax.runner.ServiceException;
-import org.ops4j.pax.runner.internal.RunnerOptions;
-import org.ops4j.pax.runner.repositories.BundleRef;
+import org.ops4j.pax.runner.RunnerOptions;
 import org.ops4j.pax.runner.state.Bundle;
 import org.ops4j.pax.runner.utils.FileUtils;
-import org.ops4j.pax.runner.utils.Pipe;
-import org.xml.sax.SAXException;
 
-public class FelixRunner extends AbstractRunner
+public class FelixPreparer extends AbstractPreparer
 {
+
 
     private static final String GROUPID = "org.apache.felix";
 
@@ -188,8 +182,7 @@ public class FelixRunner extends AbstractRunner
 
         };
 
-    public FelixRunner( Properties props )
-        throws IOException, ParserConfigurationException, SAXException, ServiceException
+    public FelixPreparer( Properties props )
     {
         m_props = props;
 
@@ -240,47 +233,6 @@ public class FelixRunner extends AbstractRunner
         }
     }
 
-    protected void runIt( RunnerOptions options, List<Bundle> systemBundles )
-        throws IOException, InterruptedException
-    {
-        Runtime runtime = Runtime.getRuntime();
-
-        String javaHome = System.getProperty( "java.home" );
-        if( javaHome == null )
-        {
-            javaHome = System.getenv().get( "JAVA_HOME" );
-        }
-        if( javaHome == null )
-        {
-            System.err.println( "JAVA_HOME is not set." );
-        }
-        else
-        {
-            BundleRef ref = systemBundles.get(0).getBundleInfo().getReference();
-            File workDir = options.getWorkDir();
-            String[] cmd =
-                {
-                    javaHome + "/bin/java",
-                    "-Dfelix.config.properties=" + workDir.getAbsolutePath() + "conf/config.properties",
-                    "-jar",
-                    ref.getLocation().getPath()
-                };
-            Process process = runtime.exec( cmd, null, options.getWorkDir() );
-            InputStream err = process.getErrorStream();
-            InputStream out = process.getInputStream();
-            OutputStream in = process.getOutputStream();
-            Pipe errPipe = new Pipe( err, System.err );
-            errPipe.start();
-            Pipe outPipe = new Pipe( out, System.out );
-            outPipe.start();
-            Pipe inPipe = new Pipe( System.in, in );
-            inPipe.start();
-            process.waitFor();
-            inPipe.stop();
-            outPipe.stop();
-            errPipe.stop();
-        }
-    }
 
     protected PomInfo[] getGuiBundles()
     {
@@ -296,5 +248,4 @@ public class FelixRunner extends AbstractRunner
     {
         return SYSTEM_POMS;
     }
-
 }

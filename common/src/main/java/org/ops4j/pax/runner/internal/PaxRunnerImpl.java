@@ -21,20 +21,17 @@ import java.io.File;
 import java.util.List;
 import java.util.Properties;
 import java.util.jar.JarFile;
-import java.util.jar.Manifest;
 import org.ops4j.pax.runner.DownloadManager;
 import org.ops4j.pax.runner.PaxRunner;
 import org.ops4j.pax.runner.PomInfo;
 import org.ops4j.pax.runner.PomManager;
 import org.ops4j.pax.runner.Runner;
+import org.ops4j.pax.runner.RunnerOptions;
 import org.ops4j.pax.runner.RunnerSelector;
 import org.ops4j.pax.runner.ServiceManager;
 import org.ops4j.pax.runner.pom.Dependency;
 import org.ops4j.pax.runner.pom.Model;
-import org.ops4j.pax.runner.repositories.BundleInfo;
 import org.ops4j.pax.runner.repositories.BundleRef;
-import org.ops4j.pax.runner.state.Bundle;
-import org.ops4j.pax.runner.state.BundleState;
 import org.w3c.dom.Element;
 
 public class PaxRunnerImpl
@@ -47,7 +44,7 @@ public class PaxRunnerImpl
         PomManager pomManager = ServiceManager.getInstance().getService( PomManager.class );
         DownloadManager downloadManager = ServiceManager.getInstance().getService( DownloadManager.class );
         Model pom = pomManager.getPom( pomInfo );
-        List<Bundle> bundles = options.getBundles();
+        List<BundleRef> refs = options.getBundleRefs();
         Properties props = options.getProperties();
         for( Dependency dep : pom.getDependencies().getDependency() )
         {
@@ -57,12 +54,7 @@ public class PaxRunnerImpl
             JarFile bundleJar = new JarFile( bundleFile );
             // TODO: Need to worry about the URL part.
             BundleRef ref = new BundleRef( artifact, options.getRepositories().get(0), bundleFile.toURL(), null );
-            BundleInfo info = new BundleInfo( ref );
-            Manifest manifest = bundleJar.getManifest();
-            info.extractData( manifest );
-            bundleJar.close();
-            Bundle bundle = new Bundle( info, 4, BundleState.START );
-            bundles.add( bundle );
+            refs.add( ref );
         }
         for( Element elem : pom.getProperties().getAny() )
         {
@@ -79,7 +71,6 @@ public class PaxRunnerImpl
         RunnerSelector selector = ServiceManager.getInstance().getService( RunnerSelector.class );
         String platform = options.getSelectedPlatform();
         Runner runner = selector.select( platform, props );
-        List<Bundle> bundles = options.getBundles();
-        runner.execute( options, bundles );
+        runner.execute( options );
     }
 }

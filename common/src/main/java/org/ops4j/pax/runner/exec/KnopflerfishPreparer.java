@@ -21,24 +21,17 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.io.StreamUtils;
 import org.ops4j.pax.runner.PomInfo;
-import org.ops4j.pax.runner.Runner;
-import org.ops4j.pax.runner.ServiceException;
-import org.ops4j.pax.runner.internal.RunnerOptions;
+import org.ops4j.pax.runner.RunnerOptions;
 import org.ops4j.pax.runner.state.Bundle;
 import org.ops4j.pax.runner.utils.FileUtils;
-import org.ops4j.pax.runner.utils.Pipe;
-import org.xml.sax.SAXException;
 
-public class KnopflerfishRunner extends AbstractRunner
-    implements Runner
+public class KnopflerfishPreparer extends AbstractPreparer
 {
 
     private Properties m_props;
@@ -73,8 +66,7 @@ public class KnopflerfishRunner extends AbstractRunner
             new PomInfo(  BUNDLES_GROUPID + ".cm_desktop", "cm_desktop", "1.0.0" )
         };
 
-    public KnopflerfishRunner( Properties props )
-        throws IOException, ParserConfigurationException, SAXException, ServiceException
+    public KnopflerfishPreparer( Properties props )
     {
         m_props = props;
     }
@@ -196,47 +188,6 @@ public class KnopflerfishRunner extends AbstractRunner
         } finally
         {
             out.close();
-        }
-    }
-
-    protected void runIt( RunnerOptions options, List<Bundle> systemBundle )
-        throws IOException, InterruptedException
-    {
-        Runtime runtime = Runtime.getRuntime();
-
-        String javaHome = System.getProperty( "java.home" );
-        if( javaHome == null )
-        {
-            javaHome = System.getenv().get( "JAVA_HOME" );
-        }
-        if( javaHome == null )
-        {
-            System.err.println( "JAVA_HOME is not set." );
-        }
-        else
-        {
-            String[] cmd =
-                {
-                    javaHome + "/bin/java",
-                    "-Dorg.knopflerfish.framework.usingwrapperscript=false",
-                    "-Dorg.knopflerfish.framework.exitonshutdown=true",
-                    "-jar",
-                    systemBundle.toString()
-                };
-            Process process = runtime.exec( cmd, null, options.getWorkDir() );
-            InputStream err = process.getErrorStream();
-            InputStream out = process.getInputStream();
-            OutputStream in = process.getOutputStream();
-            Pipe errPipe = new Pipe( err, System.err );
-            errPipe.start();
-            Pipe outPipe = new Pipe( out, System.out );
-            outPipe.start();
-            Pipe inPipe = new Pipe( System.in, in );
-            inPipe.start();
-            process.waitFor();
-            inPipe.stop();
-            outPipe.stop();
-            errPipe.stop();
         }
     }
 

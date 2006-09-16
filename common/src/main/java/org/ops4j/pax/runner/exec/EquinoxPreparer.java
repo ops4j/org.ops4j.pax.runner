@@ -19,26 +19,18 @@ package org.ops4j.pax.runner.exec;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Writer;
-import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.PomInfo;
-import org.ops4j.pax.runner.Runner;
-import org.ops4j.pax.runner.ServiceException;
-import org.ops4j.pax.runner.internal.RunnerOptions;
-import org.ops4j.pax.runner.repositories.BundleRef;
+import org.ops4j.pax.runner.RunnerOptions;
+import org.ops4j.pax.runner.RunPreparer;
 import org.ops4j.pax.runner.state.Bundle;
 import org.ops4j.pax.runner.utils.FileUtils;
-import org.ops4j.pax.runner.utils.Pipe;
-import org.xml.sax.SAXException;
 
-public class EquinoxRunner extends AbstractRunner
-    implements Runner
+public class EquinoxPreparer
+    implements RunPreparer
 {
 
     private static final PomInfo[] DEFAULT_POMS =
@@ -58,8 +50,7 @@ public class EquinoxRunner extends AbstractRunner
 
     private Properties m_props;
 
-    public EquinoxRunner( Properties props )
-        throws IOException, ParserConfigurationException, SAXException, ServiceException
+    public EquinoxPreparer( Properties props )
     {
         m_props = props;
     }
@@ -77,6 +68,10 @@ public class EquinoxRunner extends AbstractRunner
     protected PomInfo[] getSystemBundles()
     {
         return SYSTEM_POMS;
+    }
+
+    public void prepareForRun( RunnerOptions options )
+    {
     }
 
     protected void createConfigFile( RunnerOptions options, List<Bundle> bundles )
@@ -128,55 +123,6 @@ public class EquinoxRunner extends AbstractRunner
             {
                 out.close();
             }
-        }
-    }
-
-    protected void runIt( RunnerOptions options, List<Bundle> systemBundles )
-        throws IOException, InterruptedException
-    {
-        Runtime runtime = Runtime.getRuntime();
-
-        File cwd = new File( System.getProperty( "user.dir" ) );
-        String javaHome = System.getProperty( "java.home" );
-        if( javaHome == null )
-        {
-            javaHome = System.getenv().get( "JAVA_HOME" );
-        }
-        if( javaHome == null )
-        {
-            System.err.println( "JAVA_HOME is not set." );
-        }
-        else
-        {
-            File workDir = options.getWorkDir();
-            BundleRef ref = systemBundles.get(0).getBundleInfo().getReference();
-            URL location = ref.getLocation();
-            String jarFile = location.getPath();
-            String[] cmd =
-                {
-                    javaHome + "/bin/java",
-                    "-jar",
-                    jarFile,
-                    "-console",
-                    "-configuration",
-                    workDir.getAbsolutePath() + "/configuration",
-                    "-install",
-                    workDir.getAbsolutePath()
-                };
-            Process process = runtime.exec( cmd, null, cwd );
-            InputStream err = process.getErrorStream();
-            InputStream out = process.getInputStream();
-            OutputStream in = process.getOutputStream();
-            Pipe errPipe = new Pipe( err, System.err );
-            errPipe.start();
-            Pipe outPipe = new Pipe( out, System.out );
-            outPipe.start();
-            Pipe inPipe = new Pipe( System.in, in );
-            inPipe.start();
-            process.waitFor();
-            inPipe.stop();
-            outPipe.stop();
-            errPipe.stop();
         }
     }
 }

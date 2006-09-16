@@ -17,8 +17,6 @@
  */
 package org.ops4j.pax.runner;
 
-import org.ops4j.pax.runner.internal.RunnerOptions;
-
 public interface PaxRunner
 {
     void run( RunnerOptions options )

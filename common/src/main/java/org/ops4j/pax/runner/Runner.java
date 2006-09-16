@@ -17,13 +17,9 @@
  */
 package org.ops4j.pax.runner;
 
-import java.util.List;
-import org.ops4j.pax.runner.internal.RunnerOptions;
-import org.ops4j.pax.runner.state.Bundle;
-
 public interface Runner
 {
 
-    void execute( RunnerOptions options, List<Bundle> initialBundles )
+    void execute( RunnerOptions options )
         throws Exception;
 }

@@ -25,22 +25,29 @@ import com.intellij.execution.configurations.JavaParameters;
 import com.intellij.execution.configurations.ParametersList;
 import com.intellij.execution.configurations.RunnerSettings;
 import com.intellij.execution.process.OSProcessHandler;
-import com.intellij.util.PathsList;
+import java.io.File;
+import java.net.URL;
+import java.util.Properties;
 import java.util.StringTokenizer;
 import org.apache.log4j.Logger;
+import org.ops4j.pax.runner.exec.EquinoxPreparer;
 import org.ops4j.pax.runner.idea.config.ConfigBean;
+import org.ops4j.pax.runner.repositories.BundleRef;
 
 public class EquinoxRunner extends JavaCommandLineState
 {
     private static final Logger m_logger = Logger.getLogger( EquinoxRunner.class );
 
     private ConfigBean m_configBean;
+    private EquinoxPreparer m_preparer;
 
     public EquinoxRunner( ConfigBean configBean, RunnerSettings runnerSettings,
                           ConfigurationPerRunnerSettings configurationSettings )
     {
         super( runnerSettings, configurationSettings );
         m_configBean = configBean;
+        Properties props = configBean.getProperties();
+        m_preparer = new EquinoxPreparer( props );
     }
 
     protected JavaParameters createJavaParameters()
@@ -48,10 +55,10 @@ public class EquinoxRunner extends JavaCommandLineState
     {
         JavaParameters params = new JavaParameters();
         params.setJdk( m_configBean.getJdk() );
-        params.setMainClass( "org.ops4j.pax.runner.Main" );
-        params.setWorkingDirectory( m_configBean.getWorkDir() );
+        File workDir = m_configBean.getWorkDir();
+        params.setWorkingDirectory( workDir );
         processClasspath( params );
-        processArguments( params );
+        processArguments( params, workDir );
         processVmArgs( params );
         return params;
     }
@@ -63,6 +70,7 @@ public class EquinoxRunner extends JavaCommandLineState
         {
             m_logger.debug( "execute() - start");
         }
+        m_preparer.prepareForRun( m_configBean );
         ExecutionResult result = super.execute();
         if( m_logger.isDebugEnabled() )
         {
@@ -88,22 +96,30 @@ public class EquinoxRunner extends JavaCommandLineState
 
     private void processClasspath( JavaParameters params )
     {
-        PathsList classpath = params.getClassPath();
+        // No classpath support at the moment.
     }
 
-    private void processArguments( JavaParameters params )
+    private void processArguments( JavaParameters params, File workDir )
     {
         ParametersList arguments = params.getProgramParametersList();
+        arguments.add( "-console" );
+        arguments.add( "-configuration", workDir.getAbsolutePath() + "/configuration" );
+        arguments.add( "-install", workDir.getAbsolutePath() );
+
     }
 
     private void processVmArgs( JavaParameters params )
     {
         ParametersList vmArgs = params.getVMParametersList();
+        BundleRef ref = m_configBean.getSystemBundle();
+        URL location = ref.getLocation();
+        String jarFile = location.getPath();
         StringTokenizer st = new StringTokenizer( m_configBean.getVmArguments(), " ", false );
         while( st.hasMoreTokens() )
         {
             vmArgs.add( st.nextToken() );
         }
+        vmArgs.add( "-jar", jarFile ); // must be last
     }
 
 }

@@ -111,11 +111,16 @@ public class OsgiRunConfiguration extends RunConfigurationBase
         }
 
         Project project = getProject();
-        EquinoxRunner runner = new EquinoxRunner( m_configBean, runnerSettings, configurationSettings );
+        String selected = m_configBean.getSelectedPlatform();
         TextConsoleBuidlerFactory consoleBuidlerFactory = TextConsoleBuidlerFactory.getInstance();
         TextConsoleBuilder consoleBuilder = consoleBuidlerFactory.createBuilder( project );
-        runner.setConsoleBuilder( consoleBuilder );
-        return runner;
+        if( "Equinox".equalsIgnoreCase( selected ) )
+        {
+            EquinoxRunner runner = new EquinoxRunner( m_configBean, runnerSettings, configurationSettings );
+            runner.setConsoleBuilder( consoleBuilder );
+            return runner;
+        }
+        return null;
     }
 
     public void checkConfiguration()

@@ -19,6 +19,7 @@ package org.ops4j.pax.runner.repositories;
 
 import java.net.URL;
 import java.util.Properties;
+import org.ops4j.lang.NullArgumentException;
 
 public class BundleRef
 {
@@ -29,6 +30,9 @@ public class BundleRef
 
     public BundleRef( String name, RepositoryInfo repository, URL location, Properties properties )
     {
+        NullArgumentException.validateNotEmpty( name, "name");
+        NullArgumentException.validateNotNull( location, "location" );
+        NullArgumentException.validateNotNull( repository, "repository" );
         m_properties = properties;
         m_name = name;
         m_repository = repository;

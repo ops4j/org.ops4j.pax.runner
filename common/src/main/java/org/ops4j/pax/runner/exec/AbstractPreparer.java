@@ -17,35 +17,44 @@
  */
 package org.ops4j.pax.runner.exec;
 
-import org.ops4j.pax.runner.Runner;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.ops4j.pax.runner.DownloadManager;
 import org.ops4j.pax.runner.PomInfo;
+import org.ops4j.pax.runner.RunnerOptions;
 import org.ops4j.pax.runner.ServiceException;
 import org.ops4j.pax.runner.ServiceManager;
-import org.ops4j.pax.runner.repositories.BundleRef;
+import org.ops4j.pax.runner.RunPreparer;
 import org.ops4j.pax.runner.repositories.BundleInfo;
-import org.ops4j.pax.runner.internal.RunnerOptions;
+import org.ops4j.pax.runner.repositories.BundleRef;
 import org.ops4j.pax.runner.state.Bundle;
 import org.ops4j.pax.runner.state.BundleState;
-import java.io.IOException;
-import java.io.File;
-import java.util.List;
-import java.util.ArrayList;
 
-public abstract class AbstractRunner
-    implements Runner
+public abstract class AbstractPreparer
+    implements RunPreparer
 {
 
-    public void execute( RunnerOptions options, List<Bundle> initialBundles )
-        throws ServiceException, IOException, InterruptedException
+    public void prepareForRun( RunnerOptions options )
+        throws IOException
     {
-        DownloadManager downloadManager = ServiceManager.getInstance().getService( DownloadManager.class );
-        List<Bundle> systemBundles = new ArrayList<Bundle>();
-        for( PomInfo bundleInfo : getSystemBundles() )
+        DownloadManager downloadManager = null;
+        try
         {
-            Bundle systemBundle = createBundle( downloadManager, bundleInfo, options );
-            systemBundles.add( systemBundle );
+            downloadManager = ServiceManager.getInstance().getService( DownloadManager.class );
+        } catch( ServiceException e )
+        {
+            e.printStackTrace();  //TODO: Auto-generated, need attention.
         }
+        List<BundleRef> systemBundles = new ArrayList<BundleRef>();
+        for( PomInfo pom : getSystemBundles() )
+        {
+            File file = downloadManager.download( pom );
+            BundleRef ref = new BundleRef( pom.getArtifact(), options.getRepositories().get( 0 ), file.toURL(), null );
+            systemBundles.add( ref );
+        }
+        options.setSystemBundles( systemBundles );
         List<Bundle> bundles = new ArrayList<Bundle>();
         for( PomInfo bundleInfo : getDefaultBundles() )
         {
@@ -60,27 +69,32 @@ public abstract class AbstractRunner
                 bundles.add( bundle );
             }
         }
+        for( BundleRef ref : options.getBundleRefs() )
+        {
+            createBundle( ref );
+        }
         createConfigFile( options, bundles );
-        runIt( options, systemBundles );
     }
-
-    protected abstract PomInfo[] getGuiBundles();
-
-    protected abstract PomInfo[] getDefaultBundles();
-
-    protected abstract PomInfo[] getSystemBundles();
 
     protected abstract void createConfigFile( RunnerOptions options, List<Bundle> bundles )
         throws IOException;
 
-    protected abstract void runIt( RunnerOptions options, List<Bundle> systemBundle )
-        throws IOException, InterruptedException;
+    protected abstract PomInfo[] getSystemBundles();
+
+    protected abstract  PomInfo[] getDefaultBundles();
+
+    protected abstract PomInfo[] getGuiBundles();
 
     protected Bundle createBundle( DownloadManager downloadManager, PomInfo pom, RunnerOptions options )
         throws IOException
     {
         File file = downloadManager.download( pom );
         BundleRef ref = new BundleRef( pom.getArtifact(), options.getRepositories().get( 0 ), file.toURL(), null );
+        return createBundle( ref );
+    }
+
+    private Bundle createBundle( BundleRef ref )
+    {
         BundleInfo info = new BundleInfo( ref );
         return new Bundle( info, 1, BundleState.START );
     }

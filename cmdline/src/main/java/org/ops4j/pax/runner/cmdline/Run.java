@@ -26,7 +26,7 @@ import org.ops4j.pax.runner.PomInfo;
 import org.ops4j.pax.runner.ServiceException;
 import org.ops4j.pax.runner.PaxRunner;
 import org.ops4j.pax.runner.ServiceManager;
-import org.ops4j.pax.runner.internal.RunnerOptions;
+import org.ops4j.pax.runner.RunnerOptions;
 import org.ops4j.pax.runner.internal.RunnerOptionsImpl;
 import org.ops4j.pax.runner.repositories.RepositoryInfo;
 import org.ops4j.pax.runner.repositories.RepositoryType;

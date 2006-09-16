@@ -15,17 +15,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ops4j.pax.runner.internal;
+package org.ops4j.pax.runner;
 
-import java.util.Map;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
-import java.io.File;
+import org.ops4j.pax.runner.repositories.BundleObserver;
+import org.ops4j.pax.runner.repositories.BundleRef;
 import org.ops4j.pax.runner.repositories.RepositoryInfo;
 import org.ops4j.pax.runner.repositories.RepositoryObserver;
-import org.ops4j.pax.runner.repositories.BundleObserver;
-import org.ops4j.pax.runner.state.Bundle;
 
 public interface RunnerOptions
 {
@@ -78,11 +78,11 @@ public interface RunnerOptions
 
     void removePlatform( String platform );
 
-    List<Bundle> getBundles();
+    List<BundleRef> getBundleRefs();
 
-    void addBundle( Bundle bundle );
+    void addBundleRef( BundleRef ref );
 
-    void removeBundle( Bundle bundle );
+    void removeBundleRef( BundleRef ref );
 
     List<RepositoryInfo> getRepositories();
 
@@ -102,7 +102,7 @@ public interface RunnerOptions
 
     void setSystemProperties( Map<String, String> systemProperties );
 
-    void setBundles( List<Bundle> bundles );
+    void setBundleRefs( List<BundleRef> refs );
 
     String getProfile();
 
@@ -117,4 +117,8 @@ public interface RunnerOptions
     void setURL( String URL );
 
     Properties getProperties();
+
+    BundleRef getSystemBundle();
+
+    void setSystemBundles( List<BundleRef> systemBundles );
 }
