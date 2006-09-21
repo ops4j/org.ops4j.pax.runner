@@ -17,14 +17,24 @@
  */
 package org.ops4j.pax.runner.idea.module;
 
+import com.intellij.ide.util.projectWizard.ModuleWizardStep;
+import com.intellij.ide.util.projectWizard.ProjectWizardStepFactory;
+import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.openapi.module.ModuleType;
+import com.intellij.openapi.projectRoots.JavaSdk;
+import com.intellij.openapi.roots.ui.configuration.ModulesProvider;
+import com.intellij.openapi.util.Computable;
+import com.intellij.util.ArrayUtil;
+import java.util.ArrayList;
 import javax.swing.Icon;
+import org.ops4j.pax.runner.idea.OsgiIcons;
 
 public class OsgiModuleType extends ModuleType<OsgiModuleBuilder>
 {
 
     private static final String OSGI_MODULE_TYPE = "org.ops4j.pax.runner.idea.module.OsgiModuleType";
     private static OsgiModuleType m_instance = new OsgiModuleType();
+
 
     private OsgiModuleType()
     {
@@ -34,6 +44,45 @@ public class OsgiModuleType extends ModuleType<OsgiModuleBuilder>
     public static OsgiModuleType getInstance()
     {
         return m_instance;
+    }
+
+    public ModuleWizardStep[] createWizardSteps( WizardContext wizardContext,
+                                                 OsgiModuleBuilder moduleBuilder,
+                                                 ModulesProvider modulesProvider )
+    {
+        ProjectWizardStepFactory wizardFactory = ProjectWizardStepFactory.getInstance();
+        ManifestBean manifest = moduleBuilder.getManifest();
+        manifest.setVendor( "OPS4J - Open Participation Software for Java");
+        manifest.setVersion( "1.0.0" );
+        manifest.setLicense( "Apache License -  http://www.apache.org/licenses/LICENSE-2.0");
+        String projectName = wizardContext.getProjectName();
+        manifest.setBundleName( projectName );
+        manifest.setSymbolicName( "org.ops4j.pax." + projectName );
+
+        ArrayList<ModuleWizardStep> steps = new ArrayList<ModuleWizardStep>();
+        ModuleWizardStep nameAndLocationStep =
+            wizardFactory.createNameAndLocationStep( wizardContext, moduleBuilder, modulesProvider,
+                                                     OsgiIcons.WIZARD_PANEL,
+                                                     "osgi.createOsgi"
+            );
+        steps.add( nameAndLocationStep );
+        Computable computable = new Computable<Boolean>()
+        {
+            public Boolean compute()
+            {
+                return Boolean.TRUE;
+            }
+        };
+        ModuleWizardStep sdkStep = wizardFactory.createProjectJdkStep( wizardContext, JavaSdk.getInstance(), moduleBuilder, computable, OsgiIcons.WIZARD_PANEL, "osgi.createOsgi" );
+        steps.add( sdkStep );
+        steps.add( wizardFactory.createSourcePathsStep( nameAndLocationStep, moduleBuilder, OsgiIcons.WIZARD_PANEL, "osgi.createOsgi" ) );
+        OsgiModuleTypeStep step = new OsgiModuleTypeStep( wizardContext, moduleBuilder, OsgiIcons.WIZARD_PANEL, "osgi.createOsgi" );
+        steps.add( step );
+        ModuleWizardStep[] wizardSteps = steps.toArray( new ModuleWizardStep[steps.size()] );
+        return ArrayUtil.mergeArrays( wizardSteps,
+                                      super.createWizardSteps( wizardContext, moduleBuilder, modulesProvider ),
+                                      ModuleWizardStep.class
+        );
     }
 
     public OsgiModuleBuilder createModuleBuilder()
@@ -54,11 +103,18 @@ public class OsgiModuleType extends ModuleType<OsgiModuleBuilder>
 
     public Icon getBigIcon()
     {
-        return null;
+        return OsgiIcons.ICON_BIG;
     }
 
     public Icon getNodeIcon( boolean isOpened )
     {
-        return null;
+        if( isOpened )
+        {
+            return OsgiIcons.ICON_OPEN;
+        }
+        else
+        {
+            return OsgiIcons.ICON_CLOSE;
+        }
     }
 }

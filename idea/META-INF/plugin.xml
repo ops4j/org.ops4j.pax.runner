@@ -18,13 +18,18 @@
 -->
 
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
-<idea-plugin>
-  <name>Plugin name here</name>
-  <description>short description of the plugin</description>
+<idea-plugin version="2">
+  <name>Osgi Plugin</name>
+  <description>This plugin simplifies OSGi development.</description>
   <version>1.0</version>
-  <vendor>YourCompany</vendor>
+  <vendor>OPS4J - Open Participation Software for Java</vendor>
   <idea-version since-build="3000"/>
+  <resource-bundle xmlns="">org.ops4j.pax.runner.idea.OsgiResourceBundle</resource-bundle>
+
   <application-components>
+    <component>
+    <implementation-class>org.ops4j.pax.runner.idea.OsgiPlugin</implementation-class>
+    </component>
     <component>
       <implementation-class>org.ops4j.pax.runner.idea.PaxRunnerType</implementation-class>
     </component>

@@ -176,11 +176,11 @@
         <used_levels>
           <error>
             <option name="myName" value="ERROR" />
-            <option name="myVal" value="200" />
+            <option name="myVal" value="400" />
           </error>
           <warning>
             <option name="myName" value="WARNING" />
-            <option name="myVal" value="100" />
+            <option name="myVal" value="300" />
           </warning>
           <information>
             <option name="myName" value="INFO" />

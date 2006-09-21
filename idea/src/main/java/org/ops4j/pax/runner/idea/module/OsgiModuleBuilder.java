@@ -17,22 +17,23 @@
  */
 package org.ops4j.pax.runner.idea.module;
 
-import com.intellij.ide.util.projectWizard.ModuleBuilder;
-import com.intellij.openapi.roots.ModifiableRootModel;
-import com.intellij.openapi.options.ConfigurationException;
+import com.intellij.ide.util.projectWizard.JavaModuleBuilder;
 import com.intellij.openapi.module.ModuleType;
+import com.intellij.openapi.options.ConfigurationException;
+import com.intellij.openapi.roots.ModifiableRootModel;
 import org.apache.log4j.Logger;
 
-public class OsgiModuleBuilder extends ModuleBuilder
+public class OsgiModuleBuilder extends JavaModuleBuilder
 {
     private static final Logger m_logger = Logger.getLogger( OsgiModuleBuilder.class );
 
     private ModuleType m_type;
+    private ManifestBean m_manifest;
 
     public OsgiModuleBuilder( ModuleType type )
     {
-
         m_type = type;
+        m_manifest = new ManifestBean();
     }
 
     public void setupRootModel( ModifiableRootModel modifiableRootModel )
@@ -47,5 +48,10 @@ public class OsgiModuleBuilder extends ModuleBuilder
     public ModuleType getModuleType()
     {
         return m_type;
+    }
+
+    public ManifestBean getManifest()
+    {
+        return m_manifest;
     }
 }
