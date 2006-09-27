@@ -28,12 +28,12 @@ public class OsgiModuleBuilder extends JavaModuleBuilder
     private static final Logger m_logger = Logger.getLogger( OsgiModuleBuilder.class );
 
     private ModuleType m_type;
-    private ManifestBean m_manifest;
+    private DataBeanManifest m_manifest;
 
     public OsgiModuleBuilder( ModuleType type )
     {
         m_type = type;
-        m_manifest = new ManifestBean();
+        m_manifest = new DataBeanManifest();
     }
 
     public void setupRootModel( ModifiableRootModel modifiableRootModel )
@@ -50,7 +50,7 @@ public class OsgiModuleBuilder extends JavaModuleBuilder
         return m_type;
     }
 
-    public ManifestBean getManifest()
+    public DataBeanManifest getManifest()
     {
         return m_manifest;
     }

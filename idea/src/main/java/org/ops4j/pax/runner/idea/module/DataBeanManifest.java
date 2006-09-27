@@ -5,7 +5,7 @@ import com.intellij.openapi.util.JDOMExternalizable;
 import com.intellij.openapi.util.WriteExternalException;
 import org.jdom.Element;
 
-public class ManifestBean
+public class DataBeanManifest
     implements JDOMExternalizable
 {
 
@@ -22,8 +22,26 @@ public class ManifestBean
     private String m_version;
     private String m_description;
 
-    public ManifestBean()
+    public DataBeanManifest()
     {
+    }
+
+    public DataBeanManifest clone()
+    {
+        DataBeanManifest clone = new DataBeanManifest();
+        clone.m_category = m_category;
+        clone.m_symbolicName = m_symbolicName;
+        clone.m_bundleName = m_bundleName;
+        clone.m_vendor = m_vendor;
+        clone.m_copyright = m_copyright;
+        clone.m_contactAddress = m_contactAddress;
+        clone.m_license = m_license;
+        clone.m_activator = m_activator;
+        clone.m_updateLocation = m_updateLocation;
+        clone.m_docUrl = m_docUrl;
+        clone.m_version = m_version;
+        clone.m_description = m_description;
+        return clone;
     }
 
     public String getCategory()
@@ -189,6 +207,7 @@ public class ManifestBean
 
     private String getValue( Element element, String tagname )
     {
-        return getValue( element, tagname );
+        Element child = element.getChild( tagname );
+        return child.getText();
     }
 }

@@ -51,7 +51,7 @@ public class OsgiModuleTypeStep extends ModuleWizardStep
 
     public void updateDataModel()
     {
-        ManifestBean manifest = m_moduleBuilder.getManifest();
+        DataBeanManifest manifest = m_moduleBuilder.getManifest();
         m_form.getData( manifest );
     }
 

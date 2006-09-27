@@ -24,12 +24,24 @@
   <version>1.0</version>
   <vendor>OPS4J - Open Participation Software for Java</vendor>
   <idea-version since-build="3000"/>
+  <module-components>
+    <component>
+      <implementation-class>org.ops4j.pax.runner.idea.module.OsgiModuleEditorsProvider</implementation-class>
+    </component>
+    <component>
+      <interface-class>org.ops4j.pax.runner.idea.packages.PackageManager</interface-class>
+      <implementation-class>org.ops4j.pax.runner.idea.packages.PackageManagerImpl</implementation-class>
+    </component>
+  </module-components>
   <resource-bundle xmlns="">org.ops4j.pax.runner.idea.OsgiResourceBundle</resource-bundle>
+
+  <project-components>
+  </project-components>
 
   <application-components>
     <component>
-    <implementation-class>org.ops4j.pax.runner.idea.OsgiPlugin</implementation-class>
-    </component>
+      <implementation-class>org.ops4j.pax.runner.idea.OsgiPlugin</implementation-class>
+      </component>
     <component>
       <implementation-class>org.ops4j.pax.runner.idea.PaxRunnerType</implementation-class>
     </component>

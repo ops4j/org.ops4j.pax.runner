@@ -45,7 +45,7 @@ public class OsgiModuleTypeForm
     private JTextField m_version;
     private JTextArea m_description;
 
-    public void setData( ManifestBean data )
+    public void setData( DataBeanManifest data )
     {
         m_category.setText( data.getCategory() );
         m_symbolicName.setText( data.getSymbolicName() );
@@ -61,7 +61,7 @@ public class OsgiModuleTypeForm
         m_description.setText( data.getDescription() );
     }
 
-    public void getData( ManifestBean data )
+    public void getData( DataBeanManifest data )
     {
         data.setCategory( m_category.getText() );
         data.setSymbolicName( m_symbolicName.getText() );
@@ -77,7 +77,7 @@ public class OsgiModuleTypeForm
         data.setDescription( m_description.getText() );
     }
 
-    public boolean isModified( ManifestBean data )
+    public boolean isModified( DataBeanManifest data )
     {
         if( m_category.getText() != null
             ? !m_category.getText().equals( data.getCategory() )

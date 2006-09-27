@@ -23,7 +23,8 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.ops4j.pax.runner.idea.module.OsgiModuleType;
 
-public class OsgiPlugin implements ApplicationComponent
+public class OsgiPlugin
+    implements ApplicationComponent
 {
 
     public OsgiPlugin( ModuleTypeManager moduleTypeManager )

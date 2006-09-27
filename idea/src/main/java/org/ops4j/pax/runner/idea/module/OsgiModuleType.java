@@ -51,7 +51,7 @@ public class OsgiModuleType extends ModuleType<OsgiModuleBuilder>
                                                  ModulesProvider modulesProvider )
     {
         ProjectWizardStepFactory wizardFactory = ProjectWizardStepFactory.getInstance();
-        ManifestBean manifest = moduleBuilder.getManifest();
+        DataBeanManifest manifest = moduleBuilder.getManifest();
         manifest.setVendor( "OPS4J - Open Participation Software for Java");
         manifest.setVersion( "1.0.0" );
         manifest.setLicense( "Apache License -  http://www.apache.org/licenses/LICENSE-2.0");

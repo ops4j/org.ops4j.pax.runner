@@ -4,7 +4,7 @@
     <defaultAnt bundledAnt="true" />
   </component>
   <component name="BuildJarProjectSettings">
-    <option name="BUILD_JARS_ON_MAKE" value="false" />
+    <option name="BUILD_JARS_ON_MAKE" value="true" />
   </component>
   <component name="CodeStyleProjectProfileManger">
     <option name="PROJECT_PROFILE" />
@@ -176,11 +176,11 @@
         <used_levels>
           <error>
             <option name="myName" value="ERROR" />
-            <option name="myVal" value="400" />
+            <option name="myVal" value="200" />
           </error>
           <warning>
             <option name="myName" value="WARNING" />
-            <option name="myVal" value="300" />
+            <option name="myVal" value="100" />
           </warning>
           <information>
             <option name="myName" value="INFO" />
