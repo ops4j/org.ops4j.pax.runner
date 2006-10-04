@@ -33,6 +33,13 @@ public class OsgiModuleEditorsProvider
     implements ModuleComponent, ModuleConfigurationEditorProvider
 {
 
+    private Module m_module;
+
+    public OsgiModuleEditorsProvider( Module module )
+    {
+        m_module = module;
+    }
+
     /**
      * Invoked when the project corresponding to this component instance is opened.<p>
      * Note that components may be created for even unopened projects and this method can be never

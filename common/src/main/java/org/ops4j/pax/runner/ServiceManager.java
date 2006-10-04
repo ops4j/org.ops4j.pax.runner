@@ -44,7 +44,12 @@ public class ServiceManager
     {
         m_singletonTypes = new HashMap<String, Boolean>();
         m_singletons = new HashMap<String, Object>();
-        InputStream in = getClass().getClassLoader().getResourceAsStream( "/META-INF/services/pax-runner.properties" );
+        ClassLoader loader = getClass().getClassLoader();
+        InputStream in = loader.getResourceAsStream( "META-INF/services/pax-runner.properties" );
+        if( in == null )
+        {
+            throw new IllegalStateException( "Missing META-INF/services/pax-runner.properties." );
+        }
         Properties props = new Properties();
         try
         {

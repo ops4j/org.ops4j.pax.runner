@@ -32,6 +32,7 @@ public class PomBuilderTestCase extends TestCase
     {
         PomBuilder builder = ServiceManager.getInstance().getService( PomBuilder.class );
         InputStream in = getClass().getResourceAsStream( "pom.xml" );
+        assertNotNull( "Can't find test resource: pom.xml", in );
         Model model = builder.parse( in );
         assertEquals( "Pax Runner Common", model.getName() );
         Dependency dep = model.getDependencies().getDependency().get(0);

@@ -82,6 +82,7 @@ public class PackageTreeCellEditor extends AbstractCellEditor
         {
             final PackageInfo pakkage = (PackageInfo) userObject;
             JCheckBox checkBox = new JCheckBox( pakkage.getPackageName() );
+            checkBox.setSelected( pakkage.isExported() );
             checkBox.setBackground( tree.getBackground() );
             checkBox.setEnabled( true );
             checkBox.addChangeListener( new ChangeListener()

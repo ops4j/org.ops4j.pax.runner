@@ -70,7 +70,7 @@ public class OsgiModuleImportEditor
      */
     public String getDisplayName()
     {
-        return OsgiResourceBundle.message( "osgi.module.export.editor" );
+        return OsgiResourceBundle.message( "osgi.module.import.editor" );
     }
 
     /**

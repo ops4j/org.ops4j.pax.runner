@@ -53,6 +53,7 @@ public class OsgiModuleTypeStep extends ModuleWizardStep
     {
         DataBeanManifest manifest = m_moduleBuilder.getManifest();
         m_form.getData( manifest );
+        
     }
 
     public Icon getIcon()

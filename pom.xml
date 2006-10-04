@@ -48,10 +48,19 @@
   <modules>
     <module>common</module>
     <module>cmdline</module>
+    <module>idea</module>
     <!--
-      <module>idea</module>
       <module>eclipse</module>
     -->
   </modules>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.ops4j.base</groupId>
+        <artifactId>ops4j-base</artifactId>
+        <version>0.2.1</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 </project>
 

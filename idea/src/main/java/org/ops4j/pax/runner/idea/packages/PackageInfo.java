@@ -42,6 +42,10 @@ public class PackageInfo
                         Directives directives, Attributes attributes )
     {
         m_exported = exported;
+        if( m_exported || versionRange == null )
+        {
+            versionRange = new VersionRange( "", "" );
+        }
         if( attributes == null )
         {
             attributes = new Attributes( new HashMap<String, String>());
