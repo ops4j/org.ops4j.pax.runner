@@ -87,8 +87,7 @@ public class OsgiModuleType extends ModuleType<OsgiModuleBuilder>
 
     public OsgiModuleBuilder createModuleBuilder()
     {
-        OsgiModuleBuilder builder = new OsgiModuleBuilder( this );
-        return builder;
+        return new OsgiModuleBuilder( this );
     }
 
     public String getName()

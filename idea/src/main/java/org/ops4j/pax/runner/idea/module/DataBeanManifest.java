@@ -16,7 +16,6 @@ public class DataBeanManifest
     private String m_copyright;
     private String m_contactAddress;
     private String m_license;
-    private String m_activator;
     private String m_updateLocation;
     private String m_docUrl;
     private String m_version;
@@ -36,7 +35,6 @@ public class DataBeanManifest
         clone.m_copyright = m_copyright;
         clone.m_contactAddress = m_contactAddress;
         clone.m_license = m_license;
-        clone.m_activator = m_activator;
         clone.m_updateLocation = m_updateLocation;
         clone.m_docUrl = m_docUrl;
         clone.m_version = m_version;
@@ -114,16 +112,6 @@ public class DataBeanManifest
         m_license = license;
     }
 
-    public String getActivator()
-    {
-        return m_activator;
-    }
-
-    public void setActivator( final String activator )
-    {
-        m_activator = activator;
-    }
-
     public String getUpdateLocation()
     {
         return m_updateLocation;
@@ -167,7 +155,6 @@ public class DataBeanManifest
     public void readExternal( Element element )
         throws InvalidDataException
     {
-        m_activator = getValue( element, "bundleactivator" );
         m_bundleName = getValue( element, "bundlename" );
         m_category = getValue( element, "bundlecategory" );
         m_contactAddress = getValue( element, "contactaddress" );
@@ -184,7 +171,6 @@ public class DataBeanManifest
     public void writeExternal( Element element )
         throws WriteExternalException
     {
-        setValue( element, "bundleactivator", m_activator );
         setValue( element, "bundlename", m_bundleName );
         setValue( element, "bundlecategory", m_category );
         setValue( element, "contactaddress", m_contactAddress );

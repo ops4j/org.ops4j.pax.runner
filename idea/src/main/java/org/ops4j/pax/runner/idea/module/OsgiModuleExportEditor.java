@@ -37,6 +37,7 @@ import org.jetbrains.annotations.Nullable;
 import org.ops4j.pax.runner.idea.OsgiIcons;
 import org.ops4j.pax.runner.idea.OsgiResourceBundle;
 import org.ops4j.pax.runner.idea.UserKeys;
+import org.ops4j.pax.runner.idea.forms.OsgiModuleExportForm;
 import org.ops4j.pax.runner.idea.packages.PackageInfo;
 
 public class OsgiModuleExportEditor
@@ -98,7 +99,8 @@ public class OsgiModuleExportEditor
     private void establishSubPackages( PsiPackage psiPackage, GlobalSearchScope scope, Set<PackageInfo> result,
                                        PackageInfo parent )
     {
-        for( PsiPackage child : psiPackage.getSubPackages( scope ) )
+        PsiPackage[] psiPackages = psiPackage.getSubPackages( scope );
+        for( PsiPackage child : psiPackages )
         {
             String name = child.getQualifiedName();
             PackageInfo packageInfo = child.getUserData( UserKeys.KEY_EXPORTED );

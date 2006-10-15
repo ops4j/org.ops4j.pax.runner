@@ -22,6 +22,7 @@ import com.intellij.ide.util.projectWizard.WizardContext;
 import javax.swing.JComponent;
 import javax.swing.Icon;
 import org.jetbrains.annotations.NonNls;
+import org.ops4j.pax.runner.idea.forms.OsgiModuleTypeForm;
 
 public class OsgiModuleTypeStep extends ModuleWizardStep
 {
@@ -45,15 +46,17 @@ public class OsgiModuleTypeStep extends ModuleWizardStep
     {
         m_form = new OsgiModuleTypeForm();
         m_form.setData( m_moduleBuilder.getManifest() );
-        JComponent panel = new OsgiModuleTypeForm().$$$getRootComponent$$$();
+        JComponent panel = m_form.$$$getRootComponent$$$();
         return panel;
     }
 
+    /* This method is called by IDEA when the wizard creation step is to be finalized.
+     */
     public void updateDataModel()
     {
         DataBeanManifest manifest = m_moduleBuilder.getManifest();
         m_form.getData( manifest );
-        
+        m_moduleBuilder.setManifest( manifest );
     }
 
     public Icon getIcon()

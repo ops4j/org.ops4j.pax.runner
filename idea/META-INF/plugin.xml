@@ -32,6 +32,12 @@
       <interface-class>org.ops4j.pax.runner.idea.packages.PackageManager</interface-class>
       <implementation-class>org.ops4j.pax.runner.idea.packages.PackageManagerImpl</implementation-class>
     </component>
+    <component>
+      <implementation-class>org.ops4j.pax.runner.idea.bundles.BundleJar</implementation-class>
+    </component>
+    <component>
+      <implementation-class>org.ops4j.pax.runner.idea.bundles.BndFile</implementation-class>
+    </component>
   </module-components>
   <resource-bundle xmlns="">org.ops4j.pax.runner.idea.OsgiResourceBundle</resource-bundle>
 

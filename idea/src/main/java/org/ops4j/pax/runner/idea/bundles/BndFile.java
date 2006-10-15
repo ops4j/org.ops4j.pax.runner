@@ -15,27 +15,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ops4j.pax.runner.idea.module;
+package org.ops4j.pax.runner.idea.bundles;
 
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleComponent;
-import com.intellij.openapi.module.ModuleConfigurationEditor;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ModifiableRootModel;
-import com.intellij.openapi.roots.ui.configuration.DefaultModuleConfigurationEditorFactory;
-import com.intellij.openapi.roots.ui.configuration.ModuleConfigurationEditorProvider;
-import com.intellij.openapi.roots.ui.configuration.ModuleConfigurationState;
-import com.intellij.openapi.roots.ui.configuration.ModulesProvider;
+import com.intellij.openapi.util.InvalidDataException;
+import com.intellij.openapi.util.JDOMExternalizable;
+import com.intellij.openapi.util.WriteExternalException;
+import com.intellij.openapi.vfs.VirtualFile;
+import java.io.IOException;
+import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
-public class OsgiModuleEditorsProvider
-    implements ModuleComponent, ModuleConfigurationEditorProvider
+public class BndFile
+    implements ModuleComponent, JDOMExternalizable
 {
 
     private Module m_module;
+    private VirtualFile m_bndFile;
+    private String m_name;
 
-    public OsgiModuleEditorsProvider( Module module )
+    public BndFile( Module module )
     {
         m_module = module;
     }
@@ -46,8 +47,7 @@ public class OsgiModuleEditorsProvider
      * invoked for a particular component instance (for example for default project).
      */
     public void projectOpened()
-    {
-    }
+    {}
 
     /**
      * Invoked when the project corresponding to this component instance is closed.<p>
@@ -55,16 +55,14 @@ public class OsgiModuleEditorsProvider
      * invoked for a particular component instance (for example for default project).
      */
     public void projectClosed()
-    {
-    }
+    {}
 
     /**
      * Invoked when the module corresponding to this component instance has been completely
      * loaded and added to the project.
      */
     public void moduleAdded()
-    {
-    }
+    {}
 
     /**
      * Unique name of this component. If there is another component with the same name or
@@ -76,7 +74,7 @@ public class OsgiModuleEditorsProvider
     @NotNull
     public String getComponentName()
     {
-        return "org.ops4j.pax.runner.idea.OsgiModuleEditorsProvider";
+        return "org.ops4j.pax.runner.idea.bundles.BndFile";
     }
 
     /**
@@ -93,22 +91,40 @@ public class OsgiModuleEditorsProvider
     {
     }
 
-    public ModuleConfigurationEditor[] createEditors( ModuleConfigurationState state )
+    public void readExternal( Element element )
+    throws InvalidDataException
     {
-        Project project = state.getProject();
-        ModifiableRootModel rootModel = state.getRootModel();
-        Module module = rootModel.getModule();
-        ModulesProvider provider = state.getModulesProvider();
-        OsgiModuleExportEditor exportEditor = new OsgiModuleExportEditor( project, module, provider, rootModel );
-        OsgiModuleImportEditor importEditor = new OsgiModuleImportEditor( project, module, provider, rootModel );
-        OsgiModuleTypeEditor typeEditor = new OsgiModuleTypeEditor( project, module, provider, rootModel );
-        DefaultModuleConfigurationEditorFactory editorFactory = DefaultModuleConfigurationEditorFactory.getInstance();
-        return new ModuleConfigurationEditor[]
+        VirtualFile moduleDir = m_module.getModuleFile().getParent();
+        Element bndFilename = element.getChild( "filename" );
+        m_name = bndFilename.getText();
+        m_bndFile = moduleDir.findChild( m_name );
+        if( m_bndFile == null )
+        {
+            try
             {
-                editorFactory.createModuleContentRootsEditor( state ),
-                editorFactory.createOutputEditor( state ),
-                editorFactory.createClasspathEditor( state ),
-                exportEditor, importEditor, typeEditor
-            };
+                m_bndFile = moduleDir.createChildData( this, m_name );
+            } catch( IOException e )
+            {
+                // TODO: ignore ??
+            }
+        }
+        load();
+    }
+
+    public void writeExternal( Element element )
+    throws WriteExternalException
+    {
+        Element filename = element.addContent( "filename");
+        filename.setText( m_name );
+        save();
+    }
+
+    private void save()
+    {
+
+    }
+
+    private void load()
+    {
     }
 }

@@ -15,27 +15,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ops4j.pax.runner.idea.module;
+package org.ops4j.pax.runner.idea.bundles;
 
-import com.intellij.openapi.module.Module;
+import aQute.lib.osgi.Builder;
+import aQute.lib.osgi.Jar;
 import com.intellij.openapi.module.ModuleComponent;
-import com.intellij.openapi.module.ModuleConfigurationEditor;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ModifiableRootModel;
-import com.intellij.openapi.roots.ui.configuration.DefaultModuleConfigurationEditorFactory;
-import com.intellij.openapi.roots.ui.configuration.ModuleConfigurationEditorProvider;
-import com.intellij.openapi.roots.ui.configuration.ModuleConfigurationState;
-import com.intellij.openapi.roots.ui.configuration.ModulesProvider;
+import com.intellij.openapi.module.Module;
+import com.intellij.openapi.vfs.VirtualFile;
+import java.io.File;
+import java.util.Properties;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
-public class OsgiModuleEditorsProvider
-    implements ModuleComponent, ModuleConfigurationEditorProvider
+public class BundleJar
+    implements ModuleComponent
 {
 
     private Module m_module;
 
-    public OsgiModuleEditorsProvider( Module module )
+    public BundleJar( Module module )
     {
         m_module = module;
     }
@@ -46,8 +44,7 @@ public class OsgiModuleEditorsProvider
      * invoked for a particular component instance (for example for default project).
      */
     public void projectOpened()
-    {
-    }
+    {}
 
     /**
      * Invoked when the project corresponding to this component instance is closed.<p>
@@ -55,16 +52,14 @@ public class OsgiModuleEditorsProvider
      * invoked for a particular component instance (for example for default project).
      */
     public void projectClosed()
-    {
-    }
+    {}
 
     /**
      * Invoked when the module corresponding to this component instance has been completely
      * loaded and added to the project.
      */
     public void moduleAdded()
-    {
-    }
+    {}
 
     /**
      * Unique name of this component. If there is another component with the same name or
@@ -76,39 +71,40 @@ public class OsgiModuleEditorsProvider
     @NotNull
     public String getComponentName()
     {
-        return "org.ops4j.pax.runner.idea.OsgiModuleEditorsProvider";
+        return "org.ops4j.pax.runner.idea.bundles.BundleJar";
     }
 
     /**
      * Component should do initialization and communication with another components in this method.
      */
     public void initComponent()
-    {
-    }
+    {}
 
     /**
      * Component should dispose system resources or perform another cleanup in this method.
      */
     public void disposeComponent()
-    {
-    }
+    {}
 
-    public ModuleConfigurationEditor[] createEditors( ModuleConfigurationState state )
+    private Jar createJar( Properties props, VirtualFile jarDest, VirtualFile[] sources )
+        throws Exception
     {
-        Project project = state.getProject();
-        ModifiableRootModel rootModel = state.getRootModel();
-        Module module = rootModel.getModule();
-        ModulesProvider provider = state.getModulesProvider();
-        OsgiModuleExportEditor exportEditor = new OsgiModuleExportEditor( project, module, provider, rootModel );
-        OsgiModuleImportEditor importEditor = new OsgiModuleImportEditor( project, module, provider, rootModel );
-        OsgiModuleTypeEditor typeEditor = new OsgiModuleTypeEditor( project, module, provider, rootModel );
-        DefaultModuleConfigurationEditorFactory editorFactory = DefaultModuleConfigurationEditorFactory.getInstance();
-        return new ModuleConfigurationEditor[]
-            {
-                editorFactory.createModuleContentRootsEditor( state ),
-                editorFactory.createOutputEditor( state ),
-                editorFactory.createClasspathEditor( state ),
-                exportEditor, importEditor, typeEditor
-            };
+        if( !props.containsKey( "Export-Package" ) )
+        {
+            props.put( "Export-Package", "*" );
+        }
+        File target = new File( jarDest.getPath() );
+        Builder builder = new Builder();
+        builder.setJar( target );
+        builder.setProperties( props );
+        File[] sourceFiles = new File[ sources.length ];
+        int i = 0;
+        for( VirtualFile source : sources )
+        {
+            String sourcepath = source.getPath();
+            sourceFiles[ i ] = new File( sourcepath );
+        }
+        builder.setSourcepath( sourceFiles );
+        return builder.build();
     }
 }

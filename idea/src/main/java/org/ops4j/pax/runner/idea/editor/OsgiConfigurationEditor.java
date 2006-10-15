@@ -13,7 +13,7 @@
  * implied.
  *
  * See the License for the specific language governing permissions and
- * limitations under the License. 
+ * limitations under the License.
  */
 package org.ops4j.pax.runner.idea.editor;
 
@@ -22,6 +22,8 @@ import com.intellij.openapi.options.SettingsEditor;
 import javax.swing.JComponent;
 import org.apache.log4j.Logger;
 import org.ops4j.pax.runner.idea.config.OsgiRunConfiguration;
+import org.ops4j.pax.runner.idea.forms.OsgiConfigEditorForm;
+import org.jetbrains.annotations.NotNull;
 
 public class OsgiConfigurationEditor extends SettingsEditor<OsgiRunConfiguration>
 {
@@ -50,8 +52,10 @@ public class OsgiConfigurationEditor extends SettingsEditor<OsgiRunConfiguration
             m_logger.debug( "applyEditorTo( " + runConfig + ")" );
         }
         m_form.getData( runConfig.getConfigBean() );
+
     }
 
+    @NotNull
     protected JComponent createEditor()
     {
         if( m_logger.isDebugEnabled() )

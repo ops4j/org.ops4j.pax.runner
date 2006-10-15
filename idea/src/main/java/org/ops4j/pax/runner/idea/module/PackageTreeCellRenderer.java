@@ -26,7 +26,7 @@ import javax.swing.tree.TreeCellRenderer;
 import org.apache.log4j.Logger;
 import org.ops4j.pax.runner.idea.packages.PackageInfo;
 
-class PackageTreeCellRenderer
+public class PackageTreeCellRenderer
     implements TreeCellRenderer
 {
 

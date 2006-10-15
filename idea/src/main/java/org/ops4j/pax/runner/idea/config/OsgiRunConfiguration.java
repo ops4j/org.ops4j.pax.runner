@@ -136,7 +136,6 @@ public class OsgiRunConfiguration extends RunConfigurationBase
     // return modules to compile before run. Null or empty list to make project
     public Module[] getModules()
     {
-        //TODO: Auto-generated, need attention.
         if( m_logger.isDebugEnabled() )
         {
             m_logger.debug( "getModules()" );
