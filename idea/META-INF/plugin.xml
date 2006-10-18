@@ -26,33 +26,33 @@
   <idea-version since-build="3000"/>
   <module-components>
     <component>
-      <implementation-class>org.ops4j.pax.runner.idea.module.OsgiModuleEditorsProvider</implementation-class>
+      <implementation-class>org.ops4j.pixea.module.OsgiModuleEditorsProvider</implementation-class>
     </component>
     <component>
-      <interface-class>org.ops4j.pax.runner.idea.packages.PackageManager</interface-class>
-      <implementation-class>org.ops4j.pax.runner.idea.packages.PackageManagerImpl</implementation-class>
+      <interface-class>org.ops4j.pixea.module.packages.PackageManager</interface-class>
+      <implementation-class>org.ops4j.pixea.module.packages.PackageManagerImpl</implementation-class>
     </component>
     <component>
-      <implementation-class>org.ops4j.pax.runner.idea.bundles.BundleJar</implementation-class>
+      <implementation-class>org.ops4j.pixea.builder.bundles.BundleJar</implementation-class>
     </component>
     <component>
-      <implementation-class>org.ops4j.pax.runner.idea.bundles.BndFile</implementation-class>
+      <implementation-class>org.ops4j.pixea.builder.bundles.BndFile</implementation-class>
     </component>
   </module-components>
-  <resource-bundle xmlns="">org.ops4j.pax.runner.idea.OsgiResourceBundle</resource-bundle>
+  <resource-bundle xmlns="">org.ops4j.pixea.OsgiResourceBundle</resource-bundle>
 
   <project-components>
   </project-components>
 
   <application-components>
     <component>
-      <implementation-class>org.ops4j.pax.runner.idea.OsgiPlugin</implementation-class>
+      <implementation-class>org.ops4j.pixea.OsgiPlugin</implementation-class>
       </component>
     <component>
-      <implementation-class>org.ops4j.pax.runner.idea.PaxRunnerType</implementation-class>
+      <implementation-class>org.ops4j.pixea.runner.PaxRunnerType</implementation-class>
     </component>
     <component>
-      <implementation-class>org.ops4j.pax.runner.idea.editor.RepositoryNodeFactory</implementation-class>
+      <implementation-class>org.ops4j.pixea.runner.editor.RepositoryNodeFactory</implementation-class>
     </component>
   </application-components>
 </idea-plugin>

@@ -559,6 +559,13 @@
         <root url="jar://$M2_REPO$/biz/aqute/bnd/0.9.4/bnd-0.9.4.jar!/OSGI-OPT/src" />
       </SOURCES>
     </library>
+    <library name="ant-1.6.5">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/ant/ant/1.6.5/ant-1.6.5.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
   </component>
   <component name="uidesigner-configuration">
     <option name="INSTRUMENT_CLASSES" value="false" />
@@ -566,6 +573,7 @@
     <option name="DEFAULT_LAYOUT_MANAGER" value="GridLayoutManager" />
   </component>
   <UsedPathMacros>
+    <macro name="ECLIPSE_PLUGINS" />
     <macro name="M2_REPO" />
   </UsedPathMacros>
 </project>

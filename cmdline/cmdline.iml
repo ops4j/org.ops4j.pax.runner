@@ -14,5 +14,8 @@
     <orderEntry type="library" name="jaxb-api-2.0" level="project" />
     <orderEntryProperties />
   </component>
+  <component name="PluginUploader.UploadConfigurable">
+    <option name="_archivePath" />
+  </component>
 </module>
 
