@@ -442,9 +442,12 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/bundlemaker/bundlemaker.iml" filepath="$PROJECT_DIR$/bundlemaker/bundlemaker.iml" />
       <module fileurl="file://$PROJECT_DIR$/cmdline/cmdline.iml" filepath="$PROJECT_DIR$/cmdline/cmdline.iml" />
       <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
       <module fileurl="file://$PROJECT_DIR$/idea/idea-plugin.iml" filepath="$PROJECT_DIR$/idea/idea-plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pom-parser/pom-parser.iml" filepath="$PROJECT_DIR$/pom-parser/pom-parser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/repoman/repoman.iml" filepath="$PROJECT_DIR$/repoman/repoman.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="Java 1.5" />

@@ -30,7 +30,7 @@ import java.net.URL;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import org.apache.log4j.Logger;
-import org.ops4j.pixea.runner.exec.EquinoxPreparer;
+import org.ops4j.pax.runner.exec.EquinoxPreparer;
 import org.ops4j.pixea.runner.config.ConfigBean;
 import org.ops4j.pixea.runner.repositories.BundleRef;
 

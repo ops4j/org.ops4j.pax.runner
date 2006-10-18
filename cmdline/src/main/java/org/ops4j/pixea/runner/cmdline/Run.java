@@ -22,7 +22,6 @@ import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 import java.util.StringTokenizer;
 import javax.xml.parsers.ParserConfigurationException;
-import org.ops4j.pax.runner.PomInfo;
 import org.ops4j.pax.runner.ServiceException;
 import org.ops4j.pax.runner.PaxRunner;
 import org.ops4j.pax.runner.ServiceManager;

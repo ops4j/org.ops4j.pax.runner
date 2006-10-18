@@ -19,7 +19,6 @@ package org.ops4j.pax.runner.tests;
 
 import java.io.InputStream;
 import junit.framework.TestCase;
-import org.ops4j.pax.runner.PomBuilder;
 import org.ops4j.pax.runner.ServiceManager;
 import org.ops4j.pax.runner.pom.Dependency;
 import org.ops4j.pax.runner.pom.Model;
