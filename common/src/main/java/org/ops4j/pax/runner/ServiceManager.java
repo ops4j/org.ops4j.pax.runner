@@ -84,7 +84,6 @@ public class ServiceManager
     }
 
     public synchronized <T> T getService( Class<T> serviceType )
-        throws ServiceException
     {
         String service = serviceType.getName();
         String classname = m_services.get( service );

@@ -18,6 +18,7 @@
 package org.ops4j.pax.repoman;
 
 import org.ops4j.pax.repoman.RepositoryManager;
+import org.ops4j.pax.model.bundles.BundleObserver;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;

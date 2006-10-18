@@ -446,11 +446,15 @@
       <module fileurl="file://$PROJECT_DIR$/cmdline/cmdline.iml" filepath="$PROJECT_DIR$/cmdline/cmdline.iml" />
       <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
       <module fileurl="file://$PROJECT_DIR$/idea/idea-plugin.iml" filepath="$PROJECT_DIR$/idea/idea-plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/model/model.iml" filepath="$PROJECT_DIR$/model/model.iml" />
       <module fileurl="file://$PROJECT_DIR$/pom-parser/pom-parser.iml" filepath="$PROJECT_DIR$/pom-parser/pom-parser.iml" />
       <module fileurl="file://$PROJECT_DIR$/repoman/repoman.iml" filepath="$PROJECT_DIR$/repoman/repoman.iml" />
+      <module fileurl="file://$PROJECT_DIR$/runner/runner.iml" filepath="$PROJECT_DIR$/runner/runner.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="Java 1.5" />
+  <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="Java 1.5" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/target" />
+  </component>
   <component name="ProjectRunConfigurationManager">
     <configuration default="false" name="Runner" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="idea-plugin" />

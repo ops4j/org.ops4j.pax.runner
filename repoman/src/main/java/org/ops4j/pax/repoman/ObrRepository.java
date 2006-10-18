@@ -27,13 +27,18 @@ import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.ops4j.pax.runner.DownloadManager;
-import org.ops4j.pax.runner.ServiceException;
-import org.ops4j.pax.runner.ServiceManager;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import org.ops4j.pax.model.repositories.Repository;
+import org.ops4j.pax.model.repositories.RepositoryInfo;
+import org.ops4j.pax.model.repositories.RepositoryType;
+import org.ops4j.pax.model.bundles.BundleRef;
+import org.ops4j.pax.model.bundles.BundleModel;
+import org.ops4j.pax.model.bundles.BundleObserver;
+import org.ops4j.pax.runner.ServiceManager;
+import org.ops4j.pax.runner.ServiceException;
 
 public class ObrRepository
     implements Repository, Runnable
@@ -78,7 +83,7 @@ public class ObrRepository
         return m_info;
     }
 
-    public BundleInfo download( BundleRef bundleReference )
+    public BundleModel download( BundleRef bundleReference )
     {
         return null;
     }

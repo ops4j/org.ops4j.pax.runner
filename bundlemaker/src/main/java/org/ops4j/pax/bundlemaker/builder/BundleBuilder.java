@@ -22,7 +22,7 @@ import biz.aqute.lib.osgi.Jar;
 import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
-import org.ops4j.pax.builder.bundles.BundleModel;
+import org.ops4j.pax.model.bundles.BundleModel;
 
 public class BundleBuilder
 {

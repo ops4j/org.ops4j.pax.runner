@@ -17,24 +17,13 @@
  */
 package org.ops4j.pax.runner;
 
-public class ServiceException extends RuntimeException
+import org.ops4j.pax.pomparser.PomInfo;
+
+public interface PaxRunner
 {
+    void run( RunnerOptions options )
+        throws Exception;
 
-    public ServiceException( String message, Exception e )
-    {
-        super( message, e );
-    }
-
-    /**
-     * Constructs a new exception with the specified detail message.  The
-     * cause is not initialized, and may subsequently be initialized by
-     * a call to {@link #initCause}.
-     *
-     * @param message the detail message. The detail message is saved for
-     *                later retrieval by the {@link #getMessage()} method.
-     */
-    public ServiceException( String message )
-    {
-        super( message );    //TODO: Auto-generated, need attention.
-    }
+    void fillOptionsWithPomData( PomInfo pomInfo, RunnerOptions options )
+        throws Exception;
 }
