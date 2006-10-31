@@ -13,6 +13,7 @@
     <orderEntry type="jdk" jdkName="IDEA 5766" jdkType="IDEA JDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="common" />
+    <orderEntry type="module" module-name="runner" />
     <orderEntryProperties />
   </component>
   <component name="PluginUploader.UploadConfigurable">

@@ -17,13 +17,19 @@
  */
 package org.ops4j.pax.repoman;
 
-import org.ops4j.pax.repoman.RepositoryManager;
-import org.ops4j.pax.model.bundles.BundleObserver;
-import java.util.List;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.net.URL;
-import java.net.MalformedURLException;
+import java.util.List;
+import org.ops4j.pax.model.bundles.BundleModel;
+import org.ops4j.pax.model.bundles.BundleObserver;
+import org.ops4j.pax.model.bundles.BundleRef;
+import org.ops4j.pax.model.repositories.Repository;
+import org.ops4j.pax.model.repositories.RepositoryInfo;
+import org.ops4j.pax.model.repositories.RepositoryManager;
+import org.ops4j.pax.model.repositories.RepositoryObserver;
+import org.ops4j.pax.model.repositories.RepositoryType;
 
 public class RepositoryManagerImpl
     implements RepositoryManager, BundleObserver
@@ -39,7 +45,7 @@ public class RepositoryManagerImpl
         m_bundleObservers = new ArrayList<BundleObserver>();
     }
 
-    public BundleInfo download( BundleRef bundleReference )
+    public BundleModel download( BundleRef bundleReference )
     {
         RepositoryInfo repoInfo = bundleReference.getRepository();
         Repository repo = m_repositories.get( repoInfo );

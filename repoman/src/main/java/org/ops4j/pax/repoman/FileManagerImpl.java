@@ -25,9 +25,8 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import org.ops4j.io.StreamUtils;
-import org.ops4j.pax.runner.FileManager;
 import org.ops4j.pax.runner.RunnerOptions;
-import org.ops4j.pax.runner.utils.FileUtils;
+import org.ops4j.pax.common.FileUtils;
 
 public class FileManagerImpl
     implements FileManager

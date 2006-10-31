@@ -17,10 +17,10 @@
  */
 package org.ops4j.pax.repoman;
 
-import org.ops4j.pax.runner.CacheHandler;
 import org.ops4j.pax.runner.ResourceManager;
 import org.ops4j.pax.runner.ServiceManager;
 import org.ops4j.pax.runner.ServiceException;
+import org.ops4j.pax.pomparser.PomInfo;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;

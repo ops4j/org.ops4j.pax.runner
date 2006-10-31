@@ -573,6 +573,69 @@
       <JAVADOC />
       <SOURCES />
     </library>
+    <library name="org.eclipse.core.resources_3.2.0.v20060603">
+      <CLASSES>
+        <root url="jar://$ECLIPSE_PLUGINS$/org.eclipse.core.resources_3.2.0.v20060603.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="org.eclipse.jface_3.2.0.I20060605-1400">
+      <CLASSES>
+        <root url="jar://$ECLIPSE_PLUGINS$/org.eclipse.jface_3.2.0.I20060605-1400.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="org.eclipse.ui.workbench_3.2.0.I20060605-1400">
+      <CLASSES>
+        <root url="jar://$ECLIPSE_PLUGINS$/org.eclipse.ui.workbench_3.2.0.I20060605-1400.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="org.eclipse.equinox.common_3.2.0.v20060603">
+      <CLASSES>
+        <root url="jar://$ECLIPSE_PLUGINS$/org.eclipse.equinox.common_3.2.0.v20060603.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="org.eclipse.core.runtime_3.2.0.v20060603">
+      <CLASSES>
+        <root url="jar://$ECLIPSE_PLUGINS$/org.eclipse.core.runtime_3.2.0.v20060603.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="org.eclipse.core.jobs_3.2.0.v20060603">
+      <CLASSES>
+        <root url="jar://$ECLIPSE_PLUGINS$/org.eclipse.core.jobs_3.2.0.v20060603.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="org.eclipse.swt.gtk.linux.x86_3.2.0.v3232m">
+      <CLASSES>
+        <root url="jar://$ECLIPSE_PLUGINS$/org.eclipse.swt.gtk.linux.x86_3.2.0.v3232m.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="org.eclipse.swt_3.2.0.v3232o">
+      <CLASSES>
+        <root url="jar://$ECLIPSE_PLUGINS$/org.eclipse.swt_3.2.0.v3232o.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="org.eclipse.jdt.core_3.2.0.v_671">
+      <CLASSES>
+        <root url="jar://$ECLIPSE_PLUGINS$/org.eclipse.jdt.core_3.2.0.v_671.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
   </component>
   <component name="uidesigner-configuration">
     <option name="INSTRUMENT_CLASSES" value="false" />

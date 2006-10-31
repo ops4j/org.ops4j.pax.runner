@@ -23,7 +23,7 @@ import java.io.OutputStream;
 import org.ops4j.pax.runner.Runner;
 import org.ops4j.pax.runner.RunnerOptions;
 import org.ops4j.pax.runner.exec.KnopflerfishPreparer;
-import org.ops4j.pax.runner.utils.Pipe;
+import org.ops4j.pax.common.Pipe;
 
 public class KnopflerfishRunner
     implements Runner

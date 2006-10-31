@@ -19,6 +19,7 @@ package org.ops4j.pax.repoman;
 
 import java.io.File;
 import java.net.URL;
+import org.ops4j.pax.pomparser.PomInfo;
 
 public interface CacheHandler
 {
