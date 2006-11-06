@@ -7,7 +7,7 @@
     <version>0.3.0-SNAPSHOT</version>
   </parent>
   <groupId>org.ops4j.pax</groupId>
-  <artifactId>osgidea</artifactId>
+  <artifactId>osgea</artifactId>
   <name>Pax Runner IDEA plugin</name>
   <version>0.3.0-SNAPSHOT</version>
 
@@ -53,8 +53,23 @@
       <version>1.2.12</version>
     </dependency>
     <dependency>
-      <groupId>org.ops4j.pixea.runner</groupId>
+      <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>common</artifactId>
+      <version>0.3.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.runner</groupId>
+      <artifactId>model</artifactId>
+      <version>0.3.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.runner</groupId>
+      <artifactId>repoman</artifactId>
+      <version>0.3.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.runner</groupId>
+      <artifactId>runner</artifactId>
       <version>0.3.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

@@ -32,7 +32,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import org.apache.log4j.Logger;
 import org.ops4j.osgidea.operations.FileOps;
-import org.ops4j.osgidea.builder.bundles.ManifestModel;
+import org.ops4j.pax.model.bundles.ManifestModel;
 
 public class OsgiModuleBuilder extends JavaModuleBuilder
 {

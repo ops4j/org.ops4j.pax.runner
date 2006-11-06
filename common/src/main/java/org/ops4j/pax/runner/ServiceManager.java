@@ -19,9 +19,7 @@ package org.ops4j.pax.runner;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -59,12 +57,10 @@ public class ServiceManager
             e.printStackTrace();
         }
         m_services = new HashMap<String, String>();
-        Map<String, String> clone = new HashMap<String, String>();
-        clone.putAll( (Map<? extends String, ? extends String>) props );
-        for( Map.Entry<String, String> entry : clone.entrySet() )
+        for( Map.Entry<Object, Object> entry : props.entrySet() )
         {
-            String key = entry.getKey();
-            String value = entry.getValue();
+            String key = (String) entry.getKey();
+            String value = (String) entry.getValue();
             int lastDotPos = key.lastIndexOf( '.' );
             String classname = key.substring( 0, lastDotPos );
             if( key.endsWith( ".class" ) )

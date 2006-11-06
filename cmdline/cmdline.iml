@@ -13,6 +13,8 @@
     <orderEntry type="module" module-name="common" />
     <orderEntry type="library" name="jaxb-api-2.0" level="project" />
     <orderEntry type="module" module-name="runner" />
+    <orderEntry type="module" module-name="model" />
+    <orderEntry type="module" module-name="pom-parser" />
     <orderEntryProperties />
   </component>
   <component name="PluginUploader.UploadConfigurable">

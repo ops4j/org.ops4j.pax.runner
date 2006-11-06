@@ -16,5 +16,27 @@
       <groupId>org.ops4j.base</groupId>
       <artifactId>ops4j-base</artifactId>
     </dependency>
+      <dependency>
+        <groupId>org.ops4j.pax.runner</groupId>
+        <artifactId>model</artifactId>
+        <version>0.3.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.ops4j.pax.runner</groupId>
+        <artifactId>pom-parser</artifactId>
+        <version>0.3.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.ops4j.pax.runner</groupId>
+        <artifactId>common</artifactId>
+        <version>0.3.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.ops4j.pax.runner</groupId>
+        <artifactId>repoman</artifactId>
+        <version>0.3.0-SNAPSHOT</version>
+      </dependency>
+
   </dependencies>
 </project>

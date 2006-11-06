@@ -10,10 +10,11 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="IDEA 5766" jdkType="IDEA JDK" />
+    <orderEntry type="jdk" jdkName="IDEA 5784" jdkType="IDEA JDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="common" />
     <orderEntry type="module" module-name="runner" />
+    <orderEntry type="module" module-name="model" />
     <orderEntryProperties />
   </component>
   <component name="PluginUploader.UploadConfigurable">

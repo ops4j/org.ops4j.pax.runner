@@ -31,8 +31,8 @@ import java.util.Properties;
 import java.util.StringTokenizer;
 import org.apache.log4j.Logger;
 import org.ops4j.pax.runner.exec.EquinoxPreparer;
+import org.ops4j.pax.model.bundles.BundleRef;
 import org.ops4j.osgidea.runner.config.ConfigBean;
-import org.ops4j.osgidea.runner.repositories.BundleRef;
 
 public class EquinoxRunner extends JavaCommandLineState
 {

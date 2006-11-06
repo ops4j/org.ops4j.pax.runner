@@ -28,7 +28,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import org.ops4j.osgidea.builder.bundles.ManifestModel;
+import org.ops4j.pax.model.bundles.ManifestModel;
 
 public class OsgiModuleTypeForm
 {
@@ -160,241 +160,66 @@ public class OsgiModuleTypeForm
         m_wholePanel.setBorder( BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), null ) );
         final JPanel panel1 = new JPanel();
         panel1.setLayout( new GridLayoutManager( 2, 1, new Insets( 0, 0, 0, 0 ), -1, -1 ) );
-        m_wholePanel.add( panel1, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_CENTER,
-                                                       GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK
-                                                                                  | GridConstraints.SIZEPOLICY_CAN_GROW,
-                                                       GridConstraints.SIZEPOLICY_CAN_SHRINK
-                                                       | GridConstraints.SIZEPOLICY_CAN_GROW,
-                                                       null, null, null, 0, false
-        )
-        );
+        m_wholePanel.add( panel1, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false ) );
         final JPanel panel2 = new JPanel();
         panel2.setLayout( new GridLayoutManager( 10, 2, new Insets( 0, 0, 0, 0 ), -1, -1 ) );
-        panel1.add( panel2, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
-                                                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints
-                                                     .SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK
-                                                                           | GridConstraints.SIZEPOLICY_CAN_GROW, null,
-                                                                                                                  null,
-                                                                                                                  null,
-                                                                                                                  0,
-                                                                                                                  false
-        )
-        );
+        panel1.add( panel2, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false ) );
         final JLabel label1 = new JLabel();
-        this.$$$loadLabelText$$$( label1,
-                                  ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString(
-                                      "manifest.symbolicname"
-                                  )
-        );
-        panel2.add( label1, new GridConstraints( 1, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE,
-                                                 GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED,
-                                                 null, null, null, 0, false
-        )
-        );
+        this.$$$loadLabelText$$$( label1, ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString( "manifest.symbolicname" ) );
+        panel2.add( label1, new GridConstraints( 1, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false ) );
         final JLabel label2 = new JLabel();
-        this.$$$loadLabelText$$$( label2,
-                                  ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString(
-                                      "manifest.bundlename"
-                                  )
-        );
-        panel2.add( label2, new GridConstraints( 2, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE,
-                                                 GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED,
-                                                 null, null, null, 0, false
-        )
-        );
+        this.$$$loadLabelText$$$( label2, ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString( "manifest.bundlename" ) );
+        panel2.add( label2, new GridConstraints( 2, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false ) );
         final JLabel label3 = new JLabel();
-        this.$$$loadLabelText$$$( label3,
-                                  ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString(
-                                      "manifest.vendor"
-                                  )
-        );
-        panel2.add( label3, new GridConstraints( 4, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE,
-                                                 GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED,
-                                                 null, null, null, 0, false
-        )
-        );
+        this.$$$loadLabelText$$$( label3, ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString( "manifest.vendor" ) );
+        panel2.add( label3, new GridConstraints( 4, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false ) );
         final JLabel label4 = new JLabel();
-        this.$$$loadLabelText$$$( label4,
-                                  ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString(
-                                      "manifest.contactaddress"
-                                  )
-        );
-        panel2.add( label4, new GridConstraints( 6, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE,
-                                                 GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED,
-                                                 null, null, null, 0, false
-        )
-        );
+        this.$$$loadLabelText$$$( label4, ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString( "manifest.contactaddress" ) );
+        panel2.add( label4, new GridConstraints( 6, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false ) );
         final JLabel label5 = new JLabel();
-        this.$$$loadLabelText$$$( label5,
-                                  ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString(
-                                      "manifest.updatelocation"
-                                  )
-        );
-        panel2.add( label5, new GridConstraints( 8, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE,
-                                                 GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED,
-                                                 null, null, null, 0, false
-        )
-        );
+        this.$$$loadLabelText$$$( label5, ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString( "manifest.updatelocation" ) );
+        panel2.add( label5, new GridConstraints( 8, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false ) );
         final JLabel label6 = new JLabel();
-        this.$$$loadLabelText$$$( label6,
-                                  ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString(
-                                      "manifest.docurl"
-                                  )
-        );
-        panel2.add( label6, new GridConstraints( 9, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE,
-                                                 GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED,
-                                                 null, null, null, 0, false
-        )
-        );
+        this.$$$loadLabelText$$$( label6, ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString( "manifest.docurl" ) );
+        panel2.add( label6, new GridConstraints( 9, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false ) );
         final JLabel label7 = new JLabel();
-        this.$$$loadLabelText$$$( label7,
-                                  ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString(
-                                      "manifest.bundlecategory"
-                                  )
-        );
-        panel2.add( label7, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE,
-                                                 GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED,
-                                                 null, null, null, 0, false
-        )
-        );
+        this.$$$loadLabelText$$$( label7, ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString( "manifest.bundlecategory" ) );
+        panel2.add( label7, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false ) );
         final JLabel label8 = new JLabel();
-        this.$$$loadLabelText$$$( label8,
-                                  ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString(
-                                      "manifest.copyright"
-                                  )
-        );
-        panel2.add( label8, new GridConstraints( 5, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE,
-                                                 GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED,
-                                                 null, null, null, 0, false
-        )
-        );
+        this.$$$loadLabelText$$$( label8, ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString( "manifest.copyright" ) );
+        panel2.add( label8, new GridConstraints( 5, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false ) );
         final JLabel label9 = new JLabel();
-        this.$$$loadLabelText$$$( label9,
-                                  ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString(
-                                      "manifest.license"
-                                  )
-        );
-        panel2.add( label9, new GridConstraints( 7, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE,
-                                                 GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED,
-                                                 null, null, null, 0, false
-        )
-        );
+        this.$$$loadLabelText$$$( label9, ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString( "manifest.license" ) );
+        panel2.add( label9, new GridConstraints( 7, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false ) );
         m_category = new JTextField();
-        panel2.add( m_category, new GridConstraints( 0, 1, 1, 1, GridConstraints.ANCHOR_WEST,
-                                                     GridConstraints.FILL_HORIZONTAL,
-                                                     GridConstraints.SIZEPOLICY_WANT_GROW,
-                                                     GridConstraints.SIZEPOLICY_FIXED, null, new Dimension( 150, -1 ),
-                                                     null, 0, false
-        )
-        );
+        panel2.add( m_category, new GridConstraints( 0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension( 150, -1 ), null, 0, false ) );
         m_symbolicName = new JTextField();
-        panel2.add( m_symbolicName, new GridConstraints( 1, 1, 1, 1, GridConstraints.ANCHOR_WEST,
-                                                         GridConstraints.FILL_HORIZONTAL,
-                                                         GridConstraints.SIZEPOLICY_WANT_GROW,
-                                                         GridConstraints.SIZEPOLICY_FIXED, null,
-                                                         new Dimension( 150, -1 ), null, 0, false
-        )
-        );
+        panel2.add( m_symbolicName, new GridConstraints( 1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension( 150, -1 ), null, 0, false ) );
         m_bundleName = new JTextField();
-        panel2.add( m_bundleName, new GridConstraints( 2, 1, 1, 1, GridConstraints.ANCHOR_WEST,
-                                                       GridConstraints.FILL_HORIZONTAL,
-                                                       GridConstraints.SIZEPOLICY_WANT_GROW,
-                                                       GridConstraints.SIZEPOLICY_FIXED, null, new Dimension( 150, -1 ),
-                                                       null, 0, false
-        )
-        );
+        panel2.add( m_bundleName, new GridConstraints( 2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension( 150, -1 ), null, 0, false ) );
         m_vendor = new JTextField();
-        panel2.add( m_vendor, new GridConstraints( 4, 1, 1, 1, GridConstraints.ANCHOR_WEST,
-                                                   GridConstraints.FILL_HORIZONTAL,
-                                                   GridConstraints.SIZEPOLICY_WANT_GROW,
-                                                   GridConstraints.SIZEPOLICY_FIXED, null, new Dimension( 150, -1 ),
-                                                   null, 0, false
-        )
-        );
+        panel2.add( m_vendor, new GridConstraints( 4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension( 150, -1 ), null, 0, false ) );
         m_copyright = new JTextField();
-        panel2.add( m_copyright, new GridConstraints( 5, 1, 1, 1, GridConstraints.ANCHOR_WEST,
-                                                      GridConstraints.FILL_HORIZONTAL,
-                                                      GridConstraints.SIZEPOLICY_WANT_GROW,
-                                                      GridConstraints.SIZEPOLICY_FIXED, null, new Dimension( 150, -1 ),
-                                                      null, 0, false
-        )
-        );
+        panel2.add( m_copyright, new GridConstraints( 5, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension( 150, -1 ), null, 0, false ) );
         m_contactAddress = new JTextField();
-        panel2.add( m_contactAddress, new GridConstraints( 6, 1, 1, 1, GridConstraints.ANCHOR_WEST,
-                                                           GridConstraints.FILL_HORIZONTAL,
-                                                           GridConstraints.SIZEPOLICY_WANT_GROW,
-                                                           GridConstraints.SIZEPOLICY_FIXED, null,
-                                                           new Dimension( 150, -1 ), null, 0, false
-        )
-        );
+        panel2.add( m_contactAddress, new GridConstraints( 6, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension( 150, -1 ), null, 0, false ) );
         m_license = new JTextField();
-        panel2.add( m_license, new GridConstraints( 7, 1, 1, 1, GridConstraints.ANCHOR_WEST,
-                                                    GridConstraints.FILL_HORIZONTAL,
-                                                    GridConstraints.SIZEPOLICY_WANT_GROW,
-                                                    GridConstraints.SIZEPOLICY_FIXED, null, new Dimension( 150, -1 ),
-                                                    null, 0, false
-        )
-        );
+        panel2.add( m_license, new GridConstraints( 7, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension( 150, -1 ), null, 0, false ) );
         m_updateLocation = new JTextField();
-        panel2.add( m_updateLocation, new GridConstraints( 8, 1, 1, 1, GridConstraints.ANCHOR_WEST,
-                                                           GridConstraints.FILL_HORIZONTAL,
-                                                           GridConstraints.SIZEPOLICY_WANT_GROW,
-                                                           GridConstraints.SIZEPOLICY_FIXED, null,
-                                                           new Dimension( 150, -1 ), null, 0, false
-        )
-        );
+        panel2.add( m_updateLocation, new GridConstraints( 8, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension( 150, -1 ), null, 0, false ) );
         m_docUrl = new JTextField();
-        panel2.add( m_docUrl, new GridConstraints( 9, 1, 1, 1, GridConstraints.ANCHOR_WEST,
-                                                   GridConstraints.FILL_HORIZONTAL,
-                                                   GridConstraints.SIZEPOLICY_WANT_GROW,
-                                                   GridConstraints.SIZEPOLICY_FIXED, null, new Dimension( 150, -1 ),
-                                                   null, 0, false
-        )
-        );
+        panel2.add( m_docUrl, new GridConstraints( 9, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension( 150, -1 ), null, 0, false ) );
         final JLabel label10 = new JLabel();
-        this.$$$loadLabelText$$$( label10,
-                                  ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString(
-                                      "manifest.version"
-                                  )
-        );
-        panel2.add( label10, new GridConstraints( 3, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE,
-                                                  GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED,
-                                                  null, null, null, 0, false
-        )
-        );
+        this.$$$loadLabelText$$$( label10, ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString( "manifest.version" ) );
+        panel2.add( label10, new GridConstraints( 3, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false ) );
         m_version = new JTextField();
-        panel2.add( m_version, new GridConstraints( 3, 1, 1, 1, GridConstraints.ANCHOR_WEST,
-                                                    GridConstraints.FILL_HORIZONTAL,
-                                                    GridConstraints.SIZEPOLICY_WANT_GROW,
-                                                    GridConstraints.SIZEPOLICY_FIXED, null, new Dimension( 150, -1 ),
-                                                    null, 0, false
-        )
-        );
+        panel2.add( m_version, new GridConstraints( 3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension( 150, -1 ), null, 0, false ) );
         final JPanel panel3 = new JPanel();
         panel3.setLayout( new GridLayoutManager( 1, 1, new Insets( 0, 0, 0, 0 ), -1, -1 ) );
-        panel1.add( panel3, new GridConstraints( 1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
-                                                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints
-                                                     .SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK
-                                                                           | GridConstraints.SIZEPOLICY_WANT_GROW, null,
-                                                                                                                   null,
-                                                                                                                   null,
-                                                                                                                   0,
-                                                                                                                   false
-        )
-        );
-        panel3.setBorder( BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(),
-                                                            ResourceBundle.getBundle(
-                                                                "org/ops4j/pax/runner/idea/OsgiResourceBundle"
-                                                            ).getString( "manifest.bundledescription" )
-        )
-        );
+        panel1.add( panel3, new GridConstraints( 1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false ) );
+        panel3.setBorder( BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString( "manifest.bundledescription" ) ) );
         m_description = new JTextArea();
-        panel3.add( m_description, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_CENTER,
-                                                        GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW,
-                                                        GridConstraints.SIZEPOLICY_WANT_GROW, null,
-                                                        new Dimension( 150, 50 ), null, 0, false
-        )
-        );
+        panel3.add( m_description, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension( 150, 50 ), null, 0, false ) );
     }
 
     private void $$$loadLabelText$$$( JLabel component, String text )

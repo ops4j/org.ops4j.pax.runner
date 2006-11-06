@@ -74,34 +74,12 @@ public class OsgiModuleImportForm
         createUIComponents();
         m_mainPanel = new JPanel();
         m_mainPanel.setLayout( new GridLayoutManager( 2, 1, new Insets( 0, 0, 0, 0 ), -1, -1 ) );
-        m_mainPanel.setBorder( BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(),
-                                                                 ResourceBundle.getBundle(
-                                                                     "org/ops4j/pax/runner/idea/OsgiResourceBundle"
-                                                                 ).getString( "settings.import.title" )
-        )
-        );
+        m_mainPanel.setBorder( BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString( "settings.import.title" ) ) );
         final JLabel label1 = new JLabel();
-        this.$$$loadLabelText$$$( label1,
-                                  ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString(
-                                      "settings.import"
-                                  )
-        );
-        m_mainPanel.add( label1, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_WEST,
-                                                      GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED,
-                                                      GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false
-        )
-        );
+        this.$$$loadLabelText$$$( label1, ResourceBundle.getBundle( "org/ops4j/pax/runner/idea/OsgiResourceBundle" ).getString( "settings.import" ) );
+        m_mainPanel.add( label1, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false ) );
         final JScrollPane scrollPane1 = new JScrollPane();
-        m_mainPanel.add( scrollPane1, new GridConstraints( 1, 0, 1, 1, GridConstraints.ANCHOR_CENTER,
-                                                           GridConstraints.FILL_BOTH, GridConstraints
-            .SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK
-                                                                           | GridConstraints.SIZEPOLICY_WANT_GROW, null,
-                                                                                                                   null,
-                                                                                                                   null,
-                                                                                                                   0,
-                                                                                                                   false
-        )
-        );
+        m_mainPanel.add( scrollPane1, new GridConstraints( 1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false ) );
         scrollPane1.setViewportView( m_importList );
     }
 

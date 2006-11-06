@@ -26,8 +26,8 @@ import org.jetbrains.annotations.NonNls;
 import org.ops4j.osgidea.runner.config.ConfigBean;
 import org.ops4j.osgidea.runner.repositories.ObrRepository;
 import org.ops4j.osgidea.runner.repositories.ProjectRepository;
-import org.ops4j.pax.runner.repositories.RepositoryInfo;
-import org.ops4j.pax.runner.repositories.RepositoryType;
+import org.ops4j.pax.model.repositories.RepositoryType;
+import org.ops4j.pax.model.repositories.RepositoryInfo;
 import org.xml.sax.SAXException;
 
 public class RepositoryNodeFactory

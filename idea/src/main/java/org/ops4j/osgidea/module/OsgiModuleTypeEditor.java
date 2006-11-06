@@ -30,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 import org.ops4j.osgidea.OsgiIcons;
 import org.ops4j.osgidea.OsgiResourceBundle;
 import org.ops4j.osgidea.bundles.forms.OsgiModuleTypeForm;
+import org.ops4j.pax.model.bundles.ManifestModel;
 
 public class OsgiModuleTypeEditor
     implements ModuleConfigurationEditor

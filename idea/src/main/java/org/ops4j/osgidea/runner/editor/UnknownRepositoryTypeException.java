@@ -18,7 +18,7 @@
 package org.ops4j.osgidea.runner.editor;
 
 import org.ops4j.osgidea.runner.PaxRunnerRuntimeException;
-import org.ops4j.pax.runner.repositories.RepositoryType;
+import org.ops4j.pax.model.repositories.RepositoryType;
 
 public class UnknownRepositoryTypeException extends PaxRunnerRuntimeException
 {

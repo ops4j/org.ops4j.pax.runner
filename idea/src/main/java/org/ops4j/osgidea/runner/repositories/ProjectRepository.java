@@ -24,8 +24,8 @@ import java.net.URL;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 import org.ops4j.osgidea.runner.config.ConfigBean;
-import org.ops4j.pax.runner.repositories.BundleRef;
-import org.ops4j.pax.runner.repositories.RepositoryInfo;
+import org.ops4j.pax.model.bundles.BundleRef;
+import org.ops4j.pax.model.repositories.RepositoryInfo;
 
 public class ProjectRepository extends DefaultMutableTreeNode
     implements MutableTreeNode

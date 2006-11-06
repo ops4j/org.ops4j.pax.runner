@@ -57,38 +57,15 @@ public class RemoveRepositoryForm
         m_mainPanel.setLayout( new GridLayoutManager( 2, 1, new Insets( 0, 0, 0, 0 ), -1, -1 ) );
         final JPanel panel1 = new JPanel();
         panel1.setLayout( new GridLayoutManager( 1, 5, new Insets( 0, 0, 0, 0 ), -1, -1 ) );
-        m_mainPanel.add( panel1, new GridConstraints( 1, 0, 1, 1, GridConstraints.ANCHOR_CENTER,
-                                                      GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK
-                                                                                 | GridConstraints.SIZEPOLICY_CAN_GROW,
-                                                      GridConstraints.SIZEPOLICY_CAN_SHRINK
-                                                      | GridConstraints.SIZEPOLICY_CAN_GROW,
-                                                      null, null, null, 0, false
-        )
-        );
+        m_mainPanel.add( panel1, new GridConstraints( 1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false ) );
         m_remove = new JButton();
         m_remove.setText( "Remove Selected" );
-        panel1.add( m_remove, new GridConstraints( 0, 1, 1, 1, GridConstraints.ANCHOR_CENTER,
-                                                   GridConstraints.FILL_HORIZONTAL, GridConstraints
-            .SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null,
-                                                                          null, 0, false
-        )
-        );
+        panel1.add( m_remove, new GridConstraints( 0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false ) );
         m_cancel = new JButton();
         m_cancel.setText( "Cancel" );
-        panel1.add( m_cancel, new GridConstraints( 0, 3, 1, 1, GridConstraints.ANCHOR_CENTER,
-                                                   GridConstraints.FILL_HORIZONTAL, GridConstraints
-            .SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null,
-                                                                          null, 0, false
-        )
-        );
+        panel1.add( m_cancel, new GridConstraints( 0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false ) );
         m_repositories = new JList();
-        m_mainPanel.add( m_repositories, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_CENTER,
-                                                              GridConstraints.FILL_BOTH,
-                                                              GridConstraints.SIZEPOLICY_CAN_GROW,
-                                                              GridConstraints.SIZEPOLICY_WANT_GROW, null,
-                                                              new Dimension( 150, 50 ), null, 0, false
-        )
-        );
+        m_mainPanel.add( m_repositories, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension( 150, 50 ), null, 0, false ) );
     }
 
     public javax.swing.JComponent $$$getRootComponent$$$()

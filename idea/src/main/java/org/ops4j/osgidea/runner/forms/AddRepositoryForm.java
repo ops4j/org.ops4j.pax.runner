@@ -32,8 +32,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import org.apache.log4j.Logger;
 import org.ops4j.osgidea.runner.config.ConfigBean;
-import org.ops4j.osgidea.runner.repositories.RepositoryInfo;
-import org.ops4j.osgidea.runner.repositories.RepositoryType;
+import org.ops4j.pax.model.repositories.RepositoryType;
+import org.ops4j.pax.model.repositories.RepositoryInfo;
 
 public class AddRepositoryForm extends DialogWrapper
 {
@@ -142,61 +142,24 @@ public class AddRepositoryForm extends DialogWrapper
         m_mainPanel.setLayout( new GridLayoutManager( 3, 2, new Insets( 0, 0, 0, 0 ), -1, -1 ) );
         final JPanel panel1 = new JPanel();
         panel1.setLayout( new GridLayoutManager( 2, 1, new Insets( 0, 0, 0, 0 ), -1, -1 ) );
-        m_mainPanel.add( panel1, new GridConstraints( 2, 1, 1, 1, GridConstraints.ANCHOR_CENTER,
-                                                      GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK
-                                                                                 | GridConstraints.SIZEPOLICY_CAN_GROW,
-                                                      GridConstraints.SIZEPOLICY_CAN_SHRINK
-                                                      | GridConstraints.SIZEPOLICY_CAN_GROW,
-                                                      null, null, null, 0, false
-        )
-        );
+        m_mainPanel.add( panel1, new GridConstraints( 2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false ) );
         panel1.setBorder( BorderFactory.createTitledBorder( "Repository Type" ) );
         m_oscar = new JRadioButton();
         m_oscar.setText( "Oscar Bundle Repository" );
-        panel1.add( m_oscar, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
-                                                  GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints
-                                                      .SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null,
-                                                                            null, null, 0, false
-        )
-        );
+        panel1.add( m_oscar, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false ) );
         m_eclipse = new JRadioButton();
         m_eclipse.setText( "Eclipse Update Center" );
-        panel1.add( m_eclipse, new GridConstraints( 1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE,
-                                                    GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints
-                                                        .SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null,
-                                                                              null, null, 0, false
-        )
-        );
+        panel1.add( m_eclipse, new GridConstraints( 1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false ) );
         m_url = new JTextField();
-        m_mainPanel.add( m_url, new GridConstraints( 1, 1, 1, 1, GridConstraints.ANCHOR_WEST,
-                                                     GridConstraints.FILL_HORIZONTAL,
-                                                     GridConstraints.SIZEPOLICY_WANT_GROW,
-                                                     GridConstraints.SIZEPOLICY_FIXED, null, new Dimension( 150, -1 ),
-                                                     null, 0, false
-        )
-        );
+        m_mainPanel.add( m_url, new GridConstraints( 1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension( 150, -1 ), null, 0, false ) );
         final JLabel label1 = new JLabel();
         label1.setText( "URL:" );
-        m_mainPanel.add( label1, new GridConstraints( 1, 0, 1, 1, GridConstraints.ANCHOR_WEST,
-                                                      GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED,
-                                                      GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false
-        )
-        );
+        m_mainPanel.add( label1, new GridConstraints( 1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false ) );
         final JLabel label2 = new JLabel();
         label2.setText( "Name:" );
-        m_mainPanel.add( label2, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_WEST,
-                                                      GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED,
-                                                      GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false
-        )
-        );
+        m_mainPanel.add( label2, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false ) );
         m_name = new JTextField();
-        m_mainPanel.add( m_name, new GridConstraints( 0, 1, 1, 1, GridConstraints.ANCHOR_WEST,
-                                                      GridConstraints.FILL_HORIZONTAL,
-                                                      GridConstraints.SIZEPOLICY_WANT_GROW,
-                                                      GridConstraints.SIZEPOLICY_FIXED, null, new Dimension( 150, -1 ),
-                                                      null, 0, false
-        )
-        );
+        m_mainPanel.add( m_name, new GridConstraints( 0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension( 150, -1 ), null, 0, false ) );
     }
 
     public JComponent $$$getRootComponent$$$()

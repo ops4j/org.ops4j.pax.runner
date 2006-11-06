@@ -8,7 +8,7 @@ import org.ops4j.pax.runner.RunnerOptionsImpl;
 public class ConfigBean extends RunnerOptionsImpl
 {
     private ProjectJdk m_jdk;
-    private Project m_project;
+    private Project m_project;                                     
     private OsgiRunConfiguration m_osgiRunConfiguration;
 
     public ConfigBean( Project project, OsgiRunConfiguration osgiRunConfiguration )

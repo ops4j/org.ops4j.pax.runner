@@ -13,7 +13,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="ops4j-base-0.2.1" level="project" />
+    <orderEntry type="library" name="ops4j-base-0.3.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="jaxb-api-2.0" level="project" />
     <orderEntry type="library" name="junit-3.8.2" level="project" />
     <orderEntry type="library" name="jsr173_api-1.0" level="project" />

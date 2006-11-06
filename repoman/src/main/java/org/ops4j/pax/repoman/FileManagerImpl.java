@@ -25,16 +25,16 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import org.ops4j.io.StreamUtils;
-import org.ops4j.pax.runner.RunnerOptions;
 import org.ops4j.pax.common.FileUtils;
+import org.ops4j.pax.model.ApplicationOptions;
 
 public class FileManagerImpl
     implements FileManager
 {
 
-    private RunnerOptions m_options;
+    private ApplicationOptions m_options;
 
-    public FileManagerImpl( RunnerOptions options )
+    public FileManagerImpl( ApplicationOptions options )
     {
         m_options = options;
     }

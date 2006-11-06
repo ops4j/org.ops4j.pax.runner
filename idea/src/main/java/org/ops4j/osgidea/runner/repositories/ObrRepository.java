@@ -24,9 +24,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 import javax.xml.parsers.ParserConfigurationException;
 import org.apache.log4j.Logger;
-import org.ops4j.pax.runner.repositories.RepositoryInfo;
-import org.ops4j.pax.runner.repositories.BundleObserver;
-import org.ops4j.pax.runner.repositories.BundleRef;
+import org.ops4j.pax.model.repositories.RepositoryInfo;
+import org.ops4j.pax.model.bundles.BundleObserver;
+import org.ops4j.pax.model.bundles.BundleRef;
 import org.xml.sax.SAXException;
 
 public class ObrRepository extends DefaultMutableTreeNode

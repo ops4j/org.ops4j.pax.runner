@@ -22,13 +22,10 @@ import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 import java.util.StringTokenizer;
 import javax.xml.parsers.ParserConfigurationException;
-import org.ops4j.pax.runner.ServiceException;
-import org.ops4j.pax.runner.PaxRunner;
-import org.ops4j.pax.runner.ServiceManager;
-import org.ops4j.pax.runner.RunnerOptions;
-import org.ops4j.pax.runner.internal.RunnerOptionsImpl;
-import org.ops4j.pax.runner.repositories.RepositoryInfo;
-import org.ops4j.pax.runner.repositories.RepositoryType;
+import org.ops4j.pax.runner.*;
+import org.ops4j.pax.model.repositories.RepositoryInfo;
+import org.ops4j.pax.model.repositories.RepositoryType;
+import org.ops4j.pax.pomparser.PomInfo;
 import org.xml.sax.SAXException;
 
 /**

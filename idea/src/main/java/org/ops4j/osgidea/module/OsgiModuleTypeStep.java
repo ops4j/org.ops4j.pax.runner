@@ -23,8 +23,7 @@ import javax.swing.JComponent;
 import javax.swing.Icon;
 import org.jetbrains.annotations.NonNls;
 import org.ops4j.osgidea.bundles.forms.OsgiModuleTypeForm;
-import org.ops4j.osgidea.builder.bundles.ManifestModel;
-import org.ops4j.osgidea.module.OsgiModuleBuilder;
+import org.ops4j.pax.model.bundles.ManifestModel;
 
 public class OsgiModuleTypeStep extends ModuleWizardStep
 {

@@ -26,26 +26,10 @@ import org.ops4j.pax.model.repositories.RepositoryInfo;
 import org.ops4j.pax.model.repositories.RepositoryObserver;
 import org.ops4j.pax.model.bundles.BundleRef;
 import org.ops4j.pax.model.bundles.BundleObserver;
+import org.ops4j.pax.model.ApplicationOptions;
 
-public interface RunnerOptions
+public interface RunnerOptions extends ApplicationOptions
 {
-
-    String getProxyHost();
-
-    void setProxyHost( String proxyHost );
-
-    String getProxyPort();
-
-    void setProxyPort( String proxyPort );
-
-    String getProxyUser();
-
-    void setProxyUser( String proxyUser );
-
-    String getProxyPass();
-
-    void setProxyPass( String proxyPass );
-
     String getSelectedPlatform();
 
     void setSelectedPlatform( String selectedPlatform );
@@ -61,12 +45,6 @@ public interface RunnerOptions
     String getVmArguments();
 
     void setVmArguments( String vmArguments );
-
-    Map<String, String> getSystemProperties();
-
-    void addSystemProperty( String key, String value );
-
-    void removeSystemProperty( String key );
 
     File getWorkDir();
 
@@ -100,8 +78,6 @@ public interface RunnerOptions
 
     void removeBundleObserver( BundleObserver observer );
 
-    void setSystemProperties( Map<String, String> systemProperties );
-
     void setBundleRefs( List<BundleRef> refs );
 
     String getProfile();
@@ -109,10 +85,6 @@ public interface RunnerOptions
     void setProfile( String profile );
 
     String getURL();
-
-    void setNoMd5Checks( boolean noMd5Checks );
-
-    boolean isNoMd5Checks();
 
     void setURL( String URL );
 

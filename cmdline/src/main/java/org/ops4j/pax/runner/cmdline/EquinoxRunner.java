@@ -25,8 +25,8 @@ import java.net.URL;
 import org.ops4j.pax.runner.Runner;
 import org.ops4j.pax.runner.RunnerOptions;
 import org.ops4j.pax.runner.RunPreparer;
-import org.ops4j.pax.runner.repositories.BundleRef;
-import org.ops4j.pax.runner.utils.Pipe;
+import org.ops4j.pax.model.bundles.BundleRef;
+import org.ops4j.pax.common.Pipe;
 
 public class EquinoxRunner
     implements Runner

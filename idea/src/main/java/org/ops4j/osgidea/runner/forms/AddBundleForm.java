@@ -36,9 +36,9 @@ import javax.swing.tree.TreePath;
 import org.apache.log4j.Logger;
 import org.ops4j.osgidea.runner.config.ConfigBean;
 import org.ops4j.osgidea.runner.editor.RepositoryNodeFactory;
-import org.ops4j.osgidea.runner.repositories.BundleRef;
-import org.ops4j.osgidea.runner.repositories.RepositoryInfo;
-import org.ops4j.osgidea.runner.repositories.RepositoryObserver;
+import org.ops4j.pax.model.repositories.RepositoryObserver;
+import org.ops4j.pax.model.repositories.RepositoryInfo;
+import org.ops4j.pax.model.bundles.BundleRef;
 
 public class AddBundleForm extends DialogWrapper
     implements RepositoryObserver
@@ -183,51 +183,18 @@ public class AddBundleForm extends DialogWrapper
         m_mainPanel.setLayout( new GridLayoutManager( 1, 1, new Insets( 0, 0, 0, 0 ), -1, -1 ) );
         final JPanel panel1 = new JPanel();
         panel1.setLayout( new GridLayoutManager( 2, 1, new Insets( 0, 0, 0, 0 ), -1, -1 ) );
-        m_mainPanel.add( panel1, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_CENTER,
-                                                      GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK
-                                                                                 | GridConstraints.SIZEPOLICY_CAN_GROW,
-                                                      GridConstraints.SIZEPOLICY_CAN_SHRINK
-                                                      | GridConstraints.SIZEPOLICY_CAN_GROW,
-                                                      null, null, null, 0, false
-        )
-        );
+        m_mainPanel.add( panel1, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false ) );
         final JPanel panel2 = new JPanel();
         panel2.setLayout( new GridLayoutManager( 1, 2, new Insets( 0, 0, 0, 0 ), -1, -1 ) );
-        panel1.add( panel2, new GridConstraints( 1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH,
-                                                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints
-                                                     .SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK
-                                                                           | GridConstraints.SIZEPOLICY_CAN_GROW, null,
-                                                                                                                  null,
-                                                                                                                  null,
-                                                                                                                  0,
-                                                                                                                  false
-        )
-        );
+        panel1.add( panel2, new GridConstraints( 1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false ) );
         m_addRepository = new JButton();
         m_addRepository.setText( "Add Repository..." );
-        panel2.add( m_addRepository, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_CENTER,
-                                                          GridConstraints.FILL_HORIZONTAL, GridConstraints
-            .SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null,
-                                                                          null, 0, false
-        )
-        );
+        panel2.add( m_addRepository, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false ) );
         m_removeRepository = new JButton();
         m_removeRepository.setText( "Remove Repository..." );
-        panel2.add( m_removeRepository, new GridConstraints( 0, 1, 1, 1, GridConstraints.ANCHOR_CENTER,
-                                                             GridConstraints.FILL_HORIZONTAL, GridConstraints
-            .SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null,
-                                                                          null, 0, false
-        )
-        );
+        panel2.add( m_removeRepository, new GridConstraints( 0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false ) );
         final JScrollPane scrollPane1 = new JScrollPane();
-        panel1.add( scrollPane1, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_CENTER,
-                                                      GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK
-                                                                                 | GridConstraints.SIZEPOLICY_WANT_GROW,
-                                                      GridConstraints.SIZEPOLICY_CAN_SHRINK
-                                                      | GridConstraints.SIZEPOLICY_WANT_GROW,
-                                                      null, null, null, 0, false
-        )
-        );
+        panel1.add( scrollPane1, new GridConstraints( 0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false ) );
         m_bundles = new JTree();
         m_bundles.setRootVisible( false );
         m_bundles.setShowsRootHandles( true );

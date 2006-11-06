@@ -24,7 +24,7 @@ import java.io.OutputStream;
 import org.ops4j.pax.runner.Runner;
 import org.ops4j.pax.runner.RunnerOptions;
 import org.ops4j.pax.runner.exec.FelixPreparer;
-import org.ops4j.pax.runner.utils.Pipe;
+import org.ops4j.pax.common.Pipe;
 
 public class FelixRunner
     implements Runner

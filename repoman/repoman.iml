@@ -9,11 +9,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="ops4j-base-0.2.1" level="project" />
+    <orderEntry type="library" name="ops4j-base-0.3.0-SNAPSHOT" level="project" />
     <orderEntry type="module" module-name="pom-parser" />
     <orderEntry type="module" module-name="model" />
     <orderEntry type="module" module-name="common" />
-    <orderEntry type="module" module-name="runner" />
     <orderEntryProperties />
   </component>
   <component name="PluginUploader.UploadConfigurable">

@@ -27,6 +27,8 @@ import com.intellij.openapi.util.Computable;
 import com.intellij.util.ArrayUtil;
 import java.util.ArrayList;
 import javax.swing.Icon;
+import org.ops4j.osgidea.OsgiIcons;
+import org.ops4j.pax.model.bundles.ManifestModel;
 
 public class OsgiModuleType extends ModuleType<OsgiModuleBuilder>
 {

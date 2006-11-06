@@ -26,7 +26,7 @@ import com.intellij.execution.configurations.RunConfigurationBase;
 import com.intellij.execution.configurations.RunProfileState;
 import com.intellij.execution.configurations.RunnerSettings;
 import com.intellij.execution.configurations.RuntimeConfigurationException;
-import com.intellij.execution.filters.TextConsoleBuilderFactory;
+import com.intellij.execution.filters.TextConsoleBuidlerFactory;
 import com.intellij.execution.filters.TextConsoleBuilder;
 import com.intellij.execution.runners.JavaProgramRunner;
 import com.intellij.execution.runners.RunnerInfo;
@@ -38,8 +38,8 @@ import com.intellij.openapi.util.JDOMExternalizable;
 import org.apache.log4j.Logger;
 import org.ops4j.osgidea.runner.editor.OsgiConfigurationEditor;
 import org.ops4j.osgidea.runner.run.EquinoxRunner;
-import org.ops4j.pax.runner.repositories.RepositoryType;
-import org.ops4j.pax.runner.repositories.RepositoryInfo;
+import org.ops4j.pax.model.repositories.RepositoryType;
+import org.ops4j.pax.model.repositories.RepositoryInfo;
 
 public class OsgiRunConfiguration extends RunConfigurationBase
     implements RunConfiguration
@@ -112,7 +112,7 @@ public class OsgiRunConfiguration extends RunConfigurationBase
 
         Project project = getProject();
         String selected = m_configBean.getSelectedPlatform();
-        TextConsoleBuilderFactory consoleBuidlerFactory = TextConsoleBuilderFactory.getInstance();
+        TextConsoleBuidlerFactory consoleBuidlerFactory = TextConsoleBuidlerFactory.getInstance();
         TextConsoleBuilder consoleBuilder = consoleBuidlerFactory.createBuilder( project );
         if( "Equinox".equalsIgnoreCase( selected ) )
         {
