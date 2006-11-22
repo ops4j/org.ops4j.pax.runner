@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.ops4j</groupId>
@@ -10,12 +9,11 @@
   <groupId>org.ops4j.pax</groupId>
   <artifactId>runner</artifactId>
   <name>Pax Runner</name>
-  <version>0.3.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
+  <version>0.2.0</version>
   <url>http://wiki.ops4j.org/dokuwiki/doku.php?id=pax:runner</url>
   <scm>
-    <connection>scm:svn:https://scm.ops4j.org/repos/ops4j/projects/pax/runner</connection>
-    <developerConnection>scm:svn:https://scm.ops4j.org/repos/ops4j/projects/pax/runner</developerConnection>
+    <connection>scm:svn:https://scm.ops4j.org/repos/ops4j/qa/pax/runner/runner-0.2.0</connection>
+    <developerConnection>scm:svn:https://scm.ops4j.org/repos/ops4j/qa/pax/runner/runner-0.2.0</developerConnection>
   </scm>
   <build>
     <plugins>
@@ -23,6 +21,17 @@
         <artifactId>maven-release-plugin</artifactId>
         <configuration>
           <tagBase>https://scm.ops4j.org/repos/ops4j/qa/pax/runner</tagBase>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>org.ops4j.pax.runner.Run</mainClass>
+              <packageName>org.ops4j.pax.runner</packageName>
+            </manifest>
+          </archive>
         </configuration>
       </plugin>
     </plugins>
@@ -45,37 +54,4 @@
       </snapshots>
     </repository>
   </repositories>
-  <modules>
-    <module>bundlemaker</module>
-    <module>common</module>
-    <module>cmdline</module>
-    <module>idea</module>
-    <module>model</module>
-    <module>pom-parser</module>
-    <module>runner</module>
-    <module>repoman</module>
-    <!--
-      <module>eclipse</module>
-    -->
-  </modules>
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.ops4j.base</groupId>
-        <artifactId>ops4j-base</artifactId>
-        <version>0.3.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-        <groupId>org.osgi</groupId>
-        <artifactId>osgi_R4_compendium</artifactId>
-        <version>1.0</version>
-      </dependency>
-      <dependency>
-        <groupId>org.osgi</groupId>
-        <artifactId>osgi_R4_core</artifactId>
-        <version>1.0</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
 </project>
-
