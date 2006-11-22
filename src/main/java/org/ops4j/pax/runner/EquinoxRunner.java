@@ -125,7 +125,7 @@ public class EquinoxRunner
         Runtime runtime = Runtime.getRuntime();
 
         File cwd = new File( System.getProperty( "user.dir" ) );
-        String javaHome = System.getProperty( "java.home" );
+        String javaHome = System.getProperty( "JAVA_HOME" );
         if( javaHome == null )
         {
             javaHome = System.getenv().get( "JAVA_HOME" );
