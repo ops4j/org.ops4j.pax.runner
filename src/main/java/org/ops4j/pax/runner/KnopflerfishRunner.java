@@ -206,7 +206,7 @@ public class KnopflerfishRunner
     {
         Runtime runtime = Runtime.getRuntime();
 
-        String javaHome = System.getProperty( "java.home" );
+        String javaHome = System.getProperty( "JAVA_HOME" );
         if( javaHome == null )
         {
             javaHome = System.getenv().get( "JAVA_HOME" );
