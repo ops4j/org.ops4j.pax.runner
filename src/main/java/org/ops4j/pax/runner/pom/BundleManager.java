@@ -13,7 +13,7 @@
  * implied.
  *
  * See the License for the specific language governing permissions and
- * limitations under the License. 
+ * limitations under the License.
  */
 package org.ops4j.pax.runner.pom;
 
@@ -44,6 +44,10 @@ public class BundleManager
             version = MavenUtils.getLatestVersion( group, artifact, m_downloader );
         }
         version = version.replace( "-SNAPSHOT", ".SNAPSHOT" );
+        if( version == null || "LATEST".equals( version ) )
+        {
+            version = MavenUtils.getLatestVersion( group, artifact, m_downloader );
+        }
         File dest = new File( Run.WORK_DIR, "lib/" + group.replace('.','/' ));
         dest = new File( dest, artifact + "_" + version + ".jar" );
         m_downloader.download( url, dest, false );
@@ -58,5 +62,4 @@ public class BundleManager
         String url = m_downloader.getRepository() + group + "/" + artifact + "/" + version + "/" + filename;
         return new URL( url );
     }
-
 }

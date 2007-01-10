@@ -13,27 +13,30 @@
  * implied.
  *
  * See the License for the specific language governing permissions and
- * limitations under the License. 
+ * limitations under the License.
  */
 package org.ops4j.pax.runner.pom;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.StringTokenizer;
+import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.Downloader;
 import org.ops4j.pax.runner.Run;
-import org.xml.sax.SAXException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import java.io.IOException;
-import java.io.File;
-import java.net.URL;
-import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 public class MavenUtils
 {
+
     static String getLatestVersion( String group, String artifact, Downloader downloader )
         throws IOException, ParserConfigurationException, SAXException
     {
-        String metaLocation = downloader.getRepository() + group.replace( '.', '/') + "/" + artifact + "/maven-metadata.xml";
+        String metaLocation =
+            downloader.getRepository() + group.replace( '.', '/' ) + "/" + artifact + "/maven-metadata.xml";
         URL metaUrl = new URL( metaLocation );
         File dest = new File( Run.WORK_DIR, "latest.pom" );
         try
@@ -41,14 +44,47 @@ public class MavenUtils
             downloader.download( metaUrl, dest, true );
         } catch( IOException e )
         {
-            IOException ioException = new IOException( "Unable to retrieve LATEST version of [" + group + ":" + artifact + "]" );
+            IOException ioException =
+                new IOException( "Unable to retrieve LATEST version of [" + group + ":" + artifact + "]" );
             ioException.initCause( e );
             throw ioException;
         }
         Document doc = PomManager.parseDoc( dest );
-        Element root = doc.getDocumentElement();
-        NodeList children = root.getElementsByTagName( "version" );
-        Element latestVersion = (Element) children.item( 0 );
-        return latestVersion.getTextContent();
+        return getTextContentOfElement( doc, "versioning/versions/version[last]" );
+    }
+
+    static String getTextContentOfElement( Document doc, String path )
+    {
+        StringTokenizer st = new StringTokenizer( path, "/", false );
+        Element currentElement = doc.getDocumentElement();
+        while( st.hasMoreTokens() )
+        {
+            String childName = st.nextToken();
+            NodeList children = currentElement.getElementsByTagName( childName );
+            int numChildren = children.getLength();
+            int index = 0;
+            if( childName.endsWith( "]" ) )
+            {
+                int startPos = childName.indexOf( "[" );
+                int endPos = childName.indexOf( "]" );
+                String numbers = childName.substring( startPos + 1, endPos );
+                if( "last".equals( numbers ) )
+                {
+                    index = numChildren - 1;
+                }
+                else
+                {
+                    index = Integer.parseInt( numbers );
+                }
+            }
+            if( index > numChildren )
+            {
+                throw new IllegalArgumentException(
+                    "index of " + index + " is larger than the number of child nodes (" + numChildren + ")"
+                );
+            }
+            currentElement = (Element) children.item( index );
+        }
+        return currentElement.getTextContent();
     }
 }
