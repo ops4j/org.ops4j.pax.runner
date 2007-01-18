@@ -20,55 +20,113 @@ package org.ops4j.pax.runner;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.FileInputStream;
 import java.io.OutputStream;
-import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.ops4j.pax.runner.util.NullArgumentException;
 
 public class Downloader
 {
+    private static final Logger LOGGER = Logger.getLogger( Downloader.class.getName() );
 
-    private String m_repository;
-    private boolean m_noCheckMD5;
+    private final List<String> m_repositories;
+    private final boolean m_noCheckMD5;
 
     public Downloader( String repository, boolean noCheckMD5 )
+        throws IllegalArgumentException
     {
-        m_repository = repository;
+        NullArgumentException.validateNotEmpty( repository, "repository" );
+
+        ArrayList<String> repositories = new ArrayList<String>();
+        repositories.add( repository );
+        m_repositories = repositories;
         m_noCheckMD5 = noCheckMD5;
     }
 
-    public void download( URL source, File destination, boolean force )
+    public Downloader( List<String> repositories, boolean noCheckMD5 )
+        throws IllegalArgumentException
+    {
+        NullArgumentException.validateNotNull( repositories, "repositories" );
+        if ( repositories.isEmpty() )
+        {
+            throw new IllegalArgumentException( "[repositories] argument must not be empty." );
+        }
+
+        m_repositories = repositories;
+        m_noCheckMD5 = noCheckMD5;
+    }
+
+    public void download( String path, File destination, boolean force )
         throws IOException
     {
-        if( destination.exists() && ! force )
+        NullArgumentException.validateNotEmpty( path, "path" );
+        NullArgumentException.validateNotNull( destination, "destination" );
+
+        if ( destination.exists() && !force )
         {
             return;
         }
+
         File localRepo = new File( System.getProperty( "user.home" ), ".m2/repository" );
-        String sourceString = source.toExternalForm();
-        String path = sourceString.substring( m_repository.length() );
+
         File localCache = new File( localRepo, path );
-        File md5File = getMD5File( localCache );
-        int count = 3;
-        while( count > 0 && (! localCache.exists() || ! verifyMD5( localCache, md5File ) ) )
+        for ( String repository : m_repositories )
         {
-            downloadFile( localCache, source );
-            URL md5source = new URL( getMd5Filename( sourceString ) );
+            File md5File = getMD5File( localCache );
+
+            String fullPath = repository + path;
+            URL url;
             try
             {
-                downloadFile( md5File, md5source );
-            } catch( FileNotFoundException e )
-            {
-                System.out.println( "MD5 not present on server. Creating locally: " + md5File.getName() );
-                createMD5Locally( localCache, md5File );
+                url = new URL( fullPath );
             }
-            count--;
+            catch ( MalformedURLException e )
+            {
+                LOGGER.finer( "Fail to construct URL [" + fullPath + "]. Skip." );
+                continue;
+            }
+
+            String sourceString = url.toExternalForm();
+            int count = 3;
+            while ( count > 0 && (!localCache.exists() || !verifyMD5( localCache, md5File )) )
+            {
+                count--;
+                
+                try
+                {
+                    downloadFile( localCache, url );
+                }
+                catch ( FileNotFoundException e )
+                {
+                    System.out.println( "Artifact from url [" + url + "] is not found." );
+                    continue;
+                }
+
+                URL md5source = new URL( getMd5Filename( sourceString ) );
+                try
+                {
+                    downloadFile( md5File, md5source );
+                }
+                catch ( FileNotFoundException e )
+                {
+                    System.out.println( "MD5 not present on server. Creating locally: " + md5File.getName() );
+                    createMD5Locally( localCache, md5File );
+                }
+            }
         }
+
         copyFile( localCache, destination );
     }
 
@@ -82,11 +140,11 @@ public class Downloader
     private boolean verifyMD5( File fileToCheck, File md5File )
         throws IOException
     {
-        if( m_noCheckMD5 )
+        if ( m_noCheckMD5 )
         {
             return true;
         }
-        if( ! md5File.exists() )
+        if ( !md5File.exists() )
         {
             return false;
         }
@@ -105,22 +163,24 @@ public class Downloader
             FileInputStream fis = new FileInputStream( fileToCheck );
             in = new BufferedInputStream( fis );
             int b = in.read();
-                while( b != -1 )
-                {
-                    digest.update( (byte) b );
-                    b = in.read();
-                }
-                byte[] result = digest.digest();
-                String md5Value = convertToHexString( result );
-                return md5Value;
-        } catch( NoSuchAlgorithmException e )
+            while ( b != -1 )
+            {
+                digest.update( (byte) b );
+                b = in.read();
+            }
+            byte[] result = digest.digest();
+            String md5Value = convertToHexString( result );
+            return md5Value;
+        }
+        catch ( NoSuchAlgorithmException e )
         {
             // MD5 is always present
             e.printStackTrace();
             return null;
-        } finally
+        }
+        finally
         {
-            if( in != null )
+            if ( in != null )
             {
                 in.close();
             }
@@ -130,11 +190,11 @@ public class Downloader
     private String convertToHexString( byte[] data )
     {
         StringBuffer buf = new StringBuffer();
-        for( byte b : data )
+        for ( byte b : data )
         {
             int d = b & 0xFF;
             String s = Integer.toHexString( d );
-            if( d < 16 )
+            if ( d < 16 )
             {
                 buf.append( "0" );
             }
@@ -169,19 +229,20 @@ public class Downloader
             parentDir.mkdirs();
             FileOutputStream fos = new FileOutputStream( localCache );
             out = new BufferedOutputStream( fos );
-            if( ! ( in instanceof BufferedInputStream ) )
+            if ( !(in instanceof BufferedInputStream) )
             {
                 in = new BufferedInputStream( in );
             }
             StreamUtils.streamCopy( in, out, "Downloading " + composeFileName( source ) );
             out.flush();
-        } finally
+        }
+        finally
         {
-            if( in != null )
+            if ( in != null )
             {
                 in.close();
             }
-            if( out != null )
+            if ( out != null )
             {
                 out.close();
             }
@@ -200,13 +261,14 @@ public class Downloader
             fis = new FileInputStream( localCache );
             fos = new FileOutputStream( destination );
             copyStream( fis, fos, true );
-        } finally
+        }
+        finally
         {
-            if( fis != null )
+            if ( fis != null )
             {
                 fis.close();
             }
-            if( fos != null )
+            if ( fos != null )
             {
                 fos.close();
             }
@@ -216,21 +278,21 @@ public class Downloader
     static void copyStream( InputStream source, OutputStream dest, boolean buffer )
         throws IOException
     {
-        if( source == null )
+        if ( source == null )
         {
             throw new IllegalArgumentException( "source == null" );
         }
-        if( dest == null )
+        if ( dest == null )
         {
             throw new IllegalArgumentException( "dest == null" );
         }
-        if( buffer )
+        if ( buffer )
         {
             source = new BufferedInputStream( source );
             dest = new BufferedOutputStream( dest );
         }
         int ch = source.read();
-        while( ch != -1 )
+        while ( ch != -1 )
         {
             dest.write( ch );
             ch = source.read();
@@ -244,11 +306,5 @@ public class Downloader
         int slashPos = path.lastIndexOf( '/' );
         path = path.substring( slashPos + 1 );
         return path;
-    }
-
-
-    public String getRepository()
-    {
-        return m_repository;
     }
 }

@@ -21,65 +21,74 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URL;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.ops4j.pax.runner.Downloader;
+
 import org.ops4j.pax.runner.CmdLine;
+import org.ops4j.pax.runner.Downloader;
 import org.ops4j.pax.runner.PropertyResolver;
 import org.ops4j.pax.runner.Run;
+import org.ops4j.pax.runner.util.NullArgumentException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 public class PomManager
 {
 
+    private static final String SCOPE_TAGS = "scope";
+    private static final String SCOPE_TEST = "test";
+    private static final String SCOPE_COMPILE = "compile";
+
     private Downloader m_downloader;
 
     public PomManager( Downloader downloader )
+        throws IllegalArgumentException
     {
+        NullArgumentException.validateNotNull( downloader, "downloader" );
         m_downloader = downloader;
     }
 
     public Document retrievePom( CmdLine cmdLine )
-        throws IOException, ParserConfigurationException, SAXException
+        throws IOException,
+        ParserConfigurationException,
+        SAXException
     {
+        NullArgumentException.validateNotNull( cmdLine, "cmdLine" );
+
         String artifact = cmdLine.getValue( "artifact" );
+        if ( artifact == null )
+        {
+            System.out.println( "   Artifact declaration is required." );
+
+            return null;
+        }
+
         String groupId = cmdLine.getValue( "group" );
         String version = cmdLine.getValue( "version" );
-        if( "LATEST".equals( version) )
+
+        if ( "LATEST".equals( version ) )
         {
             version = MavenUtils.getLatestVersion( groupId, artifact, m_downloader );
         }
 
-        URL url;
-        if( artifact == null )
-        {
-            url = new URL( cmdLine.getValue( "url" ) );
-            System.out.println( "   Starting: " + url.toString() );
-        }
-        else
-        {
-            System.out.println( "   Starting: " + groupId + ", " + artifact + ", " + version );
-            String filename = artifact + "-" + version + ".pom";
-            groupId = groupId.replace( '.', '/' );
-            url = new URL(
-                m_downloader.getRepository() + groupId + "/" + artifact + "/" + version + "/" + filename
-            );
-        }
+        System.out.println( "   Starting: " + groupId + ", " + artifact + ", " + version );
+        String pomFilename = artifact + "-" + version + ".pom";
+        groupId = groupId.replace( '.', '/' );
+        String path = groupId + "/" + artifact + "/" + version + "/" + pomFilename;
 
         String filename = artifact + "_" + version + ".pom";
         filename = PropertyResolver.resolve( System.getProperties(), filename );
         File dest = new File( Run.WORK_DIR, "lib/" + filename );
-        m_downloader.download( url, dest, false );
+        m_downloader.download( path, dest, false );
         return parseDoc( dest );
     }
 
@@ -92,51 +101,76 @@ public class PomManager
     }
 
     public List<File> getBundles( CmdLine cmdLine )
-        throws IOException, ParserConfigurationException, SAXException
+        throws IOException,
+        ParserConfigurationException,
+        SAXException
     {
         Document pom = retrievePom( cmdLine );
+        if ( pom == null )
+        {
+            return new ArrayList<File>();
+        }
         info( pom );
         Element dependencies = DomUtils.getElement( pom, "dependencies" );
         return getBundles( dependencies );
     }
 
     public Properties getProperties( CmdLine cmdLine )
-        throws IOException, ParserConfigurationException, SAXException
+        throws IOException,
+        ParserConfigurationException,
+        SAXException
     {
         Document pom = retrievePom( cmdLine );
+        if ( pom == null )
+        {
+            return new Properties();
+        }
+
         return DomUtils.parseProperties( pom );
     }
 
-    public List<File> getBundles( Element dependencies )
-        throws IOException, ParserConfigurationException, SAXException
+    private final List<File> getBundles( Element dependencies )
+        throws IOException,
+        ParserConfigurationException,
+        SAXException
     {
+        if ( dependencies == null )
+        {
+            throw new IllegalArgumentException( "[dependencies] argument must not be [null]." );
+        }
+
         List<File> bundles = new ArrayList<File>();
         NodeList nl = dependencies.getElementsByTagName( "dependency" );
-        for( int i = 0; i < nl.getLength(); i++ )
+        for ( int i = 0; i < nl.getLength(); i++ )
         {
             Node node = nl.item( i );
-            if( node.getNodeType() == Node.ELEMENT_NODE )
+
+            short nodeType = node.getNodeType();
+            if ( nodeType == Node.ELEMENT_NODE )
             {
-                String artifact = DomUtils.getElement( node, "artifactId" );
-                String group = DomUtils.getElement( node, "groupId" );
-                String version = DomUtils.getElement( node, "version" );
-                String scope = DomUtils.getElement( node, "scope" );
-                if( ! "test".equals( scope ) && ! "compile".equals( scope ) )
+                String scope = DomUtils.getElement( node, SCOPE_TAGS );
+                if ( !SCOPE_TEST.equals( scope ) && !SCOPE_COMPILE.equals( scope ) )
                 {
+                    String group = DomUtils.getElement( node, "groupId" );
+                    String artifact = DomUtils.getElement( node, "artifactId" );
+                    String version = DomUtils.getElement( node, "version" );
                     BundleManager bundleManager = new BundleManager( m_downloader );
                     File dest = bundleManager.getBundle( group, artifact, version );
-                    if( ! "provided".equals( scope ) )
+                    if ( !"provided".equals( scope ) )
                     {
                         bundles.add( dest );
                     }
                 }
             }
         }
+
         return bundles;
     }
 
     static Document parseDoc( File docFile )
-        throws ParserConfigurationException, SAXException, IOException
+        throws ParserConfigurationException,
+        SAXException,
+        IOException
     {
         FileInputStream fis = new FileInputStream( docFile );
         try
@@ -147,7 +181,8 @@ public class PomManager
             InputSource source = new InputSource( in );
             Document document = builder.parse( source );
             return document;
-        } finally
+        }
+        finally
         {
             fis.close();
         }

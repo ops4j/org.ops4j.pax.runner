@@ -21,12 +21,14 @@ import java.io.File;
 import java.io.IOException;
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.provisioning.Provisioning;
 import org.ops4j.pax.runner.pom.PomManager;
 import org.ops4j.pax.runner.pom.BundleManager;
+import org.ops4j.pax.runner.util.NullArgumentException;
 import org.xml.sax.SAXException;
 
 /**
@@ -39,12 +41,15 @@ public class Run
     private static CmdLine m_cmdLine;
 
     public static void main( String[] args )
-        throws IOException, ParserConfigurationException, SAXException
+        throws IOException,
+        ParserConfigurationException,
+        SAXException
     {
         try
         {
             m_cmdLine = new CmdLine( args );
-        } catch( IllegalArgumentException e )
+        }
+        catch ( IllegalArgumentException e )
         {
             System.err.println( e.getMessage() );
             System.err.println();
@@ -89,13 +94,13 @@ public class Run
         {
             protected PasswordAuthentication getPasswordAuthentication()
             {
-                if( getRequestorType() == Authenticator.RequestorType.PROXY )
+                if ( getRequestorType() == Authenticator.RequestorType.PROXY )
                 {
                     String userName = m_cmdLine.getValue( "proxy-username" );
                     char[] password = m_cmdLine.getValue( "proxy-password" ).toCharArray();
                     return new PasswordAuthentication( userName, password );
                 }
-                if( getRequestorType() == Authenticator.RequestorType.SERVER )
+                if ( getRequestorType() == Authenticator.RequestorType.SERVER )
                 {
                     String userName = m_cmdLine.getValue( "repository-username" );
                     char[] password = m_cmdLine.getValue( "repository-password" ).toCharArray();
@@ -106,18 +111,14 @@ public class Run
         };
         Authenticator.setDefault( auth );
 
-        String repo = m_cmdLine.getValue( "repository" );
-        if( ! repo.endsWith( "/" ) )
-        {
-            repo = repo + "/";
-        }
+        List<String> repositoryList = parseRepositories( m_cmdLine );
         boolean noCheckMD5 = m_cmdLine.isSet( "no-md5" );
-        Downloader downloader = new Downloader( repo, noCheckMD5 );
+        Downloader downloader = new Downloader( repositoryList, noCheckMD5 );
         List<File> bundles;
         Properties props;
         String urlValue = m_cmdLine.getValue( "url" );
         boolean useProvisioning = urlValue != null && urlValue.endsWith( ".zip" );
-        if( useProvisioning )
+        if ( useProvisioning )
         {
             Provisioning provisioning = new Provisioning( downloader );
             bundles = provisioning.getBundles( m_cmdLine );
@@ -132,17 +133,17 @@ public class Run
         BundleManager bundleManager = new BundleManager( downloader );
         String platform = m_cmdLine.getValue( "platform" ).toLowerCase();
         System.out.println( "\n   Platform: " + platform );
-        if( "equinox".equals( platform ) )
+        if ( "equinox".equals( platform ) )
         {
             Runnable wrapper = new EquinoxRunner( m_cmdLine, props, bundles, bundleManager );
             wrapper.run();
         }
-        else if( "felix".equals( platform ) )
+        else if ( "felix".equals( platform ) )
         {
             Runnable wrapper = new FelixRunner( m_cmdLine, props, bundles, bundleManager );
             wrapper.run();
         }
-        else if( "knopflerfish".equals( platform ) )
+        else if ( "knopflerfish".equals( platform ) )
         {
             Runnable wrapper = new KnopflerfishRunner( m_cmdLine, props, bundles, bundleManager );
             wrapper.run();
@@ -152,6 +153,27 @@ public class Run
             System.err.println( "Platform '" + platform + "' is currently not supported." );
             System.exit( 2 );
         }
-        System.exit(0);
+        System.exit( 0 );
+    }
+
+    private static List<String> parseRepositories( CmdLine commandLine )
+        throws IllegalArgumentException
+    {
+        NullArgumentException.validateNotNull( commandLine, "commandLine" );
+
+        String repo = commandLine.getValue( "repository" );
+        String[] repositories = repo.split( "," );
+        List<String> repositoryList = new ArrayList<String>();
+        for ( int i = 0; i < repositories.length; i++ )
+        {
+            String repository = repositories[i];
+            if ( !repository.endsWith( "/" ) )
+            {
+                repository = repository + "/";
+            }
+            repositoryList.add( repository );
+        }
+
+        return repositoryList;
     }
 }

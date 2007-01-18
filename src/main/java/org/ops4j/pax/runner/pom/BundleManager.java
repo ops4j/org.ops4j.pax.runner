@@ -24,42 +24,61 @@ import java.net.URL;
 import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.Downloader;
 import org.ops4j.pax.runner.Run;
+import org.ops4j.pax.runner.util.NullArgumentException;
 import org.xml.sax.SAXException;
 
-public class BundleManager
+public final class BundleManager
 {
     private Downloader m_downloader;
 
     public BundleManager( Downloader downloader )
+        throws IllegalArgumentException
     {
+        NullArgumentException.validateNotNull( downloader, "downloader" );
+
         m_downloader = downloader;
     }
 
-    public File getBundle( String group, String artifact, String version )
-        throws IOException, ParserConfigurationException, SAXException
+    public final File getBundle( String group, String artifact, String version )
+        throws IllegalArgumentException,
+        IOException,
+        ParserConfigurationException,
+        SAXException
     {
-        URL url = composeURL( group, artifact, version );
-        if( "LATEST".equalsIgnoreCase( version ) )
+        NullArgumentException.validateNotEmpty( group, "group" );
+        NullArgumentException.validateNotEmpty( artifact, "artifact" );
+        NullArgumentException.validateNotEmpty( version, "version" );
+
+        String url = composePath( group, artifact, version );
+        if ( "LATEST".equalsIgnoreCase( version ) )
         {
             version = MavenUtils.getLatestVersion( group, artifact, m_downloader );
         }
         version = version.replace( "-SNAPSHOT", ".SNAPSHOT" );
-        if( version == null || "LATEST".equals( version ) )
+        if ( version == null || "LATEST".equals( version ) )
         {
             version = MavenUtils.getLatestVersion( group, artifact, m_downloader );
         }
-        File dest = new File( Run.WORK_DIR, "lib/" + group.replace('.','/' ));
+
+        File dest = new File( Run.WORK_DIR, "lib/" + group.replace( '.', '/' ) );
         dest = new File( dest, artifact + "_" + version + ".jar" );
+
         m_downloader.download( url, dest, false );
+
         return dest;
     }
 
-    private URL composeURL( String group, String artifact, String version )
+    private String composePath( String group, String artifact, String version )
         throws MalformedURLException
     {
+        NullArgumentException.validateNotEmpty( group, "group" );
+        NullArgumentException.validateNotEmpty( artifact, "artifact" );
+        NullArgumentException.validateNotEmpty( version, "version" );
+
         String filename = artifact + "-" + version + ".jar";
         group = group.replace( '.', '/' );
-        String url = m_downloader.getRepository() + group + "/" + artifact + "/" + version + "/" + filename;
-        return new URL( url );
+        String path = group + "/" + artifact + "/" + version + "/" + filename;
+        
+        return path;
     }
 }

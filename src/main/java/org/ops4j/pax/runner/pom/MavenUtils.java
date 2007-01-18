@@ -19,9 +19,10 @@ package org.ops4j.pax.runner.pom;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.StringTokenizer;
+
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.ops4j.pax.runner.Downloader;
 import org.ops4j.pax.runner.Run;
 import org.w3c.dom.Document;
@@ -35,13 +36,11 @@ public class MavenUtils
     static String getLatestVersion( String group, String artifact, Downloader downloader )
         throws IOException, ParserConfigurationException, SAXException
     {
-        String metaLocation =
-            downloader.getRepository() + group.replace( '.', '/' ) + "/" + artifact + "/maven-metadata.xml";
-        URL metaUrl = new URL( metaLocation );
+        String metaLocation = group.replace( '.', '/' ) + "/" + artifact + "/maven-metadata.xml";
         File dest = new File( Run.WORK_DIR, "latest.pom" );
         try
         {
-            downloader.download( metaUrl, dest, true );
+            downloader.download( metaLocation, dest, true );
         } catch( IOException e )
         {
             IOException ioException =
