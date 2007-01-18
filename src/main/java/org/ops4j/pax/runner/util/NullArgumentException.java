@@ -13,7 +13,7 @@ public final class NullArgumentException extends IllegalArgumentException
     public static final void validateNotNull( Object obj, String objVarName )
         throws IllegalArgumentException
     {
-        if ( obj == null )
+        if( obj == null )
         {
             throw new NullArgumentException( "[" + objVarName + "] argument must not be [null]." );
         }
@@ -24,7 +24,7 @@ public final class NullArgumentException extends IllegalArgumentException
     {
         validateNotNull( str, strVarName );
 
-        if ( str.length() == 0 )
+        if( str.length() == 0 )
         {
             throw new IllegalArgumentException( "[" + strVarName + "] argument must not be empty." );
         }

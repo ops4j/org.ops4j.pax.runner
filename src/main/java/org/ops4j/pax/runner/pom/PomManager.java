@@ -24,11 +24,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.ops4j.pax.runner.CmdLine;
 import org.ops4j.pax.runner.Downloader;
 import org.ops4j.pax.runner.PropertyResolver;
@@ -59,13 +57,13 @@ public class PomManager
 
     public Document retrievePom( CmdLine cmdLine )
         throws IOException,
-        ParserConfigurationException,
-        SAXException
+               ParserConfigurationException,
+               SAXException
     {
         NullArgumentException.validateNotNull( cmdLine, "cmdLine" );
 
         String artifact = cmdLine.getValue( "artifact" );
-        if ( artifact == null )
+        if( artifact == null )
         {
             System.out.println( "   Artifact declaration is required." );
 
@@ -75,7 +73,7 @@ public class PomManager
         String groupId = cmdLine.getValue( "group" );
         String version = cmdLine.getValue( "version" );
 
-        if ( "LATEST".equals( version ) )
+        if( "LATEST".equals( version ) )
         {
             version = MavenUtils.getLatestVersion( groupId, artifact, m_downloader );
         }
@@ -102,11 +100,11 @@ public class PomManager
 
     public List<File> getBundles( CmdLine cmdLine )
         throws IOException,
-        ParserConfigurationException,
-        SAXException
+               ParserConfigurationException,
+               SAXException
     {
         Document pom = retrievePom( cmdLine );
-        if ( pom == null )
+        if( pom == null )
         {
             return new ArrayList<File>();
         }
@@ -117,11 +115,11 @@ public class PomManager
 
     public Properties getProperties( CmdLine cmdLine )
         throws IOException,
-        ParserConfigurationException,
-        SAXException
+               ParserConfigurationException,
+               SAXException
     {
         Document pom = retrievePom( cmdLine );
-        if ( pom == null )
+        if( pom == null )
         {
             return new Properties();
         }
@@ -131,32 +129,32 @@ public class PomManager
 
     private final List<File> getBundles( Element dependencies )
         throws IOException,
-        ParserConfigurationException,
-        SAXException
+               ParserConfigurationException,
+               SAXException
     {
-        if ( dependencies == null )
+        if( dependencies == null )
         {
             throw new IllegalArgumentException( "[dependencies] argument must not be [null]." );
         }
 
         List<File> bundles = new ArrayList<File>();
         NodeList nl = dependencies.getElementsByTagName( "dependency" );
-        for ( int i = 0; i < nl.getLength(); i++ )
+        for( int i = 0; i < nl.getLength(); i++ )
         {
             Node node = nl.item( i );
 
             short nodeType = node.getNodeType();
-            if ( nodeType == Node.ELEMENT_NODE )
+            if( nodeType == Node.ELEMENT_NODE )
             {
                 String scope = DomUtils.getElement( node, SCOPE_TAGS );
-                if ( !SCOPE_TEST.equals( scope ) && !SCOPE_COMPILE.equals( scope ) )
+                if( !SCOPE_TEST.equals( scope ) && !SCOPE_COMPILE.equals( scope ) )
                 {
                     String group = DomUtils.getElement( node, "groupId" );
                     String artifact = DomUtils.getElement( node, "artifactId" );
                     String version = DomUtils.getElement( node, "version" );
                     BundleManager bundleManager = new BundleManager( m_downloader );
                     File dest = bundleManager.getBundle( group, artifact, version );
-                    if ( !"provided".equals( scope ) )
+                    if( !"provided".equals( scope ) )
                     {
                         bundles.add( dest );
                     }
@@ -169,8 +167,8 @@ public class PomManager
 
     static Document parseDoc( File docFile )
         throws ParserConfigurationException,
-        SAXException,
-        IOException
+               SAXException,
+               IOException
     {
         FileInputStream fis = new FileInputStream( docFile );
         try

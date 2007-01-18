@@ -25,9 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.xml.parsers.ParserConfigurationException;
-import org.ops4j.pax.runner.provisioning.Provisioning;
-import org.ops4j.pax.runner.pom.PomManager;
 import org.ops4j.pax.runner.pom.BundleManager;
+import org.ops4j.pax.runner.pom.PomManager;
+import org.ops4j.pax.runner.provisioning.Provisioning;
 import org.ops4j.pax.runner.util.NullArgumentException;
 import org.xml.sax.SAXException;
 
@@ -36,20 +36,21 @@ import org.xml.sax.SAXException;
  */
 public class Run
 {
+
     public static File WORK_DIR;
 
     private static CmdLine m_cmdLine;
 
     public static void main( String[] args )
         throws IOException,
-        ParserConfigurationException,
-        SAXException
+               ParserConfigurationException,
+               SAXException
     {
         try
         {
             m_cmdLine = new CmdLine( args );
         }
-        catch ( IllegalArgumentException e )
+        catch( IllegalArgumentException e )
         {
             System.err.println( e.getMessage() );
             System.err.println();
@@ -94,13 +95,13 @@ public class Run
         {
             protected PasswordAuthentication getPasswordAuthentication()
             {
-                if ( getRequestorType() == Authenticator.RequestorType.PROXY )
+                if( getRequestorType() == Authenticator.RequestorType.PROXY )
                 {
                     String userName = m_cmdLine.getValue( "proxy-username" );
                     char[] password = m_cmdLine.getValue( "proxy-password" ).toCharArray();
                     return new PasswordAuthentication( userName, password );
                 }
-                if ( getRequestorType() == Authenticator.RequestorType.SERVER )
+                if( getRequestorType() == Authenticator.RequestorType.SERVER )
                 {
                     String userName = m_cmdLine.getValue( "repository-username" );
                     char[] password = m_cmdLine.getValue( "repository-password" ).toCharArray();
@@ -113,12 +114,12 @@ public class Run
 
         List<String> repositoryList = parseRepositories( m_cmdLine );
         boolean noCheckMD5 = m_cmdLine.isSet( "no-md5" );
-        Downloader downloader = new Downloader( repositoryList, noCheckMD5 );
+        Downloader downloader = new Downloader( repositoryList, noCheckMD5, true );
         List<File> bundles;
         Properties props;
         String urlValue = m_cmdLine.getValue( "url" );
         boolean useProvisioning = urlValue != null && urlValue.endsWith( ".zip" );
-        if ( useProvisioning )
+        if( useProvisioning )
         {
             Provisioning provisioning = new Provisioning( downloader );
             bundles = provisioning.getBundles( m_cmdLine );
@@ -133,17 +134,17 @@ public class Run
         BundleManager bundleManager = new BundleManager( downloader );
         String platform = m_cmdLine.getValue( "platform" ).toLowerCase();
         System.out.println( "\n   Platform: " + platform );
-        if ( "equinox".equals( platform ) )
+        if( "equinox".equals( platform ) )
         {
             Runnable wrapper = new EquinoxRunner( m_cmdLine, props, bundles, bundleManager );
             wrapper.run();
         }
-        else if ( "felix".equals( platform ) )
+        else if( "felix".equals( platform ) )
         {
             Runnable wrapper = new FelixRunner( m_cmdLine, props, bundles, bundleManager );
             wrapper.run();
         }
-        else if ( "knopflerfish".equals( platform ) )
+        else if( "knopflerfish".equals( platform ) )
         {
             Runnable wrapper = new KnopflerfishRunner( m_cmdLine, props, bundles, bundleManager );
             wrapper.run();
@@ -164,16 +165,14 @@ public class Run
         String repo = commandLine.getValue( "repository" );
         String[] repositories = repo.split( "," );
         List<String> repositoryList = new ArrayList<String>();
-        for ( int i = 0; i < repositories.length; i++ )
+        for( String repository : repositories )
         {
-            String repository = repositories[i];
-            if ( !repository.endsWith( "/" ) )
+            if( !repository.endsWith( "/" ) )
             {
                 repository = repository + "/";
             }
             repositoryList.add( repository );
         }
-
         return repositoryList;
     }
 }

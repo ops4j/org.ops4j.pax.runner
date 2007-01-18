@@ -24,6 +24,7 @@ import java.util.Map;
 
 public class CmdLine
 {
+
     private Map<String, String> m_values;
     private Map<String, String> m_platforms;
 

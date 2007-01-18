@@ -17,12 +17,13 @@
  */
 package org.ops4j.pax.runner;
 
-import java.io.InputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class StreamUtils
 {
+
     public static void streamCopy( InputStream in, BufferedOutputStream out, String title )
         throws IOException
     {
@@ -54,7 +55,7 @@ public class StreamUtils
         }
         if( title != null )
         {
-            if( ! printed )
+            if( !printed )
             {
                 System.out.print( title + " : " + bytes + " bytes\r" );
             }

@@ -26,9 +26,9 @@ import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.pom.BundleManager;
 import org.xml.sax.SAXException;
-import javax.xml.parsers.ParserConfigurationException;
 
 public class FelixRunner
     implements Runnable
@@ -236,7 +236,7 @@ public class FelixRunner
             StringBuffer buf = new StringBuffer();
             for( File bundle : m_bundles )
             {
-                if( ! first )
+                if( !first )
                 {
                     buf.append( ", \\\n    " );
                 }

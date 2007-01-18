@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
 import org.ops4j.pax.runner.CmdLine;
 import org.ops4j.pax.runner.Downloader;
 import org.ops4j.pax.runner.StreamUtils;
@@ -41,6 +40,7 @@ import org.ops4j.pax.runner.StreamUtils;
  */
 public class Provisioning
 {
+
     private Downloader m_downloader;
 
     public Provisioning( Downloader downloader )
@@ -65,32 +65,32 @@ public class Provisioning
         throws IOException
     {
         Enumeration<? extends ZipEntry> entries = zipFile.entries();
-        while ( entries.hasMoreElements() )
+        while( entries.hasMoreElements() )
         {
             ZipEntry entry = entries.nextElement();
             byte[] extraField = entry.getExtra();
-            if ( extraField == null )
+            if( extraField == null )
             {
                 throw new IOException( "Not a valid Initial Provisioning ZIP file. Missing EXTRA field." );
             }
             String type = new String( extraField );
-            if ( type.startsWith( "text/plain" ) ) // text
+            if( type.startsWith( "text/plain" ) ) // text
             {
                 String text = readText( zipFile, entry );
                 provisioningDictionary.put( entry.getName(), text );
             }
-            else if ( "application/octet-stream".equals( type ) ) // binary
+            else if( "application/octet-stream".equals( type ) ) // binary
             {
                 byte[] bytes = readBinary( zipFile, entry );
                 provisioningDictionary.put( entry.getName(), bytes );
             }
-            else if ( "application/x-osgi-bundle".equals( type ) ) // bundle
+            else if( "application/x-osgi-bundle".equals( type ) ) // bundle
             {
                 byte[] bytes = readBinary( zipFile, entry );
                 provisioningDictionary.put( entry.getName(), bytes );
 
             }
-            else if ( type.startsWith( "text/x-osgi-bundle-url" ) ) // bundle-url
+            else if( type.startsWith( "text/x-osgi-bundle-url" ) ) // bundle-url
             {
                 String text = readText( zipFile, entry );
                 provisioningDictionary.put( entry.getName(), text );
@@ -128,7 +128,7 @@ public class Provisioning
         }
         finally
         {
-            if ( br != null )
+            if( br != null )
             {
                 br.close();
             }

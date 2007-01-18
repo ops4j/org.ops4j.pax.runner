@@ -29,6 +29,7 @@ import java.io.Writer;
 
 public class FileUtils
 {
+
     static Writer openPropertyFile( File file )
         throws IOException
     {
@@ -53,7 +54,7 @@ public class FileUtils
         FileInputStream fis = new FileInputStream( textUtf8File );
         InputStreamReader isr = new InputStreamReader( fis );
         BufferedReader br = new BufferedReader( isr );
-        StringBuffer buf = new StringBuffer(1000);
+        StringBuffer buf = new StringBuffer( 1000 );
         char[] ch = new char[1000];
         int length = 0;
         while( length != -1 )

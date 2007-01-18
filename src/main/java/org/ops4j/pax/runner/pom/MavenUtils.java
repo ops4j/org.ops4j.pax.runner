@@ -20,9 +20,7 @@ package org.ops4j.pax.runner.pom;
 import java.io.File;
 import java.io.IOException;
 import java.util.StringTokenizer;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.ops4j.pax.runner.Downloader;
 import org.ops4j.pax.runner.Run;
 import org.w3c.dom.Document;

@@ -26,44 +26,40 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
+import java.security.KeyManagementException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
 import org.ops4j.pax.runner.util.NullArgumentException;
 
 public class Downloader
 {
+
     private static final Logger LOGGER = Logger.getLogger( Downloader.class.getName() );
 
     private final List<String> m_repositories;
     private final boolean m_noCheckMD5;
+    private boolean m_isNoCertCheckAcceptable;
 
-    public Downloader( String repository, boolean noCheckMD5 )
-        throws IllegalArgumentException
-    {
-        NullArgumentException.validateNotEmpty( repository, "repository" );
-
-        ArrayList<String> repositories = new ArrayList<String>();
-        repositories.add( repository );
-        m_repositories = repositories;
-        m_noCheckMD5 = noCheckMD5;
-    }
-
-    public Downloader( List<String> repositories, boolean noCheckMD5 )
+    public Downloader( List<String> repositories, boolean noCheckMD5, boolean noCertCheckAcceptable )
         throws IllegalArgumentException
     {
         NullArgumentException.validateNotNull( repositories, "repositories" );
-        if ( repositories.isEmpty() )
+        if( repositories.isEmpty() )
         {
             throw new IllegalArgumentException( "[repositories] argument must not be empty." );
         }
-
+        m_isNoCertCheckAcceptable = noCertCheckAcceptable;
         m_repositories = repositories;
         m_noCheckMD5 = noCheckMD5;
     }
@@ -74,7 +70,7 @@ public class Downloader
         NullArgumentException.validateNotEmpty( path, "path" );
         NullArgumentException.validateNotNull( destination, "destination" );
 
-        if ( destination.exists() && !force )
+        if( destination.exists() && !force )
         {
             return;
         }
@@ -82,7 +78,7 @@ public class Downloader
         File localRepo = new File( System.getProperty( "user.home" ), ".m2/repository" );
 
         File localCache = new File( localRepo, path );
-        for ( String repository : m_repositories )
+        for( String repository : m_repositories )
         {
             File md5File = getMD5File( localCache );
 
@@ -92,7 +88,7 @@ public class Downloader
             {
                 url = new URL( fullPath );
             }
-            catch ( MalformedURLException e )
+            catch( MalformedURLException e )
             {
                 LOGGER.finer( "Fail to construct URL [" + fullPath + "]. Skip." );
                 continue;
@@ -100,15 +96,15 @@ public class Downloader
 
             String sourceString = url.toExternalForm();
             int count = 3;
-            while ( count > 0 && (!localCache.exists() || !verifyMD5( localCache, md5File )) )
+            while( count > 0 && ( !localCache.exists() || !verifyMD5( localCache, md5File ) ) )
             {
                 count--;
-                
+
                 try
                 {
                     downloadFile( localCache, url );
                 }
-                catch ( FileNotFoundException e )
+                catch( FileNotFoundException e )
                 {
                     System.out.println( "Artifact from url [" + url + "] is not found." );
                     continue;
@@ -119,7 +115,7 @@ public class Downloader
                 {
                     downloadFile( md5File, md5source );
                 }
-                catch ( FileNotFoundException e )
+                catch( FileNotFoundException e )
                 {
                     System.out.println( "MD5 not present on server. Creating locally: " + md5File.getName() );
                     createMD5Locally( localCache, md5File );
@@ -140,11 +136,11 @@ public class Downloader
     private boolean verifyMD5( File fileToCheck, File md5File )
         throws IOException
     {
-        if ( m_noCheckMD5 )
+        if( m_noCheckMD5 )
         {
             return true;
         }
-        if ( !md5File.exists() )
+        if( !md5File.exists() )
         {
             return false;
         }
@@ -163,7 +159,7 @@ public class Downloader
             FileInputStream fis = new FileInputStream( fileToCheck );
             in = new BufferedInputStream( fis );
             int b = in.read();
-            while ( b != -1 )
+            while( b != -1 )
             {
                 digest.update( (byte) b );
                 b = in.read();
@@ -172,7 +168,7 @@ public class Downloader
             String md5Value = convertToHexString( result );
             return md5Value;
         }
-        catch ( NoSuchAlgorithmException e )
+        catch( NoSuchAlgorithmException e )
         {
             // MD5 is always present
             e.printStackTrace();
@@ -180,7 +176,7 @@ public class Downloader
         }
         finally
         {
-            if ( in != null )
+            if( in != null )
             {
                 in.close();
             }
@@ -190,11 +186,11 @@ public class Downloader
     private String convertToHexString( byte[] data )
     {
         StringBuffer buf = new StringBuffer();
-        for ( byte b : data )
+        for( byte b : data )
         {
             int d = b & 0xFF;
             String s = Integer.toHexString( d );
-            if ( d < 16 )
+            if( d < 16 )
             {
                 buf.append( "0" );
             }
@@ -224,29 +220,78 @@ public class Downloader
         BufferedOutputStream out = null;
         try
         {
-            in = source.openStream();
+            in = openUrlStream( source );
+
             File parentDir = localCache.getParentFile();
             parentDir.mkdirs();
             FileOutputStream fos = new FileOutputStream( localCache );
             out = new BufferedOutputStream( fos );
-            if ( !(in instanceof BufferedInputStream) )
+            if( !( in instanceof BufferedInputStream ) )
             {
                 in = new BufferedInputStream( in );
             }
             StreamUtils.streamCopy( in, out, "Downloading " + composeFileName( source ) );
             out.flush();
         }
-        finally
+        catch( NoSuchAlgorithmException e )
         {
-            if ( in != null )
+            LOGGER.logp( Level.SEVERE, Downloader.class.getName(), "downloadFile", e.getMessage(), e );
+        } catch( KeyManagementException e )
+        {
+            LOGGER.logp( Level.SEVERE, Downloader.class.getName(), "downloadFile", e.getMessage(), e );
+        } finally
+        {
+            if( in != null )
             {
                 in.close();
             }
-            if ( out != null )
+            if( out != null )
             {
                 out.close();
             }
         }
+    }
+
+    private InputStream openUrlStream( URL remote )
+        throws IOException, NoSuchAlgorithmException, KeyManagementException
+    {
+        URLConnection conn = remote.openConnection();
+        if( conn instanceof HttpsURLConnection )
+        {
+            LOGGER.fine( this + " - HTTPS connection opened." );
+            if( m_isNoCertCheckAcceptable )
+            {
+                LOGGER.fine( this + " - Using NullTrustManager." );
+                HttpsURLConnection ssl = (HttpsURLConnection) conn;
+                TrustManager nullTrustManager = new NullTrustManager();
+                SSLContext ctx = SSLContext.getInstance( "SSLv3" );
+                TrustManager[] trustManagers = new TrustManager[]{ nullTrustManager };
+                ctx.init( null, trustManagers, null );
+                LOGGER.fine( this + " - Setting SSLv3 socket factory." );
+                SSLSocketFactory factory = ctx.getSocketFactory();
+                ssl.setSSLSocketFactory( factory );
+                LOGGER.fine( this + " - SSL socket factory is set." );
+            }
+        }
+        conn.connect();
+        if( conn instanceof HttpURLConnection )
+        {
+            int code = ( (HttpURLConnection) conn ).getResponseCode();
+            LOGGER.fine( this + " - ResponseCode: " + code );
+            if( code == HttpURLConnection.HTTP_UNAUTHORIZED )
+            {
+                throw new IOException( "Unauthorized request." );
+            }
+            else if( code == HttpURLConnection.HTTP_NOT_FOUND )
+            {
+                return null;
+            }
+            else if( code != HttpURLConnection.HTTP_OK )
+            {
+                throw new IOException( "Unexpected Result: " + code );
+            }
+        }
+        return conn.getInputStream();
     }
 
     private static void copyFile( File localCache, File destination )
@@ -264,11 +309,11 @@ public class Downloader
         }
         finally
         {
-            if ( fis != null )
+            if( fis != null )
             {
                 fis.close();
             }
-            if ( fos != null )
+            if( fos != null )
             {
                 fos.close();
             }
@@ -278,21 +323,21 @@ public class Downloader
     static void copyStream( InputStream source, OutputStream dest, boolean buffer )
         throws IOException
     {
-        if ( source == null )
+        if( source == null )
         {
             throw new IllegalArgumentException( "source == null" );
         }
-        if ( dest == null )
+        if( dest == null )
         {
             throw new IllegalArgumentException( "dest == null" );
         }
-        if ( buffer )
+        if( buffer )
         {
             source = new BufferedInputStream( source );
             dest = new BufferedOutputStream( dest );
         }
         int ch = source.read();
-        while ( ch != -1 )
+        while( ch != -1 )
         {
             dest.write( ch );
             ch = source.read();

@@ -30,14 +30,17 @@ import java.util.StringTokenizer;
  */
 public final class PropertyResolver
 {
-   /**
-    * Symbol substitution from properties.
-    * Replace any occurances of ${[key]} with the value of the property
-    * assigned to the [key] in the supplied properties argument.
-    * @param props the source properties from which substitution is resolved
-    * @param value a string containing possibly multiple ${[value]} sequences
-    * @return the expanded string
-    */
+
+    /**
+     * Symbol substitution from properties.
+     * Replace any occurances of ${[key]} with the value of the property
+     * assigned to the [key] in the supplied properties argument.
+     *
+     * @param props the source properties from which substitution is resolved
+     * @param value a string containing possibly multiple ${[value]} sequences
+     *
+     * @return the expanded string
+     */
     public static String resolve( Properties props, String value )
     {
         if( value == null )
@@ -59,7 +62,7 @@ public final class PropertyResolver
         Stack<String> stack = new Stack<String>();
         StringTokenizer st = new StringTokenizer( value, "${}", true );
 
-        while ( st.hasMoreTokens() )
+        while( st.hasMoreTokens() )
         {
             String token = st.nextToken();
             if( "}".equals( token ) )
@@ -100,19 +103,20 @@ public final class PropertyResolver
             }
         }
         String result = "";
-        while ( stack.size() > 0 )
+        while( stack.size() > 0 )
         {
             result = stack.pop() + result;
         }
         return result;
     }
 
-   /**
-    * Pushes a value on a stack
-    * @param stack the stack
-    * @param value the value
-    */
-    private static void push( Stack<String> stack , String value )
+    /**
+     * Pushes a value on a stack
+     *
+     * @param stack the stack
+     * @param value the value
+     */
+    private static void push( Stack<String> stack, String value )
     {
         if( stack.size() > 0 )
         {
@@ -133,9 +137,9 @@ public final class PropertyResolver
         }
     }
 
-   /**
-    * Null constructor.
-    */
+    /**
+     * Null constructor.
+     */
     private PropertyResolver()
     {
     }

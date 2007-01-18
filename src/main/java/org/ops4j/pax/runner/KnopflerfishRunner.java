@@ -26,9 +26,9 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.pom.BundleManager;
 import org.xml.sax.SAXException;
-import javax.xml.parsers.ParserConfigurationException;
 
 public class KnopflerfishRunner
     implements Runnable
@@ -40,7 +40,7 @@ public class KnopflerfishRunner
     private List<File> m_bundles;
     private static final String FRAMEWORK_GROUPID = "org.knopflerfish.osgi";
     private static final String BUNDLES_GROUPID = "org.knopflerfish.bundle";
-    private static final String[] SYSTEM_BUNDLE =  { FRAMEWORK_GROUPID, "framework", "2.0.0" };
+    private static final String[] SYSTEM_BUNDLE = { FRAMEWORK_GROUPID, "framework", "2.0.0" };
 
     private static final String[][] DEFAULT_BUNDLES =
         {
@@ -64,7 +64,6 @@ public class KnopflerfishRunner
             { BUNDLES_GROUPID + ".cm_desktop", "cm_desktop", "1.0.0" }
         };
 
-
     public KnopflerfishRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager )
         throws IOException, ParserConfigurationException, SAXException
     {
@@ -76,7 +75,7 @@ public class KnopflerfishRunner
         {
             for( String[] bundle : GUI_BUNDLES )
             {
-                File gui = bundleManager.getBundle( bundle[0], bundle[1], bundle[2] );
+                File gui = bundleManager.getBundle( bundle[ 0 ], bundle[ 1 ], bundle[ 2 ] );
                 m_bundles.add( 0, gui );
             }
         }

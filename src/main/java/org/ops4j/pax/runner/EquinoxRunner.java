@@ -26,13 +26,14 @@ import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.pom.BundleManager;
 import org.xml.sax.SAXException;
-import javax.xml.parsers.ParserConfigurationException;
 
 public class EquinoxRunner
     implements Runnable
 {
+
     private Properties m_props;
     private CmdLine m_cmdLine;
     private List<File> m_bundles;
@@ -48,7 +49,7 @@ public class EquinoxRunner
         File services = bundleManager.getBundle( "org.eclipse.osgi", "services", "3.1.100.v20060601" );
         bundles.add( services );
         File util = bundleManager.getBundle( "org.eclipse.osgi", "util", "3.1.100.v20060601" );
-        bundles.add(  util );
+        bundles.add( util );
     }
 
     public void run()
@@ -88,7 +89,7 @@ public class EquinoxRunner
             out.write( "\nosgi.bundles=\\\n" );
             for( File bundle : m_bundles )
             {
-                if( ! first )
+                if( !first )
                 {
                     out.write( ",\\\n" );
                 }

@@ -20,7 +20,6 @@ package org.ops4j.pax.runner.pom;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.Downloader;
 import org.ops4j.pax.runner.Run;
@@ -29,6 +28,7 @@ import org.xml.sax.SAXException;
 
 public final class BundleManager
 {
+
     private Downloader m_downloader;
 
     public BundleManager( Downloader downloader )
@@ -41,21 +41,21 @@ public final class BundleManager
 
     public final File getBundle( String group, String artifact, String version )
         throws IllegalArgumentException,
-        IOException,
-        ParserConfigurationException,
-        SAXException
+               IOException,
+               ParserConfigurationException,
+               SAXException
     {
         NullArgumentException.validateNotEmpty( group, "group" );
         NullArgumentException.validateNotEmpty( artifact, "artifact" );
         NullArgumentException.validateNotEmpty( version, "version" );
 
         String url = composePath( group, artifact, version );
-        if ( "LATEST".equalsIgnoreCase( version ) )
+        if( "LATEST".equalsIgnoreCase( version ) )
         {
             version = MavenUtils.getLatestVersion( group, artifact, m_downloader );
         }
         version = version.replace( "-SNAPSHOT", ".SNAPSHOT" );
-        if ( version == null || "LATEST".equals( version ) )
+        if( version == null || "LATEST".equals( version ) )
         {
             version = MavenUtils.getLatestVersion( group, artifact, m_downloader );
         }
@@ -78,7 +78,7 @@ public final class BundleManager
         String filename = artifact + "-" + version + ".jar";
         group = group.replace( '.', '/' );
         String path = group + "/" + artifact + "/" + version + "/" + filename;
-        
+
         return path;
     }
 }
