@@ -26,8 +26,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.PasswordAuthentication;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.KeyManagementException;
@@ -36,12 +38,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
-
 import org.ops4j.pax.runner.util.NullArgumentException;
 
 public class Downloader
@@ -98,7 +98,7 @@ public class Downloader
 
             String sourceString = url.toExternalForm();
             int count = 3;
-            while( count > 0 && (!localCache.exists() || !verifyMD5( localCache, md5File )) )
+            while( count > 0 && ( !localCache.exists() || !verifyMD5( localCache, md5File ) ) )
             {
                 count--;
 
@@ -108,7 +108,7 @@ public class Downloader
                 }
                 catch( FileNotFoundException e )
                 {
-                    System.out.println( "Artifact from url [" + url + "] is not found." );
+                    LOGGER.fine( "Artifact from url [" + url + "] is not found." );
                     continue;
                 }
 
@@ -119,7 +119,7 @@ public class Downloader
                 }
                 catch( FileNotFoundException e )
                 {
-                    System.out.println( "MD5 not present on server. Creating locally: " + md5File.getName() );
+                    LOGGER.fine( "MD5 not present on server. Creating locally: " + md5File.getName() );
                     createMD5Locally( localCache, md5File );
                 }
             }
@@ -235,7 +235,7 @@ public class Downloader
             parentDir.mkdirs();
             FileOutputStream fos = new FileOutputStream( localCache );
             out = new BufferedOutputStream( fos );
-            if( !(in instanceof BufferedInputStream) )
+            if( !( in instanceof BufferedInputStream ) )
             {
                 in = new BufferedInputStream( in );
             }
@@ -265,10 +265,11 @@ public class Downloader
 
     private InputStream openUrlStream( URL remote )
         throws IOException,
-        NoSuchAlgorithmException,
-        KeyManagementException
+               NoSuchAlgorithmException,
+               KeyManagementException
     {
         URLConnection conn = remote.openConnection();
+        Authenticator.setDefault( new UrlPartAuthenticator() );
         if( conn instanceof HttpsURLConnection )
         {
             LOGGER.fine( this + " - HTTPS connection opened." );
@@ -279,9 +280,9 @@ public class Downloader
                 TrustManager nullTrustManager = new NullTrustManager();
                 SSLContext ctx = SSLContext.getInstance( "SSLv3" );
                 TrustManager[] trustManagers = new TrustManager[]
-                {
-                    nullTrustManager
-                };
+                    {
+                        nullTrustManager
+                    };
                 ctx.init( null, trustManagers, null );
                 LOGGER.fine( this + " - Setting SSLv3 socket factory." );
                 SSLSocketFactory factory = ctx.getSocketFactory();
@@ -292,7 +293,7 @@ public class Downloader
         conn.connect();
         if( conn instanceof HttpURLConnection )
         {
-            int code = ((HttpURLConnection) conn).getResponseCode();
+            int code = ( (HttpURLConnection) conn ).getResponseCode();
             LOGGER.fine( this + " - ResponseCode: " + code );
             if( code == HttpURLConnection.HTTP_UNAUTHORIZED )
             {
@@ -367,5 +368,28 @@ public class Downloader
         int slashPos = path.lastIndexOf( '/' );
         path = path.substring( slashPos + 1 );
         return path;
+    }
+
+    private static class UrlPartAuthenticator extends Authenticator
+    {
+
+        protected PasswordAuthentication getPasswordAuthentication()
+        {
+            URL url = getRequestingURL();
+            String userinfo = url.getUserInfo();
+            int commaPos = userinfo.indexOf( ':' );
+            String user;
+            String pass = "";
+            if( commaPos < 0 )
+            {
+                user = userinfo;
+            }
+            else
+            {
+                user = userinfo.substring( 0, commaPos );
+                pass = userinfo.substring( commaPos + 1 );
+            }
+            return new PasswordAuthentication( user, pass.toCharArray() );
+        }
     }
 }
