@@ -36,10 +36,12 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
+
 import org.ops4j.pax.runner.util.NullArgumentException;
 
 public class Downloader
@@ -96,7 +98,7 @@ public class Downloader
 
             String sourceString = url.toExternalForm();
             int count = 3;
-            while( count > 0 && ( !localCache.exists() || !verifyMD5( localCache, md5File ) ) )
+            while( count > 0 && (!localCache.exists() || !verifyMD5( localCache, md5File )) )
             {
                 count--;
 
@@ -222,11 +224,18 @@ public class Downloader
         {
             in = openUrlStream( source );
 
+            // Means file not found.
+            // TODO: Should we handle this with boolean return instead?
+            if( in == null )
+            {
+                throw new FileNotFoundException( "File specified from [" + source + "] is not found." );
+            }
+
             File parentDir = localCache.getParentFile();
             parentDir.mkdirs();
             FileOutputStream fos = new FileOutputStream( localCache );
             out = new BufferedOutputStream( fos );
-            if( !( in instanceof BufferedInputStream ) )
+            if( !(in instanceof BufferedInputStream) )
             {
                 in = new BufferedInputStream( in );
             }
@@ -236,10 +245,12 @@ public class Downloader
         catch( NoSuchAlgorithmException e )
         {
             LOGGER.logp( Level.SEVERE, Downloader.class.getName(), "downloadFile", e.getMessage(), e );
-        } catch( KeyManagementException e )
+        }
+        catch( KeyManagementException e )
         {
             LOGGER.logp( Level.SEVERE, Downloader.class.getName(), "downloadFile", e.getMessage(), e );
-        } finally
+        }
+        finally
         {
             if( in != null )
             {
@@ -253,7 +264,9 @@ public class Downloader
     }
 
     private InputStream openUrlStream( URL remote )
-        throws IOException, NoSuchAlgorithmException, KeyManagementException
+        throws IOException,
+        NoSuchAlgorithmException,
+        KeyManagementException
     {
         URLConnection conn = remote.openConnection();
         if( conn instanceof HttpsURLConnection )
@@ -265,7 +278,10 @@ public class Downloader
                 HttpsURLConnection ssl = (HttpsURLConnection) conn;
                 TrustManager nullTrustManager = new NullTrustManager();
                 SSLContext ctx = SSLContext.getInstance( "SSLv3" );
-                TrustManager[] trustManagers = new TrustManager[]{ nullTrustManager };
+                TrustManager[] trustManagers = new TrustManager[]
+                {
+                    nullTrustManager
+                };
                 ctx.init( null, trustManagers, null );
                 LOGGER.fine( this + " - Setting SSLv3 socket factory." );
                 SSLSocketFactory factory = ctx.getSocketFactory();
@@ -276,7 +292,7 @@ public class Downloader
         conn.connect();
         if( conn instanceof HttpURLConnection )
         {
-            int code = ( (HttpURLConnection) conn ).getResponseCode();
+            int code = ((HttpURLConnection) conn).getResponseCode();
             LOGGER.fine( this + " - ResponseCode: " + code );
             if( code == HttpURLConnection.HTTP_UNAUTHORIZED )
             {

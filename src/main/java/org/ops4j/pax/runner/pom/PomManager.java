@@ -94,8 +94,17 @@ public class PomManager
     {
         Element projectName = DomUtils.getElement( pom, "name" );
         Element description = DomUtils.getElement( pom, "description" );
-        System.out.println( "       Name: " + projectName.getTextContent() );
-        System.out.println( "Description: " + description.getTextContent() );
+        if ( projectName != null )
+        {
+            String textContent = projectName.getTextContent();
+            System.out.println( "       Name: " + textContent );
+        }
+        
+        if ( description != null )
+        {
+            String textContent = description.getTextContent();
+            System.out.println( "Description: " + textContent );
+        }
     }
 
     public List<File> getBundles( CmdLine cmdLine )
