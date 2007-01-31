@@ -55,15 +55,22 @@ public class FileUtils
         InputStreamReader isr = new InputStreamReader( fis );
         BufferedReader br = new BufferedReader( isr );
         StringBuffer buf = new StringBuffer( 1000 );
-        char[] ch = new char[1000];
-        int length = 0;
-        while( length != -1 )
+        try
         {
-            length = br.read( ch );
-            if( length > 0 )
+            char[] ch = new char[1000];
+            int length = 0;
+            while( length != -1 )
             {
-                buf.append( ch, 0, length );
+                length = br.read( ch );
+                if( length > 0 )
+                {
+                    buf.append( ch, 0, length );
+                }
             }
+        }
+        finally
+        {
+            br.close();
         }
         String result = buf.toString();
         buf.setLength( 0 );
