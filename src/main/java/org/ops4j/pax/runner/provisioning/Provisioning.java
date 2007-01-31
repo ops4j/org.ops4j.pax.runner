@@ -41,6 +41,7 @@ import org.ops4j.pax.runner.StreamUtils;
 public class Provisioning
 {
 
+    @SuppressWarnings("unused")
     private Downloader m_downloader;
 
     public Provisioning( Downloader downloader )
@@ -61,7 +62,8 @@ public class Provisioning
         return null;
     }
 
-    private void extractEntries( ZipFile zipFile, Dictionary provisioningDictionary )
+    @SuppressWarnings("unused")
+    private void extractEntries( ZipFile zipFile, Dictionary<String,Object> provisioningDictionary )
         throws IOException
     {
         Enumeration<? extends ZipEntry> entries = zipFile.entries();
