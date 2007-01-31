@@ -23,10 +23,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.ops4j.pax.runner.pom.BundleManager;
 import org.xml.sax.SAXException;
 
@@ -36,11 +39,12 @@ public class FelixRunner
 
     private static final String GROUPID = "org.apache.felix";
 
-    private static final String VERSION = "0.8.0";
+    private static final String VERSION = "LATEST";
 
     private Properties m_props;
     private CmdLine m_cmdLine;
-    private List<File> m_bundles;
+    private List<File> m_sysBundles;
+    private List<File> m_appBundles;
     private static final String SYSTEM_PACKAGES = "javax.accessibility, " +
                                                   "javax.activity, " +
                                                   "javax.crypto, " +
@@ -166,30 +170,34 @@ public class FelixRunner
                                                   "org.xml.sax.helpers";
 
     private File m_main;
+    @SuppressWarnings("unused")
     private File m_osgi;
+    @SuppressWarnings("unused")
     private File m_framework;
 
     public FelixRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager )
         throws IOException, ParserConfigurationException, SAXException
     {
         m_cmdLine = cmdLine;
-        m_bundles = bundles;
         m_props = props;
+
+        m_appBundles = bundles;
+        m_sysBundles = new ArrayList<File>();
         File system1 = bundleManager.getBundle( GROUPID, "org.apache.felix.shell", VERSION );
-        bundles.add( system1 );
-        File system2 = bundleManager.getBundle( GROUPID, "org.apache.felix.bundlerepository", VERSION );
-        bundles.add( system2 );
-        File system3 = bundleManager.getBundle( GROUPID, "org.apache.felix.shell.tui", VERSION );
-        bundles.add( system3 );
+        m_sysBundles.add( system1 );
+        File system2 = bundleManager.getBundle( GROUPID, "org.apache.felix.shell.tui", VERSION );
+        m_sysBundles.add( system2 );
+        File system3 = bundleManager.getBundle( GROUPID, "org.apache.felix.bundlerepository", VERSION );
+        m_sysBundles.add( system3 );
         if( m_cmdLine.isSet( "gui" ) )
         {
             File system4 = bundleManager.getBundle( GROUPID, "org.apache.felix.shell.gui", VERSION );
-            bundles.add( system4 );
+            m_sysBundles.add( system4 );
             File system5 = bundleManager.getBundle( GROUPID, "org.apache.felix.shell.gui.plugin", VERSION );
-            bundles.add( system5 );
+            m_sysBundles.add( system5 );
         }
         m_main = bundleManager.getBundle( GROUPID, "org.apache.felix.main", VERSION );
-        m_framework = bundleManager.getBundle( GROUPID, "org.osgi.felix.framework", VERSION );
+        m_framework = bundleManager.getBundle( GROUPID, "org.apache.felix.framework", VERSION );
         m_osgi = bundleManager.getBundle( GROUPID, "org.osgi.core", VERSION );
     }
 
@@ -227,23 +235,14 @@ public class FelixRunner
             {
                 FileUtils.writeProperty( out, "felix.cache.profile", profile );
             }
+            FileUtils.writeProperty( out, "felix.cache.dir", Run.WORK_DIR + "/cache" );
             FileUtils.writeProperty( out, "felix.startlevel.framework", "1" );
             FileUtils.writeProperty( out, "felix.startlevel.bundle", "3" );
-            FileUtils.writeProperty( out, "obr.repository.url",
-                                     "http://bundles.osgi.org/obr/browse?_xml=1&cmd=repository"
-            );
-            boolean first = true;
-            StringBuffer buf = new StringBuffer();
-            for( File bundle : m_bundles )
-            {
-                if( !first )
-                {
-                    buf.append( ", \\\n    " );
-                }
-                first = false;
-                buf.append( bundle.getAbsolutePath() );
-            }
-            FileUtils.writeProperty( out, "felix.auto.start.3", buf.toString() );
+            FileUtils.writeProperty( out, "obr.repository.url", "http://www2.osgi.org/repository/repository.xml" );
+
+            writeBundleList( out, "felix.auto.start.1", m_sysBundles );
+            writeBundleList( out, "felix.auto.start.3", m_appBundles );
+
             for( Map.Entry entry : m_props.entrySet() )
             {
                 String key = (String) entry.getKey();
@@ -255,6 +254,24 @@ public class FelixRunner
         {
             out.close();
         }
+    }
+
+    private static void writeBundleList( Writer out, String startLevel, List<File> bundles )
+        throws IOException
+    {
+        boolean first = true;
+        StringBuffer buf = new StringBuffer();
+        for( File bundle : bundles )
+        {
+            if( !first )
+            {
+                buf.append( " \\\n    " );
+            }
+            first = false;
+            buf.append( "file:" );
+            buf.append( bundle.getAbsolutePath() );
+        }
+        FileUtils.writeProperty( out, startLevel, buf.toString() );
     }
 
     private void runIt()
@@ -276,7 +293,7 @@ public class FelixRunner
             String[] cmd =
                 {
                     javaHome + "/bin/java",
-                    "-Dfelix.config.properties=" + Run.WORK_DIR + "conf/config.properties",
+                    "-Dfelix.config.properties=file:" + Run.WORK_DIR + "/conf/config.properties",
                     "-jar",
                     m_main.getAbsolutePath(),
                 };
