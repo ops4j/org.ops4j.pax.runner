@@ -47,19 +47,19 @@ public final class BundleManager
     {
         NullArgumentException.validateNotEmpty( group, "group" );
         NullArgumentException.validateNotEmpty( artifact, "artifact" );
-        NullArgumentException.validateNotEmpty( version, "version" );
 
-        String url = composePath( group, artifact, version );
-        if( "LATEST".equalsIgnoreCase( version ) )
-        {
-            version = MavenUtils.getLatestVersion( group, artifact, m_downloader );
-        }
-        version = version.replace( "-SNAPSHOT", ".SNAPSHOT" );
-        if( version == null || "LATEST".equals( version ) )
+        if( version == null || version.length() == 0 || "LATEST".equalsIgnoreCase( version ) )
         {
             version = MavenUtils.getLatestVersion( group, artifact, m_downloader );
         }
 
+        String snapshot = version;
+        if( version.endsWith( "-SNAPSHOT" ) )
+        {
+            snapshot = MavenUtils.getSnapshotVersion( group, artifact, version, m_downloader );
+        }
+
+        String url = composePath( group, artifact, version, snapshot );
         File dest = new File( Run.WORK_DIR, "lib/" + group.replace( '.', '/' ) );
         dest = new File( dest, artifact + "_" + version + ".jar" );
 
@@ -68,14 +68,15 @@ public final class BundleManager
         return dest;
     }
 
-    private String composePath( String group, String artifact, String version )
+    private String composePath( String group, String artifact, String version, String snapshot )
         throws MalformedURLException
     {
         NullArgumentException.validateNotEmpty( group, "group" );
         NullArgumentException.validateNotEmpty( artifact, "artifact" );
         NullArgumentException.validateNotEmpty( version, "version" );
+        NullArgumentException.validateNotEmpty( snapshot, "snapshot" );
 
-        String filename = artifact + "-" + version + ".jar";
+        String filename = artifact + "-" + snapshot + ".jar";
         group = group.replace( '.', '/' );
         String path = group + "/" + artifact + "/" + version + "/" + filename;
 

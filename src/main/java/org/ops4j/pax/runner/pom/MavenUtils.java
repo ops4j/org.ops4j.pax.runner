@@ -38,16 +38,58 @@ public class MavenUtils
         File dest = new File( Run.WORK_DIR, "latest.pom" );
         try
         {
-            downloader.download( metaLocation, dest, true );
+            downloader.copyFileFromLocalRepository( metaLocation.replace( ".xml", "-local.xml" ), dest, true );
         } catch( IOException e )
         {
-            IOException ioException =
-                new IOException( "Unable to retrieve LATEST version of [" + group + ":" + artifact + "]" );
-            ioException.initCause( e );
-            throw ioException;
+            try
+            {
+                downloader.download( metaLocation, dest, true );
+            } catch( IOException e2 )
+            {
+                IOException ioException =
+                    new IOException( "Unable to retrieve LATEST version of [" + group + ":" + artifact + "]" );
+                ioException.initCause( e2 );
+                throw ioException;
+            }
         }
         Document doc = PomManager.parseDoc( dest );
         return getTextContentOfElement( doc, "versioning/versions/version[last]" );
+    }
+
+    static String getSnapshotVersion( String group, String artifact, String version, Downloader downloader )
+        throws IOException, ParserConfigurationException, SAXException
+    {
+        String metaLocation = group.replace( '.', '/' ) + "/" + artifact + "/" + version + "/maven-metadata.xml";
+        boolean isLocalMeta = false;
+        File dest = new File( Run.WORK_DIR, "latest.pom" );
+        try
+        {
+            downloader.copyFileFromLocalRepository( metaLocation.replace( ".xml", "-local.xml" ), dest, true );
+            isLocalMeta = true;
+        } catch( IOException e )
+        {
+            try
+            {
+                downloader.download( metaLocation, dest, true );
+            } catch( IOException e2 )
+            {
+                IOException ioException =
+                    new IOException( "Unable to retrieve SNAPSHOT version of [" + group + ":" + artifact + "/" + version + "]" );
+                ioException.initCause( e2 );
+                throw ioException;
+            }
+        }
+        if ( isLocalMeta )
+        {
+            return version;
+        }
+        else
+        {
+            Document doc = PomManager.parseDoc( dest );
+            String timestamp = getTextContentOfElement( doc, "versioning/snapshot/timestamp" );
+            String buildNumber = getTextContentOfElement( doc, "versioning/snapshot/buildNumber" );
+            return version.replace( "SNAPSHOT", timestamp ) + "-" + buildNumber;
+        }
     }
 
     static String getTextContentOfElement( Document doc, String path )
@@ -57,13 +99,13 @@ public class MavenUtils
         while( st.hasMoreTokens() )
         {
             String childName = st.nextToken();
-            NodeList children = currentElement.getElementsByTagName( childName );
-            int numChildren = children.getLength();
-            int index = 0;
             if( childName.endsWith( "]" ) )
             {
                 int startPos = childName.indexOf( "[" );
                 int endPos = childName.indexOf( "]" );
+                NodeList children = currentElement.getElementsByTagName( childName.substring( 0, startPos ) );
+                int numChildren = children.getLength();
+                int index = 0;
                 String numbers = childName.substring( startPos + 1, endPos );
                 if( "last".equals( numbers ) )
                 {
@@ -73,14 +115,18 @@ public class MavenUtils
                 {
                     index = Integer.parseInt( numbers );
                 }
+                if( index > numChildren )
+                {
+                    throw new IllegalArgumentException(
+                        "index of " + index + " is larger than the number of child nodes (" + numChildren + ")"
+                    );
+                }
+                currentElement = (Element) children.item( index );
             }
-            if( index > numChildren )
+            else
             {
-                throw new IllegalArgumentException(
-                    "index of " + index + " is larger than the number of child nodes (" + numChildren + ")"
-                );
+                currentElement = (Element) currentElement.getElementsByTagName( childName ).item( 0 );
             }
-            currentElement = (Element) children.item( index );
         }
         return currentElement.getTextContent();
     }

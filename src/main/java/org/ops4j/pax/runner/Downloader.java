@@ -78,8 +78,8 @@ public class Downloader
         }
 
         File localRepo = new File( System.getProperty( "user.home" ), ".m2/repository" );
-
         File localCache = new File( localRepo, path );
+
         for( String repository : m_repositories )
         {
             File md5File = getMD5File( localCache );
@@ -124,6 +124,23 @@ public class Downloader
                 }
             }
         }
+
+        copyFile( localCache, destination );
+    }
+
+    public void copyFileFromLocalRepository( String path, File destination, boolean force )
+        throws IOException
+    {
+        NullArgumentException.validateNotEmpty( path, "path" );
+        NullArgumentException.validateNotNull( destination, "destination" );
+
+        if( destination.exists() && !force )
+        {
+            return;
+        }
+
+        File localRepo = new File( System.getProperty( "user.home" ), ".m2/repository" );
+        File localCache = new File( localRepo, path );
 
         copyFile( localCache, destination );
     }

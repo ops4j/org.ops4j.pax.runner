@@ -73,13 +73,19 @@ public class PomManager
         String groupId = cmdLine.getValue( "group" );
         String version = cmdLine.getValue( "version" );
 
-        if( "LATEST".equals( version ) )
+        if( version == null || version.length() == 0 || "LATEST".equalsIgnoreCase( version ) )
         {
             version = MavenUtils.getLatestVersion( groupId, artifact, m_downloader );
         }
 
+        String snapshot = version;
+        if( version.endsWith( "-SNAPSHOT" ) )
+        {
+            snapshot = MavenUtils.getSnapshotVersion( groupId, artifact, version, m_downloader );
+        }
+
         System.out.println( "   Starting: " + groupId + ", " + artifact + ", " + version );
-        String pomFilename = artifact + "-" + version + ".pom";
+        String pomFilename = artifact + "-" + snapshot + ".pom";
         groupId = groupId.replace( '.', '/' );
         String path = groupId + "/" + artifact + "/" + version + "/" + pomFilename;
 
