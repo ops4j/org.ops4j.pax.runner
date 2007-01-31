@@ -50,7 +50,10 @@ public class Pipe
     public void stop()
     {
         m_loop = false;
-        m_thread.interrupt();
+        synchronized( this )
+        {
+            m_thread.interrupt();
+        }
         try
         {
             m_in.close();
