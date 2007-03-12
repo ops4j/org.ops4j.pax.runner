@@ -30,6 +30,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.pom.BundleManager;
 import org.xml.sax.SAXException;
 
+import com.sun.tools.javac.code.Attribute.Array;
+
 public class EquinoxRunner
     implements Runnable
 {
@@ -126,6 +128,13 @@ public class EquinoxRunner
         Runtime runtime = Runtime.getRuntime();
 
         File cwd = new File( System.getProperty( "user.dir" ) );
+        String frameworkOptsString = System.getProperty( "FRAMEWORK_OPTS" );
+        if( frameworkOptsString == null )
+        {
+            frameworkOptsString = "";
+        }
+        //get framework opts
+        String[] frameworkOpts = frameworkOptsString.split( " " );
         String javaHome = System.getProperty( "JAVA_HOME" );
         if( javaHome == null )
         {
@@ -135,11 +144,12 @@ public class EquinoxRunner
         {
             System.err.println( "JAVA_HOME is not set." );
         }
+        
         else
         {
-            String[] cmd =
+            //framework specific args
+            String[] commands =
                 {
-                    javaHome + "/bin/java",
                     "-jar",
                     m_system.toString(),
                     "-console",
@@ -148,7 +158,16 @@ public class EquinoxRunner
                     "-install",
                     Run.WORK_DIR.getAbsolutePath()
                 };
-            Process process = runtime.exec( cmd, null, cwd );
+            //copy these two together
+            String[] totalCommandLine = new String[commands.length + frameworkOpts.length + 1];
+            totalCommandLine[0] = javaHome + "/bin/java";
+            int i = 0;
+            for( i = 0;i < frameworkOpts.length; i++ )
+            {
+                totalCommandLine[1 + i] = frameworkOpts[i];
+            }
+            System.arraycopy( commands, 0, totalCommandLine, i + 1, commands.length );
+            Process process = runtime.exec( totalCommandLine, null, cwd );
             InputStream err = process.getErrorStream();
             InputStream out = process.getInputStream();
             OutputStream in = process.getOutputStream();

@@ -278,7 +278,13 @@ public class FelixRunner
         throws IOException, InterruptedException
     {
         Runtime runtime = Runtime.getRuntime();
-
+        String frameworkOptsString = System.getProperty( "FRAMEWORK_OPTS" );
+        if( frameworkOptsString == null )
+        {
+            frameworkOptsString = "";
+        }
+        //get framework opts
+        String[] frameworkOpts = frameworkOptsString.split( " " );
         String javaHome = System.getProperty( "JAVA_HOME" );
         if( javaHome == null )
         {
@@ -290,14 +296,22 @@ public class FelixRunner
         }
         else
         {
-            String[] cmd =
+            String[] commands =
                 {
-                    javaHome + "/bin/java",
                     "-Dfelix.config.properties=file:" + Run.WORK_DIR + "/conf/config.properties",
                     "-jar",
                     m_main.getAbsolutePath(),
                 };
-            Process process = runtime.exec( cmd, null, Run.WORK_DIR );
+            //copy these two together
+            String[] totalCommandLine = new String[commands.length + frameworkOpts.length + 1];
+            totalCommandLine[0] = javaHome + "/bin/java";
+            int i = 0;
+            for( i = 0;i < frameworkOpts.length; i++ )
+            {
+                totalCommandLine[1 + i] = frameworkOpts[i];
+            }
+            System.arraycopy( commands, 0, totalCommandLine, i + 1, commands.length );
+            Process process = runtime.exec( totalCommandLine, null );
             InputStream err = process.getErrorStream();
             InputStream out = process.getInputStream();
             OutputStream in = process.getOutputStream();

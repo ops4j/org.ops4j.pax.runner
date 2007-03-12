@@ -204,7 +204,13 @@ public class KnopflerfishRunner
         throws IOException, InterruptedException
     {
         Runtime runtime = Runtime.getRuntime();
-
+        String frameworkOptsString = System.getProperty( "FRAMEWORK_OPTS" );
+        if( frameworkOptsString == null )
+        {
+            frameworkOptsString = "";
+        }
+        //get framework opts
+        String[] frameworkOpts = frameworkOptsString.split( " " );
         String javaHome = System.getProperty( "JAVA_HOME" );
         if( javaHome == null )
         {
@@ -216,7 +222,7 @@ public class KnopflerfishRunner
         }
         else
         {
-            String[] cmd =
+            String[] commands =
                 {
                     javaHome + "/bin/java",
                     "-Dorg.knopflerfish.framework.usingwrapperscript=false",
@@ -224,7 +230,16 @@ public class KnopflerfishRunner
                     "-jar",
                     m_systemBundle.getAbsolutePath()
                 };
-            Process process = runtime.exec( cmd, null, Run.WORK_DIR );
+          //copy these two together
+            String[] totalCommandLine = new String[commands.length + frameworkOpts.length + 1];
+            totalCommandLine[0] = javaHome + "/bin/java";
+            int i = 0;
+            for( i = 0;i < frameworkOpts.length; i++ )
+            {
+                totalCommandLine[1 + i] = frameworkOpts[i];
+            }
+            System.arraycopy( commands, 0, totalCommandLine, i + 1, commands.length );
+            Process process = runtime.exec( totalCommandLine, null, Run.WORK_DIR );
             InputStream err = process.getErrorStream();
             InputStream out = process.getInputStream();
             OutputStream in = process.getOutputStream();
