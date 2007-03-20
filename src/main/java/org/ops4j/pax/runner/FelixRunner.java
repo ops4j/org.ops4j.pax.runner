@@ -278,13 +278,13 @@ public class FelixRunner
         throws IOException, InterruptedException
     {
         Runtime runtime = Runtime.getRuntime();
+        String[] frameworkOpts = {};
         String frameworkOptsString = System.getProperty( "FRAMEWORK_OPTS" );
-        if( frameworkOptsString == null )
+        if( frameworkOptsString != null )
         {
-            frameworkOptsString = "";
+            //get framework opts
+            frameworkOpts = frameworkOptsString.split( " " );
         }
-        //get framework opts
-        String[] frameworkOpts = frameworkOptsString.split( " " );
         String javaHome = System.getProperty( "JAVA_HOME" );
         if( javaHome == null )
         {

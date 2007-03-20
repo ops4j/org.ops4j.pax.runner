@@ -128,13 +128,13 @@ public class EquinoxRunner
         Runtime runtime = Runtime.getRuntime();
 
         File cwd = new File( System.getProperty( "user.dir" ) );
+        String[] frameworkOpts = {};
         String frameworkOptsString = System.getProperty( "FRAMEWORK_OPTS" );
-        if( frameworkOptsString == null )
+        if( frameworkOptsString != null )
         {
-            frameworkOptsString = "";
+            //get framework opts
+            frameworkOpts = frameworkOptsString.split( " " );
         }
-        //get framework opts
-        String[] frameworkOpts = frameworkOptsString.split( " " );
         String javaHome = System.getProperty( "JAVA_HOME" );
         if( javaHome == null )
         {
