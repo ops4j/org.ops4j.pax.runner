@@ -30,8 +30,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.pom.BundleManager;
 import org.xml.sax.SAXException;
 
-import com.sun.tools.javac.code.Attribute.Array;
-
 public class EquinoxRunner
     implements Runnable
 {
