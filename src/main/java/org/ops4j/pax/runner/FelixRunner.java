@@ -198,6 +198,8 @@ public class FelixRunner
         }
         File system6 = bundleManager.getBundle( GROUPID, "org.osgi.compendium", VERSION );
         m_sysBundles.add( system6 );
+        File system7 = bundleManager.getBundle( GROUPID, "javax.servlet", VERSION );
+        m_sysBundles.add( system7 );
         m_main = bundleManager.getBundle( GROUPID, "org.apache.felix.main", VERSION );
         m_framework = bundleManager.getBundle( GROUPID, "org.apache.felix.framework", VERSION );
         m_osgi = bundleManager.getBundle( GROUPID, "org.osgi.core", VERSION );
