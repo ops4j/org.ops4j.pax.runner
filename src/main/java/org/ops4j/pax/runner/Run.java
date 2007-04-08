@@ -196,6 +196,13 @@ public class Run
             }
             repositoryList.add( repository );
         }
+
+        // TODO: remove this patch when Felix 0.9.0-incubator is released...
+        if( "felix".equals( m_cmdLine.getValue( "platform" ).toLowerCase() ) )
+        {
+            repositoryList.add( "http://people.apache.org/repo/m2-snapshot-repository/" );
+        }
+
         return repositoryList;
     }
 }

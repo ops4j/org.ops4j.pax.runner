@@ -39,7 +39,7 @@ public class FelixRunner
 
     private static final String GROUPID = "org.apache.felix";
 
-    private static final String VERSION = "LATEST";
+    private static final String VERSION = "0.9.0-incubator-SNAPSHOT";
 
     private Properties m_props;
     private CmdLine m_cmdLine;
@@ -196,6 +196,8 @@ public class FelixRunner
             File system5 = bundleManager.getBundle( GROUPID, "org.apache.felix.shell.gui.plugin", VERSION );
             m_sysBundles.add( system5 );
         }
+        File system6 = bundleManager.getBundle( GROUPID, "org.osgi.compendium", VERSION );
+        m_sysBundles.add( system6 );
         m_main = bundleManager.getBundle( GROUPID, "org.apache.felix.main", VERSION );
         m_framework = bundleManager.getBundle( GROUPID, "org.apache.felix.framework", VERSION );
         m_osgi = bundleManager.getBundle( GROUPID, "org.osgi.core", VERSION );
