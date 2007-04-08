@@ -24,7 +24,9 @@ import java.net.PasswordAuthentication;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.ops4j.pax.runner.pom.BundleManager;
 import org.ops4j.pax.runner.pom.PomManager;
 import org.ops4j.pax.runner.provisioning.Provisioning;
@@ -49,31 +51,18 @@ public class Run
         try
         {
             m_cmdLine = new CmdLine( args );
+            if( m_cmdLine.isSet( "help" ) )
+            {
+                help( null );
+            }
         }
         catch( IllegalArgumentException e )
         {
-            System.err.println( e.getMessage() );
-            System.err.println();
-            System.err.println( "java -jar pax-runner.jar [options] <groupId> <artifactId> <version>" );
-            System.err.println( "  or" );
-            System.err.println( "java -jar pax-runner.jar [options] <pom-URL>" );
-            System.err.println( "  or" );
-            System.err.println( "java -jar pax-runner.jar [options] <provisioning-URL> (not support yet)" );
-            System.err.println( "  or" );
-            System.err.println( "java -jar pax-runner.jar [options]" );
-            System.err.println( "\nOptions;" );
-            System.err.println( "--platform=<platform>  -  The OSGi platform to use. Default: equinox" );
-            System.err.println( "--clean                -  Do not load persisted state." );
-            System.err.println( "--gui                  -  Load GUI (if supported by platform)" );
-            System.err.println( "--no-md5               -  Disable MD5 checksum checks for downloads." );
-            System.err.println( "--dir=<workdir>        -  Which directory to use. Default: runner/" );
-            System.err.println( "--profile=<profile>    -  Which profile to run (if supported by platform)" );
-            System.err.println( "--repository=<repo>    -  Which repository to download from." );
-            System.err.println( "--proxy-username=<pwd> -  Username for the proxy." );
-            System.err.println( "--proxy-password=<pwd> -  Username for the proxy." );
-            System.err.println( "--repository-username=<pwd> -  Username for the repository server." );
-            System.err.println( "--repository-password=<pwd> -  Username for the repository server." );
-            System.exit( 1 );
+            help( e );
+        }
+        catch( ArrayIndexOutOfBoundsException e )
+        {
+            help( e );
         }
 
         System.out.println( "    ______  ________  __  __" );
@@ -113,8 +102,9 @@ public class Run
         Authenticator.setDefault( auth );
 
         List<String> repositoryList = parseRepositories( m_cmdLine );
+        String localRepository = m_cmdLine.getValue( "localRepository" );
         boolean noCheckMD5 = m_cmdLine.isSet( "no-md5" );
-        Downloader downloader = new Downloader( repositoryList, noCheckMD5, true );
+        Downloader downloader = new Downloader( repositoryList, localRepository, noCheckMD5, true );
         List<File> bundles;
         Properties props;
         String urlValue = m_cmdLine.getValue( "url" );
@@ -155,6 +145,39 @@ public class Run
             System.exit( 2 );
         }
         System.exit( 0 );
+    }
+
+    public static void help( Exception e )
+    {
+        if( e != null )
+        {
+            System.err.println( e );
+        }
+
+        System.err.println();
+        System.err.println( "java -jar pax-runner.jar [options] <groupId> <artifactId> <version>" );
+        System.err.println( "  or" );
+        System.err.println( "java -jar pax-runner.jar [options] <pom-URL>" );
+        System.err.println( "  or" );
+        System.err.println( "java -jar pax-runner.jar [options] <provisioning-URL> (not supported yet)" );
+        System.err.println( "  or" );
+        System.err.println( "java -jar pax-runner.jar [options]" );
+        System.err.println( "\nOptions;" );
+        System.err.println( "--platform=<platform>       -  The OSGi platform to use. Default: equinox" );
+        System.err.println( "--clean                     -  Do not load persisted state." );
+        System.err.println( "--gui                       -  Load GUI (if supported by platform)" );
+        System.err.println( "--no-md5                    -  Disable MD5 checksum checks for downloads." );
+        System.err.println( "--dir=<workdir>             -  Which directory to use. Default: runner/" );
+        System.err.println( "--profile=<profile>         -  Which profile to run (if supported by platform)" );
+        System.err.println( "--repository=<repos>        -  Which repositories to download from." );
+        System.err.println( "--localRepository=<repo>    -  Which local repository to use. Default: ~/.m2/repository" );
+        System.err.println( "--proxy-username=<pwd>      -  Username for the proxy." );
+        System.err.println( "--proxy-password=<pwd>      -  Username for the proxy." );
+        System.err.println( "--repository-username=<pwd> -  Username for the repository server." );
+        System.err.println( "--repository-password=<pwd> -  Username for the repository server." );
+        System.err.println();
+
+        System.exit( 1 );
     }
 
     private static List<String> parseRepositories( CmdLine commandLine )

@@ -50,10 +50,11 @@ public class Downloader
     private static final Logger LOGGER = Logger.getLogger( Downloader.class.getName() );
 
     private final List<String> m_repositories;
+    private final String m_localRepository;
     private final boolean m_noCheckMD5;
     private boolean m_isNoCertCheckAcceptable;
 
-    public Downloader( List<String> repositories, boolean noCheckMD5, boolean noCertCheckAcceptable )
+    public Downloader( List<String> repositories, String localRepository, boolean noCheckMD5, boolean noCertCheckAcceptable )
         throws IllegalArgumentException
     {
         NullArgumentException.validateNotNull( repositories, "repositories" );
@@ -63,6 +64,7 @@ public class Downloader
         }
         m_isNoCertCheckAcceptable = noCertCheckAcceptable;
         m_repositories = repositories;
+        m_localRepository = localRepository;
         m_noCheckMD5 = noCheckMD5;
     }
 
@@ -77,7 +79,7 @@ public class Downloader
             return;
         }
 
-        File localRepo = new File( System.getProperty( "user.home" ), ".m2/repository" );
+        File localRepo = new File( m_localRepository );
         File localCache = new File( localRepo, path );
 
         for( String repository : m_repositories )
@@ -139,7 +141,7 @@ public class Downloader
             return;
         }
 
-        File localRepo = new File( System.getProperty( "user.home" ), ".m2/repository" );
+        File localRepo = new File( m_localRepository );
         File localCache = new File( localRepo, path );
 
         copyFile( localCache, destination );
