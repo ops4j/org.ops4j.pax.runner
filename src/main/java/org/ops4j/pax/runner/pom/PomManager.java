@@ -149,7 +149,8 @@ public class PomManager
     {
         if( dependencies == null )
         {
-            throw new IllegalArgumentException( "[dependencies] argument must not be [null]." );
+            System.err.println( "WARNING: [dependencies] argument is null => no bundles will be deployed." );
+            return new ArrayList<File>();
         }
 
         List<File> bundles = new ArrayList<File>();
