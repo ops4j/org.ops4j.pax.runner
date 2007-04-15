@@ -41,6 +41,10 @@ public class FelixRunner
 
     private static final String VERSION = "0.9.0-incubator-SNAPSHOT";
 
+    // have to escape \ for pattern compiler and again for javac
+    private static final String ONE_BACKSLASH_REGEXP = "\\\\";
+    private static final String TWO_BACKSLASH_REGEXP = "\\\\\\\\";
+
     private Properties m_props;
     private CmdLine m_cmdLine;
     private List<File> m_sysBundles;
@@ -239,7 +243,11 @@ public class FelixRunner
             {
                 FileUtils.writeProperty( out, "felix.cache.profile", profile );
             }
-            FileUtils.writeProperty( out, "felix.cache.dir", Run.WORK_DIR + "/cache" );
+
+            // Need to quote windows separators in propertyfile otherwise they're interpreted as line continuations
+            String quotedWorkDir = Run.WORK_DIR.getPath().replaceAll( ONE_BACKSLASH_REGEXP, TWO_BACKSLASH_REGEXP );
+
+            FileUtils.writeProperty( out, "felix.cache.dir", quotedWorkDir + "/cache" );
             FileUtils.writeProperty( out, "felix.startlevel.framework", "1" );
             FileUtils.writeProperty( out, "felix.startlevel.bundle", "3" );
             FileUtils.writeProperty( out, "obr.repository.url", "http://www2.osgi.org/repository/repository.xml" );
@@ -272,8 +280,7 @@ public class FelixRunner
                 buf.append( " \\\n    " );
             }
             first = false;
-            buf.append( "file:" );
-            buf.append( bundle.getAbsolutePath() );
+            buf.append( bundle.toURI() );
         }
         FileUtils.writeProperty( out, startLevel, buf.toString() );
     }
@@ -302,7 +309,7 @@ public class FelixRunner
         {
             String[] commands =
                 {
-                    "-Dfelix.config.properties=file:" + Run.WORK_DIR + "/conf/config.properties",
+                    "-Dfelix.config.properties=" + Run.WORK_DIR.toURI() + "/conf/config.properties",
                     "-jar",
                     m_main.getAbsolutePath(),
                 };
@@ -325,6 +332,7 @@ public class FelixRunner
             outPipe.start();
             Pipe inPipe = new Pipe( System.in, in );
             inPipe.start();
+            Run.destroyFrameworkOnExit( process, new Pipe[]{inPipe, outPipe, errPipe} );
             process.waitFor();
             inPipe.stop();
             outPipe.stop();

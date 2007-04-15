@@ -205,4 +205,26 @@ public class Run
 
         return repositoryList;
     }
+
+    // helper function to ensure shutdown of framework VM on Windows when Pax-Runner is Ctrl-C'd
+    protected static void destroyFrameworkOnExit( final Process frameworkVM, final Pipe[] pipes )
+    {
+        Runtime.getRuntime().addShutdownHook( new Thread( new Runnable()
+        {
+            public void run()
+            {
+                try
+                {
+                    for (int i = 0; i < pipes.length; i++ )
+                    {
+                        pipes[i].stop();
+                    }
+                }
+                finally
+                {
+                    frameworkVM.destroy();
+                }
+            }
+        } ) );
+    }
 }

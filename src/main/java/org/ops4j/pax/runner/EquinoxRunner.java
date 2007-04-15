@@ -175,6 +175,7 @@ public class EquinoxRunner
             outPipe.start();
             Pipe inPipe = new Pipe( System.in, in );
             inPipe.start();
+            Run.destroyFrameworkOnExit( process, new Pipe[]{inPipe, outPipe, errPipe} );
             process.waitFor();
             inPipe.stop();
             outPipe.stop();

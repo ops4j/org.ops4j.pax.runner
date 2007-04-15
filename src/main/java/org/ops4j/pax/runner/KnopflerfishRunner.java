@@ -177,20 +177,20 @@ public class KnopflerfishRunner
                 out.write( value );
                 out.write( "\n" );
             }
-            out.write( "-Dorg.knopflerfish.gosg.jars=file://" + confDir.getAbsolutePath() + "/lib/\n\n" );
+            out.write( "-Dorg.knopflerfish.gosg.jars=" + confDir.toURI() + "/lib/\n\n" );
             out.write( "-init\n" );
             out.write( "-initlevel 1\n" );
             for( File bundle : m_bundles )
             {
                 out.write( "-install " );
-                out.write( bundle.getAbsolutePath() );
+                out.write( bundle.toURI().toString() );
                 out.write( "\n" );
             }
             out.write( "-startlevel 7\n" );
             for( File bundle : m_bundles )
             {
                 out.write( "-start " );
-                out.write( bundle.getAbsolutePath() );
+                out.write( bundle.toURI().toString() );
                 out.write( "\n" );
             }
             out.flush();
@@ -248,6 +248,7 @@ public class KnopflerfishRunner
             outPipe.start();
             Pipe inPipe = new Pipe( System.in, in );
             inPipe.start();
+            Run.destroyFrameworkOnExit( process, new Pipe[]{inPipe, outPipe, errPipe} );
             process.waitFor();
             inPipe.stop();
             outPipe.stop();
