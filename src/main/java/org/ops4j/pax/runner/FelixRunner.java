@@ -330,7 +330,7 @@ public class FelixRunner
             errPipe.start();
             Pipe outPipe = new Pipe( out, System.out );
             outPipe.start();
-            Pipe inPipe = new Pipe( System.in, in );
+            Pipe inPipe = new Pipe( in, System.in );
             inPipe.start();
             Run.destroyFrameworkOnExit( process, new Pipe[]{inPipe, outPipe, errPipe} );
             process.waitFor();

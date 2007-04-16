@@ -26,47 +26,53 @@ import java.io.OutputStream;
 public class Pipe
     implements Runnable
 {
+    private final InputStream m_in;
+    private final OutputStream m_out;
+    private Object m_processStream;
 
-    private InputStream m_in;
-    private OutputStream m_pipe;
-    private Thread m_thread;
-    private boolean m_loop;
+    private volatile Thread m_thread;
 
-    public Pipe( InputStream in, OutputStream pipe )
+    public Pipe( InputStream processStream, OutputStream systemStream )
     {
-        m_in = new BufferedInputStream( in );
-        m_pipe = new BufferedOutputStream( pipe );
+        m_in = new BufferedInputStream( processStream );
+        m_out = new BufferedOutputStream( systemStream );
+        m_processStream = m_in;
     }
 
-    public void start()
+    public Pipe( OutputStream processStream, InputStream systemStream )
     {
-        synchronized( this )
-        {
-            m_thread = new Thread( this );
-            m_thread.start();
-        }
+        m_in = new BufferedInputStream( systemStream );
+        m_out = new BufferedOutputStream( processStream );
+        m_processStream = m_out;
     }
 
-    public void stop()
+    public synchronized void start()
     {
-        m_loop = false;
-        synchronized( this )
+        if( null == m_processStream || null != m_thread )
         {
-            m_thread.interrupt();
+            return;
         }
-        try
+
+        m_thread = new Thread( this );
+        m_thread.start();
+    }
+
+    public synchronized void stop()
+    {
+        if( null == m_processStream || null == m_thread )
         {
-            m_in.close();
-        } catch( IOException e )
-        {
-            e.printStackTrace();
+            return;
         }
+
+        Thread t = m_thread;
+        m_thread = null;
+
+        t.interrupt();
     }
 
     public void run()
     {
-        m_loop = true;
-        while( m_loop )
+        while( Thread.currentThread() == m_thread )
         {
             try
             {
@@ -75,15 +81,36 @@ public class Pipe
                 {
                     break;
                 }
-                m_pipe.write( ch );
-                m_pipe.flush();
-            } catch( IOException e )
+                m_out.write( ch );
+                m_out.flush();
+            }
+            catch( IOException e )
             {
-                if( m_loop )
+                if( Thread.currentThread() == m_thread )
                 {
                     e.printStackTrace();
                 }
             }
+        }
+
+        try
+        {
+            if( m_in == m_processStream )
+            {
+                m_in.close();
+            }
+            else
+            {
+                m_out.close();
+            }
+        }
+        catch( IOException e )
+        {
+            // ignore
+        }
+        finally
+        {
+            m_processStream = null;
         }
     }
 }
