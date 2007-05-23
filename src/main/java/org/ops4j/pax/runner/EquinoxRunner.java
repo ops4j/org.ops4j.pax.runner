@@ -26,6 +26,7 @@ import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.ArrayList;
 import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.pom.BundleManager;
 import org.xml.sax.SAXException;
@@ -37,6 +38,7 @@ public class EquinoxRunner
     private Properties m_props;
     private CmdLine m_cmdLine;
     private List<File> m_bundles;
+    private List<File> m_defaultBundles;
     private File m_system;
 
     public EquinoxRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager )
@@ -46,10 +48,9 @@ public class EquinoxRunner
         m_bundles = bundles;
         m_props = props;
         m_system = bundleManager.getBundle( "org.eclipse", "osgi", "3.2.1.R32x_v20060717" );
-        File services = bundleManager.getBundle( "org.eclipse.osgi", "services", "3.1.100.v20060601" );
-        bundles.add( services );
-        File util = bundleManager.getBundle( "org.eclipse.osgi", "util", "3.1.100.v20060601" );
-        bundles.add( util );
+        m_defaultBundles = new ArrayList<File>();
+        m_defaultBundles.add( bundleManager.getBundle( "org.eclipse.osgi", "util", "3.1.100.v20060601" ) );
+        m_defaultBundles.add( bundleManager.getBundle( "org.eclipse.osgi", "services", "3.1.100.v20060601" ) );
     }
 
     public void run()
@@ -81,7 +82,6 @@ public class EquinoxRunner
         Writer out = FileUtils.openPropertyFile( file );
         try
         {
-            boolean first = true;
             boolean clean = m_cmdLine.isSet( "clean" );
             if( clean )
             {
@@ -90,18 +90,8 @@ public class EquinoxRunner
             out.write( "\neclipse.ignoreApp=true\n" );
             out.write( "\nosgi.startLevel=" + startlevel + "\n" );
             out.write( "\nosgi.bundles=\\\n" );
-            for( File bundle : m_bundles )
-            {
-                if( !first )
-                {
-                    out.write( ",\\\n" );
-                }
-                first = false;
-                String urlString = bundle.toURL().toString();
-                out.write( "reference:" );
-                out.write( urlString );
-                out.write( "@" + bundlelevel + ":start" );
-            }
+            writeBundles( m_defaultBundles, out, "1" );
+            writeBundles( m_bundles, out, bundlelevel );
             out.write( '\n' );
             out.write( '\n' );
             for( Map.Entry entry : m_props.entrySet() )
@@ -120,6 +110,24 @@ public class EquinoxRunner
             {
                 out.close();
             }
+        }
+    }
+
+    private void writeBundles( List<File> bundles, Writer out, String bundlelevel )
+        throws IOException
+    {
+        boolean first = true;
+        for( File bundle : bundles )
+        {
+            if( !first )
+            {
+                out.write( ",\\\n" );
+            }
+            first = false;
+            String urlString = bundle.toURL().toString();
+            out.write( "reference:" );
+            out.write( urlString );
+            out.write( "@" + bundlelevel + ":start" );
         }
     }
 
