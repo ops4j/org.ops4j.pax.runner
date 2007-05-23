@@ -90,8 +90,8 @@ public class EquinoxRunner
             out.write( "\neclipse.ignoreApp=true\n" );
             out.write( "\nosgi.startLevel=" + startlevel + "\n" );
             out.write( "\nosgi.bundles=\\\n" );
-            writeBundles( m_defaultBundles, out, "1" );
-            writeBundles( m_bundles, out, bundlelevel );
+            writeBundles( m_defaultBundles, out, "1", true );
+            writeBundles( m_bundles, out, bundlelevel, false );
             out.write( '\n' );
             out.write( '\n' );
             for( Map.Entry entry : m_props.entrySet() )
@@ -113,10 +113,9 @@ public class EquinoxRunner
         }
     }
 
-    private void writeBundles( List<File> bundles, Writer out, String bundlelevel )
+    private void writeBundles( List<File> bundles, Writer out, String bundlelevel, boolean first )
         throws IOException
     {
-        boolean first = true;
         for( File bundle : bundles )
         {
             if( !first )
