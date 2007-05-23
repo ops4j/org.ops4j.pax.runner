@@ -231,6 +231,8 @@ public class FelixRunner
     private void createConfigFile()
         throws IOException
     {
+        String startlevel = m_cmdLine.getValue( "startlevel" );
+        String bundlelevel = m_cmdLine.getValue( "bundlelevel" );
         File confDir = new File( Run.WORK_DIR, "conf" );
         confDir.mkdirs();
         File file = new File( confDir, "config.properties" );
@@ -248,12 +250,12 @@ public class FelixRunner
             String quotedWorkDir = Run.WORK_DIR.getPath().replaceAll( ONE_BACKSLASH_REGEXP, TWO_BACKSLASH_REGEXP );
 
             FileUtils.writeProperty( out, "felix.cache.dir", quotedWorkDir + "/cache" );
-            FileUtils.writeProperty( out, "felix.startlevel.framework", "1" );
-            FileUtils.writeProperty( out, "felix.startlevel.bundle", "3" );
+            FileUtils.writeProperty( out, "felix.startlevel.framework", startlevel );
+            FileUtils.writeProperty( out, "felix.startlevel.bundle", bundlelevel );
             FileUtils.writeProperty( out, "obr.repository.url", "http://www2.osgi.org/repository/repository.xml" );
 
             writeBundleList( out, "felix.auto.start.1", m_sysBundles );
-            writeBundleList( out, "felix.auto.start.3", m_appBundles );
+            writeBundleList( out, "felix.auto.start." + bundlelevel, m_appBundles );
 
             for( Map.Entry entry : m_props.entrySet() )
             {

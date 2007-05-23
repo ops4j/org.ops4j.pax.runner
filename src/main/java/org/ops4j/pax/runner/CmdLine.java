@@ -34,6 +34,8 @@ public class CmdLine
         shortcuts.put( "p", "platform" );
         shortcuts.put( "r", "repository" );
         shortcuts.put( "l", "localRepository" );
+        shortcuts.put( "s", "startlevel" );
+        shortcuts.put( "b", "bundlelevel" );
         m_platforms = new HashMap<String, String>();
         m_platforms.put( "e", "equinox" );
         m_platforms.put( "eq", "equinox" );
@@ -104,6 +106,8 @@ public class CmdLine
     private void populateDefaults()
     {
         m_values.put( "platform", "equinox" );
+        m_values.put( "startlevel", "6" );
+        m_values.put( "bundlelevel", "5" );
         m_values.put( "dir", System.getProperty( "user.dir" ) + "/runner" );
         m_values.put( "group", "org.ops4j.pax.apps" );
         m_values.put( "repository", "http://repository.ops4j.org/maven2/" );

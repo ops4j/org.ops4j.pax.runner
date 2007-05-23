@@ -164,6 +164,8 @@ public class Run
         System.err.println( "java -jar pax-runner.jar [options]" );
         System.err.println( "\nOptions;" );
         System.err.println( "--platform=<platform>       -  The OSGi platform to use. Default: equinox" );
+        System.err.println( "--startlevel=<startlevel>   -  Startlevel to be set. Default:6" );
+        System.err.println( "--bundlelevel=<startlevel>  -  Startlevel of user bundles found in POM. Default: 5" );
         System.err.println( "--clean                     -  Do not load persisted state." );
         System.err.println( "--gui                       -  Load GUI (if supported by platform)" );
         System.err.println( "--no-md5                    -  Disable MD5 checksum checks for downloads." );

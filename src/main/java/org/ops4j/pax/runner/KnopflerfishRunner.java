@@ -50,8 +50,8 @@ public class KnopflerfishRunner
             { BUNDLES_GROUPID + ".console", "console", "1.0.0" },
             { BUNDLES_GROUPID + ".console", "console_api", "1.0.0" },
             { BUNDLES_GROUPID + ".logcommands", "logcommands", "1.0.1" },
-            { "org.ops4j.pax.logging", "api", "0.9.2" },
-            { "org.ops4j.pax.logging", "service", "0.9.2" },
+            { "org.ops4j.pax.logging", "api", "0.9.4" },
+            { "org.ops4j.pax.logging", "service", "0.9.4" },
             { BUNDLES_GROUPID + ".cm", "cm_api", "1.0.1" }
         };
     private static final String[][] GUI_BUNDLES =
@@ -106,6 +106,8 @@ public class KnopflerfishRunner
     private void createConfigFile( File packageFile )
         throws IOException
     {
+        String startlevel = m_cmdLine.getValue( "startlevel" );
+        String bundlelevel = m_cmdLine.getValue( "bundlelevel" );
         File confDir = Run.WORK_DIR;
         File file = new File( confDir, "init.xargs" );
         if( file.exists() )
@@ -179,14 +181,14 @@ public class KnopflerfishRunner
             }
             out.write( "-Dorg.knopflerfish.gosg.jars=" + confDir.toURI() + "/lib/\n\n" );
             out.write( "-init\n" );
-            out.write( "-initlevel 1\n" );
+            out.write( "-initlevel " + bundlelevel + "\n" );
             for( File bundle : m_bundles )
             {
                 out.write( "-install " );
                 out.write( bundle.toURI().toString() );
                 out.write( "\n" );
             }
-            out.write( "-startlevel 7\n" );
+            out.write( "-startlevel " + startlevel + "\n" );
             for( File bundle : m_bundles )
             {
                 out.write( "-start " );
@@ -204,7 +206,7 @@ public class KnopflerfishRunner
         throws IOException, InterruptedException
     {
         Runtime runtime = Runtime.getRuntime();
-        String[] frameworkOpts = {};
+        String[] frameworkOpts = { };
         String frameworkOptsString = System.getProperty( "FRAMEWORK_OPTS" );
         if( frameworkOptsString != null )
         {
@@ -229,13 +231,13 @@ public class KnopflerfishRunner
                     "-jar",
                     m_systemBundle.getAbsolutePath()
                 };
-          //copy these two together
+            //copy these two together
             String[] totalCommandLine = new String[commands.length + frameworkOpts.length + 1];
-            totalCommandLine[0] = javaHome + "/bin/java";
+            totalCommandLine[ 0 ] = javaHome + "/bin/java";
             int i = 0;
-            for( i = 0;i < frameworkOpts.length; i++ )
+            for( i = 0; i < frameworkOpts.length; i++ )
             {
-                totalCommandLine[1 + i] = frameworkOpts[i];
+                totalCommandLine[ 1 + i ] = frameworkOpts[ i ];
             }
             System.arraycopy( commands, 0, totalCommandLine, i + 1, commands.length );
             Process process = runtime.exec( totalCommandLine, null, Run.WORK_DIR );
@@ -248,7 +250,7 @@ public class KnopflerfishRunner
             outPipe.start();
             Pipe inPipe = new Pipe( in, System.in );
             inPipe.start();
-            Run.destroyFrameworkOnExit( process, new Pipe[]{inPipe, outPipe, errPipe} );
+            Run.destroyFrameworkOnExit( process, new Pipe[]{ inPipe, outPipe, errPipe } );
             process.waitFor();
             inPipe.stop();
             outPipe.stop();

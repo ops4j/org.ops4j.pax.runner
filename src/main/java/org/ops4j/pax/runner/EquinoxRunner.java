@@ -73,6 +73,8 @@ public class EquinoxRunner
     private void createConfigIniFile()
         throws IOException
     {
+        String bundlelevel = m_cmdLine.getValue( "bundlelevel" );
+        String startlevel = m_cmdLine.getValue( "startlevel" );
         File confDir = new File( Run.WORK_DIR, "configuration" );
         confDir.mkdirs();
         File file = new File( confDir, "config.ini" );
@@ -86,6 +88,7 @@ public class EquinoxRunner
                 out.write( "\nosgi.clean=true\n" );
             }
             out.write( "\neclipse.ignoreApp=true\n" );
+            out.write( "\nosgi.startLevel=" + startlevel + "\n" );
             out.write( "\nosgi.bundles=\\\n" );
             for( File bundle : m_bundles )
             {
@@ -97,7 +100,7 @@ public class EquinoxRunner
                 String urlString = bundle.toURL().toString();
                 out.write( "reference:" );
                 out.write( urlString );
-                out.write( "@5:start" );
+                out.write( "@" + bundlelevel + ":start" );
             }
             out.write( '\n' );
             out.write( '\n' );
@@ -126,7 +129,7 @@ public class EquinoxRunner
         Runtime runtime = Runtime.getRuntime();
 
         File cwd = new File( System.getProperty( "user.dir" ) );
-        String[] frameworkOpts = {};
+        String[] frameworkOpts = { };
         String frameworkOptsString = System.getProperty( "FRAMEWORK_OPTS" );
         if( frameworkOptsString != null )
         {
@@ -142,7 +145,7 @@ public class EquinoxRunner
         {
             System.err.println( "JAVA_HOME is not set." );
         }
-        
+
         else
         {
             //framework specific args
@@ -158,11 +161,11 @@ public class EquinoxRunner
                 };
             //copy these two together
             String[] totalCommandLine = new String[commands.length + frameworkOpts.length + 1];
-            totalCommandLine[0] = javaHome + "/bin/java";
+            totalCommandLine[ 0 ] = javaHome + "/bin/java";
             int i = 0;
-            for( i = 0;i < frameworkOpts.length; i++ )
+            for( i = 0; i < frameworkOpts.length; i++ )
             {
-                totalCommandLine[1 + i] = frameworkOpts[i];
+                totalCommandLine[ 1 + i ] = frameworkOpts[ i ];
             }
             System.arraycopy( commands, 0, totalCommandLine, i + 1, commands.length );
             Process process = runtime.exec( totalCommandLine, null, cwd );
@@ -175,7 +178,7 @@ public class EquinoxRunner
             outPipe.start();
             Pipe inPipe = new Pipe( in, System.in );
             inPipe.start();
-            Run.destroyFrameworkOnExit( process, new Pipe[]{inPipe, outPipe, errPipe} );
+            Run.destroyFrameworkOnExit( process, new Pipe[]{ inPipe, outPipe, errPipe } );
             process.waitFor();
             inPipe.stop();
             outPipe.stop();
