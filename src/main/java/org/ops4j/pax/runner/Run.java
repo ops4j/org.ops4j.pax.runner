@@ -125,13 +125,7 @@ public class Run
         BundleManager bundleManager = new BundleManager( downloader );
         String platform = m_cmdLine.getValue( "platform" ).toLowerCase();
         System.out.println( "\n   Platform: " + platform );
-        m_vmopts = m_cmdLine.getValue( "vmopts" ).split( " " );
-        System.out.print( "VM Options : " );
-        for( String opt : m_vmopts )
-        {
-            System.out.print( " " + opt );
-        }
-        System.out.println();
+        handleVmOptions();
         if( "equinox".equals( platform ) )
         {
             Runnable wrapper = new EquinoxRunner( m_cmdLine, props, bundles, bundleManager );
@@ -153,6 +147,26 @@ public class Run
             System.exit( 2 );
         }
         System.exit( 0 );
+    }
+
+    private static void handleVmOptions()
+    {
+        String value = m_cmdLine.getValue( "vmopts" );
+        if( "".equals( value ) )
+        {
+            m_vmopts = new String[0];
+            System.out.println( "No VM Options" );
+        }
+        else
+        {
+            m_vmopts = value.trim().split( " " );
+            System.out.print( m_vmopts.length == 1 ? "1 VM Option : " : m_vmopts.length + " VM Options : " );
+            for( String opt : m_vmopts )
+            {
+                System.out.print( " " + opt );
+            }
+            System.out.println();
+        }
     }
 
     public static void help( Exception e )
