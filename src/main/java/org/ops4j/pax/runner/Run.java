@@ -124,19 +124,20 @@ public class Run
         BundleManager bundleManager = new BundleManager( downloader );
         String platform = m_cmdLine.getValue( "platform" ).toLowerCase();
         System.out.println( "\n   Platform: " + platform );
+        String vmopts = m_cmdLine.getValue( "vmopts" );
         if( "equinox".equals( platform ) )
         {
-            Runnable wrapper = new EquinoxRunner( m_cmdLine, props, bundles, bundleManager );
+            Runnable wrapper = new EquinoxRunner( m_cmdLine, props, bundles, bundleManager, vmopts );
             wrapper.run();
         }
         else if( "felix".equals( platform ) )
         {
-            Runnable wrapper = new FelixRunner( m_cmdLine, props, bundles, bundleManager );
+            Runnable wrapper = new FelixRunner( m_cmdLine, props, bundles, bundleManager, vmopts );
             wrapper.run();
         }
         else if( "knopflerfish".equals( platform ) )
         {
-            Runnable wrapper = new KnopflerfishRunner( m_cmdLine, props, bundles, bundleManager );
+            Runnable wrapper = new KnopflerfishRunner( m_cmdLine, props, bundles, bundleManager, vmopts );
             wrapper.run();
         }
         else
@@ -177,6 +178,7 @@ public class Run
         System.err.println( "--proxy-password=<pwd>      -  Username for the proxy." );
         System.err.println( "--repository-username=<pwd> -  Username for the repository server." );
         System.err.println( "--repository-password=<pwd> -  Username for the repository server." );
+        System.err.println( "--vmopts=<options>          -  Additional JVM options." );
         System.err.println();
 
         System.exit( 1 );

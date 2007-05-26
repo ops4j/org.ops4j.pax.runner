@@ -38,6 +38,7 @@ public class KnopflerfishRunner
     private Properties m_props;
     private File m_systemBundle;
     private List<File> m_bundles;
+    private String m_vmopts;
     private static final String FRAMEWORK_GROUPID = "org.knopflerfish.osgi";
     private static final String BUNDLES_GROUPID = "org.knopflerfish.bundle";
     private static final String[] SYSTEM_BUNDLE = { FRAMEWORK_GROUPID, "framework", "2.0.0" };
@@ -64,12 +65,13 @@ public class KnopflerfishRunner
             { BUNDLES_GROUPID + ".cm_desktop", "cm_desktop", "1.0.0" }
         };
 
-    public KnopflerfishRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager )
+    public KnopflerfishRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager, String vmopts )
         throws IOException, ParserConfigurationException, SAXException
     {
         m_cmdLine = cmdLine;
         m_props = props;
         m_bundles = bundles;
+        m_vmopts = vmopts;
         m_systemBundle = bundleManager.getBundle( SYSTEM_BUNDLE[ 0 ], SYSTEM_BUNDLE[ 1 ], SYSTEM_BUNDLE[ 2 ] );
         if( m_cmdLine.isSet( "gui" ) )
         {
@@ -226,6 +228,7 @@ public class KnopflerfishRunner
         {
             String[] commands =
                 {
+                    m_vmopts,
                     "-Dorg.knopflerfish.framework.usingwrapperscript=false",
                     "-Dorg.knopflerfish.framework.exitonshutdown=true",
                     "-jar",

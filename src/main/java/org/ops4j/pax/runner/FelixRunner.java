@@ -178,10 +178,12 @@ public class FelixRunner
     private File m_osgi;
     @SuppressWarnings("unused")
     private File m_framework;
+    private String m_vmopts;
 
-    public FelixRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager )
+    public FelixRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager, String vmopts )
         throws IOException, ParserConfigurationException, SAXException
     {
+        m_vmopts = vmopts;
         m_cmdLine = cmdLine;
         m_props = props;
 
@@ -311,6 +313,7 @@ public class FelixRunner
         {
             String[] commands =
                 {
+                    m_vmopts,
                     "-Dfelix.config.properties=" + Run.WORK_DIR.toURI() + "/conf/config.properties",
                     "-jar",
                     m_main.getAbsolutePath(),

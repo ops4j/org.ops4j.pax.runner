@@ -36,17 +36,19 @@ public class EquinoxRunner
 {
 
     private Properties m_props;
+    private String m_vmopts;
     private CmdLine m_cmdLine;
     private List<File> m_bundles;
     private List<File> m_defaultBundles;
     private File m_system;
 
-    public EquinoxRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager )
+    public EquinoxRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager, String vmopts )
         throws IOException, ParserConfigurationException, SAXException
     {
         m_cmdLine = cmdLine;
         m_bundles = bundles;
         m_props = props;
+        m_vmopts = vmopts;
         m_system = bundleManager.getBundle( "org.eclipse", "osgi", "3.2.1.R32x_v20060717" );
         m_defaultBundles = new ArrayList<File>();
         m_defaultBundles.add( bundleManager.getBundle( "org.eclipse.osgi", "util", "3.1.100.v20060601" ) );
@@ -158,6 +160,7 @@ public class EquinoxRunner
             //framework specific args
             String[] commands =
                 {
+                    m_vmopts,
                     "-jar",
                     m_system.toString(),
                     "-console",

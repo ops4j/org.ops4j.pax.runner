@@ -116,6 +116,7 @@ public class CmdLine
         m_values.put( "proxy-password", "" );
         m_values.put( "repository-username", System.getProperty( "user.name" ) );
         m_values.put( "repository-password", "" );
+        m_values.put( "vmopts", "" );
     }
 
     public String getValue( String key )
