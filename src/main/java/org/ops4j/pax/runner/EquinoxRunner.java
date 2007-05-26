@@ -19,14 +19,12 @@ package org.ops4j.pax.runner;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Writer;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.ArrayList;
 import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.pom.BundleManager;
 import org.xml.sax.SAXException;
@@ -36,19 +34,17 @@ public class EquinoxRunner
 {
 
     private Properties m_props;
-    private String m_vmopts;
     private CmdLine m_cmdLine;
     private List<File> m_bundles;
     private List<File> m_defaultBundles;
     private File m_system;
 
-    public EquinoxRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager, String vmopts )
+    public EquinoxRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager )
         throws IOException, ParserConfigurationException, SAXException
     {
         m_cmdLine = cmdLine;
         m_bundles = bundles;
         m_props = props;
-        m_vmopts = vmopts;
         m_system = bundleManager.getBundle( "org.eclipse", "osgi", "3.2.1.R32x_v20060717" );
         m_defaultBundles = new ArrayList<File>();
         m_defaultBundles.add( bundleManager.getBundle( "org.eclipse.osgi", "util", "3.1.100.v20060601" ) );
@@ -135,64 +131,17 @@ public class EquinoxRunner
     private void runIt()
         throws IOException, InterruptedException
     {
-        Runtime runtime = Runtime.getRuntime();
-
-        File cwd = new File( System.getProperty( "user.dir" ) );
-        String[] frameworkOpts = { };
-        String frameworkOptsString = System.getProperty( "FRAMEWORK_OPTS" );
-        if( frameworkOptsString != null )
-        {
-            //get framework opts
-            frameworkOpts = frameworkOptsString.split( " " );
-        }
-        String javaHome = System.getProperty( "JAVA_HOME" );
-        if( javaHome == null )
-        {
-            javaHome = System.getenv().get( "JAVA_HOME" );
-        }
-        if( javaHome == null )
-        {
-            System.err.println( "JAVA_HOME is not set." );
-        }
-
-        else
-        {
-            //framework specific args
-            String[] commands =
-                {
-                    m_vmopts,
-                    "-jar",
-                    m_system.toString(),
-                    "-console",
-                    "-configuration",
-                    Run.WORK_DIR + "/configuration",
-                    "-install",
-                    Run.WORK_DIR.getAbsolutePath()
-                };
-            //copy these two together
-            String[] totalCommandLine = new String[commands.length + frameworkOpts.length + 1];
-            totalCommandLine[ 0 ] = javaHome + "/bin/java";
-            int i = 0;
-            for( i = 0; i < frameworkOpts.length; i++ )
+        //framework specific args
+        String[] commands =
             {
-                totalCommandLine[ 1 + i ] = frameworkOpts[ i ];
-            }
-            System.arraycopy( commands, 0, totalCommandLine, i + 1, commands.length );
-            Process process = runtime.exec( totalCommandLine, null, cwd );
-            InputStream err = process.getErrorStream();
-            InputStream out = process.getInputStream();
-            OutputStream in = process.getOutputStream();
-            Pipe errPipe = new Pipe( err, System.err );
-            errPipe.start();
-            Pipe outPipe = new Pipe( out, System.out );
-            outPipe.start();
-            Pipe inPipe = new Pipe( in, System.in );
-            inPipe.start();
-            Run.destroyFrameworkOnExit( process, new Pipe[]{ inPipe, outPipe, errPipe } );
-            process.waitFor();
-            inPipe.stop();
-            outPipe.stop();
-            errPipe.stop();
-        }
+                "-jar",
+                m_system.toString(),
+                "-console",
+                "-configuration",
+                Run.WORK_DIR + "/configuration",
+                "-install",
+                Run.WORK_DIR.getAbsolutePath()
+            };
+        Run.execute( commands );
     }
 }

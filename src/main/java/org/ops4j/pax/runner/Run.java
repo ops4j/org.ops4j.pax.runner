@@ -19,14 +19,14 @@ package org.ops4j.pax.runner;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.ops4j.pax.runner.pom.BundleManager;
 import org.ops4j.pax.runner.pom.PomManager;
 import org.ops4j.pax.runner.provisioning.Provisioning;
@@ -42,6 +42,7 @@ public class Run
     public static File WORK_DIR;
 
     private static CmdLine m_cmdLine;
+    private static String[] m_vmopts;
 
     public static void main( String[] args )
         throws IOException,
@@ -124,20 +125,26 @@ public class Run
         BundleManager bundleManager = new BundleManager( downloader );
         String platform = m_cmdLine.getValue( "platform" ).toLowerCase();
         System.out.println( "\n   Platform: " + platform );
-        String vmopts = m_cmdLine.getValue( "vmopts" );
+        m_vmopts = m_cmdLine.getValue( "vmopts" ).split( " " );
+        System.out.print( "VM Options : " );
+        for( String opt : m_vmopts )
+        {
+            System.out.print( " " + opt );
+        }
+        System.out.println();
         if( "equinox".equals( platform ) )
         {
-            Runnable wrapper = new EquinoxRunner( m_cmdLine, props, bundles, bundleManager, vmopts );
+            Runnable wrapper = new EquinoxRunner( m_cmdLine, props, bundles, bundleManager );
             wrapper.run();
         }
         else if( "felix".equals( platform ) )
         {
-            Runnable wrapper = new FelixRunner( m_cmdLine, props, bundles, bundleManager, vmopts );
+            Runnable wrapper = new FelixRunner( m_cmdLine, props, bundles, bundleManager );
             wrapper.run();
         }
         else if( "knopflerfish".equals( platform ) )
         {
-            Runnable wrapper = new KnopflerfishRunner( m_cmdLine, props, bundles, bundleManager, vmopts );
+            Runnable wrapper = new KnopflerfishRunner( m_cmdLine, props, bundles, bundleManager );
             wrapper.run();
         }
         else
@@ -219,9 +226,9 @@ public class Run
             {
                 try
                 {
-                    for (int i = 0; i < pipes.length; i++ )
+                    for( int i = 0; i < pipes.length; i++ )
                     {
-                        pipes[i].stop();
+                        pipes[ i ].stop();
                     }
                 }
                 finally
@@ -229,6 +236,54 @@ public class Run
                     frameworkVM.destroy();
                 }
             }
-        } ) );
+        }
+        )
+        );
+    }
+
+    public static void execute( String[] commands )
+        throws IOException, InterruptedException
+    {
+        String[] frameworkOpts = { };
+        String frameworkOptsString = System.getProperty( "FRAMEWORK_OPTS" );
+        if( frameworkOptsString != null )
+        {
+            //get framework opts
+            frameworkOpts = frameworkOptsString.split( " " );
+        }
+        String javaHome = System.getProperty( "JAVA_HOME" );
+        if( javaHome == null )
+        {
+            javaHome = System.getenv().get( "JAVA_HOME" );
+        }
+        if( javaHome == null )
+        {
+            System.err.println( "JAVA_HOME is not set." );
+        }
+
+        String[] totalCommandLine = new String[commands.length + frameworkOpts.length + m_vmopts.length + 1];
+        int pos = 0;
+        totalCommandLine[ pos++ ] = javaHome + "/bin/java";
+        System.arraycopy( frameworkOpts, 0, totalCommandLine, pos, frameworkOpts.length );
+        pos = pos + frameworkOpts.length;
+        System.arraycopy( m_vmopts, 0, totalCommandLine, pos, m_vmopts.length );
+        pos = pos + m_vmopts.length;
+        System.arraycopy( commands, 0, totalCommandLine, pos, commands.length );
+        Runtime runtime = Runtime.getRuntime();
+        Process process = runtime.exec( totalCommandLine, null );
+        InputStream err = process.getErrorStream();
+        InputStream out = process.getInputStream();
+        OutputStream in = process.getOutputStream();
+        Pipe errPipe = new Pipe( err, System.err );
+        errPipe.start();
+        Pipe outPipe = new Pipe( out, System.out );
+        outPipe.start();
+        Pipe inPipe = new Pipe( in, System.in );
+        inPipe.start();
+        destroyFrameworkOnExit( process, new Pipe[]{ inPipe, outPipe, errPipe } );
+        process.waitFor();
+        inPipe.stop();
+        outPipe.stop();
+        errPipe.stop();
     }
 }

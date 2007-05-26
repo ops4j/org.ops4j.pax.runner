@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Writer;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +37,6 @@ public class KnopflerfishRunner
     private Properties m_props;
     private File m_systemBundle;
     private List<File> m_bundles;
-    private String m_vmopts;
     private static final String FRAMEWORK_GROUPID = "org.knopflerfish.osgi";
     private static final String BUNDLES_GROUPID = "org.knopflerfish.bundle";
     private static final String[] SYSTEM_BUNDLE = { FRAMEWORK_GROUPID, "framework", "2.0.0" };
@@ -65,13 +63,12 @@ public class KnopflerfishRunner
             { BUNDLES_GROUPID + ".cm_desktop", "cm_desktop", "1.0.0" }
         };
 
-    public KnopflerfishRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager, String vmopts )
+    public KnopflerfishRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager )
         throws IOException, ParserConfigurationException, SAXException
     {
         m_cmdLine = cmdLine;
         m_props = props;
         m_bundles = bundles;
-        m_vmopts = vmopts;
         m_systemBundle = bundleManager.getBundle( SYSTEM_BUNDLE[ 0 ], SYSTEM_BUNDLE[ 1 ], SYSTEM_BUNDLE[ 2 ] );
         if( m_cmdLine.isSet( "gui" ) )
         {
@@ -207,58 +204,14 @@ public class KnopflerfishRunner
     private void runIt()
         throws IOException, InterruptedException
     {
-        Runtime runtime = Runtime.getRuntime();
-        String[] frameworkOpts = { };
-        String frameworkOptsString = System.getProperty( "FRAMEWORK_OPTS" );
-        if( frameworkOptsString != null )
-        {
-            //get framework opts
-            frameworkOpts = frameworkOptsString.split( " " );
-        }
-        String javaHome = System.getProperty( "JAVA_HOME" );
-        if( javaHome == null )
-        {
-            javaHome = System.getenv().get( "JAVA_HOME" );
-        }
-        if( javaHome == null )
-        {
-            System.err.println( "JAVA_HOME is not set." );
-        }
-        else
-        {
-            String[] commands =
-                {
-                    m_vmopts,
-                    "-Dorg.knopflerfish.framework.usingwrapperscript=false",
-                    "-Dorg.knopflerfish.framework.exitonshutdown=true",
-                    "-jar",
-                    m_systemBundle.getAbsolutePath()
-                };
-            //copy these two together
-            String[] totalCommandLine = new String[commands.length + frameworkOpts.length + 1];
-            totalCommandLine[ 0 ] = javaHome + "/bin/java";
-            int i = 0;
-            for( i = 0; i < frameworkOpts.length; i++ )
+        String[] commands =
             {
-                totalCommandLine[ 1 + i ] = frameworkOpts[ i ];
-            }
-            System.arraycopy( commands, 0, totalCommandLine, i + 1, commands.length );
-            Process process = runtime.exec( totalCommandLine, null, Run.WORK_DIR );
-            InputStream err = process.getErrorStream();
-            InputStream out = process.getInputStream();
-            OutputStream in = process.getOutputStream();
-            Pipe errPipe = new Pipe( err, System.err );
-            errPipe.start();
-            Pipe outPipe = new Pipe( out, System.out );
-            outPipe.start();
-            Pipe inPipe = new Pipe( in, System.in );
-            inPipe.start();
-            Run.destroyFrameworkOnExit( process, new Pipe[]{ inPipe, outPipe, errPipe } );
-            process.waitFor();
-            inPipe.stop();
-            outPipe.stop();
-            errPipe.stop();
-        }
+                "-Dorg.knopflerfish.framework.usingwrapperscript=false",
+                "-Dorg.knopflerfish.framework.exitonshutdown=true",
+                "-jar",
+                m_systemBundle.getAbsolutePath()
+            };
+        Run.execute( commands );
     }
 
     private File createPackageListFile()

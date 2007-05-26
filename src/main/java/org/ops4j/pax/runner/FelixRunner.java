@@ -19,17 +19,13 @@ package org.ops4j.pax.runner;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Writer;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.ops4j.pax.runner.pom.BundleManager;
 import org.xml.sax.SAXException;
 
@@ -174,16 +170,14 @@ public class FelixRunner
                                                   "org.xml.sax.helpers";
 
     private File m_main;
-    @SuppressWarnings("unused")
+    @SuppressWarnings( "unused" )
     private File m_osgi;
-    @SuppressWarnings("unused")
+    @SuppressWarnings( "unused" )
     private File m_framework;
-    private String m_vmopts;
 
-    public FelixRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager, String vmopts )
+    public FelixRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager )
         throws IOException, ParserConfigurationException, SAXException
     {
-        m_vmopts = vmopts;
         m_cmdLine = cmdLine;
         m_props = props;
 
@@ -292,56 +286,14 @@ public class FelixRunner
     private void runIt()
         throws IOException, InterruptedException
     {
-        Runtime runtime = Runtime.getRuntime();
-        String[] frameworkOpts = {};
-        String frameworkOptsString = System.getProperty( "FRAMEWORK_OPTS" );
-        if( frameworkOptsString != null )
-        {
-            //get framework opts
-            frameworkOpts = frameworkOptsString.split( " " );
-        }
-        String javaHome = System.getProperty( "JAVA_HOME" );
-        if( javaHome == null )
-        {
-            javaHome = System.getenv().get( "JAVA_HOME" );
-        }
-        if( javaHome == null )
-        {
-            System.err.println( "JAVA_HOME is not set." );
-        }
-        else
-        {
-            String[] commands =
-                {
-                    m_vmopts,
-                    "-Dfelix.config.properties=" + Run.WORK_DIR.toURI() + "/conf/config.properties",
-                    "-jar",
-                    m_main.getAbsolutePath(),
-                };
-            //copy these two together
-            String[] totalCommandLine = new String[commands.length + frameworkOpts.length + 1];
-            totalCommandLine[0] = javaHome + "/bin/java";
-            int i = 0;
-            for( i = 0;i < frameworkOpts.length; i++ )
+        String[] commands =
             {
-                totalCommandLine[1 + i] = frameworkOpts[i];
-            }
-            System.arraycopy( commands, 0, totalCommandLine, i + 1, commands.length );
-            Process process = runtime.exec( totalCommandLine, null );
-            InputStream err = process.getErrorStream();
-            InputStream out = process.getInputStream();
-            OutputStream in = process.getOutputStream();
-            Pipe errPipe = new Pipe( err, System.err );
-            errPipe.start();
-            Pipe outPipe = new Pipe( out, System.out );
-            outPipe.start();
-            Pipe inPipe = new Pipe( in, System.in );
-            inPipe.start();
-            Run.destroyFrameworkOnExit( process, new Pipe[]{inPipe, outPipe, errPipe} );
-            process.waitFor();
-            inPipe.stop();
-            outPipe.stop();
-            errPipe.stop();
-        }
+                "-Dfelix.config.properties=" + Run.WORK_DIR.toURI() + "/conf/config.properties",
+                "-jar",
+                m_main.getAbsolutePath(),
+            };
+        //copy these two together
+        Run.execute( commands );
     }
+
 }
