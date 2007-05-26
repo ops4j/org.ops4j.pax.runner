@@ -92,7 +92,7 @@ public class PomManager
         String filename = artifact + "_" + version + ".pom";
         filename = PropertyResolver.resolve( System.getProperties(), filename );
         File dest = new File( Run.WORK_DIR, "lib/" + filename );
-        m_downloader.download( path, dest, false );
+        m_downloader.download( path, dest, version.indexOf( "SNAPSHOT") >= 0 );
         return parseDoc( dest );
     }
 

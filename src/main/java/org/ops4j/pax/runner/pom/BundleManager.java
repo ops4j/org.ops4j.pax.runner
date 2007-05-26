@@ -63,7 +63,7 @@ public final class BundleManager
         File dest = new File( Run.WORK_DIR, "lib/" + group.replace( '.', '/' ) );
         dest = new File( dest, artifact + "_" + version + ".jar" );
 
-        m_downloader.download( url, dest, false );
+        m_downloader.download( url, dest, version.indexOf( "SNAPSHOT") >= 0 );
 
         return dest;
     }
