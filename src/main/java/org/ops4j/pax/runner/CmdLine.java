@@ -21,6 +21,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
 
 public class CmdLine
 {
@@ -142,6 +145,10 @@ public class CmdLine
         key = key.substring( 0, equalPos );
         if( "platform".equals( key ) )
         {
+            if ( "choose".equalsIgnoreCase( value.trim() ) )
+            {
+                value = choosePlatform();
+            }
             String platform = m_platforms.get( value );
             if( platform != null )
             {
@@ -149,5 +156,18 @@ public class CmdLine
             }
         }
         m_values.put( key, value );
+    }
+
+    private static String choosePlatform()
+    {
+        System.out.print( "OSGi platform ( equinox|e|eq / knopflerfish|k|kf / felix|f ) ? " );
+        BufferedReader stdin = new BufferedReader( new InputStreamReader( System.in ) );
+        try
+        {
+            return stdin.readLine();
+        } catch( IOException ignore )
+        {
+            return null;
+        }
     }
 }
