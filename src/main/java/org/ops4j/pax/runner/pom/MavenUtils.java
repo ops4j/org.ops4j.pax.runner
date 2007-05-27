@@ -85,10 +85,17 @@ public class MavenUtils
         }
         else
         {
-            Document doc = PomManager.parseDoc( dest );
-            String timestamp = getTextContentOfElement( doc, "versioning/snapshot/timestamp" );
-            String buildNumber = getTextContentOfElement( doc, "versioning/snapshot/buildNumber" );
-            return version.replace( "SNAPSHOT", timestamp ) + "-" + buildNumber;
+            try
+            {
+                Document doc = PomManager.parseDoc( dest );
+                String timestamp = getTextContentOfElement( doc, "versioning/snapshot/timestamp" );
+                String buildNumber = getTextContentOfElement( doc, "versioning/snapshot/buildNumber" );
+                return version.replace( "SNAPSHOT", timestamp ) + "-" + buildNumber;
+            }
+            catch ( IllegalArgumentException e )
+            {
+                return version;
+            }
         }
     }
 
@@ -127,6 +134,10 @@ public class MavenUtils
             {
                 currentElement = (Element) currentElement.getElementsByTagName( childName ).item( 0 );
             }
+        }
+        if ( null == currentElement )
+        {
+            throw new IllegalArgumentException( "No such element: " + path );
         }
         return currentElement.getTextContent();
     }
