@@ -23,6 +23,7 @@ import java.util.StringTokenizer;
 import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.Downloader;
 import org.ops4j.pax.runner.Run;
+import org.ops4j.pax.runner.util.XmlUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -52,7 +53,7 @@ public class MavenUtils
                 throw ioException;
             }
         }
-        Document doc = PomManager.parseDoc( dest );
+        Document doc = XmlUtils.parseDoc( dest );
         return getTextContentOfElement( doc, "versioning/versions/version[last]" );
     }
 
@@ -87,7 +88,7 @@ public class MavenUtils
         {
             try
             {
-                Document doc = PomManager.parseDoc( dest );
+                Document doc = XmlUtils.parseDoc( dest );
                 String timestamp = getTextContentOfElement( doc, "versioning/snapshot/timestamp" );
                 String buildNumber = getTextContentOfElement( doc, "versioning/snapshot/buildNumber" );
                 return version.replace( "SNAPSHOT", timestamp ) + "-" + buildNumber;

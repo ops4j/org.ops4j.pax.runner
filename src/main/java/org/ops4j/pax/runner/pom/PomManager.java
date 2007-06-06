@@ -17,26 +17,22 @@
  */
 package org.ops4j.pax.runner.pom;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.CmdLine;
 import org.ops4j.pax.runner.Downloader;
 import org.ops4j.pax.runner.PropertyResolver;
 import org.ops4j.pax.runner.Run;
 import org.ops4j.pax.runner.util.NullArgumentException;
+import org.ops4j.pax.runner.util.XmlUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 public class PomManager
@@ -93,13 +89,13 @@ public class PomManager
         filename = PropertyResolver.resolve( System.getProperties(), filename );
         File dest = new File( Run.WORK_DIR, "lib/" + filename );
         m_downloader.download( path, dest, version.indexOf( "SNAPSHOT") >= 0 );
-        return parseDoc( dest );
+        return XmlUtils.parseDoc( dest );
     }
 
     public void info( Document pom )
     {
-        Element projectName = DomUtils.getElement( pom, "name" );
-        Element description = DomUtils.getElement( pom, "description" );
+        Element projectName = XmlUtils.getElement( pom, "name" );
+        Element description = XmlUtils.getElement( pom, "description" );
         if ( projectName != null )
         {
             String textContent = projectName.getTextContent();
@@ -124,7 +120,7 @@ public class PomManager
             return new ArrayList<File>();
         }
         info( pom );
-        Element dependencies = DomUtils.getElement( pom, "dependencies" );
+        Element dependencies = XmlUtils.getElement( pom, "dependencies" );
         return getBundles( dependencies );
     }
 
@@ -162,12 +158,12 @@ public class PomManager
             short nodeType = node.getNodeType();
             if( nodeType == Node.ELEMENT_NODE )
             {
-                String scope = DomUtils.getElement( node, SCOPE_TAGS );
+                String scope = XmlUtils.getElement( node, SCOPE_TAGS );
                 if( !SCOPE_TEST.equals( scope ) && !SCOPE_COMPILE.equals( scope ) )
                 {
-                    String group = DomUtils.getElement( node, "groupId" );
-                    String artifact = DomUtils.getElement( node, "artifactId" );
-                    String version = DomUtils.getElement( node, "version" );
+                    String group = XmlUtils.getElement( node, "groupId" );
+                    String artifact = XmlUtils.getElement( node, "artifactId" );
+                    String version = XmlUtils.getElement( node, "version" );
                     BundleManager bundleManager = new BundleManager( m_downloader );
                     File dest = bundleManager.getBundle( group, artifact, version );
                     if( !"provided".equals( scope ) )
@@ -179,27 +175,6 @@ public class PomManager
         }
 
         return bundles;
-    }
-
-    static Document parseDoc( File docFile )
-        throws ParserConfigurationException,
-               SAXException,
-               IOException
-    {
-        FileInputStream fis = new FileInputStream( docFile );
-        try
-        {
-            BufferedInputStream in = new BufferedInputStream( fis );
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            InputSource source = new InputSource( in );
-            Document document = builder.parse( source );
-            return document;
-        }
-        finally
-        {
-            fis.close();
-        }
     }
 
 }

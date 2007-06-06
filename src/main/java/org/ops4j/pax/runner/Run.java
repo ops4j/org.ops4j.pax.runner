@@ -104,6 +104,7 @@ public class Run
 
         List<String> repositoryList = parseRepositories( m_cmdLine );
         String localRepository = m_cmdLine.getValue( "localRepository" );
+        System.out.println( " Local Repo: " + localRepository );
         boolean noCheckMD5 = m_cmdLine.isSet( "no-md5" );
         Downloader downloader = new Downloader( repositoryList, localRepository, noCheckMD5, true );
         List<File> bundles;

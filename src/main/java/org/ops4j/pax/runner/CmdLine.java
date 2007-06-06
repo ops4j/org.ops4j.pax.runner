@@ -1,5 +1,6 @@
 /*
  * Copyright 2006 Niclas Hedhman.
+ * Copyright 2007 Alin Dreghiciu.
  *
  * Licensed  under the  Apache License,  Version 2.0  (the "License");
  * you may not use  this file  except in  compliance with the License.
@@ -24,6 +25,11 @@ import java.util.Map;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.File;
+import org.ops4j.pax.runner.util.XmlUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Element;
 
 public class CmdLine
 {
@@ -114,12 +120,53 @@ public class CmdLine
         m_values.put( "dir", System.getProperty( "user.dir" ) + "/runner" );
         m_values.put( "group", "org.ops4j.pax.apps" );
         m_values.put( "repository", "http://repository.ops4j.org/maven2/" );
-        m_values.put( "localRepository", System.getProperty( "user.home" ) + "/.m2/repository" );
+        m_values.put( "localRepository", getLocalRepository() );
         m_values.put( "proxy-username", System.getProperty( "user.name" ) );
         m_values.put( "proxy-password", "" );
         m_values.put( "repository-username", System.getProperty( "user.name" ) );
         m_values.put( "repository-password", "" );
         m_values.put( "vmopts", "" );
+    }
+
+    private static String getLocalRepository()
+    {
+        String localRepository = getLocalRepositoryFromSettings( System.getProperty( "user.home" ) + "/.m2/settings.xml" );
+        if ( localRepository == null )
+        {
+            localRepository = getLocalRepositoryFromSettings( System.getProperty( "maven.home" ) + "/conf/settings.xml" );
+            if ( localRepository == null )
+            {
+                localRepository = getLocalRepositoryFromSettings( System.getenv( "M2_HOME" ) + "/conf/settings.xml" );
+                if ( localRepository == null )
+                {
+                    localRepository = System.getProperty( "user.home" ) + "/.m2/repository";
+                }
+            }
+        }
+        return localRepository;
+    }
+
+    private static String getLocalRepositoryFromSettings( final String settingsFileName )
+    {
+        File settingsFile = new File( settingsFileName );
+        if ( settingsFile.exists() && settingsFile.isFile() )
+        {
+            try
+            {
+                Document settingsDoc = XmlUtils.parseDoc( settingsFile );
+                Element settingsElement = XmlUtils.getElement( settingsDoc, "localRepository" );
+                if ( settingsElement != null )
+                {
+                    return settingsElement.getTextContent();
+                }
+
+            } catch( Exception e )
+            {
+                // just fallback
+                return null;
+            }
+        }
+        return null;
     }
 
     public String getValue( String key )
