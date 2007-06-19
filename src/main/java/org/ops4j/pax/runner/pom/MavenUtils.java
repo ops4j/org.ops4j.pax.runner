@@ -154,7 +154,7 @@ public class MavenUtils
         PasswordAuthentication[] creds = {};
         //File dest = new File( Run.WORK_DIR, "latest.pom" );
         //Document doc = XmlUtils.parseDoc( dest );
-        File serverXML = new File(System.getProperty( "user.home") + "/.m2", "settings2.xml");
+        File serverXML = new File(System.getProperty( "user.home") + "/.m2", "settings.xml");
         Document doc;
         try
         {
