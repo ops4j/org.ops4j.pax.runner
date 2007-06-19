@@ -19,19 +19,25 @@ package org.ops4j.pax.runner.pom;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.PasswordAuthentication;
 import java.util.StringTokenizer;
+import java.util.logging.Logger;
+
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.ops4j.pax.runner.Downloader;
 import org.ops4j.pax.runner.Run;
 import org.ops4j.pax.runner.util.XmlUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class MavenUtils
 {
 
+    static Logger log = Logger.getLogger( MavenUtils.class.getName() );
     static String getLatestVersion( String group, String artifact, Downloader downloader )
         throws IOException, ParserConfigurationException, SAXException
     {
@@ -141,5 +147,58 @@ public class MavenUtils
             throw new IllegalArgumentException( "No such element: " + path );
         }
         return currentElement.getTextContent();
+    }
+    
+    public static PasswordAuthentication[] getCredentialsForUrlFromSettingsXML() throws ParserConfigurationException, SAXException
+    {
+        PasswordAuthentication[] creds = {};
+        //File dest = new File( Run.WORK_DIR, "latest.pom" );
+        //Document doc = XmlUtils.parseDoc( dest );
+        File serverXML = new File(System.getProperty( "user.home") + "/.m2", "settings2.xml");
+        Document doc;
+        try
+        {
+            doc = XmlUtils.parseDoc( serverXML );
+        }
+        catch( IOException e )
+        {
+            log.info( "could not find " + serverXML + " for authentication information, skipping." );
+            return creds;
+        }
+        
+        NodeList serverTags = doc.getElementsByTagName( "server" );
+        //there are no repos in the pom
+        if (serverTags.getLength() == 0 )
+        {
+            return creds;
+        }
+        creds = new PasswordAuthentication[serverTags.getLength()];
+        //find the POM pointing out the URL in question
+        for(int i = 0; i < serverTags.getLength(); i++)
+        {
+            String username = "";
+            String password = "";
+            Node repo = serverTags.item( i );
+            NodeList children = repo.getChildNodes();
+            for(int k = 0; k < children.getLength(); k++ )
+            {
+                Node child = children.item( k );
+                if(child.getNodeName().equals( "username" ))
+                {
+                    username = child.getTextContent();
+                }
+                else if(child.getNodeName().equals( "password" ))
+                {
+                    password = child.getTextContent();
+                }
+                
+            }
+
+            PasswordAuthentication cred = new PasswordAuthentication(username, password.toCharArray());
+            creds[i] = cred;
+        }
+        //check 
+        
+        return creds ;
     }
 }

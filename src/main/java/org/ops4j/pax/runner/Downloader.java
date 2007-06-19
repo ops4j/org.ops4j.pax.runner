@@ -38,11 +38,16 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.ops4j.pax.runner.pom.MavenUtils;
 import org.ops4j.pax.runner.util.NullArgumentException;
+import org.xml.sax.SAXException;
 
 public class Downloader
 {
@@ -316,7 +321,7 @@ public class Downloader
             LOGGER.fine( this + " - ResponseCode: " + code );
             if( code == HttpURLConnection.HTTP_UNAUTHORIZED )
             {
-                throw new IOException( "Unauthorized request." );
+                throw new IOException( "Unauthorized request. to URL " + remote );
             }
             else if( code == HttpURLConnection.HTTP_NOT_FOUND )
             {
@@ -391,22 +396,50 @@ public class Downloader
 
     private static class UrlPartAuthenticator extends Authenticator
     {
-
+        Logger log = Logger.getLogger( UrlPartAuthenticator.class.getName() );
         protected PasswordAuthentication getPasswordAuthentication()
         {
             URL url = getRequestingURL();
-            String userinfo = url.getUserInfo();
-            int commaPos = userinfo.indexOf( ':' );
-            String user;
+            String user = "";
             String pass = "";
-            if( commaPos < 0 )
+            //try to determine credentials from the URL
+            String userinfo = url.getUserInfo();
+            if (userinfo != null )
             {
-                user = userinfo;
-            }
-            else
+                int commaPos = userinfo.indexOf( ':' );
+                if( commaPos < 0 )
+                {
+                    user = userinfo;
+                }
+                else
+                {
+                    user = userinfo.substring( 0, commaPos );
+                    pass = userinfo.substring( commaPos + 1 );
+                }
+            } else
+                //try to load credentials from the maven server.xml at the default location
             {
-                user = userinfo.substring( 0, commaPos );
-                pass = userinfo.substring( commaPos + 1 );
+                try
+                {
+                    PasswordAuthentication[] creds = MavenUtils.getCredentialsForUrlFromSettingsXML();
+                    //TODO find a way to use all potential authentications!
+                    //for now, return only the first
+                    if (creds.length > 0 )
+                    {
+                        return creds[0];
+                    }
+                }
+                catch( ParserConfigurationException e )
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                catch( SAXException e )
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+               
             }
             return new PasswordAuthentication( user, pass.toCharArray() );
         }
