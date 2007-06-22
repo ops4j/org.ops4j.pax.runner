@@ -21,11 +21,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.ops4j.pax.runner.pom.BundleManager;
 import org.xml.sax.SAXException;
 
@@ -45,10 +46,10 @@ public class EquinoxRunner
         m_cmdLine = cmdLine;
         m_bundles = bundles;
         m_props = props;
-        m_system = bundleManager.getBundle( "org.eclipse", "osgi", "3.2.1.R32x_v20060717" );
-        m_defaultBundles = new ArrayList<File>();
-        m_defaultBundles.add( bundleManager.getBundle( "org.eclipse.osgi", "util", "3.1.100.v20060601" ) );
-        m_defaultBundles.add( bundleManager.getBundle( "org.eclipse.osgi", "services", "3.1.100.v20060601" ) );
+        EquinoxConfigurator configurator = new EquinoxConfigurator();
+        configurator.load(Run.WORK_DIR);
+        m_system = configurator.getSystemBundle(bundleManager);
+        m_defaultBundles = configurator.getDefaultBundles(bundleManager);
     }
 
     public void run()
