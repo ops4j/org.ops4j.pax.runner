@@ -152,8 +152,7 @@ public class MavenUtils
     public static PasswordAuthentication[] getCredentialsForUrlFromSettingsXML() throws ParserConfigurationException, SAXException
     {
         PasswordAuthentication[] creds = {};
-        //File dest = new File( Run.WORK_DIR, "latest.pom" );
-        //Document doc = XmlUtils.parseDoc( dest );
+        //TODO: consider even the M2_HOME/conf/settings.xml
         File serverXML = new File(System.getProperty( "user.home") + "/.m2", "settings.xml");
         Document doc;
         try
