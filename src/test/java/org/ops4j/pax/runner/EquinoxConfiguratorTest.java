@@ -57,8 +57,7 @@ public class EquinoxConfiguratorTest extends TestCase
 
     public void testDefaultResource() throws IOException
     {
-        GroupArtifactVersion expected = new GroupArtifactVersion("org.eclipse",
-                "osgi", "3.2.1.R32x_v20060717");
+        GroupArtifactVersion expected = new GroupArtifactVersion("org.eclipse", "osgi", "3.2.1.R32x_v20060717");
         EquinoxConfigurator configurator = new EquinoxConfigurator();
         String fileName = "non-existient-file.txt";
         String resourceName = "/equinox.txt";
@@ -68,18 +67,31 @@ public class EquinoxConfiguratorTest extends TestCase
         Assert.assertNotNull(bundles);
         Assert.assertEquals(2, bundles.size());
 
-        GroupArtifactVersion bundle0 = new GroupArtifactVersion(
-                "org.eclipse.osgi", "util", "3.1.100.v20060601");
+        GroupArtifactVersion bundle0 = new GroupArtifactVersion("org.eclipse.osgi", "util", "3.1.100.v20060601");
         Assert.assertEquals(bundle0, bundles.get(0));
-        GroupArtifactVersion bundle1 = new GroupArtifactVersion(
-                "org.eclipse.osgi", "services", "3.1.100.v20060601");
+        GroupArtifactVersion bundle1 = new GroupArtifactVersion("org.eclipse.osgi", "services", "3.1.100.v20060601");
+        Assert.assertEquals(bundle1, bundles.get(1));
+    }
+
+    public void testLoad() throws IOException
+    {
+        GroupArtifactVersion expected = new GroupArtifactVersion("org.eclipse", "osgi", "3.2.1.R32x_v20060717");
+        EquinoxConfigurator configurator = new EquinoxConfigurator();
+        configurator.load(new File("."));
+        Assert.assertEquals(expected, configurator.getSystemBundleArtifact());
+        List<GroupArtifactVersion> bundles = configurator.getBundleArtifacts();
+        Assert.assertNotNull(bundles);
+        Assert.assertEquals(2, bundles.size());
+
+        GroupArtifactVersion bundle0 = new GroupArtifactVersion("org.eclipse.osgi", "util", "3.1.100.v20060601");
+        Assert.assertEquals(bundle0, bundles.get(0));
+        GroupArtifactVersion bundle1 = new GroupArtifactVersion("org.eclipse.osgi", "services", "3.1.100.v20060601");
         Assert.assertEquals(bundle1, bundles.get(1));
     }
 
     public void testResource() throws IOException
     {
-        GroupArtifactVersion expected = new GroupArtifactVersion("org.eclipse",
-                "osgi", "5.0");
+        GroupArtifactVersion expected = new GroupArtifactVersion("org.eclipse", "osgi", "5.0");
         EquinoxConfigurator configurator = new EquinoxConfigurator();
         String fileName = "non-existient-file.txt";
         String resourceName = "/org/ops4j/pax/runner/EquinoxConfiguratorTest-resource.txt";
@@ -89,18 +101,15 @@ public class EquinoxConfiguratorTest extends TestCase
         Assert.assertNotNull(bundles);
         Assert.assertEquals(2, bundles.size());
 
-        GroupArtifactVersion bundle0 = new GroupArtifactVersion(
-                "org.eclipse.osgi", "util", "5.0");
+        GroupArtifactVersion bundle0 = new GroupArtifactVersion("org.eclipse.osgi", "util", "5.0");
         Assert.assertEquals(bundle0, bundles.get(0));
-        GroupArtifactVersion bundle1 = new GroupArtifactVersion(
-                "org.eclipse.osgi", "services", "5.0");
+        GroupArtifactVersion bundle1 = new GroupArtifactVersion("org.eclipse.osgi", "services", "5.0");
         Assert.assertEquals(bundle1, bundles.get(1));
     }
 
     public void testFile() throws IOException
     {
-        GroupArtifactVersion expected = new GroupArtifactVersion("org.eclipse",
-                "osgi", "6.0");
+        GroupArtifactVersion expected = new GroupArtifactVersion("org.eclipse", "osgi", "6.0");
         EquinoxConfigurator configurator = new EquinoxConfigurator();
         String fileName = "src/test/resources/org/ops4j/pax/runner/EquinoxConfiguratorTest-file.txt";
         String resourceName = "/non-existient-resource.txt";
@@ -110,11 +119,26 @@ public class EquinoxConfiguratorTest extends TestCase
         Assert.assertNotNull(bundles);
         Assert.assertEquals(2, bundles.size());
 
-        GroupArtifactVersion bundle0 = new GroupArtifactVersion(
-                "org.eclipse.osgi", "util", "6.0");
+        GroupArtifactVersion bundle0 = new GroupArtifactVersion("org.eclipse.osgi", "util", "6.0");
         Assert.assertEquals(bundle0, bundles.get(0));
-        GroupArtifactVersion bundle1 = new GroupArtifactVersion(
-                "org.eclipse.osgi", "services", "6.0");
+        GroupArtifactVersion bundle1 = new GroupArtifactVersion("org.eclipse.osgi", "services", "6.0");
         Assert.assertEquals(bundle1, bundles.get(1));
     }
+
+    public void testEmptyFile() throws IOException
+    {
+        GroupArtifactVersion expected = new GroupArtifactVersion("org.eclipse", "osgi", "6.0");
+        EquinoxConfigurator configurator = new EquinoxConfigurator();
+        String fileName = "src/test/resources/org/ops4j/pax/runner/EquinoxConfiguratorTest-emptyfile.txt";
+        String resourceName = "/non-existient-resource.txt";
+        try
+        {
+            configurator.load(new File(fileName), resourceName);
+            Assert.fail("Expected exception");
+        } catch (IllegalStateException e)
+        {
+            Assert.assertTrue(true);
+        }
+    }
+
 }
