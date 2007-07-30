@@ -22,6 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -36,7 +37,7 @@ public class KnopflerfishRunner
     private CmdLine m_cmdLine;
     private Properties m_props;
     private File m_systemBundle;
-    private List<File> m_bundles;
+    private List m_bundles;
     private static final String FRAMEWORK_GROUPID = "org.knopflerfish.osgi";
     private static final String BUNDLES_GROUPID = "org.knopflerfish.bundle";
     private static final String[] SYSTEM_BUNDLE = { FRAMEWORK_GROUPID, "framework", "2.0.0" };
@@ -63,7 +64,7 @@ public class KnopflerfishRunner
             { BUNDLES_GROUPID + ".cm_desktop", "cm_desktop", "1.0.0" }
         };
 
-    public KnopflerfishRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager )
+    public KnopflerfishRunner( CmdLine cmdLine, Properties props, List bundles, BundleManager bundleManager )
         throws IOException, ParserConfigurationException, SAXException
     {
         m_cmdLine = cmdLine;
@@ -72,8 +73,9 @@ public class KnopflerfishRunner
         m_systemBundle = bundleManager.getBundle( SYSTEM_BUNDLE[ 0 ], SYSTEM_BUNDLE[ 1 ], SYSTEM_BUNDLE[ 2 ] );
         if( m_cmdLine.isSet( "gui" ) )
         {
-            for( String[] bundle : GUI_BUNDLES )
+            for( int i = 0; i < GUI_BUNDLES.length; i++ )
             {
+                String[] bundle = GUI_BUNDLES[ i ];
                 File gui = bundleManager.getBundle( bundle[ 0 ], bundle[ 1 ], bundle[ 2 ] );
                 m_bundles.add( 0, gui );
             }
@@ -168,8 +170,9 @@ public class KnopflerfishRunner
             out.write( "-Dorg.knopflerfish.consoletelnet.pwd=admin\n" );
             out.write( "-Dorg.knopflerfish.consoletelnet.port=8023\n" );
 
-            for( Map.Entry entry : m_props.entrySet() )
+            for( Iterator i = m_props.entrySet().iterator(); i.hasNext(); )
             {
+                Map.Entry entry = (Map.Entry)i.next();
                 String key = (String) entry.getKey();
                 String value = (String) entry.getValue();
                 out.write( "-D" );
@@ -181,15 +184,17 @@ public class KnopflerfishRunner
             out.write( "-Dorg.knopflerfish.gosg.jars=" + confDir.toURI() + "/lib/\n\n" );
             out.write( "-init\n" );
             out.write( "-initlevel " + bundlelevel + "\n" );
-            for( File bundle : m_bundles )
+            for( Iterator i = m_bundles.iterator(); i.hasNext(); )
             {
+                File bundle = (File)i.next();
                 out.write( "-install " );
                 out.write( bundle.toURI().toString() );
                 out.write( "\n" );
             }
             out.write( "-startlevel " + startlevel + "\n" );
-            for( File bundle : m_bundles )
+            for( Iterator i = m_bundles.iterator(); i.hasNext(); )
             {
+                File bundle = (File)i.next();
                 out.write( "-start " );
                 out.write( bundle.toURI().toString() );
                 out.write( "\n" );

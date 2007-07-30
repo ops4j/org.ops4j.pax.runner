@@ -35,6 +35,7 @@ import java.net.URLConnection;
 import java.security.KeyManagementException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -54,12 +55,12 @@ public class Downloader
 
     private static final Logger LOGGER = Logger.getLogger( Downloader.class.getName() );
 
-    private final List<String> m_repositories;
+    private final List m_repositories;
     private final String m_localRepository;
     private final boolean m_noCheckMD5;
     private boolean m_isNoCertCheckAcceptable;
 
-    public Downloader( List<String> repositories, String localRepository, boolean noCheckMD5, boolean noCertCheckAcceptable )
+    public Downloader( List repositories, String localRepository, boolean noCheckMD5, boolean noCertCheckAcceptable )
         throws IllegalArgumentException
     {
         NullArgumentException.validateNotNull( repositories, "repositories" );
@@ -87,8 +88,9 @@ public class Downloader
         File localRepo = new File( m_localRepository );
         File localCache = new File( localRepo, path );
 
-        for( String repository : m_repositories )
+        for( Iterator i = m_repositories.iterator(); i.hasNext(); )
         {
+            String repository = (String)i.next();
             File md5File = getMD5File( localCache );
 
             String fullPath = repository + path;
@@ -212,8 +214,9 @@ public class Downloader
     private String convertToHexString( byte[] data )
     {
         StringBuffer buf = new StringBuffer();
-        for( byte b : data )
+        for( int i = 0; i < data.length; i++ )
         {
+            byte b = data[i];
             int d = b & 0xFF;
             String s = Integer.toHexString( d );
             if( d < 16 )

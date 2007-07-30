@@ -63,7 +63,7 @@ public class EquinoxConfiguratorTest extends TestCase
         String resourceName = "/equinox.txt";
         configurator.load(new File(fileName), resourceName);
         Assert.assertEquals(expected, configurator.getSystemBundleArtifact());
-        List<GroupArtifactVersion> bundles = configurator.getBundleArtifacts();
+        List bundles = configurator.getBundleArtifacts();
         Assert.assertNotNull(bundles);
         Assert.assertEquals(2, bundles.size());
 
@@ -79,7 +79,7 @@ public class EquinoxConfiguratorTest extends TestCase
         EquinoxConfigurator configurator = new EquinoxConfigurator();
         configurator.load(new File("."));
         Assert.assertEquals(expected, configurator.getSystemBundleArtifact());
-        List<GroupArtifactVersion> bundles = configurator.getBundleArtifacts();
+        List bundles = configurator.getBundleArtifacts();
         Assert.assertNotNull(bundles);
         Assert.assertEquals(2, bundles.size());
 
@@ -97,7 +97,7 @@ public class EquinoxConfiguratorTest extends TestCase
         String resourceName = "/org/ops4j/pax/runner/EquinoxConfiguratorTest-resource.txt";
         configurator.load(new File(fileName), resourceName);
         Assert.assertEquals(expected, configurator.getSystemBundleArtifact());
-        List<GroupArtifactVersion> bundles = configurator.getBundleArtifacts();
+        List bundles = configurator.getBundleArtifacts();
         Assert.assertNotNull(bundles);
         Assert.assertEquals(2, bundles.size());
 
@@ -115,7 +115,7 @@ public class EquinoxConfiguratorTest extends TestCase
         String resourceName = "/non-existient-resource.txt";
         configurator.load(new File(fileName), resourceName);
         Assert.assertEquals(expected, configurator.getSystemBundleArtifact());
-        List<GroupArtifactVersion> bundles = configurator.getBundleArtifacts();
+        List bundles = configurator.getBundleArtifacts();
         Assert.assertNotNull(bundles);
         Assert.assertEquals(2, bundles.size());
 

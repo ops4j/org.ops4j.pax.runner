@@ -33,18 +33,18 @@ import org.w3c.dom.Element;
 public class CmdLine
 {
 
-    private Map<String, String> m_values;
-    private Map<String, String> m_platforms;
+    private Map m_values;
+    private Map m_platforms;
 
     public CmdLine( String[] args )
     {
-        Map<String, String> shortcuts = new HashMap<String, String>();
+        Map shortcuts = new HashMap();
         shortcuts.put( "p", "platform" );
         shortcuts.put( "r", "repository" );
         shortcuts.put( "l", "localRepository" );
         shortcuts.put( "s", "startlevel" );
         shortcuts.put( "b", "bundlelevel" );
-        m_platforms = new HashMap<String, String>();
+        m_platforms = new HashMap();
         m_platforms.put( "e", "equinox" );
         m_platforms.put( "eq", "equinox" );
         m_platforms.put( "f", "felix" );
@@ -52,7 +52,7 @@ public class CmdLine
         m_platforms.put( "kf", "knopflerfish" );
         String[] nonOpted = new String[3];
         int count = 0;
-        m_values = new HashMap<String, String>();
+        m_values = new HashMap();
         populateDefaults();
         for( int i = 0; i < args.length; i++ )
         {
@@ -170,7 +170,7 @@ public class CmdLine
 
     public String getValue( String key )
     {
-        return m_values.get( key );
+        return (String)m_values.get( key );
     }
 
     public boolean isSet( String key )
@@ -195,7 +195,7 @@ public class CmdLine
             {
                 value = choosePlatform();
             }
-            String platform = m_platforms.get( value );
+            String platform = (String)m_platforms.get( value );
             if( platform != null )
             {
                 value = platform;

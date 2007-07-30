@@ -102,12 +102,12 @@ public class Run
         };
         Authenticator.setDefault( auth );
 
-        List<String> repositoryList = parseRepositories( m_cmdLine );
+        List repositoryList = parseRepositories( m_cmdLine );
         String localRepository = m_cmdLine.getValue( "localRepository" );
         System.out.println( " Local Repo: " + localRepository );
         boolean noCheckMD5 = m_cmdLine.isSet( "no-md5" );
         Downloader downloader = new Downloader( repositoryList, localRepository, noCheckMD5, true );
-        List<File> bundles;
+        List bundles;
         Properties props;
         String urlValue = m_cmdLine.getValue( "url" );
         boolean useProvisioning = urlValue != null && urlValue.endsWith( ".zip" );
@@ -162,9 +162,9 @@ public class Run
         {
             m_vmopts = value.trim().split( " " );
             System.out.print( m_vmopts.length == 1 ? "1 VM Option : " : m_vmopts.length + " VM Options : " );
-            for( String opt : m_vmopts )
+            for( int i = 0; i < m_vmopts.length; i++ )
             {
-                System.out.print( " " + opt );
+                System.out.print( " " + m_vmopts[i] );
             }
             System.out.println();
         }
@@ -206,21 +206,21 @@ public class Run
         System.exit( 1 );
     }
 
-    private static List<String> parseRepositories( CmdLine commandLine )
+    private static List parseRepositories( CmdLine commandLine )
         throws IllegalArgumentException
     {
         NullArgumentException.validateNotNull( commandLine, "commandLine" );
 
         String repo = commandLine.getValue( "repository" );
         String[] repositories = repo.split( "," );
-        List<String> repositoryList = new ArrayList<String>();
-        for( String repository : repositories )
+        List repositoryList = new ArrayList();
+        for( int i = 0; i < repositories.length; i++ )
         {
-            if( !repository.endsWith( "/" ) )
+            if( !repositories[i].endsWith( "/" ) )
             {
-                repository = repository + "/";
+                repositories[i] = repositories[i] + "/";
             }
-            repositoryList.add( repository );
+            repositoryList.add( repositories[i] );
         }
 
         // TODO: remove this patch when Felix 0.9.0-incubator is released...
@@ -269,7 +269,7 @@ public class Run
         String javaHome = System.getProperty( "JAVA_HOME" );
         if( javaHome == null )
         {
-            javaHome = System.getenv().get( "JAVA_HOME" );
+            javaHome = (String)System.getenv().get( "JAVA_HOME" );
         }
         if( javaHome == null )
         {

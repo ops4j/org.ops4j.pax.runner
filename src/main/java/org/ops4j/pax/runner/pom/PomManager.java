@@ -109,7 +109,7 @@ public class PomManager
         }
     }
 
-    public List<File> getBundles( CmdLine cmdLine )
+    public List getBundles( CmdLine cmdLine )
         throws IOException,
                ParserConfigurationException,
                SAXException
@@ -117,7 +117,7 @@ public class PomManager
         Document pom = retrievePom( cmdLine );
         if( pom == null )
         {
-            return new ArrayList<File>();
+            return new ArrayList();
         }
         info( pom );
         Element dependencies = XmlUtils.getElement( pom, "dependencies" );
@@ -138,7 +138,7 @@ public class PomManager
         return DomUtils.parseProperties( pom );
     }
 
-    private final List<File> getBundles( Element dependencies )
+    private final List getBundles( Element dependencies )
         throws IOException,
                ParserConfigurationException,
                SAXException
@@ -146,10 +146,10 @@ public class PomManager
         if( dependencies == null )
         {
             System.err.println( "WARNING: [dependencies] argument is null => no bundles will be deployed." );
-            return new ArrayList<File>();
+            return new ArrayList();
         }
 
-        List<File> bundles = new ArrayList<File>();
+        List bundles = new ArrayList();
         NodeList nl = dependencies.getElementsByTagName( "dependency" );
         for( int i = 0; i < nl.getLength(); i++ )
         {

@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.net.MalformedURLException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -36,11 +37,11 @@ public class EquinoxRunner
 
     private Properties m_props;
     private CmdLine m_cmdLine;
-    private List<File> m_bundles;
-    private List<File> m_defaultBundles;
+    private List m_bundles;
+    private List m_defaultBundles;
     private File m_system;
 
-    public EquinoxRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager )
+    public EquinoxRunner( CmdLine cmdLine, Properties props, List bundles, BundleManager bundleManager )
         throws IOException, ParserConfigurationException, SAXException
     {
         m_cmdLine = cmdLine;
@@ -93,8 +94,9 @@ public class EquinoxRunner
             writeBundles( m_bundles, out, bundlelevel, false );
             out.write( '\n' );
             out.write( '\n' );
-            for( Map.Entry entry : m_props.entrySet() )
+            for( Iterator i = m_props.entrySet().iterator(); i.hasNext(); )
             {
+                Map.Entry entry = (Map.Entry)i.next();
                 String key = (String) entry.getKey();
                 String value = (String) entry.getValue();
                 out.write( key );
@@ -112,11 +114,12 @@ public class EquinoxRunner
         }
     }
 
-    private void writeBundles( List<File> bundles, Writer out, String bundlelevel, boolean first )
+    private void writeBundles( List bundles, Writer out, String bundlelevel, boolean first )
         throws IOException
     {
-        for( File bundle : bundles )
+        for( Iterator i = bundles.iterator(); i.hasNext(); )
         {
+            File bundle = (File)i.next();
             if( !first )
             {
                 out.write( ",\\\n" );

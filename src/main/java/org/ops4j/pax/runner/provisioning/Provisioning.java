@@ -41,7 +41,6 @@ import org.ops4j.pax.runner.StreamUtils;
 public class Provisioning
 {
 
-    @SuppressWarnings("unused")
     private Downloader m_downloader;
 
     public Provisioning( Downloader downloader )
@@ -49,7 +48,7 @@ public class Provisioning
         m_downloader = downloader;
     }
 
-    public List<File> getBundles( CmdLine m_cmdLine )
+    public List getBundles( CmdLine m_cmdLine )
         throws IOException
     {
         // Requires refactoring.
@@ -62,14 +61,13 @@ public class Provisioning
         return null;
     }
 
-    @SuppressWarnings("unused")
-    private void extractEntries( ZipFile zipFile, Dictionary<String,Object> provisioningDictionary )
+    private void extractEntries( ZipFile zipFile, Dictionary provisioningDictionary )
         throws IOException
     {
-        Enumeration<? extends ZipEntry> entries = zipFile.entries();
+        Enumeration entries = zipFile.entries();
         while( entries.hasMoreElements() )
         {
-            ZipEntry entry = entries.nextElement();
+            ZipEntry entry = (ZipEntry)entries.nextElement();
             byte[] extraField = entry.getExtra();
             if( extraField == null )
             {

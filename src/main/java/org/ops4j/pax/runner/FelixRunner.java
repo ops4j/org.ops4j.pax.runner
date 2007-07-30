@@ -22,10 +22,13 @@ import java.io.IOException;
 import java.io.Writer;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.ops4j.pax.runner.pom.BundleManager;
 import org.xml.sax.SAXException;
 
@@ -43,8 +46,8 @@ public class FelixRunner
 
     private Properties m_props;
     private CmdLine m_cmdLine;
-    private List<File> m_sysBundles;
-    private List<File> m_appBundles;
+    private List m_sysBundles;
+    private List m_appBundles;
     private static final String SYSTEM_PACKAGES = "javax.accessibility, " +
                                                   "javax.activity, " +
                                                   "javax.crypto, " +
@@ -170,19 +173,17 @@ public class FelixRunner
                                                   "org.xml.sax.helpers";
 
     private File m_main;
-    @SuppressWarnings( "unused" )
     private File m_osgi;
-    @SuppressWarnings( "unused" )
     private File m_framework;
 
-    public FelixRunner( CmdLine cmdLine, Properties props, List<File> bundles, BundleManager bundleManager )
+    public FelixRunner( CmdLine cmdLine, Properties props, List bundles, BundleManager bundleManager )
         throws IOException, ParserConfigurationException, SAXException
     {
         m_cmdLine = cmdLine;
         m_props = props;
 
         m_appBundles = bundles;
-        m_sysBundles = new ArrayList<File>();
+        m_sysBundles = new ArrayList();
         File system1 = bundleManager.getBundle( GROUPID, "org.apache.felix.shell", VERSION );
         m_sysBundles.add( system1 );
         File system2 = bundleManager.getBundle( GROUPID, "org.apache.felix.shell.tui", VERSION );
@@ -253,8 +254,9 @@ public class FelixRunner
             writeBundleList( out, "felix.auto.start.1", m_sysBundles );
             writeBundleList( out, "felix.auto.start." + bundlelevel, m_appBundles );
 
-            for( Map.Entry entry : m_props.entrySet() )
+            for( Iterator i = m_props.entrySet().iterator(); i.hasNext(); )
             {
+                Map.Entry entry = (Map.Entry)i.next();
                 String key = (String) entry.getKey();
                 String value = (String) entry.getValue();
                 FileUtils.writeProperty( out, key, value );
@@ -266,13 +268,14 @@ public class FelixRunner
         }
     }
 
-    private static void writeBundleList( Writer out, String startLevel, List<File> bundles )
+    private static void writeBundleList( Writer out, String startLevel, List bundles )
         throws IOException
     {
         boolean first = true;
         StringBuffer buf = new StringBuffer();
-        for( File bundle : bundles )
+        for( Iterator i = bundles.iterator(); i.hasNext(); )
         {
+            File bundle = (File)i.next();
             if( !first )
             {
                 buf.append( " \\\n    " );

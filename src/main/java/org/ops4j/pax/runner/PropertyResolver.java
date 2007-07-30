@@ -59,7 +59,7 @@ public final class PropertyResolver
             return value;
         }
 
-        Stack<String> stack = new Stack<String>();
+        Stack stack = new Stack();
         StringTokenizer st = new StringTokenizer( value, "${}", true );
 
         while( st.hasMoreTokens() )
@@ -67,8 +67,8 @@ public final class PropertyResolver
             String token = st.nextToken();
             if( "}".equals( token ) )
             {
-                String name = stack.pop();
-                String open = stack.pop();
+                String name = (String)stack.pop();
+                String open = (String)stack.pop();
                 if( "${".equals( open ) )
                 {
                     String propValue = System.getProperty( name );
@@ -116,11 +116,11 @@ public final class PropertyResolver
      * @param stack the stack
      * @param value the value
      */
-    private static void push( Stack<String> stack, String value )
+    private static void push( Stack stack, String value )
     {
         if( stack.size() > 0 )
         {
-            String data = stack.pop();
+            String data = (String)stack.pop();
             if( "${".equals( data ) )
             {
                 stack.push( data );

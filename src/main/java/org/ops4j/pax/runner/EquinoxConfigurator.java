@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -43,7 +44,7 @@ public class EquinoxConfigurator
 
     private GroupArtifactVersion m_systemArtifact;
 
-    private List<GroupArtifactVersion> m_defaultArtifacts;
+    private List m_defaultArtifacts;
 
     /**
      * Loads artifacts' data for use with equinox.
@@ -122,7 +123,7 @@ public class EquinoxConfigurator
         BufferedReader reader = null;
         try
         {
-            List<GroupArtifactVersion> bundles = new ArrayList<GroupArtifactVersion>();
+            List bundles = new ArrayList();
             reader = new BufferedReader(new InputStreamReader(in));
             while (true)
             {
@@ -147,7 +148,7 @@ public class EquinoxConfigurator
             }
             if (bundles.size() > 0)
             {
-                m_systemArtifact = bundles.remove(0);
+                m_systemArtifact = (GroupArtifactVersion)bundles.remove(0);
                 m_defaultArtifacts = bundles;
                 return true;
             }
@@ -198,7 +199,7 @@ public class EquinoxConfigurator
 
     }
 
-    public List<GroupArtifactVersion> getBundleArtifacts()
+    public List getBundleArtifacts()
     {
         return m_defaultArtifacts;
     }
@@ -211,13 +212,14 @@ public class EquinoxConfigurator
                 m_systemArtifact.artifactId, m_systemArtifact.version);
     }
 
-    public List<File> getDefaultBundles(BundleManager bundleManager)
+    public List getDefaultBundles(BundleManager bundleManager)
             throws IllegalArgumentException, IOException,
             ParserConfigurationException, SAXException
     {
-        ArrayList<File> result = new ArrayList<File>();
-        for (GroupArtifactVersion artifact : m_defaultArtifacts)
+        ArrayList result = new ArrayList();
+        for (Iterator i = m_defaultArtifacts.iterator(); i.hasNext();)
         {
+            GroupArtifactVersion artifact = (GroupArtifactVersion)i.next();
             result.add(bundleManager.getBundle(artifact.groupId,
                     artifact.artifactId, artifact.version));
         }
@@ -249,7 +251,6 @@ class GroupArtifactVersion
         return groupId + ":" + artifactId + ":" + version;
     }
 
-    @Override
     public boolean equals(Object o)
     {
         if (o instanceof GroupArtifactVersion)
@@ -259,7 +260,6 @@ class GroupArtifactVersion
         return false;
     }
 
-    @Override
     public int hashCode()
     {
         return toString().hashCode();
