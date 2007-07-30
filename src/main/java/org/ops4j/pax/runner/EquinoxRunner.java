@@ -143,6 +143,12 @@ public class EquinoxRunner
                 "-install",
                 Run.WORK_DIR.getAbsolutePath()
             };
+
+        if( m_cmdLine.isSet( "no-console" ) )
+        {
+            commands[2] = "";
+        }
+
         Run.execute( commands );
     }
 }
