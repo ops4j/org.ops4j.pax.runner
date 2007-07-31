@@ -135,7 +135,14 @@ public class CmdLine
             localRepository = getLocalRepositoryFromSettings( System.getProperty( "maven.home" ) + "/conf/settings.xml" );
             if ( localRepository == null )
             {
-                localRepository = getLocalRepositoryFromSettings( System.getenv( "M2_HOME" ) + "/conf/settings.xml" );
+                try
+                {
+                    localRepository = getLocalRepositoryFromSettings( System.getenv( "M2_HOME" ) + "/conf/settings.xml" );
+                }
+                catch ( Error e)
+                {
+                    // ignore error - probably running on Java 1.4.x
+                }
                 if ( localRepository == null )
                 {
                     localRepository = System.getProperty( "user.home" ) + "/.m2/repository";
@@ -156,7 +163,7 @@ public class CmdLine
                 Element settingsElement = XmlUtils.getElement( settingsDoc, "localRepository" );
                 if ( settingsElement != null )
                 {
-                    return settingsElement.getTextContent();
+                    return XmlUtils.getTextContent( settingsElement );
                 }
 
             } catch( Exception e )

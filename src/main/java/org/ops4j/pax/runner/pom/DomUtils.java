@@ -48,7 +48,7 @@ public class DomUtils
             if( node.getNodeType() == Node.ELEMENT_NODE )
             {
                 Element element = (Element) node;
-                props.put( element.getTagName(), element.getTextContent() );
+                props.put( element.getTagName(), XmlUtils.getTextContent( element ) );
             }
         }
         return props;

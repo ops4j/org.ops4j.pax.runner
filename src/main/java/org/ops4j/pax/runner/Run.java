@@ -269,7 +269,15 @@ public class Run
         String javaHome = System.getProperty( "JAVA_HOME" );
         if( javaHome == null )
         {
-            javaHome = (String)System.getenv().get( "JAVA_HOME" );
+            try
+            {
+                javaHome = (String)System.getenv( "JAVA_HOME" );
+            }
+            catch( Error e )
+            {
+                // fallback when running under Java 1.4.x
+                javaHome = System.getProperty( "java.home" );
+            }
         }
         if( javaHome == null )
         {

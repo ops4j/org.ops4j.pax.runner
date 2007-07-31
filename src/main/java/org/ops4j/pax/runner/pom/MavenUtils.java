@@ -45,7 +45,7 @@ public class MavenUtils
         File dest = new File( Run.WORK_DIR, "latest.pom" );
         try
         {
-            downloader.copyFileFromLocalRepository( metaLocation.replace( ".xml", "-local.xml" ), dest, true );
+            downloader.copyFileFromLocalRepository( metaLocation.replaceAll( "\\.xml", "-local.xml" ), dest, true );
         } catch( IOException e )
         {
             try
@@ -71,7 +71,7 @@ public class MavenUtils
         File dest = new File( Run.WORK_DIR, "latest.pom" );
         try
         {
-            downloader.copyFileFromLocalRepository( metaLocation.replace( ".xml", "-local.xml" ), dest, true );
+            downloader.copyFileFromLocalRepository( metaLocation.replaceAll( "\\.xml", "-local.xml" ), dest, true );
             isLocalMeta = true;
         } catch( IOException e )
         {
@@ -97,7 +97,7 @@ public class MavenUtils
                 Document doc = XmlUtils.parseDoc( dest );
                 String timestamp = getTextContentOfElement( doc, "versioning/snapshot/timestamp" );
                 String buildNumber = getTextContentOfElement( doc, "versioning/snapshot/buildNumber" );
-                return version.replace( "SNAPSHOT", timestamp ) + "-" + buildNumber;
+                return version.replaceAll( "SNAPSHOT", timestamp ) + "-" + buildNumber;
             }
             catch ( IllegalArgumentException e )
             {
@@ -146,7 +146,7 @@ public class MavenUtils
         {
             throw new IllegalArgumentException( "No such element: " + path );
         }
-        return currentElement.getTextContent();
+        return XmlUtils.getTextContent( currentElement );
     }
     
     public static PasswordAuthentication[] getCredentialsForUrlFromSettingsXML() throws ParserConfigurationException, SAXException
@@ -184,11 +184,11 @@ public class MavenUtils
                 Node child = children.item( k );
                 if(child.getNodeName().equals( "username" ))
                 {
-                    username = child.getTextContent();
+                    username = XmlUtils.getTextContent( child );
                 }
                 else if(child.getNodeName().equals( "password" ))
                 {
-                    password = child.getTextContent();
+                    password = XmlUtils.getTextContent( child );
                 }
                 
             }

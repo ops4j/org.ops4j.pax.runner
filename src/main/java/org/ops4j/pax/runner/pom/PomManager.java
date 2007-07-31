@@ -98,13 +98,13 @@ public class PomManager
         Element description = XmlUtils.getElement( pom, "description" );
         if ( projectName != null )
         {
-            String textContent = projectName.getTextContent();
+            String textContent = XmlUtils.getTextContent( projectName );
             System.out.println( "       Name: " + textContent );
         }
         
         if ( description != null )
         {
-            String textContent = description.getTextContent();
+            String textContent = XmlUtils.getTextContent( description );
             System.out.println( "Description: " + textContent );
         }
     }

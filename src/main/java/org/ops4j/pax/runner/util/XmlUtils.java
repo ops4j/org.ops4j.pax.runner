@@ -18,20 +18,22 @@
  */
 package org.ops4j.pax.runner.util;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.FileInputStream;
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.StringTokenizer;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.DocumentBuilderFactory;
+
 import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 public class XmlUtils
 {
@@ -71,7 +73,7 @@ public class XmlUtils
             if( elementName.equals( n.getNodeName() ) )
             {
                 Element elem = (Element) n;
-                return elem.getTextContent();
+                return getTextContent( elem );
             }
         }
         return null;
@@ -87,5 +89,54 @@ public class XmlUtils
             current = (Element) current.getElementsByTagName( token ).item( 0 );
         }
         return current;
+    }
+
+    public static String getTextContent( Node node )
+    {
+        switch( node.getNodeType() ) {
+        case Node.ELEMENT_NODE:
+        case Node.ATTRIBUTE_NODE:
+        case Node.ENTITY_NODE:
+        case Node.ENTITY_REFERENCE_NODE:
+        case Node.DOCUMENT_FRAGMENT_NODE:
+            return mergeTextContent( node.getChildNodes() );
+        case Node.TEXT_NODE:
+        case Node.CDATA_SECTION_NODE:
+        case Node.COMMENT_NODE:
+        case Node.PROCESSING_INSTRUCTION_NODE:
+            return node.getNodeValue();
+        case Node.DOCUMENT_NODE:
+        case Node.DOCUMENT_TYPE_NODE:
+        case Node.NOTATION_NODE:
+        default:
+            return null;
+        }
+    }
+
+    private static String mergeTextContent( NodeList nodes )
+    {
+        StringBuffer buf = new StringBuffer();
+        for( int i = 0; i < nodes.getLength(); i++ )
+        {
+            Node n = nodes.item( i );
+            final String text;
+
+            switch( n.getNodeType() ) {
+            case Node.COMMENT_NODE:
+            case Node.PROCESSING_INSTRUCTION_NODE:
+                // ignore comments when merging
+                text = null;
+                break;
+            default:
+                text = getTextContent( n );
+                break;
+            }
+
+            if( text != null )
+            {
+                buf.append( text );
+            }
+        }
+        return buf.toString();
     }
 }
