@@ -26,6 +26,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
 import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -402,11 +403,15 @@ public class Downloader
         Logger log = Logger.getLogger( UrlPartAuthenticator.class.getName() );
         protected PasswordAuthentication getPasswordAuthentication()
         {
-            URL url = getRequestingURL();
+            URL url = tryGetRequestingURL();
             String user = "";
             String pass = "";
             //try to determine credentials from the URL
-            String userinfo = url.getUserInfo();
+            String userinfo = null;
+            if (url != null )
+            {
+                userinfo = url.getUserInfo();
+            }
             if (userinfo != null )
             {
                 int commaPos = userinfo.indexOf( ':' );
@@ -445,6 +450,35 @@ public class Downloader
                
             }
             return new PasswordAuthentication( user, pass.toCharArray() );
+        }
+
+        {init();}
+
+        Method getRequestingURLMethod;
+
+        protected void init()
+        {
+            try
+            {
+                getRequestingURLMethod = Authenticator.class.getDeclaredMethod( "getRequestingURL", null );
+            }
+            catch ( Exception e )
+            {
+                // must be on a non-Java5 runtime
+            }
+        }
+
+        protected URL tryGetRequestingURL()
+        {
+            try
+            {
+                // use indirect access to Java5 specific method 
+                return (URL)getRequestingURLMethod.invoke( this, null );
+            }
+            catch( Exception e )
+            {
+                return null;
+            }
         }
     }
 }

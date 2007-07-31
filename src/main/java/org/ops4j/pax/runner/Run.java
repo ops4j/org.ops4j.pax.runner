@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 import java.util.ArrayList;
@@ -85,19 +86,57 @@ public class Run
         {
             protected PasswordAuthentication getPasswordAuthentication()
             {
-                if( getRequestorType() == Authenticator.RequestorType.PROXY )
+                if( tryGetRequestorType() == PROXY )
                 {
                     String userName = m_cmdLine.getValue( "proxy-username" );
                     char[] password = m_cmdLine.getValue( "proxy-password" ).toCharArray();
                     return new PasswordAuthentication( userName, password );
                 }
-                if( getRequestorType() == Authenticator.RequestorType.SERVER )
+                if( tryGetRequestorType() == SERVER )
                 {
                     String userName = m_cmdLine.getValue( "repository-username" );
                     char[] password = m_cmdLine.getValue( "repository-password" ).toCharArray();
                     return new PasswordAuthentication( userName, password );
                 }
                 return null;
+            }
+
+            {init();}
+
+            Class requestorTypeClass;
+            Method getRequestorTypeMethod;
+
+            Object PROXY;
+            Object SERVER;
+
+            protected void init()
+            {
+                try
+                {
+                    requestorTypeClass = Class.forName( "java.net.Authenticator$RequestorType" );
+                    getRequestorTypeMethod = Authenticator.class.getDeclaredMethod( "getRequestorType", null );
+                    PROXY = requestorTypeClass.getDeclaredField( "PROXY" ).get( null );
+                    SERVER = requestorTypeClass.getDeclaredField( "SERVER" ).get( null );
+                }
+                catch ( Exception e )
+                {
+                    // must be on a non-Java5 runtime
+                    PROXY = "PROXY";
+                    SERVER = "SERVER";
+                }
+            }
+
+            protected Object tryGetRequestorType()
+            {
+                try
+                {
+                    // use indirect access to Java5 specific method
+                    return getRequestorTypeMethod.invoke( this, null );
+                }
+                catch( Exception e )
+                {
+                    return "SERVER";
+                }
             }
         };
         Authenticator.setDefault( auth );
