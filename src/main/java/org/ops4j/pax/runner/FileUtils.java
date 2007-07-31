@@ -44,7 +44,8 @@ public class FileUtils
     {
         out.write( key );
         out.write( '=' );
-        out.write( value );
+        // fix backquotes before writing to file
+        out.write( value.replace( '\\', '/' ) );
         out.write( "\n\n" );
     }
 

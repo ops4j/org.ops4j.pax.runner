@@ -176,10 +176,7 @@ public class KnopflerfishRunner
                 String key = (String) entry.getKey();
                 String value = (String) entry.getValue();
                 out.write( "-D" );
-                out.write( key );
-                out.write( "=" );
-                out.write( value );
-                out.write( "\n" );
+                FileUtils.writeProperty( out, key, value );
             }
             out.write( "-Dorg.knopflerfish.gosg.jars=" + confDir.toURI() + "/lib/\n\n" );
             out.write( "-init\n" );

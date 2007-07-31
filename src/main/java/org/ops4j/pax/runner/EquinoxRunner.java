@@ -99,10 +99,7 @@ public class EquinoxRunner
                 Map.Entry entry = (Map.Entry)i.next();
                 String key = (String) entry.getKey();
                 String value = (String) entry.getValue();
-                out.write( key );
-                out.write( "=" );
-                out.write( value );
-                out.write( "\n\n" );
+                FileUtils.writeProperty( out, key, value );
             }
             out.flush();
         } finally
