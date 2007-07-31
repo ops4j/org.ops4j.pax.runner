@@ -70,7 +70,7 @@ public class EquinoxConfigurator
             in = new FileInputStream(file);
             if (load(in))
             {
-                System.out.println("Equinox configured using "
+                System.out.println(" System Cfg: "
                         + file.getAbsolutePath());
                 return;
             }
@@ -85,8 +85,8 @@ public class EquinoxConfigurator
         {
             closeQuietly(in);
         }
-        System.out.println("Cannot configure Equinox using "
-                + file.getAbsolutePath());
+//        System.out.println("Cannot configure Equinox using "
+//                + file.getAbsolutePath());
         try
         {
             in = getClass().getResourceAsStream(resourceName);
@@ -94,7 +94,7 @@ public class EquinoxConfigurator
             {
                 if (load(in))
                 {
-                    System.out.println("Equinox configured using resource "
+                    System.out.println(" System Cfg: "
                             + resourceName);
                     return;
                 }

@@ -192,18 +192,18 @@ public class Run
     private static void handleVmOptions()
     {
         String value = m_cmdLine.getValue( "vmopts" );
+        System.out.print( " VM Options: " );
         if( "".equals( value ) )
         {
             m_vmopts = new String[0];
-            System.out.println( "No VM Options" );
+            System.out.println( "default" );
         }
         else
         {
             m_vmopts = value.trim().split( " " );
-            System.out.print( m_vmopts.length == 1 ? "1 VM Option : " : m_vmopts.length + " VM Options : " );
             for( int i = 0; i < m_vmopts.length; i++ )
             {
-                System.out.print( " " + m_vmopts[i] );
+                System.out.print( "[" + m_vmopts[i] + "] " );
             }
             System.out.println();
         }
