@@ -358,7 +358,7 @@ public class Run
             buffer.append( " " );
         }
         LOGGER.fine( "Starting Framework: \n    " + buffer.toString() );
-        Process process = runtime.exec( totalCommandLine, null );
+        Process process = runtime.exec( totalCommandLine, null, WORK_DIR );
         InputStream err = process.getErrorStream();
         InputStream out = process.getInputStream();
         OutputStream in = process.getOutputStream();

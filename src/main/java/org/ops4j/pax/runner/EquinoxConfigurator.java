@@ -220,7 +220,7 @@ public class EquinoxConfigurator
         return result;
     }
 
-    private static class GroupArtifactVersion
+    protected static class GroupArtifactVersion
     {
         private String groupId;
         private String artifactId;

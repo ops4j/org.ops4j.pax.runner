@@ -24,6 +24,8 @@ import java.util.List;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
+import org.ops4j.pax.runner.EquinoxConfigurator.GroupArtifactVersion;
+
 public class EquinoxConfiguratorTest extends TestCase
 {
     public void testRegexp()

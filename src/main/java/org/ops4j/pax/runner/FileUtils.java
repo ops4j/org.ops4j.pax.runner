@@ -46,7 +46,7 @@ public class FileUtils
         out.write( key );
         out.write( '=' );
         // fix backquotes before writing to file
-        out.write( value.replace( '\\', '/' ) );
+        out.write( value.replaceAll( "\\\\([^\n\r])", "/$1" ) );
         out.write( "\n\n" );
     }
 
