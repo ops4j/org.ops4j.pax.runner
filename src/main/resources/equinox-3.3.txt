@@ -5,8 +5,8 @@
 #  groupId:artifactId:version
 
 #first entry is system bundle
-org.eclipse.equinox:org.eclipse.osgi:3.3.0.v20070208
+org.eclipse:osgi:3.3.0-v20070530
 
 #other bundles
-org.eclipse.equinox:org.eclipse.osgi.util:3.1.100.v20060918
-org.eclipse.equinox:org.eclipse.osgi.services:3.1.100.v20060918
+org.eclipse.osgi:util:3.1.200-v20070605
+org.eclipse.osgi:services:3.1.200-v20070605

@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -78,10 +79,10 @@ public class FileUtils
         return result;
     }
 
-    public static void writeTextContent( File md5File, String text )
+    public static void writeTextContent( File outputFile, String text )
         throws IOException
     {
-        FileOutputStream fos = new FileOutputStream( md5File );
+        FileOutputStream fos = new FileOutputStream( outputFile );
         try
         {
             OutputStreamWriter osw = new OutputStreamWriter( fos );
@@ -94,5 +95,51 @@ public class FileUtils
             fos.close();
         }
 
+    }
+
+    public static String getSystemPackages( String frameworkPackages, CmdLine cmdLine )
+        throws IOException
+    {
+        String systemPackages = createPackageList();
+        String userDefined = cmdLine.getValue( "systempackages" );
+        if( frameworkPackages.length() != 0 )
+        {
+            frameworkPackages  = ", " + frameworkPackages ;
+        }
+        if( userDefined.length() != 0 )
+        {
+            userDefined = ", " + userDefined;
+        }
+        return systemPackages + frameworkPackages + userDefined;
+    }
+
+    static String createPackageList()
+        throws IOException
+    {
+        String javaVersion = System.getProperty( "java.version" );
+        javaVersion = javaVersion.substring( 0, 3 );
+        ClassLoader cl = FileUtils.class.getClassLoader();
+        String resource = "packages" + javaVersion + ".txt";
+        InputStream in = cl.getResourceAsStream( resource );
+        if( in == null )
+        {
+            throw new IllegalStateException( "Resource not found in jar: " + resource );
+        }
+        InputStreamReader isr = new InputStreamReader( in );
+        BufferedReader reader = new BufferedReader( isr );
+        StringBuffer buf = new StringBuffer();
+        String line = reader.readLine();
+        boolean first = true;
+        while( line != null )
+        {
+            if( !first )
+            {
+                buf.append( ", " );
+            }
+            first = false;
+            buf.append( line );
+            line = reader.readLine();
+        }
+        return buf.toString();
     }
 }

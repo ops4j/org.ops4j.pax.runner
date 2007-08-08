@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.net.Authenticator;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
@@ -40,13 +41,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.ops4j.pax.runner.pom.MavenUtils;
 import org.ops4j.pax.runner.util.NullArgumentException;
 import org.xml.sax.SAXException;
@@ -54,12 +53,21 @@ import org.xml.sax.SAXException;
 public class Downloader
 {
 
-    private static final Logger LOGGER = Logger.getLogger( Downloader.class.getName() );
+    private static final Logger LOGGER;
 
     private final List m_repositories;
+
     private final String m_localRepository;
+
     private final boolean m_noCheckMD5;
+
     private boolean m_isNoCertCheckAcceptable;
+
+    static
+    {
+        LOGGER = Logger.getLogger( Downloader.class.getName() );
+        LOGGER.setParent( Logger.global );
+    }
 
     public Downloader( List repositories, String localRepository, boolean noCheckMD5, boolean noCertCheckAcceptable )
         throws IllegalArgumentException
@@ -91,7 +99,7 @@ public class Downloader
 
         for( Iterator i = m_repositories.iterator(); i.hasNext(); )
         {
-            String repository = (String)i.next();
+            String repository = (String) i.next();
             File md5File = getMD5File( localCache );
 
             String fullPath = repository + path;
@@ -108,29 +116,28 @@ public class Downloader
 
             String sourceString = url.toExternalForm();
             int count = 3;
-            while( count > 0 && ( !localCache.exists() || !verifyMD5( localCache, md5File ) ) )
+            while( count > 0 )
             {
                 count--;
 
-                try
+                boolean isMD5ok = verifyMD5( localCache, md5File );
+                boolean localExists = localCache.getAbsoluteFile().exists();
+                if( !( localExists && isMD5ok ) )
                 {
-                    downloadFile( localCache, url );
-                }
-                catch( FileNotFoundException e )
-                {
-                    LOGGER.fine( "Artifact from url [" + url + "] is not found." );
-                    continue;
-                }
-
-                URL md5source = new URL( getMd5Filename( sourceString ) );
-                try
-                {
-                    downloadFile( md5File, md5source );
-                }
-                catch( FileNotFoundException e )
-                {
-                    LOGGER.fine( "MD5 not present on server. Creating locally: " + md5File.getName() );
-                    createMD5Locally( localCache, md5File );
+                    boolean found = downloadFile( localCache, url, repository );
+                    if( ! found )
+                    {
+                        LOGGER.fine( "Artifact from url [" + url + "] is not found." );
+                    }
+                    if( !isMD5ok )
+                    {
+                        URL md5source = new URL( getMd5Filename( sourceString ) );
+                        if( ! downloadFile( md5File, md5source, repository ) )
+                        {
+                            LOGGER.fine( "MD5 not present on server. Creating locally: " + md5File.getName() );
+                            createMD5Locally( localCache, md5File );
+                        }
+                    }
                 }
             }
         }
@@ -158,8 +165,15 @@ public class Downloader
     private void createMD5Locally( File localCache, File md5File )
         throws IOException
     {
-        String md5 = computeMD5( localCache );
-        FileUtils.writeTextContent( md5File, md5 );
+        try
+        {
+            String md5 = computeMD5( localCache );
+            FileUtils.writeTextContent( md5File, md5 );
+        } catch( IOException e )
+        {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     private boolean verifyMD5( File fileToCheck, File md5File )
@@ -202,6 +216,10 @@ public class Downloader
             // MD5 is always present
             e.printStackTrace();
             return null;
+        } catch( IOException e )
+        {
+            e.printStackTrace();
+            throw e;
         }
         finally
         {
@@ -217,7 +235,7 @@ public class Downloader
         StringBuffer buf = new StringBuffer();
         for( int i = 0; i < data.length; i++ )
         {
-            byte b = data[i];
+            byte b = data[ i ];
             int d = b & 0xFF;
             String s = Integer.toHexString( d );
             if( d < 16 )
@@ -243,7 +261,7 @@ public class Downloader
         return md5filename;
     }
 
-    private void downloadFile( File localCache, URL source )
+    private boolean downloadFile( File localCache, URL source, String repository )
         throws IOException
     {
         InputStream in = null;
@@ -256,7 +274,7 @@ public class Downloader
             // TODO: Should we handle this with boolean return instead?
             if( in == null )
             {
-                throw new FileNotFoundException( "File specified from [" + source + "] is not found." );
+                return false;
             }
 
             File parentDir = localCache.getParentFile();
@@ -267,16 +285,20 @@ public class Downloader
             {
                 in = new BufferedInputStream( in );
             }
-            StreamUtils.streamCopy( in, out, "Downloading " + composeFileName( source ) );
+            String sourceName = composeFileName( source );
+            StreamUtils.streamCopy( in, out, "[" + repository + "] Downloading " + sourceName );
             out.flush();
+            LOGGER.fine( "Downloaded " + sourceName + " from " + repository + " to " + localCache );
         }
         catch( NoSuchAlgorithmException e )
         {
             LOGGER.logp( Level.SEVERE, Downloader.class.getName(), "downloadFile", e.getMessage(), e );
+            return false;
         }
         catch( KeyManagementException e )
         {
             LOGGER.logp( Level.SEVERE, Downloader.class.getName(), "downloadFile", e.getMessage(), e );
+            return false;
         }
         finally
         {
@@ -289,6 +311,7 @@ public class Downloader
                 out.close();
             }
         }
+        return true;
     }
 
     private InputStream openUrlStream( URL remote )
@@ -318,11 +341,18 @@ public class Downloader
                 LOGGER.fine( this + " - SSL socket factory is set." );
             }
         }
-        conn.connect();
+        try
+        {
+            conn.connect();
+        } catch( ConnectException e )
+        {
+            LOGGER.fine( "Unable to connect to: " + remote );
+            throw e;
+        }
         if( conn instanceof HttpURLConnection )
         {
             int code = ( (HttpURLConnection) conn ).getResponseCode();
-            LOGGER.fine( this + " - ResponseCode: " + code );
+            LOGGER.fine( remote + " - ResponseCode: " + code );
             if( code == HttpURLConnection.HTTP_UNAUTHORIZED )
             {
                 throw new IOException( "Unauthorized request. to URL " + remote );
@@ -398,9 +428,17 @@ public class Downloader
         return path;
     }
 
+    public String toString()
+    {
+
+        return "Downloader" + m_repositories;
+    }
+
     private static class UrlPartAuthenticator extends Authenticator
     {
+
         Logger log = Logger.getLogger( UrlPartAuthenticator.class.getName() );
+
         protected PasswordAuthentication getPasswordAuthentication()
         {
             URL url = tryGetRequestingURL();
@@ -408,11 +446,11 @@ public class Downloader
             String pass = "";
             //try to determine credentials from the URL
             String userinfo = null;
-            if (url != null )
+            if( url != null )
             {
                 userinfo = url.getUserInfo();
             }
-            if (userinfo != null )
+            if( userinfo != null )
             {
                 int commaPos = userinfo.indexOf( ':' );
                 if( commaPos < 0 )
@@ -424,17 +462,18 @@ public class Downloader
                     user = userinfo.substring( 0, commaPos );
                     pass = userinfo.substring( commaPos + 1 );
                 }
-            } else
-                //try to load credentials from the maven server.xml at the default location
+            }
+            else
+            //try to load credentials from the maven server.xml at the default location
             {
                 try
                 {
                     PasswordAuthentication[] creds = MavenUtils.getCredentialsForUrlFromSettingsXML();
                     //TODO find a way to use all potential authentications!
                     //for now, return only the first
-                    if (creds.length > 0 )
+                    if( creds.length > 0 )
                     {
-                        return creds[0];
+                        return creds[ 0 ];
                     }
                 }
                 catch( ParserConfigurationException e )
@@ -447,12 +486,14 @@ public class Downloader
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-               
+
             }
             return new PasswordAuthentication( user, pass.toCharArray() );
         }
 
-        {init();}
+        {
+            init();
+        }
 
         Method getRequestingURLMethod;
 
@@ -462,7 +503,7 @@ public class Downloader
             {
                 getRequestingURLMethod = Authenticator.class.getDeclaredMethod( "getRequestingURL", null );
             }
-            catch ( Exception e )
+            catch( Exception e )
             {
                 // must be on a non-Java5 runtime
             }
@@ -473,7 +514,7 @@ public class Downloader
             try
             {
                 // use indirect access to Java5 specific method 
-                return (URL)getRequestingURLMethod.invoke( this, null );
+                return (URL) getRequestingURLMethod.invoke( this, null );
             }
             catch( Exception e )
             {

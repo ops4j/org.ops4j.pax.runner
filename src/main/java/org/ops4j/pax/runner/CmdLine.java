@@ -32,7 +32,8 @@ import org.w3c.dom.Element;
 
 public class CmdLine
 {
-
+    // NOTE: This class can not use the JDK Logger, as the Logger is not setup until the CmdLine has been parsed.
+    
     private Map m_values;
     private Map m_platforms;
 
@@ -44,6 +45,8 @@ public class CmdLine
         shortcuts.put( "l", "localRepository" );
         shortcuts.put( "s", "startlevel" );
         shortcuts.put( "b", "bundlelevel" );
+        shortcuts.put( "cp", "classpath" );
+        shortcuts.put( "sys", "systempackages" );
         m_platforms = new HashMap();
         m_platforms.put( "e", "equinox" );
         m_platforms.put( "eq", "equinox" );
@@ -118,13 +121,15 @@ public class CmdLine
         m_values.put( "bundlelevel", "5" );
         m_values.put( "dir", System.getProperty( "user.dir" ) + "/runner" );
         m_values.put( "group", "org.ops4j.pax.apps" );
-        m_values.put( "repository", "http://repository.ops4j.org/maven2/" );
+        m_values.put( "repository", "http://repository.ops4j.org/maven2/,http://repo1.maven.org/maven2,http://repo1.maven.org/eclipse" );
         m_values.put( "localRepository", getLocalRepository() );
         m_values.put( "proxy-username", System.getProperty( "user.name" ) );
         m_values.put( "proxy-password", "" );
         m_values.put( "repository-username", System.getProperty( "user.name" ) );
         m_values.put( "repository-password", "" );
         m_values.put( "vmopts", "" );
+        m_values.put( "classpath", "" );
+        m_values.put( "systempackages", "" );
     }
 
     private static String getLocalRepository()

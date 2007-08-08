@@ -21,42 +21,48 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.net.MalformedURLException;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
+import java.util.ArrayList;
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.ops4j.pax.runner.pom.BundleManager;
 import org.xml.sax.SAXException;
 
 public class EquinoxRunner
     implements Runnable
 {
-
+    private static final String[] ARRAY_TYPE = new String[0];
+    
     private Properties m_props;
     private CmdLine m_cmdLine;
     private List m_bundles;
     private List m_defaultBundles;
     private File m_system;
+    private String m_classpath;
+    private String[] systemProperties;
 
-    public EquinoxRunner( CmdLine cmdLine, Properties props, List bundles, BundleManager bundleManager )
+    public EquinoxRunner( CmdLine cmdLine, Properties props, List bundles, BundleManager bundleManager,
+                          String classpath )
         throws IOException, ParserConfigurationException, SAXException
     {
+        m_classpath = classpath;
         m_cmdLine = cmdLine;
         m_bundles = bundles;
         m_props = props;
         EquinoxConfigurator configurator = new EquinoxConfigurator();
-        configurator.load(Run.WORK_DIR);
-        m_system = configurator.getSystemBundle(bundleManager);
-        m_defaultBundles = configurator.getDefaultBundles(bundleManager);
+        configurator.load( Run.WORK_DIR );
+        m_system = configurator.getSystemBundle( bundleManager );
+        m_defaultBundles = configurator.getDefaultBundles( bundleManager );
     }
 
     public void run()
     {
         try
         {
+            createSystemProperties();
             createConfigIniFile();
             runIt();
         } catch( MalformedURLException e )
@@ -89,6 +95,7 @@ public class EquinoxRunner
             }
             out.write( "\neclipse.ignoreApp=true\n" );
             out.write( "\nosgi.startLevel=" + startlevel + "\n" );
+
             out.write( "\nosgi.bundles=\\\n" );
             writeBundles( m_defaultBundles, out, "1", true );
             writeBundles( m_bundles, out, bundlelevel, false );
@@ -96,7 +103,7 @@ public class EquinoxRunner
             out.write( '\n' );
             for( Iterator i = m_props.entrySet().iterator(); i.hasNext(); )
             {
-                Map.Entry entry = (Map.Entry)i.next();
+                Map.Entry entry = (Map.Entry) i.next();
                 String key = (String) entry.getKey();
                 String value = (String) entry.getValue();
                 FileUtils.writeProperty( out, key, value );
@@ -111,12 +118,21 @@ public class EquinoxRunner
         }
     }
 
+    private void createSystemProperties()
+        throws IOException
+    {
+        systemProperties = new String[2];
+        systemProperties[ 0 ] = "-Dorg.osgi.framework.bootdelegation=java.*";
+        String systemPackages = FileUtils.getSystemPackages( "", m_cmdLine );
+        systemProperties[ 1 ] = "-Dorg.osgi.framework.system.packages=" + systemPackages;
+    }
+
     private void writeBundles( List bundles, Writer out, String bundlelevel, boolean first )
         throws IOException
     {
         for( Iterator i = bundles.iterator(); i.hasNext(); )
         {
-            File bundle = (File)i.next();
+            File bundle = (File) i.next();
             if( !first )
             {
                 out.write( ",\\\n" );
@@ -132,23 +148,19 @@ public class EquinoxRunner
     private void runIt()
         throws IOException, InterruptedException
     {
-        //framework specific args
-        String[] commands =
-            {
-                "-jar",
-                m_system.toString(),
-                "-console",
-                "-configuration",
-                Run.WORK_DIR + "/configuration",
-                "-install",
-                Run.WORK_DIR.getAbsolutePath()
-            };
-
-        if( m_cmdLine.isSet( "no-console" ) )
+        List commands = new ArrayList();
+        commands.addAll( Arrays.asList( systemProperties ) );
+        commands.add( "-cp" );
+        commands.add( m_system.toString() + File.pathSeparator + m_classpath );
+        commands.add( "org.eclipse.core.runtime.adaptor.EclipseStarter" );
+        if( !m_cmdLine.isSet( "no-console" ) )
         {
-            commands[2] = "";
+            commands.add( "-console" );
         }
-
-        Run.execute( commands );
+        commands.add( "-configuration" );
+        commands.add( Run.WORK_DIR + "/configuration" );
+        commands.add( "-install" );
+        commands.add( Run.WORK_DIR.getAbsolutePath() );
+        Run.execute( (String[]) commands.toArray( ARRAY_TYPE ) );
     }
 }

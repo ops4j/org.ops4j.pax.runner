@@ -26,9 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.ops4j.pax.runner.pom.BundleManager;
 import org.xml.sax.SAXException;
 
@@ -38,7 +36,7 @@ public class FelixRunner
 
     private static final String GROUPID = "org.apache.felix";
 
-    private static final String VERSION = "0.9.0-incubator-SNAPSHOT";
+    private static final String VERSION = "1.0.0";
 
     // have to escape \ for pattern compiler and again for javac
     private static final String ONE_BACKSLASH_REGEXP = "\\\\";
@@ -48,141 +46,26 @@ public class FelixRunner
     private CmdLine m_cmdLine;
     private List m_sysBundles;
     private List m_appBundles;
-    private static final String SYSTEM_PACKAGES = "javax.accessibility, " +
-                                                  "javax.activity, " +
-                                                  "javax.crypto, " +
-                                                  "javax.crypto.interfaces, " +
-                                                  "javax.crypto.spec, " +
-                                                  "javax.imageio, " +
-                                                  "javax.imageio.event, " +
-                                                  "javax.imageio.metadata, " +
-                                                  "javax.imageio.plugins.bmp, " +
-                                                  "javax.imageio.plugins.jpeg, " +
-                                                  "javax.imageio.spi, " +
-                                                  "javax.imageio.stream, " +
-                                                  "javax.management, " +
-                                                  "javax.management.loading, " +
-                                                  "javax.management.modelmbean, " +
-                                                  "javax.management.monitor, " +
-                                                  "javax.management.openmbean, " +
-                                                  "javax.management.relation, " +
-                                                  "javax.management.remote, " +
-                                                  "javax.management.remote.rmi, " +
-                                                  "javax.management.timer, " +
-                                                  "javax.naming, " +
-                                                  "javax.naming.directory, " +
-                                                  "javax.naming.event, " +
-                                                  "javax.naming.ldap, " +
-                                                  "javax.naming.spi, " +
-                                                  "javax.net, " +
-                                                  "javax.net.ssl, " +
-                                                  "javax.print, " +
-                                                  "javax.print.attribute, " +
-                                                  "javax.print.attribute.standard, " +
-                                                  "javax.print.event, " +
-                                                  "javax.rmi, " +
-                                                  "javax.rmi.CORBA, " +
-                                                  "javax.rmi.ssl, " +
-                                                  "javax.security.auth, " +
-                                                  "javax.security.auth.callback, " +
-                                                  "javax.security.auth.kerberos, " +
-                                                  "javax.security.auth.login, " +
-                                                  "javax.security.auth.spi, " +
-                                                  "javax.security.auth.x500, " +
-                                                  "javax.security.cert, " +
-                                                  "javax.security.sasl, " +
-                                                  "javax.sound.midi, " +
-                                                  "javax.sound.midi.spi, " +
-                                                  "javax.sound.sampled, " +
-                                                  "javax.sound.sampled.spi, " +
-                                                  "javax.sql, " +
-                                                  "javax.sql.rowset, " +
-                                                  "javax.sql.rowset.serial, " +
-                                                  "javax.sql.rowset.spi, " +
-                                                  "javax.swing, " +
-                                                  "javax.swing.border, " +
-                                                  "javax.swing.colorchooser, " +
-                                                  "javax.swing.event, " +
-                                                  "javax.swing.filechooser, " +
-                                                  "javax.swing.plaf, " +
-                                                  "javax.swing.plaf.basic, " +
-                                                  "javax.swing.plaf.metal, " +
-                                                  "javax.swing.plaf.multi, " +
-                                                  "javax.swing.plaf.synth, " +
-                                                  "javax.swing.table, " +
-                                                  "javax.swing.text, " +
-                                                  "javax.swing.text.html, " +
-                                                  "javax.swing.text.html.parser, " +
-                                                  "javax.swing.text.rtf, " +
-                                                  "javax.swing.tree, " +
-                                                  "javax.swing.undo, " +
-                                                  "javax.transaction, " +
-                                                  "javax.transaction.xa, " +
-                                                  "javax.xml, " +
-                                                  "javax.xml.datatype, " +
-                                                  "javax.xml.namespace, " +
-                                                  "javax.xml.parsers, " +
-                                                  "javax.xml.transform, " +
-                                                  "javax.xml.transform.dom, " +
-                                                  "javax.xml.transform.sax, " +
-                                                  "javax.xml.transform.stream, " +
-                                                  "javax.xml.validation, " +
-                                                  "javax.xml.xpath, " +
-                                                  "org.ietf.jgss, " +
-                                                  "org.omg.CORBA, " +
-                                                  "org.omg.CORBA_2_3, " +
-                                                  "org.omg.CORBA_2_3.portable, " +
-                                                  "org.omg.CORBA.DynAnyPackage, " +
-                                                  "org.omg.CORBA.ORBPackage, " +
-                                                  "org.omg.CORBA.portable, " +
-                                                  "org.omg.CORBA.TypeCodePackage, " +
-                                                  "org.omg.CosNaming, " +
-                                                  "org.omg.CosNaming.NamingContextExtPackage, " +
-                                                  "org.omg.CosNaming.NamingContextPackage, " +
-                                                  "org.omg.Dynamic, " +
-                                                  "org.omg.DynamicAny, " +
-                                                  "org.omg.DynamicAny.DynAnyFactoryPackage, " +
-                                                  "org.omg.DynamicAny.DynAnyPackage, " +
-                                                  "org.omg.IOP, " +
-                                                  "org.omg.IOP.CodecFactoryPackage, " +
-                                                  "org.omg.IOP.CodecPackage, " +
-                                                  "org.omg.Messaging, " +
-                                                  "org.omg.PortableInterceptor, " +
-                                                  "org.omg.PortableInterceptor.ORBInitInfoPackage, " +
-                                                  "org.omg.PortableServer, " +
-                                                  "org.omg.PortableServer.CurrentPackage, " +
-                                                  "org.omg.PortableServer.POAManagerPackage, " +
-                                                  "org.omg.PortableServer.POAPackage, " +
-                                                  "org.omg.PortableServer.portable, " +
-                                                  "org.omg.PortableServer.ServantLocatorPackage, " +
-                                                  "org.omg.SendingContext, " +
-                                                  "org.omg.stub.java.rmi, " +
-                                                  "org.osgi.framework; version=1.3.0, " +
-                                                  "org.osgi.service.condpermadmin; version=1.0.0, " +
-                                                  "org.osgi.service.packageadmin; version=1.2.0, " +
-                                                  "org.osgi.service.permissionadmin; version=1.2.0, " +
-                                                  "org.osgi.service.startlevel; version=1.0.0, " +
-                                                  "org.osgi.service.url; version=1.0.0, " +
-                                                  "org.osgi.util.tracker; version=1.3.1, " +
-                                                  "org.w3c.dom, " +
-                                                  "org.w3c.dom.bootstrap, " +
-                                                  "org.w3c.dom.events, " +
-                                                  "org.w3c.dom.ls, " +
-                                                  "org.xml.sax, " +
-                                                  "org.xml.sax.ext, " +
-                                                  "org.xml.sax.helpers";
+    private String m_classpath;
 
     private File m_main;
-    private File m_osgi;
-    private File m_framework;
 
-    public FelixRunner( CmdLine cmdLine, Properties props, List bundles, BundleManager bundleManager )
+    private static final String FRAMEWORK_PACKAGES = "org.osgi.framework; version=1.3.0, " +
+                                                     "org.osgi.service.condpermadmin; version=1.0.0, " +
+                                                     "org.osgi.service.packageadmin; version=1.2.0, " +
+                                                     "org.osgi.service.permissionadmin; version=1.2.0, " +
+                                                     "org.osgi.service.startlevel; version=1.0.0, " +
+                                                     "org.osgi.service.url; version=1.0.0, " +
+                                                     "org.osgi.util.tracker; version=1.3.1, ";
+
+    public FelixRunner( CmdLine cmdLine, Properties props, List bundles, BundleManager bundleManager, String classpath )
         throws IOException, ParserConfigurationException, SAXException
     {
         m_cmdLine = cmdLine;
         m_props = props;
 
         m_appBundles = bundles;
+        m_classpath = classpath;
         m_sysBundles = new ArrayList();
         File system1 = bundleManager.getBundle( GROUPID, "org.apache.felix.shell", VERSION );
         m_sysBundles.add( system1 );
@@ -202,8 +85,6 @@ public class FelixRunner
         File system7 = bundleManager.getBundle( GROUPID, "javax.servlet", VERSION );
         m_sysBundles.add( system7 );
         m_main = bundleManager.getBundle( GROUPID, "org.apache.felix.main", VERSION );
-        m_framework = bundleManager.getBundle( GROUPID, "org.apache.felix.framework", VERSION );
-        m_osgi = bundleManager.getBundle( GROUPID, "org.osgi.core", VERSION );
     }
 
     public void run()
@@ -236,7 +117,8 @@ public class FelixRunner
         Writer out = FileUtils.openPropertyFile( file );
         try
         {
-            FileUtils.writeProperty( out, "org.osgi.framework.system.packages", SYSTEM_PACKAGES );
+            String packages = FileUtils.getSystemPackages( FRAMEWORK_PACKAGES, m_cmdLine );
+            FileUtils.writeProperty( out, "org.osgi.framework.system.packages", packages );
             String profile = m_cmdLine.getValue( "profile" );
             if( profile != null )
             {
@@ -256,7 +138,7 @@ public class FelixRunner
 
             for( Iterator i = m_props.entrySet().iterator(); i.hasNext(); )
             {
-                Map.Entry entry = (Map.Entry)i.next();
+                Map.Entry entry = (Map.Entry) i.next();
                 String key = (String) entry.getKey();
                 String value = (String) entry.getValue();
                 FileUtils.writeProperty( out, key, value );
@@ -275,7 +157,7 @@ public class FelixRunner
         StringBuffer buf = new StringBuffer();
         for( Iterator i = bundles.iterator(); i.hasNext(); )
         {
-            File bundle = (File)i.next();
+            File bundle = (File) i.next();
             if( !first )
             {
                 buf.append( " \\\n    " );
@@ -292,8 +174,9 @@ public class FelixRunner
         String[] commands =
             {
                 "-Dfelix.config.properties=" + Run.WORK_DIR.toURI() + "/conf/config.properties",
-                "-jar",
-                m_main.getAbsolutePath(),
+                "-cp",
+                m_main.getAbsolutePath() + File.pathSeparator + m_classpath,
+                "org.apache.felix.framework.Main"
             };
         //copy these two together
         Run.execute( commands );

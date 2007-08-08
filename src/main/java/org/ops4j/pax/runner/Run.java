@@ -27,6 +27,9 @@ import java.net.PasswordAuthentication;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.pom.BundleManager;
 import org.ops4j.pax.runner.pom.PomManager;
@@ -39,6 +42,14 @@ import org.xml.sax.SAXException;
  */
 public class Run
 {
+
+    private static final Logger LOGGER;
+
+    static
+    {
+        LOGGER = Logger.getLogger( Run.class.getName() );
+        LOGGER.setParent( Logger.global );
+    }
 
     public static File WORK_DIR;
 
@@ -80,6 +91,11 @@ public class Run
         String workDir = m_cmdLine.getValue( "dir" );
         WORK_DIR = new File( workDir );
         WORK_DIR.mkdirs();
+        File logDir = new File( WORK_DIR, "logs/" );
+        logDir.mkdirs();
+        FileHandler fileHandler = new FileHandler( logDir.getAbsolutePath() + "/runner-%g.xml", 100000, 3, false );
+        Logger.global.addHandler( fileHandler );
+        Logger.global.setLevel( Level.ALL );
         System.out.println( "Working Dir: " + WORK_DIR );
 
         Authenticator auth = new Authenticator()
@@ -101,7 +117,9 @@ public class Run
                 return null;
             }
 
-            {init();}
+            {
+                init();
+            }
 
             Class requestorTypeClass;
             Method getRequestorTypeMethod;
@@ -118,7 +136,7 @@ public class Run
                     PROXY = requestorTypeClass.getDeclaredField( "PROXY" ).get( null );
                     SERVER = requestorTypeClass.getDeclaredField( "SERVER" ).get( null );
                 }
-                catch ( Exception e )
+                catch( Exception e )
                 {
                     // must be on a non-Java5 runtime
                     PROXY = "PROXY";
@@ -165,20 +183,26 @@ public class Run
         BundleManager bundleManager = new BundleManager( downloader );
         String platform = m_cmdLine.getValue( "platform" ).toLowerCase();
         System.out.println( "\n   Platform: " + platform );
+        String classpath = m_cmdLine.getValue( "classpath" );
+        if( classpath.length() > 0 )
+        {
+            System.out.println( "\n  Classpath: " + classpath );
+            System.out.println();
+        }
         handleVmOptions();
         if( "equinox".equals( platform ) )
         {
-            Runnable wrapper = new EquinoxRunner( m_cmdLine, props, bundles, bundleManager );
+            Runnable wrapper = new EquinoxRunner( m_cmdLine, props, bundles, bundleManager, classpath );
             wrapper.run();
         }
         else if( "felix".equals( platform ) )
         {
-            Runnable wrapper = new FelixRunner( m_cmdLine, props, bundles, bundleManager );
+            Runnable wrapper = new FelixRunner( m_cmdLine, props, bundles, bundleManager, classpath );
             wrapper.run();
         }
         else if( "knopflerfish".equals( platform ) )
         {
-            Runnable wrapper = new KnopflerfishRunner( m_cmdLine, props, bundles, bundleManager );
+            Runnable wrapper = new KnopflerfishRunner( m_cmdLine, props, bundles, bundleManager, classpath );
             wrapper.run();
         }
         else
@@ -203,7 +227,7 @@ public class Run
             m_vmopts = value.trim().split( " " );
             for( int i = 0; i < m_vmopts.length; i++ )
             {
-                System.out.print( "[" + m_vmopts[i] + "] " );
+                System.out.print( "[" + m_vmopts[ i ] + "] " );
             }
             System.out.println();
         }
@@ -240,6 +264,8 @@ public class Run
         System.err.println( "--repository-username=<pwd> -  Username for the repository server." );
         System.err.println( "--repository-password=<pwd> -  Username for the repository server." );
         System.err.println( "--vmopts=<options>          -  Additional JVM options." );
+        System.err.println( "--classpath=<cp>            -  The JVM classpath to be set when launching framework." );
+        System.err.println( "--systempackages=<packages> -  The packages to be exported by the system bundle." );
         System.err.println();
 
         System.exit( 1 );
@@ -255,19 +281,12 @@ public class Run
         List repositoryList = new ArrayList();
         for( int i = 0; i < repositories.length; i++ )
         {
-            if( !repositories[i].endsWith( "/" ) )
+            if( !repositories[ i ].endsWith( "/" ) )
             {
-                repositories[i] = repositories[i] + "/";
+                repositories[ i ] = repositories[ i ] + "/";
             }
-            repositoryList.add( repositories[i] );
+            repositoryList.add( repositories[ i ] );
         }
-
-        // TODO: remove this patch when Felix 0.9.0-incubator is released...
-        if( "felix".equals( m_cmdLine.getValue( "platform" ).toLowerCase() ) )
-        {
-            repositoryList.add( "http://people.apache.org/repo/m2-snapshot-repository/" );
-        }
-
         return repositoryList;
     }
 
@@ -310,7 +329,7 @@ public class Run
         {
             try
             {
-                javaHome = (String)System.getenv( "JAVA_HOME" );
+                javaHome = (String) System.getenv( "JAVA_HOME" );
             }
             catch( Error e )
             {
@@ -332,6 +351,13 @@ public class Run
         pos = pos + m_vmopts.length;
         System.arraycopy( commands, 0, totalCommandLine, pos, commands.length );
         Runtime runtime = Runtime.getRuntime();
+        StringBuffer buffer = new StringBuffer();
+        for( int i = 0; i < totalCommandLine.length; i++ )
+        {
+            buffer.append( totalCommandLine[ i ] );
+            buffer.append( " " );
+        }
+        LOGGER.fine( "Starting Framework: \n    " + buffer.toString() );
         Process process = runtime.exec( totalCommandLine, null );
         InputStream err = process.getErrorStream();
         InputStream out = process.getInputStream();

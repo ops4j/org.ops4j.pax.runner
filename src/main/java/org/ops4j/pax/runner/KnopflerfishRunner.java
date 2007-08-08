@@ -22,10 +22,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
+import java.io.BufferedOutputStream;
+import java.io.DataOutputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.StringTokenizer;
 import javax.xml.parsers.ParserConfigurationException;
 import org.ops4j.pax.runner.pom.BundleManager;
 import org.xml.sax.SAXException;
@@ -38,6 +41,7 @@ public class KnopflerfishRunner
     private Properties m_props;
     private File m_systemBundle;
     private List m_bundles;
+    private String m_classpath;
     private static final String FRAMEWORK_GROUPID = "org.knopflerfish.osgi";
     private static final String BUNDLES_GROUPID = "org.knopflerfish.bundle";
     private static final String[] SYSTEM_BUNDLE = { FRAMEWORK_GROUPID, "framework", "2.0.0" };
@@ -64,12 +68,14 @@ public class KnopflerfishRunner
             { BUNDLES_GROUPID + ".cm_desktop", "cm_desktop", "1.0.0" }
         };
 
-    public KnopflerfishRunner( CmdLine cmdLine, Properties props, List bundles, BundleManager bundleManager )
+    public KnopflerfishRunner( CmdLine cmdLine, Properties props, List bundles, BundleManager bundleManager,
+                               String classpath )
         throws IOException, ParserConfigurationException, SAXException
     {
         m_cmdLine = cmdLine;
         m_props = props;
         m_bundles = bundles;
+        m_classpath = classpath;
         m_systemBundle = bundleManager.getBundle( SYSTEM_BUNDLE[ 0 ], SYSTEM_BUNDLE[ 1 ], SYSTEM_BUNDLE[ 2 ] );
         if( m_cmdLine.isSet( "gui" ) )
         {
@@ -172,7 +178,7 @@ public class KnopflerfishRunner
 
             for( Iterator i = m_props.entrySet().iterator(); i.hasNext(); )
             {
-                Map.Entry entry = (Map.Entry)i.next();
+                Map.Entry entry = (Map.Entry) i.next();
                 String key = (String) entry.getKey();
                 String value = (String) entry.getValue();
                 out.write( "-D" );
@@ -183,7 +189,7 @@ public class KnopflerfishRunner
             out.write( "-initlevel " + bundlelevel + "\n" );
             for( Iterator i = m_bundles.iterator(); i.hasNext(); )
             {
-                File bundle = (File)i.next();
+                File bundle = (File) i.next();
                 out.write( "-install " );
                 out.write( bundle.toURI().toString() );
                 out.write( "\n" );
@@ -191,7 +197,7 @@ public class KnopflerfishRunner
             out.write( "-startlevel " + startlevel + "\n" );
             for( Iterator i = m_bundles.iterator(); i.hasNext(); )
             {
-                File bundle = (File)i.next();
+                File bundle = (File) i.next();
                 out.write( "-start " );
                 out.write( bundle.toURI().toString() );
                 out.write( "\n" );
@@ -206,12 +212,17 @@ public class KnopflerfishRunner
     private void runIt()
         throws IOException, InterruptedException
     {
+        File confDir = Run.WORK_DIR;
+        File file = new File( confDir, "init.xargs" );
         String[] commands =
             {
                 "-Dorg.knopflerfish.framework.usingwrapperscript=false",
                 "-Dorg.knopflerfish.framework.exitonshutdown=true",
-                "-jar",
-                m_systemBundle.getAbsolutePath()
+                "-cp",
+                m_systemBundle.getAbsolutePath() + File.pathSeparator + m_classpath,
+                "org.knopflerfish.framework.Main",
+                "-xargs",
+                file.getAbsoluteFile().toURL().toExternalForm()
             };
         Run.execute( commands );
     }
@@ -222,7 +233,7 @@ public class KnopflerfishRunner
         String javaVersion = System.getProperty( "java.version" );
         javaVersion = javaVersion.substring( 0, 3 );
         ClassLoader cl = getClass().getClassLoader();
-        String resource = "org/knopflerfish/packages" + javaVersion + ".txt";
+        String resource = "packages" + javaVersion + ".txt";
         InputStream in = cl.getResourceAsStream( resource );
         if( in == null )
         {
@@ -233,6 +244,15 @@ public class KnopflerfishRunner
         try
         {
             Downloader.copyStream( in, out, false );
+            String userDefined = m_cmdLine.getValue( "systempackages" );
+            StringTokenizer st = new StringTokenizer( userDefined, ",", false );
+            while( st.hasMoreTokens() )
+            {
+                String pack = st.nextToken();
+                out.write( pack.getBytes() );
+                out.write( 10 );
+            }
+            out.flush();
         } finally
         {
             out.close();
