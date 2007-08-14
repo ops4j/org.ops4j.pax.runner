@@ -130,6 +130,7 @@ public class CmdLine
         m_values.put( "vmopts", "" );
         m_values.put( "classpath", "" );
         m_values.put( "systempackages", "" );
+        m_values.put( "profile", "default" );
     }
 
     private static String getLocalRepository()

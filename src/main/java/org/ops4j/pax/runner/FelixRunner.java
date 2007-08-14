@@ -78,6 +78,9 @@ public class FelixRunner
             File system5 = bundleManager.getBundle( GROUPID, "org.apache.felix.shell.gui.plugin", VERSION );
             m_sysBundles.add( system5 );
         }
+        // TODO: replace with Felix compendium once it's deployed to maven
+        File system6 = bundleManager.getBundle( "org.eclipse.osgi", "org.eclipse.osgi.services", "3.1.200" );
+        m_sysBundles.add( system6 );
         m_main = bundleManager.getBundle( GROUPID, "org.apache.felix.main", VERSION );
     }
 
