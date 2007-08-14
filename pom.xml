@@ -9,7 +9,7 @@
   <groupId>org.ops4j.pax</groupId>
   <artifactId>runner</artifactId>
   <name>OPS4J - Pax Runner</name>
-  <version>0.3.4</version>
+  <version>0.3.5-SNAPSHOT</version>
   <url>http://wiki.ops4j.org/dokuwiki/doku.php?id=pax:runner</url>
   <build>
     <plugins>
@@ -59,9 +59,4 @@
       </snapshots>
     </repository>
   </repositories>
-
-  <scm>
-    <connection>scm:svn:https://scm.ops4j.org/repos/ops4j/qa/pax/runner-0.3.4</connection>
-    <developerConnection>scm:svn:https://scm.ops4j.org/repos/ops4j/qa/pax/runner-0.3.4</developerConnection>
-  </scm>
 </project>
