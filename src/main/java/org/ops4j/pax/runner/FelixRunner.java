@@ -50,13 +50,11 @@ public class FelixRunner
 
     private File m_main;
 
-    private static final String FRAMEWORK_PACKAGES = "org.osgi.framework; version=1.3.0, " +
-                                                     "org.osgi.service.condpermadmin; version=1.0.0, " +
-                                                     "org.osgi.service.packageadmin; version=1.2.0, " +
-                                                     "org.osgi.service.permissionadmin; version=1.2.0, " +
-                                                     "org.osgi.service.startlevel; version=1.0.0, " +
-                                                     "org.osgi.service.url; version=1.0.0, " +
-                                                     "org.osgi.util.tracker; version=1.3.1, ";
+    private static final String FRAMEWORK_PACKAGES = "org.osgi.framework; version=1.3.0," +
+                                                     "org.osgi.service.packageadmin; version=1.2.0," +
+                                                     "org.osgi.service.startlevel; version=1.0.0," +
+                                                     "org.osgi.service.url; version=1.0.0," +
+                                                     "org.osgi.util.tracker; version=1.3.1";
 
     public FelixRunner( CmdLine cmdLine, Properties props, List bundles, BundleManager bundleManager, String classpath )
         throws IOException, ParserConfigurationException, SAXException
@@ -80,10 +78,6 @@ public class FelixRunner
             File system5 = bundleManager.getBundle( GROUPID, "org.apache.felix.shell.gui.plugin", VERSION );
             m_sysBundles.add( system5 );
         }
-        File system6 = bundleManager.getBundle( GROUPID, "org.osgi.compendium", VERSION );
-        m_sysBundles.add( system6 );
-        File system7 = bundleManager.getBundle( GROUPID, "javax.servlet", VERSION );
-        m_sysBundles.add( system7 );
         m_main = bundleManager.getBundle( GROUPID, "org.apache.felix.main", VERSION );
     }
 
@@ -176,7 +170,7 @@ public class FelixRunner
                 "-Dfelix.config.properties=" + Run.WORK_DIR.toURI() + "/conf/config.properties",
                 "-cp",
                 m_main.getAbsolutePath() + File.pathSeparator + m_classpath,
-                "org.apache.felix.framework.Main"
+                "org.apache.felix.main.Main"
             };
         //copy these two together
         Run.execute( commands );

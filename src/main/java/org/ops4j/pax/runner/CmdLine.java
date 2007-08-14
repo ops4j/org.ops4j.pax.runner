@@ -116,7 +116,7 @@ public class CmdLine
 
     private void populateDefaults()
     {
-        m_values.put( "platform", "equinox" );
+        m_values.put( "platform", "felix" );
         m_values.put( "startlevel", "6" );
         m_values.put( "bundlelevel", "5" );
         m_values.put( "dir", System.getProperty( "user.dir" ) + "/runner" );
