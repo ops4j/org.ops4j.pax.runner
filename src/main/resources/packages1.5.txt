@@ -32,6 +32,8 @@ javax.naming.directory
 javax.naming.event
 javax.naming.ldap
 javax.naming.spi
+javax.net.ssl
+javax.security.cert
 javax.print
 javax.print.attribute
 javax.print.attribute.standard
