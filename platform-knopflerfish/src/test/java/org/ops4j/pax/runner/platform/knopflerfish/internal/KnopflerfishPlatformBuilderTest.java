@@ -21,12 +21,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.net.MalformedURLException;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -134,13 +134,13 @@ public class KnopflerfishPlatformBuilderTest
         PlatformContext platformContext = createMock( PlatformContext.class );
 
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-        
+
         replay( m_bundleContext, platformContext );
-        assertArrayEquals(              
+        assertArrayEquals(
             "Arguments",
             new String[]{
                 "-xargs",
-                new File(m_workDir,"knopflerfish/config.ini").getAbsoluteFile().toURL().toExternalForm(),
+                new File( m_workDir, "knopflerfish/config.ini" ).getAbsoluteFile().toURL().toExternalForm(),
             },
             new KnopflerfishPlatformBuilder( m_bundleContext ).getArguments( platformContext )
         );
@@ -152,12 +152,16 @@ public class KnopflerfishPlatformBuilderTest
     {
         PlatformContext platformContext = createMock( PlatformContext.class );
 
+        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
+
         replay( m_bundleContext, platformContext );
         assertArrayEquals(
             "System properties",
             new String[]{
                 "-Dorg.knopflerfish.framework.usingwrapperscript=false",
                 "-Dorg.knopflerfish.framework.exitonshutdown=true",
+                "-Dorg.osgi.framework.dir="
+                + m_workDir.getAbsolutePath() + File.separator + "knopflerfish" + File.separator + "fwdir"
             },
             new KnopflerfishPlatformBuilder( m_bundleContext ).getVMOptions( platformContext )
         );
@@ -193,6 +197,7 @@ public class KnopflerfishPlatformBuilderTest
         expect( platformContext.getBundles() ).andReturn( null );
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
         expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( m_configuration.shouldClean() ).andReturn( false );
         expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );
@@ -216,7 +221,7 @@ public class KnopflerfishPlatformBuilderTest
     // tests that the platform configuration ini file is correct with bundles to be installed.
     // also tests that the start level is set correctly if configured
     // also tests that the default start level is set correctly if configured
-    //@Test
+    @Test
     public void prepare()
         throws PlatformException, IOException
     {
@@ -263,6 +268,7 @@ public class KnopflerfishPlatformBuilderTest
         expect( platformContext.getBundles() ).andReturn( bundles );
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
         expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( m_configuration.shouldClean() ).andReturn( false );
         expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
         expect( m_configuration.getStartLevel() ).andReturn( 10 );
         expect( m_configuration.getBundleStartLevel() ).andReturn( 20 );
@@ -359,7 +365,6 @@ public class KnopflerfishPlatformBuilderTest
         expect( platformContext.getSystemPackages() ).andReturn( null );
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );
-        expect( m_configuration.getFrameworkProfile() ).andReturn( "runner" );
         expect( m_configuration.shouldClean() ).andReturn( shoudlClean );
         expect( platformContext.getProperties() ).andReturn( null );
 
@@ -368,5 +373,40 @@ public class KnopflerfishPlatformBuilderTest
         verify( m_bundleContext, m_configuration, platformContext );
     }
 
+    // cahce folder should not exist after returning
+    @Test
+    public void cleanWithExistingFolder()
+        throws IOException, PlatformException
+    {
+        File cacheDir = new File( m_workDir, "knopflerfish/fwdir" );
+        new File( cacheDir, "bundle1" ).mkdirs();
+        assertTrue( "Cache folder could not be created before running the test", cacheDir.exists() );
+        clean( true );
+        assertFalse( "Cache folder was not removed", cacheDir.exists() );
+    }
+
+    // cahce folder should not exist after returning and should not crash as the folder is not there
+    @Test
+    public void cleanWithNotExistingFolder()
+        throws IOException, PlatformException
+    {
+        File cacheDir = new File( m_workDir, "knopflerfish/fwdir" );
+        FileUtils.delete( cacheDir );
+        assertFalse( "Cache folder could not be deleted before running the test", cacheDir.exists() );
+        clean( true );
+        assertFalse( "Cache folder was not removed", cacheDir.exists() );
+    }
+
+    // cahce folder should not exist after returning
+    @Test
+    public void noCleanWithExistingFolder()
+        throws IOException, PlatformException
+    {
+        File cacheDir = new File( m_workDir, "knopflerfish/fwdir" );
+        new File( cacheDir, "bundle1" ).mkdirs();
+        assertTrue( "Cache folder could not be created before running the test", cacheDir.exists() );
+        clean( false );
+        assertTrue( "Cache folder was removed but it should not had been removed", cacheDir.exists() );
+    }
 
 }

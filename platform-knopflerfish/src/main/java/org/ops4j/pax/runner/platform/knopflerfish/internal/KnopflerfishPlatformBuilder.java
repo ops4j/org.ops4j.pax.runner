@@ -31,6 +31,7 @@ import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.pax.runner.commons.file.FileUtils;
 import org.ops4j.pax.runner.commons.properties.PropertiesWriter;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
@@ -70,7 +71,7 @@ public class KnopflerfishPlatformBuilder
     /**
      * Caching directory.
      */
-    private static final String CACHE_DIRECTORY = "cache";
+    private static final String CACHE_DIRECTORY = "fwdir";
     /**
      * Profile name to be used when console should be started.
      */
@@ -121,6 +122,15 @@ public class KnopflerfishPlatformBuilder
             LOGGER.debug( "Create knopflerfish configuration ini file [" + configFile + "]" );
             final Configuration configuration = context.getConfiguration();
 
+            // clean up fwdir folder
+            final Boolean clean = configuration.shouldClean();
+            if ( clean != null && clean )
+            {
+                final File fwdir = new File( configDirectory, CACHE_DIRECTORY );
+                LOGGER.trace( "Cleaning cache folder [" + fwdir + "]" );
+                FileUtils.delete( fwdir );
+            }
+
             os = new FileOutputStream( configFile );
             final PropertiesWriter writer = new PropertiesWriter( os, SEPARATOR );
 
@@ -142,7 +152,7 @@ public class KnopflerfishPlatformBuilder
                 .append( "-Dorg.knopflerfish.startlevel.use", "true" )
                 .append( "-D" + Constants.FRAMEWORK_SYSTEMPACKAGES, context.getSystemPackages() )
                 .append();
-           
+
             // framework start level
             final Integer startLevel = configuration.getStartLevel();
             if ( startLevel != null )
@@ -242,7 +252,7 @@ public class KnopflerfishPlatformBuilder
             final Boolean shouldStart = reference.shouldStart();
             if ( shouldStart != null && shouldStart )
             {
-                propertyName = "-istart " ;
+                propertyName = "-istart ";
             }
             else
             {
@@ -293,7 +303,7 @@ public class KnopflerfishPlatformBuilder
                 "-xargs",
                 new File( context.getWorkingDirectory(), CONFIG_DIRECTORY + File.separator + CONFIG_INI
                 ).getAbsoluteFile()
-                    .toURL().toExternalForm(),
+                    .toURL().toExternalForm()
             };
         }
         catch ( MalformedURLException e )
@@ -310,9 +320,13 @@ public class KnopflerfishPlatformBuilder
     public String[] getVMOptions( final PlatformContext context )
     {
         Assert.notNull( "Platform context", context );
+        final File workingDirectory = context.getWorkingDirectory();
         return new String[]{
             "-Dorg.knopflerfish.framework.usingwrapperscript=false",
             "-Dorg.knopflerfish.framework.exitonshutdown=true",
+            "-Dorg.osgi.framework.dir=" + workingDirectory.getAbsolutePath()
+            + File.separator + CONFIG_DIRECTORY
+            + File.separator + CACHE_DIRECTORY
         };
     }
 
