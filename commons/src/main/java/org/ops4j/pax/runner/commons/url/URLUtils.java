@@ -19,7 +19,9 @@
 package org.ops4j.pax.runner.commons.url;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.JarURLConnection;
+import java.net.URL;
 import java.net.URLConnection;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -108,6 +110,28 @@ public class URLUtils
 
         }
         return connection;
+    }
+
+    /**
+     * Prepare url for authentication and ssl if necessary and returns the input stream from the url.
+     *
+     * @param url                  url to prepare
+     * @param acceptAnyCertificate true if the certicate check should be skipped
+     *
+     * @return input stream from url
+     *
+     * @throws IOException re-thrown
+     */
+    public static InputStream prepareInputStream( final URL url, final boolean acceptAnyCertificate )
+        throws IOException
+    {
+        final URLConnection conn = url.openConnection();
+        prepareForAuthentication( conn );
+        if ( acceptAnyCertificate )
+        {
+           prepareForSSL( conn );
+        }
+        return conn.getInputStream();
     }
 
 }
