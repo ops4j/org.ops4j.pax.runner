@@ -208,4 +208,30 @@ public class PlatformDefinitionImplTest
         );
     }
 
+    @Test
+    public void getPlatformBundlesWithMultipleInheritance()
+        throws IOException, ParserConfigurationException, SAXException
+    {
+        PlatformDefinition definition = new PlatformDefinitionImpl(
+            FileUtils.getFileFromClasspath( "platformdefinition/definition.xml" ).toURL().openStream(),
+            10
+        );
+        assertEquals( "System package name", "System package name", definition.getSystemPackageName() );
+        assertEquals( "System package", new URL( "file:system.jar" ), definition.getSystemPackage() );
+        assertEquals( "System packages", "package.1,package.2", definition.getPackages() );
+        List<BundleReference> references = definition.getPlatformBundles( "multiple" );
+        assertNotNull( "Bundle references cannot be null", references );
+        assertEquals( "Number of bundle references", 5, references.size() );
+        assertEquals( "Bundle 1 name", "Bundle 1", references.get( 0 ).getName() );
+        assertEquals( "Bundle 1 url", new URL( "file:bundle1.jar" ), references.get( 0 ).getURL() );
+        assertEquals( "Bundle 2 name", "file:bundle2.jar", references.get( 1 ).getName() );
+        assertEquals( "Bundle 2 urle", new URL( "file:bundle2.jar" ), references.get( 1 ).getURL() );
+        assertEquals( "Bundle 3 name", "Bundle 3", references.get( 2 ).getName() );
+        assertEquals( "Bundle 3 url", new URL( "file:bundle3.jar" ), references.get( 2 ).getURL() );
+        assertEquals( "Bundle 4 name", "Bundle 4", references.get( 3 ).getName() );
+        assertEquals( "Bundle 4 url", new URL( "file:bundle4.jar" ), references.get( 3 ).getURL() );
+        assertEquals( "Bundle 6 name", "Bundle 6", references.get( 4 ).getName() );
+        assertEquals( "Bundle 6 url", new URL( "file:bundle6.jar" ), references.get( 4 ).getURL() );        
+    }
+
 }

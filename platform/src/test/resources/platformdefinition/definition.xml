@@ -38,4 +38,10 @@
       <url>file:bundle4.jar</url>
     </bundle>
   </profile>
+  <profile name="multiple" extends="extended1,profile2">
+    <bundle>
+      <name>Bundle 6</name>
+      <url>file:bundle6.jar</url>
+    </bundle>
+  </profile>
 </platform>
