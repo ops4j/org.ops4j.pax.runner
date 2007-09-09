@@ -1,5 +1,6 @@
 /*
  * Copyright 2007 Alin Dreghiciu.
+ * Copyright 2007 Peter Kriens.  
  *
  * Licensed  under the  Apache License,  Version 2.0  (the "License");
  * you may not use  this file  except in  compliance with the License.
@@ -17,11 +18,17 @@
  */
 package org.ops4j.pax.runner.handler.wrap.internal;
 
+import aQute.lib.osgi.Analyzer;
+import aQute.lib.osgi.Jar;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Properties;
+import java.util.jar.Manifest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.pax.runner.commons.Assert;
@@ -29,7 +36,7 @@ import org.ops4j.pax.runner.commons.url.URLUtils;
 
 /**
  * An URLConnection that supports wrap: protocol.<br/>
- * TODO add java doc
+ * TODO add unit tests
  *
  * @author Alin Dreghiciu
  * @see org.ops4j.pax.runner.handler.wrap.internal.Handler
@@ -43,7 +50,6 @@ public class Connection
      * Logger.
      */
     private static final Log LOGGER = LogFactory.getLog( Connection.class );
-
     /**
      * Parsed url.
      */
@@ -97,29 +103,116 @@ public class Connection
         throws IOException
     {
         connect();
-        // TODO implement wrapping
-        return null;
+        LOGGER.debug( "Start wrapping [" + m_parser.getWrappedJarURL() + "]" );
+
+        final Properties properties = m_parser.getWrappingProperties();
+        final InputStream target =
+            URLUtils.prepareInputStream( m_parser.getWrappedJarURL(), !m_configuration.getCertificateCheck() );
+
+        final Jar jar = new Jar( "dot", target );
+        final Manifest manifest = jar.getManifest();
+
+        // Verify it is not a bundle
+        if ( manifest == null
+             || ( manifest.getMainAttributes().getValue( Analyzer.EXPORT_PACKAGE ) == null
+                  && manifest.getMainAttributes().getValue( Analyzer.IMPORT_PACKAGE ) == null )
+            )
+        {
+            properties.put( "Generated-From", getURL().toExternalForm() );
+            final Analyzer analyzer = new Analyzer();
+            analyzer.setJar( jar );
+            analyzer.setProperties( properties );
+            checkMandatoryProperties( analyzer, jar );
+            analyzer.mergeManifest( manifest );
+            analyzer.calcManifest();
+        }
+
+        return createInputStream( jar );
     }
 
     /**
-     * Prepare url for authentication if necessary and returns the input stream from the url.
+     * Creates an piped input stream for the wrapped jar.
+     * This is done in a thread so we can retrun quickly.
      *
-     * @param url url to prepare
+     * @param jar the wrapped jar
      *
-     * @return input stream from url
+     * @return an input stream for the wrapped jar
      *
      * @throws IOException re-thrown
      */
-    private InputStream prepareInputStream( final URL url )
+    private PipedInputStream createInputStream( final Jar jar )
         throws IOException
     {
-        URLConnection conn = url.openConnection();
-        URLUtils.prepareForAuthentication( conn );
-        if ( !m_configuration.getCertificateCheck() )
+        final PipedInputStream pin = new PipedInputStream();
+        final PipedOutputStream pout = new PipedOutputStream( pin );
+
+        new Thread()
         {
-            URLUtils.prepareForSSL( conn );
+            public void run()
+            {
+                try
+                {
+                    jar.write( pout );
+                }
+                catch ( IOException e )
+                {
+                    throw new RuntimeException( "Could not generate the wrapped jar, e" );
+                }
+                finally
+                {
+                    try
+                    {
+                        jar.close();
+                        pout.close();
+                    }
+                    catch ( IOException ignore )
+                    {
+                        throw new RuntimeException( "Could not generate the wrapped jar, e" );
+                    }
+                }
+            }
+        }.start();
+
+        return pin;
+    }
+
+    /**
+     * Check if manadatory properties are present, otherwise generate default.
+     *
+     * @param analyzer a bnd analyzer
+     * @param jar      a bnd jar
+     */
+    private void checkMandatoryProperties( final Analyzer analyzer, final Jar jar )
+    {
+        final String importPackage = analyzer.getProperty( Analyzer.IMPORT_PACKAGE );
+        if ( importPackage == null || importPackage.trim().length() == 0 )
+        {
+            analyzer.setProperty( Analyzer.IMPORT_PACKAGE, "*;resolution:=optional" );
         }
-        return conn.getInputStream();
+        final String exportPackage = analyzer.getProperty( Analyzer.EXPORT_PACKAGE );
+        if ( exportPackage == null || exportPackage.trim().length() == 0 )
+        {
+            analyzer.setProperty( Analyzer.EXPORT_PACKAGE, analyzer.calculateExportsFromContents( jar ) );
+        }
+        final String symbolicName = analyzer.getProperty( Analyzer.BUNDLE_SYMBOLICNAME );
+        if ( symbolicName == null || symbolicName.trim().length() == 0 )
+        {
+            analyzer.setProperty( Analyzer.BUNDLE_SYMBOLICNAME,
+                                  generateSymbolicName( m_parser.getWrappedJarURL().toExternalForm() )
+            );
+        }
+    }
+
+    /**
+     * Generates a symbolic name form an url spec by replacing invalid characters.
+     *
+     * @param urlSpec the source for the name
+     *
+     * @return a valid symbolic name
+     */
+    private String generateSymbolicName( final String urlSpec )
+    {
+        return urlSpec.replaceAll( "[^a-zA-Z_0-9-]", "_" );
     }
 
 }

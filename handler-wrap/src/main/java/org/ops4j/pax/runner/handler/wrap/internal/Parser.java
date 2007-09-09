@@ -1,6 +1,7 @@
 /*
  * Copyright 2007 Alin Dreghiciu.
- *
+ * Copyright 2007 Peter Kriens.
+ * 
  * Licensed  under the  Apache License,  Version 2.0  (the "License");
  * you may not use  this file  except in  compliance with the License.
  * You may obtain a copy of the License at
@@ -17,8 +18,15 @@
  */
 package org.ops4j.pax.runner.handler.wrap.internal;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.ops4j.pax.runner.commons.url.URLUtils;
 
 /**
  * Parser for wrap: protocol.<br/>
@@ -39,17 +47,18 @@ public class Parser
      */
     private static final String INSTRUCTIONS_SEPARATOR = "!";
     /**
+     * Regex pattern for matching instructions when specified in url.
+     */
+    private static final Pattern INSTRUCTIONS_PATTERN =
+        Pattern.compile( "([a-zA-Z_0-9-]+)=([-!\"'()*+,.0-9A-Z_a-z%]+)" );
+    /**
      * Wrapped jar URL.
      */
     private URL m_wrappedJarURL;
     /**
      * Wrapping instructions URL.
      */
-    private URL m_instructionsURL;
-    /**
-     * Wrapping instructions .
-     */
-    private String m_instructions;
+    private Properties m_wrappingProperties;
 
     /**
      * Creates a new protocol parser.
@@ -61,7 +70,7 @@ public class Parser
     public Parser( final String path )
         throws MalformedURLException
     {
-        if ( path == null || path.trim().length() == 0)
+        if ( path == null || path.trim().length() == 0 )
         {
             throw new MalformedURLException( "Path cannot be null or empty. Syntax " + SYNTAX );
         }
@@ -71,6 +80,7 @@ public class Parser
                 "Path cannot start or end with " + INSTRUCTIONS_SEPARATOR + ". Syntax " + SYNTAX
             );
         }
+        m_wrappingProperties = new Properties();
         if ( path.contains( INSTRUCTIONS_SEPARATOR ) )
         {
             int pos = path.lastIndexOf( INSTRUCTIONS_SEPARATOR );
@@ -79,21 +89,67 @@ public class Parser
         }
         else
         {
-            parseInstructions( path );
+            m_wrappedJarURL = new URL( path );
         }
     }
 
     /**
      * Parses the instructions of the url ( without the wrapped jar url).
      *
-     * @param part url part without protocol and wrapped jar url.
+     * @param spec url part without protocol and wrapped jar url.
      *
      * @throws MalformedURLException if provided path does not comply to syntax.
      */
-    private void parseInstructions( final String part )
+    private void parseInstructions( final String spec )
         throws MalformedURLException
     {
-        // TODO implement instrcutions parsing 
+        try
+        {
+            // first try to make an url out of the instructions.
+            try
+            {
+                final URL url = new URL( spec );
+                // TODO use the certificate check property from the handler instead of true bellow
+                try
+                {
+                    m_wrappingProperties.load( URLUtils.prepareInputStream( url, true ) );
+                }
+                catch ( IOException e )
+                {
+                    throw initMalformedURLException( "Could not retrieve the instructions from [" + spec + "]", e );
+                }
+            }
+            catch ( MalformedURLException ignore )
+            {
+                // just ignore for the moment and try out if we have valid properties separated by "&"
+                final String segments[] = spec.split( "&" );
+                for ( String segment : segments )
+                {
+                    final Matcher matcher = INSTRUCTIONS_PATTERN.matcher( segment );
+                    if ( matcher.matches() )
+                    {
+                        m_wrappingProperties.put(
+                            matcher.group( 1 ),
+                            URLDecoder.decode( matcher.group( 2 ), "UTF-8" )
+                        );
+                    }
+                    else
+                    {
+                        throw new MalformedURLException( "Invalid syntax for instruction [" + segment
+                                                         + "]. Take a look at http://www.aqute.biz/Code/Bnd."
+                        );
+                    }
+                }
+            }
+        }
+        catch ( UnsupportedEncodingException e )
+        {
+            throw initMalformedURLException( "Could not retrieve the instructions from [" + spec + "]", e );
+        }
+        if ( m_wrappingProperties.size() == 0 )
+        {
+            throw new MalformedURLException( "Could not determine wrapping instructions from [" + spec + "]" );
+        }
     }
 
     /**
@@ -107,23 +163,28 @@ public class Parser
     }
 
     /**
-     * Returns the wrapping instructions url if this form was used, null otherwise.
+     * Returns the wrapping instructions as Properties.
      *
-     * @return wrapping instructions url
+     * @return wrapping instructions as Properties
      */
-    public URL getInstructionsURL()
+    public Properties getWrappingProperties()
     {
-        return m_instructionsURL;
+        return m_wrappingProperties;
     }
 
     /**
-     * Returns the wrapping instructions if this form was used, null otherwise.
+     * Creates an MalformedURLException with a message and a cause.
      *
-     * @return wrapping instructions
+     * @param message exception message
+     * @param cause   exception cause
+     *
+     * @return the created MalformedURLException
      */
-    public String getInstructions()
+    private MalformedURLException initMalformedURLException( final String message, final Exception cause )
     {
-        return m_instructions;
+        final MalformedURLException exception = new MalformedURLException( message );
+        exception.initCause( cause );
+        return exception;
     }
 
 }

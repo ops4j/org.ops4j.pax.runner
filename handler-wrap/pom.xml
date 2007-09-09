@@ -61,6 +61,11 @@
       <artifactId>commons</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>biz.aQute</groupId>
+      <artifactId>bndlib</artifactId>
+      <version>0.0.189</version>
+    </dependency>
   </dependencies>
 
 </project>

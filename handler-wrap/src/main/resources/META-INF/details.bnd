@@ -5,4 +5,5 @@ src/main/resources,\
 @target/dependency/commons.jar!/org/ops4j/pax/runner/commons/*,\
 @target/dependency/commons.jar!/org/ops4j/pax/runner/commons/resolver/*,\
 @target/dependency/commons.jar!/org/ops4j/pax/runner/commons/url/*,\
-@target/dependency/commons.jar!/org/ops4j/pax/runner/commons/xml/*
+@target/dependency/commons.jar!/org/ops4j/pax/runner/commons/xml/*,\
+@target/dependency/bndlib.jar!/aQute/**
