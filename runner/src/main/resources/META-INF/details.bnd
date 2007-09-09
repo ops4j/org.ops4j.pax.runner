@@ -4,6 +4,7 @@ src/main/resources,\
 @target/dependency/handler.jar,\
 @target/dependency/handler-classpath.jar,\
 @target/dependency/handler-mvn.jar,\
+@target/dependency/handler-wrap.jar,\
 @target/dependency/platform.jar,\
 @target/dependency/platform-equinox.jar,\
 @target/dependency/platform-felix.jar,\

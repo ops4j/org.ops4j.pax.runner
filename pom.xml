@@ -53,6 +53,7 @@
     <module>handler</module>
     <module>handler-classpath</module>
     <module>handler-mvn</module>
+    <module>handler-wrap</module>
     <module>provision</module>
     <module>provision-console</module>
     <module>scanner-bundle</module>

@@ -356,6 +356,7 @@
       <module fileurl="file://$PROJECT_DIR$/handler/handler.iml" filepath="$PROJECT_DIR$/handler/handler.iml" />
       <module fileurl="file://$PROJECT_DIR$/handler-classpath/handler-classpath.iml" filepath="$PROJECT_DIR$/handler-classpath/handler-classpath.iml" />
       <module fileurl="file://$PROJECT_DIR$/handler-mvn/handler-mvn.iml" filepath="$PROJECT_DIR$/handler-mvn/handler-mvn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/handler-wrap/handler-wrap.iml" filepath="$PROJECT_DIR$/handler-wrap/handler-wrap.iml" />
       <module fileurl="file://$PROJECT_DIR$/poms/imported/imported.iml" filepath="$PROJECT_DIR$/poms/imported/imported.iml" />
       <module fileurl="file://$PROJECT_DIR$/platform/platform.iml" filepath="$PROJECT_DIR$/platform/platform.iml" />
       <module fileurl="file://$PROJECT_DIR$/platform-console/platform-console.iml" filepath="$PROJECT_DIR$/platform-console/platform-console.iml" />

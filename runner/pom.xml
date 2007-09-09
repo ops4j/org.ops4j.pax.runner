@@ -80,6 +80,11 @@
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
+      <artifactId>handler-wrap</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>handler-classpath</artifactId>
       <version>${project.version}</version>
     </dependency>
