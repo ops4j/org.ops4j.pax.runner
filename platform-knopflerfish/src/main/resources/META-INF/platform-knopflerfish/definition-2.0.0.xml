@@ -34,7 +34,7 @@
     </bundle>
   </profile>
 
-  <profile name="gui" extends="config">
+  <profile name="gui" extends="minimal,config">
     <bundle>
       <name>org.knopflerfish.bundle.desktop</name>
       <url>mvn:org.knopflerfish.bundle.desktop/desktop_all/1.2.0</url>
