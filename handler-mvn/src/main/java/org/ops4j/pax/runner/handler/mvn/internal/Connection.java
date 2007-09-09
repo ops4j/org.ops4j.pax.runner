@@ -24,13 +24,13 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.ops4j.pax.runner.commons.Assert;
 import org.ops4j.pax.runner.commons.url.URLUtils;
 import org.ops4j.pax.runner.commons.xml.XmlUtils;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * An URLConnextion that supports mvn: protocol.<br/>
@@ -281,6 +281,15 @@ public class Connection
         }
     }
 
+    /**
+     * @param repositoryURL url to reporsitory
+     * @param path          a path to the artifact jar file
+     *
+     * @return prepared input stream
+     *
+     * @throws IOException re-thrown
+     * @see org.ops4j.pax.runner.commons.url.URLUtils#prepareInputStream(java.net.URL,boolean)
+     */
     private InputStream prepareInputStream( URL repositoryURL, final String path )
         throws IOException
     {
@@ -289,15 +298,17 @@ public class Connection
         {
             repository = repository + Parser.FILE_SEPARATOR;
         }
-        URLConnection conn = new URL( repository + path ).openConnection();
-        URLUtils.prepareForAuthentication( conn );
-        if ( !m_configuration.getCertificateCheck() )
-        {
-            URLUtils.prepareForSSL( conn );
-        }
-        return conn.getInputStream();
+        return URLUtils.prepareInputStream( new URL( repository + path ), !m_configuration.getCertificateCheck() );
     }
 
+    /**
+     * Creates an IOException with a message and a cause.
+     *
+     * @param message exception message
+     * @param cause   exception cause
+     *
+     * @return the created IO Exception
+     */
     private IOException initIOException( final String message, final Exception cause )
     {
         IOException exception = new IOException( message );
