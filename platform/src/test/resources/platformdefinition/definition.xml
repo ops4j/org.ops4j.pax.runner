@@ -1,0 +1,41 @@
+<platform>
+  <name>System package name</name>
+  <system>file:system.jar</system>
+  <packages>package.1,package.2</packages>
+  <profile name="default" default="true">
+    <bundle>
+      <name>Bundle 1</name>
+      <url>file:bundle1.jar</url>
+    </bundle>
+    <bundle>
+      <!--name>Bundle2 name should be default eq with url bellow</name-->
+      <url>file:bundle2.jar</url>
+    </bundle>
+  </profile>
+  <profile name="extended1" extends="default">
+    <bundle>
+      <name>Bundle 3</name>
+      <url>file:bundle3.jar</url>
+    </bundle>
+  </profile>
+  <profile name="overlaping2" extends="default">
+    <bundle>
+      <name>Bundle 5</name>
+      <url>file:bundle5.jar</url>
+    </bundle>
+    <bundle>
+      <name>Bundle 3</name>
+      <url>file:bundle3.jar</url>
+    </bundle>
+    <bundle>
+      <name>Bundle 1</name>
+      <url>file:bundle1.jar</url>
+    </bundle>
+  </profile>
+  <profile name="profile2">
+    <bundle>
+      <name>Bundle 4</name>
+      <url>file:bundle4.jar</url>
+    </bundle>
+  </profile>
+</platform>

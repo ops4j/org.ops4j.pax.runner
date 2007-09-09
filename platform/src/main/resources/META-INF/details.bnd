@@ -1,0 +1,7 @@
+Bundle-Activator=${bundle.package}.internal.Activator
+Include-Resource=\
+src/main/resources,\
+@target/dependency/commons.jar!/org/apache/commons/logging/**,\
+@target/dependency/commons.jar!/org/ops4j/pax/runner/commons/*,\
+@target/dependency/commons.jar!/org/ops4j/pax/runner/commons/resolver/*,\
+@target/dependency/commons.jar!/org/ops4j/pax/runner/commons/xml/*
