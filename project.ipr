@@ -361,6 +361,7 @@
       <module fileurl="file://$PROJECT_DIR$/platform-console/platform-console.iml" filepath="$PROJECT_DIR$/platform-console/platform-console.iml" />
       <module fileurl="file://$PROJECT_DIR$/platform-equinox/platform-equinox.iml" filepath="$PROJECT_DIR$/platform-equinox/platform-equinox.iml" />
       <module fileurl="file://$PROJECT_DIR$/platform-felix/platform-felix.iml" filepath="$PROJECT_DIR$/platform-felix/platform-felix.iml" />
+      <module fileurl="file://$PROJECT_DIR$/platform-knopflerfish/platform-knopflerfish.iml" filepath="$PROJECT_DIR$/platform-knopflerfish/platform-knopflerfish.iml" />
       <module fileurl="file://$PROJECT_DIR$/poms/poms.iml" filepath="$PROJECT_DIR$/poms/poms.iml" />
       <module fileurl="file://$PROJECT_DIR$/project.iml" filepath="$PROJECT_DIR$/project.iml" />
       <module fileurl="file://$PROJECT_DIR$/provision/provision.iml" filepath="$PROJECT_DIR$/provision/provision.iml" />
@@ -369,6 +370,7 @@
       <module fileurl="file://$PROJECT_DIR$/scanner-bundle/scanner-bundle.iml" filepath="$PROJECT_DIR$/scanner-bundle/scanner-bundle.iml" />
       <module fileurl="file://$PROJECT_DIR$/scanner-dir/scanner-dir.iml" filepath="$PROJECT_DIR$/scanner-dir/scanner-dir.iml" />
       <module fileurl="file://$PROJECT_DIR$/scanner-file/scanner-file.iml" filepath="$PROJECT_DIR$/scanner-file/scanner-file.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scripts/scripts.iml" filepath="$PROJECT_DIR$/scripts/scripts.iml" />
       <module fileurl="file://$PROJECT_DIR$/via-pax-runner/via-pax-runner.iml" filepath="$PROJECT_DIR$/via-pax-runner/via-pax-runner.iml" />
       <module fileurl="file://$PROJECT_DIR$/poms/wrapped/wrapped.iml" filepath="$PROJECT_DIR$/poms/wrapped/wrapped.iml" />
     </modules>

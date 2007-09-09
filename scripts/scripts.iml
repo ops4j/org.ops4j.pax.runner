@@ -2,33 +2,30 @@
 <module version="4" relativePaths="false" type="JAVA_MODULE">
   <component name="ModuleRootManager" />
   <component name="NewModuleRootManager" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/target/classes" />
+    <output url="file://$MODULE_DIR$/target/bin" />
     <exclude-output />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="commons" />
-    <orderEntry type="module" module-name="scanner-file" />
     <orderEntry type="module" module-name="platform" />
+    <orderEntry type="module" module-name="scanner-dir" />
     <orderEntry type="module" module-name="handler-mvn" />
-    <orderEntry type="module" module-name="handler-classpath" />
-    <orderEntry type="module" module-name="provision" />
+    <orderEntry type="module" module-name="runner" />
+    <orderEntry type="module" module-name="scanner-file" />
     <orderEntry type="module" module-name="platform-equinox" />
     <orderEntry type="module" module-name="handler" />
-    <orderEntry type="module" module-name="platform-felix" />
+    <orderEntry type="module" module-name="handler-classpath" />
+    <orderEntry type="module" module-name="provision" />
+    <orderEntry type="module" module-name="commons" />
     <orderEntry type="module" module-name="scanner-bundle" />
-    <orderEntry type="module" module-name="scanner-dir" />
+    <orderEntry type="module" module-name="platform-felix" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/osgi/osgi_R4_core/1.0/osgi_R4_core-1.0.jar!/" />
+          <root url="jar://$M2_REPO$/junit/junit/4.3.1/junit-4.3.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -37,7 +34,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$M2_REPO$/junit/junit/4.3.1/junit-4.3.1.jar!/" />
+          <root url="jar://$M2_REPO$/org/osgi/osgi_R4_core/1.0/osgi_R4_core-1.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
