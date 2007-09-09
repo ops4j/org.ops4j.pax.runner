@@ -1,0 +1,26 @@
+<assembly>
+  <id>zip</id>
+  <baseDirectory>pax-runner-${project.version}</baseDirectory>
+  <formats>
+    <format>zip</format>
+  </formats>
+  <fileSets>
+    <fileSet>
+      <directory>target/bin</directory>
+      <outputDirectory>bin</outputDirectory>
+      <directoryMode>0755</directoryMode>
+      <fileMode>0555</fileMode>
+    </fileSet>
+  </fileSets>
+  <dependencySets>
+
+    <dependencySet>
+      <outputDirectory>bin</outputDirectory>
+      <includes>
+
+        <include>*:runner:*</include>
+
+      </includes>
+    </dependencySet>
+  </dependencySets>
+</assembly>

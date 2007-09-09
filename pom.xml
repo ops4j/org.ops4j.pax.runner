@@ -1,62 +1,116 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version='1.0' encoding='UTF-8' ?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.ops4j.pax.runner</groupId>
+  <artifactId>project</artifactId>
+  <version>0.4.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>pax.runner.project</name>
+  <description>${project.name}</description>
+
   <parent>
-    <groupId>org.ops4j</groupId>
-    <artifactId>pax</artifactId>
-    <version>1.3</version>
+    <groupId>org.ops4j.pax</groupId>
+    <artifactId>project</artifactId>
+    <version>1.7</version>
   </parent>
-  <groupId>org.ops4j.pax</groupId>
-  <artifactId>runner</artifactId>
-  <name>OPS4J - Pax Runner</name>
-  <version>0.5.0-SNAPSHOT</version>
-  <url>http://wiki.ops4j.org/dokuwiki/doku.php?id=pax:runner</url>
+
+  <url>http://wiki.ops4j.org/confluence/x/Hw</url>
+
+  <developers>
+    <developer>
+      <id>niclas</id>
+      <name>Niclas Hedhman</name>
+      <email>niclas@hedhman.org</email>
+      <organization>Jayway Malaysia Sdn Bhd</organization>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>UTC+8</timezone>
+    </developer>
+    <developer>
+      <id>adreghiciu</id>
+      <name>Alin Dreghiciu</name>
+      <email>adreghiciu@gmail.com</email>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>UTC+2</timezone>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:svn:https://scm.ops4j.org/repos/ops4j/projects/pax/runner</connection>
+    <developerConnection>scm:svn:https://scm.ops4j.org/repos/ops4j/projects/pax/runner</developerConnection>
+  </scm>
+
+  <modules>
+    <module>poms</module>
+    <module>commons</module>
+    <module>handler</module>
+    <module>handler-classpath</module>
+    <module>handler-mvn</module>
+    <module>provision</module>
+    <module>provision-console</module>
+    <module>scanner-bundle</module>
+    <module>scanner-dir</module>
+    <module>scanner-file</module>
+    <module>platform</module>
+    <module>platform-console</module>
+    <module>platform-equinox</module>
+    <module>platform-felix</module>
+    <module>runner</module>
+    <module>via-pax-runner</module>
+    <module>scripts</module>
+  </modules>
+
   <build>
     <plugins>
       <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.4</source>
-          <target>1.4</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifest>
-              <mainClass>org.ops4j.pax.runner.Run</mainClass>
-              <packageName>org.ops4j.pax.runner</packageName>
-            </manifest>
-          </archive>
-        </configuration>
+        <!-- help find the right 'pax' plugin -->
+        <groupId>org.ops4j.pax.construct</groupId>
+        <artifactId>maven-pax-plugin</artifactId>
+        <inherited>false</inherited>
       </plugin>
     </plugins>
   </build>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>4.3.1</version>
       <scope>test</scope>
-    </dependency> 
+    </dependency>
+    <dependency>
+      <groupId>org.easymock</groupId>
+      <artifactId>easymock</artifactId>
+      <version>2.2</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
+
   <repositories>
     <repository>
       <id>ops4j-repository</id>
-      <name>The OPS4J Repository</name>
-      <url>http://repository.ops4j.org/maven2/</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>central</id>
-      <name>Maven Repository Switchboard</name>
-      <url>http://repo1.maven.org/maven2</url>
+      <url>http://repository.ops4j.org/maven2</url>
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
     </repository>
   </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>ops4j-repository</id>
+      <url>http://repository.ops4j.org/maven2</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+
 </project>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>scripts</artifactId>
+  <packaging>pom</packaging>
+
+  <name>pax.runner.scripts</name>
+  <description>${project.name}</description>
+
+  <parent>
+    <relativePath>../</relativePath>
+    <groupId>org.ops4j.pax.runner</groupId>
+    <artifactId>project</artifactId>
+    <version>0.4.0-SNAPSHOT</version>
+  </parent>
+
+  <build>
+    <outputDirectory>target/bin</outputDirectory>
+    <resources>
+      <resource>
+        <directory>src/bin</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>filter-scripts</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>resources</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>attached</goal>
+            </goals>
+            <configuration>
+              <finalName>pax-runner</finalName>
+              <outputDirectory>assembly</outputDirectory>
+              <appendAssemblyId>false</appendAssemblyId>
+              <descriptors>
+                <descriptor>src/assembly/zip.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.ops4j.pax</groupId>
+      <artifactId>runner</artifactId>
+      <version>${project.version}</version>
+    </dependency>    
+  </dependencies>
+
+</project>
