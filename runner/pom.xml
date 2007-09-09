@@ -118,6 +118,11 @@
       <artifactId>platform-felix</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.runner</groupId>
+      <artifactId>platform-knopflerfish</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 
 </project>

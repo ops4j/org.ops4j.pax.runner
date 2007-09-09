@@ -134,6 +134,19 @@ public class PropertiesWriterTest
         );
     }
 
+    // test valid property
+    @Test
+    public void appendRawProperty()
+        throws IOException
+    {
+        new PropertiesWriter( m_os ).appendRaw( "key value" ).write();
+        compareFiles(
+            FileUtils.getFileFromClasspath( "propertieswriter/rawproperty.ini" ),
+            m_file,
+            true
+        );
+    }
+
     private static void compareFiles( File expected, File actual, boolean reverse )
         throws IOException
     {

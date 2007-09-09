@@ -7,6 +7,7 @@ src/main/resources,\
 @target/dependency/platform.jar,\
 @target/dependency/platform-equinox.jar,\
 @target/dependency/platform-felix.jar,\
+@target/dependency/platform-knopflerfish.jar,\
 @target/dependency/provision.jar,\
 @target/dependency/scanner-bundle.jar,\
 @target/dependency/scanner-dir.jar,\

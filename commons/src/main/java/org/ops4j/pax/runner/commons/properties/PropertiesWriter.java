@@ -168,6 +168,22 @@ public class PropertiesWriter
     }
 
     /**
+     * Appends a raw value = will be exactely as recived.
+     *
+     * @param value a raw value
+     *
+     * @return self for fluent api
+     */
+    public PropertiesWriter appendRaw( final String value )
+    {
+        if ( value != null )
+        {
+            m_content.add( value );
+        }
+        return this;
+    }
+
+    /**
      * Write properties to output stream.
      *
      * @throws java.io.IOException re-thrown from output stream
@@ -184,6 +200,5 @@ public class PropertiesWriter
         writer.flush();
         writer.close();
     }
-
 
 }

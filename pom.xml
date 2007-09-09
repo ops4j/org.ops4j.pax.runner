@@ -62,6 +62,7 @@
     <module>platform-console</module>
     <module>platform-equinox</module>
     <module>platform-felix</module>
+    <module>platform-knopflerfish</module>
     <module>runner</module>
     <module>via-pax-runner</module>
     <module>scripts</module>

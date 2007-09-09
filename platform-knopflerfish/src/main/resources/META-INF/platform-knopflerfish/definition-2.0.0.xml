@@ -1,0 +1,106 @@
+<platform>
+
+  <name>Knopflerfish</name>
+
+  <system>mvn:org.knopflerfish.osgi/framework/2.0.0</system>
+
+  <profile name="minimal" default="true">
+  </profile>
+
+  <profile name="tui" extends="minimal,config,log">
+    <bundle>
+      <name>org.knopflerfish.bundle.useradmin</name>
+      <url>mvn:org.knopflerfish.bundle.useradmin/useradmin_api/1.1.0</url>
+    </bundle>
+    <bundle>
+      <name>org.knopflerfish.bundle.consoletty</name>
+      <url>mvn:org.knopflerfish.bundle.consoletty/consoletty/1.0.1</url>
+    </bundle>
+    <bundle>
+      <name>org.knopflerfish.bundle.frameworkcommands</name>
+      <url>mvn:org.knopflerfish.bundle.frameworkcommands/frameworkcommands/1.0.0</url>
+    </bundle>
+    <bundle>
+      <name>org.knopflerfish.bundle.console</name>
+      <url>mvn:org.knopflerfish.bundle.console/console/1.0.0</url>
+    </bundle>
+    <bundle>
+      <name>org.knopflerfish.bundle.console.api</name>
+      <url>mvn:org.knopflerfish.bundle.console/console_api/1.0.0</url>
+    </bundle>
+    <bundle>
+      <name>org.knopflerfish.bundle.logcommands</name>
+      <url>mvn:org.knopflerfish.bundle.logcommands/logcommands/1.0.1</url>
+    </bundle>
+  </profile>
+
+  <profile name="gui" extends="config">
+    <bundle>
+      <name>org.knopflerfish.bundle.desktop</name>
+      <url>mvn:org.knopflerfish.bundle.desktop/desktop_all/1.2.0</url>
+    </bundle>
+    <bundle>
+      <name>org.knopflerfish.bundle.util</name>
+      <url>mvn:org.knopflerfish.bundle.util/util/1.0.0</url>
+    </bundle>
+    <bundle>
+      <name>org.knopflerfish.bundle.kxml</name>
+      <url>mvn:org.knopflerfish.bundle.kxml/kxml/1.0</url>
+    </bundle>
+    <bundle>
+      <name>org.knopflerfish.bundle.metatype</name>
+      <url>mvn:org.knopflerfish.bundle.metatype/metatype/1.0.0</url>
+    </bundle>
+    <bundle>
+      <name>org.knopflerfish.bundle.kf_metatype</name>
+      <url>mvn:org.knopflerfish.bundle.kf_metatype/kf_metatype/1.0.0</url>
+    </bundle>
+    <bundle>
+      <name>org.knopflerfish.bundle.cm_desktop</name>
+      <url>mvn:org.knopflerfish.bundle.cm_desktop/cm_desktop/1.0.0</url>
+    </bundle>
+  </profile>
+
+  <profile name="obr" extends="gui">
+    <bundle>
+      <name>org.knopflerfish.bundle.bundlerepository</name>
+      <url>mvn:org.knopflerfish.bundle.bundlerepository/bundlerepository_all/1.1.2</url>
+    </bundle>
+  </profile>
+
+  <profile name="config" extends="minimal">
+    <bundle>
+      <name>org.knopflerfish.bundle.cm</name>
+      <url>
+        mvn:org.knopflerfish.bundle.cm/cm_api/1.0.1
+      </url>
+    </bundle>
+  </profile>
+
+  <profile name="log" extends="minimal">
+    <bundle>
+      <name>org.ops4j.pax.logging.api</name>
+      <url>mvn:org.ops4j.pax.logging/api/0.9.4</url>
+    </bundle>
+    <bundle>
+      <name>org.ops4j.pax.logging.service</name>
+      <url>mvn:org.ops4j.pax.logging/service/0.9.4</url>
+    </bundle>
+    <bundle>
+      <name>org.ops4j.pax.logging.jcl</name>
+      <url>mvn:org.ops4j.pax.logging/jcl/0.9.4</url>
+    </bundle>
+    <bundle>
+      <name>org.ops4j.pax.logging.slf4j</name>
+      <url>mvn:org.ops4j.pax.logging/slf4j/0.9.4</url>
+    </bundle>
+  </profile>
+
+  <profile name="web" extends="log">
+    <bundle>
+      <name>org.ops4j.pax.web</name>
+      <url>mvn:org.ops4j.pax.web.bundles/service/0.2.0</url>
+    </bundle>
+  </profile>
+
+</platform>
