@@ -1,0 +1,4 @@
+Bundle-Activator=${bundle.package}.internal.Activator
+
+
+
