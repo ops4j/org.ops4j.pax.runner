@@ -150,7 +150,8 @@ public class FelixPlatformBuilder
                 final Boolean clean = configuration.shouldClean();
                 if ( clean != null && clean )
                 {
-                    final File profileDirectory = new File( configDirectory, "cache/" + profile );
+                    final File profileDirectory =
+                        new File( configDirectory, CACHE_DIRECTORY + File.separator + profile );
                     LOGGER.trace( "Cleaning profile folder [" + profileDirectory + "]" );
                     FileUtils.delete( profileDirectory );
                 }

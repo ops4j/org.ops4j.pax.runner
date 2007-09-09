@@ -180,7 +180,7 @@ public class FelixPlatformBuilderTest
     // also tests that the start level is not set if is not configured
     // also tests that the default start level is not set if is not configured
     @Test
-    public void prepareWithNullLocalBundles()
+    public void prepareWithoutBundles()
         throws PlatformException, IOException
     {
         PlatformContext platformContext = createMock( PlatformContext.class );
