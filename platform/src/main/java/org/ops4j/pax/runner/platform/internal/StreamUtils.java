@@ -21,12 +21,14 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import org.ops4j.pax.runner.commons.Info;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.pax.runner.commons.Info;
 
 /**
  * Stream related utilities.
+ * TODO add units tests
  *
  * @author Alin Dreghiciu
  * @since August 19, 2007
@@ -59,6 +61,8 @@ public class StreamUtils
     public static void streamCopy( final InputStream in, final BufferedOutputStream out, final String displayName )
         throws IOException
     {
+        Assert.notNull( "Input stream", in );
+        Assert.notNull( "Output stream", out );
         long start = System.currentTimeMillis();
         int b = in.read();
         int counter = 0;
@@ -108,6 +112,7 @@ public class StreamUtils
     public static void streamCopy( final URL url, final BufferedOutputStream out, final String displayName )
         throws IOException
     {
+        Assert.notNull( "URL", url );
         InputStream is = null;
         try
         {
