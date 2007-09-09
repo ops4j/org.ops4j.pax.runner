@@ -1,0 +1,2 @@
+#!/bin/sh
+java -jar ~/.m2/repository/org/ops4j/pax/runner/0.4.0-SNAPSHOT/runner-0.4.0-SNAPSHOT.jar $@

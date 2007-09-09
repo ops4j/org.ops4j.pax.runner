@@ -1,0 +1,101 @@
+package org.ops4j.pax.runner;
+
+import java.io.File;
+import java.net.MalformedURLException;
+
+/**
+ * Extension based provision schema resolver:<br/>
+ * * if starts with scan- returns the same value<br/>
+ * * if extension is pom -> scan-pom<br/>
+ * * if extension is jar or bundle -> scan-jar<br/>
+ * * if extension is zip -> scan-zip<br/>
+ * * if any other extension -> scan-file<br/>
+ * * if no extension or ends with slash or backslash -> scan-dir<br/>
+ * <br/>
+ * It also adds a file protocol if is a local file.
+ *
+ * @author Alin Dreghiciu
+ * @since August 26, 2007
+ */
+public class ExtensionBasedProvisionSchemaResolver implements ProvisionSchemaResolver
+{
+
+    /**
+     * {@inheritDoc}
+     */
+    public String resolve( final String toResolve )
+    {
+        if ( toResolve == null || toResolve.trim().length() == 0 )
+        {
+            return null;
+        }
+        if ( toResolve.matches( "scan-.*:.*" ) )
+        {
+            return toResolve;
+        }
+        String options = "";
+        String resolve = toResolve;
+        if ( toResolve.contains( "@" ) )
+        {
+            final int startOfOption = toResolve.indexOf( "@" );
+            options = toResolve.substring( startOfOption );
+            resolve = toResolve.substring( 0, startOfOption );
+        }
+        // first resolve schema
+        String schema = org.ops4j.pax.runner.scanner.dir.ServiceConstants.SCHEMA;
+        if ( !resolve.endsWith( "/" ) && !resolve.endsWith( "\\" ) && !resolve.contains( "!" ) )
+        {
+            // check if starts with mvn, because most common it will be a bundle
+            if ( resolve.startsWith( org.ops4j.pax.runner.handler.mvn.ServiceConstants.PROTOCOL ) )
+            {
+                schema = org.ops4j.pax.runner.scanner.bundle.ServiceConstants.SCHEMA;
+            }
+            else
+            {
+                int indexOfSlash = resolve.lastIndexOf( "/" );
+                if ( indexOfSlash == -1 )
+                {
+                    indexOfSlash = resolve.lastIndexOf( "\\" );
+                }
+                final int indexOfDot = resolve.lastIndexOf( "." );
+                if ( indexOfDot > indexOfSlash )
+                {
+                    schema = org.ops4j.pax.runner.scanner.file.ServiceConstants.SCHEMA;
+                    if ( indexOfDot < resolve.length() - 1 )
+                    {
+                        final String extension = resolve.substring( indexOfDot + 1 ).toUpperCase();
+                        if ( "POM".equals( extension ) )
+                        {
+                            // TODO replace with static SCHEMA when scan-pom created.
+                            schema = "scan-pom";
+                        }
+                        else if ( "ZIP".equals( extension ) )
+                        {
+                            schema = org.ops4j.pax.runner.scanner.dir.ServiceConstants.SCHEMA;
+                        }
+                        else if ( "JAR".equals( extension ) || "BUNDLE".equals( extension ) )
+                        {
+                            schema = org.ops4j.pax.runner.scanner.bundle.ServiceConstants.SCHEMA;
+                        }
+                    }
+                }
+            }
+        }
+        // then check out if is a local file
+        final File file = new File( resolve );
+        String resolved = resolve;
+        if ( file.exists() )
+        {
+            try
+            {
+                resolved = file.toURL().toExternalForm();
+            }
+            catch ( MalformedURLException ignore )
+            {
+                // ignore as this should not happen if the file exists
+            }
+        }
+        return schema + org.ops4j.pax.runner.provision.ServiceConstants.SCHEME_SEPARATOR + resolved + options;
+    }
+
+}
