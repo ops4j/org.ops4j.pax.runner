@@ -43,10 +43,11 @@ public class ExtensionBasedProvisionSchemaResolver implements ProvisionSchemaRes
         }
         // first resolve schema
         String schema = org.ops4j.pax.runner.scanner.dir.ServiceConstants.SCHEMA;
-        if ( !resolve.endsWith( "/" ) && !resolve.endsWith( "\\" ) && !resolve.contains( "!" ) )
+        if ( !resolve.endsWith( "/" ) && !resolve.endsWith( "\\" ) && !resolve.contains( "!/" ) )
         {
-            // check if starts with mvn, because most common it will be a bundle
-            if ( resolve.startsWith( org.ops4j.pax.runner.handler.mvn.ServiceConstants.PROTOCOL ) )
+            // check if starts with mvn or wrap, because most common it will be a bundle
+            if ( resolve.startsWith( org.ops4j.pax.runner.handler.mvn.ServiceConstants.PROTOCOL )
+                 || resolve.startsWith( org.ops4j.pax.runner.handler.wrap.ServiceConstants.PROTOCOL ) )
             {
                 schema = org.ops4j.pax.runner.scanner.bundle.ServiceConstants.SCHEMA;
             }

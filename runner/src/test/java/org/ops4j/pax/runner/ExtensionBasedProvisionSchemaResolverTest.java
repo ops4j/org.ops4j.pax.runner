@@ -116,12 +116,6 @@ public class ExtensionBasedProvisionSchemaResolverTest
     }
 
     @Test
-    public void resolveDirWithFilterSeparator()
-    {
-        assertEquals( "Resolved", "scan-dir:x.zip!", m_underTest.resolve( "x.zip!" ) );
-    }
-
-    @Test
     public void resolveDirWithoutProtocol()
         throws MalformedURLException
     {
@@ -244,6 +238,24 @@ public class ExtensionBasedProvisionSchemaResolverTest
     {
         assertEquals( "Resolved", "scan-bundle:mvn:org.ops4j/mine/0.2.0",
                       m_underTest.resolve( "mvn:org.ops4j/mine/0.2.0" )
+        );
+    }
+
+    @Test
+    public void resolveWrap()
+        throws MalformedURLException
+    {
+        assertEquals( "Resolved", "scan-bundle:wrap:mvn:org.ops4j/mine",
+                      m_underTest.resolve( "wrap:mvn:org.ops4j/mine" )
+        );
+    }
+
+    @Test
+    public void resolveWrapWithInstructions()
+        throws MalformedURLException
+    {
+        assertEquals( "Resolved", "scan-bundle:wrap:mvn:org.ops4j/mine!instruction=value",
+                      m_underTest.resolve( "wrap:mvn:org.ops4j/mine!instruction=value" )
         );
     }
 
