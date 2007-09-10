@@ -5,6 +5,10 @@
   <system>mvn:org.knopflerfish.osgi/framework/2.0.0</system>
 
   <profile name="minimal" default="true">
+    <bundle>
+      <name>org.osgi.compendium</name>
+      <url>wrap:mvn:org.osgi/osgi_R4_compendium/1.0!classpath:META-INF/platform/org.osgi.compendium.1.0.bnd</url>
+    </bundle>
   </profile>
 
   <profile name="tui" extends="minimal,config,log">
