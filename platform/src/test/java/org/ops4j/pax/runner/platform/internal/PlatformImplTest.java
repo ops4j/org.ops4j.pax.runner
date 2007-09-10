@@ -60,6 +60,7 @@ public class PlatformImplTest
         m_bundleContext = createMock( BundleContext.class );
         m_bundle = createMock( Bundle.class );
         m_workDir = File.createTempFile( "runner", null ).getParentFile().getAbsolutePath() + "/runner";
+        System.out.println( "Work Dir:" + m_workDir );
     }
 
     @Test( expected = IllegalArgumentException.class )
