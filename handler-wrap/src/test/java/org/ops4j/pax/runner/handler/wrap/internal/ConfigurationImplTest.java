@@ -60,41 +60,4 @@ public class ConfigurationImplTest
         verify( resolver );
     }
 
-    @Test
-    public void getRepositoriesWithOneRepository()
-        throws MalformedURLException
-    {
-        Resolver resolver = createMock( Resolver.class );
-
-        expect( resolver.get( "org.ops4j.pax.runner.handler.wrap.repositories" ) ).andReturn( "file:repository1" );
-
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
-        List<URL> repositories = config.getRepositories();
-        assertNotNull( "Repositories is null", repositories );
-        assertEquals( "Repositories size", 1, repositories.size() );
-        assertEquals( "Repository", new URL( "file:repository1" ), repositories.get( 0 ) );
-        verify( resolver );
-    }
-
-    @Test
-    public void getRepositoriesWithMoreRepositories()
-        throws MalformedURLException
-    {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.handler.wrap.repositories" ) ).andReturn(
-            "file:repository1,file:repository2"
-        );
-
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
-        List<URL> repositories = config.getRepositories();
-        verify( resolver );
-
-        assertNotNull( "Repositories is null", repositories );
-        assertEquals( "Repositories size", 2, repositories.size() );
-        assertEquals( "Repository 1", new URL( "file:repository1" ), repositories.get( 0 ) );
-        assertEquals( "Repository 2", new URL( "file:repository2" ), repositories.get( 1 ) );
-    }
-
 }

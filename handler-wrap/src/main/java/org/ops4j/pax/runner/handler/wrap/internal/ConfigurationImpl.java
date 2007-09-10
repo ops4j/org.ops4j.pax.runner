@@ -46,11 +46,6 @@ public class ConfigurationImpl
     private static final Log LOGGER = LogFactory.getLog( ConfigurationImpl.class );
 
     /**
-     * Repositories separator.
-     */
-    private final static String REPOSITORIES_SEPARATOR = ",";
-
-    /**
      * Property resolver. Cannot be null.
      */
     private final Resolver m_resolver;
@@ -78,39 +73,6 @@ public class ConfigurationImpl
             );
         }
         return get( ServiceConstants.PROPERTY_CERTIFICATE_CHECK );
-    }
-
-    /**
-     * Repository is a comma separated list of repositories to be used. If repository acces requests authentication
-     * the user name and password must be specified in the repository url as for example
-     * http://user:password@repository.ops4j.org/maven2.<br/>
-     * Repository resolution:<br/>
-     * 1. looks for a configuration property named repository;<br/>
-     * 2. looks for a framework property/system setting repository;<br/>
-     *
-     * @see Configuration#getRepositories()
-     */
-    public List<URL> getRepositories()
-        throws MalformedURLException
-    {
-        if ( !contains( ServiceConstants.PROPERTY_REPOSITORIES ) )
-        {
-            // look for repositories property
-            String repositoriesProp = m_resolver.get( ServiceConstants.PROPERTY_REPOSITORIES );
-            // build repositories list
-            final List<URL> repositoriesProperty = new ArrayList<URL>();
-            if ( repositoriesProp != null && repositoriesProp.trim().length() > 0 )
-            {
-                String[] repositories = repositoriesProp.split( REPOSITORIES_SEPARATOR );
-                for ( String repositoryURL : repositories )
-                {
-                    repositoriesProperty.add( new URL( repositoryURL ) );
-                }
-            }
-            LOGGER.trace( "Using repositories [" + repositoriesProperty + "]" );
-            return set( ServiceConstants.PROPERTY_REPOSITORIES, repositoriesProperty );
-        }
-        return get( ServiceConstants.PROPERTY_REPOSITORIES );
     }
 
 }

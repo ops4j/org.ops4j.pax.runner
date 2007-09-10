@@ -37,14 +37,4 @@ public interface Configuration
      */
     Boolean getCertificateCheck();
 
-    /**
-     * Returns a list of repositories to be searched.
-     *
-     * @return a list of repositories. List can be null or empty if there are no repositories to be searched.
-     *
-     * @throws java.net.MalformedURLException if not all urls could be parsed
-     */
-    List<URL> getRepositories()
-        throws MalformedURLException;
-
 }

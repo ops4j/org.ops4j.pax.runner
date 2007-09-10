@@ -35,10 +35,6 @@ public interface ServiceConstants
      */
     static final String PROPERTY_CERTIFICATE_CHECK = PID + ".certificateCheck";    
     /**
-     * Repositories configuration property name.
-     */
-    static final String PROPERTY_REPOSITORIES = PID + ".repositories";
-    /**
      * The protocol name.
      */
     public static final String PROTOCOL = "wrap";

@@ -89,9 +89,7 @@ public class Connection
     }
 
     /**
-     * Returns the input stream denoted by the url.<br/>
-     * If the url does not contain a repository the resource is searched in every repository if available, in the order
-     * provided by the repository setting.
+     * Returns the input stream denoted by the url.
      *
      * @return the input stream for the resource denoted by url
      *

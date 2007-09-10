@@ -155,7 +155,7 @@ public class Parser
     /**
      * Returns the wrapped URL if present, null otherwise
      *
-     * @return repository URL
+     * @return wraped jar URL
      */
     public URL getWrappedJarURL()
     {
