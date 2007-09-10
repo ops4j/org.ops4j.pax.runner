@@ -40,9 +40,9 @@
     </dependency>
 
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>handler-mvn</artifactId>
-      <version>${project.version}</version>
+      <version>0.5.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
 
