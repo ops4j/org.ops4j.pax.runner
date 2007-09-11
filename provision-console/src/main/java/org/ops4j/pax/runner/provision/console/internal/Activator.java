@@ -36,10 +36,10 @@ public final class Activator
         throws BundleException
     {
         ServiceReference reference = bundleContext.getServiceReference( ProvisionService.class.getName() );
-        if ( reference != null )
+        if( reference != null )
         {
             ProvisionService service = (ProvisionService) bundleContext.getService( reference );
-            if ( service != null )
+            if( service != null )
             {
                 startConsole( service );
                 bundleContext.ungetService( reference );
@@ -51,34 +51,34 @@ public final class Activator
     {
         System.out.println();
         BufferedReader stdin = new BufferedReader( new InputStreamReader( System.in ) );
-        while ( true )
+        while( true )
         {
             try
             {
                 System.out.print( "provision> " );
                 String input = stdin.readLine();
-                if ( "exit".equalsIgnoreCase( input.trim() ) )
+                if( "exit".equalsIgnoreCase( input.trim() ) )
                 {
                     return;
                 }
-                if ( input.trim().length() > 0 )
+                if( input.trim().length() > 0 )
                 {
                     service.scan( input ).install();
                 }
             }
-            catch ( MalformedSpecificationException e )
+            catch( MalformedSpecificationException e )
             {
                 e.printStackTrace( System.out );
-            }            
-            catch ( IOException ignore )
+            }
+            catch( IOException ignore )
             {
                 return;
             }
-            catch ( ScannerException e )
+            catch( ScannerException e )
             {
                 e.printStackTrace( System.out );
             }
-            catch ( BundleException e )
+            catch( BundleException e )
             {
                 e.printStackTrace( System.out );
             }

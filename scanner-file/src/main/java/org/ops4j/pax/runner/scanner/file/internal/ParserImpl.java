@@ -68,11 +68,11 @@ public class ParserImpl
     public ParserImpl( final String path )
         throws MalformedSpecificationException
     {
-        if ( path == null || path.trim().length() == 0 )
+        if( path == null || path.trim().length() == 0 )
         {
             throw new MalformedSpecificationException( "Path cannot be null or empty. Syntax " + SYNTAX );
         }
-        if ( path.startsWith( SEPARATOR ) || path.endsWith( SEPARATOR ) )
+        if( path.startsWith( SEPARATOR ) || path.endsWith( SEPARATOR ) )
         {
             throw new MalformedSpecificationException(
                 "Path cannot start or end with " + SEPARATOR + ". Syntax " + SYNTAX
@@ -83,13 +83,13 @@ public class ParserImpl
         {
             m_fileURL = new URL( segments[ 0 ] );
         }
-        catch ( MalformedURLException e )
+        catch( MalformedURLException e )
         {
             throw new MalformedSpecificationException( "Invalid url", e );
         }
-        if ( segments.length > 1 )
+        if( segments.length > 1 )
         {
-            for ( int i = 1; i < segments.length; i++ )
+            for( int i = 1; i < segments.length; i++ )
             {
                 parseSegment( segments[ i ].trim() );
             }
@@ -107,19 +107,19 @@ public class ParserImpl
     private void parseSegment( final String segment )
         throws MalformedSpecificationException
     {
-        if ( m_shouldStart == null && segment.equalsIgnoreCase( START ) )
+        if( m_shouldStart == null && segment.equalsIgnoreCase( START ) )
         {
             m_shouldStart = false;
             return;
         }
-        if ( m_startLevel == null )
+        if( m_startLevel == null )
         {
             try
             {
                 m_startLevel = Integer.parseInt( segment );
                 return;
             }
-            catch ( NumberFormatException e )
+            catch( NumberFormatException e )
             {
                 throw new MalformedSpecificationException( "Invalid option [" + segment + "]. Syntax " + SYNTAX );
             }

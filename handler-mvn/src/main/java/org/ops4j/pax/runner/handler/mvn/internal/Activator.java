@@ -95,11 +95,11 @@ public final class Activator
     public void stop( final BundleContext bundleContext )
     {
         Assert.notNull( "Bundle context", bundleContext );
-        if ( m_handlerReg != null )
+        if( m_handlerReg != null )
         {
             m_handlerReg.unregister();
         }
-        if ( m_managedServiceReg != null )
+        if( m_managedServiceReg != null )
         {
             m_managedServiceReg.unregister();
         }
@@ -143,7 +143,7 @@ public final class Activator
                 public void updated( final Dictionary config )
                     throws ConfigurationException
                 {
-                    if ( config == null )
+                    if( config == null )
                     {
                         m_handler.setResolver( new BundleContextResolver( m_bundleContext ) );
                     }

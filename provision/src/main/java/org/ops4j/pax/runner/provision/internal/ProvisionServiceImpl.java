@@ -54,7 +54,7 @@ public class ProvisionServiceImpl
     /**
      * Scheme -> scanner relation.
      */
-    private Map<String, Scanner> m_scanners;
+    private final Map<String, Scanner> m_scanners;
     /**
      * Bundle context where the bundle is installed.
      */
@@ -83,18 +83,18 @@ public class ProvisionServiceImpl
         throws MalformedSpecificationException, ScannerException
     {
         LOGGER.info( "Provision from [" + spec + "]" );
-        if ( spec == null || spec.trim().length() == 0 )
+        if( spec == null || spec.trim().length() == 0 )
         {
             throw new MalformedSpecificationException( "Specification cannot be null or empty" );
         }
-        if ( !spec.contains( ServiceConstants.SCHEME_SEPARATOR ) )
+        if( !spec.contains( ServiceConstants.SCHEME_SEPARATOR ) )
         {
             throw new UnsupportedSchemaException( "Provisioning scheme is not specified" );
         }
         String scheme = spec.substring( 0, spec.indexOf( ServiceConstants.SCHEME_SEPARATOR ) );
         String path = spec.substring( spec.indexOf( ServiceConstants.SCHEME_SEPARATOR ) + 1 );
         Scanner scanner = m_scanners.get( scheme );
-        if ( scanner == null )
+        if( scanner == null )
         {
             throw new UnsupportedSchemaException( "Unknown provisioning scheme [" + scheme + "]" );
         }
@@ -111,9 +111,9 @@ public class ProvisionServiceImpl
     InstallableBundles wrap( final List<BundleReference> bundleReferences )
     {
         List<InstallableBundle> installables = new ArrayList<InstallableBundle>();
-        if ( bundleReferences != null )
+        if( bundleReferences != null )
         {
-            for ( BundleReference reference : bundleReferences )
+            for( BundleReference reference : bundleReferences )
             {
                 installables.add( wrap( reference ) );
             }
@@ -125,6 +125,7 @@ public class ProvisionServiceImpl
      * Creates a new installable set. The methods could be overrided by subclasses.
      *
      * @param installables a list of installables that makes up the set.
+     * @return The installable bundles as an Iterable.
      */
     InstallableBundles createSet( final List<InstallableBundle> installables )
     {
@@ -148,16 +149,19 @@ public class ProvisionServiceImpl
      *
      * @param scanner the scanner to use
      * @param path    the path part of the specification
+     * @return A List of bundle references found by the scanner.
+     * @throws ScannerException TODO
+     * @throws MalformedSpecificationException TODO
      */
     private List<BundleReference> scan( final Scanner scanner, final String path )
         throws ScannerException, MalformedSpecificationException
     {
         List<BundleReference> references = scanner.scan( path );
-        if ( LOGGER.isInfoEnabled() )
+        if( LOGGER.isInfoEnabled() )
         {
-            if ( references != null )
+            if( references != null )
             {
-                for ( BundleReference reference : references )
+                for( BundleReference reference : references )
                 {
                     LOGGER.info( "Installing bundle [" + reference + "]" );
                 }
@@ -180,7 +184,7 @@ public class ProvisionServiceImpl
     {
         Assert.notNull( "Scheme", scheme );
         Assert.notNull( "Scanner", scanner );
-        synchronized ( m_scanners )
+        synchronized( m_scanners )
         {
             m_scanners.put( scheme, scanner );
         }
@@ -195,11 +199,11 @@ public class ProvisionServiceImpl
     public void removeScanner( final Scanner scanner )
     {
         Assert.notNull( "Scanner", scanner );
-        synchronized ( m_scanners )
+        synchronized( m_scanners )
         {
-            for ( Map.Entry<String, Scanner> entry : m_scanners.entrySet() )
+            for( Map.Entry<String, Scanner> entry : m_scanners.entrySet() )
             {
-                if ( scanner == entry.getValue() )
+                if( scanner == entry.getValue() )
                 {
                     m_scanners.remove( entry.getKey() );
                     LOGGER.debug( "Removed scheme [" + entry.getKey() + "] scanner [" + scanner + "]" );

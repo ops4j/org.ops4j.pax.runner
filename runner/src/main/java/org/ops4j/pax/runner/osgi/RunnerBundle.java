@@ -121,7 +121,7 @@ public class RunnerBundle
     }
 
     /**
-     * Delegates to class loader. 
+     * Delegates to class loader.
      * {@inheritDoc}
      */
     @Override
@@ -129,5 +129,5 @@ public class RunnerBundle
     {
         return getClass().getClassLoader().getResource( name );
     }
-    
+
 }

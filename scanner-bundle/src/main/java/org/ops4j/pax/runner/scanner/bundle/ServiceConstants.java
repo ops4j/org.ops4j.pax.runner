@@ -34,5 +34,5 @@ public interface ServiceConstants
      * Scanner scheme.
      */
     static final String SCHEMA = "scan-bundle";
-    
+
 }

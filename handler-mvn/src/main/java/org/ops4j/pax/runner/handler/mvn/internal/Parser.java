@@ -112,17 +112,17 @@ public class Parser
     public Parser( final String path )
         throws MalformedURLException
     {
-        if ( path == null )
+        if( path == null )
         {
             throw new MalformedURLException( "Path cannot be null. Syntax " + SYNTAX );
         }
-        if ( path.startsWith( REPOSITORY_SEPARATOR ) || path.endsWith( REPOSITORY_SEPARATOR ) )
+        if( path.startsWith( REPOSITORY_SEPARATOR ) || path.endsWith( REPOSITORY_SEPARATOR ) )
         {
             throw new MalformedURLException(
                 "Path cannot start or end with " + REPOSITORY_SEPARATOR + ". Syntax " + SYNTAX
             );
         }
-        if ( path.contains( REPOSITORY_SEPARATOR ) )
+        if( path.contains( REPOSITORY_SEPARATOR ) )
         {
             int pos = path.lastIndexOf( REPOSITORY_SEPARATOR );
             parseArtifactPart( path.substring( pos + 1 ) );
@@ -145,31 +145,31 @@ public class Parser
         throws MalformedURLException
     {
         String[] segments = part.split( ARTIFACT_SEPARATOR );
-        if ( segments.length < 2 )
+        if( segments.length < 2 )
         {
             throw new MalformedURLException( "Invalid path. Syntax " + SYNTAX );
         }
         // we must have a valid group
         m_group = segments[ 0 ];
-        if ( m_group.trim().length() == 0 )
+        if( m_group.trim().length() == 0 )
         {
             throw new MalformedURLException( "Invalid groupId. Syntax " + SYNTAX );
         }
         // valid artifact
         m_artifact = segments[ 1 ];
-        if ( m_artifact.trim().length() == 0 )
+        if( m_artifact.trim().length() == 0 )
         {
             throw new MalformedURLException( "Invalid artifactId. Syntax " + SYNTAX );
         }
         // version is optional but we have a default value 
         m_version = VERSION_LATEST;
-        if ( segments.length >= 3 && segments[ 2 ].trim().length() > 0 )
+        if( segments.length >= 3 && segments[ 2 ].trim().length() > 0 )
         {
             m_version = segments[ 2 ];
         }
         // type is optional but we have a default value
         m_type = TYPE_JAR;
-        if ( segments.length >= 4 && segments[ 3 ].trim().length() > 0 )
+        if( segments.length >= 4 && segments[ 3 ].trim().length() > 0 )
         {
             m_type = segments[ 3 ];
         }
@@ -238,6 +238,8 @@ public class Parser
     /**
      * Returns the complete path to artifact as stated by Maven 2 repository layout.
      *
+     * @param version The version of the artifact.
+     *
      * @return artifact path
      */
     public String getArtifactPath( final String version )
@@ -259,6 +261,10 @@ public class Parser
 
     /**
      * Returns the complete path to artifact for a snapshot file.
+     *
+     * @param version     The version of the snapshot.
+     * @param timestamp   The timestamp of the snapshot.
+     * @param buildnumber The buildnumber of the snapshot.
      *
      * @return artifact path
      */
@@ -282,6 +288,8 @@ public class Parser
 
     /**
      * Returns the path to metdata file corresponding to this artifact.
+     *
+     * @param version The version of the the metadata.
      *
      * @return metadata file path
      */

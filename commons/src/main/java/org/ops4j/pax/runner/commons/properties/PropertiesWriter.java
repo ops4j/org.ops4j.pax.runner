@@ -97,20 +97,20 @@ public class PropertiesWriter
     {
         Assert.notNull( "Key", key );
         String valueToAdd = value;
-        if ( value == null )
+        if( value == null )
         {
             valueToAdd = "";
         }
         Integer position = m_positions.get( key );
         List<String> values = m_values.get( key );
-        if ( values == null )
+        if( values == null )
         {
             values = new ArrayList<String>();
             m_values.put( key, values );
         }
         values.add( valueToAdd );
-        StringBuilder builder = new StringBuilder().append( key + "=" );
-        if ( values.size() == 1 )
+        StringBuilder builder = new StringBuilder().append( key ).append( "=" );
+        if( values.size() == 1 )
         {
             builder.append( valueToAdd );
         }
@@ -118,9 +118,9 @@ public class PropertiesWriter
         {
             builder.append( "\\\n" );
             String trail = null;
-            for ( String storedValue : values )
+            for( String storedValue : values )
             {
-                if ( trail != null )
+                if( trail != null )
                 {
                     builder.append( trail );
                 }
@@ -128,7 +128,7 @@ public class PropertiesWriter
                 trail = m_separator + "\\\n";
             }
         }
-        if ( position == null )
+        if( position == null )
         {
             m_content.add( builder.toString() );
             m_positions.put( key, m_content.size() - 1 );
@@ -143,12 +143,14 @@ public class PropertiesWriter
     /**
      * Appends a comment to be written.
      *
+     * @param comment The comment to add to the Properties file.
+     *
      * @return self for a fluent api
      */
     public PropertiesWriter append( final String comment )
     {
         String commentToAdd = "#" + comment;
-        if ( comment == null )
+        if( comment == null )
         {
             commentToAdd = "#";
         }
@@ -192,7 +194,7 @@ public class PropertiesWriter
         throws IOException
     {
         BufferedWriter writer = new BufferedWriter( new OutputStreamWriter( m_outputStream ) );
-        for ( String line : m_content )
+        for( String line : m_content )
         {
             writer.write( line );
             writer.newLine();

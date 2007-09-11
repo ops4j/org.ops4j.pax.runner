@@ -31,40 +31,39 @@ public class NullLog implements Log
         m_logLevel = logLevel;
     }
 
-
     public boolean isDebugEnabled()
     {
-        return ge(m_logLevel, DEBUG);
+        return ge( m_logLevel, DEBUG );
     }
 
     public boolean isErrorEnabled()
     {
-        return ge(m_logLevel, ERROR);
+        return ge( m_logLevel, ERROR );
     }
 
     public boolean isFatalEnabled()
     {
-        return ge(m_logLevel, FATAL);
+        return ge( m_logLevel, FATAL );
     }
 
     public boolean isInfoEnabled()
     {
-        return ge(m_logLevel, INFO);
+        return ge( m_logLevel, INFO );
     }
 
     public boolean isTraceEnabled()
     {
-        return ge(m_logLevel, TRACE);
+        return ge( m_logLevel, TRACE );
     }
 
     public boolean isWarnEnabled()
     {
-        return ge(m_logLevel, WARNING);
+        return ge( m_logLevel, WARNING );
     }
 
     public void trace( Object message )
     {
-        if ( message != null && isTraceEnabled() )
+        if( message != null && isTraceEnabled() )
         {
             Info.println( message.toString() );
         }
@@ -72,13 +71,13 @@ public class NullLog implements Log
 
     public void trace( Object message, Throwable t )
     {
-        if ( isTraceEnabled() )
+        if( isTraceEnabled() )
         {
-            if ( message != null )
+            if( message != null )
             {
                 Info.println( message.toString() );
             }
-            if ( t != null )
+            if( t != null )
             {
                 t.printStackTrace();
             }
@@ -87,7 +86,7 @@ public class NullLog implements Log
 
     public void debug( Object message )
     {
-        if ( message != null && isDebugEnabled() )
+        if( message != null && isDebugEnabled() )
         {
             Info.println( message.toString() );
         }
@@ -95,13 +94,13 @@ public class NullLog implements Log
 
     public void debug( Object message, Throwable t )
     {
-        if ( isDebugEnabled() )
+        if( isDebugEnabled() )
         {
-            if ( message != null )
+            if( message != null )
             {
                 Info.println( message.toString() );
             }
-            if ( t != null )
+            if( t != null )
             {
                 t.printStackTrace();
             }
@@ -110,7 +109,7 @@ public class NullLog implements Log
 
     public void info( Object message )
     {
-        if ( message != null && isInfoEnabled() )
+        if( message != null && isInfoEnabled() )
         {
             Info.println( message.toString() );
         }
@@ -118,13 +117,13 @@ public class NullLog implements Log
 
     public void info( Object message, Throwable t )
     {
-        if ( isInfoEnabled() )
+        if( isInfoEnabled() )
         {
-            if ( message != null )
+            if( message != null )
             {
                 Info.println( message.toString() );
             }
-            if ( t != null )
+            if( t != null )
             {
                 t.printStackTrace();
             }
@@ -133,7 +132,7 @@ public class NullLog implements Log
 
     public void warn( Object message )
     {
-        if ( message != null && isWarnEnabled() )
+        if( message != null && isWarnEnabled() )
         {
             Info.println( message.toString() );
         }
@@ -141,13 +140,13 @@ public class NullLog implements Log
 
     public void warn( Object message, Throwable t )
     {
-        if ( isWarnEnabled() )
+        if( isWarnEnabled() )
         {
-            if ( message != null )
+            if( message != null )
             {
                 Info.println( message.toString() );
             }
-            if ( t != null )
+            if( t != null )
             {
                 t.printStackTrace();
             }
@@ -156,7 +155,7 @@ public class NullLog implements Log
 
     public void error( Object message )
     {
-        if ( message != null && isErrorEnabled() )
+        if( message != null && isErrorEnabled() )
         {
             Info.println( message.toString() );
         }
@@ -164,13 +163,13 @@ public class NullLog implements Log
 
     public void error( Object message, Throwable t )
     {
-        if ( isErrorEnabled() )
+        if( isErrorEnabled() )
         {
-            if ( message != null )
+            if( message != null )
             {
                 Info.println( message.toString() );
             }
-            if ( t != null )
+            if( t != null )
             {
                 t.printStackTrace();
             }
@@ -179,7 +178,7 @@ public class NullLog implements Log
 
     public void fatal( Object message )
     {
-        if ( message != null && isFatalEnabled() )
+        if( message != null && isFatalEnabled() )
         {
             Info.println( message.toString() );
         }
@@ -187,13 +186,13 @@ public class NullLog implements Log
 
     public void fatal( Object message, Throwable t )
     {
-        if ( isFatalEnabled() )
+        if( isFatalEnabled() )
         {
-            if ( message != null )
+            if( message != null )
             {
                 Info.println( message.toString() );
             }
-            if ( t != null )
+            if( t != null )
             {
                 t.printStackTrace();
             }
@@ -212,7 +211,7 @@ public class NullLog implements Log
 
     public static Log newInstance( final LogLevel logLevel )
     {
-        if ( m_me == null )
+        if( m_me == null )
         {
             m_me = new NullLog( logLevel );
         }

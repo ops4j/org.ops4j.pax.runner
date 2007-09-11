@@ -132,23 +132,23 @@ public class FelixPlatformBuilder
             writer.append( "#############################" );
             // framework start level
             final Integer startLevel = configuration.getStartLevel();
-            if ( startLevel != null )
+            if( startLevel != null )
             {
                 writer.append( "felix.startlevel.framework", startLevel.toString() );
             }
             // bundle start level
             final Integer bundleStartLevel = configuration.getBundleStartLevel();
-            if ( bundleStartLevel != null )
+            if( bundleStartLevel != null )
             {
                 writer.append( "felix.startlevel.bundle", bundleStartLevel.toString() );
             }
             // default profile
             final String profile = configuration.getFrameworkProfile();
-            if ( profile != null )
+            if( profile != null )
             {
                 writer.append( "felix.cache.profile", profile );
                 final Boolean clean = configuration.shouldClean();
-                if ( clean != null && clean )
+                if( clean != null && clean )
                 {
                     final File profileDirectory =
                         new File( configDirectory, CACHE_DIRECTORY + File.separator + profile );
@@ -159,7 +159,7 @@ public class FelixPlatformBuilder
             // system packages
             writer.append( Constants.FRAMEWORK_SYSTEMPACKAGES, context.getSystemPackages() );
 
-            if ( bundles != null && bundles.size() > 0 )
+            if( bundles != null && bundles.size() > 0 )
             {
                 writer.append();
                 writer.append( "#############################" );
@@ -176,20 +176,21 @@ public class FelixPlatformBuilder
 
             writer.write();
         }
-        catch ( IOException e )
+        catch( IOException e )
         {
             throw new PlatformException( "Could not create felix configuration file", e );
         }
         finally
         {
-            if ( os != null )
+            if( os != null )
             {
                 try
                 {
                     os.close();
                 }
-                catch ( IOException e )
+                catch( IOException e )
                 {
+                    //noinspection ThrowFromFinallyBlock
                     throw new PlatformException( "Could not create felix configuration file", e );
                 }
             }
@@ -205,10 +206,10 @@ public class FelixPlatformBuilder
      */
     private void appendProperties( final PropertiesWriter writer, final Properties properties )
     {
-        if ( properties != null )
+        if( properties != null )
         {
             final Enumeration enumeration = properties.propertyNames();
-            while ( enumeration.hasMoreElements() )
+            while( enumeration.hasMoreElements() )
             {
                 final String key = (String) enumeration.nextElement();
                 writer.append( key, properties.getProperty( key ) );
@@ -231,10 +232,10 @@ public class FelixPlatformBuilder
                                 final Integer defaultStartlevel )
         throws MalformedURLException, PlatformException
     {
-        for ( LocalBundle bundle : bundles )
+        for( LocalBundle bundle : bundles )
         {
             File bundleFile = bundle.getFile();
-            if ( bundleFile == null )
+            if( bundleFile == null )
             {
                 throw new PlatformException( "The file from bundle to install cannot be null" );
             }
@@ -243,7 +244,7 @@ public class FelixPlatformBuilder
 
             final BundleReference reference = bundle.getBundleReference();
             final Boolean shouldStart = reference.shouldStart();
-            if ( shouldStart != null && shouldStart )
+            if( shouldStart != null && shouldStart )
             {
                 propertyName.append( "." ).append( "start" );
             }
@@ -252,11 +253,11 @@ public class FelixPlatformBuilder
                 propertyName.append( "." ).append( "install" );
             }
             Integer startLevel = reference.getStartLevel();
-            if ( startLevel == null )
+            if( startLevel == null )
             {
                 startLevel = defaultStartlevel;
             }
-            if ( startLevel != null )
+            if( startLevel != null )
             {
                 propertyName.append( "." ).append( startLevel );
             }
@@ -327,7 +328,7 @@ public class FelixPlatformBuilder
     {
         // TODO implement platform versioning
         final URL url = m_bundleContext.getBundle().getResource( "META-INF/platform-felix/definition-1.0.0.xml" );
-        if ( url == null )
+        if( url == null )
         {
             throw new FileNotFoundException( "META-INF/platform-felix/definition-1.0.0.xml could not be found" );
         }
@@ -343,7 +344,7 @@ public class FelixPlatformBuilder
     public String getRequiredProfile( final PlatformContext context )
     {
         final Boolean console = context.getConfiguration().startConsole();
-        if ( console == null || !console )
+        if( console == null || !console )
         {
             return null;
         }

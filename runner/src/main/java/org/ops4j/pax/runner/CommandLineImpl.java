@@ -60,9 +60,9 @@ public class CommandLineImpl implements CommandLine
         m_options = new Properties();
         m_arguments = new ArrayList<String>();
 
-        for ( String arg : args )
+        for( String arg : args )
         {
-            if ( arg.startsWith( OPTION_PREFIX ) )
+            if( arg.startsWith( OPTION_PREFIX ) )
             {
                 parseOption( arg );
             }
@@ -98,18 +98,18 @@ public class CommandLineImpl implements CommandLine
     {
         final StringTokenizer tokenizer = new StringTokenizer( arg.substring( 2 ), EQ );
         final String key = tokenizer.nextToken();
-        if ( key != null && !"".equals( key.trim() ) )
+        if( key != null && !"".equals( key.trim() ) )
         {
-            if ( tokenizer.hasMoreTokens() )
+            if( tokenizer.hasMoreTokens() )
             {
                 m_options.put( key, tokenizer.nextToken() );
             }
             else
             {
-                if ( key.startsWith( "no" ) && key.length() > 2 )
+                if( key.startsWith( "no" ) && key.length() > 2 )
                 {
-                    String actualKey = key.substring( 2, 3 ).toLowerCase( );
-                    if ( key.length() >= 3 )
+                    String actualKey = key.substring( 2, 3 ).toLowerCase();
+                    if( key.length() >= 3 )
                     {
                         actualKey = actualKey + key.substring( 3 );
                     }
@@ -141,7 +141,7 @@ public class CommandLineImpl implements CommandLine
     {
         StringBuilder builder = new StringBuilder();
         builder.append( "Arguments: " );
-        for ( String entry : m_arguments )
+        for( String entry : m_arguments )
         {
             builder
                 .append( "[" )
@@ -149,7 +149,7 @@ public class CommandLineImpl implements CommandLine
                 .append( "]" );
         }
         builder.append( "Options: " );
-        for ( Object key : m_options.keySet() )
+        for( Object key : m_options.keySet() )
         {
             builder
                 .append( "[" )

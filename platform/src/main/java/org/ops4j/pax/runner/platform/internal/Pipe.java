@@ -53,7 +53,7 @@ public class Pipe
 
     public synchronized Pipe start( final String name )
     {
-        if ( null == m_processStream || null != m_thread )
+        if( null == m_processStream || null != m_thread )
         {
             return this;
         }
@@ -66,7 +66,7 @@ public class Pipe
 
     public synchronized void stop()
     {
-        if ( null == m_processStream || null == m_thread )
+        if( null == m_processStream || null == m_thread )
         {
             return;
         }
@@ -79,21 +79,21 @@ public class Pipe
 
     public void run()
     {
-        while ( Thread.currentThread() == m_thread )
+        while( Thread.currentThread() == m_thread )
         {
             try
             {
                 int ch = m_in.read();
-                if ( ch == -1 )
+                if( ch == -1 )
                 {
                     break;
                 }
                 m_out.write( ch );
                 m_out.flush();
             }
-            catch ( IOException e )
+            catch( IOException e )
             {
-                if ( Thread.currentThread() == m_thread )
+                if( Thread.currentThread() == m_thread )
                 {
                     e.printStackTrace();
                 }
@@ -102,7 +102,7 @@ public class Pipe
 
         try
         {
-            if ( m_in == m_processStream )
+            if( m_in == m_processStream )
             {
                 m_in.close();
             }
@@ -111,7 +111,7 @@ public class Pipe
                 m_out.close();
             }
         }
-        catch ( IOException e )
+        catch( IOException e )
         {
             // ignore
         }

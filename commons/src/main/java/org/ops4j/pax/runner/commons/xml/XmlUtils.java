@@ -67,8 +67,7 @@ public class XmlUtils
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             InputSource source = new InputSource( in );
-            Document document = builder.parse( source );
-            return document;
+            return builder.parse( source );
         }
         finally
         {
@@ -89,7 +88,7 @@ public class XmlUtils
 
         Element current = element;
         StringTokenizer st = new StringTokenizer( path, "/", false );
-        while ( st.hasMoreTokens() && current != null )
+        while( st.hasMoreTokens() && current != null )
         {
             String token = st.nextToken();
             current = (Element) current.getElementsByTagName( token ).item( 0 );
@@ -109,7 +108,7 @@ public class XmlUtils
         Assert.notNull( "Element path", path );
         String lastElement;
         Element parent;
-        if ( path.contains( "/" ) )
+        if( path.contains( "/" ) )
         {
             parent = getElement( element, path.substring( 0, path.lastIndexOf( "/" ) ) );
             lastElement = path.substring( path.lastIndexOf( "/" ) + 1 );
@@ -120,13 +119,13 @@ public class XmlUtils
             lastElement = path;
         }
         List<Element> elements = null;
-        if ( parent != null )
+        if( parent != null )
         {
             NodeList nodeList = parent.getElementsByTagName( lastElement );
-            if ( nodeList != null )
+            if( nodeList != null )
             {
                 elements = new ArrayList<Element>();
-                for ( int i = 0; i < nodeList.getLength(); i++ )
+                for( int i = 0; i < nodeList.getLength(); i++ )
                 {
                     elements.add( (Element) nodeList.item( i ) );
                 }
@@ -148,18 +147,18 @@ public class XmlUtils
 
         StringTokenizer st = new StringTokenizer( path, "/", false );
         Element currentElement = element;
-        while ( st.hasMoreTokens() )
+        while( st.hasMoreTokens() )
         {
             final String childName = st.nextToken();
-            if ( childName.endsWith( "]" ) )
+            if( childName.endsWith( "]" ) )
             {
                 int startPos = childName.indexOf( "[" );
                 int endPos = childName.indexOf( "]" );
                 NodeList children = currentElement.getElementsByTagName( childName.substring( 0, startPos ) );
                 int numChildren = children.getLength();
-                int index = 0;
+                int index;
                 String numbers = childName.substring( startPos + 1, endPos );
-                if ( "last".equals( numbers ) )
+                if( "last".equals( numbers ) )
                 {
                     index = numChildren - 1;
                 }
@@ -167,7 +166,7 @@ public class XmlUtils
                 {
                     index = Integer.parseInt( numbers );
                 }
-                if ( index > numChildren )
+                if( index > numChildren )
                 {
                     throw new IllegalArgumentException(
                         "index of " + index + " is larger than the number of child nodes (" + numChildren + ")"
@@ -178,12 +177,12 @@ public class XmlUtils
             else
             {
                 final NodeList parent = currentElement.getElementsByTagName( childName );
-                if ( parent != null )
+                if( parent != null )
                 {
                     currentElement = (Element) parent.item( 0 );
                 }
             }
-            if ( null == currentElement )
+            if( null == currentElement )
             {
                 return null;
             }
@@ -193,7 +192,7 @@ public class XmlUtils
 
     public static String getTextContent( final Node node )
     {
-        switch ( node.getNodeType() )
+        switch( node.getNodeType() )
         {
             case Node.ELEMENT_NODE:
             case Node.ATTRIBUTE_NODE:
@@ -217,12 +216,12 @@ public class XmlUtils
     private static String mergeTextContent( final NodeList nodes )
     {
         StringBuffer buf = new StringBuffer();
-        for ( int i = 0; i < nodes.getLength(); i++ )
+        for( int i = 0; i < nodes.getLength(); i++ )
         {
             Node n = nodes.item( i );
             final String text;
 
-            switch ( n.getNodeType() )
+            switch( n.getNodeType() )
             {
                 case Node.COMMENT_NODE:
                 case Node.PROCESSING_INSTRUCTION_NODE:
@@ -234,7 +233,7 @@ public class XmlUtils
                     break;
             }
 
-            if ( text != null )
+            if( text != null )
             {
                 buf.append( text );
             }

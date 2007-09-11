@@ -69,20 +69,20 @@ public class StreamUtils
         int bytes = 0;
         boolean printed = false;
         boolean infoEnabled = LOGGER.isInfoEnabled();
-        while ( b != -1 )
+        while( b != -1 )
         {
             out.write( b );
             b = in.read();
             counter = ( counter + 1 ) % 1024;
-            if ( counter == 0 )
+            if( counter == 0 )
             {
                 long time = System.currentTimeMillis() - start;
-                if ( time <= 0 )
+                if( time <= 0 )
                 {
                     time = 1;
                 }
                 long kbps = bytes / time;
-                if ( displayName != null && infoEnabled )
+                if( displayName != null && infoEnabled )
                 {
                     Info.print( displayName + " : " + bytes + " bytes @ [ " + kbps + "kBps ]\r" );
                 }
@@ -90,9 +90,9 @@ public class StreamUtils
             }
             bytes++;
         }
-        if ( displayName != null && infoEnabled )
+        if( displayName != null && infoEnabled )
         {
-            if ( !printed )
+            if( !printed )
             {
                 Info.print( displayName + " : " + bytes + " bytes\r" );
             }
@@ -116,7 +116,7 @@ public class StreamUtils
         InputStream is = null;
         try
         {
-            if ( LOGGER.isInfoEnabled() )
+            if( LOGGER.isInfoEnabled() )
             {
                 Info.print( displayName + " : connecting...\r" );
             }
@@ -125,7 +125,7 @@ public class StreamUtils
         }
         finally
         {
-            if ( is != null )
+            if( is != null )
             {
                 is.close();
             }

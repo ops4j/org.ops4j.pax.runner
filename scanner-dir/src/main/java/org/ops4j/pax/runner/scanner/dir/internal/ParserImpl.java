@@ -81,11 +81,11 @@ public class ParserImpl
     public ParserImpl( final String path )
         throws MalformedSpecificationException
     {
-        if ( path == null || path.trim().length() == 0 )
+        if( path == null || path.trim().length() == 0 )
         {
             throw new MalformedSpecificationException( "Path cannot be null or empty. Syntax " + SYNTAX );
         }
-        if ( path.startsWith( SEPARATOR_OPTIONS ) || path.endsWith( SEPARATOR_OPTIONS ) )
+        if( path.startsWith( SEPARATOR_OPTIONS ) || path.endsWith( SEPARATOR_OPTIONS ) )
         {
             throw new MalformedSpecificationException(
                 "Path cannot start or end with " + SEPARATOR_OPTIONS + ". Syntax " + SYNTAX
@@ -96,12 +96,12 @@ public class ParserImpl
         {
             final String[] urlParts = segments[ 0 ].split( SEPARATTOR_FILTER );
             String url = urlParts[ 0 ];
-            if ( url.endsWith( "!" ) )
+            if( url.endsWith( "!" ) )
             {
                 url = url.substring( 0, url.length() - 1 );
             }
             m_URL = url;
-            if ( urlParts.length > 1 )
+            if( urlParts.length > 1 )
             {
                 m_filter = parseFilter( urlParts[ 1 ] );
             }
@@ -110,13 +110,13 @@ public class ParserImpl
                 m_filter = parseFilter( DEFAULT_FILTER );
             }
         }
-        catch ( MalformedURLException e )
+        catch( MalformedURLException e )
         {
             throw new MalformedSpecificationException( "Invalid url", e );
         }
-        if ( segments.length > 1 )
+        if( segments.length > 1 )
         {
-            for ( int i = 1; i < segments.length; i++ )
+            for( int i = 1; i < segments.length; i++ )
             {
                 parseSegment( segments[ i ].trim() );
             }
@@ -134,19 +134,19 @@ public class ParserImpl
     private void parseSegment( final String segment )
         throws MalformedSpecificationException
     {
-        if ( m_shouldStart == null && segment.equalsIgnoreCase( START ) )
+        if( m_shouldStart == null && segment.equalsIgnoreCase( START ) )
         {
             m_shouldStart = false;
             return;
         }
-        if ( m_startLevel == null )
+        if( m_startLevel == null )
         {
             try
             {
                 m_startLevel = Integer.parseInt( segment );
                 return;
             }
-            catch ( NumberFormatException e )
+            catch( NumberFormatException e )
             {
                 throw new MalformedSpecificationException( "Invalid option [" + segment + "]. Syntax " + SYNTAX );
             }
@@ -168,10 +168,10 @@ public class ParserImpl
         throws MalformedSpecificationException
     {
         StringBuffer sb = new StringBuffer();
-        for ( int j = 0; j < spec.length(); j++ )
+        for( int j = 0; j < spec.length(); j++ )
         {
             char c = spec.charAt( j );
-            switch ( c )
+            switch( c )
             {
                 case'.':
                     sb.append( "\\." );
@@ -179,7 +179,7 @@ public class ParserImpl
 
                 case'*':
                     // test for ** (all directories)
-                    if ( j < spec.length() - 1 && spec.charAt( j + 1 ) == '*' )
+                    if( j < spec.length() - 1 && spec.charAt( j + 1 ) == '*' )
                     {
                         sb.append( ".*" );
                         j++;
@@ -199,7 +199,7 @@ public class ParserImpl
         {
             return Pattern.compile( s );
         }
-        catch ( Exception e )
+        catch( Exception e )
         {
             throw new MalformedSpecificationException( "Invalid characted used in the filter name", e );
         }

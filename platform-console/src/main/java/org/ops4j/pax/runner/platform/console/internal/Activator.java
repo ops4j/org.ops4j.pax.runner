@@ -38,10 +38,10 @@ public final class Activator
         throws BundleException
     {
         ServiceReference reference = bundleContext.getServiceReference( Platform.class.getName() );
-        if ( reference != null )
+        if( reference != null )
         {
             Platform service = (Platform) bundleContext.getService( reference );
-            if ( service != null )
+            if( service != null )
             {
                 startConsole( service );
                 bundleContext.ungetService( reference );
@@ -53,24 +53,24 @@ public final class Activator
     {
         System.out.println();
         BufferedReader stdin = new BufferedReader( new InputStreamReader( System.in ) );
-        while ( true )
+        while( true )
         {
             try
             {
                 System.out.print( "platform> " );
                 String input = stdin.readLine().trim();
-                if ( "exit".equalsIgnoreCase( input ) )
+                if( "exit".equalsIgnoreCase( input ) )
                 {
                     return;
                 }
-                if ( input.length() > 0 )
+                if( input.length() > 0 )
                 {
                     List<BundleReference> bundles = null;
-                    if ( !"none".equalsIgnoreCase( input ) )
+                    if( !"none".equalsIgnoreCase( input ) )
                     {
                         final String[] urls = input.split( "," );
                         bundles = new ArrayList<BundleReference>();
-                        for ( String url : urls )
+                        for( String url : urls )
                         {
                             bundles.add( new BundleReferenceBean( new URL( url ) ) );
                         }
@@ -78,7 +78,7 @@ public final class Activator
                     service.start( bundles, null, null );
                 }
             }
-            catch ( Exception e )
+            catch( Exception e )
             {
                 e.printStackTrace( System.out );
             }

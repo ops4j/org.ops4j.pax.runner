@@ -81,7 +81,7 @@ public class Activator
         throws Exception
     {
         Assert.notNull( "Bundle context", bundleContext );
-        if ( m_serviceTracker != null )
+        if( m_serviceTracker != null )
         {
             m_serviceTracker.close();
             m_serviceTracker = null;
@@ -111,7 +111,7 @@ public class Activator
                 // TODO check for class cast exception (very defensive)
                 final URLStreamHandlerService streamHandler =
                     (URLStreamHandlerService) super.addingService( serviceReference );
-                if ( streamHandler != null )
+                if( streamHandler != null )
                 {
                     // TODO ensure that the protocol property is set and is a string array
                     m_extender.register(
@@ -131,7 +131,7 @@ public class Activator
             public void removedService( final ServiceReference serviceReference, final Object object )
             {
                 LOGGER.debug( "URL stream handler service removed [" + serviceReference + "]" );
-                if ( !( object instanceof URLStreamHandlerService ) )
+                if( !( object instanceof URLStreamHandlerService ) )
                 {
                     throw new IllegalArgumentException(
                         "Invalid tracked object [" + object.getClass() + "]. Expected an "

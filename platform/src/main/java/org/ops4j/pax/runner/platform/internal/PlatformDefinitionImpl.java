@@ -95,52 +95,52 @@ public class PlatformDefinitionImpl
         final Document doc = XmlUtils.parseDoc( inputStream );
         m_systemPackageName = XmlUtils.getTextContentOfElement( doc, "name" );
         final String systemPackage = XmlUtils.getTextContentOfElement( doc, "system" );
-        if ( systemPackage == null )
+        if( systemPackage == null )
         {
             throw new IOException( "Invalid syntax: system bundle url not defined" );
         }
         m_systemPackage = new URL( systemPackage );
-        if ( m_systemPackageName == null )
+        if( m_systemPackageName == null )
         {
             m_systemPackageName = systemPackage;
         }
         m_packages = XmlUtils.getTextContentOfElement( doc, "packages" );
         final List<Element> profiles = XmlUtils.getElements( doc, "profile" );
-        if ( profiles != null )
+        if( profiles != null )
         {
-            for ( Element profile : profiles )
+            for( Element profile : profiles )
             {
                 final String profileName = profile.getAttribute( "name" );
                 final Boolean profileDefault = Boolean.valueOf( profile.getAttribute( "default" ) );
                 String profileExtends = profile.getAttribute( "extends" );
-                if ( profileExtends != null && profileExtends.trim().length() == 0 )
+                if( profileExtends != null && profileExtends.trim().length() == 0 )
                 {
                     profileExtends = null;
                 }
-                if ( profileName == null )
+                if( profileName == null )
                 {
                     throw new IOException( "Invalid syntax: all profiles must have a name" );
                 }
                 // if there is no other default profile first one is the default one
-                if ( m_defaultProfile == null || profileDefault )
+                if( m_defaultProfile == null || profileDefault )
                 {
                     m_defaultProfile = profileName;
                 }
                 m_profiles.put( profileName, profileExtends );
                 m_bundles.put( profileName, new ArrayList<BundleReference>() );
                 final List<Element> bundles = XmlUtils.getElements( profile, "bundle" );
-                if ( bundles != null )
+                if( bundles != null )
                 {
-                    for ( Element bundle : bundles )
+                    for( Element bundle : bundles )
                     {
                         String name = XmlUtils.getTextContentOfElement( bundle, "name" );
                         final String urlSpec = XmlUtils.getTextContentOfElement( bundle, "url" );
-                        if ( urlSpec == null )
+                        if( urlSpec == null )
                         {
                             throw new IOException( "Invalid syntax: bundle url not defined in profile " + profileName );
                         }
                         final URL bundleURL = new URL( urlSpec );
-                        if ( name == null )
+                        if( name == null )
                         {
                             name = urlSpec;
                         }
@@ -187,29 +187,29 @@ public class PlatformDefinitionImpl
     public List<BundleReference> getPlatformBundles( final String profiles )
     {
         List<BundleReference> bundles = null;
-        if ( profiles == null || profiles.trim().length() == 0 )
+        if( profiles == null || profiles.trim().length() == 0 )
         {
             return getPlatformBundles( m_defaultProfile );
         }
         final String[] segments = profiles.split( "," );
-        for ( String segment : segments )
+        for( String segment : segments )
         {
-            if ( m_profiles.containsKey( segment ) )
+            if( m_profiles.containsKey( segment ) )
             {
-                if ( bundles == null )
+                if( bundles == null )
                 {
                     bundles = new ArrayList<BundleReference>();
                 }
                 final String extended = m_profiles.get( segment );
-                if ( extended != null )
+                if( extended != null )
                 {
                     final List<BundleReference> references = getPlatformBundles( extended );
                     // eliminate duplicates
-                    if ( references != null && references.size() > 0 )
+                    if( references != null && references.size() > 0 )
                     {
-                        for ( BundleReference reference : references )
+                        for( BundleReference reference : references )
                         {
-                            if ( !bundles.contains( reference ) )
+                            if( !bundles.contains( reference ) )
                             {
                                 bundles.add( reference );
                             }
@@ -218,11 +218,11 @@ public class PlatformDefinitionImpl
                 }
                 final List<BundleReference> references = m_bundles.get( segment );
                 // eliminate duplicates
-                if ( references != null && references.size() > 0 )
+                if( references != null && references.size() > 0 )
                 {
-                    for ( BundleReference reference : references )
+                    for( BundleReference reference : references )
                     {
-                        if ( !bundles.contains( reference ) )
+                        if( !bundles.contains( reference ) )
                         {
                             bundles.add( reference );
                         }
@@ -236,7 +236,7 @@ public class PlatformDefinitionImpl
             }
         }
         // if no success with profiles and this was not a call for default profile then look at default profile
-        if ( bundles == null && !m_defaultProfile.equals( profiles ) )
+        if( bundles == null && !m_defaultProfile.equals( profiles ) )
         {
             bundles = getPlatformBundles( m_defaultProfile );
         }

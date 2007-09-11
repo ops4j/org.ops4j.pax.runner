@@ -26,8 +26,8 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.service.startlevel.StartLevel;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Activate the provisioning service implementation.
@@ -84,12 +84,12 @@ public final class Activator
     public void stop( final BundleContext bundleContext )
     {
         Assert.notNull( "Bundle context", bundleContext );
-        if ( m_serviceTracker != null )
+        if( m_serviceTracker != null )
         {
             m_serviceTracker.close();
             m_serviceTracker = null;
         }
-        if ( m_provisionServiceReg != null )
+        if( m_provisionServiceReg != null )
         {
             m_provisionServiceReg.unregister();
             m_provisionServiceReg = null;
@@ -119,10 +119,10 @@ public final class Activator
                 Object schema = serviceReference.getProperty( Scanner.SCHEMA_PROPERTY );
                 Scanner scanner = null;
                 // only use the right registered scanners
-                if ( schema != null && schema instanceof String && ( (String) schema ).trim().length() > 0 )
+                if( schema != null && schema instanceof String && ( (String) schema ).trim().length() > 0 )
                 {
                     scanner = (Scanner) super.addingService( serviceReference );
-                    if ( scanner != null )
+                    if( scanner != null )
                     {
                         m_provisionService.addScanner( scanner, (String) schema );
                     }
@@ -140,7 +140,7 @@ public final class Activator
             {
                 LOGGER.debug( "Scanner removed [" + serviceReference + "]" );
                 super.removedService( serviceReference, object );
-                if ( !( object instanceof Scanner ) )
+                if( !( object instanceof Scanner ) )
                 {
                     throw new IllegalArgumentException(
                         "Invalid tracked object [" + object.getClass() + "]. Expected an " + Scanner.class.getName()
@@ -184,7 +184,7 @@ public final class Activator
                 Assert.notNull( "Service reference", serviceReference );
                 LOGGER.debug( "Start Level service available [" + serviceReference + "]" );
                 final StartLevel startLevel = (StartLevel) super.addingService( serviceReference );
-                if ( startLevel != null )
+                if( startLevel != null )
                 {
                     m_provisionService.setStartLevelService( startLevel );
                 }

@@ -58,7 +58,7 @@ public class URLUtils
     public static URLConnection prepareForAuthentication( final URLConnection connection )
     {
         Assert.notNull( "url connection cannot be null", connection );
-        if ( connection.getURL().getUserInfo() != null )
+        if( connection.getURL().getUserInfo() != null )
         {
             String base64Encoded = Base64Encoder.encode( connection.getURL().getUserInfo() );
             // sun bug 6459815: Long passwords cause Basic Auth to fail with a java.net.Authenticator
@@ -79,19 +79,19 @@ public class URLUtils
     {
         Assert.notNull( "url connection cannot be null", connection );
         URLConnection conn = connection;
-        if ( conn instanceof JarURLConnection )
+        if( conn instanceof JarURLConnection )
         {
             try
             {
                 conn = ( (JarURLConnection) connection ).getJarFileURL().openConnection();
                 conn.connect();
             }
-            catch ( IOException e )
+            catch( IOException e )
             {
                 throw new RuntimeException( "Could not prepare connection for HTTPS.", e );
             }
         }
-        if ( conn instanceof HttpsURLConnection )
+        if( conn instanceof HttpsURLConnection )
         {
             try
             {
@@ -99,11 +99,11 @@ public class URLUtils
                 ctx.init( null, new TrustManager[]{ new AllCertificatesTrustManager() }, null );
                 ( (HttpsURLConnection) conn ).setSSLSocketFactory( ctx.getSocketFactory() );
             }
-            catch ( KeyManagementException e )
+            catch( KeyManagementException e )
             {
                 throw new RuntimeException( "Could not prepare connection for HTTPS.", e );
             }
-            catch ( NoSuchAlgorithmException e )
+            catch( NoSuchAlgorithmException e )
             {
                 throw new RuntimeException( "Could not prepare connection for HTTPS.", e );
             }

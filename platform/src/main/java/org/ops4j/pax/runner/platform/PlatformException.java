@@ -18,7 +18,7 @@
 package org.ops4j.pax.runner.platform;
 
 /**
- * Thrown to indicate an exception durring running of the platform.
+ * Thrown to indicate an exception during running of the platform.
  *
  * @author Alin Dreghiciu
  * @since August 19, 2007
@@ -28,6 +28,7 @@ public class PlatformException
 {
 
     /**
+     * @param message The exception message.
      * @see Exception#Exception(String)
      */
     public PlatformException( String message )
@@ -36,6 +37,8 @@ public class PlatformException
     }
 
     /**
+     * @param message The exception message.
+     * @param cause The original cause of this exception.
      * @see Exception#Exception(String,Throwable)
      */
     public PlatformException( String message, Throwable cause )

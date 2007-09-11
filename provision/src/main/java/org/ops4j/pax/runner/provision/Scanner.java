@@ -18,8 +18,6 @@
 package org.ops4j.pax.runner.provision;
 
 import java.util.List;
-import org.ops4j.pax.runner.commons.resolver.BundleContextResolver;
-import org.ops4j.pax.runner.commons.resolver.Resolver;
 
 /**
  * A scanner handles a certain scheme.

@@ -86,14 +86,14 @@ public class Base64Encoder
      */
     public static byte[] encode( byte[] dData )
     {
-        if ( dData == null )
+        if( dData == null )
         {
             throw new IllegalArgumentException( "Cannot encode null" );
         }
         byte[] eData = new byte[( ( dData.length + 2 ) / 3 ) * 4];
 
         int eIndex = 0;
-        for ( int i = 0; i < dData.length; i += 3 )
+        for( int i = 0; i < dData.length; i += 3 )
         {
             int d1;
             int d2 = 0;
@@ -105,10 +105,10 @@ public class Base64Encoder
             int pad = 0;
 
             d1 = dData[ i ];
-            if ( ( i + 1 ) < dData.length )
+            if( ( i + 1 ) < dData.length )
             {
                 d2 = dData[ i + 1 ];
-                if ( ( i + 2 ) < dData.length )
+                if( ( i + 2 ) < dData.length )
                 {
                     d3 = dData[ i + 2 ];
                 }
@@ -140,11 +140,11 @@ public class Base64Encoder
 
     static
     {
-        for ( int i = 0; i < CODES.length; i++ )
+        for( int i = 0; i < CODES.length; i++ )
         {
             CODES[ i ] = 64;
         }
-        for ( int i = 0; i < ALPHASET.length; i++ )
+        for( int i = 0; i < ALPHASET.length; i++ )
         {
             CODES[ ALPHASET[ i ] ] = i;
         }
@@ -163,22 +163,22 @@ public class Base64Encoder
      */
     public static byte[] decode( byte[] eData )
     {
-        if ( eData == null )
+        if( eData == null )
         {
             throw new IllegalArgumentException( "Cannot decode null" );
         }
-        byte[] cleanEData = (byte[]) eData.clone();
+        byte[] cleanEData = eData.clone();
         int cleanELength = 0;
-        for ( int i = 0; i < eData.length; i++ )
+        for( byte anEData : eData )
         {
-            if ( eData[ i ] < 256 && CODES[ eData[ i ] ] < 64 )
+            if( anEData < 256 && CODES[ anEData ] < 64 )
             {
-                cleanEData[ cleanELength++ ] = eData[ i ];
+                cleanEData[ cleanELength++ ] = anEData;
             }
         }
 
         int dLength = ( cleanELength / 4 ) * 3;
-        switch ( cleanELength % 4 )
+        switch( cleanELength % 4 )
         {
             case 3:
                 dLength += 2;
@@ -190,9 +190,9 @@ public class Base64Encoder
 
         byte[] dData = new byte[dLength];
         int dIndex = 0;
-        for ( int i = 0; i < eData.length; i += 4 )
+        for( int i = 0; i < eData.length; i += 4 )
         {
-            if ( ( i + 3 ) > eData.length )
+            if( ( i + 3 ) > eData.length )
             {
                 throw new IllegalArgumentException(
                     "byte array is not a valid com.sun.syndication.io.impl.Base64 encoding"
@@ -203,11 +203,11 @@ public class Base64Encoder
             int e3 = CODES[ cleanEData[ i + 2 ] ];
             int e4 = CODES[ cleanEData[ i + 3 ] ];
             dData[ dIndex++ ] = (byte) ( ( e1 << 2 ) | ( e2 >> 4 ) );
-            if ( dIndex < dData.length )
+            if( dIndex < dData.length )
             {
                 dData[ dIndex++ ] = (byte) ( ( e2 << 4 ) | ( e3 >> 2 ) );
             }
-            if ( dIndex < dData.length )
+            if( dIndex < dData.length )
             {
                 dData[ dIndex++ ] = (byte) ( ( e3 << 6 ) | ( e4 ) );
             }

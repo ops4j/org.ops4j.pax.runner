@@ -91,20 +91,20 @@ public class DirScanner
         {
             url = new URL( spec );
         }
-        catch ( MalformedURLException ignore )
+        catch( MalformedURLException ignore )
         {
             // ignore this as the spec may be resolved other way
             LOGGER.trace( "Specification is not a valid url: " + ignore.getMessage() + ". Continue discovery..." );
         }
         File file = null;
-        if ( url != null && "file".equals( url.getProtocol() ) )
+        if( url != null && "file".equals( url.getProtocol() ) )
         // if we have an url and it's a file url
         {
             try
             {
                 file = new File( url.toURI() );
             }
-            catch ( URISyntaxException ignore )
+            catch( URISyntaxException ignore )
             {
                 // ignore this as the spec may be resolved other way
                 LOGGER.trace(
@@ -117,16 +117,16 @@ public class DirScanner
         {
             file = new File( spec );
         }
-        if ( file != null && file.exists() )
+        if( file != null && file.exists() )
         // if we have a directory
         {
-            if ( file.isDirectory() )
+            if( file.isDirectory() )
             {
                 try
                 {
                     return list( new DirectoryLister( file, filter ), defaultStartLevel, defaultStart );
                 }
-                catch ( MalformedURLException e )
+                catch( MalformedURLException e )
                 {
                     throw new MalformedSpecificationException( e );
                 }
@@ -145,30 +145,30 @@ public class DirScanner
         URL baseUrl = null;
         try
         {
-            if ( file != null && file.exists() )
+            if( file != null && file.exists() )
             // try out a zip from the file we have
             {
                 zip = new ZipFile( file );
                 baseUrl = file.toURL();
             }
-            else if ( url != null )
+            else if( url != null )
             {
                 zip = new ZipFile( url.toExternalForm() );
                 baseUrl = url;
             }
         }
-        catch ( IOException ignore )
+        catch( IOException ignore )
         {
             // ignore for the moment
             LOGGER.trace( "Specification is not a valid zip: " + ignore.getMessage() );
         }
-        if ( zip != null && baseUrl != null )
+        if( zip != null && baseUrl != null )
         {
             try
             {
                 return list( new ZipLister( baseUrl, zip, filter ), defaultStartLevel, defaultStart );
             }
-            catch ( MalformedURLException e )
+            catch( MalformedURLException e )
             {
                 throw new MalformedSpecificationException( e );
             }
@@ -198,9 +198,9 @@ public class DirScanner
     {
         final List<BundleReference> references = new ArrayList<BundleReference>();
         final List<URL> urls = lister.list();
-        if ( urls != null )
+        if( urls != null )
         {
-            for ( URL url : urls )
+            for( URL url : urls )
             {
                 references.add( new FileBundleReference( url.toExternalForm(), startLevel, shouldStart ) );
             }
@@ -219,7 +219,7 @@ public class DirScanner
     private Integer getDefaultStartLevel( Parser parser, ScannerConfiguration config )
     {
         Integer startLevel = parser.getStartLevel();
-        if ( startLevel == null )
+        if( startLevel == null )
         {
             startLevel = config.getStartLevel();
         }
@@ -237,7 +237,7 @@ public class DirScanner
     private Boolean getDefaultStart( final Parser parser, final ScannerConfiguration config )
     {
         Boolean start = parser.shouldStart();
-        if ( start == null )
+        if( start == null )
         {
             start = config.shouldStart();
         }

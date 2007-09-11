@@ -27,7 +27,8 @@ import org.osgi.framework.BundleContext;
  * @author Alin Dreghiciu
  * @since August 11, 2007
  */
-public class BundleContextResolver implements Resolver
+public class BundleContextResolver
+    implements Resolver
 {
 
     /**
@@ -58,7 +59,7 @@ public class BundleContextResolver implements Resolver
     public String get( final String propertyName )
     {
         String value = m_bundleContext.getProperty( propertyName );
-        if ( value != null && value.trim().length() == 0 )
+        if( value != null && value.trim().length() == 0 )
         {
             value = null;
         }

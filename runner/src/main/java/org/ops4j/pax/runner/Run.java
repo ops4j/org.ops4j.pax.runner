@@ -81,7 +81,7 @@ public class Run
      */
     public Run()
     {
-        if ( LOGGER == null )
+        if( LOGGER == null )
         {
             LOGGER = LogFactory.getLog( Run.class, LogLevel.INFO );
         }
@@ -150,17 +150,17 @@ public class Run
     {
         LOGGER.debug( "Installing handlers" );
         final String option = context.getOptionResolver().get( OPTION_HANDLERS );
-        if ( option != null )
+        if( option != null )
         {
             // first install each handler
             final Configuration config = context.getConfiguration();
             final String[] segments = option.split( "," );
-            for ( String segment : segments )
+            for( String segment : segments )
             {
                 Assert.notEmpty( "Handler entry", segment );
                 LOGGER.debug( "Handler [" + segment + "]" );
                 final String activatorName = config.getProperty( segment );
-                if ( activatorName == null || activatorName.trim().length() == 0 )
+                if( activatorName == null || activatorName.trim().length() == 0 )
                 {
                     throw new ConfigurationException( "Handler [" + segment + "] is not supported" );
                 }
@@ -169,7 +169,7 @@ public class Run
             // then install the handler service
             // maintain this order as in this way the bundle context will be easier to respond to getServiceListeners
             final String serviceActivatorName = config.getProperty( HANDLER_SERVICE );
-            if ( serviceActivatorName == null || serviceActivatorName.trim().length() == 0 )
+            if( serviceActivatorName == null || serviceActivatorName.trim().length() == 0 )
             {
                 throw new ConfigurationException( "Handler Service must be configured [" + HANDLER_SERVICE + "]" );
             }
@@ -192,12 +192,12 @@ public class Run
         RunnerStartLevel.install( context.getServiceRegistry() );
         // then install each scanner
         final String[] segments = option.split( "," );
-        for ( String segment : segments )
+        for( String segment : segments )
         {
             Assert.notEmpty( "Scanner entry", segment );
             LOGGER.debug( "Scanner [" + segment + "]" );
             final String activatorName = context.getConfiguration().getProperty( segment );
-            if ( activatorName == null || activatorName.trim().length() == 0 )
+            if( activatorName == null || activatorName.trim().length() == 0 )
             {
                 throw new ConfigurationException( "Scanner [" + segment + "] is not supported" );
             }
@@ -206,18 +206,18 @@ public class Run
         // then install the provisioning service
         // maintain this order as in this way the bundle context will be easier to respond to getServiceListeners
         final String serviceActivatorName = context.getConfiguration().getProperty( PROVISION_SERVICE );
-        if ( serviceActivatorName == null || serviceActivatorName.trim().length() == 0 )
+        if( serviceActivatorName == null || serviceActivatorName.trim().length() == 0 )
         {
             throw new ConfigurationException( "Provision Service must be configured [" + PROVISION_SERVICE + "]" );
         }
         final BundleContext bundleContext = createActivator( PROVISION_SERVICE, serviceActivatorName, context );
         // sanity check
-        if ( bundleContext == null )
+        if( bundleContext == null )
         {
             throw new RuntimeException( "Could not create bundle context for provision service" );
         }
         final ServiceReference reference = bundleContext.getServiceReference( ProvisionService.class.getName() );
-        if ( reference == null )
+        if( reference == null )
         {
             throw new RuntimeException( "Could not resolve a provision service" );
         }
@@ -235,24 +235,24 @@ public class Run
                          final Context context )
     {
         LOGGER.debug( "Installing bundles" );
-        if ( provisionService == null )
+        if( provisionService == null )
         {
             throw new RuntimeException( "Could not resolve a provision service" );
         }
         List<String> arguments = context.getCommandLine().getArguments();
-        if ( arguments == null || arguments.size() == 0 )
+        if( arguments == null || arguments.size() == 0 )
         {
             final String defaultProvisionURL = context.getConfiguration().getProperty( PROVISION_DEFAULT_URL );
             Assert.notNull( "Provision url", defaultProvisionURL );
             arguments = new ArrayList<String>();
             final String[] urls = defaultProvisionURL.split( "," );
-            for ( String url : urls )
+            for( String url : urls )
             {
                 arguments.add( url );
             }
         }
         // then scan those url's
-        for ( String provisionURL : arguments )
+        for( String provisionURL : arguments )
         {
             try
             {
@@ -260,10 +260,10 @@ public class Run
                 {
                     provisionService.scan( provisionURL ).install();
                 }
-                catch ( UnsupportedSchemaException e )
+                catch( UnsupportedSchemaException e )
                 {
                     final String resolvedProvisionURL = schemaResolver.resolve( provisionURL );
-                    if ( resolvedProvisionURL != null && !resolvedProvisionURL.equals( provisionURL ) )
+                    if( resolvedProvisionURL != null && !resolvedProvisionURL.equals( provisionURL ) )
                     {
                         provisionService.scan( resolvedProvisionURL ).install();
                     }
@@ -273,15 +273,15 @@ public class Run
                     }
                 }
             }
-            catch ( MalformedSpecificationException e )
+            catch( MalformedSpecificationException e )
             {
                 throw new RuntimeException( e );
             }
-            catch ( ScannerException e )
+            catch( ScannerException e )
             {
                 throw new RuntimeException( e );
             }
-            catch ( BundleException e )
+            catch( BundleException e )
             {
                 throw new RuntimeException( e );
             }
@@ -301,25 +301,25 @@ public class Run
         // first install platform
         final String option = context.getOptionResolver().getMandatory( OPTION_PLATFORM );
         final String activatorName = context.getConfiguration().getProperty( option );
-        if ( activatorName == null || activatorName.trim().length() == 0 )
+        if( activatorName == null || activatorName.trim().length() == 0 )
         {
             throw new ConfigurationException( "Platform [" + option + "] is not supported" );
         }
         createActivator( option, activatorName, context );
         // then install platform service
         final String serviceActivatorName = context.getConfiguration().getProperty( PLATFORM_SERVICE );
-        if ( serviceActivatorName == null || serviceActivatorName.trim().length() == 0 )
+        if( serviceActivatorName == null || serviceActivatorName.trim().length() == 0 )
         {
             throw new ConfigurationException( "Platform Service must be configured [" + PLATFORM_SERVICE + "]" );
         }
         final BundleContext bundleContext = createActivator( PLATFORM_SERVICE, serviceActivatorName, context );
         // sanity check
-        if ( bundleContext == null )
+        if( bundleContext == null )
         {
             throw new RuntimeException( "Could not create bundle context for platform service" );
         }
         final ServiceReference reference = bundleContext.getServiceReference( Platform.class.getName() );
-        if ( reference == null )
+        if( reference == null )
         {
             throw new RuntimeException( "Could not resolve a platform" );
         }
@@ -335,15 +335,15 @@ public class Run
     private void startPlatform( final Platform platform, final Context context )
     {
         LOGGER.debug( "Starting platform" );
-        if ( platform == null )
+        if( platform == null )
         {
             throw new RuntimeException( "Could not resolve a platform" );
         }
         final List<RunnerBundle> installedBundles = context.getBundles();
         final List<BundleReference> references = new ArrayList<BundleReference>();
-        if ( installedBundles != null )
+        if( installedBundles != null )
         {
-            for ( RunnerBundle bundle : installedBundles )
+            for( RunnerBundle bundle : installedBundles )
             {
                 references.add(
                     new BundleReferenceBean(
@@ -359,7 +359,7 @@ public class Run
         {
             platform.start( references, null, null );
         }
-        catch ( PlatformException e )
+        catch( PlatformException e )
         {
             throw new RuntimeException( e );
         }
@@ -383,7 +383,7 @@ public class Run
             activator.start( bundleContext );
             return bundleContext;
         }
-        catch ( Exception e )
+        catch( Exception e )
         {
             throw new RuntimeException( "Could not create [" + bundleName + "]", e );
         }
@@ -414,7 +414,7 @@ public class Run
     {
         String message = "";
         String debugInfo = "";
-        if ( !LOGGER.isErrorEnabled() )
+        if( !LOGGER.isErrorEnabled() )
         {
             message = t.getMessage();
             debugInfo = "Use --" + OPTION_DEBUG + "=ERROR to see details.";
@@ -428,7 +428,7 @@ public class Run
         System.out.println( "   /__/     " + debugInfo );
         System.out.println();
 
-        if ( LOGGER.isErrorEnabled() )
+        if( LOGGER.isErrorEnabled() )
         {
             LOGGER.error( t );
             t.printStackTrace();
@@ -448,7 +448,7 @@ public class Run
             final CommandLine commandLine = new CommandLineImpl( args );
             initializeLogger( commandLine );
             String configURL = commandLine.getOption( OPTION_CONFIG );
-            if ( configURL == null )
+            if( configURL == null )
             {
                 configURL = "classpath:META-INF/runner.properties";
             }
@@ -459,7 +459,7 @@ public class Run
                 new OptionResolverImpl( commandLine, config )
             );
         }
-        catch ( Throwable t )
+        catch( Throwable t )
         {
             showError( t );
             // TODO eliminate system exit as in this case it should runner should be shutdown nicely by stopping the running services
@@ -475,13 +475,13 @@ public class Run
     private static void initializeLogger( final CommandLine commandLine )
     {
         String debug = commandLine.getOption( OPTION_DEBUG );
-        if ( debug != null )
+        if( debug != null )
         {
             try
             {
                 LOGGER = LogFactory.getLog( Run.class, LogLevel.valueOf( debug.toUpperCase() ) );
             }
-            catch ( Exception ignore )
+            catch( Exception ignore )
             {
                 LOGGER = LogFactory.getLog( Run.class, LogLevel.INFO );
                 LOGGER.warn( "Unknown debug option [" + debug + "], switching to INFO" );

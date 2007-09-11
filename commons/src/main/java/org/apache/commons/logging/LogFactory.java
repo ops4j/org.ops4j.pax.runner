@@ -57,7 +57,7 @@ public class LogFactory
 
     public Log getInstance( String name )
     {
-        if ( m_log == null )
+        if( m_log == null )
         {
             m_log = NullLog.newInstance();
         }
@@ -66,7 +66,7 @@ public class LogFactory
 
     public Log getInstance( String name, LogLevel logLevel )
     {
-        if ( m_log == null )
+        if( m_log == null )
         {
             m_log = NullLog.newInstance( logLevel );
         }

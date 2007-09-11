@@ -50,12 +50,12 @@ public class FileUtils
         try
         {
             URL fileURL = FileUtils.class.getClassLoader().getResource( filePath );
-            if ( fileURL == null )
+            if( fileURL == null )
             {
                 throw new RuntimeException( "File [" + filePath + "] could not be found" );
             }
             return new File( fileURL.toURI() );
-        } catch ( URISyntaxException e )
+        } catch( URISyntaxException e )
         {
             throw new RuntimeException( "File [" + filePath + "] could not be found", e );
         }
@@ -71,16 +71,16 @@ public class FileUtils
     public static boolean delete( final File file )
     {
         boolean delete = false;
-        if ( file != null && file.exists() )
+        if( file != null && file.exists() )
         {
             // even if is a directory try to delete. maybe is empty or maybe is a *nix symbolic link
             delete = file.delete();
-            if ( !delete && file.isDirectory() )
+            if( !delete && file.isDirectory() )
             {
                 File[] childs = file.listFiles();
-                if ( childs != null && childs.length > 0 )
+                if( childs != null && childs.length > 0 )
                 {
-                    for ( File child : childs )
+                    for( File child : childs )
                     {
                         delete( child );
                     }

@@ -34,7 +34,7 @@ public final class Info
 
     public static void print( final String label, final String message )
     {
-        if ( label != null )
+        if( label != null )
         {
             System.out.print( format( label + ":" ) );
         }
@@ -42,9 +42,9 @@ public final class Info
         {
             System.out.print( format( "" ) );
         }
-        if ( message != null )
+        if( message != null )
         {
-            if ( label != null )
+            if( label != null )
             {
                 System.out.print( " " + message );
             }
@@ -57,11 +57,11 @@ public final class Info
 
     private static String format( final String toFormat )
     {
-        if ( toFormat == null )
+        if( toFormat == null )
         {
             return fill( LABEL_LENGTH );
         }
-        if ( toFormat.length() >= LABEL_LENGTH )
+        if( toFormat.length() >= LABEL_LENGTH )
         {
             return toFormat.substring( toFormat.length() - LABEL_LENGTH );
         }

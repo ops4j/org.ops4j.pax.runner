@@ -67,7 +67,7 @@ public class RunnerBundleContext
         throws InvalidSyntaxException
     {
         Filter osgiFilter = null;
-        if ( filter != null )
+        if( filter != null )
         {
             osgiFilter = createFilter( filter );
         }
@@ -80,13 +80,13 @@ public class RunnerBundleContext
         try
         {
             final ServiceReference[] references = getServiceReferences( clazz, null );
-            if ( references != null && references.length > 0 )
+            if( references != null && references.length > 0 )
             {
                 return references[ 0 ];
             }
             return null;
         }
-        catch ( InvalidSyntaxException ignore )
+        catch( InvalidSyntaxException ignore )
         {
             return null;
         }
@@ -97,13 +97,14 @@ public class RunnerBundleContext
         throws InvalidSyntaxException
     {
         Filter osgiFilter = null;
-        if ( filter != null )
+        if( filter != null )
         {
             osgiFilter = createFilter( filter );
         }
+        //noinspection unchecked
         final List<ServiceReference> references =
             m_context.getServiceRegistry().getServiceReferences( clazz, osgiFilter );
-        if ( references != null )
+        if( references != null )
         {
             return references.toArray( new ServiceReference[references.size()] );
         }
@@ -145,7 +146,7 @@ public class RunnerBundleContext
         {
             url = new URL( location );
         }
-        catch ( MalformedURLException e )
+        catch( MalformedURLException e )
         {
             throw new BundleException( "Invalid location [" + location + "]" );
         }

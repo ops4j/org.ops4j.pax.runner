@@ -49,6 +49,6 @@ public interface ServiceConstants
     /**
      * The protocol name.
      */
-    public static final String PROTOCOL = "mvn";    
+    public static final String PROTOCOL = "mvn";
 
 }

@@ -35,7 +35,7 @@ public final class User
         try
         {
             return stdin.readLine();
-        } catch ( IOException ignore )
+        } catch( IOException ignore )
         {
             return null;
         }

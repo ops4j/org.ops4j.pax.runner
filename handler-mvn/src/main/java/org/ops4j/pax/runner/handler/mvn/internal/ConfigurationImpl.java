@@ -22,12 +22,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.ops4j.pax.runner.commons.Assert;
 import org.ops4j.pax.runner.commons.resolver.ConfigurationMap;
 import org.ops4j.pax.runner.commons.resolver.Resolver;
 import org.ops4j.pax.runner.handler.mvn.ServiceConstants;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * Service Configuration implementation.
@@ -91,7 +91,7 @@ public class ConfigurationImpl
      */
     public Boolean getCertificateCheck()
     {
-        if ( !contains( ServiceConstants.PROPERTY_CERTIFICATE_CHECK ) )
+        if( !contains( ServiceConstants.PROPERTY_CERTIFICATE_CHECK ) )
         {
             return set( ServiceConstants.PROPERTY_CERTIFICATE_CHECK,
                         Boolean.valueOf( m_resolver.get( ServiceConstants.PROPERTY_CERTIFICATE_CHECK ) )
@@ -109,19 +109,19 @@ public class ConfigurationImpl
     public URL getSettings()
         throws MalformedURLException
     {
-        if ( !contains( ServiceConstants.PROPERTY_SETTINGS_FILE ) )
+        if( !contains( ServiceConstants.PROPERTY_SETTINGS_FILE ) )
         {
             String spec = m_resolver.get( ServiceConstants.PROPERTY_SETTINGS_FILE );
-            if ( spec != null )
+            if( spec != null )
             {
                 try
                 {
                     return set( ServiceConstants.PROPERTY_SETTINGS_FILE, new URL( spec ) );
                 }
-                catch ( MalformedURLException e )
+                catch( MalformedURLException e )
                 {
                     File file = new File( spec );
-                    if ( file.exists() )
+                    if( file.exists() )
                     {
                         return set( ServiceConstants.PROPERTY_SETTINGS_FILE, file.toURL() );
                     }
@@ -154,18 +154,18 @@ public class ConfigurationImpl
     public List<URL> getRepositories()
         throws MalformedURLException
     {
-        if ( !contains( ServiceConstants.PROPERTY_REPOSITORIES ) )
+        if( !contains( ServiceConstants.PROPERTY_REPOSITORIES ) )
         {
             // look for repositories property
             String repositoriesProp = m_resolver.get( ServiceConstants.PROPERTY_REPOSITORIES );
             // if not set or starting with a plus (+) get repositories from settings xml
-            if ( ( repositoriesProp == null || repositoriesProp.startsWith( REPOSITORIES_APPEND_SIGN ) )
-                 && m_settings != null )
+            if( ( repositoriesProp == null || repositoriesProp.startsWith( REPOSITORIES_APPEND_SIGN ) )
+                && m_settings != null )
             {
                 String settingsRepos = m_settings.getRepositories();
-                if ( settingsRepos != null )
+                if( settingsRepos != null )
                 {
-                    if ( repositoriesProp == null )
+                    if( repositoriesProp == null )
                     {
                         repositoriesProp = settingsRepos;
                     }
@@ -179,14 +179,14 @@ public class ConfigurationImpl
             // build repositories list
             final List<URL> repositoriesProperty = new ArrayList<URL>();
             URL localRepository = getLocalRepository();
-            if ( localRepository != null )
+            if( localRepository != null )
             {
                 repositoriesProperty.add( localRepository );
             }
-            if ( repositoriesProp != null && repositoriesProp.trim().length() > 0 )
+            if( repositoriesProp != null && repositoriesProp.trim().length() > 0 )
             {
                 String[] repositories = repositoriesProp.split( REPOSITORIES_SEPARATOR );
-                for ( String repositoryURL : repositories )
+                for( String repositoryURL : repositories )
                 {
                     repositoriesProperty.add( new URL( repositoryURL ) );
                 }
@@ -209,27 +209,27 @@ public class ConfigurationImpl
     public URL getLocalRepository()
         throws MalformedURLException
     {
-        if ( !contains( ServiceConstants.PROPERTY_LOCAL_REPOSITORY ) )
+        if( !contains( ServiceConstants.PROPERTY_LOCAL_REPOSITORY ) )
         {
             // look for a local repository property
             String spec = m_resolver.get( ServiceConstants.PROPERTY_LOCAL_REPOSITORY );
             // if not set get local repository from maven settings
-            if ( spec == null && m_settings != null )
+            if( spec == null && m_settings != null )
             {
                 spec = m_settings.getLocalRepository();
             }
-            if ( spec != null )
+            if( spec != null )
             {
                 // check if we have a valid url
                 try
                 {
                     set( ServiceConstants.PROPERTY_LOCAL_REPOSITORY, new URL( spec ) );
                 }
-                catch ( MalformedURLException e )
+                catch( MalformedURLException e )
                 {
                     // maybe is just a file?
                     File file = new File( spec );
-                    if ( file.exists() )
+                    if( file.exists() )
                     {
                         set( ServiceConstants.PROPERTY_LOCAL_REPOSITORY, file.toURL() );
                     }

@@ -103,7 +103,7 @@ public class InstallableBundleImpl
     public InstallableBundle startIfNecessary()
         throws BundleException
     {
-        if ( m_reference.shouldStart() )
+        if( m_reference.shouldStart() )
         {
             start();
         }
@@ -130,20 +130,20 @@ public class InstallableBundleImpl
         throws BundleException
     {
         final String location = m_reference.getLocation();
-        if ( location == null )
+        if( location == null )
         {
             throw new BundleException( "The bundle reference has no location" );
         }
         m_bundle = m_bundleContext.installBundle( location );
-        if ( m_bundle == null )
+        if( m_bundle == null )
         {
             throw new BundleException( "The bundle could not be installed due to unknown reason" );
         }
         m_state = new InstalledState();
-        if ( m_startLevelService != null )
+        if( m_startLevelService != null )
         {
             Integer startLevel = m_reference.getStartLevel();
-            if ( startLevel != null )
+            if( startLevel != null )
             {
                 m_startLevelService.setBundleStartLevel( m_bundle, startLevel );
             }
@@ -159,7 +159,7 @@ public class InstallableBundleImpl
     private void doStart()
         throws BundleException
     {
-        if ( m_bundle != null )
+        if( m_bundle != null )
         {
             m_bundle.start();
         }
@@ -174,6 +174,7 @@ public class InstallableBundleImpl
 
         /**
          * Does nothing.
+         * @throws org.osgi.framework.BundleException Can not happen.
          */
         void install()
             throws BundleException
@@ -183,6 +184,7 @@ public class InstallableBundleImpl
 
         /**
          * Does nothing.
+         * @throws org.osgi.framework.BundleException Can not happen.
          */
         void start()
             throws BundleException

@@ -63,7 +63,7 @@ public class ConfigurationImpl
         InputStream inputStream;
         try
         {
-            if ( url.startsWith( CLASSPATH_PROTOCOL ) )
+            if( url.startsWith( CLASSPATH_PROTOCOL ) )
             {
                 String actualConfigFileName = url.split( ":" )[ 1 ];
                 Assert.notEmpty( "configuration file name", actualConfigFileName );
@@ -78,7 +78,7 @@ public class ConfigurationImpl
             m_properties.load( inputStream );
             LOGGER.info( "Using config [" + url + "]" );
         }
-        catch ( IOException e )
+        catch( IOException e )
         {
             throw new IllegalArgumentException( "Could not load configuration from url [" + url + "]", e );
         }
@@ -101,10 +101,10 @@ public class ConfigurationImpl
     {
         final List<String> result = new ArrayList<String>();
         final Enumeration<String> propertyNames = (Enumeration<String>) m_properties.propertyNames();
-        while ( propertyNames.hasMoreElements() )
+        while( propertyNames.hasMoreElements() )
         {
             String propertyName = propertyNames.nextElement();
-            if ( propertyName.matches( regex ) )
+            if( propertyName.matches( regex ) )
             {
                 result.add( propertyName );
             }

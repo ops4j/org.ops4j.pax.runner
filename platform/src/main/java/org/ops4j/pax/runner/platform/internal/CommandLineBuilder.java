@@ -49,7 +49,7 @@ public class CommandLineBuilder
      */
     public CommandLineBuilder append( final String[] segments )
     {
-        if ( segments != null && segments.length > 0 )
+        if( segments != null && segments.length > 0 )
         {
             final String[] command = new String[m_commandLine.length + segments.length];
             System.arraycopy( m_commandLine, 0, command, 0, m_commandLine.length );
@@ -68,7 +68,7 @@ public class CommandLineBuilder
      */
     public CommandLineBuilder append( final String segment )
     {
-        if ( segment != null )
+        if( segment != null )
         {
             return append( new String[]{ segment } );
         }

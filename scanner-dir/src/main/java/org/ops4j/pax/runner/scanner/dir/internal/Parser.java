@@ -17,7 +17,6 @@
  */
 package org.ops4j.pax.runner.scanner.dir.internal;
 
-import java.net.URL;
 import java.util.regex.Pattern;
 
 /**

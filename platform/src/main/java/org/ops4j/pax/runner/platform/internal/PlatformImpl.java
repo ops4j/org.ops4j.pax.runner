@@ -136,7 +136,7 @@ public class PlatformImpl
         LOGGER.debug( "Preparing platform [" + this + "]" );
         // we should fail fast so let's do first what is easy
         final String mainClassName = m_platformBuilder.getMainClassName();
-        if ( mainClassName == null || mainClassName.trim().length() == 0 )
+        if( mainClassName == null || mainClassName.trim().length() == 0 )
         {
             throw new PlatformException( "Main class of the platform cannot be null or empty" );
         }
@@ -212,25 +212,25 @@ public class PlatformImpl
             LOGGER.info( "Starting platform [" + this + "]. Runner has succesfully finished his job!" );
             process.waitFor();
         }
-        catch ( IOException e )
+        catch( IOException e )
         {
             throw new PlatformException( "Could not start up the process", e );
         }
-        catch ( InterruptedException e )
+        catch( InterruptedException e )
         {
             throw new PlatformException( "Could not start up the process", e );
         }
         finally
         {
-            if ( inPipe != null )
+            if( inPipe != null )
             {
                 inPipe.stop();
             }
-            if ( outPipe != null )
+            if( outPipe != null )
             {
                 outPipe.stop();
             }
-            if ( errPipe != null )
+            if( errPipe != null )
             {
                 errPipe.stop();
             }
@@ -251,7 +251,7 @@ public class PlatformImpl
             {
                 try
                 {
-                    for ( Pipe pipe : pipes )
+                    for( Pipe pipe : pipes )
                     {
                         pipe.stop();
                     }
@@ -277,7 +277,7 @@ public class PlatformImpl
         // TODO what the hack are framework options?
         String[] options = new String[0];
         final String property = System.getProperty( "FRAMEWORK_OPTS" );
-        if ( property != null )
+        if( property != null )
         {
             options = property.split( " " );
         }
@@ -297,7 +297,7 @@ public class PlatformImpl
         throws PlatformException
     {
         final String javaHome = configuration.getJavaHome();
-        if ( javaHome == null )
+        if( javaHome == null )
         {
             throw new PlatformException( "JAVA_HOME is not set." );
         }
@@ -320,12 +320,12 @@ public class PlatformImpl
         throws PlatformException
     {
         final List<LocalBundle> localBundles = new ArrayList<LocalBundle>();
-        if ( bundles != null )
+        if( bundles != null )
         {
-            for ( BundleReference reference : bundles )
+            for( BundleReference reference : bundles )
             {
                 final URL url = reference.getURL();
-                if ( url == null )
+                if( url == null )
                 {
                     throw new PlatformException( "Invalid url in bundle refrence [" + reference + "]" );
                 }
@@ -355,14 +355,14 @@ public class PlatformImpl
     {
         final StringBuilder profiles = new StringBuilder();
         final String userProfiles = platformContext.getConfiguration().getProfiles();
-        if ( userProfiles != null && userProfiles.trim().length() > 0 )
+        if( userProfiles != null && userProfiles.trim().length() > 0 )
         {
             profiles.append( userProfiles );
         }
         final String builderProfile = m_platformBuilder.getRequiredProfile( platformContext );
-        if ( builderProfile != null && builderProfile.trim().length() > 0 )
+        if( builderProfile != null && builderProfile.trim().length() > 0 )
         {
-            if ( profiles.length() > 0 )
+            if( profiles.length() > 0 )
             {
                 profiles.append( "," );
             }
@@ -407,7 +407,7 @@ public class PlatformImpl
         // destination will be made based on the hashcode of the url to be downloaded
         File destination = new File( workDir, "bundles/" + url.toExternalForm().hashCode() + ".bundle" );
         // download the bundle only if is a forced overwrite or the file does not exist
-        if ( overwrite || !destination.exists() )
+        if( overwrite || !destination.exists() )
         {
             try
             {
@@ -422,13 +422,13 @@ public class PlatformImpl
                 }
                 finally
                 {
-                    if ( os != null )
+                    if( os != null )
                     {
                         os.close();
                     }
                 }
             }
-            catch ( IOException e )
+            catch( IOException e )
             {
                 throw new PlatformException( "[" + url + "] could not be downloaded", e );
             }
@@ -473,11 +473,11 @@ public class PlatformImpl
     {
         final StringBuffer packages = new StringBuffer();
         final String ee = configuration.getExecutionEnvironment();
-        if ( !"NONE".equalsIgnoreCase( ee ) )
+        if( !"NONE".equalsIgnoreCase( ee ) )
         {
             // we make an union of the packages form each ee so let's have a unique set for it
             final Set<String> unique = new HashSet<String>();
-            for ( String segment : ee.split( "," ) )
+            for( String segment : ee.split( "," ) )
             {
                 final URL url = discoverExecutionEnvironmentURL( segment );
                 BufferedReader reader = null;
@@ -487,13 +487,13 @@ public class PlatformImpl
                     {
                         reader = new BufferedReader( new InputStreamReader( url.openStream() ) );
                         String line;
-                        while ( ( line = reader.readLine() ) != null )
+                        while( ( line = reader.readLine() ) != null )
                         {
                             line = line.trim();
                             // dont add empty lines and packages that we already have
-                            if ( line.length() > 0 && !unique.contains( line ) )
+                            if( line.length() > 0 && !unique.contains( line ) )
                             {
-                                if ( packages.length() > 0 )
+                                if( packages.length() > 0 )
                                 {
                                     packages.append( ", " );
                                 }
@@ -504,13 +504,13 @@ public class PlatformImpl
                     }
                     finally
                     {
-                        if ( reader != null )
+                        if( reader != null )
                         {
                             reader.close();
                         }
                     }
                 }
-                catch ( IOException e )
+                catch( IOException e )
                 {
                     throw new PlatformException( "Could not read packages from execution environment", e );
                 }
@@ -518,9 +518,9 @@ public class PlatformImpl
         }
         // append used defined packages
         final String userPackages = configuration.getSystemPackages();
-        if ( userPackages != null && userPackages.trim().length() > 0 )
+        if( userPackages != null && userPackages.trim().length() > 0 )
         {
-            if ( packages.length() > 0 )
+            if( packages.length() > 0 )
             {
                 packages.append( ", " );
             }
@@ -528,9 +528,9 @@ public class PlatformImpl
         }
         // append platform specific packages
         final String platformPackages = platformDefinition.getPackages();
-        if ( platformPackages != null && platformPackages.trim().length() > 0 )
+        if( platformPackages != null && platformPackages.trim().length() > 0 )
         {
-            if ( packages.length() > 0 )
+            if( packages.length() > 0 )
             {
                 packages.append( ", " );
             }
@@ -553,10 +553,10 @@ public class PlatformImpl
     {
         URL url;
         final String relativeFileName = m_eeMappings.get( ee.toUpperCase() );
-        if ( relativeFileName != null )
+        if( relativeFileName != null )
         {
             url = m_bundleContext.getBundle().getResource( EE_FILES_ROOT + relativeFileName );
-            if ( url == null )
+            if( url == null )
             {
                 throw new PlatformException( "Execution environment [" + ee + "] not supported" );
             }
@@ -569,7 +569,7 @@ public class PlatformImpl
                 url = new URL( ee );
                 LOGGER.info( "Execution environment [" + url.toExternalForm() + "]" );
             }
-            catch ( MalformedURLException e )
+            catch( MalformedURLException e )
             {
                 throw new PlatformException( "Execution environment [" + ee + "] could not be found", e );
             }
@@ -587,7 +587,7 @@ public class PlatformImpl
     Configuration createConfiguration( final Dictionary config )
     {
         Resolver resolver = m_resolver;
-        if ( config != null )
+        if( config != null )
         {
             resolver = new CompositeResolver( new DictionaryResolver( config ), m_resolver );
         }
@@ -613,25 +613,25 @@ public class PlatformImpl
         {
             final URL definitionURL = configuration.getDefinitionURL();
             InputStream inputStream = null;
-            if ( definitionURL != null )
+            if( definitionURL != null )
             {
                 inputStream = definitionURL.openStream();
             }
-            if ( inputStream == null )
+            if( inputStream == null )
             {
                 inputStream = m_platformBuilder.getDefinition();
             }
             return new PlatformDefinitionImpl( inputStream, configuration.getProfileStartLevel() );
         }
-        catch ( IOException e )
+        catch( IOException e )
         {
             throw new PlatformException( "Invalid platform definition", e );
         }
-        catch ( ParserConfigurationException e )
+        catch( ParserConfigurationException e )
         {
             throw new PlatformException( "Invalid platform definition", e );
         }
-        catch ( SAXException e )
+        catch( SAXException e )
         {
             throw new PlatformException( "Invalid platform definition", e );
         }
@@ -657,7 +657,7 @@ public class PlatformImpl
      */
     private <T> T mandatory( final String name, final T object )
     {
-        if ( object == null )
+        if( object == null )
         {
             throw new IllegalStateException( name + " cannot be null" );
         }

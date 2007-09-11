@@ -108,7 +108,7 @@ public class BundleReferenceBean
     public void setName( String name )
     {
         m_name = name;
-        if ( m_name == null )
+        if( m_name == null )
         {
             m_name = m_url.toString();
         }
@@ -136,7 +136,7 @@ public class BundleReferenceBean
     @Override
     public boolean equals( final Object object )
     {
-        if ( object == null || !( object instanceof BundleReference ) )
+        if( object == null || !( object instanceof BundleReference ) )
         {
             return false;
         }

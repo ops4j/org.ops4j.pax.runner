@@ -62,16 +62,16 @@ public class ScannerConfigurationImpl
      */
     public Integer getStartLevel()
     {
-        if ( !contains( m_pid + ServiceConstants.PROPERTY_START_LEVEL ) )
+        if( !contains( m_pid + ServiceConstants.PROPERTY_START_LEVEL ) )
         {
             final String value = m_resolver.get( m_pid + ServiceConstants.PROPERTY_START_LEVEL );
-            if ( value != null )
+            if( value != null )
             {
                 try
                 {
                     return set( m_pid + ServiceConstants.PROPERTY_START_LEVEL, Integer.valueOf( value ) );
                 }
-                catch ( NumberFormatException e )
+                catch( NumberFormatException e )
                 {
                     // do nothing
                 }
@@ -86,10 +86,10 @@ public class ScannerConfigurationImpl
      */
     public Boolean shouldStart()
     {
-        if ( !contains( m_pid + ServiceConstants.PROPERTY_START ) )
+        if( !contains( m_pid + ServiceConstants.PROPERTY_START ) )
         {
             final String value = m_resolver.get( m_pid + ServiceConstants.PROPERTY_START );
-            if ( value == null )
+            if( value == null )
             {
                 return set( m_pid + ServiceConstants.PROPERTY_START, Boolean.TRUE );
             }

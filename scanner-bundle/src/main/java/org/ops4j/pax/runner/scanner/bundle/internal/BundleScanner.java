@@ -78,7 +78,7 @@ public class BundleScanner
         {
             references.add( new FileBundleReference( urlSpec, config.getStartLevel(), config.shouldStart() ) );
         }
-        catch ( MalformedURLException e )
+        catch( MalformedURLException e )
         {
             throw new MalformedSpecificationException( "Invalid url", e );
         }

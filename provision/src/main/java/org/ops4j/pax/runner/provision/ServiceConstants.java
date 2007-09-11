@@ -8,6 +8,7 @@ package org.ops4j.pax.runner.provision;
  */
 public interface ServiceConstants
 {
+
     /**
      * Scheme separator.
      */
@@ -19,6 +20,6 @@ public interface ServiceConstants
     /**
      * Start configuration property name (used by scanners).
      */
-    static final String PROPERTY_START = ".start";    
-    
+    static final String PROPERTY_START = ".start";
+
 }

@@ -17,9 +17,9 @@
  */
 package org.ops4j.pax.runner.scanner.dir.internal;
 
-import java.util.List;
-import java.net.URL;
 import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
 
 /**
  * List urls from different sources. Implementatiosn mat list urls from file directory or zip files.
@@ -32,7 +32,9 @@ public interface Lister
 
     /**
      * Returns a list of urls the lister knows about.
+     *
      * @return list of urls
+     * @throws java.net.MalformedURLException If an underlying problem occurs in the OSGi framework.
      */
     List<URL> list()
         throws MalformedURLException;

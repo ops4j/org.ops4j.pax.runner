@@ -89,11 +89,11 @@ public abstract class AbstractScannerActivator<T extends Scanner>
     public void stop( final BundleContext bundleContext )
     {
         Assert.notNull( "Bundle context", bundleContext );
-        if ( m_scannerReg != null )
+        if( m_scannerReg != null )
         {
             m_scannerReg.unregister();
         }
-        if ( m_managedServiceReg != null )
+        if( m_managedServiceReg != null )
         {
             m_managedServiceReg.unregister();
         }
@@ -131,7 +131,7 @@ public abstract class AbstractScannerActivator<T extends Scanner>
                 public void updated( final Dictionary config )
                     throws ConfigurationException
                 {
-                    if ( config == null )
+                    if( config == null )
                     {
                         setResolver( new BundleContextResolver( m_bundleContext ) );
                     }

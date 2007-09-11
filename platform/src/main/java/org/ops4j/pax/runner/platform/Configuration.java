@@ -132,7 +132,7 @@ public interface Configuration
      *
      * @return value of overwrite option
      */
-    Boolean isOverwrite();    
+    Boolean isOverwrite();
 
     /**
      * Returns the profiles option - optional; a comma separated list of profiles to be used.

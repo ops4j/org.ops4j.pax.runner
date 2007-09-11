@@ -53,7 +53,7 @@ public class DirectoryLister
     public DirectoryLister( final File dir, final Pattern filter )
     {
         Assert.notNull( "Directory", dir );
-        Assert.notNull( "Filter", filter );        
+        Assert.notNull( "Filter", filter );
         m_dir = dir;
         m_filter = filter;
     }
@@ -68,9 +68,9 @@ public class DirectoryLister
         // first we get all files
         final List<String> fileNames = listFiles( m_dir, "" );
         // then we filter them based on configured filter
-        for ( String fileName : fileNames )
+        for( String fileName : fileNames )
         {
-            if ( m_filter == null || m_filter.matcher( fileName ).matches() )
+            if( m_filter == null || m_filter.matcher( fileName ).matches() )
             {
                 content.add( new File( m_dir, fileName ).toURL() );
             }
@@ -89,9 +89,9 @@ public class DirectoryLister
     private List<String> listFiles( final File dir, final String parentName )
     {
         final List<String> fileNames = new ArrayList<String>();
-        for ( File file : dir.listFiles() )
+        for( File file : dir.listFiles() )
         {
-            if ( file.isDirectory() )
+            if( file.isDirectory() )
             {
                 fileNames.addAll( listFiles( file, parentName + file.getName() + "/" ) );
             }

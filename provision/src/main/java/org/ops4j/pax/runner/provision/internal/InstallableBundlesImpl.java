@@ -60,11 +60,11 @@ public class InstallableBundlesImpl
     public InstallableBundles install()
         throws BundleException
     {
-        for ( InstallableBundle installable : m_installables )
+        for( InstallableBundle installable : m_installables )
         {
             installable.install();
         }
-        for ( InstallableBundle installable : m_installables )
+        for( InstallableBundle installable : m_installables )
         {
             installable.startIfNecessary();
         }

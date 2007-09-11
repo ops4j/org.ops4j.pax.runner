@@ -1,8 +1,8 @@
 package org.ops4j.pax.runner.osgi;
 
 import org.apache.felix.framework.ServiceRegistry;
-import org.osgi.service.startlevel.StartLevel;
 import org.osgi.framework.Bundle;
+import org.osgi.service.startlevel.StartLevel;
 
 public class RunnerStartLevel
     extends UnsupportedStartLevel
@@ -30,11 +30,11 @@ public class RunnerStartLevel
      */
     public void setBundleStartLevel( final Bundle bundle, final int startLevel )
     {
-        if ( !( bundle instanceof RunnerBundle ) )
+        if( !( bundle instanceof RunnerBundle ) )
         {
             super.setBundleStartLevel( bundle, startLevel );
         }
         ( (RunnerBundle) bundle ).setStartLevel( startLevel );
     }
-    
+
 }

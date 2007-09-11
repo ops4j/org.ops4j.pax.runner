@@ -80,7 +80,7 @@ public class URLStreamHandlerExtender
         );
         Assert.notEmpty( "Protocol", protocols );
         Assert.notNull( "URL stream handler service", urlStreamHandlerService );
-        for ( String protocol : protocols )
+        for( String protocol : protocols )
         {
             m_proxies.put( protocol, createProxy( urlStreamHandlerService ) );
         }
@@ -96,7 +96,7 @@ public class URLStreamHandlerExtender
     {
         LOGGER.debug( "Unregistering protocols [" + Arrays.toString( protocols ) + "]" );
         Assert.notEmpty( "Protocols", protocols );
-        for ( String protocol : protocols )
+        for( String protocol : protocols )
         {
             m_proxies.remove( protocol );
         }

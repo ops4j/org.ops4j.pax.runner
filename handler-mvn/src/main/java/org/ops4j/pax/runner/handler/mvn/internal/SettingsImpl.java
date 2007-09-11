@@ -89,19 +89,19 @@ public class SettingsImpl
     public SettingsImpl( final URL settingsURL )
     {
         m_settingsURL = settingsURL;
-        if ( m_settingsURL == null )
+        if( m_settingsURL == null )
         {
             m_settingsURL = safeGetFile( System.getProperty( "user.home" ) + "/.m2/settings.xml" );
-            if ( m_settingsURL == null )
+            if( m_settingsURL == null )
             {
                 m_settingsURL = safeGetFile( System.getProperty( "maven.home" ) + "/conf/settings.xml" );
-                if ( m_settingsURL == null )
+                if( m_settingsURL == null )
                 {
                     try
                     {
                         m_settingsURL = safeGetFile( System.getenv( "M2_HOME" ) + "/conf/settings.xml" );
                     }
-                    catch ( Error e )
+                    catch( Error e )
                     {
                         // ignore error - probably running on Java 1.4.x
                     }
@@ -118,18 +118,18 @@ public class SettingsImpl
      */
     public String getLocalRepository()
     {
-        if ( m_localRepository == null )
+        if( m_localRepository == null )
         {
             readSettings();
-            if ( m_document != null )
+            if( m_document != null )
             {
                 Element settingsElement = XmlUtils.getElement( m_document, LOCAL_REPOSITORY_TAG );
-                if ( settingsElement != null )
+                if( settingsElement != null )
                 {
                     m_localRepository = XmlUtils.getTextContent( settingsElement );
                 }
             }
-            if ( m_localRepository == null )
+            if( m_localRepository == null )
             {
                 m_localRepository = System.getProperty( "user.home" ) + "/.m2/repository";
             }
@@ -148,41 +148,41 @@ public class SettingsImpl
      */
     public String getRepositories()
     {
-        if ( m_repositories == null )
+        if( m_repositories == null )
         {
             readSettings();
-            if ( m_document != null )
+            if( m_document != null )
             {
                 Map<String, String> repositories = null;
                 List<String> order = null;
                 List<Element> repos = XmlUtils.getElements( m_document, REPOSITORY_TAG );
                 // first look for repositories
-                if ( repos != null )
+                if( repos != null )
                 {
-                    for ( Element repo : repos )
+                    for( Element repo : repos )
                     {
                         Element element = XmlUtils.getElement( repo, "id" );
-                        if ( element != null )
+                        if( element != null )
                         {
                             String id = XmlUtils.getTextContent( element );
-                            if ( id != null )
+                            if( id != null )
                             {
                                 element = XmlUtils.getElement( repo, "layout" );
                                 String layout = null;
-                                if ( element != null )
+                                if( element != null )
                                 {
                                     layout = XmlUtils.getTextContent( element );
                                 }
                                 // take only repositories with a default layout (skip legacy ones)
-                                if ( layout == null || "default".equals( layout ) )
+                                if( layout == null || "default".equals( layout ) )
                                 {
                                     element = XmlUtils.getElement( repo, "url" );
-                                    if ( element != null )
+                                    if( element != null )
                                     {
                                         String url = XmlUtils.getTextContent( element );
-                                        if ( url != null )
+                                        if( url != null )
                                         {
-                                            if ( repositories == null )
+                                            if( repositories == null )
                                             {
                                                 repositories = new HashMap<String, String>();
                                                 order = new ArrayList<String>();
@@ -197,33 +197,33 @@ public class SettingsImpl
                     }
                 }
                 // then look for user / passwords but only if we have repositories
-                if ( repositories != null )
+                if( repositories != null )
                 {
                     List<Element> servers = XmlUtils.getElements( m_document, SERVER_TAG );
-                    if ( servers != null )
+                    if( servers != null )
                     {
-                        for ( Element server : servers )
+                        for( Element server : servers )
                         {
                             Element element = XmlUtils.getElement( server, "id" );
-                            if ( element != null )
+                            if( element != null )
                             {
                                 String id = XmlUtils.getTextContent( element );
                                 // if we do not find a corresponding repository don't go furter
                                 String repository = repositories.get( id );
-                                if ( repository != null && repository.contains( "://" ) )
+                                if( repository != null && repository.contains( "://" ) )
                                 {
                                     element = XmlUtils.getElement( server, "username" );
-                                    if ( element != null )
+                                    if( element != null )
                                     {
                                         String username = XmlUtils.getTextContent( element );
                                         // if there is no username stop the search
-                                        if ( username != null )
+                                        if( username != null )
                                         {
                                             element = XmlUtils.getElement( server, "password" );
-                                            if ( element != null )
+                                            if( element != null )
                                             {
                                                 String password = XmlUtils.getTextContent( element );
-                                                if ( password != null )
+                                                if( password != null )
                                                 {
                                                     username = username + ":" + password;
                                                 }
@@ -239,9 +239,9 @@ public class SettingsImpl
                     }
                     // build the list of repositories
                     final StringBuilder builder = new StringBuilder();
-                    for ( String repositoryId : order )
+                    for( String repositoryId : order )
                     {
-                        if ( builder.length() > 0 )
+                        if( builder.length() > 0 )
                         {
                             builder.append( "," );
                         }
@@ -250,7 +250,7 @@ public class SettingsImpl
                     m_repositories = builder.toString();
                 }
             }
-            if ( m_repositories == null )
+            if( m_repositories == null )
             {
                 m_repositories = CENTRAL_REPOSITORY;
             }
@@ -267,21 +267,21 @@ public class SettingsImpl
      */
     private void readSettings()
     {
-        if ( m_document == null && m_settingsURL != null )
+        if( m_document == null && m_settingsURL != null )
         {
             try
             {
                 m_document = XmlUtils.parseDoc( m_settingsURL.openStream() );
             }
-            catch ( ParserConfigurationException e )
+            catch( ParserConfigurationException e )
             {
                 throw new RuntimeException( "Could not parse settings [" + m_settingsURL + "]", e );
             }
-            catch ( SAXException e )
+            catch( SAXException e )
             {
                 throw new RuntimeException( "Could not parse settings [" + m_settingsURL + "]", e );
             }
-            catch ( IOException e )
+            catch( IOException e )
             {
                 throw new RuntimeException( "Could not parse settings [" + m_settingsURL + "]", e );
             }
@@ -299,16 +299,16 @@ public class SettingsImpl
      */
     private static URL safeGetFile( final String filePath )
     {
-        if ( filePath != null )
+        if( filePath != null )
         {
             File file = new File( filePath );
-            if ( file.exists() && file.canRead() && file.isFile() )
+            if( file.exists() && file.canRead() && file.isFile() )
             {
                 try
                 {
                     return file.toURL();
                 }
-                catch ( MalformedURLException e )
+                catch( MalformedURLException e )
                 {
                     // do nothing
                 }

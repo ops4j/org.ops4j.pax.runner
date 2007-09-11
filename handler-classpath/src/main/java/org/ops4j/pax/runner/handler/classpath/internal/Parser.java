@@ -48,17 +48,17 @@ public class Parser
     public Parser( final String path )
         throws MalformedURLException
     {
-        if ( path == null )
+        if( path == null )
         {
             throw new MalformedURLException( "Path cannot be null. Syntax " + SYNTAX );
         }
-        if ( "".equals( path.trim() ) || "/".equals( path.trim() ) )
+        if( "".equals( path.trim() ) || "/".equals( path.trim() ) )
         {
             throw new MalformedURLException( "Path cannot be empty. Syntax " + SYNTAX );
         }
         m_resourceName = path;
         // remove leading slash 
-        if ( m_resourceName.startsWith( "/" ) )
+        if( m_resourceName.startsWith( "/" ) )
         {
             m_resourceName = m_resourceName.substring( 1 );
         }

@@ -60,11 +60,11 @@ public class ZipLister
         // first we get all files
         final Enumeration<? extends ZipEntry> entries = m_zip.entries();
         // then we filter them based on configured filter
-        while ( entries.hasMoreElements() )
+        while( entries.hasMoreElements() )
         {
             final ZipEntry entry = entries.nextElement();
             final String fileName = entry.getName();
-            if ( !entry.isDirectory() && m_filter.matcher( fileName ).matches() )
+            if( !entry.isDirectory() && m_filter.matcher( fileName ).matches() )
             {
                 content.add( new URL( "jar:" + m_baseURL.toExternalForm() + "!/" + fileName ) );
             }

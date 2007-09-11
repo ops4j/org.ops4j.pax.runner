@@ -23,9 +23,9 @@ import java.net.URL;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.ServiceReference;
-import org.osgi.framework.BundleContext;
 
 public class UnsupportedBundle
     implements Bundle

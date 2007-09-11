@@ -133,22 +133,22 @@ public class EquinoxPlatformBuilder
             writer.append( "#############################" );
             writer.append( "eclipse.ignoreApp", "true" );
             final Boolean clean = configuration.shouldClean();
-            if ( clean != null && clean )
+            if( clean != null && clean )
             {
                 writer.append( "osgi.clean", "true" );
             }
             final Integer startLevel = configuration.getStartLevel();
-            if ( startLevel != null )
+            if( startLevel != null )
             {
                 writer.append( "osgi.startLevel", startLevel.toString() );
             }
             final Integer bundleStartLevel = configuration.getBundleStartLevel();
-            if ( bundleStartLevel != null )
+            if( bundleStartLevel != null )
             {
                 writer.append( "osgi.bundles.defaultStartLevel", bundleStartLevel.toString() );
             }
 
-            if ( bundles != null && bundles.size() > 0 )
+            if( bundles != null && bundles.size() > 0 )
             {
                 writer.append();
                 writer.append( "#############################" );
@@ -165,20 +165,21 @@ public class EquinoxPlatformBuilder
 
             writer.write();
         }
-        catch ( IOException e )
+        catch( IOException e )
         {
             throw new PlatformException( "Could not create equinox configuration file", e );
         }
         finally
         {
-            if ( os != null )
+            if( os != null )
             {
                 try
                 {
                     os.close();
                 }
-                catch ( IOException e )
+                catch( IOException e )
                 {
+                    //noinspection ThrowFromFinallyBlock
                     throw new PlatformException( "Could not create equinox configuration file", e );
                 }
             }
@@ -190,14 +191,14 @@ public class EquinoxPlatformBuilder
      * Writes properties to configuration file.
      *
      * @param writer     a property writer
-     * @param properties properties to be written; can be null
+     * @param properties properties toC be written; can be null
      */
     private void appendProperties( final PropertiesWriter writer, final Properties properties )
     {
-        if ( properties != null )
+        if( properties != null )
         {
             final Enumeration enumeration = properties.propertyNames();
-            while ( enumeration.hasMoreElements() )
+            while( enumeration.hasMoreElements() )
             {
                 final String key = (String) enumeration.nextElement();
                 writer.append( key, properties.getProperty( key ) );
@@ -218,10 +219,10 @@ public class EquinoxPlatformBuilder
     private void appendBundles( final PropertiesWriter writer, final List<LocalBundle> bundles )
         throws MalformedURLException, PlatformException
     {
-        for ( LocalBundle bundle : bundles )
+        for( LocalBundle bundle : bundles )
         {
             File bundleFile = bundle.getFile();
-            if ( bundleFile == null )
+            if( bundleFile == null )
             {
                 throw new PlatformException( "The file from bundle to install cannot be null" );
             }
@@ -231,14 +232,14 @@ public class EquinoxPlatformBuilder
 
             final BundleReference reference = bundle.getBundleReference();
             final Integer startLevel = reference.getStartLevel();
-            if ( startLevel != null )
+            if( startLevel != null )
             {
                 builder.append( "@" ).append( startLevel );
             }
             final Boolean shouldStart = reference.shouldStart();
-            if ( shouldStart != null && shouldStart )
+            if( shouldStart != null && shouldStart )
             {
-                if ( startLevel != null )
+                if( startLevel != null )
                 {
                     builder.append( ":" );
                 }
@@ -289,7 +290,7 @@ public class EquinoxPlatformBuilder
         final String workingDirectory = context.getWorkingDirectory().getAbsolutePath();
         final List<String> arguments = new ArrayList<String>();
         final Boolean startConsole = context.getConfiguration().startConsole();
-        if ( startConsole != null && startConsole )
+        if( startConsole != null && startConsole )
         {
             arguments.add( ARG_CONSOLE );
         }
@@ -321,7 +322,7 @@ public class EquinoxPlatformBuilder
     {
         // TODO implement platform versioning
         final URL url = m_bundleContext.getBundle().getResource( "META-INF/platform-equinox/definition-3.2.1.xml" );
-        if ( url == null )
+        if( url == null )
         {
             throw new FileNotFoundException( "META-INF/platform-equinox/definition-3.2.1.xml could not be found" );
         }

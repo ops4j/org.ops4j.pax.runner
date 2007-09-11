@@ -42,7 +42,7 @@ public class Assert
      */
     public static void notNull( final String label, final Object value )
     {
-        if ( value == null )
+        if( value == null )
         {
             throw new IllegalArgumentException( label + " cannot be null" );
         }
@@ -58,7 +58,7 @@ public class Assert
     public static void notEmpty( final String label, final String value )
     {
         notNull( label, value );
-        if ( value.trim().length() == 0 )
+        if( value.trim().length() == 0 )
         {
             throw new IllegalArgumentException( label + " cannot be empty" );
         }
@@ -78,11 +78,11 @@ public class Assert
     public static void notEmpty( final String label, final String[] value )
     {
         notNull( label, value );
-        if ( value.length == 0 )
+        if( value.length == 0 )
         {
             throw new IllegalArgumentException( label + " cannot be empty" );
         }
-        for ( String element : value )
+        for( String element : value )
         {
             notEmpty( label + " element", element );
         }

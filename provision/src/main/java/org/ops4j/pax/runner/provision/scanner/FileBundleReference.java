@@ -55,15 +55,15 @@ public class FileBundleReference
     public FileBundleReference( final String reference )
         throws MalformedSpecificationException
     {
-        if ( reference == null || "".equals( reference.trim() ) )
+        if( reference == null || "".equals( reference.trim() ) )
         {
             throw new MalformedSpecificationException( "Reference cannot be null or empty" );
         }
-        if ( reference.trim().length() == 0 )
+        if( reference.trim().length() == 0 )
         {
             throw new MalformedSpecificationException( "Path cannot be empty. Syntax " + SYNTAX );
         }
-        if ( reference.startsWith( SEPARATOR ) || reference.endsWith( SEPARATOR ) )
+        if( reference.startsWith( SEPARATOR ) || reference.endsWith( SEPARATOR ) )
         {
             throw new MalformedSpecificationException(
                 "Path cannot start or end with " + SEPARATOR + ". Syntax " + SYNTAX
@@ -71,21 +71,21 @@ public class FileBundleReference
         }
         String[] segments = reference.split( SEPARATOR );
         setLocation( segments[ 0 ] );
-        if ( segments.length > 1 )
+        if( segments.length > 1 )
         {
-            for ( int i = 1; i < segments.length; i++ )
+            for( int i = 1; i < segments.length; i++ )
             {
                 try
                 {
                     parseSegment( segments[ i ].trim() );
                 }
-                catch ( MalformedURLException e )
+                catch( MalformedURLException e )
                 {
                     throw new MalformedSpecificationException( e );
                 }
             }
         }
-        if ( shouldStart() == null )
+        if( shouldStart() == null )
         {
             setShouldStart( true );
         }
@@ -105,12 +105,12 @@ public class FileBundleReference
         throws MalformedURLException
     {
         this( reference );
-        if ( defaultStartLevel != null && getStartLevel() == null )
+        if( defaultStartLevel != null && getStartLevel() == null )
         {
             setStartLevel( defaultStartLevel );
         }
         // by default should start is true so if we have a default passed then use this one
-        if ( defaultShouldStart != null && ( shouldStart() == null || shouldStart() ) )
+        if( defaultShouldStart != null && ( shouldStart() == null || shouldStart() ) )
         {
             setShouldStart( defaultShouldStart );
         }
@@ -126,19 +126,19 @@ public class FileBundleReference
     private void parseSegment( final String segment )
         throws MalformedURLException
     {
-        if ( shouldStart() == null && segment.equalsIgnoreCase( NO_START ) )
+        if( shouldStart() == null && segment.equalsIgnoreCase( NO_START ) )
         {
             setShouldStart( false );
             return;
         }
-        if ( getStartLevel() == null )
+        if( getStartLevel() == null )
         {
             try
             {
                 setStartLevel( Integer.parseInt( segment ) );
                 return;
             }
-            catch ( NumberFormatException e )
+            catch( NumberFormatException e )
             {
                 throw new MalformedURLException( "Invalid option [" + segment + "]. Syntax " + SYNTAX );
             }

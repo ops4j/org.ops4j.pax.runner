@@ -19,10 +19,10 @@ package org.ops4j.pax.runner;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.ops4j.pax.runner.commons.Info;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.pax.runner.commons.Info;
 
 /**
  * Resolvs options by:<br/>
@@ -81,7 +81,7 @@ public class OptionResolverImpl
         Assert.notEmpty( "Option name", name );
         LOGGER.trace( "Resolving option [" + name + "]" );
         // if is in the cache just return it
-        if ( m_cache.containsKey( name ) )
+        if( m_cache.containsKey( name ) )
         {
             final String value = m_cache.get( name );
             LOGGER.trace( "Option [" + name + "] resolved to [" + value + "]" );
@@ -90,18 +90,18 @@ public class OptionResolverImpl
         // then look in the command line
         String value = m_commandLine.getOption( name );
         // maybe there is an alias for it
-        if ( value == null || value.trim().length() == 0 )
+        if( value == null || value.trim().length() == 0 )
         {
             final String alias = m_configuration.getProperty( "alias." + name );
-            if ( alias != null && alias.trim().length() > 0 )
+            if( alias != null && alias.trim().length() > 0 )
             {
                 // alias could be a comma separated set of possibilities
                 String[] aliases = alias.split( "," );
-                for ( String entry : aliases )
+                for( String entry : aliases )
                 {
                     value = m_commandLine.getOption( entry );
                     // we get out on first found
-                    if ( value != null )
+                    if( value != null )
                     {
                         break;
                     }
@@ -109,30 +109,30 @@ public class OptionResolverImpl
             }
         }
         // maybe is a "choose" option, so ask the user
-        if ( value != null && "choose".equalsIgnoreCase( value ) )
+        if( value != null && "choose".equalsIgnoreCase( value ) )
         {
             Info.print( "your " + name.toLowerCase() + "? " );
             value = User.ask();
         }
         // and finally look for a default
-        if ( value == null || value.trim().length() == 0 )
+        if( value == null || value.trim().length() == 0 )
         {
             value = m_configuration.getProperty( "default." + name );
         }
         // try to replace the shortcuts
-        if ( value != null && value.trim().length() > 0 )
+        if( value != null && value.trim().length() > 0 )
         {
             // the value must be a comma separated list so replace each value
             final String[] segments = value.split( "," );
             final StringBuilder newValue = new StringBuilder();
-            for ( String segment : segments )
+            for( String segment : segments )
             {
-                if ( newValue.length() > 0 )
+                if( newValue.length() > 0 )
                 {
                     newValue.append( "," );
                 }
                 final String replacer = m_configuration.getProperty( "alias." + name + "." + segment );
-                if ( replacer != null )
+                if( replacer != null )
                 {
                     newValue.append( replacer );
                 }
@@ -154,7 +154,7 @@ public class OptionResolverImpl
     public String getMandatory( final String name )
     {
         final String value = get( name );
-        if ( value == null )
+        if( value == null )
         {
             throw new MissingOptionException( name );
         }

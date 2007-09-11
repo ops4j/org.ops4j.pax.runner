@@ -26,7 +26,8 @@ import java.util.Dictionary;
  * @author Alin Dreghiciu
  * @since August 26, 2007
  */
-public class DictionaryResolver implements Resolver
+public class DictionaryResolver
+    implements Resolver
 {
 
     /**
@@ -64,11 +65,11 @@ public class DictionaryResolver implements Resolver
     public String get( final String propertyName )
     {
         String value = null;
-        if ( m_properties != null )
+        if( m_properties != null )
         {
             value = (String) m_properties.get( propertyName );
         }
-        if ( value != null && value.trim().length() == 0 )
+        if( value != null && value.trim().length() == 0 )
         {
             value = null;
         }

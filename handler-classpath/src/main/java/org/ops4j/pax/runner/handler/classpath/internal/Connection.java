@@ -96,19 +96,19 @@ public class Connection
     {
         connect();
         InputStream is;
-        if ( url.getAuthority() != null )
+        if( url.getAuthority() != null )
         {
             is = getFromSpecificBundle();
         }
         else
         {
             is = getFromClasspath();
-            if ( is == null )
+            if( is == null )
             {
                 is = getFromInstalledBundles();
             }
         }
-        if ( is == null )
+        if( is == null )
         {
             throw new IOException( "URL [" + m_parser.getResourceName() + "] could not be resolved from classpath" );
         }
@@ -126,10 +126,10 @@ public class Connection
         throws IOException
     {
         Bundle[] bundles = getBundles( url.getAuthority() );
-        if ( bundles != null && bundles.length > 0 )
+        if( bundles != null && bundles.length > 0 )
         {
             final URL resource = bundles[ 0 ].getResource( m_parser.getResourceName() );
-            if ( resource != null )
+            if( resource != null )
             {
                 return resource.openStream();
             }
@@ -145,7 +145,7 @@ public class Connection
     private InputStream getFromClasspath()
     {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        if ( cl != null )
+        if( cl != null )
         {
             return cl.getResourceAsStream( m_parser.getResourceName() );
         }
@@ -163,12 +163,12 @@ public class Connection
         throws IOException
     {
         Bundle[] bundles = getBundles( null );
-        if ( bundles != null && bundles.length > 0 )
+        if( bundles != null && bundles.length > 0 )
         {
-            for ( Bundle bundle : bundles )
+            for( Bundle bundle : bundles )
             {
                 URL resource = bundle.getResource( m_parser.getResourceName() );
-                if ( resource != null )
+                if( resource != null )
                 {
                     return resource.openStream();
                 }
@@ -188,13 +188,13 @@ public class Connection
     private Bundle[] getBundles( final String symbolicName )
     {
         final Bundle[] bundles = m_bundleContext.getBundles();
-        if ( bundles != null )
+        if( bundles != null )
         {
-            if ( symbolicName != null )
+            if( symbolicName != null )
             {
-                for ( Bundle bundle : bundles )
+                for( Bundle bundle : bundles )
                 {
-                    if ( bundle.getSymbolicName().equals( symbolicName ) )
+                    if( bundle.getSymbolicName().equals( symbolicName ) )
                     {
                         return new Bundle[]{ bundle };
                     }

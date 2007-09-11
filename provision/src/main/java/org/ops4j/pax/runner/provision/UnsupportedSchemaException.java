@@ -22,13 +22,14 @@ package org.ops4j.pax.runner.provision;
  * Thrown to indicate that the schema is not supported.
  *
  * @author Alin Dreghiciu
- * @since September 04, 2007 
+ * @since September 04, 2007
  */
 public class UnsupportedSchemaException
     extends MalformedSpecificationException
 {
 
     /**
+     * @param message The exception message.
      * @see Exception#Exception(String)
      */
     public UnsupportedSchemaException( String message )
@@ -37,6 +38,8 @@ public class UnsupportedSchemaException
     }
 
     /**
+     * @param message The exception message.
+     * @param cause The original cause of the exception.
      * @see Exception#Exception(String,Throwable)
      */
     public UnsupportedSchemaException( String message, Throwable cause )

@@ -84,7 +84,7 @@ public final class Activator
         throws Exception
     {
         Assert.notNull( "Bundle context", bundleContext );
-        if ( m_platformBuilderServiceReg != null )
+        if( m_platformBuilderServiceReg != null )
         {
             m_platformBuilderServiceReg.unregister();
             m_platformBuilderServiceReg = null;

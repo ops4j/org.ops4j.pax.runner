@@ -25,7 +25,8 @@ package org.ops4j.pax.runner.commons.resolver;
  * @author Alin Dreghiciu
  * @since August 26, 2007
  */
-public class CompositeResolver implements Resolver
+public class CompositeResolver
+    implements Resolver
 {
 
     /**
@@ -52,15 +53,15 @@ public class CompositeResolver implements Resolver
      */
     public String get( final String propertyName )
     {
-        String value = null;
-        if ( m_resolvers != null )
+        String value;
+        if( m_resolvers != null )
         {
-            for ( Resolver resolver : m_resolvers )
+            for( Resolver resolver : m_resolvers )
             {
                 value = resolver.get( propertyName );
-                if ( value != null )
+                if( value != null )
                 {
-                    if ( value.trim().length() == 0 )
+                    if( value.trim().length() == 0 )
                     {
                         return null;
                     }

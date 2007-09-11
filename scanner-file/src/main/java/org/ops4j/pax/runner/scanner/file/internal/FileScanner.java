@@ -89,28 +89,29 @@ public class FileScanner
             Integer defaultStartLevel = getDefaultStartLevel( parser, config );
             Boolean defaultStart = getDefaultStart( parser, config );
             String line;
-            while ( ( line = bufferedReader.readLine() ) != null )
+            while( ( line = bufferedReader.readLine() ) != null )
             {
-                if ( !"".equals( line.trim() ) && !line.trim().startsWith( COMMENT_SIGN ) )
+                if( !"".equals( line.trim() ) && !line.trim().startsWith( COMMENT_SIGN ) )
                 {
                     references.add( new FileBundleReference( line, defaultStartLevel, defaultStart ) );
                 }
             }
         }
-        catch ( IOException e )
+        catch( IOException e )
         {
             throw new ScannerException( "Could not parse the provision file", e );
         }
         finally
         {
-            if ( bufferedReader != null )
+            if( bufferedReader != null )
             {
                 try
                 {
                     bufferedReader.close();
                 }
-                catch ( IOException e )
+                catch( IOException e )
                 {
+                    //noinspection ThrowFromFinallyBlock
                     throw new ScannerException( "Could not parse the provision file", e );
                 }
             }
@@ -129,7 +130,7 @@ public class FileScanner
     private Integer getDefaultStartLevel( Parser parser, ScannerConfiguration config )
     {
         Integer startLevel = parser.getStartLevel();
-        if ( startLevel == null )
+        if( startLevel == null )
         {
             startLevel = config.getStartLevel();
         }
@@ -147,7 +148,7 @@ public class FileScanner
     private Boolean getDefaultStart( final Parser parser, final ScannerConfiguration config )
     {
         Boolean start = parser.shouldStart();
-        if ( start == null )
+        if( start == null )
         {
             start = config.shouldStart();
         }

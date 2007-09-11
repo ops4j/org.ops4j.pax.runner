@@ -122,22 +122,22 @@ public class Activator
         throws Exception
     {
         Assert.notNull( "Bundle context", bundleContext );
-        if ( m_serviceTracker != null )
+        if( m_serviceTracker != null )
         {
             m_serviceTracker.close();
             m_serviceTracker = null;
         }
-        if ( m_registrations != null )
+        if( m_registrations != null )
         {
-            for ( ServiceRegistration registration : m_registrations.values() )
+            for( ServiceRegistration registration : m_registrations.values() )
             {
-                if ( registration != null )
+                if( registration != null )
                 {
                     registration.unregister();
                 }
             }
         }
-        if ( m_managedServiceReg != null )
+        if( m_managedServiceReg != null )
         {
             m_managedServiceReg.unregister();
         }
@@ -164,15 +164,15 @@ public class Activator
                 Assert.notNull( "Service reference", serviceReference );
                 LOGGER.debug( "Platform builder available [" + serviceReference + "]" );
                 final PlatformBuilder platformBuilder = (PlatformBuilder) super.addingService( serviceReference );
-                if ( platformBuilder != null )
+                if( platformBuilder != null )
                 {
                     LOGGER.debug( "Registering a platform for [" + platformBuilder + "]" );
                     // copy all properties
                     final Dictionary<String, Object> props = new Hashtable<String, Object>();
                     final String[] keys = serviceReference.getPropertyKeys();
-                    if ( keys != null )
+                    if( keys != null )
                     {
-                        for ( String key : keys )
+                        for( String key : keys )
                         {
                             props.put( key, serviceReference.getProperty( key ) );
                         }
@@ -188,13 +188,13 @@ public class Activator
                         );
                         // and store it for clean up
                         m_registrations.put( serviceReference, registration );
-                        if ( platform instanceof PlatformImpl )
+                        if( platform instanceof PlatformImpl )
                         {
                             m_platforms.put( serviceReference, (PlatformImpl) platform );
                         }
                         LOGGER.debug( "Registred platform [" + platform + "]" );
                     }
-                    catch ( Exception e )
+                    catch( Exception e )
                     {
                         LOGGER.error( "Could not register a platform for [" + serviceReference + "]", e );
                     }
@@ -211,7 +211,7 @@ public class Activator
             public void removedService( final ServiceReference serviceReference, final Object object )
             {
                 LOGGER.debug( "Platform builder removed [" + serviceReference + "]" );
-                if ( !( object instanceof PlatformBuilder ) )
+                if( !( object instanceof PlatformBuilder ) )
                 {
                     throw new IllegalArgumentException(
                         "Invalid tracked object [" + object.getClass() + "]. Expected an "
@@ -220,7 +220,7 @@ public class Activator
                 }
                 super.removedService( serviceReference, object );
                 final ServiceRegistration registration = m_registrations.get( serviceReference );
-                if ( registration != null )
+                if( registration != null )
                 {
                     registration.unregister();
                     m_registrations.remove( serviceReference );
@@ -255,9 +255,9 @@ public class Activator
                     try
                     {
                         m_config = config;
-                        for ( PlatformImpl platform : m_platforms.values() )
+                        for( PlatformImpl platform : m_platforms.values() )
                         {
-                            if ( m_config == null )
+                            if( m_config == null )
                             {
                                 platform.setResolver( new BundleContextResolver( m_bundleContext ) );
                             }
@@ -294,7 +294,7 @@ public class Activator
         m_lock.lock();
         try
         {
-            if ( m_config == null )
+            if( m_config == null )
             {
                 platform.setResolver( new BundleContextResolver( m_bundleContext ) );
             }

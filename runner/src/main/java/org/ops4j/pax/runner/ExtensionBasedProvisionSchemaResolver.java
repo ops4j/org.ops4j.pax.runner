@@ -17,7 +17,8 @@ import java.net.MalformedURLException;
  * @author Alin Dreghiciu
  * @since August 26, 2007
  */
-public class ExtensionBasedProvisionSchemaResolver implements ProvisionSchemaResolver
+public class ExtensionBasedProvisionSchemaResolver
+    implements ProvisionSchemaResolver
 {
 
     /**
@@ -25,17 +26,17 @@ public class ExtensionBasedProvisionSchemaResolver implements ProvisionSchemaRes
      */
     public String resolve( final String toResolve )
     {
-        if ( toResolve == null || toResolve.trim().length() == 0 )
+        if( toResolve == null || toResolve.trim().length() == 0 )
         {
             return null;
         }
-        if ( toResolve.matches( "scan-.*:.*" ) )
+        if( toResolve.matches( "scan-.*:.*" ) )
         {
             return toResolve;
         }
         String options = "";
         String resolve = toResolve;
-        if ( toResolve.contains( "@" ) )
+        if( toResolve.contains( "@" ) )
         {
             final int startOfOption = toResolve.indexOf( "@" );
             options = toResolve.substring( startOfOption );
@@ -43,38 +44,38 @@ public class ExtensionBasedProvisionSchemaResolver implements ProvisionSchemaRes
         }
         // first resolve schema
         String schema = org.ops4j.pax.runner.scanner.dir.ServiceConstants.SCHEMA;
-        if ( !resolve.endsWith( "/" ) && !resolve.endsWith( "\\" ) && !resolve.contains( "!/" ) )
+        if( !resolve.endsWith( "/" ) && !resolve.endsWith( "\\" ) && !resolve.contains( "!/" ) )
         {
             // check if starts with mvn or wrap, because most common it will be a bundle
-            if ( resolve.startsWith( org.ops4j.pax.runner.handler.mvn.ServiceConstants.PROTOCOL )
-                 || resolve.startsWith( org.ops4j.pax.runner.handler.wrap.ServiceConstants.PROTOCOL ) )
+            if( resolve.startsWith( org.ops4j.pax.runner.handler.mvn.ServiceConstants.PROTOCOL )
+                || resolve.startsWith( org.ops4j.pax.runner.handler.wrap.ServiceConstants.PROTOCOL ) )
             {
                 schema = org.ops4j.pax.runner.scanner.bundle.ServiceConstants.SCHEMA;
             }
             else
             {
                 int indexOfSlash = resolve.lastIndexOf( "/" );
-                if ( indexOfSlash == -1 )
+                if( indexOfSlash == -1 )
                 {
                     indexOfSlash = resolve.lastIndexOf( "\\" );
                 }
                 final int indexOfDot = resolve.lastIndexOf( "." );
-                if ( indexOfDot > indexOfSlash )
+                if( indexOfDot > indexOfSlash )
                 {
                     schema = org.ops4j.pax.runner.scanner.file.ServiceConstants.SCHEMA;
-                    if ( indexOfDot < resolve.length() - 1 )
+                    if( indexOfDot < resolve.length() - 1 )
                     {
                         final String extension = resolve.substring( indexOfDot + 1 ).toUpperCase();
-                        if ( "POM".equals( extension ) )
+                        if( "POM".equals( extension ) )
                         {
                             // TODO replace with static SCHEMA when scan-pom created.
                             schema = "scan-pom";
                         }
-                        else if ( "ZIP".equals( extension ) )
+                        else if( "ZIP".equals( extension ) )
                         {
                             schema = org.ops4j.pax.runner.scanner.dir.ServiceConstants.SCHEMA;
                         }
-                        else if ( "JAR".equals( extension ) || "BUNDLE".equals( extension ) )
+                        else if( "JAR".equals( extension ) || "BUNDLE".equals( extension ) )
                         {
                             schema = org.ops4j.pax.runner.scanner.bundle.ServiceConstants.SCHEMA;
                         }
@@ -85,13 +86,13 @@ public class ExtensionBasedProvisionSchemaResolver implements ProvisionSchemaRes
         // then check out if is a local file
         final File file = new File( resolve );
         String resolved = resolve;
-        if ( file.exists() )
+        if( file.exists() )
         {
             try
             {
                 resolved = file.toURL().toExternalForm();
             }
-            catch ( MalformedURLException ignore )
+            catch( MalformedURLException ignore )
             {
                 // ignore as this should not happen if the file exists
             }

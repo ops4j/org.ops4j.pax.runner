@@ -35,7 +35,7 @@ public interface CommandLine
     /**
      * Debug option.
      */
-    static final String OPTION_DEBUG = "debug";    
+    static final String OPTION_DEBUG = "debug";
     /**
      * Handlers option.
      */
@@ -53,6 +53,7 @@ public interface CommandLine
      * Returns the value of an option by key. If option is not defined returns null.
      *
      * @param key option key
+     * @return The option value.
      */
     String getOption( String key );
 

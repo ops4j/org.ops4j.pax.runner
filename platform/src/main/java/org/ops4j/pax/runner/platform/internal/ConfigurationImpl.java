@@ -81,11 +81,11 @@ public class ConfigurationImpl
     public URL getDefinitionURL()
         throws MalformedURLException
     {
-        if ( !contains( ServiceConstants.CONFIG_DEFINITION_URL ) )
+        if( !contains( ServiceConstants.CONFIG_DEFINITION_URL ) )
         {
             final String urlSpec = m_resolver.get( ServiceConstants.CONFIG_DEFINITION_URL );
             URL url = null;
-            if ( urlSpec != null )
+            if( urlSpec != null )
             {
                 url = new URL( urlSpec );
             }
@@ -99,10 +99,10 @@ public class ConfigurationImpl
      */
     public String getWorkingDirectory()
     {
-        if ( !contains( ServiceConstants.CONFIG_WORKING_DIRECTORY ) )
+        if( !contains( ServiceConstants.CONFIG_WORKING_DIRECTORY ) )
         {
             String workDir = m_resolver.get( ServiceConstants.CONFIG_WORKING_DIRECTORY );
-            if ( workDir == null )
+            if( workDir == null )
             {
                 workDir = DEFAULT_WORKING_DIRECTORY;
             }
@@ -119,7 +119,7 @@ public class ConfigurationImpl
     public String getVMOptions()
     {
         // TODO unit test
-        if ( !contains( ServiceConstants.CONFIG_VMOPTIONS ) )
+        if( !contains( ServiceConstants.CONFIG_VMOPTIONS ) )
         {
             return set( ServiceConstants.CONFIG_VMOPTIONS, m_resolver.get( ServiceConstants.CONFIG_VMOPTIONS ) );
         }
@@ -134,14 +134,14 @@ public class ConfigurationImpl
     public String getClasspath()
     {
         // TODO unit test
-        if ( !contains( ServiceConstants.CONFIG_CLASSPATH ) )
+        if( !contains( ServiceConstants.CONFIG_CLASSPATH ) )
         {
             String classpath = m_resolver.get( ServiceConstants.CONFIG_CLASSPATH );
-            if ( classpath == null )
+            if( classpath == null )
             {
                 classpath = "";
             }
-            else if ( !classpath.startsWith( File.pathSeparator ) )
+            else if( !classpath.startsWith( File.pathSeparator ) )
             {
                 classpath = File.pathSeparator + classpath;
             }
@@ -155,7 +155,7 @@ public class ConfigurationImpl
      */
     public String getSystemPackages()
     {
-        if ( !contains( ServiceConstants.CONFIG_SYSTEM_PACKAGES ) )
+        if( !contains( ServiceConstants.CONFIG_SYSTEM_PACKAGES ) )
         {
             return set(
                 ServiceConstants.CONFIG_SYSTEM_PACKAGES,
@@ -170,10 +170,10 @@ public class ConfigurationImpl
      */
     public String getExecutionEnvironment()
     {
-        if ( !contains( ServiceConstants.CONFIG_EXECUTION_ENV ) )
+        if( !contains( ServiceConstants.CONFIG_EXECUTION_ENV ) )
         {
             String javaVersion = m_resolver.get( ServiceConstants.CONFIG_EXECUTION_ENV );
-            if ( javaVersion == null )
+            if( javaVersion == null )
             {
                 javaVersion = "J2SE-" + System.getProperty( "java.version" ).substring( 0, 3 );
             }
@@ -187,19 +187,19 @@ public class ConfigurationImpl
      */
     public String getJavaHome()
     {
-        if ( !contains( ServiceConstants.CONFIG_JAVA_HOME ) )
+        if( !contains( ServiceConstants.CONFIG_JAVA_HOME ) )
         {
             String javaHome = m_resolver.get( ServiceConstants.CONFIG_JAVA_HOME );
-            if ( javaHome == null )
+            if( javaHome == null )
             {
                 javaHome = System.getProperty( "JAVA_HOME" );
-                if ( javaHome == null )
+                if( javaHome == null )
                 {
                     try
                     {
                         javaHome = System.getenv( "JAVA_HOME" );
                     }
-                    catch ( Error e )
+                    catch( Error e )
                     {
                         // fallback when running under Java 1.4.x
                         javaHome = System.getProperty( "java.home" );
@@ -216,7 +216,7 @@ public class ConfigurationImpl
      */
     public Boolean shouldClean()
     {
-        if ( !contains( ServiceConstants.CONFIG_CLEAN ) )
+        if( !contains( ServiceConstants.CONFIG_CLEAN ) )
         {
             return set( ServiceConstants.CONFIG_CLEAN,
                         Boolean.valueOf( m_resolver.get( ServiceConstants.CONFIG_CLEAN ) )
@@ -230,10 +230,10 @@ public class ConfigurationImpl
      */
     public Boolean startConsole()
     {
-        if ( !contains( ServiceConstants.CONFIG_CONSOLE ) )
+        if( !contains( ServiceConstants.CONFIG_CONSOLE ) )
         {
             String console = m_resolver.get( ServiceConstants.CONFIG_CONSOLE );
-            if ( console == null )
+            if( console == null )
             {
                 return set( ServiceConstants.CONFIG_CONSOLE, Boolean.TRUE );
             }
@@ -247,7 +247,7 @@ public class ConfigurationImpl
      */
     public Boolean isOverwrite()
     {
-        if ( !contains( ServiceConstants.CONFIG_OVERWRITE ) )
+        if( !contains( ServiceConstants.CONFIG_OVERWRITE ) )
         {
             return set( ServiceConstants.CONFIG_OVERWRITE,
                         Boolean.valueOf( m_resolver.get( ServiceConstants.CONFIG_OVERWRITE ) )
@@ -261,7 +261,7 @@ public class ConfigurationImpl
      */
     public String getProfiles()
     {
-        if ( !contains( ServiceConstants.CONFIG_PROFILES ) )
+        if( !contains( ServiceConstants.CONFIG_PROFILES ) )
         {
             return set( ServiceConstants.CONFIG_PROFILES, m_resolver.get( ServiceConstants.CONFIG_PROFILES ) );
         }
@@ -273,10 +273,10 @@ public class ConfigurationImpl
      */
     public String getFrameworkProfile()
     {
-        if ( !contains( ServiceConstants.CONFIG_FRAMEWORK_PROFILE ) )
+        if( !contains( ServiceConstants.CONFIG_FRAMEWORK_PROFILE ) )
         {
             String profile = m_resolver.get( ServiceConstants.CONFIG_FRAMEWORK_PROFILE );
-            if ( profile == null )
+            if( profile == null )
             {
                 profile = DEFAULT_FRAMEWORK_PROFILE;
             }
@@ -319,17 +319,17 @@ public class ConfigurationImpl
      */
     private Integer resolveStartLevel( final String optionName, final Integer defaultValue )
     {
-        if ( !contains( optionName ) )
+        if( !contains( optionName ) )
         {
             String startLevel = m_resolver.get( optionName );
             Integer startLevelAsInt = defaultValue;
-            if ( startLevel != null )
+            if( startLevel != null )
             {
                 try
                 {
                     startLevelAsInt = Integer.valueOf( startLevel );
                 }
-                catch ( NumberFormatException ignore )
+                catch( NumberFormatException ignore )
                 {
                     // ignore and use default value
                 }

@@ -51,5 +51,5 @@ public class Activator
     {
         getScanner().setResolver( resolver );
     }
-    
+
 }
