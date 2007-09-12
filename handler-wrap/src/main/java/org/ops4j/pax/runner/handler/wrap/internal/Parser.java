@@ -70,22 +70,24 @@ public class Parser
     public Parser( final String path )
         throws MalformedURLException
     {
-        if ( path == null || path.trim().length() == 0 )
+        if( path == null || path.trim().length() == 0 )
         {
             throw new MalformedURLException( "Path cannot be null or empty. Syntax " + SYNTAX );
         }
-        if ( path.startsWith( INSTRUCTIONS_SEPARATOR ) || path.endsWith( INSTRUCTIONS_SEPARATOR ) )
+        if( path.startsWith( INSTRUCTIONS_SEPARATOR ) || path.endsWith( INSTRUCTIONS_SEPARATOR ) )
         {
             throw new MalformedURLException(
                 "Path cannot start or end with " + INSTRUCTIONS_SEPARATOR + ". Syntax " + SYNTAX
             );
         }
         m_wrappingProperties = new Properties();
-        if ( path.contains( INSTRUCTIONS_SEPARATOR ) )
+        Pattern splitPattern = Pattern.compile( "(.+?)!(.+?)" );
+        if( splitPattern.matcher( path ).matches() )
         {
-            int pos = path.lastIndexOf( INSTRUCTIONS_SEPARATOR );
-            parseInstructions( path.substring( pos + 1 ) );
-            m_wrappedJarURL = new URL( path.substring( 0, pos ) );
+            Matcher matcher = splitPattern.matcher( path );
+            matcher.matches();
+            parseInstructions( matcher.group( 2 ) );
+            m_wrappedJarURL = new URL( matcher.group( 1 ) );
         }
         else
         {
@@ -114,19 +116,19 @@ public class Parser
                 {
                     m_wrappingProperties.load( URLUtils.prepareInputStream( url, true ) );
                 }
-                catch ( IOException e )
+                catch( IOException e )
                 {
                     throw initMalformedURLException( "Could not retrieve the instructions from [" + spec + "]", e );
                 }
             }
-            catch ( MalformedURLException ignore )
+            catch( MalformedURLException ignore )
             {
                 // just ignore for the moment and try out if we have valid properties separated by "&"
                 final String segments[] = spec.split( "&" );
-                for ( String segment : segments )
+                for( String segment : segments )
                 {
                     final Matcher matcher = INSTRUCTIONS_PATTERN.matcher( segment );
-                    if ( matcher.matches() )
+                    if( matcher.matches() )
                     {
                         m_wrappingProperties.put(
                             matcher.group( 1 ),
@@ -142,11 +144,11 @@ public class Parser
                 }
             }
         }
-        catch ( UnsupportedEncodingException e )
+        catch( UnsupportedEncodingException e )
         {
             throw initMalformedURLException( "Could not retrieve the instructions from [" + spec + "]", e );
         }
-        if ( m_wrappingProperties.size() == 0 )
+        if( m_wrappingProperties.size() == 0 )
         {
             throw new MalformedURLException( "Could not determine wrapping instructions from [" + spec + "]" );
         }

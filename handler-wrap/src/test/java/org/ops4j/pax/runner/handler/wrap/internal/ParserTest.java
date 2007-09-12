@@ -151,4 +151,22 @@ public class ParserTest
         assertEquals( "Property 2", "v2", props.getProperty( "Bundle-Name" ) );
     }
 
+    //wrap:mvn:commons-logging/commons-logging/1.1!jar:mvn:org.ops4j.pax.wrappers/commons-logging!/commons-logging-1.1.bnd
+
+    @Test
+    public void validWrappedJarURLAndValidInstructionsURLFromJar()
+        throws MalformedURLException
+    {
+        Parser parser = new Parser(
+            "file:toWrap.jar!jar:"
+            + FileUtils.getFileFromClasspath( "parser/instructions.jar" ).toURL().toExternalForm()
+            + "!/instructions.properties"
+        );
+        assertEquals( "Wrapped Jar URL", new URL( "file:toWrap.jar" ), parser.getWrappedJarURL() );
+        Properties props = parser.getWrappingProperties();
+        assertNotNull( "Properties was not expected to be null", props );
+        assertEquals( "Property 1", "v1", props.getProperty( "Bundle-SymbolicName" ) );
+        assertEquals( "Property 2", "v2", props.getProperty( "Bundle-Name" ) );
+    }
+
 }
