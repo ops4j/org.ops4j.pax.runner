@@ -19,6 +19,7 @@
 package org.ops4j.pax.runner.handler.wrap.internal;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -41,16 +42,36 @@ public class Parser
     /**
      * Syntax for the url; to be shown on exception messages.
      */
-    private static final String SYNTAX = "wrap:jar_url[!wrapping_instructions_url|wrapping_instructions]";
+    private static final String SYNTAX = "wrap:wrapped-jar-uri[,wrapping-instr-uri][$wrapping-instructions]";
     /**
      * Separator between wrapped jar url and instructions.
      */
-    private static final String INSTRUCTIONS_SEPARATOR = "!";
+    private static final String INSTRUCTIONS_SEPARATOR = "$";
+    /**
+     * Separator between wrapped jar url and instructions file url.
+     */
+    private static final String INSTRUCTIONS_FILE_SEPARATOR = ",";
+    /**
+     * Regex pattern for matching jar, wrapping file and instructions.
+     */
+    private static final Pattern SYNTAX_JAR_BND_INSTR =
+        Pattern.compile( "(.+?)" + INSTRUCTIONS_FILE_SEPARATOR + "(.+?)\\" + INSTRUCTIONS_SEPARATOR + "(.+?)" );
+    /**
+     * Regex pattern for matching jar and instructions.
+     */
+    private static final Pattern SYNTAX_JAR_INSTR =
+        Pattern.compile( "(.+?)\\" + INSTRUCTIONS_SEPARATOR + "(.+?)" );
+    /**
+     * Regex pattern for matching jar and wrapping file.
+     */
+    private static final Pattern SYNTAX_JAR_BND =
+        Pattern.compile( "(.+?)" + INSTRUCTIONS_FILE_SEPARATOR + "(.+?)" );
     /**
      * Regex pattern for matching instructions when specified in url.
      */
     private static final Pattern INSTRUCTIONS_PATTERN =
         Pattern.compile( "([a-zA-Z_0-9-]+)=([-!\"'()*+,.0-9A-Z_a-z%]+)" );
+
     /**
      * Wrapped jar URL.
      */
@@ -81,22 +102,68 @@ public class Parser
             );
         }
         m_wrappingProperties = new Properties();
-        Pattern splitPattern = Pattern.compile( "(.+?)!(.+?)" );
-        if( splitPattern.matcher( path ).matches() )
+        Matcher matcher = SYNTAX_JAR_BND_INSTR.matcher( path );
+        if( matcher.matches() )
         {
-            Matcher matcher = splitPattern.matcher( path );
-            matcher.matches();
-            parseInstructions( matcher.group( 2 ) );
+            // we have all the parts
             m_wrappedJarURL = new URL( matcher.group( 1 ) );
+            parseInstructionsFile( new URL( matcher.group( 2 ) ) );
+            parseInstructions( matcher.group( 3 ) );
+        }
+        else if( ( matcher = SYNTAX_JAR_INSTR.matcher( path ) ).matches() )
+        {
+            // we have a wrapped jar and instructions
+            m_wrappedJarURL = new URL( matcher.group( 1 ) );
+            parseInstructions( matcher.group( 2 ) );
+        }
+        else if( ( matcher = SYNTAX_JAR_BND.matcher( path ) ).matches() )
+        {
+            // we have a wraped jar and a wrapping instructions file
+            m_wrappedJarURL = new URL( matcher.group( 1 ) );
+            parseInstructionsFile( new URL( matcher.group( 2 ) ) );
         }
         else
         {
+            //we have only a wrapped jar
             m_wrappedJarURL = new URL( path );
         }
     }
 
     /**
-     * Parses the instructions of the url ( without the wrapped jar url).
+     * Loeads the propertis out of an url.
+     *
+     * @param bndFileURL url of the file containing the instructions
+     *
+     * @throws MalformedURLException if the file could not be read
+     */
+    private void parseInstructionsFile( final URL bndFileURL )
+        throws MalformedURLException
+    {
+        // TODO use the certificate check property from the handler instead of true bellow
+        try
+        {
+            InputStream is = null;
+            try
+            {
+                is = URLUtils.prepareInputStream( bndFileURL, true );
+                m_wrappingProperties.load( is );
+            }
+            finally
+            {
+                if( is != null )
+                {
+                    is.close();
+                }
+            }
+        }
+        catch( IOException e )
+        {
+            throw initMalformedURLException( "Could not retrieve the instructions from [" + bndFileURL + "]", e );
+        }
+    }
+
+    /**
+     * Parses bnd instrcutions and adds them as properties..
      *
      * @param spec url part without protocol and wrapped jar url.
      *
@@ -107,50 +174,30 @@ public class Parser
     {
         try
         {
-            // first try to make an url out of the instructions.
-            try
+            // just ignore for the moment and try out if we have valid properties separated by "&"
+            final String segments[] = spec.split( "&" );
+            for( String segment : segments )
             {
-                final URL url = new URL( spec );
-                // TODO use the certificate check property from the handler instead of true bellow
-                try
+                final Matcher matcher = INSTRUCTIONS_PATTERN.matcher( segment );
+                if( matcher.matches() )
                 {
-                    m_wrappingProperties.load( URLUtils.prepareInputStream( url, true ) );
+                    m_wrappingProperties.setProperty(
+                        matcher.group( 1 ),
+                        URLDecoder.decode( matcher.group( 2 ), "UTF-8" )
+                    );
                 }
-                catch( IOException e )
+                else
                 {
-                    throw initMalformedURLException( "Could not retrieve the instructions from [" + spec + "]", e );
-                }
-            }
-            catch( MalformedURLException ignore )
-            {
-                // just ignore for the moment and try out if we have valid properties separated by "&"
-                final String segments[] = spec.split( "&" );
-                for( String segment : segments )
-                {
-                    final Matcher matcher = INSTRUCTIONS_PATTERN.matcher( segment );
-                    if( matcher.matches() )
-                    {
-                        m_wrappingProperties.put(
-                            matcher.group( 1 ),
-                            URLDecoder.decode( matcher.group( 2 ), "UTF-8" )
-                        );
-                    }
-                    else
-                    {
-                        throw new MalformedURLException( "Invalid syntax for instruction [" + segment
-                                                         + "]. Take a look at http://www.aqute.biz/Code/Bnd."
-                        );
-                    }
+                    throw new MalformedURLException( "Invalid syntax for instruction [" + segment
+                                                     + "]. Take a look at http://www.aqute.biz/Code/Bnd."
+                    );
                 }
             }
         }
         catch( UnsupportedEncodingException e )
         {
+            // thrown by URLDecoder but it should never happen
             throw initMalformedURLException( "Could not retrieve the instructions from [" + spec + "]", e );
-        }
-        if( m_wrappingProperties.size() == 0 )
-        {
-            throw new MalformedURLException( "Could not determine wrapping instructions from [" + spec + "]" );
         }
     }
 

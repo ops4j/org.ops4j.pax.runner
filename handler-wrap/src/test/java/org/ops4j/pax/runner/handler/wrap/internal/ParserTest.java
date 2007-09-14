@@ -45,14 +45,14 @@ public class ParserTest
     public void urlStartingWithInstructionsSeparator()
         throws MalformedURLException
     {
-        new Parser( "!instructions" );
+        new Parser( "$instructions" );
     }
 
     @Test( expected = MalformedURLException.class )
     public void urlEndingWithInstructionsSeparator()
         throws MalformedURLException
     {
-        new Parser( "file:toWrap.jar!" );
+        new Parser( "file:toWrap.jar$" );
     }
 
     @Test
@@ -68,56 +68,56 @@ public class ParserTest
     public void validWrappedJarURLAndInvalidInstructionsURL()
         throws MalformedURLException
     {
-        new Parser( "file:toWrap.jar!wrongprotocol:toInstructions" );
+        new Parser( "file:toWrap.jar,wrongprotocol:toInstructions" );
     }
 
     @Test( expected = MalformedURLException.class )
     public void validWrappedJarURLAndInvalidInstructions01()
         throws MalformedURLException
     {
-        new Parser( "file:toWrap.jar!instructions" );
+        new Parser( "file:toWrap.jar$instructions" );
     }
 
     @Test( expected = MalformedURLException.class )
     public void validWrappedJarURLAndInvalidInstructions02()
         throws MalformedURLException
     {
-        new Parser( "file:toWrap.jar!Bundle-SymbolicName&Bundle-Name" );
+        new Parser( "file:toWrap.jar$Bundle-SymbolicName&Bundle-Name" );
     }
 
     @Test( expected = MalformedURLException.class )
     public void validWrappedJarURLAndInvalidInstructions03()
         throws MalformedURLException
     {
-        new Parser( "file:toWrap.jar!Bundle-SymbolicName&" );
+        new Parser( "file:toWrap.jar$Bundle-SymbolicName&" );
     }
 
     @Test( expected = MalformedURLException.class )
     public void validWrappedJarURLAndInvalidInstructions04()
         throws MalformedURLException
     {
-        new Parser( "file:toWrap.jar!&Bundle-Name" );
+        new Parser( "file:toWrap.jar$&Bundle-Name" );
     }
 
     @Test( expected = MalformedURLException.class )
     public void validWrappedJarURLAndInvalidInstructions05()
         throws MalformedURLException
     {
-        new Parser( "file:toWrap.jar!Bundle-SymbolicName&Bundle-Name=v2" );
+        new Parser( "file:toWrap.jar$Bundle-SymbolicName&Bundle-Name=v2" );
     }
 
     @Test( expected = MalformedURLException.class )
     public void validWrappedJarURLAndInvalidInstructions06()
         throws MalformedURLException
     {
-        new Parser( "file:toWrap.jar!Bundle-SymbolicName=v1&Bundle-Name" );
+        new Parser( "file:toWrap.jar$Bundle-SymbolicName=v1&Bundle-Name" );
     }
 
     @Test
     public void validWrappedJarURLAndValidInstructions()
         throws MalformedURLException
     {
-        Parser parser = new Parser( "file:toWrap.jar!Bundle-SymbolicName=v1&Bundle-Name=v2" );
+        Parser parser = new Parser( "file:toWrap.jar$Bundle-SymbolicName=v1&Bundle-Name=v2" );
         assertEquals( "Wrapped Jar URL", new URL( "file:toWrap.jar" ), parser.getWrappedJarURL() );
         Properties props = parser.getWrappingProperties();
         assertNotNull( "Properties was not expected to be null", props );
@@ -129,7 +129,7 @@ public class ParserTest
     public void validWrappedJarURLAndValidOneInstruction()
         throws MalformedURLException
     {
-        Parser parser = new Parser( "file:toWrap.jar!Bundle-SymbolicName=v1" );
+        Parser parser = new Parser( "file:toWrap.jar$Bundle-SymbolicName=v1" );
         assertEquals( "Wrapped Jar URL", new URL( "file:toWrap.jar" ), parser.getWrappedJarURL() );
         Properties props = parser.getWrappingProperties();
         assertNotNull( "Properties was not expected to be null", props );
@@ -141,7 +141,7 @@ public class ParserTest
         throws MalformedURLException
     {
         Parser parser = new Parser(
-            "file:toWrap.jar!"
+            "file:toWrap.jar,"
             + FileUtils.getFileFromClasspath( "parser/instructions.properties" ).toURL().toExternalForm()
         );
         assertEquals( "Wrapped Jar URL", new URL( "file:toWrap.jar" ), parser.getWrappedJarURL() );
@@ -151,14 +151,12 @@ public class ParserTest
         assertEquals( "Property 2", "v2", props.getProperty( "Bundle-Name" ) );
     }
 
-    //wrap:mvn:commons-logging/commons-logging/1.1!jar:mvn:org.ops4j.pax.wrappers/commons-logging!/commons-logging-1.1.bnd
-
     @Test
     public void validWrappedJarURLAndValidInstructionsURLFromJar()
         throws MalformedURLException
     {
         Parser parser = new Parser(
-            "file:toWrap.jar!jar:"
+            "file:toWrap.jar,jar:"
             + FileUtils.getFileFromClasspath( "parser/instructions.jar" ).toURL().toExternalForm()
             + "!/instructions.properties"
         );
@@ -167,6 +165,23 @@ public class ParserTest
         assertNotNull( "Properties was not expected to be null", props );
         assertEquals( "Property 1", "v1", props.getProperty( "Bundle-SymbolicName" ) );
         assertEquals( "Property 2", "v2", props.getProperty( "Bundle-Name" ) );
+    }
+
+    @Test
+    public void validWrappedJarURLAndValidInstructionsURLAndInstructions()
+        throws MalformedURLException
+    {
+        Parser parser = new Parser(
+            "file:toWrap.jar,"
+            + FileUtils.getFileFromClasspath( "parser/instructions.properties" ).toURL().toExternalForm()
+            + "$Bundle-Name=v3&Bundle-URL=v4"
+        );
+        assertEquals( "Wrapped Jar URL", new URL( "file:toWrap.jar" ), parser.getWrappedJarURL() );
+        Properties props = parser.getWrappingProperties();
+        assertNotNull( "Properties was not expected to be null", props );
+        assertEquals( "Property 1", "v1", props.getProperty( "Bundle-SymbolicName" ) );
+        assertEquals( "Property 2", "v3", props.getProperty( "Bundle-Name" ) );
+        assertEquals( "Property 3", "v4", props.getProperty( "Bundle-URL" ) );
     }
 
 }
