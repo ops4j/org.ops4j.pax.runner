@@ -20,6 +20,7 @@ package org.ops4j.pax.runner.platform.internal;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
@@ -249,6 +250,7 @@ public class PlatformImplTest
         start( bundles );
     }
 
+    // test that platform starts even without bundles to be installed
     @Test
     public void startWithoutBundles()
         throws MalformedURLException, PlatformException
@@ -256,7 +258,45 @@ public class PlatformImplTest
         start( null );
     }
 
+    // expected to throw an exception the bundle is a plain file not a jar
+    @Test( expected = PlatformException.class )
+    public void startWithNotAJarBundle()
+        throws MalformedURLException, PlatformException
+    {
+        List<BundleReference> bundles = new ArrayList<BundleReference>();
+        bundles.add(
+            new BundleReferenceBean( FileUtils.getFileFromClasspath( "platform/invalid.jar" ).toURL() )
+        );
+        start( bundles );
+    }
+    
+    // expected to throw an exception since bundle is jar that does not have a manifest entry for symbolic name
+    @Test( expected = PlatformException.class )
+    public void startWithAJarWithNoManifestAttr()
+        throws MalformedURLException, PlatformException
+    {
+        List<BundleReference> bundles = new ArrayList<BundleReference>();
+        bundles.add(
+            new BundleReferenceBean( FileUtils.getFileFromClasspath( "platform/noManifestAttr.jar" ).toURL() )
+        );
+        start( bundles );
+    }
+
+    // test that platform starts even if the system jar is not a bundle by itself
+    @Test
+    public void startWithoutBundlesAndAsystemJarThatIsNotBunlde()
+        throws MalformedURLException, PlatformException
+    {
+        start( null, FileUtils.getFileFromClasspath( "platform/noManifestAttr.jar" ).toURL() );
+    }
+
     public void start( final List<BundleReference> bundles )
+        throws PlatformException, MalformedURLException
+    {
+        start( bundles, FileUtils.getFileFromClasspath( "platform/system.jar" ).toURL() );
+    }
+
+    public void start( final List<BundleReference> bundles, URL systemBundleURL )
         throws PlatformException, MalformedURLException
     {
         expect( m_builder.getMainClassName() ).andReturn( "Main" );
@@ -265,9 +305,7 @@ public class PlatformImplTest
         expect( m_config.getWorkingDirectory() ).andReturn( m_workDir );
         m_context.setWorkingDirectory( new File( m_workDir ) );
         expect( m_config.isOverwrite() ).andReturn( true );
-        expect( m_definition.getSystemPackage() ).andReturn(
-            FileUtils.getFileFromClasspath( "platform/system.jar" ).toURL()
-        );
+        expect( m_definition.getSystemPackage() ).andReturn( systemBundleURL );
         expect( m_definition.getSystemPackageName() ).andReturn( "system package" );
         List<BundleReference> platformBundles = new ArrayList<BundleReference>();
         platformBundles.add(

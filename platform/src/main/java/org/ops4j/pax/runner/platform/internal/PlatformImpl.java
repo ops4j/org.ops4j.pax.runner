@@ -35,6 +35,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.jar.JarFile;
+import java.util.jar.Manifest;
 import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -50,11 +52,13 @@ import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.xml.sax.SAXException;
 
 /**
  * Handles the workflow of creating the platform. Concrete platforms should implement only the PlatformBuilder
  * interface.
+ * TODO Add unit tests
  *
  * @author Alin Dreghiciu
  * @since August 19, 2007
@@ -330,7 +334,7 @@ public class PlatformImpl
                     throw new PlatformException( "Invalid url in bundle refrence [" + reference + "]" );
                 }
                 localBundles.add(
-                    new LocalBundleImpl( reference, download( workDir, url, reference.getName(), overwrite ) )
+                    new LocalBundleImpl( reference, download( workDir, url, reference.getName(), overwrite, true ) )
                 );
             }
         }
@@ -385,29 +389,45 @@ public class PlatformImpl
     private File downloadSystemFile( final File workDir, final PlatformDefinition definition, final Boolean overwrite )
         throws PlatformException
     {
-        return download( workDir, definition.getSystemPackage(), definition.getSystemPackageName(), overwrite );
+        return download( workDir, definition.getSystemPackage(), definition.getSystemPackageName(), overwrite, false );
     }
 
     /**
      * Downloads files from urls.
      *
-     * @param workDir     the directory where to download bundles
-     * @param url         of the file to be downloaded
-     * @param displayName to be shown during download
-     * @param overwrite   if the bundles should be overwriten
+     * @param workDir         the directory where to download bundles
+     * @param url             of the file to be downloaded
+     * @param displayName     to be shown during download
+     * @param overwrite       if the bundles should be overwriten
+     * @param checkAttributes whether or not to check attributes in the manifest
      *
      * @return the File corresponding to the downloaded file.
      *
      * @throws PlatformException if the url could not be downloaded
      */
-    private File download( final File workDir, final URL url, final String displayName, final Boolean overwrite )
+    private File download( final File workDir, final URL url, final String displayName, final Boolean overwrite,
+                           boolean checkAttributes )
         throws PlatformException
     {
         LOGGER.debug( "Downloading [" + url + "]" );
         // destination will be made based on the hashcode of the url to be downloaded
         File destination = new File( workDir, "bundles/" + url.toExternalForm().hashCode() + ".bundle" );
-        // download the bundle only if is a forced overwrite or the file does not exist
-        if( overwrite || !destination.exists() )
+
+        // download the bundle only if is a forced overwrite or the file does not exist or the file is there but is
+        // invalid
+        boolean forceOverwrite = overwrite || !destination.exists();
+        if( !forceOverwrite )
+        {
+            try
+            {
+                validateBundle( destination, url, checkAttributes );
+            }
+            catch( PlatformException ignore )
+            {
+                forceOverwrite = true;
+            }
+        }
+        if( forceOverwrite )
         {
             try
             {
@@ -433,7 +453,55 @@ public class PlatformImpl
                 throw new PlatformException( "[" + url + "] could not be downloaded", e );
             }
         }
+        validateBundle( destination, url, checkAttributes );
+
         return destination;
+    }
+
+    /**
+     * Validate that the file is an valid bundle. A valid bundle will be a loadable jar file that has manifes and the
+     * manifest contains at least an entry for Bundle-SymboliName.
+     *
+     * @param file            file to be validated
+     * @param url             original url from where the bundle was created.
+     * @param checkAttributes whether or not to check attributes in the manifest
+     *
+     * @throws PlatformException if the jar is not a valid bundle
+     */
+    private void validateBundle( final File file, final URL url, boolean checkAttributes )
+        throws PlatformException
+    {
+        // verify that is a valid jar. Do not verify that is signed (the false param).
+        JarFile jar = null;
+        try
+        {
+            jar = new JarFile( file, false );
+            final Manifest manifest = jar.getManifest();
+            if( manifest == null
+                || ( checkAttributes
+                     && manifest.getMainAttributes().getValue( Constants.BUNDLE_SYMBOLICNAME ) == null ) )
+            {
+                throw new PlatformException( "[" + url + "] is not a valid bundle" );
+            }
+        }
+        catch( IOException e )
+        {
+            throw new PlatformException( "[" + url + "] is not a valid bundle", e );
+        }
+        finally
+        {
+             if (jar != null)
+             {
+                 try
+                 {
+                     jar.close();
+                 }
+                 catch( IOException ignore )
+                 {
+                     // just ignore as this is less probably to happen.
+                 }
+             }
+        }
     }
 
     /**
