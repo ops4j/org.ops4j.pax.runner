@@ -167,7 +167,7 @@
 
         <configuration>
 
-          <aggregate>false</aggregate>
+          <aggregate>true</aggregate>
 
         </configuration>
 
