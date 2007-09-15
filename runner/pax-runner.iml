@@ -15,20 +15,12 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="pax-runner-platform-knopflerfish" />
-    <orderEntry type="module" module-name="pax-runner-provision" />
-    <orderEntry type="module" module-name="pax-runner-commons" />
     <orderEntry type="module" module-name="pax-runner-platform" />
+    <orderEntry type="module" module-name="pax-runner-commons" />
+    <orderEntry type="module" module-name="pax-runner-provision" />
     <orderEntry type="module" module-name="pax-runner-scanner-file" />
     <orderEntry type="module" module-name="pax-runner-scanner-bundle" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$M2_REPO$/org/osgi/osgi_R4_core/1.0/osgi_R4_core-1.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="module" module-name="pax-runner-platform-felix" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -38,7 +30,15 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="pax-runner-platform-felix" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/osgi/osgi_R4_core/1.0/osgi_R4_core-1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="module" module-name="pax-runner-handler-wrap" />
     <orderEntry type="module-library">
       <library>
@@ -70,7 +70,6 @@
     <orderEntry type="module" module-name="pax-runner-handler-classpath" />
     <orderEntry type="module" module-name="pax-runner-platform-equinox" />
     <orderEntry type="module" module-name="pax-runner-scanner-dir" />
-    <orderEntry type="module" module-name="pax-runner-handler-mvn" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -80,6 +79,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="pax-runner-handler-mvn" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>

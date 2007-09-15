@@ -33,7 +33,6 @@
   </scm>
 
   <modules>
-    <module>poms</module>
     <module>commons</module>
     <module>handler</module>
     <module>handler-classpath</module>
@@ -98,13 +97,48 @@
         </configuration>
 
       </plugin>
-      <plugin>
-        <!-- help find the right 'pax' plugin -->
-        <groupId>org.ops4j.pax.construct</groupId>
-        <artifactId>maven-pax-plugin</artifactId>
-        <inherited>false</inherited>
-      </plugin>
     </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>embed-jar</id>
+              <phase>generate-resources</phase>
+              <goals>
+                <goal>copy-dependencies</goal>
+              </goals>
+              <configuration>
+                <excludeTransitive>true</excludeTransitive>
+                <excludeScope>provided</excludeScope>
+                <stripVersion>true</stripVersion>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.ops4j.pax.maven</groupId>
+          <artifactId>maven-bundle-plugin</artifactId>
+          <version>RELEASE</version>
+          <extensions>true</extensions>
+          <configuration>
+            <instructions>
+              <Bundle-Version>${project.version}</Bundle-Version>
+              <Bundle-SymbolicName>$(replace;${project.groupId}.${project.artifactId};-;.)</Bundle-SymbolicName>
+              <Private-Package>
+                ${bundle.package}.internal
+              </Private-Package>
+              <Export-Package>
+                !${bundle.package}.internal,
+                ${bundle.package}.*;version="${project.version}"
+              </Export-Package>
+              <_include>-target/classes/META-INF/details.bnd</_include>
+            </instructions>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 
   <reporting>
@@ -192,6 +226,25 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>osgi_R4_core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>osgi_R4_compendium</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.easymock</groupId>
+      <artifactId>easymock</artifactId>
+    </dependency>
+  </dependencies>
 
   <repositories>
     <repository>

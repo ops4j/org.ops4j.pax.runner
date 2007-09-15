@@ -160,7 +160,7 @@
     <option name="OUTPUT_DIRECTORY" />
   </component>
   <component name="GUI Designer component loader factory" />
-  <component name="IdProvider" IDEtalkID="84E13941BC6B14695D479EBA99E0BF82" />
+  <component name="IdProvider" IDEtalkID="05597DB296A11E338FD7046CCCCA5A1A" />
   <component name="ImportConfiguration">
     <option name="VENDOR" />
     <option name="RELEASE_TAG" />
@@ -361,8 +361,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/runner/pax-runner.iml" filepath="$PROJECT_DIR$/runner/pax-runner.iml" />
-      <module fileurl="file://$PROJECT_DIR$/poms/pax-runner-build-bundles.iml" filepath="$PROJECT_DIR$/poms/pax-runner-build-bundles.iml" />
-      <module fileurl="file://$PROJECT_DIR$/poms/compiled/pax-runner-build-compiled.iml" filepath="$PROJECT_DIR$/poms/compiled/pax-runner-build-compiled.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-build-root.iml" filepath="$PROJECT_DIR$/pax-runner-build-root.iml" />
       <module fileurl="file://$PROJECT_DIR$/scripts/pax-runner-build-scripts.iml" filepath="$PROJECT_DIR$/scripts/pax-runner-build-scripts.iml" />
       <module fileurl="file://$PROJECT_DIR$/commons/pax-runner-commons.iml" filepath="$PROJECT_DIR$/commons/pax-runner-commons.iml" />
