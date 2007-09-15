@@ -6,6 +6,11 @@
   <component name="BuildJarProjectSettings">
     <option name="BUILD_JARS_ON_MAKE" value="false" />
   </component>
+  <component name="CheckStyle-IDEA">
+    <checkstyle-config>
+      <property name="config-file">$PROJECT_DIR$\src\site\ops4j-format.xml</property>
+    </checkstyle-config>
+  </component>
   <component name="CodeStyleManager">
     <option name="USE_DEFAULT_CODE_STYLE_SCHEME" value="true" />
     <option name="CODE_STYLE_SCHEME" value="" />
