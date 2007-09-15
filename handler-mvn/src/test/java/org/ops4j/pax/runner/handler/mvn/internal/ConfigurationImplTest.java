@@ -64,11 +64,11 @@ public class ConfigurationImplTest
     {
         Resolver resolver = createMock( Resolver.class );
         expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.settings" ) ).andReturn(
-            "http://somewhere/settings.xml"
+            "file:somewhere/settings.xml"
         );
         replay( resolver );
         Configuration config = new ConfigurationImpl( resolver );
-        assertEquals( "Settings", new URL( "http://somewhere/settings.xml" ), config.getSettings() );
+        assertEquals( "Settings", new URL( "file:somewhere/settings.xml" ), config.getSettings() );
         verify( resolver );
     }
 
@@ -114,14 +114,62 @@ public class ConfigurationImplTest
         throws MalformedURLException
     {
         Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.repositories" ) ).andReturn( "http://repository1" );
+        expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.repositories" ) ).andReturn( "file:repository1/" );
         expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.localRepository" ) ).andReturn( null );
         replay( resolver );
         Configuration config = new ConfigurationImpl( resolver );
         List<URL> repositories = config.getRepositories();
         assertNotNull( "Repositories is null", repositories );
         assertEquals( "Repositories size", 1, repositories.size() );
-        assertEquals( "Repository", new URL( "http://repository1" ), repositories.get( 0 ) );
+        assertEquals( "Repository", new URL( "file:repository1/" ), repositories.get( 0 ) );
+        verify( resolver );
+    }
+
+    @Test
+    public void getRepositoriesWithoutSlash()
+        throws MalformedURLException
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.repositories" ) ).andReturn( "file:repository1" );
+        expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.localRepository" ) ).andReturn( null );
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        List<URL> repositories = config.getRepositories();
+        assertNotNull( "Repositories is null", repositories );
+        assertEquals( "Repositories size", 1, repositories.size() );
+        assertEquals( "Repository", new URL( "file:repository1/" ), repositories.get( 0 ) );
+        verify( resolver );
+    }
+
+    @Test
+    public void getRepositoriesWithSlash()
+        throws MalformedURLException
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.repositories" ) ).andReturn( "file:repository1/" );
+        expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.localRepository" ) ).andReturn( null );
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        List<URL> repositories = config.getRepositories();
+        assertNotNull( "Repositories is null", repositories );
+        assertEquals( "Repositories size", 1, repositories.size() );
+        assertEquals( "Repository", new URL( "file:repository1/" ), repositories.get( 0 ) );
+        verify( resolver );
+    }
+
+    @Test
+    public void getRepositoriesWithBackSlash()
+        throws MalformedURLException
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.repositories" ) ).andReturn( "file:repository1\\" );
+        expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.localRepository" ) ).andReturn( null );
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        List<URL> repositories = config.getRepositories();
+        assertNotNull( "Repositories is null", repositories );
+        assertEquals( "Repositories size", 1, repositories.size() );
+        assertEquals( "Repository", new URL( "file:repository1\\" ), repositories.get( 0 ) );
         verify( resolver );
     }
 
@@ -131,7 +179,7 @@ public class ConfigurationImplTest
     {
         Resolver resolver = createMock( Resolver.class );
         expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.repositories" ) ).andReturn(
-            "http://repository1,http://repository2"
+            "file:repository1/,file:repository2/"
         );
         expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.localRepository" ) ).andReturn( null );
         replay( resolver );
@@ -139,8 +187,8 @@ public class ConfigurationImplTest
         List<URL> repositories = config.getRepositories();
         assertNotNull( "Repositories is null", repositories );
         assertEquals( "Repositories size", 2, repositories.size() );
-        assertEquals( "Repository 1", new URL( "http://repository1" ), repositories.get( 0 ) );
-        assertEquals( "Repository 2", new URL( "http://repository2" ), repositories.get( 1 ) );
+        assertEquals( "Repository 1", new URL( "file:repository1/" ), repositories.get( 0 ) );
+        assertEquals( "Repository 2", new URL( "file:repository2/" ), repositories.get( 1 ) );
         verify( resolver );
     }
 
@@ -152,7 +200,7 @@ public class ConfigurationImplTest
         expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.repositories" ) ).andReturn( null );
         expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.localRepository" ) ).andReturn( null );
         Settings settings = createMock( Settings.class );
-        expect( settings.getRepositories() ).andReturn( "http://repository1" );
+        expect( settings.getRepositories() ).andReturn( "file:repository1/" );
         expect( settings.getLocalRepository() ).andReturn( null );
         replay( resolver, settings );
         ConfigurationImpl config = new ConfigurationImpl( resolver );
@@ -160,7 +208,7 @@ public class ConfigurationImplTest
         List<URL> repositories = config.getRepositories();
         assertNotNull( "Repositories is null", repositories );
         assertEquals( "Repositories size", 1, repositories.size() );
-        assertEquals( "Repository", new URL( "http://repository1" ), repositories.get( 0 ) );
+        assertEquals( "Repository", new URL( "file:repository1/" ), repositories.get( 0 ) );
         verify( resolver );
     }
 
@@ -169,10 +217,10 @@ public class ConfigurationImplTest
         throws MalformedURLException
     {
         Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.repositories" ) ).andReturn( "+http://repository1" );
+        expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.repositories" ) ).andReturn( "+file:repository1/" );
         expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.localRepository" ) ).andReturn( null );
         Settings settings = createMock( Settings.class );
-        expect( settings.getRepositories() ).andReturn( "http://repository2" );
+        expect( settings.getRepositories() ).andReturn( "file:repository2/" );
         expect( settings.getLocalRepository() ).andReturn( null );
         replay( resolver, settings );
         ConfigurationImpl config = new ConfigurationImpl( resolver );
@@ -180,8 +228,8 @@ public class ConfigurationImplTest
         List<URL> repositories = config.getRepositories();
         assertNotNull( "Repositories is null", repositories );
         assertEquals( "Repositories size", 2, repositories.size() );
-        assertEquals( "Repository 1", new URL( "http://repository1" ), repositories.get( 0 ) );
-        assertEquals( "Repository 2", new URL( "http://repository2" ), repositories.get( 1 ) );
+        assertEquals( "Repository 1", new URL( "file:repository1/" ), repositories.get( 0 ) );
+        assertEquals( "Repository 2", new URL( "file:repository2/" ), repositories.get( 1 ) );
         verify( resolver );
     }
 
@@ -190,17 +238,17 @@ public class ConfigurationImplTest
         throws MalformedURLException
     {
         Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.repositories" ) ).andReturn( "http://repository1" );
+        expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.repositories" ) ).andReturn( "file:repository1/" );
         expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.localRepository" ) ).andReturn(
-            "http://localRepository"
+            "file:localRepository/"
         );
         replay( resolver );
         Configuration config = new ConfigurationImpl( resolver );
         List<URL> repositories = config.getRepositories();
         assertNotNull( "Repositories is null", repositories );
         assertEquals( "Repositories size", 2, repositories.size() );
-        assertEquals( "Local repository", new URL( "http://localRepository" ), repositories.get( 0 ) );
-        assertEquals( "Repository", new URL( "http://repository1" ), repositories.get( 1 ) );
+        assertEquals( "Local repository", new URL( "file:localRepository/" ), repositories.get( 0 ) );
+        assertEquals( "Repository", new URL( "file:repository1/" ), repositories.get( 1 ) );
         verify( resolver );
     }
 
@@ -210,11 +258,38 @@ public class ConfigurationImplTest
     {
         Resolver resolver = createMock( Resolver.class );
         expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.localRepository" ) ).andReturn(
-            "http://somewhere/localrepository"
+            "file:somewhere/localrepository/"
         );
         replay( resolver );
         Configuration config = new ConfigurationImpl( resolver );
-        assertEquals( "Local repository", new URL( "http://somewhere/localrepository" ), config.getLocalRepository() );
+        assertEquals( "Local repository", new URL( "file:somewhere/localrepository/" ), config.getLocalRepository() );
+        verify( resolver );
+    }
+
+    @Test
+    public void getLocalRepositoryAsURLWithoutSlash()
+        throws MalformedURLException
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.localRepository" ) ).andReturn(
+            "file:somewhere/localrepository"
+        );
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        assertEquals( "Local repository", new URL( "file:somewhere/localrepository/" ), config.getLocalRepository() );
+        verify( resolver );
+    }
+    @Test
+    public void getLocalRepositoryAsURLWithBackSlash()
+        throws MalformedURLException
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.localRepository" ) ).andReturn(
+            "file:somewhere/localrepository\\"
+        );
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        assertEquals( "Local repository", new URL( "file:somewhere/localrepository\\" ), config.getLocalRepository() );
         verify( resolver );
     }
 
@@ -230,6 +305,22 @@ public class ConfigurationImplTest
         replay( resolver );
         Configuration config = new ConfigurationImpl( resolver );
         assertEquals( "Local repository", valid.toURL(), config.getLocalRepository() );
+        verify( resolver );
+    }
+
+    @Test
+    public void getLocalRepositoryAsFilePathWithoutSlash()
+        throws MalformedURLException
+    {
+        Resolver resolver = createMock( Resolver.class );
+        File valid = FileUtils.getFileFromClasspath( "configuration/localrepository" );
+        File validWithSlash = FileUtils.getFileFromClasspath( "configuration/localrepository/" );
+        expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.localRepository" ) ).andReturn(
+            valid.getAbsolutePath()
+        );
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        assertEquals( "Local repository", validWithSlash.toURL(), config.getLocalRepository() );
         verify( resolver );
     }
 
@@ -264,11 +355,11 @@ public class ConfigurationImplTest
         Resolver resolver = createMock( Resolver.class );
         expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.localRepository" ) ).andReturn( null );
         Settings settings = createMock( Settings.class );
-        expect( settings.getLocalRepository() ).andReturn( "http://somewhere/localrepository" );
+        expect( settings.getLocalRepository() ).andReturn( "file:somewhere/localrepository/" );
         replay( resolver, settings );
         ConfigurationImpl config = new ConfigurationImpl( resolver );
         config.setSettings( settings );
-        assertEquals( "Local repository", new URL( "http://somewhere/localrepository" ), config.getLocalRepository() );
+        assertEquals( "Local repository", new URL( "file:somewhere/localrepository/" ), config.getLocalRepository() );
         verify( resolver, settings );
     }
 

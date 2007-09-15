@@ -188,6 +188,10 @@ public class ConfigurationImpl
                 String[] repositories = repositoriesProp.split( REPOSITORIES_SEPARATOR );
                 for( String repositoryURL : repositories )
                 {
+                    if( !repositoryURL.endsWith( "\\" ) && !repositoryURL.endsWith( "/" ) )
+                    {
+                        repositoryURL = repositoryURL + "/";
+                    }
                     repositoriesProperty.add( new URL( repositoryURL ) );
                 }
             }
@@ -220,6 +224,10 @@ public class ConfigurationImpl
             }
             if( spec != null )
             {
+                if( !spec.endsWith( "\\" ) && !spec.endsWith( "/" ) )
+                {
+                    spec = spec + "/";
+                }
                 // check if we have a valid url
                 try
                 {
