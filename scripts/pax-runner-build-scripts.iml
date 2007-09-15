@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4" relativePaths="false" type="JAVA_MODULE">
+  <component name="ModuleRootManager" />
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/target/bin" />
+    <exclude-output />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="pax-runner" />
+    <orderEntry type="module" module-name="pax-runner-platform-knopflerfish" />
+    <orderEntry type="module" module-name="pax-runner-commons" />
+    <orderEntry type="module" module-name="pax-runner-platform" />
+    <orderEntry type="module" module-name="pax-runner-provision" />
+    <orderEntry type="module" module-name="pax-runner-scanner-file" />
+    <orderEntry type="module" module-name="pax-runner-scanner-bundle" />
+    <orderEntry type="module" module-name="pax-runner-platform-felix" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/osgi/osgi_R4_core/1.0/osgi_R4_core-1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module" module-name="pax-runner-handler-wrap" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/osgi/osgi_R4_compendium/1.0/osgi_R4_compendium-1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.core/1.0.0/org.osgi.core-1.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/apache/felix/org.apache.felix.framework/1.0.0/org.apache.felix.framework-1.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module" module-name="pax-runner-handler-classpath" />
+    <orderEntry type="module" module-name="pax-runner-platform-equinox" />
+    <orderEntry type="module" module-name="pax-runner-scanner-dir" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$M2_REPO$/biz/aQute/bndlib/0.0.189/bndlib-0.0.189.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module" module-name="pax-runner-handler-mvn" />
+    <orderEntry type="module" module-name="pax-runner-handler" />
+    <orderEntryProperties />
+  </component>
+</module>
+
