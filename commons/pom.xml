@@ -4,31 +4,56 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>commons</artifactId>
-
-  <name>pax.runner.commons</name>
-  <description>${project.name}</description>
-
   <parent>
-    <relativePath>../</relativePath>
-    <groupId>org.ops4j.pax.runner</groupId>
-    <artifactId>project</artifactId>
+    <relativePath>../poms/compiled/</relativePath>
+    <groupId>org.ops4j.pax.runner.pax-runner-build</groupId>
+    <artifactId>compiled</artifactId>
     <version>0.5.0-SNAPSHOT</version>
   </parent>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>osgi_R4_core</artifactId>
-      <version>1.0</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>osgi_R4_compendium</artifactId>
-      <version>1.0</version>
-      <scope>provided</scope>
-    </dependency>
-  </dependencies>
+  <groupId>org.ops4j.pax.runner.pax-runner-internal</groupId>
+  <artifactId>pax-runner-commons</artifactId>
+  <version>0.5.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>OPS4J Pax Runner - Commons</name>
+  <description>
+    Pax Runner - Common utilities shared between modules. The jar is not required to be deployed alongside the artifacts
+    that uses parts of it. The used parts are embeded into the artifact via maven depenency plugin + maven bundle
+    plugin.
+  </description>
+
+  <properties>
+    <bundle.package>org.ops4j.pax.runner.commons</bundle.package>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.ops4j.pax.maven</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Import-Package>
+              org.apache.commons.logging;resolution:=optional,
+              *
+            </Import-Package>
+            <Export-Package>
+              org.apache.commons.logging,
+              ${bundle.package}.*;version="${project.version}"
+            </Export-Package>
+          </instructions>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.ops4j.pax.construct</groupId>
+        <artifactId>maven-pax-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

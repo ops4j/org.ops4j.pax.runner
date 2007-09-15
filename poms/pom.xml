@@ -4,34 +4,31 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.ops4j.pax.runner</groupId>
-  <artifactId>poms</artifactId>
-  <packaging>pom</packaging>
-
-  <name>pax.runner.poms</name>
-  <description>${project.name}</description>
-
   <parent>
     <relativePath>../</relativePath>
-    <groupId>org.ops4j.pax.runner</groupId>
-    <artifactId>project</artifactId>
+    <groupId>org.ops4j.pax.runner.pax-runner-build</groupId>
+    <artifactId>pax-runner</artifactId>
     <version>0.5.0-SNAPSHOT</version>
   </parent>
 
+  <groupId>org.ops4j.pax.runner.pax-runner-build</groupId>
+  <artifactId>bundles</artifactId>
+  <version>0.5.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>OPS4J Pax Runner - Build Parent</name>
+  <description>
+    OPS4J Pax Runner - Pom Management.
+  </description>
+
   <modules>
-    <module>wrapped</module>
-    <module>imported</module>
     <module>compiled</module>
   </modules>
 
   <build>
-    <!--
-      define version and default configuration of plugins used in bundle creation
-    -->
     <pluginManagement>
       <plugins>
         <plugin>
-          <!-- use local snapshot for now -->
           <groupId>org.ops4j.pax.maven</groupId>
           <artifactId>maven-bundle-plugin</artifactId>
           <version>RELEASE</version>

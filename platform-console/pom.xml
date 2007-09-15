@@ -4,19 +4,23 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.ops4j.pax.runner</groupId>
-  <artifactId>platform-console</artifactId>
-  <packaging>bundle</packaging>
-
-  <name>pax.runner.platform.console</name>
-  <description>${project.name}</description>
-
   <parent>
     <relativePath>../poms/compiled/</relativePath>
-    <groupId>org.ops4j.pax.runner.poms</groupId>
+    <groupId>org.ops4j.pax.runner.pax-runner-build</groupId>
     <artifactId>compiled</artifactId>
     <version>0.5.0-SNAPSHOT</version>
   </parent>
+
+  <groupId>org.ops4j.pax.runner.pax-runner-internal</groupId>
+  <artifactId>pax-runner-platform-console</artifactId>
+  <version>0.5.0-SNAPSHOT</version>
+  <packaging>bundle</packaging>
+
+  <name>OPS4J Pax Runner - Platform Console</name>
+  <description>
+    OPS4J Pax Runner - Utility console that could be used to start platforms from a command line while in a running
+    osgi platform.
+  </description>
 
   <properties>
     <bundle.package>org.ops4j.pax.runner.platform.console</bundle.package>
@@ -49,7 +53,7 @@
   <dependencies>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>platform</artifactId>
+      <artifactId>pax-runner-platform</artifactId>
       <version>0.5.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>

@@ -4,43 +4,28 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.ops4j.pax.runner</groupId>
-  <artifactId>project</artifactId>
-  <version>0.5.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
-
-  <name>pax.runner.project</name>
-  <description>${project.name}</description>
-
   <parent>
     <groupId>org.ops4j.pax</groupId>
     <artifactId>project</artifactId>
     <version>1.7</version>
   </parent>
 
+  <groupId>org.ops4j.pax.runner.pax-runner-build</groupId>
+  <artifactId>pax-runner</artifactId>
+  <version>0.5.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>OPS4J Pax Runner - Root</name>
+  <description>
+    OPS4J Pax Runner - Easiest way to run your bundles
+  </description>
+
   <url>http://wiki.ops4j.org/confluence/x/Hw</url>
 
-  <developers>
-    <developer>
-      <id>niclas</id>
-      <name>Niclas Hedhman</name>
-      <email>niclas@hedhman.org</email>
-      <organization>Jayway Malaysia Sdn Bhd</organization>
-      <roles>
-        <role>Developer</role>
-      </roles>
-      <timezone>UTC+8</timezone>
-    </developer>
-    <developer>
-      <id>adreghiciu</id>
-      <name>Alin Dreghiciu</name>
-      <email>adreghiciu@gmail.com</email>
-      <roles>
-        <role>Developer</role>
-      </roles>
-      <timezone>UTC+2</timezone>
-    </developer>
-  </developers>
+  <issueManagement>
+    <system>jira</system>
+    <url>http://issues.ops4j.org/jira/browse/PAXRUNNER</url>
+  </issueManagement>
 
   <scm>
     <connection>scm:svn:https://scm.ops4j.org/repos/ops4j/projects/pax/runner</connection>
@@ -65,9 +50,30 @@
     <module>platform-felix</module>
     <module>platform-knopflerfish</module>
     <module>runner</module>
-    <module>via-pax-runner</module>
     <module>scripts</module>
   </modules>
+
+  <developers>
+    <developer>
+      <id>niclas</id>
+      <name>Niclas Hedhman</name>
+      <email>niclas@hedhman.org</email>
+      <organization>Jayway Malaysia Sdn Bhd</organization>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>UTC+8</timezone>
+    </developer>
+    <developer>
+      <id>adreghiciu</id>
+      <name>Alin Dreghiciu</name>
+      <email>adreghiciu@gmail.com</email>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>UTC+2</timezone>
+    </developer>
+  </developers>
 
   <build>
     <plugins>
@@ -80,20 +86,35 @@
     </plugins>
   </build>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.3.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.easymock</groupId>
-      <artifactId>easymock</artifactId>
-      <version>2.2</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.osgi</groupId>
+        <artifactId>osgi_R4_core</artifactId>
+        <version>1.0</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.osgi</groupId>
+        <artifactId>osgi_R4_compendium</artifactId>
+        <version>1.0</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.3.1</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.easymock</groupId>
+        <artifactId>easymock</artifactId>
+        <version>2.2</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
 
   <repositories>
     <repository>

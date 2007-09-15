@@ -4,19 +4,21 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.ops4j.pax</groupId>
-  <artifactId>runner</artifactId>
-  <packaging>bundle</packaging>
-
-  <name>pax.runner.runner</name>
-  <description>${project.name}</description>
-
   <parent>
     <relativePath>../poms/compiled/</relativePath>
-    <groupId>org.ops4j.pax.runner.poms</groupId>
+    <groupId>org.ops4j.pax.runner.pax-runner-build</groupId>
     <artifactId>compiled</artifactId>
     <version>0.5.0-SNAPSHOT</version>
   </parent>
+
+  <groupId>org.ops4j.pax.runner</groupId>
+  <artifactId>pax-runner</artifactId>
+  <packaging>bundle</packaging>
+
+  <name>OPS4J Pax Runner - Core</name>
+  <description>
+    OPS4J Pax Runner - Core engine.
+  </description>
 
   <properties>
     <bundle.package>org.ops4j.pax.runner</bundle.package>
@@ -66,76 +68,76 @@
     <dependency>
       <groupId>org.osgi</groupId>
       <artifactId>osgi_R4_core</artifactId>
-      <version>1.0</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.osgi</groupId>
       <artifactId>osgi_R4_compendium</artifactId>
-      <version>1.0</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>commons</artifactId>
+      <groupId>org.ops4j.pax.runner.pax-runner-internal</groupId>
+      <artifactId>pax-runner-commons</artifactId>
       <version>0.5.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>handler</artifactId>
+      <artifactId>pax-runner-handler</artifactId>
       <version>0.5.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>handler-mvn</artifactId>
+      <artifactId>pax-runner-handler-mvn</artifactId>
       <version>0.5.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>handler-wrap</artifactId>
+      <artifactId>pax-runner-handler-wrap</artifactId>
       <version>0.5.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>handler-classpath</artifactId>
+      <artifactId>pax-runner-handler-classpath</artifactId>
       <version>0.5.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>provision</artifactId>
+      <artifactId>pax-runner-provision</artifactId>
       <version>0.5.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>scanner-bundle</artifactId>
+      <artifactId>pax-runner-scanner-bundle</artifactId>
       <version>0.5.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>scanner-dir</artifactId>
+      <artifactId>pax-runner-scanner-dir</artifactId>
       <version>0.5.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>scanner-file</artifactId>
+      <artifactId>pax-runner-scanner-file</artifactId>
       <version>0.5.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>platform</artifactId>
+      <artifactId>pax-runner-platform</artifactId>
       <version>0.5.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>platform-equinox</artifactId>
+      <artifactId>pax-runner-platform-equinox</artifactId>
       <version>0.5.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>platform-felix</artifactId>
+      <artifactId>pax-runner-platform-felix</artifactId>
       <version>0.5.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>platform-knopflerfish</artifactId>
+      <artifactId>pax-runner-platform-knopflerfish</artifactId>
       <version>0.5.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

@@ -4,19 +4,22 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.ops4j.pax.runner</groupId>
-  <artifactId>handler-mvn</artifactId>
-  <packaging>bundle</packaging>
-
-  <name>pax.runner.handler.mvn</name>
-  <description>${project.name}</description>
-
   <parent>
     <relativePath>../poms/compiled/</relativePath>
-    <groupId>org.ops4j.pax.runner.poms</groupId>
+    <groupId>org.ops4j.pax.runner.pax-runner-build</groupId>
     <artifactId>compiled</artifactId>
     <version>0.5.0-SNAPSHOT</version>
   </parent>
+
+  <groupId>org.ops4j.pax.runner</groupId>
+  <artifactId>pax-runner-handler-mvn</artifactId>
+  <version>0.5.0-SNAPSHOT</version>
+  <packaging>bundle</packaging>
+
+  <name>OPS4J Pax Runner - Maven 2 Handler</name>
+  <description>
+    OPS4J Pax Runner - mvn: protocol handler.
+  </description>
 
   <properties>
     <bundle.package>org.ops4j.pax.runner.handler.mvn</bundle.package>
@@ -24,11 +27,9 @@
 
   <build>
     <plugins>
-
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
       </plugin>
-
       <plugin>
         <groupId>org.ops4j.pax.maven</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
@@ -42,7 +43,6 @@
           </instructions>
         </configuration>
       </plugin>
-
       <plugin>
         <groupId>org.ops4j.pax.construct</groupId>
         <artifactId>maven-pax-plugin</artifactId>
@@ -52,8 +52,8 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>commons</artifactId>
+      <groupId>org.ops4j.pax.runner.pax-runner-internal</groupId>
+      <artifactId>pax-runner-commons</artifactId>
       <version>0.5.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
