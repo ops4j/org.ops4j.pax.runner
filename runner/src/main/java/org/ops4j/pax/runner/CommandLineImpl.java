@@ -18,10 +18,14 @@
  */
 package org.ops4j.pax.runner;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
+import org.ops4j.pax.runner.commons.file.FileUtils;
 
 /**
  * Default implementation of Command Line.
@@ -59,7 +63,28 @@ public class CommandLineImpl implements CommandLine
     {
         m_options = new Properties();
         m_arguments = new ArrayList<String>();
+        parseArguments( Arrays.asList( args ) );
+        final String argsURL = getOption( "args" );
+        if( argsURL != null )
+        {
+            try
+            {
+                parseArguments( FileUtils.readTextFile( new URL( argsURL ), true ) );
+            }
+            catch( IOException e )
+            {
+                throw new RuntimeException( "Arguments could not be read from [" + argsURL + "]", e );
+            }
+        }
+    }
 
+    /**
+     * Parses a list of arguments.
+     *
+     * @param args a list of arguments
+     */
+    private void parseArguments( List<String> args )
+    {
         for( String arg : args )
         {
             if( arg.startsWith( OPTION_PREFIX ) )
@@ -98,7 +123,7 @@ public class CommandLineImpl implements CommandLine
     {
         final StringTokenizer tokenizer = new StringTokenizer( arg.substring( 2 ), EQ );
         final String key = tokenizer.nextToken();
-        if( key != null && !"".equals( key.trim() ) )
+        if( key != null && !"".equals( key.trim() ) && !m_options.containsKey( key ) )
         {
             if( tokenizer.hasMoreTokens() )
             {
@@ -124,13 +149,16 @@ public class CommandLineImpl implements CommandLine
     }
 
     /**
-     * Parses and argument (does not start with --).
+     * Parses an argument (does not start with --).
      *
      * @param arg a command line argument to be parsed
      */
     private void parseArgument( final String arg )
     {
-        m_arguments.add( arg );
+        if( !m_arguments.contains( arg ) )
+        {
+            m_arguments.add( arg );
+        }
     }
 
     /**

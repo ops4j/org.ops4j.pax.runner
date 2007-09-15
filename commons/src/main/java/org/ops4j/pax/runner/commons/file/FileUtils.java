@@ -17,9 +17,14 @@
  */
 package org.ops4j.pax.runner.commons.file;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * File related utilities.
@@ -90,6 +95,43 @@ public class FileUtils
             }
         }
         return delete;
+    }
+
+    /**
+     * Reads content of a text files and returns every line as an entry to a List.
+     *
+     * @param fileURL        url of the file to be read
+     * @param skipEmptyLines if empty lines should be skippied
+     *
+     * @return a list of strings, one entry for each line (depending if it should skip empty lines or not)
+     *
+     * @throws IOException re-thrown if an exception appear during processing of input stream
+     */
+    public static List<String> readTextFile( final URL fileURL, final boolean skipEmptyLines )
+        throws IOException
+    {
+        final List<String> content = new ArrayList<String>();
+        BufferedReader bufferedReader = null;
+        try
+        {
+            bufferedReader = new BufferedReader( new InputStreamReader( fileURL.openStream() ) );
+            String line;
+            while( ( line = bufferedReader.readLine() ) != null )
+            {
+                if( !skipEmptyLines || line.trim().length() > 0 )
+                {
+                    content.add( line );
+                }
+            }
+        }
+        finally
+        {
+            if( bufferedReader != null )
+            {
+                bufferedReader.close();
+            }
+        }
+        return content;
     }
 
 }
