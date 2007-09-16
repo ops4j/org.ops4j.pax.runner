@@ -7,9 +7,7 @@
     <option name="BUILD_JARS_ON_MAKE" value="false" />
   </component>
   <component name="CheckStyle-IDEA">
-    <checkstyle-config>
-      <property name="config-file">$PROJECT_DIR$\src\site\ops4j-format.xml</property>
-    </checkstyle-config>
+    <checkstyle-config />
   </component>
   <component name="CodeStyleManager">
     <option name="USE_DEFAULT_CODE_STYLE_SCHEME" value="true" />
@@ -165,7 +163,7 @@
     <option name="OUTPUT_DIRECTORY" />
   </component>
   <component name="GUI Designer component loader factory" />
-  <component name="IdProvider" IDEtalkID="05597DB296A11E338FD7046CCCCA5A1A" />
+  <component name="IdProvider" IDEtalkID="155159004ECA03A49BC33177452A7158" />
   <component name="ImportConfiguration">
     <option name="VENDOR" />
     <option name="RELEASE_TAG" />
@@ -242,6 +240,7 @@
     <option name="FILTER_INFO" value="true" />
     <option name="CUSTOM_FILTER" />
   </component>
+  <component name="PMDProjectComponent" />
   <component name="Palette2">
     <group name="Swing">
       <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
@@ -365,24 +364,24 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/runner/pax-runner.iml" filepath="$PROJECT_DIR$/runner/pax-runner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner/pax-runner.iml" filepath="$PROJECT_DIR$/pax-runner/pax-runner.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-build-root.iml" filepath="$PROJECT_DIR$/pax-runner-build-root.iml" />
-      <module fileurl="file://$PROJECT_DIR$/scripts/pax-runner-build-scripts.iml" filepath="$PROJECT_DIR$/scripts/pax-runner-build-scripts.iml" />
-      <module fileurl="file://$PROJECT_DIR$/commons/pax-runner-commons.iml" filepath="$PROJECT_DIR$/commons/pax-runner-commons.iml" />
-      <module fileurl="file://$PROJECT_DIR$/handler/pax-runner-handler.iml" filepath="$PROJECT_DIR$/handler/pax-runner-handler.iml" />
-      <module fileurl="file://$PROJECT_DIR$/handler-classpath/pax-runner-handler-classpath.iml" filepath="$PROJECT_DIR$/handler-classpath/pax-runner-handler-classpath.iml" />
-      <module fileurl="file://$PROJECT_DIR$/handler-mvn/pax-runner-handler-mvn.iml" filepath="$PROJECT_DIR$/handler-mvn/pax-runner-handler-mvn.iml" />
-      <module fileurl="file://$PROJECT_DIR$/handler-wrap/pax-runner-handler-wrap.iml" filepath="$PROJECT_DIR$/handler-wrap/pax-runner-handler-wrap.iml" />
-      <module fileurl="file://$PROJECT_DIR$/platform/pax-runner-platform.iml" filepath="$PROJECT_DIR$/platform/pax-runner-platform.iml" />
-      <module fileurl="file://$PROJECT_DIR$/platform-console/pax-runner-platform-console.iml" filepath="$PROJECT_DIR$/platform-console/pax-runner-platform-console.iml" />
-      <module fileurl="file://$PROJECT_DIR$/platform-equinox/pax-runner-platform-equinox.iml" filepath="$PROJECT_DIR$/platform-equinox/pax-runner-platform-equinox.iml" />
-      <module fileurl="file://$PROJECT_DIR$/platform-felix/pax-runner-platform-felix.iml" filepath="$PROJECT_DIR$/platform-felix/pax-runner-platform-felix.iml" />
-      <module fileurl="file://$PROJECT_DIR$/platform-knopflerfish/pax-runner-platform-knopflerfish.iml" filepath="$PROJECT_DIR$/platform-knopflerfish/pax-runner-platform-knopflerfish.iml" />
-      <module fileurl="file://$PROJECT_DIR$/provision/pax-runner-provision.iml" filepath="$PROJECT_DIR$/provision/pax-runner-provision.iml" />
-      <module fileurl="file://$PROJECT_DIR$/provision-console/pax-runner-provision-console.iml" filepath="$PROJECT_DIR$/provision-console/pax-runner-provision-console.iml" />
-      <module fileurl="file://$PROJECT_DIR$/scanner-bundle/pax-runner-scanner-bundle.iml" filepath="$PROJECT_DIR$/scanner-bundle/pax-runner-scanner-bundle.iml" />
-      <module fileurl="file://$PROJECT_DIR$/scanner-dir/pax-runner-scanner-dir.iml" filepath="$PROJECT_DIR$/scanner-dir/pax-runner-scanner-dir.iml" />
-      <module fileurl="file://$PROJECT_DIR$/scanner-file/pax-runner-scanner-file.iml" filepath="$PROJECT_DIR$/scanner-file/pax-runner-scanner-file.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-build-scripts/pax-runner-build-scripts.iml" filepath="$PROJECT_DIR$/pax-runner-build-scripts/pax-runner-build-scripts.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-commons/pax-runner-commons.iml" filepath="$PROJECT_DIR$/pax-runner-commons/pax-runner-commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-handler/pax-runner-handler.iml" filepath="$PROJECT_DIR$/pax-runner-handler/pax-runner-handler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-handler-classpath/pax-runner-handler-classpath.iml" filepath="$PROJECT_DIR$/pax-runner-handler-classpath/pax-runner-handler-classpath.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-handler-mvn/pax-runner-handler-mvn.iml" filepath="$PROJECT_DIR$/pax-runner-handler-mvn/pax-runner-handler-mvn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-handler-wrap/pax-runner-handler-wrap.iml" filepath="$PROJECT_DIR$/pax-runner-handler-wrap/pax-runner-handler-wrap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform/pax-runner-platform.iml" filepath="$PROJECT_DIR$/pax-runner-platform/pax-runner-platform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-console/pax-runner-platform-console.iml" filepath="$PROJECT_DIR$/pax-runner-platform-console/pax-runner-platform-console.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-equinox/pax-runner-platform-equinox.iml" filepath="$PROJECT_DIR$/pax-runner-platform-equinox/pax-runner-platform-equinox.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-felix/pax-runner-platform-felix.iml" filepath="$PROJECT_DIR$/pax-runner-platform-felix/pax-runner-platform-felix.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-knopflerfish/pax-runner-platform-knopflerfish.iml" filepath="$PROJECT_DIR$/pax-runner-platform-knopflerfish/pax-runner-platform-knopflerfish.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-provision/pax-runner-provision.iml" filepath="$PROJECT_DIR$/pax-runner-provision/pax-runner-provision.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-provision-console/pax-runner-provision-console.iml" filepath="$PROJECT_DIR$/pax-runner-provision-console/pax-runner-provision-console.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-bundle/pax-runner-scanner-bundle.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-bundle/pax-runner-scanner-bundle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-dir/pax-runner-scanner-dir.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-dir/pax-runner-scanner-dir.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-file/pax-runner-scanner-file.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-file/pax-runner-scanner-file.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="1.5" />
