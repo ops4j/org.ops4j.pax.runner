@@ -18,8 +18,10 @@
 
   <name>OPS4J Pax Runner - Maven 2 Handler</name>
   <description>
-    OPS4J Pax Runner - mvn: protocol handler.
+    OPS4J Pax Runner - mvn: protocol handler. See details at http://wiki.ops4j.org/confluence/x/CoA6
   </description>
+
+  <url>http://wiki.ops4j.org/confluence/x/CoA6</url>
 
   <properties>
     <bundle.package>org.ops4j.pax.runner.handler.mvn</bundle.package>

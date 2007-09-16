@@ -18,8 +18,10 @@
 
   <name>OPS4J Pax Runner - Dir scanner</name>
   <description>
-    OPS4J Pax Runner - Provision from an dir or a zip.
+    OPS4J Pax Runner - Provision from an dir or a zip. See details at http://wiki.ops4j.org/confluence/x/GoA6
   </description>
+
+  <url>http://wiki.ops4j.org/confluence/x/GoA6</url>
 
   <properties>
     <bundle.package>org.ops4j.pax.runner.scanner.dir</bundle.package>

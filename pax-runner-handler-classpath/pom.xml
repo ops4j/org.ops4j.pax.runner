@@ -18,8 +18,10 @@
 
   <name>OPS4J Pax Runner - Classpath Handler</name>
   <description>
-    OPS4J Pax Runner - classpath: protocol handler.
+    OPS4J Pax Runner - classpath: protocol handler. See details at http://wiki.ops4j.org/confluence/x/DYA6
   </description>
+
+  <url>http://wiki.ops4j.org/confluence/x/DYA6</url>
 
   <properties>
     <bundle.package>org.ops4j.pax.runner.handler.classpath</bundle.package>

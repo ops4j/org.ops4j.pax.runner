@@ -18,8 +18,10 @@
 
   <name>OPS4J Pax Runner - Wrap Handler</name>
   <description>
-    OPS4J Pax Runner - wrap: protocol handler.
+    OPS4J Pax Runner - wrap: protocol handler. See details at http://wiki.ops4j.org/confluence/x/KoA6
   </description>
+
+  <url>http://wiki.ops4j.org/confluence/x/KoA6</url>
 
   <properties>
     <bundle.package>org.ops4j.pax.runner.handler.wrap</bundle.package>

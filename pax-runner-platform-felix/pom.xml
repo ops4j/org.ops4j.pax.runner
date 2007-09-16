@@ -18,8 +18,10 @@
 
   <name>OPS4J Pax Runner - Felix Platfrom Builder</name>
   <description>
-    OPS4J Pax Runner - Felix Platform Builder. Creates felix specific artifacts.
+    OPS4J Pax Runner - Felix Platform Builder. Creates felix specific artifacts. See details at http://wiki.ops4j.org/confluence/x/HIA6
   </description>
+
+  <url>http://wiki.ops4j.org/confluence/x/HIA6</url>
 
   <properties>
     <bundle.package>org.ops4j.pax.runner.platform.felix</bundle.package>

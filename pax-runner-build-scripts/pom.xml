@@ -17,8 +17,10 @@
 
   <name>OPS4J Pax Runner - Scripts</name>
   <description>
-    Pax Runner - Scripts for starting up pax runner and assembly.
+    Pax Runner - Scripts for starting up pax runner and assembly. See details at http://wiki.ops4j.org/confluence/x/A4A6
   </description>
+
+  <url>http://wiki.ops4j.org/confluence/x/A4A6</url>
 
   <build>
     <outputDirectory>target/bin</outputDirectory>

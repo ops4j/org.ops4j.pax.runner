@@ -18,9 +18,10 @@
 
   <name>OPS4J Pax Runner - Provision Console</name>
   <description>
-    OPS4J Pax Runner - Utility console that could be used to provision from a command line while in a running
-    osgi platform.
+    OPS4J Pax Runner - Utility console that could be used to provision from a command line while in a running osgi platform. See details at http://wiki.ops4j.org/confluence/x/A4A6
   </description>
+
+  <url>http://wiki.ops4j.org/confluence/x/A4A6</url>
 
   <properties>
     <bundle.package>org.ops4j.pax.runner.provision.console</bundle.package>

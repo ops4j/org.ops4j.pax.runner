@@ -18,8 +18,10 @@
 
   <name>OPS4J Pax Runner - Bundle scanner</name>
   <description>
-    OPS4J Pax Runner - Provision from an file containing bundle urls.
+    OPS4J Pax Runner - Provision from an file containing bundle urls. See details at http://wiki.ops4j.org/confluence/x/GIA6
   </description>
+
+  <url>http://wiki.ops4j.org/confluence/x/GIA6</url>
 
   <properties>
     <bundle.package>org.ops4j.pax.runner.scanner.file</bundle.package>

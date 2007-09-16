@@ -18,8 +18,10 @@
 
   <name>OPS4J Pax Runner - Provision Service</name>
   <description>
-    OPS4J Pax Runner - Exposes the provisioning service and acts as an extender for scanners.
+    OPS4J Pax Runner - Exposes the provisioning service and acts as an extender for scanners. See details at http://wiki.ops4j.org/confluence/x/A4A6
   </description>
+
+  <url>http://wiki.ops4j.org/confluence/x/A4A6</url>
 
   <properties>
     <bundle.package>org.ops4j.pax.runner.provision</bundle.package>

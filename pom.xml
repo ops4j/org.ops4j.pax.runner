@@ -17,10 +17,10 @@
 
   <name>OPS4J Pax Runner - Root</name>
   <description>
-    OPS4J Pax Runner - Easiest way to run your bundles
+    OPS4J Pax Runner - Easiest way to run your bundles. See details at http://wiki.ops4j.org/confluence/x/A4A6
   </description>
 
-  <url>http://wiki.ops4j.org/confluence/x/Hw</url>
+  <url>http://wiki.ops4j.org/confluence/x/A4A6</url>
 
   <issueManagement>
     <system>jira</system>

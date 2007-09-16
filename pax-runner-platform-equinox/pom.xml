@@ -18,8 +18,10 @@
 
   <name>OPS4J Pax Runner - Equinox Platfrom Builder</name>
   <description>
-    OPS4J Pax Runner - Equinox Platform Builder. Creates equinox specific artifacts.
+    OPS4J Pax Runner - Equinox Platform Builder. Creates equinox specific artifacts. See details at http://wiki.ops4j.org/confluence/x/HYA6
   </description>
+
+  <url>http://wiki.ops4j.org/confluence/x/HYA6</url>
 
   <properties>
     <bundle.package>org.ops4j.pax.runner.platform.equinox</bundle.package>
