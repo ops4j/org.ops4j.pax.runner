@@ -33,7 +33,7 @@
   </scm>
 
   <modules>
-    <module>commons</module>
+    <module>pax-runner-commons</module>
     <module>handler</module>
     <module>handler-classpath</module>
     <module>handler-mvn</module>
