@@ -65,7 +65,9 @@ public class SettingsImplTest
     {
         SettingsImpl settings =
             new SettingsImpl( FileUtils.getFileFromClasspath( "settings/settingsEmpty.xml" ).toURL() );
-        assertEquals( "Repositories", "http://repo1.maven.org/maven2", settings.getRepositories() );
+        assertEquals( "Repositories", "http://repo1.maven.org/maven2,http://repository.ops4j.org/maven2",
+                      settings.getRepositories()
+        );
     }
 
     @Test
@@ -79,13 +81,14 @@ public class SettingsImplTest
         String repositories = settings.getRepositories();
         assertNotNull( "Repositories", repositories );
         String[] segments = repositories.split( "," );
-        assertEquals( "Number of repositories", 6, segments.length );
+        assertEquals( "Number of repositories", 7, segments.length );
         assertEquals( "Repository 1", "http://repository1", segments[ 0 ] );
         assertEquals( "Repository 2", "http://user@repository2", segments[ 1 ] );
         assertEquals( "Repository 3", "http://user:password@repository3", segments[ 2 ] );
         assertEquals( "Repository 4", "jar:http://user:password@repository5/jar!", segments[ 3 ] );
         assertEquals( "Repository 5", "http://user:password@repository6", segments[ 4 ] );
         assertEquals( "Repository 6", "http://repo1.maven.org/maven2", segments[ 5 ] );
+        assertEquals( "Repository 7", "http://repository.ops4j.org/maven2", segments[ 6 ] );
     }
 
 

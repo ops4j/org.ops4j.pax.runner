@@ -57,7 +57,7 @@ public class SettingsImpl
     /**
      * Maven Central repository.
      */
-    private static final String CENTRAL_REPOSITORY = "http://repo1.maven.org/maven2";
+    private static final String DEFAULT_REPOSITORIES = "http://repo1.maven.org/maven2,http://repository.ops4j.org/maven2";
 
     /**
      * The settings.xml DOM Document. Null if there is no settings.xml.
@@ -252,11 +252,11 @@ public class SettingsImpl
             }
             if( m_repositories == null )
             {
-                m_repositories = CENTRAL_REPOSITORY;
+                m_repositories = DEFAULT_REPOSITORIES;
             }
             else
             {
-                m_repositories = m_repositories + "," + CENTRAL_REPOSITORY;
+                m_repositories = m_repositories + "," + DEFAULT_REPOSITORIES;
             }
         }
         return m_repositories;
