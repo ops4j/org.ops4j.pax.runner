@@ -61,9 +61,50 @@ public class BundleReferenceBean
         m_shouldStart = shouldStart;
     }
 
+    @Override
+    public boolean equals( Object o )
+    {
+        if( this == o )
+        {
+            return true;
+        }
+        if( o == null || getClass() != o.getClass() )
+        {
+            return false;
+        }
+
+        BundleReferenceBean that = (BundleReferenceBean) o;
+
+        if( !m_location.equals( that.m_location ) )
+        {
+            return false;
+        }
+        if( m_shouldStart != null ? !m_shouldStart.equals( that.m_shouldStart ) : that.m_shouldStart != null )
+        {
+            return false;
+        }
+        if( m_startLevel != null ? !m_startLevel.equals( that.m_startLevel ) : that.m_startLevel != null )
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result;
+        result = m_location.hashCode();
+        result = 31 * result + ( m_startLevel != null ? m_startLevel.hashCode() : 0 );
+        result = 31 * result + ( m_shouldStart != null ? m_shouldStart.hashCode() : 0 );
+        return result;
+    }
+
     /**
      * @see Object#toString()
      */
+    @Override
     public String toString()
     {
         return new StringBuilder()
