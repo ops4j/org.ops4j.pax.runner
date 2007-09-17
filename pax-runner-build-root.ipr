@@ -382,6 +382,7 @@
       <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-bundle/pax-runner-scanner-bundle.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-bundle/pax-runner-scanner-bundle.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-dir/pax-runner-scanner-dir.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-dir/pax-runner-scanner-dir.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-file/pax-runner-scanner-file.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-file/pax-runner-scanner-file.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-pom/pax-runner-scanner-pom.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-pom/pax-runner-scanner-pom.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="1.5" />
