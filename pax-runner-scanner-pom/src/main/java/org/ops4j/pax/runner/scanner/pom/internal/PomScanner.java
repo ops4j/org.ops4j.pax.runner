@@ -25,6 +25,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 import org.ops4j.pax.runner.commons.Assert;
 import org.ops4j.pax.runner.commons.resolver.Resolver;
@@ -33,6 +34,7 @@ import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.Scanner;
 import org.ops4j.pax.runner.provision.ScannerException;
+import org.ops4j.pax.runner.provision.scanner.FileBundleReference;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfigurationImpl;
 import org.ops4j.pax.runner.scanner.pom.ServiceConstants;
@@ -88,6 +90,21 @@ public class PomScanner
                 final Document doc = XmlUtils.parseDoc( inputStream );
                 final Integer defaultStartLevel = getDefaultStartLevel( parser, config );
                 final Boolean defaultStart = getDefaultStart( parser, config );
+                references.add(
+                    new FileBundleReference( composeURL( doc.getDocumentElement(), "packaging" ), defaultStartLevel,
+                                             defaultStart
+                    )
+                );
+                final List<Element> dependencies = XmlUtils.getElements( doc, "dependencies/dependency" );
+                if( dependencies != null )
+                {
+                    for( Element dependency : dependencies )
+                    {
+                        references.add(
+                            new FileBundleReference( composeURL( dependency, "type" ), defaultStartLevel, defaultStart )
+                        );
+                    }
+                }
             }
             finally
             {
@@ -111,6 +128,76 @@ public class PomScanner
             throw new ScannerException( "Could not parse the provision file", e );
         }
         return references;
+    }
+
+    /**
+     * Retruns a maven url based on an element that contains group/artifact/version/type.
+     *
+     * @param parentElement   the element that contains the group/artifact/version/type
+     * @param typeElementName name of the type element to be used
+     *
+     * @return a maven url
+     *
+     * @throws org.ops4j.pax.runner.provision.ScannerException
+     *          if the element does not contain an artifact or group id
+     */
+    private String composeURL( Element parentElement, String typeElementName )
+        throws ScannerException
+    {
+        Element element = XmlUtils.getElement( parentElement, "artifactId" );
+        if( element == null )
+        {
+            throw new ScannerException( "Invalid pom file. Missing artifact id." );
+        }
+        final String artifactId = XmlUtils.getTextContent( element );
+        if( artifactId == null || artifactId.trim().length() == 0 )
+        {
+            throw new ScannerException( "Invalid pom file. Invalid artifact id." );
+        }
+        element = XmlUtils.getElement( parentElement, "groupId" );
+        if( element == null )
+        {
+            throw new ScannerException( "Invalid pom file. Missing group id." );
+        }
+        final String groupId = XmlUtils.getTextContent( element );
+        if( groupId == null || groupId.trim().length() == 0 )
+        {
+            throw new ScannerException( "Invalid pom file. Invalid group id." );
+        }
+        element = XmlUtils.getElement( parentElement, "version" );
+        String version = null;
+        if( element != null )
+        {
+            version = XmlUtils.getTextContent( element );
+        }
+        if( version != null && version.trim().length() == 0 )
+        {
+            version = null;
+        }
+        element = XmlUtils.getElement( parentElement, typeElementName );
+        String type = null;
+        if( element != null )
+        {
+            type = XmlUtils.getTextContent( element );
+        }
+        if( type != null && ( type.trim().length() == 0 || type.trim().equalsIgnoreCase( "bundle" ) ) )
+        {
+            type = null;
+        }
+        final StringBuilder builder = new StringBuilder()
+            .append( "mvn:" )
+            .append( groupId )
+            .append( "/" )
+            .append( artifactId );
+        if( version != null )
+        {
+            builder.append( "/" ).append( version );
+            if( type != null )
+            {
+                builder.append( "/" ).append( type );
+            }
+        }
+        return builder.toString();
     }
 
     /**
