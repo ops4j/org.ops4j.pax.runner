@@ -85,36 +85,31 @@ public class FileScanner
         BufferedReader bufferedReader = null;
         try
         {
-            bufferedReader = new BufferedReader( new InputStreamReader( parser.getFileURL().openStream() ) );
-            Integer defaultStartLevel = getDefaultStartLevel( parser, config );
-            Boolean defaultStart = getDefaultStart( parser, config );
-            String line;
-            while( ( line = bufferedReader.readLine() ) != null )
+            try
             {
-                if( !"".equals( line.trim() ) && !line.trim().startsWith( COMMENT_SIGN ) )
+                bufferedReader = new BufferedReader( new InputStreamReader( parser.getFileURL().openStream() ) );
+                Integer defaultStartLevel = getDefaultStartLevel( parser, config );
+                Boolean defaultStart = getDefaultStart( parser, config );
+                String line;
+                while( ( line = bufferedReader.readLine() ) != null )
                 {
-                    references.add( new FileBundleReference( line, defaultStartLevel, defaultStart ) );
+                    if( !"".equals( line.trim() ) && !line.trim().startsWith( COMMENT_SIGN ) )
+                    {
+                        references.add( new FileBundleReference( line, defaultStartLevel, defaultStart ) );
+                    }
+                }
+            }
+            finally
+            {
+                if( bufferedReader != null )
+                {
+                    bufferedReader.close();
                 }
             }
         }
         catch( IOException e )
         {
             throw new ScannerException( "Could not parse the provision file", e );
-        }
-        finally
-        {
-            if( bufferedReader != null )
-            {
-                try
-                {
-                    bufferedReader.close();
-                }
-                catch( IOException e )
-                {
-                    //noinspection ThrowFromFinallyBlock
-                    throw new ScannerException( "Could not parse the provision file", e );
-                }
-            }
         }
         return references;
     }
