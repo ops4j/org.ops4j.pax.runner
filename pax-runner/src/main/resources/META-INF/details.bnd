@@ -13,6 +13,7 @@ src/main/resources,\
 @target/dependency/pax-runner-scanner-bundle.jar,\
 @target/dependency/pax-runner-scanner-dir.jar,\
 @target/dependency/pax-runner-scanner-file.jar,\
+@target/dependency/pax-runner-scanner-pom.jar,\
 @target/dependency/pax-runner-commons.jar,\
 @target/dependency/osgi_R4_core.jar!/org/osgi/framework/*,\
 @target/dependency/osgi_R4_core.jar!/org/osgi/service/startlevel/*,\

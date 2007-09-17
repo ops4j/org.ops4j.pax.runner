@@ -21,15 +21,13 @@
     <orderEntry type="module" module-name="pax-runner-scanner-file" />
     <orderEntry type="module" module-name="pax-runner-scanner-bundle" />
     <orderEntry type="module" module-name="pax-runner-platform-felix" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$M2_REPO$/junit/junit/4.3.1/junit-4.3.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="module" module-name="pax-runner-handler-wrap" />
+    <orderEntry type="module" module-name="pax-runner-handler-classpath" />
+    <orderEntry type="module" module-name="pax-runner-platform-equinox" />
+    <orderEntry type="module" module-name="pax-runner-scanner-dir" />
+    <orderEntry type="module" module-name="pax-runner-handler-mvn" />
+    <orderEntry type="module" module-name="pax-runner-handler" />
+    <orderEntry type="module" module-name="pax-runner-scanner-pom" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -39,7 +37,15 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="pax-runner-handler-wrap" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$M2_REPO$/junit/junit/4.3.1/junit-4.3.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -67,9 +73,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="pax-runner-handler-classpath" />
-    <orderEntry type="module" module-name="pax-runner-platform-equinox" />
-    <orderEntry type="module" module-name="pax-runner-scanner-dir" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -79,7 +82,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="pax-runner-handler-mvn" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -89,7 +91,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="pax-runner-handler" />
     <orderEntryProperties />
   </component>
 </module>
