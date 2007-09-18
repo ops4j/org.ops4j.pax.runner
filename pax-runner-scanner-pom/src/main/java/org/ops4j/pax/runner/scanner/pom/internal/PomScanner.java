@@ -90,19 +90,21 @@ public class PomScanner
                 final Document doc = XmlUtils.parseDoc( inputStream );
                 final Integer defaultStartLevel = getDefaultStartLevel( parser, config );
                 final Boolean defaultStart = getDefaultStart( parser, config );
-                references.add(
-                    new FileBundleReference( composeURL( doc.getDocumentElement(), "packaging" ), defaultStartLevel,
-                                             defaultStart
-                    )
-                );
+                final String mainArtifactURL = composeURL( doc.getDocumentElement(), "packaging" );
+                if( mainArtifactURL != null )
+                {
+                    references.add( new FileBundleReference( mainArtifactURL, defaultStartLevel, defaultStart ) );
+                }
                 final List<Element> dependencies = XmlUtils.getElements( doc, "dependencies/dependency" );
                 if( dependencies != null )
                 {
                     for( Element dependency : dependencies )
                     {
-                        references.add(
-                            new FileBundleReference( composeURL( dependency, "type" ), defaultStartLevel, defaultStart )
-                        );
+                        final String dependencyURL = composeURL( dependency, "type" );
+                        if( dependencyURL != null )
+                        {
+                            references.add( new FileBundleReference( dependencyURL, defaultStartLevel, defaultStart ) );
+                        }
                     }
                 }
             }
@@ -183,6 +185,23 @@ public class PomScanner
         if( type != null && ( type.trim().length() == 0 || type.trim().equalsIgnoreCase( "bundle" ) ) )
         {
             type = null;
+        }
+        // we only support jars
+        if( type != null && !type.equalsIgnoreCase( "jar" ) )
+        {
+            return null;
+        }
+        // verify scope
+        element = XmlUtils.getElement( parentElement, "scope" );
+        String scope = null;
+        if( element != null )
+        {
+            scope = XmlUtils.getTextContent( element );
+        }
+        // skip artifacts with test scopes
+        if( scope != null && scope.equalsIgnoreCase( "test" ) )
+        {
+            return null;
         }
         final StringBuilder builder = new StringBuilder()
             .append( "mvn:" )
