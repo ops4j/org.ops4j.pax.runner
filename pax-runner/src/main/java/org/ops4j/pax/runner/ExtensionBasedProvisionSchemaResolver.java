@@ -46,9 +46,15 @@ public class ExtensionBasedProvisionSchemaResolver
         String schema = org.ops4j.pax.runner.scanner.dir.ServiceConstants.SCHEMA;
         if( !resolve.endsWith( "/" ) && !resolve.endsWith( "\\" ) && !resolve.contains( "!/" ) )
         {
-            // check if starts with mvn or wrap, because most common it will be a bundle
+            // check if is a pom using mvn protocol
             if( resolve.startsWith( org.ops4j.pax.runner.handler.mvn.ServiceConstants.PROTOCOL )
-                || resolve.startsWith( org.ops4j.pax.runner.handler.wrap.ServiceConstants.PROTOCOL ) )
+                && resolve.endsWith( "pom" ) )
+            {
+                schema = org.ops4j.pax.runner.scanner.pom.ServiceConstants.SCHEMA;
+            }
+            // check if starts with mvn or wrap, because most common it will be a bundle
+            else if( resolve.startsWith( org.ops4j.pax.runner.handler.mvn.ServiceConstants.PROTOCOL )
+                     || resolve.startsWith( org.ops4j.pax.runner.handler.wrap.ServiceConstants.PROTOCOL ) )
             {
                 schema = org.ops4j.pax.runner.scanner.bundle.ServiceConstants.SCHEMA;
             }
@@ -66,10 +72,9 @@ public class ExtensionBasedProvisionSchemaResolver
                     if( indexOfDot < resolve.length() - 1 )
                     {
                         final String extension = resolve.substring( indexOfDot + 1 ).toUpperCase();
-                        if( "POM".equals( extension ) )
+                        if( "XML".equals( extension ) )
                         {
-                            // TODO replace with static SCHEMA when scan-pom created.
-                            schema = "scan-pom";
+                            schema = org.ops4j.pax.runner.scanner.pom.ServiceConstants.SCHEMA;
                         }
                         else if( "ZIP".equals( extension ) )
                         {

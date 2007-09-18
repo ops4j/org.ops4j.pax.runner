@@ -28,20 +28,28 @@ public class ExtensionBasedProvisionSchemaResolverTest
     @Test
     public void resolvePOMWithFileProtocol()
     {
-        assertEquals( "Resolved", "scan-pom:file:x.pom", m_underTest.resolve( "file:x.pom" ) );
+        assertEquals( "Resolved", "scan-pom:file:pom.xml", m_underTest.resolve( "file:pom.xml" ) );
+    }
+
+    @Test
+    public void resolvePOMWithMvnProtocol()
+    {
+        assertEquals( "Resolved", "scan-pom:mvn:group/artifact/version/pom",
+                      m_underTest.resolve( "mvn:group/artifact/version/pom" )
+        );
     }
 
     @Test
     public void resolvePOMWithAnyProtocol()
     {
-        assertEquals( "Resolved", "scan-pom:http:x.pom", m_underTest.resolve( "http:x.pom" ) );
+        assertEquals( "Resolved", "scan-pom:http:pom.xml", m_underTest.resolve( "http:pom.xml" ) );
     }
 
     @Test
     public void resolvePOMWithoutProtocol()
         throws MalformedURLException
     {
-        File file = FileUtils.getFileFromClasspath( "ebpsresolver/x.pom" );
+        File file = FileUtils.getFileFromClasspath( "ebpsresolver/pom.xml" );
         assertEquals( "Resolved", "scan-pom:" + file.toURL().toExternalForm(),
                       m_underTest.resolve( file.getAbsolutePath() )
         );
