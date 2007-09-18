@@ -18,7 +18,7 @@
       <outputDirectory>bin</outputDirectory>
       <includes>
 
-        <include>*:runner:*</include>
+        <include>*:pax-runner:*</include>
 
       </includes>
     </dependencySet>
