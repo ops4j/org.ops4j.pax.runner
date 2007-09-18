@@ -29,13 +29,13 @@ import java.util.StringTokenizer;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.ops4j.pax.runner.commons.Assert;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.ops4j.pax.runner.commons.Assert;
 
 public class XmlUtils
 {
@@ -90,8 +90,17 @@ public class XmlUtils
         StringTokenizer st = new StringTokenizer( path, "/", false );
         while( st.hasMoreTokens() && current != null )
         {
-            String token = st.nextToken();
-            current = (Element) current.getElementsByTagName( token ).item( 0 );
+            final String token = st.nextToken();
+            final NodeList childs = current.getChildNodes();
+            current = null;
+            for( int i = 0; i < childs.getLength(); i++ )
+            {
+                final Node child = childs.item( i );
+                if( child instanceof Element && child.getNodeName().equals( token ) )
+                {
+                    current = (Element) child;
+                }
+            }
         }
         return current;
     }
