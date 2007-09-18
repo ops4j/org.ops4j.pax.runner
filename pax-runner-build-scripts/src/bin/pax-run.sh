@@ -8,4 +8,4 @@ if [ -z "$PAX_HOME" ] ; then
   PAX_HOME=$HOME/.pax
 fi
 
-java -jar $PAX_HOME/runner/bin/pax-runner-${project.version}.jar "$@"
+java $JAVA_OPTS -jar $PAX_HOME/runner/bin/pax-runner-${project.version}.jar "$@"
