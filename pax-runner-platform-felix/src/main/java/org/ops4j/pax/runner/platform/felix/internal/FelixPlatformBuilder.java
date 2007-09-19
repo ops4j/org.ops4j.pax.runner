@@ -261,7 +261,9 @@ public class FelixPlatformBuilder
             {
                 propertyName.append( "." ).append( startLevel );
             }
-            writer.append( propertyName.toString(), bundleFile.toURL().toExternalForm() );
+            // PAXRUNNER-41
+            // url of the file must be quoted otherwise will be considered as two separated files by Felix
+            writer.append( propertyName.toString(), "\"" + bundleFile.toURL().toExternalForm() + "\"" );
         }
     }
 
