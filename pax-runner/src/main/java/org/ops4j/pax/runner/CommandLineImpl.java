@@ -24,7 +24,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.ops4j.pax.runner.commons.file.FileUtils;
 
 /**
@@ -41,9 +42,9 @@ public class CommandLineImpl implements CommandLine
      */
     private static final String OPTION_PREFIX = "--";
     /**
-     * Option name, option value separator.
+     * Option pattern.
      */
-    private static final String EQ = "=";
+    public static final Pattern OPTION_PATTERN = Pattern.compile( "(.*?)=(.*)" );
 
     /**
      * Options as properties.
@@ -121,28 +122,37 @@ public class CommandLineImpl implements CommandLine
      */
     private void parseOption( final String arg )
     {
-        final StringTokenizer tokenizer = new StringTokenizer( arg.substring( 2 ), EQ );
-        final String key = tokenizer.nextToken();
-        if( key != null && !"".equals( key.trim() ) && !m_options.containsKey( key ) )
+        String key = arg.substring( 2 ).trim();
+        if( key != null && key.length() > 0 )
         {
-            if( tokenizer.hasMoreTokens() )
+            String value = null;
+            final Matcher matcher = OPTION_PATTERN.matcher( key );
+            if( matcher.matches() && matcher.groupCount() == 2 )
             {
-                m_options.put( key, tokenizer.nextToken() );
+                key = matcher.group( 1 );
+                value = matcher.group( 2 );
             }
-            else
+            if( !m_options.containsKey( key ) )
             {
-                if( key.startsWith( "no" ) && key.length() > 2 )
+                if( value != null )
                 {
-                    String actualKey = key.substring( 2, 3 ).toLowerCase();
-                    if( key.length() >= 3 )
-                    {
-                        actualKey = actualKey + key.substring( 3 );
-                    }
-                    m_options.put( actualKey, "false" );
+                    m_options.put( key, value );
                 }
                 else
                 {
-                    m_options.put( key, "true" );
+                    if( key.startsWith( "no" ) && key.length() > 2 )
+                    {
+                        String actualKey = key.substring( 2, 3 ).toLowerCase();
+                        if( key.length() >= 3 )
+                        {
+                            actualKey = actualKey + key.substring( 3 );
+                        }
+                        m_options.put( actualKey, "false" );
+                    }
+                    else
+                    {
+                        m_options.put( key, "true" );
+                    }
                 }
             }
         }
