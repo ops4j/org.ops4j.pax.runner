@@ -21,6 +21,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.Properties;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -154,6 +155,45 @@ public class PomScannerTest
                 new FileBundleReference( "mvn:org.ops4j.pax.runner/main-artifact/0.1.0-SNAPSHOT", null, null ),
             };
         scan( expected, null, null, "scanner/pomWithoutDependencies.xml" );
+    }
+
+    @Test
+    public void scanWithValidPomAndProperties()
+        throws ScannerException, MalformedURLException
+    {
+        final Recorder recorder = createMock( Recorder.class );
+        recorder.record( "prop.1=value.1" );
+        recorder.record( "prop.2=value.2" );
+
+        Properties sysPropsBackup = System.getProperties();
+        try
+        {
+            System.setProperties(
+                new Properties()
+                {
+
+                    @Override
+                    public synchronized Object setProperty( String key, String value )
+                    {
+                        recorder.record( key + "=" + value );
+                        return null;
+                    }
+
+                }
+            );
+            BundleReference[] expected = new BundleReference[]
+                {
+                    new FileBundleReference( "mvn:org.ops4j.pax.runner/main-artifact/0.1.0-SNAPSHOT", null, null ),
+                };
+
+            replay( recorder );
+            scan( expected, null, null, "scanner/pomWithProperties.xml" );
+            verify( recorder );
+        }
+        finally
+        {
+            System.setProperties( sysPropsBackup );
+        }
     }
 
     private PomScanner createPomScanner( final ScannerConfiguration config, final Parser parser )

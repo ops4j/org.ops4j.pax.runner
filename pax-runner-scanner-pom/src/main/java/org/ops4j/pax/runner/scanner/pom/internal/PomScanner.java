@@ -95,6 +95,7 @@ public class PomScanner
                 {
                     references.add( new FileBundleReference( mainArtifactURL, defaultStartLevel, defaultStart ) );
                 }
+                // check out dependencies
                 final List<Element> dependencies = XmlUtils.getElements( doc, "dependencies/dependency" );
                 if( dependencies != null )
                 {
@@ -105,6 +106,18 @@ public class PomScanner
                         {
                             references.add( new FileBundleReference( dependencyURL, defaultStartLevel, defaultStart ) );
                         }
+                    }
+                }
+                // check out properties
+                final Element properties = XmlUtils.getElement( doc, "properties" );
+                if( properties != null )
+                {
+                    List<Element> props = XmlUtils.getChildElements( properties );
+                    for( Element property : props )
+                    {
+                        final String key = property.getNodeName();
+                        final String value = XmlUtils.getTextContent( property );
+                        System.setProperty( key, value );
                     }
                 }
             }

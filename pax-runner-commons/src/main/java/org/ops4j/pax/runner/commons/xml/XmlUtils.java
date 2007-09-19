@@ -143,6 +143,21 @@ public class XmlUtils
         return elements;
     }
 
+    public static List<Element> getChildElements( final Element element )
+    {
+        final List<Element> elements = new ArrayList<Element>();
+        final NodeList childs = element.getChildNodes();
+        for( int i = 0; i < childs.getLength(); i++ )
+        {
+            Node child = childs.item( i );
+            if( child instanceof Element )
+            {
+                elements.add( (Element) child );
+            }
+        }
+        return elements;
+    }
+
     public static String getTextContentOfElement( final Document doc, final String path )
     {
         Assert.notNull( "XML document", doc );
