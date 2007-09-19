@@ -20,12 +20,19 @@ package org.ops4j.pax.runner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.LogLevel;
 import org.apache.felix.framework.Logger;
 import org.apache.felix.framework.ServiceRegistry;
 import org.apache.felix.framework.util.EventDispatcher;
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleException;
+import org.osgi.framework.ServiceEvent;
+import org.osgi.framework.ServiceListener;
+import org.osgi.framework.ServiceReference;
 import static org.ops4j.pax.runner.CommandLine.*;
 import org.ops4j.pax.runner.commons.Assert;
 import org.ops4j.pax.runner.osgi.RunnerBundle;
@@ -39,12 +46,6 @@ import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionService;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.UnsupportedSchemaException;
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleException;
-import org.osgi.framework.ServiceEvent;
-import org.osgi.framework.ServiceListener;
-import org.osgi.framework.ServiceReference;
 
 /**
  * Main runner class. Does all the work.
@@ -251,40 +252,52 @@ public class Run
                 arguments.add( url );
             }
         }
-        // then scan those url's
-        for( String provisionURL : arguments )
+        // backup properties and replace them with audited properties
+        final Properties sysPropsBackup = System.getProperties();
+        try
         {
-            try
+            context.setSystemProperties( new AuditedProperties( sysPropsBackup ) );
+            System.setProperties( context.getSystemProperties() );
+            // then scan those url's
+            for( String provisionURL : arguments )
             {
                 try
                 {
-                    provisionService.scan( provisionURL ).install();
+                    try
+                    {
+                        provisionService.scan( provisionURL ).install();
+                    }
+                    catch( UnsupportedSchemaException e )
+                    {
+                        final String resolvedProvisionURL = schemaResolver.resolve( provisionURL );
+                        if( resolvedProvisionURL != null && !resolvedProvisionURL.equals( provisionURL ) )
+                        {
+                            provisionService.scan( resolvedProvisionURL ).install();
+                        }
+                        else
+                        {
+                            throw e;
+                        }
+                    }
                 }
-                catch( UnsupportedSchemaException e )
+                catch( MalformedSpecificationException e )
                 {
-                    final String resolvedProvisionURL = schemaResolver.resolve( provisionURL );
-                    if( resolvedProvisionURL != null && !resolvedProvisionURL.equals( provisionURL ) )
-                    {
-                        provisionService.scan( resolvedProvisionURL ).install();
-                    }
-                    else
-                    {
-                        throw e;
-                    }
+                    throw new RuntimeException( e );
+                }
+                catch( ScannerException e )
+                {
+                    throw new RuntimeException( e );
+                }
+                catch( BundleException e )
+                {
+                    throw new RuntimeException( e );
                 }
             }
-            catch( MalformedSpecificationException e )
-            {
-                throw new RuntimeException( e );
-            }
-            catch( ScannerException e )
-            {
-                throw new RuntimeException( e );
-            }
-            catch( BundleException e )
-            {
-                throw new RuntimeException( e );
-            }
+        }
+        finally
+        {
+            // restore the backup-ed properties
+            System.setProperties( sysPropsBackup );
         }
     }
 
@@ -357,7 +370,7 @@ public class Run
         }
         try
         {
-            platform.start( references, null, null );
+            platform.start( references, context.getSystemProperties(), null );
         }
         catch( PlatformException e )
         {

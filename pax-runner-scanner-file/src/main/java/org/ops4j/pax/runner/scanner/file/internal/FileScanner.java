@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.pax.runner.commons.Assert;
@@ -53,6 +55,14 @@ public class FileScanner
      * The starting character for a comment line.
      */
     private static final String COMMENT_SIGN = "#";
+    /**
+     * Prefix for properties.
+     */
+    private static final String PROPERTY_PREFIX = "-D";
+    /**
+     * Regex pattern used to spint property key/value.
+     */
+    private static final Pattern PROPERTY_PATTERN = Pattern.compile( "-D(.*)=(.*)" );
 
     /**
      * Resolver used to resolve properties.
@@ -95,7 +105,19 @@ public class FileScanner
                 {
                     if( !"".equals( line.trim() ) && !line.trim().startsWith( COMMENT_SIGN ) )
                     {
-                        references.add( new FileBundleReference( line, defaultStartLevel, defaultStart ) );
+                        if( line.trim().startsWith( PROPERTY_PREFIX ) )
+                        {
+                            final Matcher matcher = PROPERTY_PATTERN.matcher( line.trim() );
+                            if( !matcher.matches() || matcher.groupCount() != 2 )
+                            {
+                                throw new ScannerException( "Invalid property: " + line );
+                            }
+                            System.setProperty( matcher.group( 1 ), matcher.group( 2 ) );
+                        }
+                        else
+                        {
+                            references.add( new FileBundleReference( line, defaultStartLevel, defaultStart ) );
+                        }
                     }
                 }
             }

@@ -18,6 +18,7 @@
 package org.ops4j.pax.runner;
 
 import java.util.List;
+import java.util.Properties;
 import org.apache.felix.framework.ServiceRegistry;
 import org.apache.felix.framework.util.EventDispatcher;
 import org.ops4j.pax.runner.osgi.RunnerBundle;
@@ -127,4 +128,19 @@ public interface Context
      */
     List<RunnerBundle> getBundles();
 
+    /**
+     * Sets the system properties that will be used when starting the platform.
+     *
+     * @param properties java Properties
+     *
+     * @return self, for fluent api
+     */
+    Context setSystemProperties( Properties properties );
+
+    /**
+     * Returns the system properties to be used for starting the platform.
+     *
+     * @return java Properties
+     */
+    Properties getSystemProperties();
 }

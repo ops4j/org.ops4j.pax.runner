@@ -19,6 +19,7 @@ package org.ops4j.pax.runner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import org.apache.felix.framework.ServiceRegistry;
 import org.apache.felix.framework.util.EventDispatcher;
 import org.ops4j.pax.runner.osgi.RunnerBundle;
@@ -58,6 +59,10 @@ public class ContextImpl
      * Felix Event dispatcher.
      */
     private EventDispatcher m_dispatcher;
+    /**
+     * System properties to be used when starting the platform.
+     */
+    private Properties m_systemProperties;
 
     /**
      * Create a new Context implementation.
@@ -167,5 +172,22 @@ public class ContextImpl
     public List<RunnerBundle> getBundles()
     {
         return m_bundles;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Context setSystemProperties( Properties properties )
+    {
+        m_systemProperties = properties;
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Properties getSystemProperties()
+    {
+        return m_systemProperties;
     }
 }

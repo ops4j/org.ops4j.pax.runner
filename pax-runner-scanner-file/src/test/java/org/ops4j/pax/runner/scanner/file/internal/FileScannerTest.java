@@ -21,6 +21,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.Properties;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -146,6 +147,54 @@ public class FileScannerTest
         assertNotNull( "Returned bundle references list is null", references );
         assertEquals( "Nuber of bundles", 0, references.size() );
         verify( parser, config );
+    }
+
+    @Test
+    public void scanValidFileWithProperties()
+        throws ScannerException, MalformedURLException
+    {
+        Parser parser = createMock( Parser.class );
+        ScannerConfiguration config = createMock( ScannerConfiguration.class );
+        final Recorder recorder = createMock( Recorder.class );
+        File file = FileUtils.getFileFromClasspath( "scanner/properties.txt" );
+
+        expect( parser.getFileURL() ).andReturn( file.toURL() );
+        expect( parser.getStartLevel() ).andReturn( null );
+        expect( config.getStartLevel() ).andReturn( null );
+        expect( parser.shouldStart() ).andReturn( null );
+        expect( config.shouldStart() ).andReturn( null );
+
+        recorder.record( "prop.1=value.1" );
+        recorder.record( "prop.2=value.2" );
+
+        replay( parser, config, recorder );
+        Properties sysPropsBackup = System.getProperties();
+        try
+        {
+            System.setProperties(
+                new Properties()
+                {
+
+                    @Override
+                    public synchronized Object setProperty( String key, String value )
+                    {
+                        recorder.record( key + "=" + value );
+                        return null;
+                    }
+
+                }
+            );
+            List<BundleReference> references =
+                createFileScanner( config, parser ).scan( file.toURL().toExternalForm() );
+            assertNotNull( "Returned bundle references list is null", references );
+            verify( parser, config, recorder );
+        }
+        finally
+        {
+            System.setProperties( sysPropsBackup );
+        }
+
+
     }
 
     private FileScanner createFileScanner( final ScannerConfiguration config, final Parser parser )
