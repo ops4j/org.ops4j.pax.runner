@@ -28,6 +28,8 @@ import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.ops4j.pax.runner.commons.file.FileUtils;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.BundleReferenceBean;
@@ -36,8 +38,6 @@ import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 
 public class PlatformImplTest
 {
@@ -269,7 +269,7 @@ public class PlatformImplTest
         );
         start( bundles );
     }
-    
+
     // expected to throw an exception since bundle is jar that does not have a manifest entry for symbolic name
     @Test( expected = PlatformException.class )
     public void startWithAJarWithNoManifestAttr()
@@ -302,6 +302,7 @@ public class PlatformImplTest
         expect( m_builder.getMainClassName() ).andReturn( "Main" );
         m_context.setProperties( null );
         m_context.setConfiguration( m_config );
+        expect( m_config.freshStart()).andReturn( false );
         expect( m_config.getWorkingDirectory() ).andReturn( m_workDir );
         m_context.setWorkingDirectory( new File( m_workDir ) );
         expect( m_config.isOverwrite() ).andReturn( true );

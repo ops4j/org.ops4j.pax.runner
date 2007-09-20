@@ -40,7 +40,11 @@ import java.util.jar.Manifest;
 import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
+import org.xml.sax.SAXException;
 import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.pax.runner.commons.file.FileUtils;
 import org.ops4j.pax.runner.commons.resolver.CompositeResolver;
 import org.ops4j.pax.runner.commons.resolver.DictionaryResolver;
 import org.ops4j.pax.runner.commons.resolver.Resolver;
@@ -51,9 +55,6 @@ import org.ops4j.pax.runner.platform.Platform;
 import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
-import org.xml.sax.SAXException;
 
 /**
  * Handles the workflow of creating the platform. Concrete platforms should implement only the PlatformBuilder
@@ -154,6 +155,12 @@ public class PlatformImpl
         // create the platform definition from the configured url or from the platform builder
         final PlatformDefinition definition = mandatory( "Definition", createPlatformDefinition( configuration ) );
         LOGGER.debug( "Using platform definition [" + definition + "]" );
+        // check out if the wrking folder must be removed first (fresh start)
+        final Boolean freshStart = configuration.freshStart();
+        if( freshStart != null && freshStart )
+        {
+            FileUtils.delete( new File( configuration.getWorkingDirectory() ) );
+        }
         // create a working directory on the file system
         final File workDir = mandatory( "Working dir", createWorkingDir( configuration.getWorkingDirectory() ) );
         LOGGER.debug( "Using working directory [" + workDir + "]" );
@@ -490,17 +497,17 @@ public class PlatformImpl
         }
         finally
         {
-             if (jar != null)
-             {
-                 try
-                 {
-                     jar.close();
-                 }
-                 catch( IOException ignore )
-                 {
-                     // just ignore as this is less probably to happen.
-                 }
-             }
+            if( jar != null )
+            {
+                try
+                {
+                    jar.close();
+                }
+                catch( IOException ignore )
+                {
+                    // just ignore as this is less probably to happen.
+                }
+            }
         }
     }
 

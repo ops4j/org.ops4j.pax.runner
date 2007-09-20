@@ -66,6 +66,10 @@ public interface ServiceConstants
      */
     static final String CONFIG_CLEAN = PID + ".clean";
     /**
+     * Fresh platform start property name.
+     */
+    static final String CONFIG_FRESH_START = PID + ".freshStart";    
+    /**
      * Console configuration property name.
      */
     static final String CONFIG_CONSOLE = PID + ".console";

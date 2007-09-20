@@ -286,6 +286,20 @@ public class ConfigurationImpl
     }
 
     /**
+     * @see Configuration#freshStart()
+     */
+    public Boolean freshStart()
+    {
+        if( !contains( ServiceConstants.CONFIG_FRESH_START ) )
+        {
+            return set( ServiceConstants.CONFIG_FRESH_START,
+                        Boolean.valueOf( m_resolver.get( ServiceConstants.CONFIG_FRESH_START ) )
+            );
+        }
+        return get( ServiceConstants.CONFIG_FRESH_START );
+    }
+
+    /**
      * @see Configuration#getProfileStartLevel()
      */
     public Integer getProfileStartLevel()

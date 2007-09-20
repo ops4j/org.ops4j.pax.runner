@@ -163,13 +163,13 @@ public class ConfigurationImplTest
         Resolver resolver = createMock( Resolver.class );
         expect( resolver.get( "org.ops4j.pax.runner.platform.javaHome" ) ).andReturn( null );
         String javaHome = System.getProperty( "JAVA_HOME" );
-        if ( javaHome == null )
+        if( javaHome == null )
         {
             try
             {
                 javaHome = System.getenv( "JAVA_HOME" );
             }
-            catch ( Error e )
+            catch( Error e )
             {
                 // fallback when running under Java 1.4.x
                 javaHome = System.getProperty( "java.home" );
@@ -438,6 +438,51 @@ public class ConfigurationImplTest
         replay( resolver );
         Configuration config = new ConfigurationImpl( resolver );
         assertEquals( "Overwrite", false, config.isOverwrite() );
+        verify( resolver );
+    }
+
+    /**
+     * Tests the happy path.
+     */
+    @Test
+    public void freshStart()
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.freshStart" ) ).andReturn( "true" );
+
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        assertEquals( "Fresh start", true, config.freshStart() );
+        verify( resolver );
+    }
+
+    /**
+     * Tests that default value is false.
+     */
+    @Test
+    public void freshStartDefault()
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.freshStart" ) ).andReturn( null );
+
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        assertEquals( "Fresh start", false, config.freshStart() );
+        verify( resolver );
+    }
+
+    /**
+     * Test that an invalid value will not cause problems and will return false.
+     */
+    @Test
+    public void freshStartWithInvalidValue()
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.freshStart" ) ).andReturn( "of course" );
+
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        assertEquals( "Fresh start", false, config.freshStart() );
         verify( resolver );
     }
 

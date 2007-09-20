@@ -148,4 +148,12 @@ public interface Configuration
      * @return value of framework profile
      */
     String getFrameworkProfile();
+
+    /**
+     * Returns true if the cached bundles and target platforms configuration folder shall be removed.
+     *
+     * @return true if there should be a fresh start
+     */
+    Boolean freshStart();
+    
 }
