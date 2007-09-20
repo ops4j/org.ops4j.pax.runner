@@ -18,11 +18,13 @@
 package org.ops4j.pax.runner;
 
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Porperties that audits changes of properties from the moment that was created.
+ * Java Properties that audits changes of properties from the moment that was created.
  *
  * @author Alin Dreghiciu
  * @since 0.5.0
@@ -35,6 +37,10 @@ public class AuditedProperties
      * Logger.
      */
     private static final Log LOGGER = LogFactory.getLog( AuditedProperties.class );
+    /**
+     * Pattern used for replacing placeholders.
+     */
+    private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile( "(.*?\\$\\{)([.[^\\$]]+?)(\\}.*)" );
 
     /**
      * Default properties to be used.
@@ -82,8 +88,47 @@ public class AuditedProperties
     @Override
     public synchronized Object setProperty( String key, String value )
     {
-        LOGGER.info( "Using property [" + key + "=" + value + "]" );
-        return super.setProperty( key, value );
+        final String replaced = replacePlaceholders( value );
+        LOGGER.info( "Using property [" + key + "=" + replaced + "]" );
+        return super.setProperty( key, replaced );
+    }
+
+    /**
+     * Replaces placeholders = ${*}.
+     *
+     * @param value the string where the place holders should be replaced
+     *
+     * @return replaced place holders or the original if there are no place holders or a value for place holder could
+     *         not be found
+     */
+    private String replacePlaceholders( final String value )
+    {
+        String replaced = value;
+        String rest = value;
+        while( rest != null && rest.length() != 0 )
+        {
+            final Matcher matcher = PLACEHOLDER_PATTERN.matcher( rest );
+            if( matcher.matches() && matcher.groupCount() == 3 )
+            {
+                // groups 2 contains the placeholder name
+                final String placeholderName = matcher.group( 2 );
+                final String placeholderValue = getProperty( placeholderName );
+                if( placeholderValue != null )
+                {
+                    replaced = replaced.replace( "${" + placeholderName + "}", placeholderValue );
+                }
+                rest = matcher.group( 3 );
+            }
+            else
+            {
+                rest = null;
+            }
+        }
+        if( replaced != value )
+        {
+            replaced = replacePlaceholders( replaced );
+        }
+        return replaced;
     }
 
 }
