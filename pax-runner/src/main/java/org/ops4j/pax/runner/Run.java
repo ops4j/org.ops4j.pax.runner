@@ -427,7 +427,7 @@ public class Run
     {
         String message = "";
         String debugInfo = "";
-        if( !LOGGER.isErrorEnabled() )
+        if( LOGGER != null && !LOGGER.isErrorEnabled() )
         {
             message = t.getMessage();
             debugInfo = "Use --" + OPTION_DEBUG + "=ERROR to see details.";
@@ -441,9 +441,12 @@ public class Run
         System.out.println( "   /__/     " + debugInfo );
         System.out.println();
 
-        if( LOGGER.isErrorEnabled() )
+        if( LOGGER == null || LOGGER.isErrorEnabled() )
         {
-            LOGGER.error( t );
+            if( LOGGER != null )
+            {
+                LOGGER.error( t );
+            }
             t.printStackTrace();
         }
 
