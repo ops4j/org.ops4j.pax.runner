@@ -1,6 +1,7 @@
 /*
  * Copyright 2006 Niclas Hedhman.
  * Copyright 2007 Alin Dreghiciu.
+ * Copyright 2007 David Leangen.
  *
  * Licensed  under the  Apache License,  Version 2.0  (the "License");
  * you may not use  this file  except in  compliance with the License.
@@ -131,6 +132,16 @@ public class Run
      */
     public void start( final CommandLine commandLine, final Configuration config, final OptionResolver resolver )
     {
+        final Thread shutdownHookThread = new Thread()
+        {
+            public void run()
+            {
+                shutdownHook();
+            };
+        };
+
+        Runtime.getRuntime().addShutdownHook( shutdownHookThread );
+
         final Context context = createContext( commandLine, config, resolver );
         // install aditional handlers
         installHandlers( context );
@@ -481,6 +492,12 @@ public class Run
             // TODO eliminate system exit as in this case it should runner should be shutdown nicely by stopping the running services
             System.exit( 1 );
         }
+    }
+
+    private static void shutdownHook()
+    {
+        LOGGER.warn( "Shutting down..." );
+        // Add shutdown stuff here...
     }
 
     /**
