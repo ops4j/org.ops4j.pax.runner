@@ -31,14 +31,15 @@ import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.After;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.ops4j.pax.runner.commons.file.FileUtils;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 
 public class KnopflerfishPlatformBuilderTest
 {
@@ -53,8 +54,17 @@ public class KnopflerfishPlatformBuilderTest
     {
         m_bundleContext = createMock( BundleContext.class );
         m_configuration = createMock( Configuration.class );
-        m_workDir = new File( File.createTempFile( "runner", null ).getParentFile(), "runner" );
+        m_workDir = File.createTempFile( "runner", "" );
+        m_workDir.delete();
+        m_workDir = new File( m_workDir.getAbsolutePath() );
         m_workDir.mkdirs();
+        m_workDir.deleteOnExit();
+    }
+
+    @After
+    public void tearDown()
+    {
+        FileUtils.delete( m_workDir );
     }
 
     @Test( expected = IllegalArgumentException.class )
@@ -310,14 +320,14 @@ public class KnopflerfishPlatformBuilderTest
             actualReader = new BufferedReader( new FileReader( actual ) );
             String actualLine, expectedLine;
             int lineNumber = 1;
-            while ( ( actualLine = actualReader.readLine() ) != null )
+            while( ( actualLine = actualReader.readLine() ) != null )
             {
                 expectedLine = expectedReader.readLine();
-                if ( reverse )
+                if( reverse )
                 {
-                    if ( replacements != null )
+                    if( replacements != null )
                     {
-                        for ( Map.Entry<String, String> entry : replacements.entrySet() )
+                        for( Map.Entry<String, String> entry : replacements.entrySet() )
                         {
                             expectedLine = expectedLine.replace( entry.getKey(), entry.getValue() );
                         }
@@ -326,9 +336,9 @@ public class KnopflerfishPlatformBuilderTest
                 }
                 else
                 {
-                    if ( replacements != null )
+                    if( replacements != null )
                     {
-                        for ( Map.Entry<String, String> entry : replacements.entrySet() )
+                        for( Map.Entry<String, String> entry : replacements.entrySet() )
                         {
                             actualLine = actualLine.replace( entry.getKey(), entry.getValue() );
                         }
@@ -339,16 +349,16 @@ public class KnopflerfishPlatformBuilderTest
         }
         finally
         {
-            if ( expectedReader != null )
+            if( expectedReader != null )
             {
                 expectedReader.close();
             }
-            if ( actualReader != null )
+            if( actualReader != null )
             {
                 actualReader.close();
             }
         }
-        if ( reverse )
+        if( reverse )
         {
             compareFiles( actual, expected, false, replacements );
         }

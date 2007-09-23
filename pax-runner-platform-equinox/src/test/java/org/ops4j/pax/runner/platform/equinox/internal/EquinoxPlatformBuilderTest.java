@@ -31,6 +31,7 @@ import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.After;
 import org.ops4j.pax.runner.commons.file.FileUtils;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
@@ -54,8 +55,17 @@ public class EquinoxPlatformBuilderTest
     {
         m_bundleContext = createMock( BundleContext.class );
         m_configuration = createMock( Configuration.class );
-        m_workDir = new File( File.createTempFile( "runner", null ).getParentFile(), "runner" );
+        m_workDir = File.createTempFile( "runner", "" );
+        m_workDir.delete();
+        m_workDir = new File( m_workDir.getAbsolutePath() );
         m_workDir.mkdirs();
+        m_workDir.deleteOnExit();
+    }
+
+    @After
+    public void tearDown()
+    {
+        FileUtils.delete( m_workDir );
     }
 
     @Test( expected = IllegalArgumentException.class )

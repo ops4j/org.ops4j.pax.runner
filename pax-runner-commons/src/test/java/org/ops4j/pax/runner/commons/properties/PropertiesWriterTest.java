@@ -39,6 +39,7 @@ public class PropertiesWriterTest
         throws IOException
     {
         m_file = File.createTempFile( "writer", ".ini" );
+        m_file.deleteOnExit();
         m_os = new FileOutputStream( m_file );
     }
 

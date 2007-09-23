@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 import static org.easymock.EasyMock.*;
+import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -60,7 +61,18 @@ public class PlatformImplTest
         m_context = createMock( PlatformContext.class );
         m_bundleContext = createMock( BundleContext.class );
         m_bundle = createMock( Bundle.class );
-        m_workDir = File.createTempFile( "runner", null ).getParentFile().getAbsolutePath() + "/runner";
+        File workDir = File.createTempFile( "runner", "" );
+        m_workDir = workDir.getAbsolutePath();
+        workDir.delete();
+        workDir = new File( m_workDir );
+        workDir.mkdirs();
+        workDir.deleteOnExit();
+    }
+
+    @After
+    public void tearDown()
+    {
+        FileUtils.delete( new File( m_workDir ) );
     }
 
     @Test( expected = IllegalArgumentException.class )
@@ -302,7 +314,7 @@ public class PlatformImplTest
         expect( m_builder.getMainClassName() ).andReturn( "Main" );
         m_context.setProperties( null );
         m_context.setConfiguration( m_config );
-        expect( m_config.freshStart()).andReturn( false );
+        expect( m_config.freshStart() ).andReturn( false );
         expect( m_config.getWorkingDirectory() ).andReturn( m_workDir );
         m_context.setWorkingDirectory( new File( m_workDir ) );
         expect( m_config.isOverwrite() ).andReturn( true );
