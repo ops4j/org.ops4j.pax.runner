@@ -185,7 +185,7 @@ public class PlatformImpl
         // and finally start it up.
         final CommandLineBuilder commandLine = new CommandLineBuilder()
             .append( getJavaExecutable( configuration ) )
-            .append( configuration.getVMOptions() )
+            .append( configuration.getVMOptions().split( " " ) )
             .append( m_platformBuilder.getVMOptions( context ) )
             .append( "-cp" )
             .append( systemFile.getAbsolutePath() + configuration.getClasspath() )
