@@ -486,4 +486,52 @@ public class ConfigurationImplTest
         verify( resolver );
     }
 
+    /**
+     * Tests that if vm options is set and contains only one option the correct array is returned.
+     */
+    @Test
+    public void getVMOptionsWithOneOption()
+        throws MalformedURLException
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.vmOptions" ) ).andReturn( "-Xmx512m" );
+
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        assertArrayEquals( "Working directory", new String[]{ "-Xmx512m" }, config.getVMOptions() );
+        verify( resolver );
+    }
+
+    /**
+     * Tests that if vm options is set and contains more then one option the correct array is returned.
+     */
+    @Test
+    public void getVMOptionsWithMoreOptions()
+        throws MalformedURLException
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.vmOptions" ) ).andReturn( "-Xmx512m -Xms512m" );
+
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        assertArrayEquals( "Working directory", new String[]{ "-Xmx512m", "-Xms512m" }, config.getVMOptions() );
+        verify( resolver );
+    }
+
+    /**
+     * Tests tthat if vm options is not set there is no exception (as NPE) and null is returned.
+     */
+    @Test
+    public void getVMOptionsNotSet()
+        throws MalformedURLException
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.vmOptions" ) ).andReturn( null );
+
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        assertEquals( "Working directory", null, config.getVMOptions() );
+        verify( resolver );
+    }
+
 }

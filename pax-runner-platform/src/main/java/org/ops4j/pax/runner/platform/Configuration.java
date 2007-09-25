@@ -54,7 +54,7 @@ public interface Configuration
      *
      * @return value of virtual machine options option
      */
-    String getVMOptions();
+    String[] getVMOptions();
 
     /**
      * Returns the classpatch option - optional; a File.pathSeparator separated list of classpath entries to be

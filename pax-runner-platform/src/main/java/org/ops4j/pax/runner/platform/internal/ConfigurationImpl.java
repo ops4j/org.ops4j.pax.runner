@@ -112,16 +112,23 @@ public class ConfigurationImpl
     }
 
     /**
-     * TODO add unit tests
-     *
      * @see Configuration#getVMOptions()
      */
-    public String getVMOptions()
+    public String[] getVMOptions()
     {
         // TODO unit test
         if( !contains( ServiceConstants.CONFIG_VMOPTIONS ) )
         {
-            return set( ServiceConstants.CONFIG_VMOPTIONS, m_resolver.get( ServiceConstants.CONFIG_VMOPTIONS ) );
+            final String vmOptions = m_resolver.get( ServiceConstants.CONFIG_VMOPTIONS );
+            if( vmOptions != null )
+            {
+                return set( ServiceConstants.CONFIG_VMOPTIONS, vmOptions.split( " " ) );
+            }
+            else
+            {
+                return set( ServiceConstants.CONFIG_VMOPTIONS, null );
+            }
+
         }
         return get( ServiceConstants.CONFIG_VMOPTIONS );
     }
