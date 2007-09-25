@@ -256,6 +256,8 @@ public class PlatformImpl
      */
     private void destroyFrameworkOnExit( final Process process, final Pipe[] pipes )
     {
+        LOGGER.warn( "Shutting down system..." );
+
         Runtime.getRuntime().addShutdownHook( new Thread( new Runnable()
         {
             public void run()
@@ -438,6 +440,7 @@ public class PlatformImpl
         {
             try
             {
+                LOGGER.debug( "Creating new file at destination: " + destination.getAbsolutePath() );
                 destination.getParentFile().mkdirs();
                 destination.createNewFile();
                 BufferedOutputStream os = null;
