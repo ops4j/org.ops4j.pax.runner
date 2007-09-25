@@ -333,7 +333,7 @@ public class PlatformImplTest
         m_context.setSystemPackages( "systemPackages" );
         m_builder.prepare( m_context );
         expect( m_config.getProfiles() ).andReturn( null );
-        expect( m_config.getVMOptions() ).andReturn( "-Xm512" );
+        expect( m_config.getVMOptions() ).andReturn( new String[] { "-Xmx512", "-Xms128m" } );
         expect( m_builder.getVMOptions( m_context ) ).andReturn( new String[]{ "-Dproperty=value" } );
         expect( m_config.getClasspath() ).andReturn( "" );
         expect( m_builder.getArguments( m_context ) ).andReturn( new String[]{ "arg1" } );

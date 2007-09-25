@@ -116,14 +116,20 @@ public class ConfigurationImpl
      *
      * @see Configuration#getVMOptions()
      */
-    public String getVMOptions()
+    public String[] getVMOptions()
     {
         // TODO unit test
+        String optionsValue;
         if( !contains( ServiceConstants.CONFIG_VMOPTIONS ) )
         {
-            return set( ServiceConstants.CONFIG_VMOPTIONS, m_resolver.get( ServiceConstants.CONFIG_VMOPTIONS ) );
+            String value = m_resolver.get( ServiceConstants.CONFIG_VMOPTIONS );
+            optionsValue = set( ServiceConstants.CONFIG_VMOPTIONS, value );
         }
-        return get( ServiceConstants.CONFIG_VMOPTIONS );
+        else
+        {
+            optionsValue = get( ServiceConstants.CONFIG_VMOPTIONS );
+        }
+        return optionsValue.split( " " );
     }
 
     /**
