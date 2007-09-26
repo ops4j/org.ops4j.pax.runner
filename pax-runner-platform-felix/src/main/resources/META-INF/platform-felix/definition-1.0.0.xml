@@ -56,19 +56,11 @@
   <profile name="log" extends="minimal">
     <bundle>
       <name>org.ops4j.pax.logging.api</name>
-      <url>mvn:org.ops4j.pax.logging/api/0.9.4</url>
+      <url>mvn:org.ops4j.pax.logging/pax-logging-api/0.9.6</url>
     </bundle>
     <bundle>
       <name>org.ops4j.pax.logging.service</name>
-      <url>mvn:org.ops4j.pax.logging/service/0.9.4</url>
-    </bundle>
-    <bundle>
-      <name>org.ops4j.pax.logging.jcl</name>
-      <url>mvn:org.ops4j.pax.logging/jcl/0.9.4</url>
-    </bundle>
-    <bundle>
-      <name>org.ops4j.pax.logging.slf4j</name>
-      <url>mvn:org.ops4j.pax.logging/slf4j/0.9.4</url>
+      <url>mvn:org.ops4j.pax.logging/pax-logging-service/0.9.6</url>
     </bundle>
   </profile>
 

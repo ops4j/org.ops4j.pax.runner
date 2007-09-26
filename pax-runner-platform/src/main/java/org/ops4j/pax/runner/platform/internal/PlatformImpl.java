@@ -256,12 +256,11 @@ public class PlatformImpl
      */
     private void destroyFrameworkOnExit( final Process process, final Pipe[] pipes )
     {
-        LOGGER.warn( "Shutting down system..." );
-
         Runtime.getRuntime().addShutdownHook( new Thread( new Runnable()
         {
             public void run()
             {
+                LOGGER.info( "Shuting down platform..." );
                 try
                 {
                     for( Pipe pipe : pipes )
@@ -271,12 +270,14 @@ public class PlatformImpl
                 }
                 finally
                 {
+                    LOGGER.info( "Destroying platform process..." );
                     process.destroy();
                 }
             }
         }
         )
         );
+        LOGGER.debug( "Added shutdown hook." );
     }
 
     /**
