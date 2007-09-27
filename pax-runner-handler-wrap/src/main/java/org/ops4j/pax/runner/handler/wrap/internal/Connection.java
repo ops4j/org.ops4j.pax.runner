@@ -116,7 +116,7 @@ public class Connection
                   && manifest.getMainAttributes().getValue( Analyzer.IMPORT_PACKAGE ) == null )
             )
         {
-            properties.put( "Generated-From", getURL().toExternalForm() );
+            properties.put( "Pax-Runner-Generated-From", getURL().toExternalForm() );
             final Analyzer analyzer = new Analyzer();
             analyzer.setJar( jar );
             analyzer.setProperties( properties );
