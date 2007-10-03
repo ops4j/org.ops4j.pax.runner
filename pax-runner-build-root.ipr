@@ -365,8 +365,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/pax-runner/pax-runner.iml" filepath="$PROJECT_DIR$/pax-runner/pax-runner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-assembly/pax-runner-assembly.iml" filepath="$PROJECT_DIR$/pax-runner-assembly/pax-runner-assembly.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-build-root.iml" filepath="$PROJECT_DIR$/pax-runner-build-root.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-build-scripts/pax-runner-build-scripts.iml" filepath="$PROJECT_DIR$/pax-runner-build-scripts/pax-runner-build-scripts.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-commons/pax-runner-commons.iml" filepath="$PROJECT_DIR$/pax-runner-commons/pax-runner-commons.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-handler/pax-runner-handler.iml" filepath="$PROJECT_DIR$/pax-runner-handler/pax-runner-handler.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-handler-classpath/pax-runner-handler-classpath.iml" filepath="$PROJECT_DIR$/pax-runner-handler-classpath/pax-runner-handler-classpath.iml" />

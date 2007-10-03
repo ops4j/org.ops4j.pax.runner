@@ -2,7 +2,7 @@
 <module version="4" relativePaths="false" type="JAVA_MODULE">
   <component name="ModuleRootManager" />
   <component name="NewModuleRootManager" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/target/bin" />
+    <output url="file://$MODULE_DIR$/target/classes" />
     <exclude-output />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -12,19 +12,12 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="pax-runner" />
     <orderEntry type="module" module-name="pax-runner-platform-knopflerfish" />
-    <orderEntry type="module" module-name="pax-runner-provision" />
     <orderEntry type="module" module-name="pax-runner-platform" />
     <orderEntry type="module" module-name="pax-runner-commons" />
+    <orderEntry type="module" module-name="pax-runner-provision" />
+    <orderEntry type="module" module-name="pax-runner-scanner-pom" />
     <orderEntry type="module" module-name="pax-runner-scanner-file" />
     <orderEntry type="module" module-name="pax-runner-scanner-bundle" />
-    <orderEntry type="module" module-name="pax-runner-platform-felix" />
-    <orderEntry type="module" module-name="pax-runner-handler-wrap" />
-    <orderEntry type="module" module-name="pax-runner-handler-classpath" />
-    <orderEntry type="module" module-name="pax-runner-scanner-dir" />
-    <orderEntry type="module" module-name="pax-runner-platform-equinox" />
-    <orderEntry type="module" module-name="pax-runner-handler-mvn" />
-    <orderEntry type="module" module-name="pax-runner-handler" />
-    <orderEntry type="module" module-name="pax-runner-scanner-pom" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -34,6 +27,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="pax-runner-platform-felix" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -43,6 +37,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="pax-runner-handler-wrap" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -70,15 +65,10 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$M2_REPO$/biz/aQute/bndlib/0.0.189/bndlib-0.0.189.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="module" module-name="pax-runner-handler-classpath" />
+    <orderEntry type="module" module-name="pax-runner" />
+    <orderEntry type="module" module-name="pax-runner-platform-equinox" />
+    <orderEntry type="module" module-name="pax-runner-scanner-dir" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -88,6 +78,17 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="pax-runner-handler-mvn" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$M2_REPO$/biz/aQute/bndlib/0.0.189/bndlib-0.0.189.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module" module-name="pax-runner-handler" />
     <orderEntryProperties />
   </component>
 </module>
