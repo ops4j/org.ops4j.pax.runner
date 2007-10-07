@@ -153,8 +153,8 @@ public interface Configuration
     /**
      * Returns true if the cached bundles and target platforms configuration folder shall be removed.
      *
-     * @return true if there should be a fresh start
+     * @return true if there should be a clean start
      */
-    Boolean freshStart();
+    Boolean isCleanStart();
     
 }

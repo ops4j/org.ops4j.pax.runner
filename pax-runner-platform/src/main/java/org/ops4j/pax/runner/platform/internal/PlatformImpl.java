@@ -155,9 +155,9 @@ public class PlatformImpl
         // create the platform definition from the configured url or from the platform builder
         final PlatformDefinition definition = mandatory( "Definition", createPlatformDefinition( configuration ) );
         LOGGER.debug( "Using platform definition [" + definition + "]" );
-        // check out if the wrking folder must be removed first (fresh start)
-        final Boolean freshStart = configuration.freshStart();
-        if( freshStart != null && freshStart )
+        // check out if the wrking folder must be removed first (clean start)
+        final Boolean clean = configuration.isCleanStart();
+        if( clean != null && clean )
         {
             FileUtils.delete( new File( configuration.getWorkingDirectory() ) );
         }

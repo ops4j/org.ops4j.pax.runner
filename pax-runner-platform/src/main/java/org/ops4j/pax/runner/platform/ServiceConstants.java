@@ -66,9 +66,9 @@ public interface ServiceConstants
      */
     static final String CONFIG_USE_PERSISTED_STATE = PID + ".usePersistedState";
     /**
-     * Fresh platform start property name.
+     * Clean platform start property name.
      */
-    static final String CONFIG_FRESH_START = PID + ".freshStart";    
+    static final String CONFIG_CLEAN = PID + ".clean";    
     /**
      * Console configuration property name.
      */

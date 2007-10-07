@@ -297,17 +297,17 @@ public class ConfigurationImpl
     }
 
     /**
-     * @see Configuration#freshStart()
+     * @see Configuration#isCleanStart()
      */
-    public Boolean freshStart()
+    public Boolean isCleanStart()
     {
-        if( !contains( ServiceConstants.CONFIG_FRESH_START ) )
+        if( !contains( ServiceConstants.CONFIG_CLEAN ) )
         {
-            return set( ServiceConstants.CONFIG_FRESH_START,
-                        Boolean.valueOf( m_resolver.get( ServiceConstants.CONFIG_FRESH_START ) )
+            return set( ServiceConstants.CONFIG_CLEAN,
+                        Boolean.valueOf( m_resolver.get( ServiceConstants.CONFIG_CLEAN ) )
             );
         }
-        return get( ServiceConstants.CONFIG_FRESH_START );
+        return get( ServiceConstants.CONFIG_CLEAN );
     }
 
     /**

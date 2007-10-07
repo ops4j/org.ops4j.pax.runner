@@ -458,14 +458,14 @@ public class ConfigurationImplTest
      * Tests the happy path.
      */
     @Test
-    public void freshStart()
+    public void clean()
     {
         Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.freshStart" ) ).andReturn( "true" );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.clean" ) ).andReturn( "true" );
 
         replay( resolver );
         Configuration config = new ConfigurationImpl( resolver );
-        assertEquals( "Fresh start", true, config.freshStart() );
+        assertEquals( "Clean", true, config.isCleanStart() );
         verify( resolver );
     }
 
@@ -473,14 +473,14 @@ public class ConfigurationImplTest
      * Tests that default value is false.
      */
     @Test
-    public void freshStartDefault()
+    public void cleanDefault()
     {
         Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.freshStart" ) ).andReturn( null );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.clean" ) ).andReturn( null );
 
         replay( resolver );
         Configuration config = new ConfigurationImpl( resolver );
-        assertEquals( "Fresh start", false, config.freshStart() );
+        assertEquals( "Clean", false, config.isCleanStart() );
         verify( resolver );
     }
 
@@ -488,14 +488,14 @@ public class ConfigurationImplTest
      * Test that an invalid value will not cause problems and will return false.
      */
     @Test
-    public void freshStartWithInvalidValue()
+    public void cleanWithInvalidValue()
     {
         Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.freshStart" ) ).andReturn( "of course" );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.clean" ) ).andReturn( "of course" );
 
         replay( resolver );
         Configuration config = new ConfigurationImpl( resolver );
-        assertEquals( "Fresh start", false, config.freshStart() );
+        assertEquals( "Clean", false, config.isCleanStart() );
         verify( resolver );
     }
 
