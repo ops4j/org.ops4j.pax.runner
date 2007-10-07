@@ -32,7 +32,6 @@ public class PlatformContextImpl
     private File m_workingDirectory;
     private Properties m_properties;
     private String m_systemPackages;
-    private Boolean m_shouldClean;
     private Configuration m_configuration;
 
     /**
@@ -97,22 +96,6 @@ public class PlatformContextImpl
     public void setSystemPackages( final String systemPackages )
     {
         m_systemPackages = systemPackages;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Boolean shouldClean()
-    {
-        return m_shouldClean;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setShouldClean( final Boolean shouldClean )
-    {
-        m_shouldClean = shouldClean;
     }
 
     /**

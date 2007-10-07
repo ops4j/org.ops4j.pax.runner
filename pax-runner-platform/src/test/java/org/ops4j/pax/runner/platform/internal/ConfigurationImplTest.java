@@ -300,27 +300,40 @@ public class ConfigurationImplTest
 
     // normal flow
     @Test
-    public void shouldClean()
+    public void usePersistedState()
     {
         Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.clean" ) ).andReturn( "true" );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.usePersistedState" ) ).andReturn( "true" );
 
         replay( resolver );
         Configuration config = new ConfigurationImpl( resolver );
-        assertEquals( "Clean platform", true, config.shouldClean() );
+        assertEquals( "Use persisted state", true, config.usePersistedState() );
         verify( resolver );
     }
 
     // test that an invalid value will not cause problems and will return false
     @Test
-    public void shouldCleanWithInvalidValue()
+    public void usePersistedStateWithInvalidValue()
     {
         Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.clean" ) ).andReturn( "of course" );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.usePersistedState" ) ).andReturn( "of course" );
 
         replay( resolver );
         Configuration config = new ConfigurationImpl( resolver );
-        assertEquals( "Clean platform", false, config.shouldClean() );
+        assertEquals( "Use persisted state", false, config.usePersistedState() );
+        verify( resolver );
+    }
+
+    // test that if value is not set it will not cause problems and will return false
+    @Test
+    public void usePersistedStateDefaultValue()
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.usePersistedState" ) ).andReturn( null );
+
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        assertEquals( "Use persisted state", false, config.usePersistedState() );
         verify( resolver );
     }
 
@@ -530,7 +543,7 @@ public class ConfigurationImplTest
 
         replay( resolver );
         Configuration config = new ConfigurationImpl( resolver );
-        assertEquals( "Working directory", null, config.getVMOptions() );
+        assertArrayEquals( "Working directory", null, config.getVMOptions() );
         verify( resolver );
     }
 

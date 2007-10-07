@@ -62,9 +62,9 @@ public interface ServiceConstants
      */
     static final String CONFIG_JAVA_HOME = PID + ".javaHome";
     /**
-     * Clean platform configuration property name.
+     * UsePersistedState platform configuration property name.
      */
-    static final String CONFIG_CLEAN = PID + ".clean";
+    static final String CONFIG_USE_PERSISTED_STATE = PID + ".usePersistedState";
     /**
      * Fresh platform start property name.
      */

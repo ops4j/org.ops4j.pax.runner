@@ -219,17 +219,21 @@ public class ConfigurationImpl
     }
 
     /**
-     * @see Configuration#shouldClean()
+     * @see Configuration#usePersistedState()
      */
-    public Boolean shouldClean()
+    public Boolean usePersistedState()
     {
-        if( !contains( ServiceConstants.CONFIG_CLEAN ) )
+        if( !contains( ServiceConstants.CONFIG_USE_PERSISTED_STATE ) )
         {
-            return set( ServiceConstants.CONFIG_CLEAN,
-                        Boolean.valueOf( m_resolver.get( ServiceConstants.CONFIG_CLEAN ) )
+            String usePersistedState = m_resolver.get( ServiceConstants.CONFIG_USE_PERSISTED_STATE );
+            if( usePersistedState == null )
+            {
+                return set( ServiceConstants.CONFIG_USE_PERSISTED_STATE, Boolean.FALSE );
+            }
+            return set( ServiceConstants.CONFIG_USE_PERSISTED_STATE, Boolean.valueOf( usePersistedState )
             );
         }
-        return get( ServiceConstants.CONFIG_CLEAN );
+        return get( ServiceConstants.CONFIG_USE_PERSISTED_STATE );
     }
 
     /**

@@ -132,8 +132,8 @@ public class EquinoxPlatformBuilder
             writer.append( " Equinox settings" );
             writer.append( "#############################" );
             writer.append( "eclipse.ignoreApp", "true" );
-            final Boolean clean = configuration.shouldClean();
-            if( clean != null && clean )
+            final Boolean usePersistedState = configuration.usePersistedState();
+            if( usePersistedState != null && !usePersistedState )
             {
                 writer.append( "osgi.clean", "true" );
             }

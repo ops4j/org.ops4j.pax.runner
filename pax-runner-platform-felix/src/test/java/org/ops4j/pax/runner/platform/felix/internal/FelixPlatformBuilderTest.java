@@ -273,7 +273,7 @@ public class FelixPlatformBuilderTest
         expect( m_configuration.getStartLevel() ).andReturn( 10 );
         expect( m_configuration.getBundleStartLevel() ).andReturn( 20 );
         expect( m_configuration.getFrameworkProfile() ).andReturn( "myProfile" );
-        expect( m_configuration.shouldClean() ).andReturn( false );
+        expect( m_configuration.usePersistedState() ).andReturn( false );
 
         Properties properties = new Properties();
         properties.setProperty( "myProperty", "myValue" );
@@ -356,7 +356,7 @@ public class FelixPlatformBuilderTest
         }
     }
 
-    public void clean( boolean shoudlClean )
+    public void clean( boolean usePersistedState )
         throws PlatformException, IOException
     {
         PlatformContext platformContext = createMock( PlatformContext.class );
@@ -368,7 +368,7 @@ public class FelixPlatformBuilderTest
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );
         expect( m_configuration.getFrameworkProfile() ).andReturn( "runner" );
-        expect( m_configuration.shouldClean() ).andReturn( shoudlClean );
+        expect( m_configuration.usePersistedState() ).andReturn( usePersistedState );
         expect( platformContext.getProperties() ).andReturn( null );
 
         replay( m_bundleContext, m_configuration, platformContext );
@@ -376,39 +376,39 @@ public class FelixPlatformBuilderTest
         verify( m_bundleContext, m_configuration, platformContext );
     }
 
-    // cahce folder should not exist after returning
+    // cache folder should not exist after returning
     @Test
-    public void cleanWithExistingFolder()
+    public void usePersistedStateWithExistingFolder()
         throws IOException, PlatformException
     {
         File cacheDir = new File( m_workDir, "felix/cache/runner" );
         new File( cacheDir, "bundle1" ).mkdirs();
         assertTrue( "Cache folder could not be created before running the test", cacheDir.exists() );
-        clean( true );
+        clean( false );
         assertFalse( "Cache folder was not removed", cacheDir.exists() );
     }
 
-    // cahce folder should not exist after returning and should not crash as the folder is not there
+    // cache folder should not exist after returning and should not crash as the folder is not there
     @Test
-    public void cleanWithNotExistingFolder()
+    public void usePersistedStateWithNotExistingFolder()
         throws IOException, PlatformException
     {
         File cacheDir = new File( m_workDir, "felix/cache/runner" );
         FileUtils.delete( cacheDir );
         assertFalse( "Cache folder could not be deleted before running the test", cacheDir.exists() );
-        clean( true );
+        clean( false );
         assertFalse( "Cache folder was not removed", cacheDir.exists() );
     }
 
     // cahce folder should not exist after returning
     @Test
-    public void noCleanWithExistingFolder()
+    public void noUsePersistedStateWithExistingFolder()
         throws IOException, PlatformException
     {
         new File( m_workDir, "felix/cache/runner/bundle1" ).mkdirs();
         File cacheDir = new File( m_workDir, "felix/cache/runner" );
         assertTrue( "Cache folder could not be created before running the test", cacheDir.exists() );
-        clean( false );
+        clean( true );
         assertTrue( "Cache folder was removed but it should not had been removed", cacheDir.exists() );
     }
 

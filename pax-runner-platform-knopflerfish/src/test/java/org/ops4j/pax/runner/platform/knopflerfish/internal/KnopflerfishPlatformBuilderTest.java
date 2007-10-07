@@ -207,7 +207,7 @@ public class KnopflerfishPlatformBuilderTest
         expect( platformContext.getBundles() ).andReturn( null );
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
         expect( platformContext.getConfiguration() ).andReturn( m_configuration );
-        expect( m_configuration.shouldClean() ).andReturn( false );
+        expect( m_configuration.usePersistedState() ).andReturn( false );
         expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );
@@ -278,7 +278,7 @@ public class KnopflerfishPlatformBuilderTest
         expect( platformContext.getBundles() ).andReturn( bundles );
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
         expect( platformContext.getConfiguration() ).andReturn( m_configuration );
-        expect( m_configuration.shouldClean() ).andReturn( false );
+        expect( m_configuration.usePersistedState() ).andReturn( false );
         expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
         expect( m_configuration.getStartLevel() ).andReturn( 10 );
         expect( m_configuration.getBundleStartLevel() ).andReturn( 20 );
@@ -364,7 +364,7 @@ public class KnopflerfishPlatformBuilderTest
         }
     }
 
-    public void clean( boolean shoudlClean )
+    public void clean( boolean usePersistedState )
         throws PlatformException, IOException
     {
         PlatformContext platformContext = createMock( PlatformContext.class );
@@ -375,7 +375,7 @@ public class KnopflerfishPlatformBuilderTest
         expect( platformContext.getSystemPackages() ).andReturn( null );
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );
-        expect( m_configuration.shouldClean() ).andReturn( shoudlClean );
+        expect( m_configuration.usePersistedState() ).andReturn( usePersistedState );
         expect( platformContext.getProperties() ).andReturn( null );
 
         replay( m_bundleContext, m_configuration, platformContext );
@@ -385,37 +385,37 @@ public class KnopflerfishPlatformBuilderTest
 
     // cahce folder should not exist after returning
     @Test
-    public void cleanWithExistingFolder()
-        throws IOException, PlatformException
-    {
-        File cacheDir = new File( m_workDir, "knopflerfish/fwdir" );
-        new File( cacheDir, "bundle1" ).mkdirs();
-        assertTrue( "Cache folder could not be created before running the test", cacheDir.exists() );
-        clean( true );
-        assertFalse( "Cache folder was not removed", cacheDir.exists() );
-    }
-
-    // cahce folder should not exist after returning and should not crash as the folder is not there
-    @Test
-    public void cleanWithNotExistingFolder()
-        throws IOException, PlatformException
-    {
-        File cacheDir = new File( m_workDir, "knopflerfish/fwdir" );
-        FileUtils.delete( cacheDir );
-        assertFalse( "Cache folder could not be deleted before running the test", cacheDir.exists() );
-        clean( true );
-        assertFalse( "Cache folder was not removed", cacheDir.exists() );
-    }
-
-    // cahce folder should not exist after returning
-    @Test
-    public void noCleanWithExistingFolder()
+    public void usePersistedStateWithExistingFolder()
         throws IOException, PlatformException
     {
         File cacheDir = new File( m_workDir, "knopflerfish/fwdir" );
         new File( cacheDir, "bundle1" ).mkdirs();
         assertTrue( "Cache folder could not be created before running the test", cacheDir.exists() );
         clean( false );
+        assertFalse( "Cache folder was not removed", cacheDir.exists() );
+    }
+
+    // cache folder should not exist after returning and should not crash as the folder is not there
+    @Test
+    public void usePersistedStateWithNotExistingFolder()
+        throws IOException, PlatformException
+    {
+        File cacheDir = new File( m_workDir, "knopflerfish/fwdir" );
+        FileUtils.delete( cacheDir );
+        assertFalse( "Cache folder could not be deleted before running the test", cacheDir.exists() );
+        clean( false );
+        assertFalse( "Cache folder was not removed", cacheDir.exists() );
+    }
+
+    // cache folder should not exist after returning
+    @Test
+    public void noUsePersistedStateWithExistingFolder()
+        throws IOException, PlatformException
+    {
+        File cacheDir = new File( m_workDir, "knopflerfish/fwdir" );
+        new File( cacheDir, "bundle1" ).mkdirs();
+        assertTrue( "Cache folder could not be created before running the test", cacheDir.exists() );
+        clean( true );
         assertTrue( "Cache folder was removed but it should not had been removed", cacheDir.exists() );
     }
 

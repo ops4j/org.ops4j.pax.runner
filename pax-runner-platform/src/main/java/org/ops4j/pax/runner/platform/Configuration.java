@@ -90,11 +90,12 @@ public interface Configuration
     String getJavaHome();
 
     /**
-     * Returns true if the platform should have a fresh start.
+     * Returns true if persisted platform state (platform specific) should be used on start up.
+     * Default value is false.
      *
-     * @return true if the platorm should have a fresh start
+     * @return true if persisted platform state (platform specific) should be used on start up
      */
-    Boolean shouldClean();
+    Boolean usePersistedState();
 
     /**
      * Returns the platform bundles start level option - optional; the start level at which the platform bundles will be

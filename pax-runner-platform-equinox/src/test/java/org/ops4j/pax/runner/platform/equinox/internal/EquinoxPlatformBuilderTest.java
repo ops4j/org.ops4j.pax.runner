@@ -241,7 +241,7 @@ public class EquinoxPlatformBuilderTest
         PlatformContext platformContext = createMock( PlatformContext.class );
 
         expect( platformContext.getConfiguration() ).andReturn( m_configuration );
-        expect( m_configuration.shouldClean() ).andReturn( true );
+        expect( m_configuration.usePersistedState() ).andReturn( false );
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );
         expect( platformContext.getBundles() ).andReturn( null );
@@ -272,7 +272,7 @@ public class EquinoxPlatformBuilderTest
         PlatformContext platformContext = createMock( PlatformContext.class );
 
         expect( platformContext.getConfiguration() ).andReturn( m_configuration );
-        expect( m_configuration.shouldClean() ).andReturn( true );
+        expect( m_configuration.usePersistedState() ).andReturn( false );
         expect( m_configuration.getStartLevel() ).andReturn( 10 );
         expect( m_configuration.getBundleStartLevel() ).andReturn( 20 );
         List<LocalBundle> bundles = new ArrayList<LocalBundle>();

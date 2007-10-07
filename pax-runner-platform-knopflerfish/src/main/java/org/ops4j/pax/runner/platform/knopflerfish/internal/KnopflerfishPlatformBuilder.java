@@ -123,8 +123,8 @@ public class KnopflerfishPlatformBuilder
             final Configuration configuration = context.getConfiguration();
 
             // clean up fwdir folder
-            final Boolean clean = configuration.shouldClean();
-            if ( clean != null && clean )
+            final Boolean usePersistedState = configuration.usePersistedState();
+            if ( usePersistedState != null && !usePersistedState )
             {
                 final File fwdir = new File( configDirectory, CACHE_DIRECTORY );
                 LOGGER.trace( "Cleaning cache folder [" + fwdir + "]" );

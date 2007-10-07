@@ -147,8 +147,8 @@ public class FelixPlatformBuilder
             if( profile != null )
             {
                 writer.append( "felix.cache.profile", profile );
-                final Boolean clean = configuration.shouldClean();
-                if( clean != null && clean )
+                final Boolean usePersistedState = configuration.usePersistedState();
+                if( usePersistedState != null && !usePersistedState )
                 {
                     final File profileDirectory =
                         new File( configDirectory, CACHE_DIRECTORY + File.separator + profile );
