@@ -592,4 +592,49 @@ public class ConfigurationImplTest
         verify( resolver );
     }
 
+    /**
+     * Test normal flow
+     */
+    @Test
+    public void isOverwriteSystemBundles()
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.overwriteSystemBundles" ) ).andReturn( "true" );
+
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        assertEquals( "Overwrite system bundles", true, config.isOverwriteSystemBundles() );
+        verify( resolver );
+    }
+
+    /**
+     * Test that an invalid value will not cause problems and will return false
+     */
+    @Test
+    public void isOverwriteSystemBundlesWithInvalidValue()
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.overwriteSystemBundles" ) ).andReturn( "of course" );
+
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        assertEquals( "Overwrite system bundles", false, config.isOverwriteSystemBundles() );
+        verify( resolver );
+    }
+
+    /**
+     * Test that default value is false.
+     */
+    @Test
+    public void isOverwriteSystemBundlesDefault()
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.overwriteSystemBundles" ) ).andReturn( null );
+
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        assertEquals( "Overwrite system bundles", false, config.isOverwriteSystemBundles() );
+        verify( resolver );
+    }
+
 }
