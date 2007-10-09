@@ -23,6 +23,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.ops4j.pax.runner.commons.Assert;
 
 /**
@@ -34,6 +36,11 @@ import org.ops4j.pax.runner.commons.Assert;
 public class DirectoryLister
     implements Lister
 {
+
+    /**
+     * Logger.
+     */
+    private static final Log LOGGER = LogFactory.getLog( DirectoryLister.class );
 
     /**
      * The root directory to be listed.
@@ -88,16 +95,25 @@ public class DirectoryLister
      */
     private List<String> listFiles( final File dir, final String parentName )
     {
+        LOGGER.trace( "Scanning " + dir.getAbsolutePath() );
         final List<String> fileNames = new ArrayList<String>();
-        for( File file : dir.listFiles() )
+        File[] files = null;
+        if( dir.canRead() )
         {
-            if( file.isDirectory() )
+            files = dir.listFiles();
+        }
+        if( files != null )
+        {
+            for( File file : files )
             {
-                fileNames.addAll( listFiles( file, parentName + file.getName() + "/" ) );
-            }
-            else
-            {
-                fileNames.add( parentName + file.getName() );
+                if( file.isDirectory() )
+                {
+                    fileNames.addAll( listFiles( file, parentName + file.getName() + "/" ) );
+                }
+                else
+                {
+                    fileNames.add( parentName + file.getName() );
+                }
             }
         }
         return fileNames;
