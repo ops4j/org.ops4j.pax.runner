@@ -128,7 +128,7 @@ public interface Configuration
     Boolean startConsole();
 
     /**
-     * Returns true if the already downloaded bunsles from a previous run must be overwritten.
+     * Returns true if the already downloaded bundles from a previous run must be overwritten.
      * Default value is "false".
      *
      * @return value of overwrite option
@@ -156,5 +156,21 @@ public interface Configuration
      * @return true if there should be a clean start
      */
     Boolean isCleanStart();
+
+    /**
+     * Returns true if the already downloaded user bundles from a previous run must be overwritten.
+     * Default value is "false".
+     *
+     * @return value of overwrite user bundles option
+     */
+    Boolean isOverwriteUserBundles();
+
+    /**
+     * Returns true if the already downloaded system bundles from a previous run must be overwritten.
+     * Default value is "false".
+     *
+     * @return value of overwrite system bundles option
+     */
+    Boolean isOverwriteSystemBundles();
     
 }

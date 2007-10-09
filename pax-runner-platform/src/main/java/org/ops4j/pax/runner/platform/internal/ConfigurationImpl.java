@@ -364,4 +364,32 @@ public class ConfigurationImpl
         return get( optionName );
     }
 
+    /**
+     * @see Configuration#isOverwriteUserBundles()
+     */
+    public Boolean isOverwriteUserBundles()
+    {
+        if( !contains( ServiceConstants.CONFIG_OVERWRITE_USER_BUNDLES ) )
+        {
+            return set( ServiceConstants.CONFIG_OVERWRITE_USER_BUNDLES,
+                        Boolean.valueOf( m_resolver.get( ServiceConstants.CONFIG_OVERWRITE_USER_BUNDLES ) )
+            );
+        }
+        return get( ServiceConstants.CONFIG_OVERWRITE_USER_BUNDLES );
+    }
+
+    /**
+     * @see Configuration#isOverwriteSystemBundles()
+     */
+    public Boolean isOverwriteSystemBundles()
+    {
+        if( !contains( ServiceConstants.CONFIG_OVERWRITE_SYSTEM_BUNDLES ) )
+        {
+            return set( ServiceConstants.CONFIG_OVERWRITE_SYSTEM_BUNDLES,
+                        Boolean.valueOf( m_resolver.get( ServiceConstants.CONFIG_OVERWRITE_SYSTEM_BUNDLES ) )
+            );
+        }
+        return get( ServiceConstants.CONFIG_OVERWRITE_SYSTEM_BUNDLES );
+    }
+
 }

@@ -547,4 +547,49 @@ public class ConfigurationImplTest
         verify( resolver );
     }
 
+    /**
+     * Test normal flow
+     */
+    @Test
+    public void isOverwriteUserBundles()
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.overwriteUserBundles" ) ).andReturn( "true" );
+
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        assertEquals( "Overwrite user bundles", true, config.isOverwriteUserBundles() );
+        verify( resolver );
+    }
+
+    /**
+     * Test that an invalid value will not cause problems and will return false
+     */
+    @Test
+    public void isOverwriteUserBundlesWithInvalidValue()
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.overwriteUserBundles" ) ).andReturn( "of course" );
+
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        assertEquals( "Overwrite user bundles", false, config.isOverwriteUserBundles() );
+        verify( resolver );
+    }
+
+    /**
+     * Test that default value is false.
+     */
+    @Test
+    public void isOverwriteUserBundlesDefault()
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.overwriteUserBundles" ) ).andReturn( null );
+
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        assertEquals( "Overwrite user bundles", false, config.isOverwriteUserBundles() );
+        verify( resolver );
+    }
+
 }

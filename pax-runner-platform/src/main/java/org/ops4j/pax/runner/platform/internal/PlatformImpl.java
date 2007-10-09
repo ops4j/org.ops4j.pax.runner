@@ -166,16 +166,20 @@ public class PlatformImpl
         LOGGER.debug( "Using working directory [" + workDir + "]" );
         context.setWorkingDirectory( workDir );
         final Boolean overwriteBundles = configuration.isOverwrite();
+        final Boolean overwriteUserBundles = configuration.isOverwriteUserBundles();
+        final Boolean overwriteSystemBundles = configuration.isOverwriteSystemBundles();
         LOGGER.info( "Downloading bundles..." );
         // download system package
         LOGGER.debug( "Download system package" );
-        final File systemFile = downloadSystemFile( workDir, definition, overwriteBundles );
+        final File systemFile = downloadSystemFile( workDir, definition, overwriteBundles || overwriteSystemBundles );
         // download the rest of the bundles
         final List<LocalBundle> bundlesToInstall = new ArrayList<LocalBundle>();
         LOGGER.debug( "Download platform bundles" );
-        bundlesToInstall.addAll( downloadPlatformBundles( workDir, definition, context, overwriteBundles ) );
+        bundlesToInstall.addAll(
+            downloadPlatformBundles( workDir, definition, context, overwriteBundles || overwriteSystemBundles )
+        );
         LOGGER.debug( "Download bundles" );
-        bundlesToInstall.addAll( downloadBundles( workDir, bundles, overwriteBundles ) );
+        bundlesToInstall.addAll( downloadBundles( workDir, bundles, overwriteBundles || overwriteUserBundles ) );
         context.setBundles( bundlesToInstall );
         context.setSystemPackages( createPackageList( configuration, definition ) );
 

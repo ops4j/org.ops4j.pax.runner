@@ -78,6 +78,14 @@ public interface ServiceConstants
      */
     static final String CONFIG_OVERWRITE = PID + ".overwrite";
     /**
+     * Overwrite user bundles configuration property name.
+     */
+    static final String CONFIG_OVERWRITE_USER_BUNDLES = PID + ".overwriteUserBundles";
+    /**
+     * Overwrite system bundles configuration property name.
+     */
+    static final String CONFIG_OVERWRITE_SYSTEM_BUNDLES = PID + ".overwriteSystemBundles";     
+    /**
      * The service property name under which the platform name should be registered.
      */
     static final String PROPERTY_PROVIDER = "provider";
