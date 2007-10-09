@@ -21,11 +21,6 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.ops4j.pax.runner.commons.Assert;
-import org.ops4j.pax.runner.commons.resolver.BundleContextResolver;
-import org.ops4j.pax.runner.commons.resolver.CompositeResolver;
-import org.ops4j.pax.runner.commons.resolver.DictionaryResolver;
-import org.ops4j.pax.runner.handler.mvn.ServiceConstants;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -34,6 +29,11 @@ import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedService;
 import org.osgi.service.url.URLConstants;
 import org.osgi.service.url.URLStreamHandlerService;
+import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.pax.runner.commons.resolver.BundleContextResolver;
+import org.ops4j.pax.runner.commons.resolver.CompositeResolver;
+import org.ops4j.pax.runner.commons.resolver.DictionaryResolver;
+import org.ops4j.pax.runner.handler.mvn.ServiceConstants;
 
 /**
  * Bundle activator for mvn: protocol handler.

@@ -87,7 +87,10 @@ public class ConfigurationImplTest
         verify( resolver );
     }
 
-    @Test( expected = MalformedURLException.class )
+    /**
+     * Test that a malformed url will not trigger an exception ( will be skipped)
+     */
+    @Test
     public void getSettingsAsMalformedURL()
         throws MalformedURLException
     {
@@ -324,13 +327,31 @@ public class ConfigurationImplTest
         verify( resolver );
     }
 
-    @Test( expected = MalformedURLException.class )
+    /**
+     * Test that an url that is malformed will not trigger an execption.
+     */
+    @Test
     public void getLocalRepositoryAsMalformedURL()
         throws MalformedURLException
     {
         Resolver resolver = createMock( Resolver.class );
         expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.localRepository" ) ).andReturn(
             "noprotocol://localrepository"
+        );
+        replay( resolver );
+        new ConfigurationImpl( resolver ).getLocalRepository();
+    }
+
+    /**
+     * Test that a path to a file that does not exist will not trigger an exception.
+     */
+    @Test
+    public void getLocalRepositoryToAnInexistentDirectory()
+        throws MalformedURLException
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.handler.mvn.localRepository" ) ).andReturn(
+            "c:/this/should/be/an/inexistent/directory"
         );
         replay( resolver );
         new ConfigurationImpl( resolver ).getLocalRepository();

@@ -41,11 +41,8 @@ public interface Configuration
      * Returns the URL of maven settings file.
      *
      * @return the url to settings file
-     *
-     * @throws java.net.MalformedURLException if the settings property is a malformed url
      */
-    URL getSettings()
-        throws MalformedURLException;
+    URL getSettings();
 
     /**
      * Returns a list of repositories to be searched.
@@ -59,9 +56,7 @@ public interface Configuration
      * Returns the url of local repository.
      *
      * @return url of local repository. Can be null if there is no local repository.
-     *
-     * @throws MalformedURLException if local repository is a malformed url.
      */
-    URL getLocalRepository()
-        throws MalformedURLException;
+    URL getLocalRepository();
+    
 }

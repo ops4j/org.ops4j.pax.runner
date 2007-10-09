@@ -20,6 +20,7 @@ package org.ops4j.pax.runner.handler.mvn.internal;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.MalformedURLException;
 import org.ops4j.pax.runner.commons.resolver.Resolver;
 import org.osgi.service.url.AbstractURLStreamHandlerService;
 
@@ -35,9 +36,9 @@ public class Handler
 {
 
     /**
-     * Property resolver to be used on resolving properties.
+     * Service configuration.
      */
-    private Resolver m_resolver;
+    private ConfigurationImpl m_configuration; 
 
     /**
      * @see org.osgi.service.url.URLStreamHandlerService#openConnection(java.net.URL)
@@ -46,9 +47,7 @@ public class Handler
     public URLConnection openConnection( final URL url )
         throws IOException
     {
-        ConfigurationImpl sc = new ConfigurationImpl( m_resolver );
-        sc.setSettings( new SettingsImpl( sc.getSettings() ) );
-        return new Connection( url, sc );
+        return new Connection( url, m_configuration );
     }
 
     /**
@@ -58,7 +57,8 @@ public class Handler
      */
     public void setResolver( final Resolver resolver )
     {
-        m_resolver = resolver;
+        m_configuration = new ConfigurationImpl( resolver );
+        m_configuration.setSettings( new SettingsImpl( m_configuration.getSettings() ) );
     }
 
 }

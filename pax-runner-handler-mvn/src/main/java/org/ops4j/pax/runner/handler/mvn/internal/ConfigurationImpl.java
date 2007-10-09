@@ -107,7 +107,6 @@ public class ConfigurationImpl
      * @see Configuration#getSettings()
      */
     public URL getSettings()
-        throws MalformedURLException
     {
         if( !contains( ServiceConstants.PROPERTY_SETTINGS_FILE ) )
         {
@@ -123,11 +122,21 @@ public class ConfigurationImpl
                     File file = new File( spec );
                     if( file.exists() )
                     {
-                        return set( ServiceConstants.PROPERTY_SETTINGS_FILE, file.toURL() );
+                        try
+                        {
+                            return set( ServiceConstants.PROPERTY_SETTINGS_FILE, file.toURL() );
+                        }
+                        catch( MalformedURLException ignore )
+                        {
+                            // ignore as it usually should not happen since we already have a file
+                        }
                     }
                     else
                     {
-                        throw e;
+                        LOGGER.warn( "Settings file [" + spec
+                                     + "] cannot be used and will be skipped (malformed url or file does not exist)"
+                        );
+                        set( ServiceConstants.PROPERTY_SETTINGS_FILE, null );
                     }
                 }
             }
@@ -211,7 +220,6 @@ public class ConfigurationImpl
      * @see Configuration#getLocalRepository()
      */
     public URL getLocalRepository()
-        throws MalformedURLException
     {
         if( !contains( ServiceConstants.PROPERTY_LOCAL_REPOSITORY ) )
         {
@@ -239,11 +247,21 @@ public class ConfigurationImpl
                     File file = new File( spec );
                     if( file.exists() )
                     {
-                        set( ServiceConstants.PROPERTY_LOCAL_REPOSITORY, file.toURL() );
+                        try
+                        {
+                            set( ServiceConstants.PROPERTY_LOCAL_REPOSITORY, file.toURL() );
+                        }
+                        catch( MalformedURLException ignore )
+                        {
+                            // ignore as it usually should not happen since we already have a file
+                        }
                     }
                     else
                     {
-                        throw e;
+                        LOGGER.warn( "Local repository [" + spec
+                                     + "] cannot be used and will be skipped (malformed url or directory does not exist)"
+                        );
+                        set( ServiceConstants.PROPERTY_LOCAL_REPOSITORY, null );
                     }
                 }
             }
