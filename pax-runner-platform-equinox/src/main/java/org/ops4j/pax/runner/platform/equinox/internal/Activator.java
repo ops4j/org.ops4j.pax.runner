@@ -17,104 +17,55 @@
  */
 package org.ops4j.pax.runner.platform.equinox.internal;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.ops4j.pax.runner.commons.Assert;
-import org.ops4j.pax.runner.platform.PlatformBuilder;
-import org.ops4j.pax.runner.platform.ServiceConstants;
-import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
+import org.ops4j.pax.runner.platform.PlatformBuilder;
+import org.ops4j.pax.runner.platform.builder.AbstractPlatformBuilderActivator;
 
 /**
- * Bundle activator for equinox platform.<br/>
- * Registers a platform builder for equinox. The extender will automatically create and register a platform based on
- * the registered builder.
+ * Bundle activator for equinox platform.
  *
  * @author Alin Dreghiciu
+ * @see org.ops4j.pax.runner.platform.builder.AbstractPlatformBuilderActivator
  * @since August 20, 2007
  */
 public final class Activator
-    implements BundleActivator
+    extends AbstractPlatformBuilderActivator
 {
 
     /**
-     * Logger.
-     */
-    private static final Log LOGGER = LogFactory.getLog( Activator.class );
-    /**
-     * The bundle context.
-     */
-    private BundleContext m_bundleContext;
-    /**
-     * Platform builder service registration. Used for cleanup.
-     */
-    private ServiceRegistration m_platformBuilderServiceReg;
-    /**
      * Provider name to be used in registration.
      */
-    private static final String PROVIDER_EQUINOX = "equinox";
+    private static final String PROVIDER_NAME = "equinox";
     /**
      * Provider version to be used in registration.
      */
-    private static final String PROVIDER_VERSION_EQUINOX = "3.2.1";
+    private static final String PROVIDER_VERSION = "3.2.1";
 
     /**
-     * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
+     * {@inheritDoc}
      */
-    public void start( final BundleContext bundleContext )
-        throws Exception
+    @Override
+    protected String getProviderName()
     {
-        Assert.notNull( "Bundle context", bundleContext );
-        m_bundleContext = bundleContext;
-        registerPlatformBuilder( createPlatformBuilder() );
-        LOGGER.debug( "Equinox platform builder started" );
+        return PROVIDER_NAME;
     }
 
     /**
-     * Performs cleanup:<br/>
-     * * Unregister the platform builder;<br/>
-     * * Release bundle context.
-     *
-     * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+     * {@inheritDoc}
      */
-    public void stop( final BundleContext bundleContext )
-        throws Exception
+    @Override
+    protected String getProviderVersion()
     {
-        Assert.notNull( "Bundle context", bundleContext );
-        if( m_platformBuilderServiceReg != null )
-        {
-            m_platformBuilderServiceReg.unregister();
-            m_platformBuilderServiceReg = null;
-        }
-        m_bundleContext = null;
-        LOGGER.debug( "Equinox platform builder stopped" );
+        return PROVIDER_VERSION;
     }
 
     /**
-     * Equinox platform builder factory method.
-     *
-     * @return equinox platform builder
+     * {@inheritDoc}
      */
-    private PlatformBuilder createPlatformBuilder()
+    @Override
+    protected PlatformBuilder createPlatformBuilder( final BundleContext bundleContext )
     {
-        return new EquinoxPlatformBuilder( m_bundleContext );
-    }
-
-    /**
-     * Registers the platformBuilder.
-     *
-     * @param platformBuilder the platformBuilder to register
-     */
-    private void registerPlatformBuilder( final PlatformBuilder platformBuilder )
-    {
-        Dictionary<String, Object> props = new Hashtable<String, Object>();
-        props.put( ServiceConstants.PROPERTY_PROVIDER, PROVIDER_EQUINOX );
-        props.put( ServiceConstants.PROPERTY_PROVIDER_VERSION, PROVIDER_VERSION_EQUINOX );
-        m_platformBuilderServiceReg =
-            m_bundleContext.registerService( PlatformBuilder.class.getName(), platformBuilder, props );
+        return new EquinoxPlatformBuilder( bundleContext );
     }
 
 }

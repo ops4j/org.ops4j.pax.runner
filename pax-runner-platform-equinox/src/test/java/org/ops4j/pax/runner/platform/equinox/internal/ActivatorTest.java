@@ -17,53 +17,22 @@
  */
 package org.ops4j.pax.runner.platform.equinox.internal;
 
-import java.util.Dictionary;
-import static org.easymock.EasyMock.*;
+import static org.junit.Assert.*;
 import org.junit.Test;
-import org.ops4j.pax.runner.platform.PlatformBuilder;
-import org.osgi.framework.BundleContext;
 
 public class ActivatorTest
 {
 
-    @Test( expected = IllegalArgumentException.class )
-    public void startWithNullBundleContext()
-        throws Exception
+    @Test
+    public void getProviderName()
     {
-        new Activator().start( null );
+        assertEquals( "Provider name", "equinox", new Activator().getProviderName() );
     }
 
     @Test
-    public void start()
-        throws Exception
+    public void getProviderVersion()
     {
-        BundleContext context = createMock( BundleContext.class );
-        expect( context.registerService(
-            eq( PlatformBuilder.class.getName() ),
-            isA( EquinoxPlatformBuilder.class ),
-            (Dictionary) notNull()
-        )
-        ).andReturn( null );
-        replay( context );
-        new Activator().start( context );
-        verify( context );
-    }
-
-    @Test( expected = IllegalArgumentException.class )
-    public void stopWithNullBundleContext()
-        throws Exception
-    {
-        new Activator().stop( null );
-    }
-
-    @Test
-    public void stop()
-        throws Exception
-    {
-        BundleContext context = createMock( BundleContext.class );
-        replay( context );
-        new Activator().stop( context );
-        verify( context );
+        assertEquals( "Provider version", "3.2.1", new Activator().getProviderVersion() );
     }
 
 }
