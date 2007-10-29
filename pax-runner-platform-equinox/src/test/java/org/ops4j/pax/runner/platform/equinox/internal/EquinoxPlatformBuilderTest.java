@@ -112,6 +112,25 @@ public class EquinoxPlatformBuilderTest
     }
 
     @Test
+    public void getDefinition_3_3_0()
+        throws IOException
+    {
+        Bundle bundle = createMock( Bundle.class );
+
+        expect( m_bundleContext.getBundle() ).andReturn( bundle );
+        expect( bundle.getResource( "META-INF/platform-equinox/definition-3.3.0.xml" ) ).andReturn(
+            FileUtils.getFileFromClasspath( "META-INF/platform-equinox/definition-3.3.0.xml" ).toURL()
+        );
+
+        replay( m_bundleContext, bundle );
+        assertNotNull(
+            "Definition input stream",
+            new EquinoxPlatformBuilder( m_bundleContext, "3.3.0" ).getDefinition()
+        );
+        verify( m_bundleContext, bundle );
+    }
+
+    @Test
     public void getRequiredProfiles()
     {
         PlatformContext platformContext = createMock( PlatformContext.class );
