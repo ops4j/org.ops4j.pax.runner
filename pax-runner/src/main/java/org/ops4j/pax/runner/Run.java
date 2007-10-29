@@ -31,6 +31,7 @@ import org.apache.felix.framework.util.EventDispatcher;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
@@ -341,11 +342,21 @@ public class Run
         {
             throw new RuntimeException( "Could not create bundle context for platform service" );
         }
-        final ServiceReference reference = bundleContext.getServiceReference( Platform.class.getName() );
-        if( reference == null )
+        final ServiceReference[] references;
+        try
+        {
+            references = bundleContext.getServiceReferences( Platform.class.getName(), "(version=" + version + ")" );
+        }
+        catch( InvalidSyntaxException ignore )
+        {
+            // this should never happen
+            throw new ConfigurationException( "Platform [" + platform + " " + version + "] is not supported" );
+        }
+        if( references == null )
         {
             throw new RuntimeException( "Could not resolve a platform" );
         }
+        final ServiceReference reference = references[ 0 ];
         return (Platform) bundleContext.getService( reference );
     }
 
