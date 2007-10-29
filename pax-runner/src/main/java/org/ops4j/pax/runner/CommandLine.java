@@ -48,6 +48,10 @@ public interface CommandLine
      * Platform option.
      */
     static final String OPTION_PLATFORM = "platform";
+    /**
+     * Platform version option.
+     */
+    static final String OPTION_PLATFORM_VERSION = "version";    
 
     /**
      * Returns the value of an option by key. If option is not defined returns null.

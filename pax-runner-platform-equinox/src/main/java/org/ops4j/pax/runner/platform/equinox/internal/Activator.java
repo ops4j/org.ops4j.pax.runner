@@ -33,39 +33,14 @@ public final class Activator
 {
 
     /**
-     * Provider name to be used in registration.
-     */
-    private static final String PROVIDER_NAME = "equinox";
-    /**
-     * Provider version to be used in registration.
-     */
-    private static final String PROVIDER_VERSION = "3.2.1";
-
-    /**
      * {@inheritDoc}
      */
     @Override
-    protected String getProviderName()
+    protected PlatformBuilder[] createPlatformBuilders( final BundleContext bundleContext )
     {
-        return PROVIDER_NAME;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected String getProviderVersion()
-    {
-        return PROVIDER_VERSION;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected PlatformBuilder createPlatformBuilder( final BundleContext bundleContext )
-    {
-        return new EquinoxPlatformBuilder( bundleContext );
+        return new PlatformBuilder[]{
+            new EquinoxPlatformBuilder( bundleContext, "3.2.1" )
+        };
     }
 
 }

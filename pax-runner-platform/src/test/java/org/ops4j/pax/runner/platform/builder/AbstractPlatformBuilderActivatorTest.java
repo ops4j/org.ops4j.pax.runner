@@ -19,12 +19,23 @@ package org.ops4j.pax.runner.platform.builder;
 
 import java.util.Dictionary;
 import static org.easymock.EasyMock.*;
+import org.junit.Before;
 import org.junit.Test;
-import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.osgi.framework.BundleContext;
+import org.ops4j.pax.runner.platform.PlatformBuilder;
 
 public class AbstractPlatformBuilderActivatorTest
 {
+
+    private PlatformBuilder m_platformBuilder1;
+    private PlatformBuilder m_platformBuilder2;
+
+    @Before
+    public void setUp()
+    {
+        m_platformBuilder1 = createMock( PlatformBuilder.class );
+        m_platformBuilder2 = createMock( PlatformBuilder.class );
+    }
 
     @Test( expected = IllegalArgumentException.class )
     public void startWithNullBundleContext()
@@ -40,13 +51,24 @@ public class AbstractPlatformBuilderActivatorTest
         BundleContext context = createMock( BundleContext.class );
         expect( context.registerService(
             eq( PlatformBuilder.class.getName() ),
-            isA( PlatformBuilder.class ),
+            eq( m_platformBuilder1 ),
             (Dictionary) notNull()
         )
         ).andReturn( null );
-        replay( context );
+        expect( context.registerService(
+            eq( PlatformBuilder.class.getName() ),
+            eq( m_platformBuilder2 ),
+            (Dictionary) notNull()
+        )
+        ).andReturn( null );
+        expect( m_platformBuilder1.getProviderName()).andReturn( "provider");
+        expect( m_platformBuilder1.getProviderVersion()).andReturn( "version1");
+        expect( m_platformBuilder2.getProviderName()).andReturn( "provider");
+        expect( m_platformBuilder2.getProviderVersion()).andReturn( "version2");
+        
+        replay( context, m_platformBuilder1, m_platformBuilder2 );
         new TestAPBActivator().start( context );
-        verify( context );
+        verify( context, m_platformBuilder1, m_platformBuilder2 );
     }
 
     @Test( expected = IllegalArgumentException.class )
@@ -70,21 +92,9 @@ public class AbstractPlatformBuilderActivatorTest
     {
 
         @Override
-        protected String getProviderVersion()
+        protected PlatformBuilder[] createPlatformBuilders( final BundleContext bundleContext )
         {
-            return "version";
-        }
-
-        @Override
-        protected String getProviderName()
-        {
-            return "provider";
-        }
-
-        @Override
-        protected PlatformBuilder createPlatformBuilder( final BundleContext bundleContext )
-        {
-            return createMock( PlatformBuilder.class );
+            return new PlatformBuilder[]{ m_platformBuilder1, m_platformBuilder2 };
         }
 
     }

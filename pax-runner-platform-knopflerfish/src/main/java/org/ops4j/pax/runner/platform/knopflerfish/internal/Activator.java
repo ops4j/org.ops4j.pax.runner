@@ -17,9 +17,9 @@
  */
 package org.ops4j.pax.runner.platform.knopflerfish.internal;
 
+import org.osgi.framework.BundleContext;
 import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.builder.AbstractPlatformBuilderActivator;
-import org.osgi.framework.BundleContext;
 
 /**
  * Bundle activator for knopflerfish platform.
@@ -33,39 +33,14 @@ public final class Activator
 {
 
     /**
-     * Provider name to be used in registration.
-     */
-    private static final String PROVIDER_NAME = "knopflerfish";
-    /**
-     * Provider version to be used in registration.
-     */
-    private static final String PROVIDER_VERSION = "2.0.0";
-
-    /**
      * {@inheritDoc}
      */
     @Override
-    protected String getProviderName()
+    protected PlatformBuilder[] createPlatformBuilders( final BundleContext bundleContext )
     {
-        return PROVIDER_NAME;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected String getProviderVersion()
-    {
-        return PROVIDER_VERSION;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected PlatformBuilder createPlatformBuilder( final BundleContext bundleContext )
-    {
-        return new KnopflerfishPlatformBuilder( bundleContext );
+        return new PlatformBuilder[]{
+            new KnopflerfishPlatformBuilder( bundleContext, "2.0.0" )
+        };
     }
 
 }

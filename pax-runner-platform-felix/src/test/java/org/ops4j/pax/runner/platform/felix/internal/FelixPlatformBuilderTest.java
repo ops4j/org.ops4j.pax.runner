@@ -69,7 +69,13 @@ public class FelixPlatformBuilderTest
     @Test( expected = IllegalArgumentException.class )
     public void constructorWithNullBundleContext()
     {
-        new FelixPlatformBuilder( null );
+        new FelixPlatformBuilder( null, "version" );
+    }
+
+    @Test( expected = IllegalArgumentException.class )
+    public void constructorWithNullVersion()
+    {
+        new FelixPlatformBuilder( m_bundleContext, null );
     }
 
     @Test
@@ -79,13 +85,13 @@ public class FelixPlatformBuilderTest
         assertEquals(
             "Main class name",
             "org.apache.felix.main.Main",
-            new FelixPlatformBuilder( m_bundleContext ).getMainClassName()
+            new FelixPlatformBuilder( m_bundleContext, "version" ).getMainClassName()
         );
         verify( m_bundleContext );
     }
 
     @Test
-    public void getDefinition()
+    public void getDefinition_1_0_0()
         throws IOException
     {
         Bundle bundle = createMock( Bundle.class );
@@ -98,7 +104,7 @@ public class FelixPlatformBuilderTest
         replay( m_bundleContext, bundle );
         assertNotNull(
             "Definition input stream",
-            new FelixPlatformBuilder( m_bundleContext ).getDefinition()
+            new FelixPlatformBuilder( m_bundleContext, "1.0.0" ).getDefinition()
         );
         verify( m_bundleContext, bundle );
     }
@@ -114,7 +120,7 @@ public class FelixPlatformBuilderTest
         replay( m_bundleContext, m_configuration, platformContext );
         assertNull(
             "Required profiles is not null",
-            new FelixPlatformBuilder( m_bundleContext ).getRequiredProfile( platformContext )
+            new FelixPlatformBuilder( m_bundleContext, "version" ).getRequiredProfile( platformContext )
         );
         verify( m_bundleContext, m_configuration, platformContext );
     }
@@ -131,7 +137,7 @@ public class FelixPlatformBuilderTest
         assertEquals(
             "Required profiles",
             "tui",
-            new FelixPlatformBuilder( m_bundleContext ).getRequiredProfile( platformContext )
+            new FelixPlatformBuilder( m_bundleContext, "version" ).getRequiredProfile( platformContext )
         );
         verify( m_bundleContext, m_configuration, platformContext );
     }
@@ -143,7 +149,7 @@ public class FelixPlatformBuilderTest
 
         replay( m_bundleContext, m_configuration, platformContext );
         assertNull( "Arguments is not not null",
-                    new FelixPlatformBuilder( m_bundleContext ).getArguments( platformContext )
+                    new FelixPlatformBuilder( m_bundleContext, "version" ).getArguments( platformContext )
         );
         verify( m_bundleContext, m_configuration, platformContext );
     }
@@ -164,7 +170,7 @@ public class FelixPlatformBuilderTest
                 "-Dfelix.cache.dir="
                 + m_workDir.getAbsolutePath() + File.separator + "felix" + File.separator + "cache"
             },
-            new FelixPlatformBuilder( m_bundleContext ).getVMOptions( platformContext )
+            new FelixPlatformBuilder( m_bundleContext, "version" ).getVMOptions( platformContext )
         );
         verify( m_bundleContext, platformContext );
     }
@@ -173,7 +179,7 @@ public class FelixPlatformBuilderTest
     public void getSystemPropertiesWithNullPlatformContext()
     {
         replay( m_bundleContext );
-        new FelixPlatformBuilder( m_bundleContext ).getVMOptions( null );
+        new FelixPlatformBuilder( m_bundleContext, "version" ).getVMOptions( null );
         verify( m_bundleContext );
     }
 
@@ -182,7 +188,7 @@ public class FelixPlatformBuilderTest
         throws PlatformException
     {
         replay( m_bundleContext );
-        new FelixPlatformBuilder( m_bundleContext ).prepare( null );
+        new FelixPlatformBuilder( m_bundleContext, "version" ).prepare( null );
         verify( m_bundleContext );
     }
 
@@ -208,7 +214,7 @@ public class FelixPlatformBuilderTest
         expect( platformContext.getProperties() ).andReturn( properties );
 
         replay( m_bundleContext, m_configuration, platformContext );
-        new FelixPlatformBuilder( m_bundleContext ).prepare( platformContext );
+        new FelixPlatformBuilder( m_bundleContext, "version" ).prepare( platformContext );
         verify( m_bundleContext, m_configuration, platformContext );
 
         compareFiles(
@@ -282,7 +288,7 @@ public class FelixPlatformBuilderTest
         replay( m_bundleContext, m_configuration, platformContext, bundle1, bundle2, bundle3, reference1, reference2,
                 reference3, bundle4, reference4
         );
-        new FelixPlatformBuilder( m_bundleContext ).prepare( platformContext );
+        new FelixPlatformBuilder( m_bundleContext, "version" ).prepare( platformContext );
         verify( m_bundleContext, m_configuration, platformContext, bundle1, bundle2, bundle3, reference1, reference2,
                 reference3, bundle4, reference4
         );
@@ -372,7 +378,7 @@ public class FelixPlatformBuilderTest
         expect( platformContext.getProperties() ).andReturn( null );
 
         replay( m_bundleContext, m_configuration, platformContext );
-        new FelixPlatformBuilder( m_bundleContext ).prepare( platformContext );
+        new FelixPlatformBuilder( m_bundleContext, "version" ).prepare( platformContext );
         verify( m_bundleContext, m_configuration, platformContext );
     }
 

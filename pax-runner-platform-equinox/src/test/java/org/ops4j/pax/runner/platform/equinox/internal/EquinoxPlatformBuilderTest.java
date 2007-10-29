@@ -28,19 +28,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import static org.easymock.EasyMock.*;
+import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.After;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.ops4j.pax.runner.commons.file.FileUtils;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 
 public class EquinoxPlatformBuilderTest
 {
@@ -71,7 +71,13 @@ public class EquinoxPlatformBuilderTest
     @Test( expected = IllegalArgumentException.class )
     public void constructorWithNullBundleContext()
     {
-        new EquinoxPlatformBuilder( null );
+        new EquinoxPlatformBuilder( null, "version" );
+    }
+
+    @Test( expected = IllegalArgumentException.class )
+    public void constructorWithNullVersion()
+    {
+        new EquinoxPlatformBuilder( m_bundleContext, null );
     }
 
     @Test
@@ -81,13 +87,13 @@ public class EquinoxPlatformBuilderTest
         assertEquals(
             "Main class name",
             "org.eclipse.core.runtime.adaptor.EclipseStarter",
-            new EquinoxPlatformBuilder( m_bundleContext ).getMainClassName()
+            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getMainClassName()
         );
         verify( m_bundleContext );
     }
 
     @Test
-    public void getDefinition()
+    public void getDefinition_3_2_1()
         throws IOException
     {
         Bundle bundle = createMock( Bundle.class );
@@ -100,7 +106,7 @@ public class EquinoxPlatformBuilderTest
         replay( m_bundleContext, bundle );
         assertNotNull(
             "Definition input stream",
-            new EquinoxPlatformBuilder( m_bundleContext ).getDefinition()
+            new EquinoxPlatformBuilder( m_bundleContext, "3.2.1" ).getDefinition()
         );
         verify( m_bundleContext, bundle );
     }
@@ -113,7 +119,7 @@ public class EquinoxPlatformBuilderTest
         replay( m_bundleContext, platformContext );
         assertNull(
             "Required profiles is not null",
-            new EquinoxPlatformBuilder( m_bundleContext ).getRequiredProfile( platformContext )
+            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getRequiredProfile( platformContext )
         );
         verify( m_bundleContext, platformContext );
     }
@@ -137,7 +143,7 @@ public class EquinoxPlatformBuilderTest
                 "-install",
                 m_workDir.getAbsolutePath()
             },
-            new EquinoxPlatformBuilder( m_bundleContext ).getArguments( platformContext )
+            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getArguments( platformContext )
         );
         verify( m_bundleContext, m_configuration, platformContext );
     }
@@ -160,7 +166,7 @@ public class EquinoxPlatformBuilderTest
                 "-install",
                 m_workDir.getAbsolutePath()
             },
-            new EquinoxPlatformBuilder( m_bundleContext ).getArguments( platformContext )
+            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getArguments( platformContext )
         );
         verify( m_bundleContext, m_configuration, platformContext );
     }
@@ -183,7 +189,7 @@ public class EquinoxPlatformBuilderTest
                 "-install",
                 m_workDir.getAbsolutePath()
             },
-            new EquinoxPlatformBuilder( m_bundleContext ).getArguments( platformContext )
+            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getArguments( platformContext )
         );
         verify( m_bundleContext, m_configuration, platformContext );
     }
@@ -192,7 +198,7 @@ public class EquinoxPlatformBuilderTest
     public void getArgumentsWithNullPlatformContext()
     {
         replay( m_bundleContext );
-        new EquinoxPlatformBuilder( m_bundleContext ).getArguments( null );
+        new EquinoxPlatformBuilder( m_bundleContext, "version" ).getArguments( null );
         verify( m_bundleContext );
     }
 
@@ -209,7 +215,7 @@ public class EquinoxPlatformBuilderTest
                 "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=java.*",
                 "-D" + Constants.FRAMEWORK_SYSTEMPACKAGES + "=sys.package.one,sys.package.two"
             },
-            new EquinoxPlatformBuilder( m_bundleContext ).getVMOptions( platformContext )
+            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getVMOptions( platformContext )
         );
         verify( m_bundleContext, platformContext );
     }
@@ -218,7 +224,7 @@ public class EquinoxPlatformBuilderTest
     public void getSystemPropertiesWithNullPlatformContext()
     {
         replay( m_bundleContext );
-        new EquinoxPlatformBuilder( m_bundleContext ).getVMOptions( null );
+        new EquinoxPlatformBuilder( m_bundleContext, "version" ).getVMOptions( null );
         verify( m_bundleContext );
     }
 
@@ -227,7 +233,7 @@ public class EquinoxPlatformBuilderTest
         throws PlatformException
     {
         replay( m_bundleContext );
-        new EquinoxPlatformBuilder( m_bundleContext ).prepare( null );
+        new EquinoxPlatformBuilder( m_bundleContext, "version" ).prepare( null );
         verify( m_bundleContext );
     }
 
@@ -251,7 +257,7 @@ public class EquinoxPlatformBuilderTest
         expect( platformContext.getProperties() ).andReturn( properties );
 
         replay( m_bundleContext, m_configuration, platformContext );
-        new EquinoxPlatformBuilder( m_bundleContext ).prepare( platformContext );
+        new EquinoxPlatformBuilder( m_bundleContext, "version" ).prepare( platformContext );
         verify( m_bundleContext, m_configuration, platformContext );
 
         compareFiles(
@@ -313,7 +319,7 @@ public class EquinoxPlatformBuilderTest
         replay( m_bundleContext, m_configuration, platformContext, bundle1, bundle2, bundle3, reference1, reference2,
                 reference3
         );
-        new EquinoxPlatformBuilder( m_bundleContext ).prepare( platformContext );
+        new EquinoxPlatformBuilder( m_bundleContext, "version" ).prepare( platformContext );
         verify( m_bundleContext, m_configuration, platformContext, bundle1, bundle2, bundle3, reference1, reference2,
                 reference3
         );
@@ -342,14 +348,14 @@ public class EquinoxPlatformBuilderTest
             actualReader = new BufferedReader( new FileReader( actual ) );
             String actualLine, expectedLine;
             int lineNumber = 1;
-            while ( ( actualLine = actualReader.readLine() ) != null )
+            while( ( actualLine = actualReader.readLine() ) != null )
             {
                 expectedLine = expectedReader.readLine();
-                if ( reverse )
+                if( reverse )
                 {
-                    if ( replacements != null )
+                    if( replacements != null )
                     {
-                        for ( Map.Entry<String, String> entry : replacements.entrySet() )
+                        for( Map.Entry<String, String> entry : replacements.entrySet() )
                         {
                             expectedLine = expectedLine.replace( entry.getKey(), entry.getValue() );
                         }
@@ -358,9 +364,9 @@ public class EquinoxPlatformBuilderTest
                 }
                 else
                 {
-                    if ( replacements != null )
+                    if( replacements != null )
                     {
-                        for ( Map.Entry<String, String> entry : replacements.entrySet() )
+                        for( Map.Entry<String, String> entry : replacements.entrySet() )
                         {
                             actualLine = actualLine.replace( entry.getKey(), entry.getValue() );
                         }
@@ -371,16 +377,16 @@ public class EquinoxPlatformBuilderTest
         }
         finally
         {
-            if ( expectedReader != null )
+            if( expectedReader != null )
             {
                 expectedReader.close();
             }
-            if ( actualReader != null )
+            if( actualReader != null )
             {
                 actualReader.close();
             }
         }
-        if ( reverse )
+        if( reverse )
         {
             compareFiles( actual, expected, false, replacements );
         }

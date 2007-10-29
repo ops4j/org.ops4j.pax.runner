@@ -30,6 +30,8 @@ import java.util.List;
 import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.ops4j.pax.runner.commons.Assert;
 import org.ops4j.pax.runner.commons.file.FileUtils;
 import org.ops4j.pax.runner.commons.properties.PropertiesWriter;
@@ -39,8 +41,6 @@ import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 
 /**
  * Platform builder for felix platform.
@@ -56,6 +56,10 @@ public class FelixPlatformBuilder
      * Logger.
      */
     private static final Log LOGGER = LogFactory.getLog( FelixPlatformBuilder.class );
+    /**
+     * Provider name to be used in registration.
+     */
+    private static final String PROVIDER_NAME = "felix";
     /**
      * Name of the main class from Felix.
      */
@@ -84,16 +88,23 @@ public class FelixPlatformBuilder
      * Current bundle context.
      */
     private final BundleContext m_bundleContext;
+    /**
+     * Supported version.
+     */
+    private final String m_version;
 
     /**
      * Create a new equinux platform builder.
      *
      * @param bundleContext a bundle context
+     * @param version       supported version
      */
-    public FelixPlatformBuilder( final BundleContext bundleContext )
+    public FelixPlatformBuilder( final BundleContext bundleContext, final String version )
     {
         Assert.notNull( "Bundle context", bundleContext );
+        Assert.notNull( "Version", version );
         m_bundleContext = bundleContext;
+        m_version = version;
     }
 
     /**
@@ -328,11 +339,11 @@ public class FelixPlatformBuilder
     public InputStream getDefinition()
         throws IOException
     {
-        // TODO implement platform versioning
-        final URL url = m_bundleContext.getBundle().getResource( "META-INF/platform-felix/definition-1.0.0.xml" );
+        final String definitionFile = "META-INF/platform-felix/definition-" + m_version + ".xml";
+        final URL url = m_bundleContext.getBundle().getResource( definitionFile );
         if( url == null )
         {
-            throw new FileNotFoundException( "META-INF/platform-felix/definition-1.0.0.xml could not be found" );
+            throw new FileNotFoundException( definitionFile + " could not be found" );
         }
         return url.openStream();
     }
@@ -361,8 +372,23 @@ public class FelixPlatformBuilder
      */
     public String toString()
     {
-        return "Felix";
+        return "Felix " + m_version;
     }
 
+    /**
+     * @see PlatformBuilder#getProviderName()
+     */
+    public String getProviderName()
+    {
+        return PROVIDER_NAME;
+    }
+
+    /**
+     * @see PlatformBuilder#getProviderVersion()
+     */
+    public String getProviderVersion()
+    {
+        return m_version;
+    }
 
 }

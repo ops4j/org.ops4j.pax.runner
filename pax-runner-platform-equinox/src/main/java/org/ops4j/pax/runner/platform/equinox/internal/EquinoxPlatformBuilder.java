@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.ops4j.pax.runner.commons.Assert;
 import org.ops4j.pax.runner.commons.properties.PropertiesWriter;
 import org.ops4j.pax.runner.platform.BundleReference;
@@ -39,8 +41,6 @@ import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 
 /**
  * Platform builder for equinox platform.
@@ -56,6 +56,10 @@ public class EquinoxPlatformBuilder
      * Logger.
      */
     private static final Log LOGGER = LogFactory.getLog( EquinoxPlatformBuilder.class );
+    /**
+     * Provider name to be used in registration.
+     */
+    private static final String PROVIDER_NAME = "equinox";
     /**
      * Configuration directory argument name.
      */
@@ -88,16 +92,23 @@ public class EquinoxPlatformBuilder
      * Current bundle context.
      */
     private final BundleContext m_bundleContext;
+    /**
+     * Supported version.
+     */
+    private final String m_version;
 
     /**
      * Create a new equinux platform builder.
      *
      * @param bundleContext a bundle context
+     * @param version       supported version
      */
-    public EquinoxPlatformBuilder( final BundleContext bundleContext )
+    public EquinoxPlatformBuilder( final BundleContext bundleContext, final String version )
     {
         Assert.notNull( "Bundle context", bundleContext );
+        Assert.notNull( "Version", version );
         m_bundleContext = bundleContext;
+        m_version = version;
     }
 
     /**
@@ -320,11 +331,11 @@ public class EquinoxPlatformBuilder
     public InputStream getDefinition()
         throws IOException
     {
-        // TODO implement platform versioning
-        final URL url = m_bundleContext.getBundle().getResource( "META-INF/platform-equinox/definition-3.2.1.xml" );
+        final String definitionFile = "META-INF/platform-equinox/definition-" + m_version + ".xml";
+        final URL url = m_bundleContext.getBundle().getResource( definitionFile );
         if( url == null )
         {
-            throw new FileNotFoundException( "META-INF/platform-equinox/definition-3.2.1.xml could not be found" );
+            throw new FileNotFoundException( definitionFile + " could not be found" );
         }
         return url.openStream();
     }
@@ -345,8 +356,23 @@ public class EquinoxPlatformBuilder
      */
     public String toString()
     {
-        return "Equinox";
+        return "Equinox " + m_version;
     }
 
+    /**
+     * @see PlatformBuilder#getProviderName()
+     */
+    public String getProviderName()
+    {
+        return PROVIDER_NAME;
+    }
+
+    /**
+     * @see PlatformBuilder#getProviderVersion()
+     */
+    public String getProviderVersion()
+    {
+        return m_version;
+    }
 
 }

@@ -4,12 +4,12 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.ops4j.pax.runner.commons.Assert;
-import org.ops4j.pax.runner.platform.PlatformBuilder;
-import org.ops4j.pax.runner.platform.ServiceConstants;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
+import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.pax.runner.platform.PlatformBuilder;
+import org.ops4j.pax.runner.platform.ServiceConstants;
 
 /**
  * Abstract bundle activator for platform builders.<br/>
@@ -32,9 +32,9 @@ public abstract class AbstractPlatformBuilderActivator
      */
     private BundleContext m_bundleContext;
     /**
-     * Platform builder service registration. Used for cleanup.
+     * Platform builder service registrations. Used for cleanup.
      */
-    private ServiceRegistration m_platformBuilderServiceReg;
+    private ServiceRegistration[] m_platformBuilderServiceReg;
 
     /**
      * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
@@ -44,7 +44,7 @@ public abstract class AbstractPlatformBuilderActivator
     {
         Assert.notNull( "Bundle context", bundleContext );
         m_bundleContext = bundleContext;
-        registerPlatformBuilder( createPlatformBuilder( m_bundleContext ) );
+        registerPlatformBuilders( createPlatformBuilders( m_bundleContext ) );
         LOGGER.debug( "Platform builder [" + this + "] started" );
     }
 
@@ -61,7 +61,13 @@ public abstract class AbstractPlatformBuilderActivator
         Assert.notNull( "Bundle context", bundleContext );
         if( m_platformBuilderServiceReg != null )
         {
-            m_platformBuilderServiceReg.unregister();
+            for( ServiceRegistration registration : m_platformBuilderServiceReg )
+            {
+                if( registration != null )
+                {
+                    registration.unregister();
+                }
+            }
             m_platformBuilderServiceReg = null;
         }
         m_bundleContext = null;
@@ -69,40 +75,31 @@ public abstract class AbstractPlatformBuilderActivator
     }
 
     /**
-     * Registers the platformBuilder.
+     * Registers the platform builders.
      *
-     * @param platformBuilder the platformBuilder to register
+     * @param platformBuilders an array of platform builders to register
      */
-    private void registerPlatformBuilder( final PlatformBuilder platformBuilder )
+    private void registerPlatformBuilders( final PlatformBuilder[] platformBuilders )
     {
-        Dictionary<String, Object> props = new Hashtable<String, Object>();
-        props.put( ServiceConstants.PROPERTY_PROVIDER, getProviderName() );
-        props.put( ServiceConstants.PROPERTY_PROVIDER_VERSION, getProviderVersion() );
-        m_platformBuilderServiceReg =
-            m_bundleContext.registerService( PlatformBuilder.class.getName(), platformBuilder, props );
+        m_platformBuilderServiceReg = new ServiceRegistration[platformBuilders.length];
+        int i = 0;
+        for( PlatformBuilder platformBuilder : platformBuilders )
+        {
+            Dictionary<String, Object> props = new Hashtable<String, Object>();
+            props.put( ServiceConstants.PROPERTY_PROVIDER, platformBuilder.getProviderName() );
+            props.put( ServiceConstants.PROPERTY_PROVIDER_VERSION, platformBuilder.getProviderVersion() );
+            m_platformBuilderServiceReg[ i++ ] =
+                m_bundleContext.registerService( PlatformBuilder.class.getName(), platformBuilder, props );
+        }
     }
 
     /**
-     * Returns the provider version.
-     *
-     * @return provider version
-     */
-    abstract protected String getProviderVersion();
-
-    /**
-     * Returns the provider name.
-     *
-     * @return provider name
-     */
-    abstract protected String getProviderName();
-
-    /**
-     * Platform builder factory method.
+     * Platform builders factory method. It should return an array of platform builders supported.
      *
      * @param bundleContext current bundle context
      *
-     * @return equinox platform builder
+     * @return corresponding platform builder for the passed version
      */
-    abstract protected PlatformBuilder createPlatformBuilder( BundleContext bundleContext );
+    abstract protected PlatformBuilder[] createPlatformBuilders( BundleContext bundleContext );
 
 }

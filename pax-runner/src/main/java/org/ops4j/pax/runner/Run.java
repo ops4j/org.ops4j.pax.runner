@@ -313,13 +313,22 @@ public class Run
     {
         LOGGER.debug( "Installing platform" );
         // first install platform
-        final String option = context.getOptionResolver().getMandatory( OPTION_PLATFORM );
-        final String activatorName = context.getConfiguration().getProperty( option );
+        final String platform = context.getOptionResolver().getMandatory( OPTION_PLATFORM );
+        String version = context.getOptionResolver().get( OPTION_PLATFORM_VERSION );
+        if( version == null )
+        {
+            version = context.getOptionResolver().get( platform + "." + OPTION_PLATFORM_VERSION );
+            if( version == null )
+            {
+                throw new ConfigurationException( "Could not resolve a version for platform [" + platform + "]" );
+            }
+        }
+        final String activatorName = context.getConfiguration().getProperty( platform + "." + version );
         if( activatorName == null || activatorName.trim().length() == 0 )
         {
-            throw new ConfigurationException( "Platform [" + option + "] is not supported" );
+            throw new ConfigurationException( "Platform [" + platform + " " + version + "] is not supported" );
         }
-        createActivator( option, activatorName, context );
+        createActivator( platform, activatorName, context );
         // then install platform service
         final String serviceActivatorName = context.getConfiguration().getProperty( PLATFORM_SERVICE );
         if( serviceActivatorName == null || serviceActivatorName.trim().length() == 0 )

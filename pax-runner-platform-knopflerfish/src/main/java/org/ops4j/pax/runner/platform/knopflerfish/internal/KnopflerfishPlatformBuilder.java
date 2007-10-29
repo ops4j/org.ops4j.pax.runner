@@ -30,6 +30,8 @@ import java.util.List;
 import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.ops4j.pax.runner.commons.Assert;
 import org.ops4j.pax.runner.commons.file.FileUtils;
 import org.ops4j.pax.runner.commons.properties.PropertiesWriter;
@@ -39,8 +41,6 @@ import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 
 /**
  * Platform builder for knopflerfish platform.
@@ -56,6 +56,10 @@ public class KnopflerfishPlatformBuilder
      * Logger.
      */
     private static final Log LOGGER = LogFactory.getLog( KnopflerfishPlatformBuilder.class );
+    /**
+     * Provider name to be used in registration.
+     */
+    private static final String PROVIDER_NAME = "knopflerfish";
     /**
      * Name of the main class from Knopflerfish.
      */
@@ -84,16 +88,23 @@ public class KnopflerfishPlatformBuilder
      * Current bundle context.
      */
     private final BundleContext m_bundleContext;
+    /**
+     * Supported version.
+     */
+    private final String m_version;
 
     /**
      * Create a new equinux platform builder.
      *
      * @param bundleContext a bundle context
+     * @param version       supported version
      */
-    public KnopflerfishPlatformBuilder( final BundleContext bundleContext )
+    public KnopflerfishPlatformBuilder( final BundleContext bundleContext, final String version )
     {
         Assert.notNull( "Bundle context", bundleContext );
+        Assert.notNull( "Version", version );
         m_bundleContext = bundleContext;
+        m_version = version;
     }
 
     /**
@@ -124,7 +135,7 @@ public class KnopflerfishPlatformBuilder
 
             // clean up fwdir folder
             final Boolean usePersistedState = configuration.usePersistedState();
-            if ( usePersistedState != null && !usePersistedState )
+            if( usePersistedState != null && !usePersistedState )
             {
                 final File fwdir = new File( configDirectory, CACHE_DIRECTORY );
                 LOGGER.trace( "Cleaning cache folder [" + fwdir + "]" );
@@ -155,18 +166,18 @@ public class KnopflerfishPlatformBuilder
 
             // framework start level
             final Integer startLevel = configuration.getStartLevel();
-            if ( startLevel != null )
+            if( startLevel != null )
             {
                 writer.appendRaw( "-startlevel " + startLevel.toString() );
             }
             // bundle start level
             final Integer bundleStartLevel = configuration.getBundleStartLevel();
-            if ( bundleStartLevel != null )
+            if( bundleStartLevel != null )
             {
                 writer.appendRaw( "-initlevel " + bundleStartLevel.toString() );
             }
 
-            if ( bundles != null && bundles.size() > 0 )
+            if( bundles != null && bundles.size() > 0 )
             {
                 writer.append();
                 writer.append( "#############################" );
@@ -183,19 +194,19 @@ public class KnopflerfishPlatformBuilder
 
             writer.write();
         }
-        catch ( IOException e )
+        catch( IOException e )
         {
             throw new PlatformException( "Could not create knopflerfish configuration file", e );
         }
         finally
         {
-            if ( os != null )
+            if( os != null )
             {
                 try
                 {
                     os.close();
                 }
-                catch ( IOException e )
+                catch( IOException e )
                 {
                     throw new PlatformException( "Could not create knopflerfish configuration file", e );
                 }
@@ -212,10 +223,10 @@ public class KnopflerfishPlatformBuilder
      */
     private void appendProperties( final PropertiesWriter writer, final Properties properties )
     {
-        if ( properties != null )
+        if( properties != null )
         {
             final Enumeration enumeration = properties.propertyNames();
-            while ( enumeration.hasMoreElements() )
+            while( enumeration.hasMoreElements() )
             {
                 final String key = (String) enumeration.nextElement();
                 writer.append( "-D" + key, properties.getProperty( key ) );
@@ -238,10 +249,10 @@ public class KnopflerfishPlatformBuilder
                                 final Integer defaultStartlevel )
         throws MalformedURLException, PlatformException
     {
-        for ( LocalBundle bundle : bundles )
+        for( LocalBundle bundle : bundles )
         {
             File bundleFile = bundle.getFile();
-            if ( bundleFile == null )
+            if( bundleFile == null )
             {
                 throw new PlatformException( "The file from bundle to install cannot be null" );
             }
@@ -250,7 +261,7 @@ public class KnopflerfishPlatformBuilder
 
             final BundleReference reference = bundle.getBundleReference();
             final Boolean shouldStart = reference.shouldStart();
-            if ( shouldStart != null && shouldStart )
+            if( shouldStart != null && shouldStart )
             {
                 propertyName = "-istart ";
             }
@@ -306,7 +317,7 @@ public class KnopflerfishPlatformBuilder
                     .toURL().toExternalForm()
             };
         }
-        catch ( MalformedURLException e )
+        catch( MalformedURLException e )
         {
             // TODO shall a platform exception be thrown instead of RuntimeException?
             throw new RuntimeException( e );
@@ -336,12 +347,11 @@ public class KnopflerfishPlatformBuilder
     public InputStream getDefinition()
         throws IOException
     {
-        // TODO implement platform versioning
-        final URL url =
-            m_bundleContext.getBundle().getResource( "META-INF/platform-knopflerfish/definition-2.0.0.xml" );
-        if ( url == null )
+        final String definitionFile = "META-INF/platform-knopflerfish/definition-" + m_version + ".xml";
+        final URL url = m_bundleContext.getBundle().getResource( definitionFile );
+        if( url == null )
         {
-            throw new FileNotFoundException( "META-INF/platform-knopflerfish/definition-2.0.0.xml could not be found" );
+            throw new FileNotFoundException( definitionFile + " could not be found" );
         }
         return url.openStream();
     }
@@ -355,7 +365,7 @@ public class KnopflerfishPlatformBuilder
     public String getRequiredProfile( final PlatformContext context )
     {
         final Boolean console = context.getConfiguration().startConsole();
-        if ( console == null || !console )
+        if( console == null || !console )
         {
             return null;
         }
@@ -370,8 +380,23 @@ public class KnopflerfishPlatformBuilder
      */
     public String toString()
     {
-        return "Knopflerfish";
+        return "Knopflerfish " + m_version;
     }
 
+    /**
+     * @see PlatformBuilder#getProviderName()
+     */
+    public String getProviderName()
+    {
+        return PROVIDER_NAME;
+    }
+
+    /**
+     * @see PlatformBuilder#getProviderVersion()
+     */
+    public String getProviderVersion()
+    {
+        return m_version;
+    }
 
 }

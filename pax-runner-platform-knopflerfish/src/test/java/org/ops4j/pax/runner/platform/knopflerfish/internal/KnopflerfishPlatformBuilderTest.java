@@ -28,10 +28,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import static org.easymock.EasyMock.*;
+import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.After;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.ops4j.pax.runner.commons.file.FileUtils;
@@ -70,7 +70,13 @@ public class KnopflerfishPlatformBuilderTest
     @Test( expected = IllegalArgumentException.class )
     public void constructorWithNullBundleContext()
     {
-        new KnopflerfishPlatformBuilder( null );
+        new KnopflerfishPlatformBuilder( null, "version" );
+    }
+
+    @Test( expected = IllegalArgumentException.class )
+    public void constructorWithNullVersion()
+    {
+        new KnopflerfishPlatformBuilder( m_bundleContext, null );
     }
 
     @Test
@@ -80,13 +86,13 @@ public class KnopflerfishPlatformBuilderTest
         assertEquals(
             "Main class name",
             "org.knopflerfish.framework.Main",
-            new KnopflerfishPlatformBuilder( m_bundleContext ).getMainClassName()
+            new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).getMainClassName()
         );
         verify( m_bundleContext );
     }
 
     @Test
-    public void getDefinition()
+    public void getDefinition_2_0_0()
         throws IOException
     {
         Bundle bundle = createMock( Bundle.class );
@@ -99,7 +105,7 @@ public class KnopflerfishPlatformBuilderTest
         replay( m_bundleContext, bundle );
         assertNotNull(
             "Definition input stream",
-            new KnopflerfishPlatformBuilder( m_bundleContext ).getDefinition()
+            new KnopflerfishPlatformBuilder( m_bundleContext, "2.0.0" ).getDefinition()
         );
         verify( m_bundleContext, bundle );
     }
@@ -115,7 +121,7 @@ public class KnopflerfishPlatformBuilderTest
         replay( m_bundleContext, m_configuration, platformContext );
         assertNull(
             "Required profiles is not null",
-            new KnopflerfishPlatformBuilder( m_bundleContext ).getRequiredProfile( platformContext )
+            new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).getRequiredProfile( platformContext )
         );
         verify( m_bundleContext, m_configuration, platformContext );
     }
@@ -132,7 +138,7 @@ public class KnopflerfishPlatformBuilderTest
         assertEquals(
             "Required profiles",
             "tui",
-            new KnopflerfishPlatformBuilder( m_bundleContext ).getRequiredProfile( platformContext )
+            new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).getRequiredProfile( platformContext )
         );
         verify( m_bundleContext, m_configuration, platformContext );
     }
@@ -152,7 +158,7 @@ public class KnopflerfishPlatformBuilderTest
                 "-xargs",
                 new File( m_workDir, "knopflerfish/config.ini" ).getAbsoluteFile().toURL().toExternalForm(),
             },
-            new KnopflerfishPlatformBuilder( m_bundleContext ).getArguments( platformContext )
+            new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).getArguments( platformContext )
         );
         verify( m_bundleContext, platformContext );
     }
@@ -173,7 +179,7 @@ public class KnopflerfishPlatformBuilderTest
                 "-Dorg.osgi.framework.dir="
                 + m_workDir.getAbsolutePath() + File.separator + "knopflerfish" + File.separator + "fwdir"
             },
-            new KnopflerfishPlatformBuilder( m_bundleContext ).getVMOptions( platformContext )
+            new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).getVMOptions( platformContext )
         );
         verify( m_bundleContext, platformContext );
     }
@@ -182,7 +188,7 @@ public class KnopflerfishPlatformBuilderTest
     public void getSystemPropertiesWithNullPlatformContext()
     {
         replay( m_bundleContext );
-        new KnopflerfishPlatformBuilder( m_bundleContext ).getVMOptions( null );
+        new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).getVMOptions( null );
         verify( m_bundleContext );
     }
 
@@ -191,7 +197,7 @@ public class KnopflerfishPlatformBuilderTest
         throws PlatformException
     {
         replay( m_bundleContext );
-        new KnopflerfishPlatformBuilder( m_bundleContext ).prepare( null );
+        new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).prepare( null );
         verify( m_bundleContext );
     }
 
@@ -217,7 +223,7 @@ public class KnopflerfishPlatformBuilderTest
         expect( platformContext.getProperties() ).andReturn( properties );
 
         replay( m_bundleContext, m_configuration, platformContext );
-        new KnopflerfishPlatformBuilder( m_bundleContext ).prepare( platformContext );
+        new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).prepare( platformContext );
         verify( m_bundleContext, m_configuration, platformContext );
 
         compareFiles(
@@ -290,7 +296,7 @@ public class KnopflerfishPlatformBuilderTest
         replay( m_bundleContext, m_configuration, platformContext, bundle1, bundle2, bundle3, reference1, reference2,
                 reference3, bundle4, reference4
         );
-        new KnopflerfishPlatformBuilder( m_bundleContext ).prepare( platformContext );
+        new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).prepare( platformContext );
         verify( m_bundleContext, m_configuration, platformContext, bundle1, bundle2, bundle3, reference1, reference2,
                 reference3, bundle4, reference4
         );
@@ -379,7 +385,7 @@ public class KnopflerfishPlatformBuilderTest
         expect( platformContext.getProperties() ).andReturn( null );
 
         replay( m_bundleContext, m_configuration, platformContext );
-        new KnopflerfishPlatformBuilder( m_bundleContext ).prepare( platformContext );
+        new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).prepare( platformContext );
         verify( m_bundleContext, m_configuration, platformContext );
     }
 
