@@ -27,7 +27,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$M2_REPO$/biz/aQute/bndlib/0.0.189/bndlib-0.0.189.jar!/" />
+          <root url="jar://$M2_REPO$/biz/aQute/bndlib/0.0.208/bndlib-0.0.208.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
