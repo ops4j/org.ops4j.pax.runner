@@ -196,6 +196,20 @@ public class PomScannerTest
         }
     }
 
+    @Test
+    public void scanWithValidPomWithPropertiesInDependency()
+        throws ScannerException, MalformedURLException
+    {
+        BundleReference[] expected = new BundleReference[]
+            {
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/main-artifact/0.1.0-SNAPSHOT", null, null ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/first-dependency/0.1.0/jar", null, null ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/second-dependency/0.1.0.5", null, null ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/third-dependency/0.3", null, null )
+            };
+        scan( expected, null, null, "scanner/pomWithPropertiesInDependency.xml" );
+    }
+
     private PomScanner createPomScanner( final ScannerConfiguration config, final Parser parser )
     {
         return new PomScanner( createMock( Resolver.class ) )

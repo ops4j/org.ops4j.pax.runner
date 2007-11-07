@@ -95,6 +95,18 @@ public class PomScanner
                 {
                     references.add( new FileBundleReference( mainArtifactURL, defaultStartLevel, defaultStart ) );
                 }
+                // check out properties before processing dependencies
+                final Element properties = XmlUtils.getElement( doc, "properties" );
+                if( properties != null )
+                {
+                    List<Element> props = XmlUtils.getChildElements( properties );
+                    for( Element property : props )
+                    {
+                        final String key = property.getNodeName();
+                        final String value = getTextContent( property );
+                        System.setProperty( key, value );
+                    }
+                }
                 // check out dependencies
                 final List<Element> dependencies = XmlUtils.getElements( doc, "dependencies/dependency" );
                 if( dependencies != null )
@@ -106,18 +118,6 @@ public class PomScanner
                         {
                             references.add( new FileBundleReference( dependencyURL, defaultStartLevel, defaultStart ) );
                         }
-                    }
-                }
-                // check out properties
-                final Element properties = XmlUtils.getElement( doc, "properties" );
-                if( properties != null )
-                {
-                    List<Element> props = XmlUtils.getChildElements( properties );
-                    for( Element property : props )
-                    {
-                        final String key = property.getNodeName();
-                        final String value = XmlUtils.getTextContent( property );
-                        System.setProperty( key, value );
                     }
                 }
             }
@@ -164,7 +164,7 @@ public class PomScanner
         {
             throw new ScannerException( "Invalid pom file. Missing artifact id." );
         }
-        final String artifactId = XmlUtils.getTextContent( element );
+        final String artifactId = getTextContent( element );
         if( artifactId == null || artifactId.trim().length() == 0 )
         {
             throw new ScannerException( "Invalid pom file. Invalid artifact id." );
@@ -174,7 +174,7 @@ public class PomScanner
         {
             throw new ScannerException( "Invalid pom file. Missing group id." );
         }
-        final String groupId = XmlUtils.getTextContent( element );
+        final String groupId = getTextContent( element );
         if( groupId == null || groupId.trim().length() == 0 )
         {
             throw new ScannerException( "Invalid pom file. Invalid group id." );
@@ -183,7 +183,7 @@ public class PomScanner
         String version = null;
         if( element != null )
         {
-            version = XmlUtils.getTextContent( element );
+            version = getTextContent(element);
         }
         if( version != null && version.trim().length() == 0 )
         {
@@ -193,7 +193,7 @@ public class PomScanner
         String type = null;
         if( element != null )
         {
-            type = XmlUtils.getTextContent( element );
+            type = getTextContent( element );
         }
         if( type != null && ( type.trim().length() == 0 || type.trim().equalsIgnoreCase( "bundle" ) ) )
         {
@@ -209,7 +209,7 @@ public class PomScanner
         String scope = null;
         if( element != null )
         {
-            scope = XmlUtils.getTextContent( element );
+            scope = getTextContent( element );
         }
         // skip artifacts with test scopes
         if( scope != null && scope.equalsIgnoreCase( "test" ) )
@@ -231,6 +231,15 @@ public class PomScanner
         }
         return builder.toString();
     }
+
+	private String getTextContent(Element element) {
+		String text = XmlUtils.getTextContent( element );
+		if( text!=null )
+		{
+		  text = SystemPropertyUtils.resolvePlaceholders(text);
+		}
+		return text;
+	}
 
     /**
      * Returns the default start level by first looking at the parser and if not set fallback to configuration.
