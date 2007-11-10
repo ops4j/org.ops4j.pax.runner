@@ -352,7 +352,7 @@ public class Run
             // this should never happen
             throw new ConfigurationException( "Platform [" + platform + " " + version + "] is not supported" );
         }
-        if( references == null )
+        if( references == null || references.length == 0 )
         {
             throw new RuntimeException( "Could not resolve a platform" );
         }

@@ -39,7 +39,8 @@ public final class Activator
     protected PlatformBuilder[] createPlatformBuilders( final BundleContext bundleContext )
     {
         return new PlatformBuilder[]{
-            new FelixPlatformBuilder( bundleContext, "1.0.0" )
+            new FelixPlatformBuilder( bundleContext, "1.0.0" ),
+            new FelixPlatformBuilder( bundleContext, "1.0.1" )
         };
     }
 
