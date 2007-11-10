@@ -18,8 +18,10 @@
  */
 package org.ops4j.pax.runner;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,6 +47,10 @@ public class CommandLineImpl implements CommandLine
      * Option pattern.
      */
     public static final Pattern OPTION_PATTERN = Pattern.compile( "(.*?)=(.*)" );
+    /**
+     * Default arguments file name.
+     */
+    private static final String DEFAULT_ARGS_FILE_NAME = "runner.args";
 
     /**
      * Options as properties.
@@ -65,7 +71,23 @@ public class CommandLineImpl implements CommandLine
         m_options = new Properties();
         m_arguments = new ArrayList<String>();
         parseArguments( Arrays.asList( args ) );
-        final String argsURL = getOption( "args" );
+        String argsURL = getOption( "args" );
+        if (argsURL == null )
+        {
+            // use a default args file if available
+            final File defaultArgsFile = new File( DEFAULT_ARGS_FILE_NAME );
+            if( defaultArgsFile.exists() )
+            {
+                try
+                {
+                    argsURL = defaultArgsFile.toURL().toExternalForm();
+                }
+                catch( MalformedURLException ignore )
+                {
+                    // ignore as this should not happen
+                }
+            }
+        }
         if( argsURL != null )
         {
             try
