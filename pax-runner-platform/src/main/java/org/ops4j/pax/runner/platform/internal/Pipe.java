@@ -17,11 +17,13 @@
  */
 package org.ops4j.pax.runner.platform.internal;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 /**
  * TODO add unit tests
@@ -31,23 +33,23 @@ public class Pipe
     implements Runnable
 {
 
-    private final InputStream m_in;
-    private final OutputStream m_out;
+    private final BufferedReader m_in;
+    private final BufferedWriter m_out;
     private Object m_processStream;
 
     private volatile Thread m_thread;
 
     public Pipe( InputStream processStream, OutputStream systemStream )
     {
-        m_in = new BufferedInputStream( processStream );
-        m_out = new BufferedOutputStream( systemStream );
+        m_in = new BufferedReader( new InputStreamReader( processStream ) );
+        m_out = new BufferedWriter( new OutputStreamWriter( systemStream ) );
         m_processStream = m_in;
     }
 
     public Pipe( OutputStream processStream, InputStream systemStream )
     {
-        m_in = new BufferedInputStream( systemStream );
-        m_out = new BufferedOutputStream( processStream );
+        m_in = new BufferedReader( new InputStreamReader( systemStream ) );
+        m_out = new BufferedWriter( new OutputStreamWriter( processStream ) );
         m_processStream = m_out;
     }
 
@@ -83,12 +85,13 @@ public class Pipe
         {
             try
             {
-                int ch = m_in.read();
-                if( ch == -1 )
+                String line = m_in.readLine();
+                if( line == null )
                 {
                     break;
                 }
-                m_out.write( ch );
+                m_out.write( line );
+                m_out.newLine();
                 m_out.flush();
             }
             catch( IOException e )
