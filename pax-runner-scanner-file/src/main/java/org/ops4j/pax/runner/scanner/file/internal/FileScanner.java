@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.pax.runner.commons.properties.SystemPropertyUtils;
 import org.ops4j.pax.runner.commons.resolver.Resolver;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
@@ -112,10 +113,13 @@ public class FileScanner
                             {
                                 throw new ScannerException( "Invalid property: " + line );
                             }
-                            System.setProperty( matcher.group( 1 ), matcher.group( 2 ) );
+                            String value = matcher.group( 2 );
+                            value = SystemPropertyUtils.resolvePlaceholders(value);
+							System.setProperty( matcher.group( 1 ), value );
                         }
                         else
                         {
+                        	line = SystemPropertyUtils.resolvePlaceholders(line);
                             references.add( new FileBundleReference( line, defaultStartLevel, defaultStart ) );
                         }
                     }
