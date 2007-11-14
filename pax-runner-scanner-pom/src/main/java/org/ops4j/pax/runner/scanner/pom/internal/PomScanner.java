@@ -28,6 +28,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.pax.runner.commons.properties.SystemPropertyUtils;
 import org.ops4j.pax.runner.commons.resolver.Resolver;
 import org.ops4j.pax.runner.commons.xml.XmlUtils;
 import org.ops4j.pax.runner.provision.BundleReference;
