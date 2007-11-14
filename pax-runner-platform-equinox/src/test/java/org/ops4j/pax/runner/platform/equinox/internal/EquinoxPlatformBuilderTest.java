@@ -149,8 +149,9 @@ public class EquinoxPlatformBuilderTest
         PlatformContext platformContext = createMock( PlatformContext.class );
 
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( platformContext.getConfiguration() ).andReturn( m_configuration ).anyTimes();
         expect( m_configuration.startConsole() ).andReturn( true );
+        expect( m_configuration.isDebugClassLoading() ).andReturn( false );
 
         replay( m_bundleContext, m_configuration, platformContext );
         assertArrayEquals(
@@ -173,8 +174,9 @@ public class EquinoxPlatformBuilderTest
         PlatformContext platformContext = createMock( PlatformContext.class );
 
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( platformContext.getConfiguration() ).andReturn( m_configuration ).anyTimes();
         expect( m_configuration.startConsole() ).andReturn( false );
+        expect( m_configuration.isDebugClassLoading() ).andReturn( false );
 
         replay( m_bundleContext, m_configuration, platformContext );
         assertArrayEquals(
@@ -196,8 +198,9 @@ public class EquinoxPlatformBuilderTest
         PlatformContext platformContext = createMock( PlatformContext.class );
 
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( platformContext.getConfiguration() ).andReturn( m_configuration ).anyTimes();
         expect( m_configuration.startConsole() ).andReturn( null );
+        expect( m_configuration.isDebugClassLoading() ).andReturn( false );
 
         replay( m_bundleContext, m_configuration, platformContext );
         assertArrayEquals(
@@ -265,12 +268,13 @@ public class EquinoxPlatformBuilderTest
     {
         PlatformContext platformContext = createMock( PlatformContext.class );
 
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( platformContext.getConfiguration() ).andReturn( m_configuration ).anyTimes();
         expect( m_configuration.usePersistedState() ).andReturn( false );
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );
         expect( platformContext.getBundles() ).andReturn( null );
-        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
+        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir ).anyTimes();
+        expect( m_configuration.isDebugClassLoading() ).andReturn( false );
         Properties properties = new Properties();
         properties.setProperty( "myProperty", "myValue" );
         expect( platformContext.getProperties() ).andReturn( properties );
@@ -296,7 +300,7 @@ public class EquinoxPlatformBuilderTest
     {
         PlatformContext platformContext = createMock( PlatformContext.class );
 
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( platformContext.getConfiguration() ).andReturn( m_configuration ).anyTimes();
         expect( m_configuration.usePersistedState() ).andReturn( false );
         expect( m_configuration.getStartLevel() ).andReturn( 10 );
         expect( m_configuration.getBundleStartLevel() ).andReturn( 20 );
@@ -330,7 +334,8 @@ public class EquinoxPlatformBuilderTest
         expect( reference3.shouldStart() ).andReturn( true );
 
         expect( platformContext.getBundles() ).andReturn( bundles );
-        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
+        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir ).anyTimes();
+        expect( m_configuration.isDebugClassLoading() ).andReturn( false );
         Properties properties = new Properties();
         properties.setProperty( "myProperty", "myValue" );
         expect( platformContext.getProperties() ).andReturn( properties );
