@@ -68,7 +68,7 @@ public interface ServiceConstants
     /**
      * Clean platform start property name.
      */
-    static final String CONFIG_CLEAN = PID + ".clean";    
+    static final String CONFIG_CLEAN = PID + ".clean";
     /**
      * Console configuration property name.
      */
@@ -78,13 +78,17 @@ public interface ServiceConstants
      */
     static final String CONFIG_OVERWRITE = PID + ".overwrite";
     /**
+     * Debug class loading configuration property name.
+     */
+    static final String CONFIG_DEBUG_CLASS_LOADING = PID + ".debugClassLoading";
+    /**
      * Overwrite user bundles configuration property name.
      */
     static final String CONFIG_OVERWRITE_USER_BUNDLES = PID + ".overwriteUserBundles";
     /**
      * Overwrite system bundles configuration property name.
      */
-    static final String CONFIG_OVERWRITE_SYSTEM_BUNDLES = PID + ".overwriteSystemBundles";     
+    static final String CONFIG_OVERWRITE_SYSTEM_BUNDLES = PID + ".overwriteSystemBundles";
     /**
      * The service property name under which the platform name should be registered.
      */

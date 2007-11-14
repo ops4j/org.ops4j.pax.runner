@@ -172,5 +172,13 @@ public interface Configuration
      * @return value of overwrite system bundles option
      */
     Boolean isOverwriteSystemBundles();
-    
+
+    /**
+     * Returns true if the platform should print debug messages about class loading.
+     * Default value is "false".
+     *
+     * @return value of debug class loading option
+     */
+    Boolean isDebugClassLoading();
+
 }

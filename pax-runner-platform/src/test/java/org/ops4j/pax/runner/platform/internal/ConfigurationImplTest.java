@@ -637,4 +637,42 @@ public class ConfigurationImplTest
         verify( resolver );
     }
 
+    // normal flow
+    @Test
+    public void isDebugClassLoading()
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.debugClassLoading" ) ).andReturn( "true" );
+
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        assertEquals( "DebugClassLoading", true, config.isDebugClassLoading() );
+        verify( resolver );
+    }
+
+    // test that an invalid value will not cause problems and will return false
+    @Test
+    public void isDebugClassLoadingWithInvalidValue()
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.debugClassLoading" ) ).andReturn( "of course" );
+
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        assertEquals( "DebugClassLoading", false, config.isDebugClassLoading() );
+        verify( resolver );
+    }
+
+    // default value should be false
+    @Test
+    public void isDebugClassLoadingDefault()
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.debugClassLoading" ) ).andReturn( null );
+
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        assertEquals( "DebugClassLoading", false, config.isDebugClassLoading() );
+        verify( resolver );
+    }
 }

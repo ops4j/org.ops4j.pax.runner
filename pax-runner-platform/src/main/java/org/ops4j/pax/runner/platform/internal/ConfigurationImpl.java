@@ -392,4 +392,17 @@ public class ConfigurationImpl
         return get( ServiceConstants.CONFIG_OVERWRITE_SYSTEM_BUNDLES );
     }
 
+    /**
+     * @see Configuration#isDebugClassLoading()
+     */
+    public Boolean isDebugClassLoading()
+    {
+        if( !contains( ServiceConstants.CONFIG_DEBUG_CLASS_LOADING ) )
+        {
+            return set( ServiceConstants.CONFIG_DEBUG_CLASS_LOADING,
+                        Boolean.valueOf( m_resolver.get( ServiceConstants.CONFIG_DEBUG_CLASS_LOADING ) )
+            );
+        }
+        return get( ServiceConstants.CONFIG_DEBUG_CLASS_LOADING );
+    }
 }
