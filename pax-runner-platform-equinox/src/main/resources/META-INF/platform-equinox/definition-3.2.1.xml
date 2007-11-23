@@ -43,7 +43,7 @@
   <profile name="web" extends="log">
     <bundle>
       <name>org.ops4j.pax.web</name>
-      <url>mvn:org.ops4j.pax.web.bundles/service/0.2.1</url>
+      <url>mvn:org.ops4j.pax.web/pax-web-service/0.2.1</url>
     </bundle>
   </profile>  
 
