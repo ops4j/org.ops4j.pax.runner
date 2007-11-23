@@ -30,6 +30,15 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+          <root url="jar://$M2_REPO$/biz/aQute/bndlib/0.0.208/bndlib-0.0.208.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
           <root url="jar://$M2_REPO$/org/osgi/osgi_R4_core/1.0/osgi_R4_core-1.0.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -67,15 +76,6 @@
       <library>
         <CLASSES>
           <root url="jar://$M2_REPO$/org/apache/felix/org.apache.felix.framework/1.0.0/org.apache.felix.framework-1.0.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$M2_REPO$/biz/aQute/bndlib/0.0.189/bndlib-0.0.189.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

@@ -44,6 +44,7 @@
     <module>pax-runner-scanner-pom</module>
     <module>pax-runner-platform</module>
     <module>pax-runner-platform-console</module>
+    <module>pax-runner-platform-concierge</module>
     <module>pax-runner-platform-equinox</module>
     <module>pax-runner-platform-felix</module>
     <module>pax-runner-platform-knopflerfish</module>

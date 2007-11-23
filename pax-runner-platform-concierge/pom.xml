@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <relativePath>../</relativePath>
+    <groupId>org.ops4j.pax.runner.pax-runner-build</groupId>
+    <artifactId>pax-runner-build-root</artifactId>
+    <version>0.5.4-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.ops4j.pax.runner</groupId>
+  <artifactId>pax-runner-platform-concierge</artifactId>
+  <version>0.5.4-SNAPSHOT</version>
+  <packaging>bundle</packaging>
+
+  <name>OPS4J Pax Runner - Concierge Platfrom Builder</name>
+  <description>
+    OPS4J Pax Runner - Concierge Platform Builder. Creates knopflerfish specific artifacts. See details at http://wiki.ops4j.org/confluence/x/HoA6
+  </description>
+
+  <url>http://wiki.ops4j.org/confluence/x/HoA6</url>
+
+  <properties>
+    <bundle.package>org.ops4j.pax.runner.platform.concierge</bundle.package>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.ops4j.pax.maven</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Import-Package>
+              org.apache.commons.logging;resolution:=optional,
+              *
+            </Import-Package>
+            <Export-Package>
+              !${bundle.package}.internal
+            </Export-Package>
+          </instructions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.ops4j.pax.runner.pax-runner-internal</groupId>
+      <artifactId>pax-runner-commons</artifactId>
+      <version>0.5.4-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.runner</groupId>
+      <artifactId>pax-runner-platform</artifactId>
+      <version>0.5.4-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+</project>

@@ -13,20 +13,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="pax-runner-commons" />
+    <orderEntry type="module" module-name="pax-runner-platform" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="jar://$M2_REPO$/org/osgi/osgi_R4_compendium/1.0/osgi_R4_compendium-1.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$M2_REPO$/biz/aQute/bndlib/0.0.208/bndlib-0.0.208.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -59,6 +50,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="pax-runner-commons" />
     <orderEntryProperties />
   </component>
 </module>

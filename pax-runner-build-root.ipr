@@ -364,6 +364,7 @@
       <module fileurl="file://$PROJECT_DIR$/pax-runner-handler-mvn/pax-runner-handler-mvn.iml" filepath="$PROJECT_DIR$/pax-runner-handler-mvn/pax-runner-handler-mvn.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-handler-wrap/pax-runner-handler-wrap.iml" filepath="$PROJECT_DIR$/pax-runner-handler-wrap/pax-runner-handler-wrap.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-platform/pax-runner-platform.iml" filepath="$PROJECT_DIR$/pax-runner-platform/pax-runner-platform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-concierge/pax-runner-platform-concierge.iml" filepath="$PROJECT_DIR$/pax-runner-platform-concierge/pax-runner-platform-concierge.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-console/pax-runner-platform-console.iml" filepath="$PROJECT_DIR$/pax-runner-platform-console/pax-runner-platform-console.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-equinox/pax-runner-platform-equinox.iml" filepath="$PROJECT_DIR$/pax-runner-platform-equinox/pax-runner-platform-equinox.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-felix/pax-runner-platform-felix.iml" filepath="$PROJECT_DIR$/pax-runner-platform-felix/pax-runner-platform-felix.iml" />
@@ -390,6 +391,19 @@
     <option name="GENERATE_NO_WARNINGS" value="false" />
     <option name="GENERATE_IIOP_STUBS" value="false" />
     <option name="ADDITIONAL_OPTIONS_STRING" value="" />
+  </component>
+  <component name="SvnBranchConfigurationManager">
+    <option name="myConfigurationMap">
+      <map>
+        <entry key="$PROJECT_DIR$">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="trunkUrl" value="https://scm.ops4j.org/repos/ops4j/projects/pax/runner" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="svn" />

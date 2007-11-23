@@ -425,7 +425,7 @@ public class PlatformImpl
     {
         LOGGER.debug( "Downloading [" + url + "]" );
         // destination will be made based on the hashcode of the url to be downloaded
-        File destination = new File( workDir, "bundles/" + url.toExternalForm().hashCode() + ".bundle" );
+        File destination = new File( workDir, "bundles/" + url.toExternalForm().hashCode() + ".jar" );
 
         // download the bundle only if is a forced overwrite or the file does not exist or the file is there but is
         // invalid
@@ -494,8 +494,9 @@ public class PlatformImpl
             final Manifest manifest = jar.getManifest();
             if( manifest == null
                 || ( checkAttributes
-                     && manifest.getMainAttributes().getValue( Constants.BUNDLE_SYMBOLICNAME ) == null ) )
-            {
+                     && manifest.getMainAttributes().getValue( Constants.BUNDLE_SYMBOLICNAME ) == null
+                     && manifest.getMainAttributes().getValue( Constants.BUNDLE_NAME ) == null) )
+            {                                                              
                 throw new PlatformException( "[" + url + "] is not a valid bundle" );
             }
         }

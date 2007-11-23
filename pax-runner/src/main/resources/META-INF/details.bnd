@@ -6,6 +6,7 @@ src/main/resources,\
 @target/dependency/pax-runner-handler-mvn.jar,\
 @target/dependency/pax-runner-handler-wrap.jar,\
 @target/dependency/pax-runner-platform.jar,\
+@target/dependency/pax-runner-platform-concierge.jar,\
 @target/dependency/pax-runner-platform-equinox.jar,\
 @target/dependency/pax-runner-platform-felix.jar,\
 @target/dependency/pax-runner-platform-knopflerfish.jar,\

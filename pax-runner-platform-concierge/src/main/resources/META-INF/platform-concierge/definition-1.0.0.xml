@@ -1,0 +1,17 @@
+<platform>
+
+  <name>Concierge</name>
+
+  <system>mvn:ch.ethz.iks.concierge/concierge/1.0_RC1</system>
+
+  <profile name="minimal" default="true">
+  </profile>
+
+  <profile name="tui" extends="minimal,config,log">
+    <bundle>
+      <name>ch.ethz.iks.concierge.shell</name>
+      <url>mvn:ch.ethz.iks.concierge/shell/1.0_RC1</url>
+    </bundle>
+  </profile>
+
+</platform>
