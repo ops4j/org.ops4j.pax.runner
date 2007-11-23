@@ -208,6 +208,7 @@ public class ConciergePlatformBuilderTest
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
         expect( platformContext.getConfiguration() ).andReturn( m_configuration );
         expect( m_configuration.usePersistedState() ).andReturn( false );
+        expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );
 
@@ -281,6 +282,7 @@ public class ConciergePlatformBuilderTest
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
         expect( platformContext.getConfiguration() ).andReturn( m_configuration );
         expect( m_configuration.usePersistedState() ).andReturn( true );
+        expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
         expect( m_configuration.getStartLevel() ).andReturn( 10 );
         expect( m_configuration.getBundleStartLevel() ).andReturn( 20 );
 

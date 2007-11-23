@@ -34,6 +34,7 @@ import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.ops4j.pax.runner.commons.Assert;
 import org.ops4j.pax.runner.commons.properties.PropertiesWriter;
 import org.ops4j.pax.runner.platform.BundleReference;
@@ -134,7 +135,9 @@ public class ConciergePlatformBuilder
             writer.append( "#############################" );
             writer.append( " Concierge settings" );
             writer.append( "#############################" );
-            writer.append( "-Dch.ethz.iks.concierge.basedir", configDirectory.getAbsolutePath() );
+            writer
+                .append( "-D" + Constants.FRAMEWORK_SYSTEMPACKAGES, context.getSystemPackages() )
+                .append( "-Dch.ethz.iks.concierge.basedir", configDirectory.getAbsolutePath() );
             // clean start ?
             final Boolean usePersistedState = configuration.usePersistedState();
             if( usePersistedState != null && !usePersistedState )
