@@ -78,10 +78,6 @@ public class ConciergePlatformBuilder
      */
     private static final String CONSOLE_PROFILE = "tui";
     /**
-     * Separator for properties (bundles)
-     */
-    private static final String SEPARATOR = " ";
-    /**
      * Current bundle context.
      */
     private final BundleContext m_bundleContext;
@@ -131,7 +127,7 @@ public class ConciergePlatformBuilder
             final Configuration configuration = context.getConfiguration();
 
             os = new FileOutputStream( configFile );
-            final PropertiesWriter writer = new PropertiesWriter( os, SEPARATOR );
+            final PropertiesWriter writer = new PropertiesWriter( os );
 
             writeHeader( writer );
 
