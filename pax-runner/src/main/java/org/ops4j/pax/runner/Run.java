@@ -451,7 +451,7 @@ public class Run
         if( LOGGER != null && !LOGGER.isErrorEnabled() )
         {
             message = t.getMessage();
-            debugInfo = "Use --" + OPTION_DEBUG + "=ERROR to see details.";
+            debugInfo = "Use --" + OPTION_LOG + "=ERROR to see details.";
         }
         System.out.println( "         ___" );
         System.out.println( "        /  /" );
@@ -511,7 +511,7 @@ public class Run
      */
     private static void initializeLogger( final CommandLine commandLine )
     {
-        String debug = commandLine.getOption( OPTION_DEBUG );
+        String debug = commandLine.getOption( OPTION_LOG );
         if( debug != null )
         {
             try

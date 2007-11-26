@@ -35,7 +35,7 @@ public interface CommandLine
     /**
      * Debug option.
      */
-    static final String OPTION_DEBUG = "debug";
+    static final String OPTION_LOG = "log";
     /**
      * Handlers option.
      */
