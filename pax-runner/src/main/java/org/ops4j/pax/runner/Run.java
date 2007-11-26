@@ -71,10 +71,6 @@ public class Run
      */
     private static final String PROVISION_SERVICE = "provision.service";
     /**
-     * Default provision url (in no argument) onfiguration property name.
-     */
-    private static final String PROVISION_DEFAULT_URL = "default.provision.url";
-    /**
      * Platform extender configuration property name.
      */
     private static final String PLATFORM_SERVICE = "platform.service";
@@ -243,17 +239,6 @@ public class Run
             throw new RuntimeException( "Could not resolve a provision service" );
         }
         List<String> arguments = context.getCommandLine().getArguments();
-        if( arguments == null || arguments.size() == 0 )
-        {
-            final String defaultProvisionURL = context.getConfiguration().getProperty( PROVISION_DEFAULT_URL );
-            Assert.notNull( "Provision url", defaultProvisionURL );
-            arguments = new ArrayList<String>();
-            final String[] urls = defaultProvisionURL.split( "," );
-            for( String url : urls )
-            {
-                arguments.add( url );
-            }
-        }
         // backup properties and replace them with audited properties
         final Properties sysPropsBackup = System.getProperties();
         try
