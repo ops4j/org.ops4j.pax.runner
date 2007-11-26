@@ -387,8 +387,7 @@ public class RunTest
     }
 
     // test bundles installation with no arguments and no default configuration
-    // expected to throw a RuntimeException
-    @Test( expected = RuntimeException.class )
+    // expected to just pass and do nothing
     public void installBundlesWithNoArgumentsAndNoDefault()
     {
         Run run = new Run();
