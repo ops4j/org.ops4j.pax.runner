@@ -357,35 +357,6 @@ public class RunTest
         );
     }
 
-    // test bundles installation from default configured provision
-    @Test
-    public void installBundlesFromConfigurationDefault()
-        throws ScannerException, MalformedSpecificationException, BundleException
-    {
-        Run run = new Run();
-        Context context = run.createContext( m_commandLine, m_config, m_resolver );
-
-        ProvisionService provisionService = createMock( ProvisionService.class );
-        InstallableBundles installables = createMock( InstallableBundles.class );
-
-        expect( m_commandLine.getArguments() ).andReturn( null );
-        expect( m_config.getProperty( "default.provision.url" ) ).andReturn(
-            "scan-file:file:bundles1.txt,scan-file:file:bundles2.txt"
-        );
-        expect( provisionService.scan( "scan-file:file:bundles1.txt" ) ).andReturn( installables );
-        expect( installables.install() ).andReturn( installables );
-        expect( provisionService.scan( "scan-file:file:bundles2.txt" ) ).andReturn( installables );
-        expect( installables.install() ).andReturn( installables );
-
-        replay( m_commandLine, m_config, m_resolver, m_recorder, m_bundleContext, provisionService,
-                installables
-        );
-        run.installBundles( provisionService, null, context );
-        verify( m_commandLine, m_config, m_resolver, m_recorder, m_bundleContext, provisionService,
-                installables
-        );
-    }
-
     // test bundles installation from arguments
     @Test
     public void installBundlesWithNoSchema()

@@ -239,52 +239,55 @@ public class Run
             throw new RuntimeException( "Could not resolve a provision service" );
         }
         List<String> arguments = context.getCommandLine().getArguments();
-        // backup properties and replace them with audited properties
-        final Properties sysPropsBackup = System.getProperties();
-        try
+        if( arguments != null )
         {
-            context.setSystemProperties( new AuditedProperties( sysPropsBackup ) );
-            System.setProperties( context.getSystemProperties() );
-            // then scan those url's
-            for( String provisionURL : arguments )
+            // backup properties and replace them with audited properties
+            final Properties sysPropsBackup = System.getProperties();
+            try
             {
-                try
+                context.setSystemProperties( new AuditedProperties( sysPropsBackup ) );
+                System.setProperties( context.getSystemProperties() );
+                // then scan those url's
+                for( String provisionURL : arguments )
                 {
                     try
                     {
-                        provisionService.scan( provisionURL ).install();
+                        try
+                        {
+                            provisionService.scan( provisionURL ).install();
+                        }
+                        catch( UnsupportedSchemaException e )
+                        {
+                            final String resolvedProvisionURL = schemaResolver.resolve( provisionURL );
+                            if( resolvedProvisionURL != null && !resolvedProvisionURL.equals( provisionURL ) )
+                            {
+                                provisionService.scan( resolvedProvisionURL ).install();
+                            }
+                            else
+                            {
+                                throw e;
+                            }
+                        }
                     }
-                    catch( UnsupportedSchemaException e )
+                    catch( MalformedSpecificationException e )
                     {
-                        final String resolvedProvisionURL = schemaResolver.resolve( provisionURL );
-                        if( resolvedProvisionURL != null && !resolvedProvisionURL.equals( provisionURL ) )
-                        {
-                            provisionService.scan( resolvedProvisionURL ).install();
-                        }
-                        else
-                        {
-                            throw e;
-                        }
+                        throw new RuntimeException( e );
                     }
-                }
-                catch( MalformedSpecificationException e )
-                {
-                    throw new RuntimeException( e );
-                }
-                catch( ScannerException e )
-                {
-                    throw new RuntimeException( e );
-                }
-                catch( BundleException e )
-                {
-                    throw new RuntimeException( e );
+                    catch( ScannerException e )
+                    {
+                        throw new RuntimeException( e );
+                    }
+                    catch( BundleException e )
+                    {
+                        throw new RuntimeException( e );
+                    }
                 }
             }
-        }
-        finally
-        {
-            // restore the backup-ed properties
-            System.setProperties( sysPropsBackup );
+            finally
+            {
+                // restore the backup-ed properties
+                System.setProperties( sysPropsBackup );
+            }
         }
     }
 
