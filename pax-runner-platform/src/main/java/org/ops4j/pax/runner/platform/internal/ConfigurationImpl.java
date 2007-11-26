@@ -208,7 +208,10 @@ public class ConfigurationImpl
                     }
                     catch( Error e )
                     {
-                        // fallback when running under Java 1.4.x
+                        // should only happen under Java 1.4.x as this method does not exist
+                    }
+                    if( javaHome == null )
+                    {
                         javaHome = System.getProperty( "java.home" );
                     }
                 }

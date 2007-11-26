@@ -171,7 +171,9 @@ public class ConfigurationImplTest
             }
             catch( Error e )
             {
-                // fallback when running under Java 1.4.x
+            }
+            if(javaHome == null)
+            {
                 javaHome = System.getProperty( "java.home" );
             }
         }
