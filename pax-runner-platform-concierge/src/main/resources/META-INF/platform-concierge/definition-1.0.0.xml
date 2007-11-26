@@ -5,6 +5,10 @@
   <system>mvn:ch.ethz.iks.concierge/concierge/1.0_RC1</system>
 
   <profile name="minimal" default="true">
+    <bundle>
+      <name>ch.ethz.iks.concierge.service.tracker</name>
+      <url>mvn:ch.ethz.iks.concierge/service-tracker/1.0_RC1</url>
+    </bundle>
   </profile>
 
   <profile name="tui" extends="minimal">
