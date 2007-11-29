@@ -408,4 +408,20 @@ public class ConfigurationImpl
         }
         return get( ServiceConstants.CONFIG_DEBUG_CLASS_LOADING );
     }
+
+    public Boolean isDownloadFeedback()
+    {
+        if( !contains( ServiceConstants.CONFIG_DOWNLOAD_FEEDBACK ) )
+        {
+            String downloadFeedback = m_resolver.get( ServiceConstants.CONFIG_DOWNLOAD_FEEDBACK );
+            if( downloadFeedback == null )
+            {
+                downloadFeedback = Boolean.TRUE.toString();
+            }
+            return set( ServiceConstants.CONFIG_DOWNLOAD_FEEDBACK,
+                        Boolean.valueOf( downloadFeedback )
+            );
+        }
+        return get( ServiceConstants.CONFIG_OVERWRITE_SYSTEM_BUNDLES );
+    }
 }

@@ -677,4 +677,34 @@ public class ConfigurationImplTest
         assertEquals( "DebugClassLoading", false, config.isDebugClassLoading() );
         verify( resolver );
     }
+
+     /**
+     * Test that default value is true.
+     */
+    @Test
+    public void isDownloadFeebackDefault()
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.downloadFeedback" ) ).andReturn( null );
+
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        assertEquals( "Download feedback", true, config.isDownloadFeedback() );
+        verify( resolver );
+    }
+
+    /**
+     * Test normal flow
+     */
+    @Test
+    public void isDownloadFeedback()
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( "org.ops4j.pax.runner.platform.downloadFeedback" ) ).andReturn( "false" );
+
+        replay( resolver );
+        Configuration config = new ConfigurationImpl( resolver );
+        assertEquals( "Download feedback", false, config.isDownloadFeedback() );
+        verify( resolver );
+    }
 }

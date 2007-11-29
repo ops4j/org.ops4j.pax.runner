@@ -168,18 +168,24 @@ public class PlatformImpl
         final Boolean overwriteBundles = configuration.isOverwrite();
         final Boolean overwriteUserBundles = configuration.isOverwriteUserBundles();
         final Boolean overwriteSystemBundles = configuration.isOverwriteSystemBundles();
+        final Boolean downloadFeeback = configuration.isDownloadFeedback();
         LOGGER.info( "Downloading bundles..." );
         // download system package
         LOGGER.debug( "Download system package" );
-        final File systemFile = downloadSystemFile( workDir, definition, overwriteBundles || overwriteSystemBundles );
+        final File systemFile =
+            downloadSystemFile( workDir, definition, overwriteBundles || overwriteSystemBundles, downloadFeeback );
         // download the rest of the bundles
         final List<LocalBundle> bundlesToInstall = new ArrayList<LocalBundle>();
         LOGGER.debug( "Download platform bundles" );
         bundlesToInstall.addAll(
-            downloadPlatformBundles( workDir, definition, context, overwriteBundles || overwriteSystemBundles )
+            downloadPlatformBundles( workDir, definition, context, overwriteBundles || overwriteSystemBundles,
+                                     downloadFeeback
+            )
         );
         LOGGER.debug( "Download bundles" );
-        bundlesToInstall.addAll( downloadBundles( workDir, bundles, overwriteBundles || overwriteUserBundles ) );
+        bundlesToInstall.addAll(
+            downloadBundles( workDir, bundles, overwriteBundles || overwriteUserBundles, downloadFeeback )
+        );
         context.setBundles( bundlesToInstall );
         context.setSystemPackages( createPackageList( configuration, definition ) );
 
@@ -325,16 +331,17 @@ public class PlatformImpl
     /**
      * Downloads the bundles that will be installed to the working directory.
      *
-     * @param bundles   url of bundles to be installed
-     * @param workDir   the directory where to download bundles
-     * @param overwrite if the bundles should be overwriten
+     * @param bundles         url of bundles to be installed
+     * @param workDir         the directory where to download bundles
+     * @param overwrite       if the bundles should be overwriten
+     * @param downloadFeeback whether or not downloading process should display fne grained progres info
      *
      * @return a list of downloaded files
      *
      * @throws PlatformException re-thrown
      */
     private List<LocalBundle> downloadBundles( final File workDir, final List<BundleReference> bundles,
-                                               final Boolean overwrite )
+                                               final Boolean overwrite, final boolean downloadFeeback )
         throws PlatformException
     {
         final List<LocalBundle> localBundles = new ArrayList<LocalBundle>();
@@ -348,7 +355,10 @@ public class PlatformImpl
                     throw new PlatformException( "Invalid url in bundle refrence [" + reference + "]" );
                 }
                 localBundles.add(
-                    new LocalBundleImpl( reference, download( workDir, url, reference.getName(), overwrite, true ) )
+                    new LocalBundleImpl( reference, download( workDir, url, reference.getName(), overwrite, true,
+                                                              downloadFeeback
+                    )
+                    )
                 );
             }
         }
@@ -362,13 +372,15 @@ public class PlatformImpl
      * @param definition      to take the system package
      * @param platformContext current platform context
      * @param overwrite       if the bundles should be overwriten
+     * @param downloadFeeback whether or not downloading process should display fne grained progres info
      *
      * @return a list of downloaded files
      *
      * @throws PlatformException re-thrown
      */
     private List<LocalBundle> downloadPlatformBundles( final File workDir, final PlatformDefinition definition,
-                                                       final PlatformContext platformContext, final Boolean overwrite )
+                                                       final PlatformContext platformContext, final Boolean overwrite,
+                                                       final boolean downloadFeeback )
         throws PlatformException
     {
         final StringBuilder profiles = new StringBuilder();
@@ -386,24 +398,30 @@ public class PlatformImpl
             }
             profiles.append( builderProfile );
         }
-        return downloadBundles( workDir, definition.getPlatformBundles( profiles.toString() ), overwrite );
+        return downloadBundles( workDir, definition.getPlatformBundles( profiles.toString() ), overwrite,
+                                downloadFeeback
+        );
     }
 
     /**
      * Downloads the system file.
      *
-     * @param workDir    the directory where to download bundles
-     * @param definition to take the system package
-     * @param overwrite  if the bundles should be overwriten
+     * @param workDir         the directory where to download bundles
+     * @param definition      to take the system package
+     * @param overwrite       if the bundles should be overwriten
+     * @param downloadFeeback whether or not downloading process should display fne grained progres info
      *
      * @return the system file
      *
      * @throws PlatformException re-thrown
      */
-    private File downloadSystemFile( final File workDir, final PlatformDefinition definition, final Boolean overwrite )
+    private File downloadSystemFile( final File workDir, final PlatformDefinition definition, final Boolean overwrite,
+                                     final boolean downloadFeeback )
         throws PlatformException
     {
-        return download( workDir, definition.getSystemPackage(), definition.getSystemPackageName(), overwrite, false );
+        return download( workDir, definition.getSystemPackage(), definition.getSystemPackageName(), overwrite, false,
+                         downloadFeeback
+        );
     }
 
     /**
@@ -414,13 +432,14 @@ public class PlatformImpl
      * @param displayName     to be shown during download
      * @param overwrite       if the bundles should be overwriten
      * @param checkAttributes whether or not to check attributes in the manifest
+     * @param downloadFeeback whether or not downloading process should display fne grained progres info
      *
      * @return the File corresponding to the downloaded file.
      *
      * @throws PlatformException if the url could not be downloaded
      */
     private File download( final File workDir, final URL url, final String displayName, final Boolean overwrite,
-                           boolean checkAttributes )
+                           final boolean checkAttributes, final boolean downloadFeeback )
         throws PlatformException
     {
         LOGGER.debug( "Downloading [" + url + "]" );
@@ -452,7 +471,19 @@ public class PlatformImpl
                 try
                 {
                     os = new BufferedOutputStream( new FileOutputStream( destination ) );
-                    StreamUtils.streamCopy( url, os, displayName );
+                    StreamUtils.ProgressBar progressBar = null;
+                    if( LOGGER.isInfoEnabled() )
+                    {
+                        if( downloadFeeback )
+                        {
+                            progressBar = new StreamUtils.FineGrainedProgressBar( displayName );
+                        }
+                        else
+                        {
+                            progressBar = new StreamUtils.CoarseGrainedProgressBar( displayName );
+                        }
+                    }
+                    StreamUtils.streamCopy( url, os, progressBar );
                     LOGGER.debug( "Succesfully downloaded to [" + destination + "]" );
                 }
                 finally
@@ -495,8 +526,8 @@ public class PlatformImpl
             if( manifest == null
                 || ( checkAttributes
                      && manifest.getMainAttributes().getValue( Constants.BUNDLE_SYMBOLICNAME ) == null
-                     && manifest.getMainAttributes().getValue( Constants.BUNDLE_NAME ) == null) )
-            {                                                              
+                     && manifest.getMainAttributes().getValue( Constants.BUNDLE_NAME ) == null ) )
+            {
                 throw new PlatformException( "[" + url + "] is not a valid bundle" );
             }
         }

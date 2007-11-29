@@ -86,6 +86,10 @@ public interface ServiceConstants
      */
     static final String CONFIG_OVERWRITE_USER_BUNDLES = PID + ".overwriteUserBundles";
     /**
+     * Download feeback configuration property name.
+     */
+    static final String CONFIG_DOWNLOAD_FEEDBACK = PID + ".downloadFeedback";
+    /**
      * Overwrite system bundles configuration property name.
      */
     static final String CONFIG_OVERWRITE_SYSTEM_BUNDLES = PID + ".overwriteSystemBundles";

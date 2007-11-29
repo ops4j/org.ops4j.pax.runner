@@ -320,6 +320,7 @@ public class PlatformImplTest
         expect( m_config.isOverwrite() ).andReturn( true );
         expect( m_config.isOverwriteUserBundles() ).andReturn( false );
         expect( m_config.isOverwriteSystemBundles() ).andReturn( false );
+        expect( m_config.isDownloadFeedback() ).andReturn( false );
         expect( m_definition.getSystemPackage() ).andReturn( systemBundleURL );
         expect( m_definition.getSystemPackageName() ).andReturn( "system package" );
         List<BundleReference> platformBundles = new ArrayList<BundleReference>();

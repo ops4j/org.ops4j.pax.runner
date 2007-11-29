@@ -181,4 +181,11 @@ public interface Configuration
      */
     Boolean isDebugClassLoading();
 
+    /**
+     * Retrurns true if detailed information about downloading process should be displayed.
+     * Default value is true.
+     *
+     * @return value of download feedback option
+     */
+    Boolean isDownloadFeedback();
 }
