@@ -21,11 +21,6 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.ops4j.pax.runner.commons.Assert;
-import org.ops4j.pax.runner.commons.resolver.BundleContextResolver;
-import org.ops4j.pax.runner.commons.resolver.CompositeResolver;
-import org.ops4j.pax.runner.commons.resolver.DictionaryResolver;
-import org.ops4j.pax.runner.handler.wrap.ServiceConstants;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -34,6 +29,11 @@ import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedService;
 import org.osgi.service.url.URLConstants;
 import org.osgi.service.url.URLStreamHandlerService;
+import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.pax.runner.commons.resolver.BundleContextResolver;
+import org.ops4j.pax.runner.commons.resolver.CompositeResolver;
+import org.ops4j.pax.runner.commons.resolver.DictionaryResolver;
+import org.ops4j.pax.runner.handler.wrap.ServiceConstants;
 
 /**
  * Bundle activator for wrap: protocol handler.
@@ -49,7 +49,7 @@ public final class Activator
     /**
      * Logger.
      */
-    private static final Log LOGGER = LogFactory.getLog( Activator.class );
+    private static final Log LOG = LogFactory.getLog( Activator.class );
     /**
      * Bundle context in use.
      */
@@ -81,7 +81,7 @@ public final class Activator
         m_bundleContext = bundleContext;
         registerHandler();
         registerManagedService();
-        LOGGER.info( "Protocol [" + ServiceConstants.PROTOCOL + "] handler started" );
+        LOG.debug( "Protocol [" + ServiceConstants.PROTOCOL + "] handler started" );
     }
 
     /**
@@ -95,16 +95,16 @@ public final class Activator
     public void stop( final BundleContext bundleContext )
     {
         Assert.notNull( "Bundle context", bundleContext );
-        if ( m_handlerReg != null )
+        if( m_handlerReg != null )
         {
             m_handlerReg.unregister();
         }
-        if ( m_managedServiceReg != null )
+        if( m_managedServiceReg != null )
         {
             m_managedServiceReg.unregister();
         }
         m_bundleContext = null;
-        LOGGER.info( "Protocol [" + ServiceConstants.PROTOCOL + "] handler stopped" );
+        LOG.debug( "Protocol [" + ServiceConstants.PROTOCOL + "] handler stopped" );
     }
 
     /**
@@ -143,7 +143,7 @@ public final class Activator
                 public void updated( final Dictionary config )
                     throws ConfigurationException
                 {
-                    if ( config == null )
+                    if( config == null )
                     {
                         m_handler.setResolver( new BundleContextResolver( m_bundleContext ) );
                     }

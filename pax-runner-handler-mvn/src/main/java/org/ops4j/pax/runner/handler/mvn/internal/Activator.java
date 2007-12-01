@@ -49,7 +49,7 @@ public final class Activator
     /**
      * Logger.
      */
-    private static final Log LOGGER = LogFactory.getLog( Activator.class );
+    private static final Log LOG = LogFactory.getLog( Activator.class );
     /**
      * Bundle context in use.
      */
@@ -81,7 +81,7 @@ public final class Activator
         m_bundleContext = bundleContext;
         registerHandler();
         registerManagedService();
-        LOGGER.info( "Protocol [" + ServiceConstants.PROTOCOL + "] handler started" );
+        LOG.debug( "Protocol [" + ServiceConstants.PROTOCOL + "] handler started" );
     }
 
     /**
@@ -104,7 +104,7 @@ public final class Activator
             m_managedServiceReg.unregister();
         }
         m_bundleContext = null;
-        LOGGER.info( "Protocol [" + ServiceConstants.PROTOCOL + "] handler stopped" );
+        LOG.debug( "Protocol [" + ServiceConstants.PROTOCOL + "] handler stopped" );
     }
 
     /**

@@ -47,7 +47,7 @@ public abstract class AbstractScannerActivator<T extends Scanner>
     /**
      * Logger.
      */
-    private static final Log LOGGER = LogFactory.getLog( AbstractScannerActivator.class );
+    private static final Log LOG = LogFactory.getLog( AbstractScannerActivator.class );
     /**
      * The bundle context.
      */
@@ -75,7 +75,7 @@ public abstract class AbstractScannerActivator<T extends Scanner>
         m_bundleContext = bundleContext;
         registerScanner();
         registerManagedService();
-        LOGGER.info( "Scanner for schema [" + getSchema() + "] started" );
+        LOG.debug( "Scanner for schema [" + getSchema() + "] started" );
     }
 
     /**
@@ -98,7 +98,7 @@ public abstract class AbstractScannerActivator<T extends Scanner>
             m_managedServiceReg.unregister();
         }
         m_bundleContext = null;
-        LOGGER.info( "Scanner for schema [" + getSchema() + "] stopped" );
+        LOG.debug( "Scanner for schema [" + getSchema() + "] stopped" );
     }
 
     /**
