@@ -77,6 +77,15 @@ public class Pipe
 
     public void run()
     {
+        /*
+         * Note: The original code only read characters from the stream one at a
+         * time. This corrupted the output by interleaving data from System.out
+         * and System.err.  The below reads bytes from in blocks as they are made
+         * available by the Platform process.  This groups the data as appropriate
+         * to prevent this interleaving.  The bugs related to this are:
+         * PAXRUNNER-68: http://issues.ops4j.org/jira/browse/PAXRUNNER-68
+         * PAXRUNNER-80: http://issues.ops4j.org/jira/browse/PAXRUNNER-80
+         */
         byte[] cbuf = new byte[8192];
         while( Thread.currentThread() == m_thread )
         {
