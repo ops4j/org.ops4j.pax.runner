@@ -17,15 +17,9 @@
  */
 package org.ops4j.pax.runner.platform.internal;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Writer;
 
 /**
  * TODO add unit tests
@@ -35,23 +29,23 @@ public class Pipe
     implements Runnable
 {
 
-    private final Reader m_in;
-    private final Writer m_out;
+    private final InputStream m_in;
+    private final OutputStream m_out;
     private Object m_processStream;
 
     private volatile Thread m_thread;
 
     public Pipe( InputStream processStream, OutputStream systemStream )
     {
-        m_in = new BufferedReader( new InputStreamReader( processStream ) );
-        m_out = new BufferedWriter( new OutputStreamWriter( systemStream ) );
+        m_in = processStream;
+        m_out = systemStream;
         m_processStream = m_in;
     }
 
     public Pipe( OutputStream processStream, InputStream systemStream )
     {
-        m_in = new BufferedReader( new InputStreamReader( systemStream ) );
-        m_out = new BufferedWriter( new OutputStreamWriter( processStream ) );
+        m_in = systemStream;
+        m_out = processStream;
         m_processStream = m_out;
     }
 
@@ -83,18 +77,18 @@ public class Pipe
 
     public void run()
     {
-        char[] cbuf = new char[8192];
+        byte[] cbuf = new byte[8192];
         while( Thread.currentThread() == m_thread )
         {
             try
             {
                 
-                int charsRead = m_in.read(cbuf, 0, 8192);
-                if( charsRead == -1 )
+                int bytesRead = m_in.read(cbuf, 0, 8192);
+                if( bytesRead == -1 )
                 {
                     break;
                 }
-                m_out.write(cbuf, 0, charsRead);
+                m_out.write(cbuf, 0, bytesRead);
                 m_out.flush();
             }
             catch( IOException e )
