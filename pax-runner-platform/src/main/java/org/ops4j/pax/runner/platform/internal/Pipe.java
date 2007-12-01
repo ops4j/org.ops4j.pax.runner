@@ -24,6 +24,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.Writer;
 
 /**
  * TODO add unit tests
@@ -33,8 +35,8 @@ public class Pipe
     implements Runnable
 {
 
-    private final BufferedReader m_in;
-    private final BufferedWriter m_out;
+    private final Reader m_in;
+    private final Writer m_out;
     private Object m_processStream;
 
     private volatile Thread m_thread;
@@ -81,17 +83,18 @@ public class Pipe
 
     public void run()
     {
+        char[] cbuf = new char[8192];
         while( Thread.currentThread() == m_thread )
         {
             try
             {
-                String line = m_in.readLine();
-                if( line == null )
+                
+                int charsRead = m_in.read(cbuf, 0, 8192);
+                if( charsRead == -1 )
                 {
                     break;
                 }
-                m_out.write( line );
-                m_out.newLine();
+                m_out.write(cbuf, 0, charsRead);
                 m_out.flush();
             }
             catch( IOException e )
