@@ -102,7 +102,7 @@ public class ParserTest
     {
         Parser parser = new ParserImpl( "file:/dir@5" );
         assertEquals( "URL", "file:/dir", parser.getURL() );
-        assertEquals( "Start level", 5, parser.getStartLevel() );
+        assertEquals( "Start level", Integer.valueOf( 5 ), parser.getStartLevel() );
     }
 
     @Test
@@ -120,7 +120,7 @@ public class ParserTest
     {
         Parser parser = new ParserImpl( "file:/dir@5@nostart" );
         assertEquals( "URL", "file:/dir", parser.getURL() );
-        assertEquals( "Start level", 5, parser.getStartLevel() );
+        assertEquals( "Start level", Integer.valueOf( 5 ), parser.getStartLevel() );
         assertEquals( "Start", false, parser.shouldStart() );
     }
 

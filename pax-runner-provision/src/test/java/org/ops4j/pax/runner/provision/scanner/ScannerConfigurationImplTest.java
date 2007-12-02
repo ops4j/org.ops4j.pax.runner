@@ -45,7 +45,7 @@ public class ScannerConfigurationImplTest
         Integer startlevel = config.getStartLevel();
         verify( resolver );
         assertNotNull( "Start level is null", startlevel );
-        assertEquals( "Start level", 5, startlevel );
+        assertEquals( "Start level", Integer.valueOf( 5), startlevel );
     }
 
     @Test

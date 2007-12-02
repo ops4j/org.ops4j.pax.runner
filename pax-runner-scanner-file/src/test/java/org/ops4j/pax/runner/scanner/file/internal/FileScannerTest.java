@@ -111,8 +111,8 @@ public class FileScannerTest
             createFileScanner( config, parser ).scan( file.toURL().toExternalForm() + "@10" );
         assertNotNull( "Returned bundle references list is null", references );
         assertEquals( "Nuber of bundles", 4, references.size() );
-        assertEquals( "Start level", 10, references.get( 0 ).getStartLevel() );
-        assertEquals( "Start level", 10, references.get( 3 ).getStartLevel() );
+        assertEquals( "Start level", Integer.valueOf( 10 ), references.get( 0 ).getStartLevel() );
+        assertEquals( "Start level", Integer.valueOf( 10 ), references.get( 3 ).getStartLevel() );
         verify( parser, config );
     }
 

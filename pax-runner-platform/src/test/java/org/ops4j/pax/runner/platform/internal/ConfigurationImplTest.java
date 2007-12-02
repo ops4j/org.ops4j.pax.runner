@@ -172,7 +172,7 @@ public class ConfigurationImplTest
             catch( Error e )
             {
             }
-            if(javaHome == null)
+            if( javaHome == null )
             {
                 javaHome = System.getProperty( "java.home" );
             }
@@ -192,7 +192,7 @@ public class ConfigurationImplTest
 
         replay( resolver );
         Configuration config = new ConfigurationImpl( resolver );
-        assertEquals( "Platform start level", 10, config.getProfileStartLevel() );
+        assertEquals( "Platform start level", Integer.valueOf( 10 ), config.getProfileStartLevel() );
         verify( resolver );
     }
 
@@ -205,7 +205,7 @@ public class ConfigurationImplTest
 
         replay( resolver );
         Configuration config = new ConfigurationImpl( resolver );
-        assertEquals( "Platform start level", 1, config.getProfileStartLevel() );
+        assertEquals( "Platform start level", Integer.valueOf( 1 ), config.getProfileStartLevel() );
         verify( resolver );
     }
 
@@ -218,7 +218,7 @@ public class ConfigurationImplTest
 
         replay( resolver );
         Configuration config = new ConfigurationImpl( resolver );
-        assertEquals( "Platform start level", 1, config.getProfileStartLevel() );
+        assertEquals( "Platform start level", Integer.valueOf( 1 ), config.getProfileStartLevel() );
         verify( resolver );
     }
 
@@ -231,7 +231,7 @@ public class ConfigurationImplTest
 
         replay( resolver );
         Configuration config = new ConfigurationImpl( resolver );
-        assertEquals( "Platform start level", 10, config.getStartLevel() );
+        assertEquals( "Platform start level", Integer.valueOf( 10 ), config.getStartLevel() );
         verify( resolver );
     }
 
@@ -244,7 +244,7 @@ public class ConfigurationImplTest
 
         replay( resolver );
         Configuration config = new ConfigurationImpl( resolver );
-        assertEquals( "Platform start level", 6, config.getStartLevel() );
+        assertEquals( "Platform start level", Integer.valueOf( 6 ), config.getStartLevel() );
         verify( resolver );
     }
 
@@ -257,7 +257,7 @@ public class ConfigurationImplTest
 
         replay( resolver );
         Configuration config = new ConfigurationImpl( resolver );
-        assertEquals( "Platform start level", 6, config.getStartLevel() );
+        assertEquals( "Platform start level", Integer.valueOf( 6 ), config.getStartLevel() );
         verify( resolver );
     }
 
@@ -270,7 +270,7 @@ public class ConfigurationImplTest
 
         replay( resolver );
         Configuration config = new ConfigurationImpl( resolver );
-        assertEquals( "Bundles start level", 10, config.getBundleStartLevel() );
+        assertEquals( "Bundles start level", Integer.valueOf( 10 ), config.getBundleStartLevel() );
         verify( resolver );
     }
 
@@ -283,7 +283,7 @@ public class ConfigurationImplTest
 
         replay( resolver );
         Configuration config = new ConfigurationImpl( resolver );
-        assertEquals( "Bundles start level", 5, config.getBundleStartLevel() );
+        assertEquals( "Bundles start level", Integer.valueOf( 5 ), config.getBundleStartLevel() );
         verify( resolver );
     }
 
@@ -296,7 +296,7 @@ public class ConfigurationImplTest
 
         replay( resolver );
         Configuration config = new ConfigurationImpl( resolver );
-        assertEquals( "Bundles start level", 5, config.getBundleStartLevel() );
+        assertEquals( "Bundles start level", Integer.valueOf( 5 ), config.getBundleStartLevel() );
         verify( resolver );
     }
 
@@ -678,7 +678,7 @@ public class ConfigurationImplTest
         verify( resolver );
     }
 
-     /**
+    /**
      * Test that default value is true.
      */
     @Test

@@ -20,7 +20,6 @@ package org.ops4j.pax.runner.provision.scanner;
 import java.net.MalformedURLException;
 import static org.junit.Assert.*;
 import org.junit.Test;
-import org.ops4j.pax.runner.provision.scanner.FileBundleReference;
 
 public class FileBundleReferenceTest
 {
@@ -93,7 +92,7 @@ public class FileBundleReferenceTest
     {
         FileBundleReference br = new FileBundleReference( "file://afile@5" );
         assertEquals( "url", "file://afile", br.getLocation() );
-        assertEquals( "start level", 5, br.getStartLevel() );
+        assertEquals( "start level", Integer.valueOf( 5 ), br.getStartLevel() );
         assertEquals( "start", Boolean.TRUE, br.shouldStart() );
     }
 
@@ -103,7 +102,7 @@ public class FileBundleReferenceTest
     {
         FileBundleReference br = new FileBundleReference( "file://afile@5@nostart" );
         assertEquals( "url", "file://afile", br.getLocation() );
-        assertEquals( "start level", 5, br.getStartLevel() );
+        assertEquals( "start level", Integer.valueOf( 5 ), br.getStartLevel() );
         assertEquals( "start", Boolean.FALSE, br.shouldStart() );
     }
 
@@ -113,7 +112,7 @@ public class FileBundleReferenceTest
     {
         FileBundleReference br = new FileBundleReference( "file://afile", 10, false );
         assertEquals( "url", "file://afile", br.getLocation() );
-        assertEquals( "start level", 10, br.getStartLevel() );
+        assertEquals( "start level", Integer.valueOf( 10 ), br.getStartLevel() );
         assertEquals( "start", Boolean.FALSE, br.shouldStart() );
     }
 

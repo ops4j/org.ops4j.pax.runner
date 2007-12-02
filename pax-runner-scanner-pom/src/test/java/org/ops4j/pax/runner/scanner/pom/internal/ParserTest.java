@@ -103,7 +103,7 @@ public class ParserTest
     {
         Parser parser = new ParserImpl( "file:/pom.xml@5" );
         assertEquals( "URL", new URL( "file:/pom.xml" ), parser.getPomURL() );
-        assertEquals( "Start level", 5, parser.getStartLevel() );
+        assertEquals( "Start level", Integer.valueOf( 5 ), parser.getStartLevel() );
     }
 
     @Test
@@ -121,7 +121,7 @@ public class ParserTest
     {
         Parser parser = new ParserImpl( "file:/pom.xml@5@nostart" );
         assertEquals( "URL", new URL( "file:/pom.xml" ), parser.getPomURL() );
-        assertEquals( "Start level", 5, parser.getStartLevel() );
+        assertEquals( "Start level", Integer.valueOf( 5 ), parser.getStartLevel() );
         assertEquals( "Start", false, parser.shouldStart() );
     }
 
