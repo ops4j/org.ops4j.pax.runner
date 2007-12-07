@@ -40,7 +40,8 @@ public final class Activator
     {
         return new PlatformBuilder[]{
             new EquinoxPlatformBuilder( bundleContext, "3.2.1" ),
-            new EquinoxPlatformBuilder( bundleContext, "3.3.0" )
+            new EquinoxPlatformBuilder( bundleContext, "3.3.0" ),
+            new EquinoxPlatformBuilder( bundleContext, "3.3.1" )
         };
     }
 

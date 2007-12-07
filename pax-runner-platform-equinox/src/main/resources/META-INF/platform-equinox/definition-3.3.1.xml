@@ -1,0 +1,50 @@
+<platform>
+
+  <name>Eclipse platform 3.3.1</name>
+
+  <system>mvn:org.eclipse/osgi/3.3.1.R33x_v20070828</system>
+
+  <profile name="minimal" default="true">
+    <bundle>
+      <name>Eclipse utilities</name>
+      <url>mvn:org.eclipse.osgi/util/3.1.200.v20070605</url>
+    </bundle>
+    <bundle>
+      <name>Eclipse compendium services</name>
+      <url>mvn:org.eclipse.osgi/services/3.1.200.v20070605</url>
+    </bundle>
+  </profile>
+
+  <profile name="obr" extends="minimal">
+    <bundle>
+      <name>org.apache.felix.bundlerepository</name>
+      <url>mvn:org.apache.felix/org.apache.felix.bundlerepository/1.0.0</url>
+    </bundle>
+  </profile>
+
+  <profile name="config" extends="minimal">
+    <bundle>
+      <name>org.apache.felix.configadmin</name>
+      <url>mvn:http://cvs.apache.org/maven-snapshot-repository!org.apache.felix/org.apache.felix.configadmin/0.9.0-SNAPSHOT</url>
+    </bundle>
+  </profile>
+
+  <profile name="log" extends="minimal">
+    <bundle>
+      <name>org.ops4j.pax.logging.api</name>
+      <url>mvn:org.ops4j.pax.logging/pax-logging-api/0.9.6</url>
+    </bundle>
+    <bundle>
+      <name>org.ops4j.pax.logging.service</name>
+      <url>mvn:org.ops4j.pax.logging/pax-logging-service/0.9.6</url>
+    </bundle>
+  </profile>
+
+  <profile name="web" extends="log">
+    <bundle>
+      <name>org.ops4j.pax.web</name>
+      <url>mvn:org.ops4j.pax.web/pax-web-service/0.2.1</url>
+    </bundle>
+  </profile>  
+
+</platform>
