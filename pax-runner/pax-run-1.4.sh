@@ -4,4 +4,7 @@
 #
 #
 
-java $JAVA_OPTS -jar ~/.m2/repository/org/ops4j/pax/runner/pax-runner/0.5.3-SNAPSHOT/pax-runner-0.5.3-SNAPSHOT-jdk14.jar "$@"
+SCRIPTS=`readlink $0`
+SCRIPTS=`dirname $SCRIPTS`
+
+java $JAVA_OPTS -jar $SCRIPTS/target/pax-runner-0.5.5-SNAPSHOT-jdk14.jar "$@"
