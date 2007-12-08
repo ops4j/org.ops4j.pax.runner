@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -28,6 +29,18 @@
     <plugins>
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>embed-jar</id>
+              <phase>generate-resources</phase>
+              <goals>
+                <goal>copy-dependencies</goal>
+              </goals>
+              <configuration>
+                <includeScope>provided</includeScope>
+              </configuration>
+            </execution>
+          </executions>
       </plugin>
       <plugin>
         <groupId>${maven.bundle.plugin.groupId}</groupId>
@@ -50,6 +63,7 @@
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.framework</artifactId>
       <version>1.0.0</version>
+      <scope>provided</scope>
       <exclusions>
         <!--
           remove bad dependency from the released felix 1.0.0 pom
@@ -64,87 +78,102 @@
     <dependency>
       <groupId>org.osgi</groupId>
       <artifactId>osgi_R4_core</artifactId>
-      <scope>compile</scope>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.osgi</groupId>
       <artifactId>osgi_R4_compendium</artifactId>
-      <scope>compile</scope>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner.pax-runner-internal</groupId>
       <artifactId>pax-runner-commons</artifactId>
       <version>0.5.6-SNAPSHOT</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-handler</artifactId>
       <version>0.5.6-SNAPSHOT</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-handler-mvn</artifactId>
       <version>0.5.6-SNAPSHOT</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-handler-wrap</artifactId>
       <version>0.5.6-SNAPSHOT</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-handler-classpath</artifactId>
       <version>0.5.6-SNAPSHOT</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-provision</artifactId>
       <version>0.5.6-SNAPSHOT</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-scanner-bundle</artifactId>
       <version>0.5.6-SNAPSHOT</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-scanner-dir</artifactId>
       <version>0.5.6-SNAPSHOT</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-scanner-file</artifactId>
       <version>0.5.6-SNAPSHOT</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-scanner-pom</artifactId>
       <version>0.5.6-SNAPSHOT</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-platform</artifactId>
       <version>0.5.6-SNAPSHOT</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-platform-concierge</artifactId>
       <version>0.5.6-SNAPSHOT</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-platform-equinox</artifactId>
       <version>0.5.6-SNAPSHOT</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-platform-felix</artifactId>
       <version>0.5.6-SNAPSHOT</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-platform-knopflerfish</artifactId>
       <version>0.5.6-SNAPSHOT</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 
