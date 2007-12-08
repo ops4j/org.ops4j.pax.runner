@@ -7,4 +7,4 @@
 SCRIPTS=`readlink $0`
 SCRIPTS=`dirname $SCRIPTS`
 
-java $JAVA_OPTS -jar $SCRIPTS/target/pax-runner-0.5.5-SNAPSHOT.jar "$@"
+java $JAVA_OPTS -jar $SCRIPTS/target/pax-runner-0.5.6-SNAPSHOT.jar "$@"
