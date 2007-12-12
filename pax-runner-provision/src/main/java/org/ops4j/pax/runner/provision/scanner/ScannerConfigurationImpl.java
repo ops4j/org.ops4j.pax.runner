@@ -100,4 +100,24 @@ public class ScannerConfigurationImpl
         }
         return get( m_pid + ServiceConstants.PROPERTY_START );
     }
+
+    /**
+     * @see ScannerConfiguration#shouldUpdate()
+     */
+    public Boolean shouldUpdate()
+    {
+        if( !contains( m_pid + ServiceConstants.PROPERTY_UPDATE ) )
+        {
+            final String value = m_resolver.get( m_pid + ServiceConstants.PROPERTY_UPDATE );
+            if( value == null )
+            {
+                return set( m_pid + ServiceConstants.PROPERTY_UPDATE, Boolean.FALSE );
+            }
+            else
+            {
+                return set( m_pid + ServiceConstants.PROPERTY_UPDATE, Boolean.valueOf( value ) );
+            }
+        }
+        return get( m_pid + ServiceConstants.PROPERTY_UPDATE );
+    }
 }

@@ -101,6 +101,7 @@ public class FileScanner
                 bufferedReader = new BufferedReader( new InputStreamReader( parser.getFileURL().openStream() ) );
                 Integer defaultStartLevel = getDefaultStartLevel( parser, config );
                 Boolean defaultStart = getDefaultStart( parser, config );
+                Boolean defaultUpdate = getDefaultUpdate( parser, config );
                 String line;
                 while( ( line = bufferedReader.readLine() ) != null )
                 {
@@ -114,13 +115,15 @@ public class FileScanner
                                 throw new ScannerException( "Invalid property: " + line );
                             }
                             String value = matcher.group( 2 );
-                            value = SystemPropertyUtils.resolvePlaceholders(value);
-							System.setProperty( matcher.group( 1 ), value );
+                            value = SystemPropertyUtils.resolvePlaceholders( value );
+                            System.setProperty( matcher.group( 1 ), value );
                         }
                         else
                         {
-                        	line = SystemPropertyUtils.resolvePlaceholders(line);
-                            references.add( new FileBundleReference( line, defaultStartLevel, defaultStart ) );
+                            line = SystemPropertyUtils.resolvePlaceholders( line );
+                            references.add(
+                                new FileBundleReference( line, defaultStartLevel, defaultStart, defaultUpdate )
+                            );
                         }
                     }
                 }
@@ -174,6 +177,24 @@ public class FileScanner
             start = config.shouldStart();
         }
         return start;
+    }
+
+    /**
+     * Returns the default update by first looking at the parser and if not set fallback to configuration.
+     *
+     * @param parser a parser
+     * @param config a configuration
+     *
+     * @return default update or null if nos set.
+     */
+    private Boolean getDefaultUpdate( final Parser parser, final ScannerConfiguration config )
+    {
+        Boolean update = parser.shouldUpdate();
+        if( update == null )
+        {
+            update = config.shouldUpdate();
+        }
+        return update;
     }
 
     /**

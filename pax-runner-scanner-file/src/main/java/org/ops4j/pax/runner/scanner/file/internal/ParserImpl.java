@@ -34,7 +34,7 @@ public class ParserImpl
     /**
      * Syntax for the url; to be shown on exception messages.
      */
-    private static final String SYNTAX = "file_url[@start_level][@nostart]";
+    private static final String SYNTAX = "file_url[@start_level][@nostart][@update]";
     /**
      * Separator for options.
      */
@@ -42,7 +42,11 @@ public class ParserImpl
     /**
      * Start option.
      */
-    private static final String START = "nostart";
+    private static final String NO_START = "nostart";
+    /**
+     * Update option.
+     */
+    private static final String UPDATE = "update";
 
     /**
      * URL to file containing the bundles to be installed.
@@ -56,6 +60,10 @@ public class ParserImpl
      * The start option.
      */
     private Boolean m_shouldStart;
+    /**
+     * The update option.
+     */
+    private Boolean m_shouldUpdate;
 
     /**
      * Creates a new protocol parser.
@@ -107,9 +115,14 @@ public class ParserImpl
     private void parseSegment( final String segment )
         throws MalformedSpecificationException
     {
-        if( m_shouldStart == null && segment.equalsIgnoreCase( START ) )
+        if( m_shouldStart == null && segment.equalsIgnoreCase( NO_START ) )
         {
             m_shouldStart = false;
+            return;
+        }
+        if( m_shouldUpdate == null && segment.equalsIgnoreCase( UPDATE ) )
+        {
+            m_shouldUpdate = true;
             return;
         }
         if( m_startLevel == null )
@@ -149,6 +162,14 @@ public class ParserImpl
     public Boolean shouldStart()
     {
         return m_shouldStart;
+    }
+
+    /**
+     * @see Parser#shouldUpdate()
+     */
+    public Boolean shouldUpdate()
+    {
+        return m_shouldUpdate;
     }
 
 }

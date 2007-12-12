@@ -22,4 +22,8 @@ public interface ServiceConstants
      */
     static final String PROPERTY_START = ".start";
 
+    /**
+     * Update configuration property name (used by scanners).
+     */
+    static final String PROPERTY_UPDATE = ".update";
 }

@@ -34,7 +34,7 @@ public class FileBundleReference
     /**
      * Syntax for the url; to be shown on exception messages.
      */
-    private static final String SYNTAX = "bundle_url[@start_level][@nostart]";
+    private static final String SYNTAX = "bundle_url[@start_level][@nostart][@update]";
     /**
      * Separator for options.
      */
@@ -43,6 +43,10 @@ public class FileBundleReference
      * Start option.
      */
     private static final String NO_START = "nostart";
+    /**
+     * Update option.
+     */
+    private static final String UPDATE = "update";
 
     /**
      * Creates a new bundle reference based on a bundle reference.
@@ -89,6 +93,10 @@ public class FileBundleReference
         {
             setShouldStart( true );
         }
+        if( shouldUpdate() == null )
+        {
+            setShouldUpdate( false );
+        }
     }
 
     /**
@@ -101,7 +109,7 @@ public class FileBundleReference
      * @throws MalformedURLException if the reference is malformed
      */
     public FileBundleReference( final String reference, final Integer defaultStartLevel,
-                                final Boolean defaultShouldStart )
+                                final Boolean defaultShouldStart, final Boolean defaultShouldUpdate )
         throws MalformedURLException
     {
         this( reference );
@@ -113,6 +121,11 @@ public class FileBundleReference
         if( defaultShouldStart != null && ( shouldStart() == null || shouldStart() ) )
         {
             setShouldStart( defaultShouldStart );
+        }
+        // by default update is false so if we have a default passed, then use that one
+        if( defaultShouldUpdate != null && ( shouldUpdate() == null || !shouldUpdate() ) )
+        {
+            setShouldUpdate( defaultShouldUpdate );
         }
     }
 
@@ -129,6 +142,11 @@ public class FileBundleReference
         if( shouldStart() == null && segment.equalsIgnoreCase( NO_START ) )
         {
             setShouldStart( false );
+            return;
+        }
+        if( shouldUpdate() == null && segment.equalsIgnoreCase( UPDATE ) )
+        {
+            setShouldUpdate( true );
             return;
         }
         if( getStartLevel() == null )

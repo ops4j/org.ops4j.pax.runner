@@ -76,7 +76,14 @@ public class BundleScanner
         final ScannerConfiguration config = createConfiguration();
         try
         {
-            references.add( new FileBundleReference( urlSpec, config.getStartLevel(), config.shouldStart() ) );
+            references.add(
+                new FileBundleReference(
+                    urlSpec,
+                    config.getStartLevel(),
+                    config.shouldStart(),
+                    config.shouldUpdate()
+                )
+            );
         }
         catch( MalformedURLException e )
         {

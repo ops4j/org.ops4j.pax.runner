@@ -79,6 +79,7 @@ public class InstallableBundleImplTest
         Bundle bundle = createMock( Bundle.class );
         expect( reference.getLocation() ).andReturn( "file:bundle.jar" );
         expect( context.installBundle( "file:bundle.jar" ) ).andReturn( bundle );
+        expect( reference.shouldUpdate() ).andReturn( false );
         expect( reference.shouldStart() ).andReturn( true );
         bundle.start();
         replay( context, reference, bundle );
@@ -95,6 +96,7 @@ public class InstallableBundleImplTest
         Bundle bundle = createMock( Bundle.class );
         expect( reference.getLocation() ).andReturn( "file:bundle.jar" );
         expect( context.installBundle( "file:bundle.jar" ) ).andReturn( bundle );
+        expect( reference.shouldUpdate() ).andReturn( false );
         expect( reference.shouldStart() ).andReturn( false );
         replay( context, reference, bundle );
         new InstallableBundleImpl( context, reference ).install();
@@ -111,6 +113,7 @@ public class InstallableBundleImplTest
         StartLevel startLevel = createMock( StartLevel.class );
         expect( reference.getLocation() ).andReturn( "file:bundle.jar" );
         expect( context.installBundle( "file:bundle.jar" ) ).andReturn( bundle );
+        expect( reference.shouldUpdate() ).andReturn( false );
         expect( reference.getStartLevel() ).andReturn( 5 );
         startLevel.setBundleStartLevel( bundle, 5 );
         expect( reference.shouldStart() ).andReturn( false );
@@ -129,6 +132,7 @@ public class InstallableBundleImplTest
         StartLevel startLevel = createMock( StartLevel.class );
         expect( reference.getLocation() ).andReturn( "file:bundle.jar" );
         expect( context.installBundle( "file:bundle.jar" ) ).andReturn( bundle );
+        expect( reference.shouldUpdate() ).andReturn( false );
         expect( reference.getStartLevel() ).andReturn( null );
         expect( reference.shouldStart() ).andReturn( false );
         replay( context, reference, bundle, startLevel );
@@ -145,6 +149,7 @@ public class InstallableBundleImplTest
         Bundle bundle = createMock( Bundle.class );
         expect( reference.getLocation() ).andReturn( "file:bundle.jar" );
         expect( context.installBundle( "file:bundle.jar" ) ).andReturn( bundle );
+        expect( reference.shouldUpdate() ).andReturn( false );
         expect( reference.shouldStart() ).andReturn( false );
         replay( context, reference, bundle );
         InstallableBundle installable = new InstallableBundleImpl( context, reference ).install();
@@ -165,6 +170,7 @@ public class InstallableBundleImplTest
         Bundle bundle = createMock( Bundle.class );
         expect( reference.getLocation() ).andReturn( "file:bundle.jar" );
         expect( context.installBundle( "file:bundle.jar" ) ).andReturn( bundle );
+        expect( reference.shouldUpdate() ).andReturn( false );
         expect( reference.shouldStart() ).andReturn( false );
         bundle.start();
         replay( context, reference, bundle );
@@ -181,6 +187,7 @@ public class InstallableBundleImplTest
         Bundle bundle = createMock( Bundle.class );
         expect( reference.getLocation() ).andReturn( "file:bundle.jar" );
         expect( context.installBundle( "file:bundle.jar" ) ).andReturn( bundle );
+        expect( reference.shouldUpdate() ).andReturn( false );
         expect( reference.shouldStart() ).andReturn( false );
         replay( context, reference, bundle );
         new InstallableBundleImpl( context, reference ).install().install();
@@ -196,6 +203,7 @@ public class InstallableBundleImplTest
         Bundle bundle = createMock( Bundle.class );
         expect( reference.getLocation() ).andReturn( "file:bundle.jar" );
         expect( context.installBundle( "file:bundle.jar" ) ).andReturn( bundle );
+        expect( reference.shouldUpdate() ).andReturn( false );
         expect( reference.shouldStart() ).andReturn( false );
         bundle.start();
         replay( context, reference, bundle );

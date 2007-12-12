@@ -43,9 +43,13 @@ public class BundleReferenceBean
      */
     private Integer m_startLevel;
     /**
-     * Whether or not the bundle should be started. Can be null, case when the bundle is tarted.
+     * Whether or not the bundle should be started. Can be null, case when the bundle is started.
      */
     private Boolean m_shouldStart;
+    /**
+     * True if the bundle should be updated. Can be null, case when the bundle is not updated.
+     */
+    private Boolean m_update;
 
     /**
      * Create a new bundle reference based on url and with null start level and start.
@@ -54,7 +58,7 @@ public class BundleReferenceBean
      */
     public BundleReferenceBean( final URL url )
     {
-        this( null, url, null, null );
+        this( null, url, null, null, null );
     }
 
     /**
@@ -66,7 +70,7 @@ public class BundleReferenceBean
      */
     public BundleReferenceBean( final String name, final URL url )
     {
-        this( name, url, null, null );
+        this( name, url, null, null, null );
     }
 
     /**
@@ -75,14 +79,16 @@ public class BundleReferenceBean
      * @param name        a nice ready to print bundle m_name; optional
      * @param url         bundle location
      * @param startLevel  start level of the bundle; optional
-     * @param shouldStart wether or not the bundle should be started; optional
+     * @param shouldStart if the bundle should be started; optional
+     * @param update   if the bundle should be updated; optional
      */
-    public BundleReferenceBean( final String name, final URL url, final Integer startLevel, final Boolean shouldStart )
+    public BundleReferenceBean( final String name, final URL url, final Integer startLevel, final Boolean shouldStart, final Boolean update )
     {
         setURL( url );
         setName( name );
         m_startLevel = startLevel;
         m_shouldStart = shouldStart;
+        m_update = update;
     }
 
     public String getName()
@@ -103,6 +109,11 @@ public class BundleReferenceBean
     public Boolean shouldStart()
     {
         return m_shouldStart;
+    }
+
+    public Boolean shouldUpdate()
+    {
+        return m_update;
     }
 
     public void setName( String name )
@@ -160,6 +171,8 @@ public class BundleReferenceBean
             .append( getStartLevel() )
             .append( ",shouldStart=" )
             .append( shouldStart() )
+            .append( ",shouldUpdate=" )
+            .append( shouldUpdate() )
             .append( "}" )
             .toString();
     }

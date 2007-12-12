@@ -91,10 +91,13 @@ public class PomScanner
                 final Document doc = XmlUtils.parseDoc( inputStream );
                 final Integer defaultStartLevel = getDefaultStartLevel( parser, config );
                 final Boolean defaultStart = getDefaultStart( parser, config );
+                final Boolean defaultUpdate = getDefaultUpdate( parser, config );
                 final String mainArtifactURL = composeURL( doc.getDocumentElement(), "packaging" );
                 if( mainArtifactURL != null )
                 {
-                    references.add( new FileBundleReference( mainArtifactURL, defaultStartLevel, defaultStart ) );
+                    references.add(
+                        new FileBundleReference( mainArtifactURL, defaultStartLevel, defaultStart, defaultUpdate )
+                    );
                 }
                 // check out properties before processing dependencies
                 final Element properties = XmlUtils.getElement( doc, "properties" );
@@ -117,7 +120,10 @@ public class PomScanner
                         final String dependencyURL = composeURL( dependency, "type" );
                         if( dependencyURL != null )
                         {
-                            references.add( new FileBundleReference( dependencyURL, defaultStartLevel, defaultStart ) );
+                            references.add( new FileBundleReference( dependencyURL, defaultStartLevel, defaultStart,
+                                                                     defaultUpdate
+                            )
+                            );
                         }
                     }
                 }
@@ -184,7 +190,7 @@ public class PomScanner
         String version = null;
         if( element != null )
         {
-            version = getTextContent(element);
+            version = getTextContent( element );
         }
         if( version != null && version.trim().length() == 0 )
         {
@@ -233,14 +239,15 @@ public class PomScanner
         return builder.toString();
     }
 
-	private String getTextContent(Element element) {
-		String text = XmlUtils.getTextContent( element );
-		if( text!=null )
-		{
-		  text = SystemPropertyUtils.resolvePlaceholders(text);
-		}
-		return text;
-	}
+    private String getTextContent( Element element )
+    {
+        String text = XmlUtils.getTextContent( element );
+        if( text != null )
+        {
+            text = SystemPropertyUtils.resolvePlaceholders( text );
+        }
+        return text;
+    }
 
     /**
      * Returns the default start level by first looking at the parser and if not set fallback to configuration.
@@ -248,7 +255,7 @@ public class PomScanner
      * @param parser a parser
      * @param config a configuration
      *
-     * @return default start level or null if nos set.
+     * @return default start level or null if not set.
      */
     private Integer getDefaultStartLevel( Parser parser, ScannerConfiguration config )
     {
@@ -266,7 +273,7 @@ public class PomScanner
      * @param parser a parser
      * @param config a configuration
      *
-     * @return default start level or null if nos set.
+     * @return default start or null if not set.
      */
     private Boolean getDefaultStart( final Parser parser, final ScannerConfiguration config )
     {
@@ -276,6 +283,24 @@ public class PomScanner
             start = config.shouldStart();
         }
         return start;
+    }
+
+    /**
+     * Returns the default update by first looking at the parser and if not set fallback to configuration.
+     *
+     * @param parser a parser
+     * @param config a configuration
+     *
+     * @return default update or null if not set.
+     */
+    private Boolean getDefaultUpdate( final Parser parser, final ScannerConfiguration config )
+    {
+        Boolean update = parser.shouldUpdate();
+        if( update == null )
+        {
+            update = config.shouldUpdate();
+        }
+        return update;
     }
 
     /**

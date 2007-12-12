@@ -64,7 +64,8 @@ public class PomScannerTest
         verify( parser, config );
     }
 
-    public void scan( BundleReference[] expected, Integer startLevel, Boolean shouldStart, String pomFile )
+    public void scan( BundleReference[] expected, Integer startLevel, Boolean shouldStart, Boolean update,
+                      String pomFile )
         throws ScannerException, MalformedURLException
     {
         Parser parser = createMock( Parser.class );
@@ -82,6 +83,11 @@ public class PomScannerTest
         {
             expect( config.shouldStart() ).andReturn( null );
         }
+        expect( parser.shouldUpdate() ).andReturn( update );
+        if( update == null )
+        {
+            expect( config.shouldUpdate() ).andReturn( null );
+        }
 
         replay( parser, config );
         List<BundleReference> references = createPomScanner( config, parser ).scan( file.toURL().toExternalForm() );
@@ -96,12 +102,12 @@ public class PomScannerTest
     {
         BundleReference[] expected = new BundleReference[]
             {
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/main-artifact/0.1.0-SNAPSHOT", null, null ),
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/first-dependency/0.1.0/jar", null, null ),
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/second-dependency", null, null ),
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/third-dependency/0.3", null, null )
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/main-artifact/0.1.0-SNAPSHOT", null, null, null ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/first-dependency/0.1.0/jar", null, null, null ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/second-dependency", null, null, null ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/third-dependency/0.3", null, null, null )
             };
-        scan( expected, null, null, "scanner/pom.xml" );
+        scan( expected, null, null, null, "scanner/pom.xml" );
     }
 
     @Test
@@ -110,12 +116,12 @@ public class PomScannerTest
     {
         BundleReference[] expected = new BundleReference[]
             {
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/main-artifact/0.1.0-SNAPSHOT", 5, null ),
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/first-dependency/0.1.0/jar", 5, null ),
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/second-dependency", 5, null ),
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/third-dependency/0.3", 5, null )
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/main-artifact/0.1.0-SNAPSHOT", 5, null, null ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/first-dependency/0.1.0/jar", 5, null, null ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/second-dependency", 5, null, null ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/third-dependency/0.3", 5, null, null )
             };
-        scan( expected, 5, null, "scanner/pom.xml" );
+        scan( expected, 5, null, null, "scanner/pom.xml" );
     }
 
     @Test
@@ -124,12 +130,26 @@ public class PomScannerTest
     {
         BundleReference[] expected = new BundleReference[]
             {
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/main-artifact/0.1.0-SNAPSHOT", null, false ),
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/first-dependency/0.1.0/jar", null, false ),
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/second-dependency", null, false ),
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/third-dependency/0.3", null, false )
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/main-artifact/0.1.0-SNAPSHOT", null, false, null ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/first-dependency/0.1.0/jar", null, false, null ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/second-dependency", null, false, null ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/third-dependency/0.3", null, false, null )
             };
-        scan( expected, null, false, "scanner/pom.xml" );
+        scan( expected, null, false, null, "scanner/pom.xml" );
+    }
+
+    @Test
+    public void scanWithValidPomAndUpdate()
+        throws ScannerException, MalformedURLException
+    {
+        BundleReference[] expected = new BundleReference[]
+            {
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/main-artifact/0.1.0-SNAPSHOT", null, null, true ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/first-dependency/0.1.0/jar", null, null, true ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/second-dependency", null, null, true ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/third-dependency/0.3", null, null, true )
+            };
+        scan( expected, null, null, true, "scanner/pom.xml" );
     }
 
     @Test
@@ -138,12 +158,12 @@ public class PomScannerTest
     {
         BundleReference[] expected = new BundleReference[]
             {
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/main-artifact/0.1.0-SNAPSHOT", 5, false ),
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/first-dependency/0.1.0/jar", 5, false ),
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/second-dependency", 5, false ),
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/third-dependency/0.3", 5, false )
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/main-artifact/0.1.0-SNAPSHOT", 5, false, null ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/first-dependency/0.1.0/jar", 5, false, null ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/second-dependency", 5, false, null ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/third-dependency/0.3", 5, false, null )
             };
-        scan( expected, 5, false, "scanner/pom.xml" );
+        scan( expected, 5, false, null, "scanner/pom.xml" );
     }
 
     @Test
@@ -152,9 +172,9 @@ public class PomScannerTest
     {
         BundleReference[] expected = new BundleReference[]
             {
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/main-artifact/0.1.0-SNAPSHOT", null, null ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/main-artifact/0.1.0-SNAPSHOT", null, null, null ),
             };
-        scan( expected, null, null, "scanner/pomWithoutDependencies.xml" );
+        scan( expected, null, null, null, "scanner/pomWithoutDependencies.xml" );
     }
 
     @Test
@@ -183,11 +203,12 @@ public class PomScannerTest
             );
             BundleReference[] expected = new BundleReference[]
                 {
-                    new FileBundleReference( "mvn:org.ops4j.pax.runner/main-artifact/0.1.0-SNAPSHOT", null, null ),
+                    new FileBundleReference( "mvn:org.ops4j.pax.runner/main-artifact/0.1.0-SNAPSHOT", null, null, null
+                    ),
                 };
 
             replay( recorder );
-            scan( expected, null, null, "scanner/pomWithProperties.xml" );
+            scan( expected, null, null, null, "scanner/pomWithProperties.xml" );
             verify( recorder );
         }
         finally
@@ -202,12 +223,12 @@ public class PomScannerTest
     {
         BundleReference[] expected = new BundleReference[]
             {
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/main-artifact/0.1.0-SNAPSHOT", null, null ),
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/first-dependency/0.1.0/jar", null, null ),
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/second-dependency/0.1.0.5", null, null ),
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/third-dependency/0.3", null, null )
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/main-artifact/0.1.0-SNAPSHOT", null, null, null ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/first-dependency/0.1.0/jar", null, null, null ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/second-dependency/0.1.0.5", null, null, null ),
+                new FileBundleReference( "mvn:org.ops4j.pax.runner/third-dependency/0.3", null, null, null )
             };
-        scan( expected, null, null, "scanner/pomWithPropertiesInDependency.xml" );
+        scan( expected, null, null, null, "scanner/pomWithPropertiesInDependency.xml" );
     }
 
     private PomScanner createPomScanner( final ScannerConfiguration config, final Parser parser )

@@ -53,6 +53,7 @@ public class FileBundleReferenceTest
         assertEquals( "url", "file://afile", br.getLocation() );
         assertEquals( "start level", null, br.getStartLevel() );
         assertEquals( "start", Boolean.TRUE, br.shouldStart() );
+        assertEquals( "update", Boolean.FALSE, br.shouldUpdate() );
     }
 
     @Test( expected = MalformedURLException.class )
@@ -84,6 +85,7 @@ public class FileBundleReferenceTest
         assertEquals( "url", "file://afile", br.getLocation() );
         assertEquals( "start level", null, br.getStartLevel() );
         assertEquals( "nostart", Boolean.FALSE, br.shouldStart() );
+        assertEquals( "update", Boolean.FALSE, br.shouldUpdate() );
     }
 
     @Test
@@ -94,26 +96,51 @@ public class FileBundleReferenceTest
         assertEquals( "url", "file://afile", br.getLocation() );
         assertEquals( "start level", Integer.valueOf( 5 ), br.getStartLevel() );
         assertEquals( "start", Boolean.TRUE, br.shouldStart() );
+        assertEquals( "update", Boolean.FALSE, br.shouldUpdate() );
     }
 
     @Test
-    public void constructorWithURLAndStartLevelAndNStart()
+    public void constructorWithURLAndUpdate()
+        throws MalformedURLException
+    {
+        FileBundleReference br = new FileBundleReference( "file://afile@update" );
+        assertEquals( "url", "file://afile", br.getLocation() );
+        assertEquals( "start level", null, br.getStartLevel() );
+        assertEquals( "start", Boolean.TRUE, br.shouldStart() );
+        assertEquals( "update", Boolean.TRUE, br.shouldUpdate() );
+    }
+
+    @Test
+    public void constructorWithURLAndStartLevelAndNoStart()
         throws MalformedURLException
     {
         FileBundleReference br = new FileBundleReference( "file://afile@5@nostart" );
         assertEquals( "url", "file://afile", br.getLocation() );
         assertEquals( "start level", Integer.valueOf( 5 ), br.getStartLevel() );
         assertEquals( "start", Boolean.FALSE, br.shouldStart() );
+        assertEquals( "update", Boolean.FALSE, br.shouldUpdate() );
+    }
+
+    @Test
+    public void constructorWithURLAndStartLevelAndNStartAndUpdate()
+        throws MalformedURLException
+    {
+        FileBundleReference br = new FileBundleReference( "file://afile@5@nostart@update" );
+        assertEquals( "url", "file://afile", br.getLocation() );
+        assertEquals( "start level", Integer.valueOf( 5 ), br.getStartLevel() );
+        assertEquals( "start", Boolean.FALSE, br.shouldStart() );
+        assertEquals( "update", Boolean.TRUE, br.shouldUpdate() );
     }
 
     @Test
     public void constructorWithDefaultOptions()
         throws MalformedURLException
     {
-        FileBundleReference br = new FileBundleReference( "file://afile", 10, false );
+        FileBundleReference br = new FileBundleReference( "file://afile", 10, false, true );
         assertEquals( "url", "file://afile", br.getLocation() );
         assertEquals( "start level", Integer.valueOf( 10 ), br.getStartLevel() );
         assertEquals( "start", Boolean.FALSE, br.shouldStart() );
+        assertEquals( "update", Boolean.TRUE, br.shouldUpdate() );
     }
 
 }

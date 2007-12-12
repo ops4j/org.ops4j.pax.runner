@@ -30,6 +30,7 @@ public class BundleReferenceBean
     private String m_location;
     private Integer m_startLevel;
     private Boolean m_shouldStart;
+    private Boolean m_shouldUpdate;
 
     public String getLocation()
     {
@@ -61,6 +62,16 @@ public class BundleReferenceBean
         m_shouldStart = shouldStart;
     }
 
+    public Boolean shouldUpdate()
+    {
+        return m_shouldUpdate;
+    }
+
+    public void setShouldUpdate( final Boolean update )
+    {
+        this.m_shouldUpdate = update;
+    }
+
     @Override
     public boolean equals( Object o )
     {
@@ -87,6 +98,10 @@ public class BundleReferenceBean
         {
             return false;
         }
+        if( m_shouldUpdate != null ? !m_shouldUpdate.equals( that.m_shouldUpdate ) : that.m_shouldUpdate != null )
+        {
+            return false;
+        }
 
         return true;
     }
@@ -98,12 +113,10 @@ public class BundleReferenceBean
         result = m_location.hashCode();
         result = 31 * result + ( m_startLevel != null ? m_startLevel.hashCode() : 0 );
         result = 31 * result + ( m_shouldStart != null ? m_shouldStart.hashCode() : 0 );
+        result = 31 * result + ( m_shouldUpdate != null ? m_shouldUpdate.hashCode() : 0 );
         return result;
     }
 
-    /**
-     * @see Object#toString()
-     */
     @Override
     public String toString()
     {
@@ -115,6 +128,8 @@ public class BundleReferenceBean
             .append( getStartLevel() )
             .append( ",shouldStart=" )
             .append( shouldStart() )
+            .append( ",shouldUpdate=" )
+            .append( shouldUpdate() )            
             .append( "}" )
             .toString();
     }

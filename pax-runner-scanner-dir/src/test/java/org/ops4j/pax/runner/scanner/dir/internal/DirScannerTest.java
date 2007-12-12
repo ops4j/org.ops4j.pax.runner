@@ -72,6 +72,8 @@ public class DirScannerTest
         expect( config.getStartLevel() ).andReturn( null );
         expect( parser.shouldStart() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
+        expect( parser.shouldUpdate() ).andReturn( null );
+        expect( config.shouldUpdate() ).andReturn( null );        
 
         replay( parser, config );
         List<BundleReference> references = createScanner( config, parser ).scan( file.getAbsolutePath() );
@@ -94,6 +96,8 @@ public class DirScannerTest
         expect( config.getStartLevel() ).andReturn( null );
         expect( parser.shouldStart() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
+        expect( parser.shouldUpdate() ).andReturn( null );
+        expect( config.shouldUpdate() ).andReturn( null );
 
         replay( parser, config );
         List<BundleReference> references = createScanner( config, parser ).scan( file.toURL().toExternalForm() );
@@ -115,6 +119,8 @@ public class DirScannerTest
         expect( config.getStartLevel() ).andReturn( null );
         expect( parser.shouldStart() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
+        expect( parser.shouldUpdate() ).andReturn( null );
+        expect( config.shouldUpdate() ).andReturn( null );
 
         replay( parser, config );
         createScanner( config, parser ).scan( "http:myserver/myfile" );
@@ -135,6 +141,8 @@ public class DirScannerTest
         expect( config.getStartLevel() ).andReturn( null );
         expect( parser.shouldStart() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
+        expect( parser.shouldUpdate() ).andReturn( null );
+        expect( config.shouldUpdate() ).andReturn( null );
 
         replay( parser, config );
         List<BundleReference> references = createScanner( config, parser ).scan( file.getAbsolutePath() );
@@ -157,6 +165,8 @@ public class DirScannerTest
         expect( config.getStartLevel() ).andReturn( null );
         expect( parser.shouldStart() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
+        expect( parser.shouldUpdate() ).andReturn( null );
+        expect( config.shouldUpdate() ).andReturn( null );
 
         replay( parser, config );
         List<BundleReference> references = createScanner( config, parser ).scan( file.toURL().toExternalForm() );
@@ -179,6 +189,8 @@ public class DirScannerTest
         expect( config.getStartLevel() ).andReturn( null );
         expect( parser.shouldStart() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
+        expect( parser.shouldUpdate() ).andReturn( null );
+        expect( config.shouldUpdate() ).andReturn( null );        
 
         replay( parser, config );
         List<BundleReference> references = createScanner( config, parser ).scan( "http:myserver/my.zip" );

@@ -17,13 +17,13 @@
  */
 package org.ops4j.pax.runner.provision.internal;
 
-import org.ops4j.pax.runner.commons.Assert;
-import org.ops4j.pax.runner.provision.BundleReference;
-import org.ops4j.pax.runner.provision.InstallableBundle;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.service.startlevel.StartLevel;
+import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.pax.runner.provision.BundleReference;
+import org.ops4j.pax.runner.provision.InstallableBundle;
 
 public class InstallableBundleImpl
     implements InstallableBundle
@@ -134,7 +134,15 @@ public class InstallableBundleImpl
         {
             throw new BundleException( "The bundle reference has no location" );
         }
+        // get current time to be ubale to verify if the bundle was already installed before the install below
+        long currentTime = System.currentTimeMillis();
         m_bundle = m_bundleContext.installBundle( location );
+        // if the bundle was modified (installed/updated) before then force an update
+        Boolean shouldUpdate = m_reference.shouldUpdate();
+        if( shouldUpdate != null && shouldUpdate && m_bundle.getLastModified() < currentTime )
+        {
+            m_bundle.update();
+        }
         if( m_bundle == null )
         {
             throw new BundleException( "The bundle could not be installed due to unknown reason" );
@@ -174,7 +182,9 @@ public class InstallableBundleImpl
 
         /**
          * Does nothing.
-         * @throws org.osgi.framework.BundleException Can not happen.
+         *
+         * @throws org.osgi.framework.BundleException
+         *          Can not happen.
          */
         void install()
             throws BundleException
@@ -184,7 +194,9 @@ public class InstallableBundleImpl
 
         /**
          * Does nothing.
-         * @throws org.osgi.framework.BundleException Can not happen.
+         *
+         * @throws org.osgi.framework.BundleException
+         *          Can not happen.
          */
         void start()
             throws BundleException

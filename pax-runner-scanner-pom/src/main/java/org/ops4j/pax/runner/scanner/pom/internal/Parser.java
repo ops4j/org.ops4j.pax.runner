@@ -45,8 +45,15 @@ public interface Parser
     /**
      * Returns the start option.
      *
-     * @return the start level option value
+     * @return the start option value
      */
     Boolean shouldStart();
+
+    /**
+     * Returns the update option.
+     *
+     * @return the update option value
+     */
+    Boolean shouldUpdate();
 
 }

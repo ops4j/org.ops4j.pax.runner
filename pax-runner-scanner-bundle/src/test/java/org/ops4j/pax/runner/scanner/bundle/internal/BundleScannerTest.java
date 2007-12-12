@@ -38,6 +38,7 @@ public class BundleScannerTest
 
         expect( config.getStartLevel() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
+        expect( config.shouldUpdate() ).andReturn( null );
 
         replay( config );
         List<BundleReference> references = createFileScanner( config ).scan( null );
@@ -51,6 +52,7 @@ public class BundleScannerTest
 
         expect( config.getStartLevel() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
+        expect( config.shouldUpdate() ).andReturn( null );
 
         replay( config );
         List<BundleReference> references = createFileScanner( config ).scan( " " );
@@ -64,6 +66,7 @@ public class BundleScannerTest
 
         expect( config.getStartLevel() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
+        expect( config.shouldUpdate() ).andReturn( null );
 
         replay( config );
         List<BundleReference> references = createFileScanner( config ).scan( "file:bundle.jar" );

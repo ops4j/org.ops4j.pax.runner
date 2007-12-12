@@ -109,4 +109,41 @@ public class ScannerConfigurationImplTest
         assertEquals( "Start", false, shouldStart );
     }
 
+    @Test
+    public void getUpdate()
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( PID + ".update" ) ).andReturn( "true" );
+        replay( resolver );
+        ScannerConfiguration config = new ScannerConfigurationImpl( resolver, PID );
+        Boolean update = config.shouldUpdate();
+        verify( resolver );
+        assertNotNull( "Update is null", update );
+        assertEquals( "Update", true, update );
+    }
+
+    @Test
+    public void getNotConfiguredUpdate()
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( PID + ".update" ) ).andReturn( null );
+        replay( resolver );
+        ScannerConfiguration config = new ScannerConfigurationImpl( resolver, PID );
+        Boolean update = config.shouldUpdate();
+        verify( resolver );
+        assertEquals( "Update", false, update );
+    }
+
+    @Test
+    public void getWrongConfiguredUpdate()
+    {
+        Resolver resolver = createMock( Resolver.class );
+        expect( resolver.get( PID + ".update" ) ).andReturn( "wrong" );
+        replay( resolver );
+        ScannerConfiguration config = new ScannerConfigurationImpl( resolver, PID );
+        Boolean update = config.shouldUpdate();
+        verify( resolver );
+        assertEquals( "Update", false, update );
+    }
+
 }

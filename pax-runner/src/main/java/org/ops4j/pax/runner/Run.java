@@ -372,7 +372,8 @@ public class Run
                         bundle.getLocationAsURL().toExternalForm(),
                         bundle.getLocationAsURL(),
                         bundle.getStartLevel(),
-                        bundle.shouldStart()
+                        bundle.shouldStart(),
+                        bundle.shouldUpdate()
                     )
                 );
             }

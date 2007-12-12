@@ -40,4 +40,11 @@ public interface ScannerConfiguration
      */
     Boolean shouldStart();
 
+    /**
+     * If installed bundles should be updated ot not. If the value is not configured will return false.
+     *
+     * @return true if bundles shouls be updated
+     */
+    Boolean shouldUpdate();
+
 }

@@ -62,6 +62,8 @@ public class FileScannerTest
         expect( config.getStartLevel() ).andReturn( null );
         expect( parser.shouldStart() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
+        expect( parser.shouldUpdate() ).andReturn( null );
+        expect( config.shouldUpdate() ).andReturn( null );
 
         replay( parser, config );
         List<BundleReference> references = createFileScanner( config, parser ).scan( file.toURL().toExternalForm() );
@@ -82,6 +84,8 @@ public class FileScannerTest
         expect( parser.getStartLevel() ).andReturn( null );
         expect( config.getStartLevel() ).andReturn( null );
         expect( parser.shouldStart() ).andReturn( false );
+        expect( parser.shouldUpdate() ).andReturn( null );
+        expect( config.shouldUpdate() ).andReturn( null );        
 
         replay( parser, config );
         List<BundleReference> references =
@@ -105,6 +109,8 @@ public class FileScannerTest
         expect( parser.getStartLevel() ).andReturn( 10 );
         expect( parser.shouldStart() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
+        expect( parser.shouldUpdate() ).andReturn( null );
+        expect( config.shouldUpdate() ).andReturn( null );
 
         replay( parser, config );
         List<BundleReference> references =
@@ -141,6 +147,7 @@ public class FileScannerTest
         expect( parser.getFileURL() ).andReturn( file.toURL() );
         expect( parser.getStartLevel() ).andReturn( 10 );
         expect( parser.shouldStart() ).andReturn( true );
+        expect( parser.shouldUpdate() ).andReturn( true );
 
         replay( parser, config );
         List<BundleReference> references = createFileScanner( config, parser ).scan( file.toURL().toExternalForm() );
@@ -163,6 +170,8 @@ public class FileScannerTest
         expect( config.getStartLevel() ).andReturn( null );
         expect( parser.shouldStart() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
+        expect( parser.shouldUpdate() ).andReturn( null );
+        expect( config.shouldUpdate() ).andReturn( null );
 
         recorder.record( "prop.1=value.1" );
         recorder.record( "prop.2=value.2" );

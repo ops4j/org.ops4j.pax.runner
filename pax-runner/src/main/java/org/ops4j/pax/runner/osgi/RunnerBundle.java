@@ -43,6 +43,10 @@ public class RunnerBundle
      * Bundles start level. If null there is no start level set for the bundle.
      */
     private Integer m_startLevel;
+    /**
+     * True if the bundle should be updated.
+     */
+    private boolean m_shouldUpdate;
 
     /**
      * Default constructor. Used for bundles that are part of runner.
@@ -50,6 +54,8 @@ public class RunnerBundle
     public RunnerBundle()
     {
         m_location = null;
+        m_shouldStart = false;
+        m_shouldUpdate = false;
     }
 
     /**
@@ -108,6 +114,37 @@ public class RunnerBundle
     public Integer getStartLevel()
     {
         return m_startLevel;
+    }
+
+    /**
+     * Called by provisioning system if the update option is set on the bundle to be installed.
+     */
+    @Override
+    public void update()
+    {
+        LOGGER.debug( "Bundle [" + m_location + "] will be updated" );
+        m_shouldUpdate = true;
+    }
+
+    /**
+     * Always return zero = long time ago, so provisioning service will force an update.
+     *
+     * @return zero (0)
+     */
+    @Override
+    public long getLastModified()
+    {
+        return 0;
+    }
+
+    /**
+     * Returns true of the bundle whould be updated.
+     *
+     * @return true if the bundle shoud be updated
+     */
+    public boolean shouldUpdate()
+    {
+        return m_shouldUpdate;
     }
 
     /**

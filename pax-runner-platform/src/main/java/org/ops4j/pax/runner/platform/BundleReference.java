@@ -30,7 +30,7 @@ public interface BundleReference
 
     /**
      * Returns the name to the bundle to be installed.
-     * Name is udet for nice diplaying when required, as for example when downloading the reference to a local system
+     * Name is used for nice diplaying when required, as for example when downloading the reference to a local system
      * file directory.
      *
      * @return an name
@@ -45,7 +45,7 @@ public interface BundleReference
     URL getURL();
 
     /**
-     * Returns the start level of the bundle.
+     * The start level of the bundle.
      * If null is returned the start level will not be set on the bundle.
      *
      * @return the start level
@@ -53,10 +53,17 @@ public interface BundleReference
     Integer getStartLevel();
 
     /**
-     * Returns wheather or not the bundle should be started.
+     * Should  the bundle should be started?
      *
-     * @return if the bundle should start
+     * @return true, if the bundle should start
      */
     Boolean shouldStart();
+
+    /**
+     * Should the bundle should be updated?
+     *
+     * @return true, if the bundle should be updated
+     */
+    Boolean shouldUpdate();
 
 }

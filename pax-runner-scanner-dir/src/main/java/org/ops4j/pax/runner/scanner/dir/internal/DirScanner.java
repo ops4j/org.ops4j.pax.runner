@@ -84,6 +84,7 @@ public class DirScanner
         final String spec = parser.getURL();
         final Integer defaultStartLevel = getDefaultStartLevel( parser, config );
         final Boolean defaultStart = getDefaultStart( parser, config );
+        final Boolean defaultUpdate = getDefaultUpdate( parser, config );
         // try out an url
         LOGGER.trace( "Searching for [" + spec + "]" );
         URL url = null;
@@ -124,7 +125,12 @@ public class DirScanner
             {
                 try
                 {
-                    return list( new DirectoryLister( file, filter ), defaultStartLevel, defaultStart );
+                    return list(
+                        new DirectoryLister( file, filter ),
+                        defaultStartLevel,
+                        defaultStart,
+                        defaultUpdate
+                    );
                 }
                 catch( MalformedURLException e )
                 {
@@ -166,7 +172,7 @@ public class DirScanner
         {
             try
             {
-                return list( new ZipLister( baseUrl, zip, filter ), defaultStartLevel, defaultStart );
+                return list( new ZipLister( baseUrl, zip, filter ), defaultStartLevel, defaultStart, defaultUpdate );
             }
             catch( MalformedURLException e )
             {
@@ -187,13 +193,15 @@ public class DirScanner
      * @param lister      source of bundles
      * @param startLevel  default start level to use (see FileBundleReference)
      * @param shouldStart if by default should start (see FileBundleReference)
+     * @param update      if by default should be updated (see FileBundleReference)
      *
      * @return a list of bundles references from the provided source
      *
      * @throws java.net.MalformedURLException re-thrown from FileBundleReference
-     * @see org.ops4j.pax.runner.provision.scanner.FileBundleReference#FileBundleReference(String,Integer,Boolean)
+     * @see FileBundleReference#FileBundleReference(String,Integer,Boolean,Boolean)
      */
-    private List<BundleReference> list( final Lister lister, final Integer startLevel, final Boolean shouldStart )
+    private List<BundleReference> list( final Lister lister, final Integer startLevel, final Boolean shouldStart,
+                                        final Boolean update )
         throws MalformedURLException
     {
         final List<BundleReference> references = new ArrayList<BundleReference>();
@@ -202,7 +210,7 @@ public class DirScanner
         {
             for( URL url : urls )
             {
-                references.add( new FileBundleReference( url.toExternalForm(), startLevel, shouldStart ) );
+                references.add( new FileBundleReference( url.toExternalForm(), startLevel, shouldStart, update ) );
             }
         }
         return references;
@@ -232,7 +240,7 @@ public class DirScanner
      * @param parser a parser
      * @param config a configuration
      *
-     * @return default start level or null if nos set.
+     * @return default start level or null if not set.
      */
     private Boolean getDefaultStart( final Parser parser, final ScannerConfiguration config )
     {
@@ -242,6 +250,24 @@ public class DirScanner
             start = config.shouldStart();
         }
         return start;
+    }
+
+    /**
+     * Returns the default update by first looking at the parser and if not set fallback to configuration.
+     *
+     * @param parser a parser
+     * @param config a configuration
+     *
+     * @return default update or null if not set.
+     */
+    private Boolean getDefaultUpdate( final Parser parser, final ScannerConfiguration config )
+    {
+        Boolean update = parser.shouldUpdate();
+        if( update == null )
+        {
+            update = config.shouldUpdate();
+        }
+        return update;
     }
 
     /**

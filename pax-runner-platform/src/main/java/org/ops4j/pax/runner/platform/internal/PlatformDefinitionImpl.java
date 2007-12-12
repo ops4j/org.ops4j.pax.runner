@@ -145,7 +145,7 @@ public class PlatformDefinitionImpl
                             name = urlSpec;
                         }
                         m_bundles.get( profileName )
-                            .add( new BundleReferenceBean( name, bundleURL, startLevel, true ) );
+                            .add( new BundleReferenceBean( name, bundleURL, startLevel, true, false ) );
                     }
                 }
             }

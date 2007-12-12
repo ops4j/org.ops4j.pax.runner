@@ -333,7 +333,7 @@ public class PlatformImpl
      *
      * @param bundles         url of bundles to be installed
      * @param workDir         the directory where to download bundles
-     * @param overwrite       if the bundles should be overwriten
+     * @param overwrite       if the bundles should be overwritten
      * @param downloadFeeback whether or not downloading process should display fne grained progres info
      *
      * @return a list of downloaded files
@@ -355,7 +355,8 @@ public class PlatformImpl
                     throw new PlatformException( "Invalid url in bundle refrence [" + reference + "]" );
                 }
                 localBundles.add(
-                    new LocalBundleImpl( reference, download( workDir, url, reference.getName(), overwrite, true,
+                    new LocalBundleImpl( reference, download( workDir, url, reference.getName(),
+                                                              overwrite || reference.shouldUpdate(), true,
                                                               downloadFeeback
                     )
                     )
@@ -371,7 +372,7 @@ public class PlatformImpl
      * @param workDir         the directory where to download bundles
      * @param definition      to take the system package
      * @param platformContext current platform context
-     * @param overwrite       if the bundles should be overwriten
+     * @param overwrite       if the bundles should be overwritten
      * @param downloadFeeback whether or not downloading process should display fne grained progres info
      *
      * @return a list of downloaded files
@@ -408,7 +409,7 @@ public class PlatformImpl
      *
      * @param workDir         the directory where to download bundles
      * @param definition      to take the system package
-     * @param overwrite       if the bundles should be overwriten
+     * @param overwrite       if the bundles should be overwritten
      * @param downloadFeeback whether or not downloading process should display fne grained progres info
      *
      * @return the system file
@@ -430,7 +431,7 @@ public class PlatformImpl
      * @param workDir         the directory where to download bundles
      * @param url             of the file to be downloaded
      * @param displayName     to be shown during download
-     * @param overwrite       if the bundles should be overwriten
+     * @param overwrite       if the bundles should be overwritten
      * @param checkAttributes whether or not to check attributes in the manifest
      * @param downloadFeeback whether or not downloading process should display fne grained progres info
      *
