@@ -17,7 +17,6 @@
  */
 package org.ops4j.pax.runner.handler.internal;
 
-import java.net.URL;
 import java.net.URLStreamHandler;
 import java.net.URLStreamHandlerFactory;
 import java.util.Arrays;
@@ -25,8 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.ops4j.pax.runner.commons.Assert;
 import org.osgi.service.url.URLStreamHandlerService;
+import org.ops4j.pax.runner.commons.Assert;
 
 /**
  * An extender that implements URLStreamHandlerFactory.
@@ -64,7 +63,7 @@ public class URLStreamHandlerExtender
      */
     public void start()
     {
-        URL.setURLStreamHandlerFactory( this );
+        URLUtils.setURLStreamHandlerFactory( this );
     }
 
     /**
