@@ -32,11 +32,11 @@
   <profile name="log" extends="minimal">
     <bundle>
       <name>org.ops4j.pax.logging.api</name>
-      <url>mvn:org.ops4j.pax.logging/pax-logging-api/0.9.6</url>
+      <url>mvn:org.ops4j.pax.logging/pax-logging-api/0.9.8</url>
     </bundle>
     <bundle>
       <name>org.ops4j.pax.logging.service</name>
-      <url>mvn:org.ops4j.pax.logging/pax-logging-service/0.9.6</url>
+      <url>mvn:org.ops4j.pax.logging/pax-logging-service/0.9.8</url>
     </bundle>
   </profile>
 
