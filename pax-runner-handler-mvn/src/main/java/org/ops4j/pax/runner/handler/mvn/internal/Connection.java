@@ -26,11 +26,11 @@ import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 import org.ops4j.pax.runner.commons.Assert;
 import org.ops4j.pax.runner.commons.url.URLUtils;
 import org.ops4j.pax.runner.commons.xml.XmlUtils;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 /**
  * An URLConnextion that supports mvn: protocol.<br/>
@@ -130,15 +130,15 @@ public class Connection
         connect();
         List<URL> repositories = m_configuration.getRepositories();
         // if url does not have a repository
-        if ( m_parser.getRepositoryURL() == null && repositories != null )
+        if( m_parser.getRepositoryURL() == null && repositories != null )
         {
-            for ( URL repositoryURL : repositories )
+            for( URL repositoryURL : repositories )
             {
                 try
                 {
                     return resolveFromRepository( repositoryURL );
                 }
-                catch ( IOException ignore )
+                catch( IOException ignore )
                 {
                     // go on with next repository
                     LOGGER.debug( "Could not locate in [" + repositoryURL + "]" );
@@ -164,11 +164,11 @@ public class Connection
     private InputStream resolveFromRepository( final URL repositoryURL )
         throws IOException
     {
-        if ( m_parser.getVersion().contains( "LATEST" ) )
+        if( m_parser.getVersion().contains( "LATEST" ) )
         {
             return resolveLatestVersion( repositoryURL );
         }
-        else if ( m_parser.getVersion().endsWith( "SNAPSHOT" ) )
+        else if( m_parser.getVersion().endsWith( "SNAPSHOT" ) )
         {
             return resolveSnapshotVersion( repositoryURL, m_parser.getVersion() );
         }
@@ -196,7 +196,7 @@ public class Connection
             // first try to get the artifact local metadata
             inputStream = prepareInputStream( repositoryURL, m_parser.getArtifactLocalMetdataPath() );
         }
-        catch ( IOException ignore )
+        catch( IOException ignore )
         {
             // if not found then try to get the artifact metadata
             inputStream = prepareInputStream( repositoryURL, m_parser.getArtifactMetdataPath() );
@@ -205,9 +205,9 @@ public class Connection
         {
             final Document doc = XmlUtils.parseDoc( inputStream );
             final String version = XmlUtils.getTextContentOfElement( doc, "versioning/versions/version[last]" );
-            if ( version != null )
+            if( version != null )
             {
-                if ( version.endsWith( "SNAPSHOT" ) )
+                if( version.endsWith( "SNAPSHOT" ) )
                 {
                     return resolveSnapshotVersion( repositoryURL, version );
                 }
@@ -217,11 +217,11 @@ public class Connection
                 }
             }
         }
-        catch ( ParserConfigurationException e )
+        catch( ParserConfigurationException e )
         {
             throw initIOException( "Maven metadata [" + url.toExternalForm() + "] could not be parsed.", e );
         }
-        catch ( SAXException e )
+        catch( SAXException e )
         {
             throw initIOException( "Maven metadata [" + url.toExternalForm() + "] could not be parsed.", e );
         }
@@ -249,31 +249,38 @@ public class Connection
         {
             return prepareInputStream( repositoryURL, m_parser.getArtifactPath( version ) );
         }
-        catch ( IOException ignore )
+        catch( IOException ignore )
         {
             // lets try then to download maven-metadata.xml that contains the snapshot version information
             Document doc;
+            final String metadataPath = m_parser.getVersionMetadataPath( version );
             try
             {
                 doc = XmlUtils.parseDoc(
-                    prepareInputStream( repositoryURL, m_parser.getVersionMetadataPath( version ) )
+                    prepareInputStream( repositoryURL, metadataPath )
                 );
             }
-            catch ( ParserConfigurationException e )
+            catch( ParserConfigurationException e )
             {
-                throw initIOException( "Maven metadata [" + url.toExternalForm() + "] could not be parsed.", e );
+                throw initIOException( "Maven metadata [" + metadataPath + "] from repository [" + repositoryURL
+                                       + "] could not be parsed.", e
+                );
             }
-            catch ( SAXException e )
+            catch( SAXException e )
             {
-                throw initIOException( "Maven metadata [" + url.toExternalForm() + "] could not be parsed.", e );
+                throw initIOException( "Maven metadata [" + metadataPath + "] from repository [" + repositoryURL
+                                       + "] could not be parsed.", e
+                );
             }
-            catch ( IOException e )
+            catch( IOException e )
             {
-                throw initIOException( "Maven metadata [" + url.toExternalForm() + "] could not be downloaded.", e );
+                throw initIOException( "Maven metadata [" + metadataPath + "] from repository [" + repositoryURL
+                                       + "] could not be downloaded.", e
+                );
             }
             String timestamp = XmlUtils.getTextContentOfElement( doc, "versioning/snapshot/timestamp" );
             String buildNumber = XmlUtils.getTextContentOfElement( doc, "versioning/snapshot/buildNumber" );
-            if ( timestamp != null && buildNumber != null )
+            if( timestamp != null && buildNumber != null )
             {
                 return prepareInputStream( repositoryURL, m_parser.getSnapshotPath( version, timestamp, buildNumber ) );
             }
@@ -294,7 +301,7 @@ public class Connection
         throws IOException
     {
         String repository = repositoryURL.toExternalForm();
-        if ( !repository.endsWith( Parser.FILE_SEPARATOR ) )
+        if( !repository.endsWith( Parser.FILE_SEPARATOR ) )
         {
             repository = repository + Parser.FILE_SEPARATOR;
         }
