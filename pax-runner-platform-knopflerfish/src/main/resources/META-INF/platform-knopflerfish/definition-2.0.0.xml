@@ -99,4 +99,59 @@
     </bundle>
   </profile>
 
+  <profile name="spring-dm" extends="log">
+    <bundle>
+      <name>org.springframework.osgi.aopalliance.osgi</name>
+      <url>mvn:http://s3.amazonaws.com/maven.springframework.org/osgi!org.springframework.osgi/aopalliance.osgi/1.0-SNAPSHOT</url>
+    </bundle>
+    <bundle>
+      <name>org.springframework.osgi.asm.osgi</name>
+      <url>mvn:http://s3.amazonaws.com/maven.springframework.org/osgi!org.springframework.osgi/asm.osgi/2.2.3-SNAPSHOT</url>
+    </bundle>
+    <bundle>
+      <name>org.springframework.osgi.backport-util-concurrent</name>
+      <url>mvn:http://s3.amazonaws.com/maven.springframework.org/osgi!org.springframework.osgi/backport-util-concurrent.osgi/3.0-SNAPSHOT</url>
+    </bundle>
+    <bundle>
+      <name>org.springframework.osgi.cglib-nodep.osgi</name>
+      <url>mvn:http://s3.amazonaws.com/maven.springframework.org/osgi!org.springframework.osgi/cglib-nodep.osgi/2.1.3-SNAPSHOT</url>
+    </bundle>
+    <bundle>
+      <name>org.springframework.spring-aop</name>
+      <url>mvn:org.springframework/spring-aop</url>
+    </bundle>
+    <bundle>
+      <name>org.springframework.spring-beans</name>
+      <url>mvn:org.springframework/spring-beans</url>
+    </bundle>
+    <bundle>
+      <name>org.springframework.spring-context</name>
+      <url>mvn:org.springframework/spring-context</url>
+    </bundle>
+    <bundle>
+      <name>org.springframework.spring-context-support</name>
+      <url>mvn:org.springframework/spring-context-support</url>
+    </bundle>
+    <bundle>
+      <name>org.springframework.spring-core</name>
+      <url>mvn:org.springframework/spring-core</url>
+    </bundle>
+    <bundle>
+      <name>org.springframework.osgi.spring-osgi-annotation</name>
+      <url>mvn:http://s3.amazonaws.com/maven.springframework.org/milestone!org.springframework.osgi/spring-osgi-annotation</url>
+    </bundle>
+    <bundle>
+      <name>org.springframework.osgi.spring-osgi-core</name>
+      <url>mvn:http://s3.amazonaws.com/maven.springframework.org/milestone!org.springframework.osgi/spring-osgi-core</url>
+    </bundle>
+    <bundle>
+      <name>org.springframework.osgi.spring-osgi-extender</name>
+      <url>mvn:http://s3.amazonaws.com/maven.springframework.org/milestone!org.springframework.osgi/spring-osgi-extender</url>
+    </bundle>
+    <bundle>
+      <name>org.springframework.osgi.spring-osgi-io</name>
+      <url>mvn:http://s3.amazonaws.com/maven.springframework.org/milestone!org.springframework.osgi/spring-osgi-io</url>
+    </bundle>
+  </profile>  
+
 </platform>
