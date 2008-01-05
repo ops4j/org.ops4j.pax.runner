@@ -300,10 +300,10 @@ public class ConciergePlatformBuilderTest
 
         Map<String, String> replacements = new HashMap<String, String>();
         replacements.put( "${basedir.path}", new File( m_workDir, "concierge" ).getAbsolutePath() );
-        replacements.put( "${bundle1.path}", new File( "bundle1.jar" ).toURL().toExternalForm() );
-        replacements.put( "${bundle2.path}", new File( "bundle2.jar" ).toURL().toExternalForm() );
-        replacements.put( "${bundle3.path}", new File( "bundle3.jar" ).toURL().toExternalForm() );
-        replacements.put( "${bundle4.path}", new File( "bundle4.jar" ).toURL().toExternalForm() );
+        replacements.put( "${bundle1.path}", new File( "bundle1.jar" ).toURI().toASCIIString() );
+        replacements.put( "${bundle2.path}", new File( "bundle2.jar" ).toURI().toASCIIString() );
+        replacements.put( "${bundle3.path}", new File( "bundle3.jar" ).toURI().toASCIIString() );
+        replacements.put( "${bundle4.path}", new File( "bundle4.jar" ).toURI().toASCIIString() );
 
         compareFiles(
             FileUtils.getFileFromClasspath( "conciergeplatformbuilder/config.ini" ),
