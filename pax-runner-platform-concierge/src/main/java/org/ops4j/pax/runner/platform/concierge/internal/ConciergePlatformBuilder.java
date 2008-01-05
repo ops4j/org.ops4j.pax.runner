@@ -252,7 +252,7 @@ public class ConciergePlatformBuilder
                 bundlesAsStrings = new ArrayList<String>();
                 bundlesPerStartlevel.put( startLevel, bundlesAsStrings );
             }
-            bundlesAsStrings.add( propertyName + bundleFile.toURL().toExternalForm() );
+            bundlesAsStrings.add( propertyName + bundleFile.toURI().toASCIIString() );
         }
         for( Map.Entry<Integer, List<String>> entry : bundlesPerStartlevel.entrySet() )
         {
