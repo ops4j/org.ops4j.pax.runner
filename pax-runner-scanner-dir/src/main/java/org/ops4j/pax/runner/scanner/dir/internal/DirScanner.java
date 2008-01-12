@@ -19,6 +19,7 @@ package org.ops4j.pax.runner.scanner.dir.internal;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.JarURLConnection;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -146,11 +147,11 @@ public class DirScanner
         {
             LOGGER.trace( "Specification is not a valid file. Continue discovery..." );
         }
-        // on this point only chance is that we have a zip
-        ZipFile zip = null;
-        URL baseUrl = null;
+        // on this point we may have a zip
         try
         {
+            ZipFile zip = null;
+            URL baseUrl = null;
             if( file != null && file.exists() )
             // try out a zip from the file we have
             {
@@ -162,28 +163,45 @@ public class DirScanner
                 zip = new ZipFile( url.toExternalForm() );
                 baseUrl = url;
             }
+            if( zip != null && baseUrl != null )
+            {
+                try
+                {
+                    return list(
+                        new ZipLister( baseUrl, zip.entries(), filter ),
+                        defaultStartLevel, defaultStart, defaultUpdate
+                    );
+                }
+                catch( MalformedURLException e )
+                {
+                    throw new MalformedSpecificationException( e );
+                }
+            }
         }
         catch( IOException ignore )
         {
             // ignore for the moment
-            LOGGER.trace( "Specification is not a valid zip: " + ignore.getMessage() );
+            LOGGER.trace( "Specification is not a valid zip: " + ignore.getMessage() + "Continue discovery..." );
         }
-        if( zip != null && baseUrl != null )
+        // finaly try with a zip protocol
+        if( url!= null && !url.toExternalForm().startsWith( "jar" ) )
         {
             try
             {
-                return list( new ZipLister( baseUrl, zip, filter ), defaultStartLevel, defaultStart, defaultUpdate );
+                final URL jarUrl = new URL( "jar:" + url.toURI().toASCIIString() + "!/" );
+                final JarURLConnection jar = (JarURLConnection) jarUrl.openConnection();
+                return list(
+                    new ZipLister( url, jar.getJarFile().entries(), filter ),
+                    defaultStartLevel, defaultStart, defaultUpdate
+                );
             }
-            catch( MalformedURLException e )
+            catch( Exception ignore )
             {
-                throw new MalformedSpecificationException( e );
+                LOGGER.trace( "Specification is not a valid jar: " + ignore.getMessage() );
             }
-        }
-        else
-        {
-            LOGGER.trace( "Specification is not a valid zip file. Stopping." );
         }
         // if we got to this point then we cannot go further
+        LOGGER.trace( "Specification urlSpec cannot be used. Stopping." );
         throw new MalformedSpecificationException( "Specification [" + urlSpec + "] could not be used" );
     }
 

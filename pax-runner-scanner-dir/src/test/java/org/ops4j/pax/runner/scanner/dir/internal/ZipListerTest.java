@@ -27,11 +27,11 @@ public class ZipListerTest extends ListerTest
 
     Lister createLister( Pattern filter )
     {
-        return new ZipLister( m_baseURL, m_zip, filter );
+        return new ZipLister( m_baseURL, m_zip.entries(), filter );
     }
 
     URL asURL( String fileName )
-                throws MalformedURLException
+        throws MalformedURLException
     {
         return new URL( "jar:" + m_baseURL.toExternalForm() + "!/" + fileName );
     }
@@ -40,7 +40,7 @@ public class ZipListerTest extends ListerTest
     public void cosntructorWithNullBaseURL()
         throws MalformedURLException
     {
-        new ZipLister( null, m_zip, ParserImpl.parseFilter( "*" ) ).list();
+        new ZipLister( null, m_zip.entries(), ParserImpl.parseFilter( "*" ) ).list();
     }
 
     @Test( expected = IllegalArgumentException.class )
@@ -51,10 +51,10 @@ public class ZipListerTest extends ListerTest
     }
 
     @Test( expected = IllegalArgumentException.class )
-    public void cosntructorWithNullFilter()
+    public void constructorWithNullFilter()
         throws MalformedURLException
     {
-        new ZipLister( m_baseURL, m_zip, null ).list();
+        new ZipLister( m_baseURL, m_zip.entries(), null ).list();
     }
-    
+
 }

@@ -7,7 +7,6 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 import org.ops4j.pax.runner.commons.Assert;
 
 /**
@@ -25,9 +24,9 @@ public class ZipLister
      */
     private URL m_baseURL;
     /**
-     * The root directory to be listed.
+     * The root zip entties to be listed.
      */
-    private final ZipFile m_zip;
+    private final Enumeration<? extends ZipEntry> m_zipEntries;
     /**
      * File name filter.
      */
@@ -36,17 +35,17 @@ public class ZipLister
     /**
      * Creates a zip lister.
      *
-     * @param baseURL the url from which the zip file was created
-     * @param zip     the zip file to be listed.
-     * @param filter  filter to be used to filter entries from the zip
+     * @param baseURL    the url from which the zip file was created
+     * @param zipEntries the zip file to be listed.
+     * @param filter     filter to be used to filter entries from the zip
      */
-    public ZipLister( final URL baseURL, final ZipFile zip, final Pattern filter )
+    public ZipLister( final URL baseURL, final Enumeration<? extends ZipEntry> zipEntries, final Pattern filter )
     {
         Assert.notNull( "Base url", baseURL );
-        Assert.notNull( "Zip file", zip );
+        Assert.notNull( "Zip entries", zipEntries );
         Assert.notNull( "Filter", filter );
         m_baseURL = baseURL;
-        m_zip = zip;
+        m_zipEntries = zipEntries;
         m_filter = filter;
     }
 
@@ -57,12 +56,10 @@ public class ZipLister
         throws MalformedURLException
     {
         final List<URL> content = new ArrayList<URL>();
-        // first we get all files
-        final Enumeration<? extends ZipEntry> entries = m_zip.entries();
         // then we filter them based on configured filter
-        while( entries.hasMoreElements() )
+        while( m_zipEntries.hasMoreElements() )
         {
-            final ZipEntry entry = entries.nextElement();
+            final ZipEntry entry = m_zipEntries.nextElement();
             final String fileName = entry.getName();
             if( !entry.isDirectory() && m_filter.matcher( fileName ).matches() )
             {
