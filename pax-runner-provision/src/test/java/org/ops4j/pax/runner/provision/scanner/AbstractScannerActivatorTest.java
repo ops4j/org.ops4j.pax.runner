@@ -20,11 +20,10 @@ package org.ops4j.pax.runner.provision.scanner;
 import java.util.Dictionary;
 import static org.easymock.EasyMock.*;
 import org.junit.Test;
-import org.ops4j.pax.runner.commons.resolver.Resolver;
-import org.ops4j.pax.runner.provision.Scanner;
-import org.ops4j.pax.runner.provision.scanner.AbstractScannerActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.cm.ManagedService;
+import org.ops4j.pax.runner.commons.resolver.Resolver;
+import org.ops4j.pax.runner.provision.Scanner;
 
 public class AbstractScannerActivatorTest
 {

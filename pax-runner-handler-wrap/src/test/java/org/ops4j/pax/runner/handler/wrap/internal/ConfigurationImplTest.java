@@ -17,9 +17,6 @@
  */
 package org.ops4j.pax.runner.handler.wrap.internal;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Test;

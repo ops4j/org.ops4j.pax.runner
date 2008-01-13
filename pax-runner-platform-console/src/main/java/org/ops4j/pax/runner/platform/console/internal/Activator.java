@@ -22,13 +22,13 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import org.ops4j.pax.runner.platform.BundleReference;
-import org.ops4j.pax.runner.platform.BundleReferenceBean;
-import org.ops4j.pax.runner.platform.Platform;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.ServiceReference;
+import org.ops4j.pax.runner.platform.BundleReference;
+import org.ops4j.pax.runner.platform.BundleReferenceBean;
+import org.ops4j.pax.runner.platform.Platform;
 
 public final class Activator
     implements BundleActivator
