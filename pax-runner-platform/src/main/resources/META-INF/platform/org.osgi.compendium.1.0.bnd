@@ -1,5 +1,7 @@
 Bundle-SymbolicName=org.osgi.r4.compendium
 Bundle-Version=1.0.0
+Bundle-Name=R4 Compendium
+Bundle-Description=OSGi r4 Compendium APIs
 Export-Package=\
 org.osgi.service.cm; version="1.2",\
 org.osgi.service.component; version="1.0",\

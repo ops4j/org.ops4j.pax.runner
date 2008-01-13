@@ -39,7 +39,8 @@ public final class Activator
     protected PlatformBuilder[] createPlatformBuilders( final BundleContext bundleContext )
     {
         return new PlatformBuilder[]{
-            new KnopflerfishPlatformBuilder( bundleContext, "2.0.0" )
+            new KnopflerfishPlatformBuilder( bundleContext, "2.0.0" ),
+            new KnopflerfishPlatformBuilder( bundleContext, "2.0.3" )
         };
     }
 
