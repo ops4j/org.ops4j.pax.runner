@@ -11,7 +11,11 @@
     </bundle>
   </profile>
 
-  <profile name="tui" extends="minimal,config,log">
+  <profile name="tui" extends="minimal,config">
+    <bundle>
+      <name>org.knopflerfish.bundle.log</name>
+      <url>mvn:org.knopflerfish.bundle.log/log_api/1.0.1</url>
+    </bundle>
     <bundle>
       <name>org.knopflerfish.bundle.useradmin</name>
       <url>mvn:org.knopflerfish.bundle.useradmin/useradmin_api/1.1.0</url>
