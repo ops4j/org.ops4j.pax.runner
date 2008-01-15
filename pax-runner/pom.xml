@@ -97,21 +97,27 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>pax-runner-handler-mvn</artifactId>
-      <version>0.5.7-SNAPSHOT</version>
+      <groupId>org.ops4j.pax.url</groupId>
+      <artifactId>pax-url-classpath</artifactId>
+      <version>0.1.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>pax-runner-handler-wrap</artifactId>
-      <version>0.5.7-SNAPSHOT</version>
+      <groupId>org.ops4j.pax.url</groupId>
+      <artifactId>pax-url-mvn</artifactId>
+      <version>0.1.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>pax-runner-handler-classpath</artifactId>
-      <version>0.5.7-SNAPSHOT</version>
+      <groupId>org.ops4j.pax.url</groupId>
+      <artifactId>pax-url-war</artifactId>
+      <version>0.1.0-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.url</groupId>
+      <artifactId>pax-url-wrap</artifactId>
+      <version>0.1.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

@@ -2,9 +2,10 @@ Main-Class: org.ops4j.pax.runner.Run
 Include-Resource=\
 src/main/resources,\
 @target/dependency/pax-runner-handler.jar,\
-@target/dependency/pax-runner-handler-classpath.jar,\
-@target/dependency/pax-runner-handler-mvn.jar,\
-@target/dependency/pax-runner-handler-wrap.jar,\
+@target/dependency/pax-url-classpath.jar,\
+@target/dependency/pax-url-mvn.jar,\
+@target/dependency/pax-url-war.jar,\
+@target/dependency/pax-url-wrap.jar,\
 @target/dependency/pax-runner-platform.jar,\
 @target/dependency/pax-runner-platform-concierge.jar,\
 @target/dependency/pax-runner-platform-equinox.jar,\

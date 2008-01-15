@@ -33,9 +33,6 @@
   <modules>
     <module>pax-runner-commons</module>
     <module>pax-runner-handler</module>
-    <module>pax-runner-handler-classpath</module>
-    <module>pax-runner-handler-mvn</module>
-    <module>pax-runner-handler-wrap</module>
     <module>pax-runner-provision</module>
     <module>pax-runner-provision-console</module>
     <module>pax-runner-scanner-bundle</module>
