@@ -47,6 +47,17 @@
     </bundle>
   </profile>
 
+  <profile name="war" extends="web">
+    <bundle>
+      <name>org.ops4j.pax.web.jsp</name>
+      <url>mvn:org.ops4j.pax.web/pax-web-jsp</url>
+    </bundle>
+    <bundle>
+      <name>org.ops4j.pax.web.extender.war</name>
+      <url>mvn:org.ops4j.pax.web-extender/pax-web-ex-war</url>
+    </bundle>
+  </profile>
+
   <profile name="spring-dm" extends="log">
     <bundle>
       <name>org.springframework.osgi.aopalliance.osgi</name>
