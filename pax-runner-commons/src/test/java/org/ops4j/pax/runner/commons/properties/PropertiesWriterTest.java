@@ -26,7 +26,7 @@ import java.io.OutputStream;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import org.ops4j.pax.runner.commons.file.FileUtils;
+import org.ops4j.io.FileUtils;
 
 public class PropertiesWriterTest
 {
@@ -159,10 +159,10 @@ public class PropertiesWriterTest
             actualReader = new BufferedReader( new FileReader( actual ) );
             String actualLine, expectedLine;
             int lineNumber = 1;
-            while ( ( actualLine = actualReader.readLine() ) != null )
+            while( ( actualLine = actualReader.readLine() ) != null )
             {
                 expectedLine = expectedReader.readLine();
-                if ( reverse )
+                if( reverse )
                 {
                     assertEquals( "Config ini line " + lineNumber++, expectedLine, actualLine );
                 }
@@ -177,7 +177,7 @@ public class PropertiesWriterTest
             expectedReader.close();
             actualReader.close();
         }
-        if ( reverse )
+        if( reverse )
         {
             compareFiles( actual, expected, false );
         }

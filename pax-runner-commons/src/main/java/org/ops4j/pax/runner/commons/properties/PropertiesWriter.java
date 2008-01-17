@@ -178,7 +178,7 @@ public class PropertiesWriter
      */
     public PropertiesWriter appendRaw( final String value )
     {
-        if ( value != null )
+        if( value != null )
         {
             m_content.add( value );
         }

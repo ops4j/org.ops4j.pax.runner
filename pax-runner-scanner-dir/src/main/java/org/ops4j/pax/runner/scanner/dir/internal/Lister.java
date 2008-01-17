@@ -34,6 +34,7 @@ public interface Lister
      * Returns a list of urls the lister knows about.
      *
      * @return list of urls
+     *
      * @throws java.net.MalformedURLException If an underlying problem occurs in the OSGi framework.
      */
     List<URL> list()

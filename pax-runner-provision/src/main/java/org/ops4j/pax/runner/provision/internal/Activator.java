@@ -19,15 +19,15 @@ package org.ops4j.pax.runner.provision.internal;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.ops4j.pax.runner.commons.Assert;
-import org.ops4j.pax.runner.provision.ProvisionService;
-import org.ops4j.pax.runner.provision.Scanner;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.startlevel.StartLevel;
 import org.osgi.util.tracker.ServiceTracker;
+import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.pax.runner.provision.ProvisionService;
+import org.ops4j.pax.runner.provision.Scanner;
 
 /**
  * Activate the provisioning service implementation.

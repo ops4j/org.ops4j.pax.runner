@@ -129,7 +129,7 @@ public class BundleReferenceBean
             .append( ",shouldStart=" )
             .append( shouldStart() )
             .append( ",shouldUpdate=" )
-            .append( shouldUpdate() )            
+            .append( shouldUpdate() )
             .append( "}" )
             .toString();
     }

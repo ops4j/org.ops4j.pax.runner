@@ -1,12 +1,13 @@
 package org.ops4j.pax.runner.scanner.dir.internal;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.regex.Pattern;
 import org.junit.Before;
 import org.junit.Test;
-import org.ops4j.pax.runner.commons.file.FileUtils;
+import org.ops4j.io.FileUtils;
 
 public class DirectoryListerTest
     extends ListerTest
@@ -16,6 +17,7 @@ public class DirectoryListerTest
 
     @Before
     public void setUp()
+        throws FileNotFoundException
     {
         m_dir = FileUtils.getFileFromClasspath( "dirscanner" );
     }

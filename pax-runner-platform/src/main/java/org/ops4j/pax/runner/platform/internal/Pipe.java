@@ -91,13 +91,13 @@ public class Pipe
         {
             try
             {
-                
-                int bytesRead = m_in.read(cbuf, 0, 8192);
+
+                int bytesRead = m_in.read( cbuf, 0, 8192 );
                 if( bytesRead == -1 )
                 {
                     break;
                 }
-                m_out.write(cbuf, 0, bytesRead);
+                m_out.write( cbuf, 0, bytesRead );
                 m_out.flush();
             }
             catch( IOException e )

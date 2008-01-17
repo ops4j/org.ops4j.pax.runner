@@ -21,8 +21,6 @@ import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.ops4j.pax.runner.commons.resolver.Resolver;
-import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
-import org.ops4j.pax.runner.provision.scanner.ScannerConfigurationImpl;
 
 public class ScannerConfigurationImplTest
 {
@@ -45,7 +43,7 @@ public class ScannerConfigurationImplTest
         Integer startlevel = config.getStartLevel();
         verify( resolver );
         assertNotNull( "Start level is null", startlevel );
-        assertEquals( "Start level", Integer.valueOf( 5), startlevel );
+        assertEquals( "Start level", Integer.valueOf( 5 ), startlevel );
     }
 
     @Test

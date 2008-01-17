@@ -26,13 +26,6 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.ops4j.pax.runner.commons.Assert;
-import org.ops4j.pax.runner.commons.resolver.BundleContextResolver;
-import org.ops4j.pax.runner.commons.resolver.CompositeResolver;
-import org.ops4j.pax.runner.commons.resolver.DictionaryResolver;
-import org.ops4j.pax.runner.platform.Platform;
-import org.ops4j.pax.runner.platform.PlatformBuilder;
-import org.ops4j.pax.runner.platform.ServiceConstants;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -41,6 +34,13 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedService;
 import org.osgi.util.tracker.ServiceTracker;
+import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.pax.runner.commons.resolver.BundleContextResolver;
+import org.ops4j.pax.runner.commons.resolver.CompositeResolver;
+import org.ops4j.pax.runner.commons.resolver.DictionaryResolver;
+import org.ops4j.pax.runner.platform.Platform;
+import org.ops4j.pax.runner.platform.PlatformBuilder;
+import org.ops4j.pax.runner.platform.ServiceConstants;
 
 /**
  * Bundle activator for platform extender.

@@ -17,8 +17,8 @@
  */
 package org.ops4j.pax.runner.commons.resolver;
 
-import org.ops4j.pax.runner.commons.Assert;
 import org.osgi.framework.BundleContext;
+import org.ops4j.pax.runner.commons.Assert;
 
 /**
  * Resolves properties by first looking in an optional configured dictionary then if property not found looking in

@@ -25,7 +25,7 @@ import java.util.Properties;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
-import org.ops4j.pax.runner.commons.file.FileUtils;
+import org.ops4j.io.FileUtils;
 import org.ops4j.pax.runner.commons.resolver.Resolver;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
@@ -66,7 +66,7 @@ public class PomScannerTest
 
     public void scan( BundleReference[] expected, Integer startLevel, Boolean shouldStart, Boolean update,
                       String pomFile )
-        throws ScannerException, MalformedURLException
+        throws Exception
     {
         Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
@@ -98,7 +98,7 @@ public class PomScannerTest
 
     @Test
     public void scanWithValidPomAndNoOptions()
-        throws ScannerException, MalformedURLException
+        throws Exception
     {
         BundleReference[] expected = new BundleReference[]
             {
@@ -112,7 +112,7 @@ public class PomScannerTest
 
     @Test
     public void scanWithValidPomAndStartLevel()
-        throws ScannerException, MalformedURLException
+        throws Exception
     {
         BundleReference[] expected = new BundleReference[]
             {
@@ -126,7 +126,7 @@ public class PomScannerTest
 
     @Test
     public void scanWithValidPomAndNoStart()
-        throws ScannerException, MalformedURLException
+        throws Exception
     {
         BundleReference[] expected = new BundleReference[]
             {
@@ -140,7 +140,7 @@ public class PomScannerTest
 
     @Test
     public void scanWithValidPomAndUpdate()
-        throws ScannerException, MalformedURLException
+        throws Exception
     {
         BundleReference[] expected = new BundleReference[]
             {
@@ -154,7 +154,7 @@ public class PomScannerTest
 
     @Test
     public void scanWithValidPomAndStartLevelAndNoStart()
-        throws ScannerException, MalformedURLException
+        throws Exception
     {
         BundleReference[] expected = new BundleReference[]
             {
@@ -168,7 +168,7 @@ public class PomScannerTest
 
     @Test
     public void scanWithValidPomWithoutDependencies()
-        throws ScannerException, MalformedURLException
+        throws Exception
     {
         BundleReference[] expected = new BundleReference[]
             {
@@ -179,7 +179,7 @@ public class PomScannerTest
 
     @Test
     public void scanWithValidPomAndProperties()
-        throws ScannerException, MalformedURLException
+        throws Exception
     {
         final Recorder recorder = createMock( Recorder.class );
         recorder.record( "prop.1=value.1" );
@@ -219,7 +219,7 @@ public class PomScannerTest
 
     @Test
     public void scanWithValidPomWithPropertiesInDependency()
-        throws ScannerException, MalformedURLException
+        throws Exception
     {
         BundleReference[] expected = new BundleReference[]
             {

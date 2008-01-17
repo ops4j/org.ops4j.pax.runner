@@ -129,13 +129,14 @@ public class EquinoxPlatformBuilder
         throws PlatformException
     {
         Assert.notNull( "Platform context", context );
-        createConfigIniFile(context);
-        createOptionsFile(context);
+        createConfigIniFile( context );
+        createOptionsFile( context );
     }
 
-	private void createConfigIniFile(final PlatformContext context)
-			throws PlatformException {
-		final List<LocalBundle> bundles = context.getBundles();
+    private void createConfigIniFile( final PlatformContext context )
+        throws PlatformException
+    {
+        final List<LocalBundle> bundles = context.getBundles();
         OutputStream os = null;
         try
         {
@@ -209,98 +210,102 @@ public class EquinoxPlatformBuilder
                 }
             }
         }
-	}
+    }
 
-	private void createOptionsFile(final PlatformContext context)
-	throws PlatformException {
-		OutputStream os = null;
-		try
-		{
-		    // make sure the directory exists
-		    final File configDirectory = new File( context.getWorkingDirectory(), CONFIG_DIRECTORY );
-		    configDirectory.mkdirs();
-		    // create the configuration file
-		    final File configFile = new File( configDirectory, OPTIONS );
-		    configFile.createNewFile();
-		    final Configuration configuration = context.getConfiguration();
-		    if( isOptionsFileNeeded( configuration ) )
-		    {
-			    LOGGER.debug( "Create equinox options file [" + configFile + "]" );
+    private void createOptionsFile( final PlatformContext context )
+        throws PlatformException
+    {
+        OutputStream os = null;
+        try
+        {
+            // make sure the directory exists
+            final File configDirectory = new File( context.getWorkingDirectory(), CONFIG_DIRECTORY );
+            configDirectory.mkdirs();
+            // create the configuration file
+            final File configFile = new File( configDirectory, OPTIONS );
+            configFile.createNewFile();
+            final Configuration configuration = context.getConfiguration();
+            if( isOptionsFileNeeded( configuration ) )
+            {
+                LOGGER.debug( "Create equinox options file [" + configFile + "]" );
 
-			    os = new FileOutputStream( configFile );
-			    final PropertiesWriter writer = new PropertiesWriter( os );
+                os = new FileOutputStream( configFile );
+                final PropertiesWriter writer = new PropertiesWriter( os );
 
-			    writeHeader( writer );
-			    Properties props = new Properties();
-			    writer.append( "#############################" );
-			    writer.append( " Equinox debug options" );
-			    writer.append( "#############################" );
-			    props.setProperty( "org.eclipse.osgi/trace/filename", "runtime.traces" );
-			    props.setProperty( "org.eclipse.osgi/debug/bundleTime", "false" );
-			    props.setProperty( "org.eclipse.osgi/defaultprofile/logsynchronously", "false" );
-			    props.setProperty( "org.eclipse.osgi/resolver/requires", "false" );
-			    props.setProperty( "org.eclipse.osgi/debug", "false" );
-			    props.setProperty( "org.eclipse.osgi/profile/benchmark", "false" );
-			    props.setProperty( "org.eclipse.osgi/defaultprofile/buffersize", "256" );
-			    props.setProperty( "org.eclipse.osgi/trace/activation", "false" );
-			    props.setProperty( "org.eclipse.osgi/debug/security", "false" );
-			    props.setProperty( "org.eclipse.osgi/resolver/wiring", "false" );
-			    props.setProperty( "org.eclipse.osgi/eclipseadaptor/debug/platformadmin/resolver", "false" );
-			    props.setProperty( "org.eclipse.osgi/debug/loader", "true" );
-			    props.setProperty( "org.eclipse.osgi/eclipseadaptor/debug", "false" );
-			    props.setProperty( "org.eclipse.osgi/debug/messageBundles", "false" );
-			    props.setProperty( "org.eclipse.osgi/debug/events", "false" );
-			    props.setProperty( "org.eclipse.osgi/resolver/debug", "false" );
-			    props.setProperty( "org.eclipse.osgi/profile/startup", "false" );
-			    props.setProperty( "org.eclipse.osgi/debug/startlevel", "false" );
-			    props.setProperty( "org.eclipse.osgi/debug/packageadmin", "false" );
-			    props.setProperty( "org.eclipse.osgi/resolver/grouping", "false" );
-			    props.setProperty( "org.eclipse.osgi/trace/classLoading", "false" );
-			    props.setProperty( "org.eclipse.osgi/eclipseadaptor/debug/platformadmin", "false" );
-			    props.setProperty( "org.eclipse.osgi/debug/filter", "false" );
-			    props.setProperty( "org.eclipse.osgi/monitor/activation", "false" );
-			    props.setProperty( "org.eclipse.osgi/resolver/generics", "false" );
-			    props.setProperty( "org.eclipse.osgi/debug/manifest", "false" );
-			    props.setProperty( "org.eclipse.osgi/debug/services", "false" );
-			    props.setProperty( "org.eclipse.osgi/eclipseadaptor/debug/location", "false" );
-			    props.setProperty( "org.eclipse.osgi/profile/impl", "org.eclipse.osgi.internal.profile.DefaultProfileLogger" );
-			    props.setProperty( "org.eclipse.osgi/eclipseadaptor/converter/debug", "false" );
-			    props.setProperty( "org.eclipse.osgi/profile/debug", "false" );
-			    props.setProperty( "org.eclipse.osgi/monitor/classes", "false" );
-			    props.setProperty( "org.eclipse.osgi/trace/filters", "trace.properties" );
-			    props.setProperty( "org.eclipse.osgi/resolver/cycles", "false" );
-			    props.setProperty( "org.eclipse.osgi/defaultprofile/logfilename", "" );
-			    props.setProperty( "org.eclipse.osgi/resolver/imports", "false" );
-			    props.setProperty( "org.eclipse.osgi/monitor/resources", "false" );
-			    appendProperties(writer, props);
-			    writer.write();
-		    }
-		}
-		catch( IOException e )
-		{
-		    throw new PlatformException( "Could not create equinox debug options file", e );
-		}
-		finally
-		{
-		    if( os != null )
-		    {
-		        try
-		        {
-		            os.close();
-		        }
-		        catch( IOException e )
-		        {
-		            //noinspection ThrowFromFinallyBlock
-		            throw new PlatformException( "Could not create equinox debug options file", e );
-		        }
-		    }
-		}
-	}
+                writeHeader( writer );
+                Properties props = new Properties();
+                writer.append( "#############################" );
+                writer.append( " Equinox debug options" );
+                writer.append( "#############################" );
+                props.setProperty( "org.eclipse.osgi/trace/filename", "runtime.traces" );
+                props.setProperty( "org.eclipse.osgi/debug/bundleTime", "false" );
+                props.setProperty( "org.eclipse.osgi/defaultprofile/logsynchronously", "false" );
+                props.setProperty( "org.eclipse.osgi/resolver/requires", "false" );
+                props.setProperty( "org.eclipse.osgi/debug", "false" );
+                props.setProperty( "org.eclipse.osgi/profile/benchmark", "false" );
+                props.setProperty( "org.eclipse.osgi/defaultprofile/buffersize", "256" );
+                props.setProperty( "org.eclipse.osgi/trace/activation", "false" );
+                props.setProperty( "org.eclipse.osgi/debug/security", "false" );
+                props.setProperty( "org.eclipse.osgi/resolver/wiring", "false" );
+                props.setProperty( "org.eclipse.osgi/eclipseadaptor/debug/platformadmin/resolver", "false" );
+                props.setProperty( "org.eclipse.osgi/debug/loader", "true" );
+                props.setProperty( "org.eclipse.osgi/eclipseadaptor/debug", "false" );
+                props.setProperty( "org.eclipse.osgi/debug/messageBundles", "false" );
+                props.setProperty( "org.eclipse.osgi/debug/events", "false" );
+                props.setProperty( "org.eclipse.osgi/resolver/debug", "false" );
+                props.setProperty( "org.eclipse.osgi/profile/startup", "false" );
+                props.setProperty( "org.eclipse.osgi/debug/startlevel", "false" );
+                props.setProperty( "org.eclipse.osgi/debug/packageadmin", "false" );
+                props.setProperty( "org.eclipse.osgi/resolver/grouping", "false" );
+                props.setProperty( "org.eclipse.osgi/trace/classLoading", "false" );
+                props.setProperty( "org.eclipse.osgi/eclipseadaptor/debug/platformadmin", "false" );
+                props.setProperty( "org.eclipse.osgi/debug/filter", "false" );
+                props.setProperty( "org.eclipse.osgi/monitor/activation", "false" );
+                props.setProperty( "org.eclipse.osgi/resolver/generics", "false" );
+                props.setProperty( "org.eclipse.osgi/debug/manifest", "false" );
+                props.setProperty( "org.eclipse.osgi/debug/services", "false" );
+                props.setProperty( "org.eclipse.osgi/eclipseadaptor/debug/location", "false" );
+                props.setProperty( "org.eclipse.osgi/profile/impl",
+                                   "org.eclipse.osgi.internal.profile.DefaultProfileLogger"
+                );
+                props.setProperty( "org.eclipse.osgi/eclipseadaptor/converter/debug", "false" );
+                props.setProperty( "org.eclipse.osgi/profile/debug", "false" );
+                props.setProperty( "org.eclipse.osgi/monitor/classes", "false" );
+                props.setProperty( "org.eclipse.osgi/trace/filters", "trace.properties" );
+                props.setProperty( "org.eclipse.osgi/resolver/cycles", "false" );
+                props.setProperty( "org.eclipse.osgi/defaultprofile/logfilename", "" );
+                props.setProperty( "org.eclipse.osgi/resolver/imports", "false" );
+                props.setProperty( "org.eclipse.osgi/monitor/resources", "false" );
+                appendProperties( writer, props );
+                writer.write();
+            }
+        }
+        catch( IOException e )
+        {
+            throw new PlatformException( "Could not create equinox debug options file", e );
+        }
+        finally
+        {
+            if( os != null )
+            {
+                try
+                {
+                    os.close();
+                }
+                catch( IOException e )
+                {
+                    //noinspection ThrowFromFinallyBlock
+                    throw new PlatformException( "Could not create equinox debug options file", e );
+                }
+            }
+        }
+    }
 
-	private Boolean isOptionsFileNeeded( final Configuration configuration )
-	{
-		return configuration.isDebugClassLoading();
-	}
+    private Boolean isOptionsFileNeeded( final Configuration configuration )
+    {
+        return configuration.isDebugClassLoading();
+    }
+
     /**
      * Writes properties to configuration file.
      *
@@ -412,8 +417,8 @@ public class EquinoxPlatformBuilder
         arguments.add( workingDirectory + File.separator + CONFIG_DIRECTORY );
         if( isOptionsFileNeeded( context.getConfiguration() ) )
         {
-	        arguments.add( ARG_DEBUG );
-	        arguments.add( workingDirectory + File.separator + CONFIG_DIRECTORY + File.separator + OPTIONS);
+            arguments.add( ARG_DEBUG );
+            arguments.add( workingDirectory + File.separator + CONFIG_DIRECTORY + File.separator + OPTIONS );
         }
         arguments.add( ARG_INSTALL );
         arguments.add( workingDirectory );

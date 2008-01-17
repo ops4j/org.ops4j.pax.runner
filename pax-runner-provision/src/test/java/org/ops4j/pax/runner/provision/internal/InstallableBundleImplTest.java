@@ -21,12 +21,12 @@ import java.net.MalformedURLException;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
-import org.ops4j.pax.runner.provision.BundleReference;
-import org.ops4j.pax.runner.provision.InstallableBundle;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.service.startlevel.StartLevel;
+import org.ops4j.pax.runner.provision.BundleReference;
+import org.ops4j.pax.runner.provision.InstallableBundle;
 
 public class InstallableBundleImplTest
 {

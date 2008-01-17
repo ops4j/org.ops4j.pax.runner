@@ -32,6 +32,7 @@ public class MalformedSpecificationException
 
     /**
      * @param message The exception message.
+     *
      * @see Exception#Exception(String)
      */
     public MalformedSpecificationException( final String message )
@@ -41,7 +42,8 @@ public class MalformedSpecificationException
 
     /**
      * @param message The exception message.
-     * @param cause The original cause of the exception.
+     * @param cause   The original cause of the exception.
+     *
      * @see Exception#Exception(String,Throwable)
      */
     public MalformedSpecificationException( final String message, Throwable cause )

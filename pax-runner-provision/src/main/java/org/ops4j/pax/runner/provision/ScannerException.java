@@ -29,6 +29,7 @@ public class ScannerException
 
     /**
      * @param message The exception message.
+     *
      * @see Exception#Exception(String)
      */
     public ScannerException( String message )
@@ -38,7 +39,8 @@ public class ScannerException
 
     /**
      * @param message The exception message.
-     * @param cause The originial cause of the exception.
+     * @param cause   The originial cause of the exception.
+     *
      * @see Exception#Exception(String,Throwable)
      */
     public ScannerException( String message, Throwable cause )

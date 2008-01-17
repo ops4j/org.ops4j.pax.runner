@@ -85,12 +85,14 @@ public interface PlatformBuilder
 
     /**
      * Returns the name of the provider (e.g. felix, equionox)
+     *
      * @return name of the provider
      */
     String getProviderName();
 
     /**
      * Returns the version of the provider (e.g. 1.0, 3.3.0)
+     *
      * @return version of the provider
      */
     String getProviderVersion();

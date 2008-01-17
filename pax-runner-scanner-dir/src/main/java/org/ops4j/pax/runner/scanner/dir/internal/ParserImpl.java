@@ -186,11 +186,11 @@ public class ParserImpl
             char c = spec.charAt( j );
             switch( c )
             {
-                case'.':
+                case '.':
                     sb.append( "\\." );
                     break;
 
-                case'*':
+                case '*':
                     // test for ** (all directories)
                     if( j < spec.length() - 1 && spec.charAt( j + 1 ) == '*' )
                     {

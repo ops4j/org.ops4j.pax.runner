@@ -20,12 +20,12 @@ package org.ops4j.pax.runner.provision.internal;
 import java.util.Dictionary;
 import static org.easymock.EasyMock.*;
 import org.junit.Test;
-import org.ops4j.pax.runner.provision.ProvisionService;
-import org.ops4j.pax.runner.provision.Scanner;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
 import org.osgi.framework.ServiceListener;
 import org.osgi.service.startlevel.StartLevel;
+import org.ops4j.pax.runner.provision.ProvisionService;
+import org.ops4j.pax.runner.provision.Scanner;
 
 public class ActivatorTest
 {
@@ -59,7 +59,7 @@ public class ActivatorTest
             eq( StartLevel.class.getName() ),
             (String) isNull()
         )
-        ).andReturn( null );        
+        ).andReturn( null );
         // service tracker for scanners
         expect( context.createFilter( "(objectClass=" + Scanner.class.getName() + ")" )
         ).andReturn( createMock( Filter.class ) );

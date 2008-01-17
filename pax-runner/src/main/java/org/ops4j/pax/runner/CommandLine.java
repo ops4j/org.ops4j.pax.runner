@@ -51,12 +51,13 @@ public interface CommandLine
     /**
      * Platform version option.
      */
-    static final String OPTION_PLATFORM_VERSION = "version";    
+    static final String OPTION_PLATFORM_VERSION = "version";
 
     /**
      * Returns the value of an option by key. If option is not defined returns null.
      *
      * @param key option key
+     *
      * @return The option value.
      */
     String getOption( String key );

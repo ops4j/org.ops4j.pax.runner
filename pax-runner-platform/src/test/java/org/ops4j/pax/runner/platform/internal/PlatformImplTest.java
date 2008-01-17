@@ -31,7 +31,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.ops4j.pax.runner.commons.file.FileUtils;
+import org.ops4j.io.FileUtils;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.BundleReferenceBean;
 import org.ops4j.pax.runner.platform.Configuration;
@@ -106,7 +106,7 @@ public class PlatformImplTest
     // test returned packages when there is no user defined packages option
     @Test
     public void createPackageListWithNoUserDefinedPackages()
-        throws MalformedURLException, PlatformException
+        throws Exception
     {
         expect( m_bundleContext.getBundle() ).andReturn( m_bundle );
         expect( m_bundle.getResource( "META-INF/platform/ee/J2SE-1.5.packages" ) ).andReturn(
@@ -122,7 +122,7 @@ public class PlatformImplTest
     // test returned packages when there is a user defined packages option
     @Test
     public void createPackageListWithUserDefinedPackages()
-        throws MalformedURLException, PlatformException
+        throws Exception
     {
         expect( m_bundleContext.getBundle() ).andReturn( m_bundle );
         expect( m_bundle.getResource( "META-INF/platform/ee/J2SE-1.5.packages" ) ).andReturn(
@@ -138,7 +138,7 @@ public class PlatformImplTest
     // test returned packages when the ee is an valid url
     @Test
     public void createPackageListWithURLEE()
-        throws MalformedURLException, PlatformException
+        throws Exception
     {
         assertEquals(
             "System packages",
@@ -168,7 +168,7 @@ public class PlatformImplTest
     // test returned packages when the ee is a valid url but has incorect letter case
     @Test
     public void createPackageListLetterCase()
-        throws MalformedURLException, PlatformException
+        throws Exception
     {
         expect( m_bundleContext.getBundle() ).andReturn( m_bundle );
         expect( m_bundle.getResource( "META-INF/platform/ee/J2SE-1.5.packages" ) ).andReturn(
@@ -187,7 +187,7 @@ public class PlatformImplTest
     // test returned packages when the ee is an invalid url
     @Test( expected = PlatformException.class )
     public void createPackageListWithInvalidEE()
-        throws MalformedURLException, PlatformException
+        throws Exception
     {
         expect( m_bundleContext.getBundle() ).andReturn( m_bundle );
         expect( m_bundle.getResource( "META-INF/platform/ee/J2SE-1.5.packages" ) ).andReturn(
@@ -206,7 +206,7 @@ public class PlatformImplTest
     // test returned packages when there are more EEs
     @Test
     public void createPackageListWithMoreEEs()
-        throws MalformedURLException, PlatformException
+        throws Exception
     {
         expect( m_bundleContext.getBundle() ).andReturn( m_bundle );
         expect( m_bundle.getResource( "META-INF/platform/ee/J2SE-1.4.packages" ) ).andReturn(
@@ -250,7 +250,7 @@ public class PlatformImplTest
 
     @Test
     public void startWithBundles()
-        throws MalformedURLException, PlatformException
+        throws Exception
     {
         List<BundleReference> bundles = new ArrayList<BundleReference>();
         bundles.add(
@@ -265,7 +265,7 @@ public class PlatformImplTest
     // test that platform starts even without bundles to be installed
     @Test
     public void startWithoutBundles()
-        throws MalformedURLException, PlatformException
+        throws Exception
     {
         start( null );
     }
@@ -273,7 +273,7 @@ public class PlatformImplTest
     // expected to throw an exception the bundle is a plain file not a jar
     @Test( expected = PlatformException.class )
     public void startWithNotAJarBundle()
-        throws MalformedURLException, PlatformException
+        throws Exception
     {
         List<BundleReference> bundles = new ArrayList<BundleReference>();
         bundles.add(
@@ -285,7 +285,7 @@ public class PlatformImplTest
     // expected to throw an exception since bundle is jar that does not have a manifest entry for symbolic name
     @Test( expected = PlatformException.class )
     public void startWithAJarWithNoManifestAttr()
-        throws MalformedURLException, PlatformException
+        throws Exception
     {
         List<BundleReference> bundles = new ArrayList<BundleReference>();
         bundles.add(
@@ -297,19 +297,19 @@ public class PlatformImplTest
     // test that platform starts even if the system jar is not a bundle by itself
     @Test
     public void startWithoutBundlesAndAsystemJarThatIsNotBunlde()
-        throws MalformedURLException, PlatformException
+        throws Exception
     {
         start( null, FileUtils.getFileFromClasspath( "platform/noManifestAttr.jar" ).toURL() );
     }
 
     public void start( final List<BundleReference> bundles )
-        throws PlatformException, MalformedURLException
+        throws Exception
     {
         start( bundles, FileUtils.getFileFromClasspath( "platform/system.jar" ).toURL() );
     }
 
     public void start( final List<BundleReference> bundles, URL systemBundleURL )
-        throws PlatformException, MalformedURLException
+        throws Exception
     {
         expect( m_builder.getMainClassName() ).andReturn( "Main" );
         m_context.setProperties( null );

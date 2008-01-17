@@ -18,14 +18,15 @@
 package org.ops4j.pax.runner.scanner.dir.internal;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.util.List;
 import java.util.regex.Pattern;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
-import org.junit.Test;
 import org.junit.Before;
-import org.ops4j.pax.runner.commons.file.FileUtils;
+import org.junit.Test;
+import org.ops4j.io.FileUtils;
 import org.ops4j.pax.runner.commons.resolver.Resolver;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
@@ -60,7 +61,7 @@ public class DirScannerTest
 
     @Test
     public void scanDir()
-        throws ScannerException, MalformedURLException
+        throws ScannerException, MalformedURLException, FileNotFoundException
     {
         Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
@@ -73,7 +74,7 @@ public class DirScannerTest
         expect( parser.shouldStart() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
         expect( parser.shouldUpdate() ).andReturn( null );
-        expect( config.shouldUpdate() ).andReturn( null );        
+        expect( config.shouldUpdate() ).andReturn( null );
 
         replay( parser, config );
         List<BundleReference> references = createScanner( config, parser ).scan( file.getAbsolutePath() );
@@ -84,7 +85,7 @@ public class DirScannerTest
 
     @Test
     public void scanDirFromFileURL()
-        throws ScannerException, MalformedURLException
+        throws ScannerException, MalformedURLException, FileNotFoundException
     {
         Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
@@ -106,7 +107,7 @@ public class DirScannerTest
         verify( parser, config );
     }
 
-    @Test(expected = MalformedSpecificationException.class)
+    @Test( expected = MalformedSpecificationException.class )
     public void scanDirFromHttpURL()
         throws ScannerException, MalformedURLException
     {
@@ -129,7 +130,7 @@ public class DirScannerTest
 
     @Test
     public void scanZip()
-        throws ScannerException, MalformedURLException
+        throws ScannerException, MalformedURLException, FileNotFoundException
     {
         Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
@@ -153,7 +154,7 @@ public class DirScannerTest
 
     @Test
     public void scanZipFromFileURL()
-        throws ScannerException, MalformedURLException
+        throws ScannerException, MalformedURLException, FileNotFoundException
     {
         Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
@@ -190,7 +191,7 @@ public class DirScannerTest
         expect( parser.shouldStart() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
         expect( parser.shouldUpdate() ).andReturn( null );
-        expect( config.shouldUpdate() ).andReturn( null );        
+        expect( config.shouldUpdate() ).andReturn( null );
 
         replay( parser, config );
         List<BundleReference> references = createScanner( config, parser ).scan( "http:myserver/my.zip" );

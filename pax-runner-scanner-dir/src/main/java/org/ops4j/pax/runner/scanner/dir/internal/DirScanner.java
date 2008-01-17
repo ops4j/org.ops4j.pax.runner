@@ -184,7 +184,7 @@ public class DirScanner
             LOGGER.trace( "Specification is not a valid zip: " + ignore.getMessage() + "Continue discovery..." );
         }
         // finaly try with a zip protocol
-        if( url!= null && !url.toExternalForm().startsWith( "jar" ) )
+        if( url != null && !url.toExternalForm().startsWith( "jar" ) )
         {
             try
             {

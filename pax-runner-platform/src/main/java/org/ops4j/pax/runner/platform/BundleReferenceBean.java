@@ -80,9 +80,10 @@ public class BundleReferenceBean
      * @param url         bundle location
      * @param startLevel  start level of the bundle; optional
      * @param shouldStart if the bundle should be started; optional
-     * @param update   if the bundle should be updated; optional
+     * @param update      if the bundle should be updated; optional
      */
-    public BundleReferenceBean( final String name, final URL url, final Integer startLevel, final Boolean shouldStart, final Boolean update )
+    public BundleReferenceBean( final String name, final URL url, final Integer startLevel, final Boolean shouldStart,
+                                final Boolean update )
     {
         setURL( url );
         setName( name );

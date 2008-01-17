@@ -61,11 +61,11 @@ public class AbstractPlatformBuilderActivatorTest
             (Dictionary) notNull()
         )
         ).andReturn( null );
-        expect( m_platformBuilder1.getProviderName()).andReturn( "provider");
-        expect( m_platformBuilder1.getProviderVersion()).andReturn( "version1");
-        expect( m_platformBuilder2.getProviderName()).andReturn( "provider");
-        expect( m_platformBuilder2.getProviderVersion()).andReturn( "version2");
-        
+        expect( m_platformBuilder1.getProviderName() ).andReturn( "provider" );
+        expect( m_platformBuilder1.getProviderVersion() ).andReturn( "version1" );
+        expect( m_platformBuilder2.getProviderName() ).andReturn( "provider" );
+        expect( m_platformBuilder2.getProviderVersion() ).andReturn( "version2" );
+
         replay( context, m_platformBuilder1, m_platformBuilder2 );
         new TestAPBActivator().start( context );
         verify( context, m_platformBuilder1, m_platformBuilder2 );

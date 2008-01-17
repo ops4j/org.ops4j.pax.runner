@@ -24,9 +24,9 @@ import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 import static org.junit.Assert.*;
 import org.junit.Test;
-import org.ops4j.pax.runner.commons.file.FileUtils;
-import org.ops4j.pax.runner.platform.BundleReference;
 import org.xml.sax.SAXException;
+import org.ops4j.io.FileUtils;
+import org.ops4j.pax.runner.platform.BundleReference;
 
 public class PlatformDefinitionImplTest
 {
@@ -231,7 +231,7 @@ public class PlatformDefinitionImplTest
         assertEquals( "Bundle 4 name", "Bundle 4", references.get( 3 ).getName() );
         assertEquals( "Bundle 4 url", new URL( "file:bundle4.jar" ), references.get( 3 ).getURL() );
         assertEquals( "Bundle 6 name", "Bundle 6", references.get( 4 ).getName() );
-        assertEquals( "Bundle 6 url", new URL( "file:bundle6.jar" ), references.get( 4 ).getURL() );        
+        assertEquals( "Bundle 6 url", new URL( "file:bundle6.jar" ), references.get( 4 ).getURL() );
     }
 
 }

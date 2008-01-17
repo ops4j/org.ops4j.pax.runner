@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipFile;
 import org.junit.Before;
 import org.junit.Test;
-import org.ops4j.pax.runner.commons.file.FileUtils;
+import org.ops4j.io.FileUtils;
 
 public class ZipListerTest extends ListerTest
 {

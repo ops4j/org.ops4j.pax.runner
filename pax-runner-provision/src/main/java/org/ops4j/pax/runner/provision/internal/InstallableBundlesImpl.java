@@ -19,10 +19,10 @@ package org.ops4j.pax.runner.provision.internal;
 
 import java.util.Iterator;
 import java.util.List;
+import org.osgi.framework.BundleException;
 import org.ops4j.pax.runner.commons.Assert;
 import org.ops4j.pax.runner.provision.InstallableBundle;
 import org.ops4j.pax.runner.provision.InstallableBundles;
-import org.osgi.framework.BundleException;
 
 public class InstallableBundlesImpl
     implements InstallableBundles

@@ -18,17 +18,18 @@
  */
 package org.ops4j.pax.runner;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.ops4j.pax.runner.commons.file.FileUtils;
 
 /**
  * Default implementation of Command Line.
@@ -72,7 +73,7 @@ public class CommandLineImpl implements CommandLine
         m_arguments = new ArrayList<String>();
         parseArguments( Arrays.asList( args ) );
         String argsURL = getOption( "args" );
-        if (argsURL == null )
+        if( argsURL == null )
         {
             // use a default args file if available
             final File defaultArgsFile = new File( DEFAULT_ARGS_FILE_NAME );
@@ -92,7 +93,7 @@ public class CommandLineImpl implements CommandLine
         {
             try
             {
-                parseArguments( FileUtils.readTextFile( new URL( argsURL ), true ) );
+                parseArguments( readTextFile( new URL( argsURL ), true ) );
             }
             catch( IOException e )
             {
@@ -191,6 +192,43 @@ public class CommandLineImpl implements CommandLine
         {
             m_arguments.add( arg );
         }
+    }
+
+    /**
+     * Reads content of a text files and returns every line as an entry to a List.
+     *
+     * @param fileURL        url of the file to be read
+     * @param skipEmptyLines if empty lines should be skippied
+     *
+     * @return a list of strings, one entry for each line (depending if it should skip empty lines or not)
+     *
+     * @throws IOException re-thrown if an exception appear during processing of input stream
+     */
+    private static List<String> readTextFile( final URL fileURL, final boolean skipEmptyLines )
+        throws IOException
+    {
+        final List<String> content = new ArrayList<String>();
+        BufferedReader bufferedReader = null;
+        try
+        {
+            bufferedReader = new BufferedReader( new InputStreamReader( fileURL.openStream() ) );
+            String line;
+            while( ( line = bufferedReader.readLine() ) != null )
+            {
+                if( !skipEmptyLines || line.trim().length() > 0 )
+                {
+                    content.add( line );
+                }
+            }
+        }
+        finally
+        {
+            if( bufferedReader != null )
+            {
+                bufferedReader.close();
+            }
+        }
+        return content;
     }
 
     /**

@@ -29,6 +29,7 @@ public class PlatformException
 
     /**
      * @param message The exception message.
+     *
      * @see Exception#Exception(String)
      */
     public PlatformException( String message )
@@ -38,7 +39,8 @@ public class PlatformException
 
     /**
      * @param message The exception message.
-     * @param cause The original cause of this exception.
+     * @param cause   The original cause of this exception.
+     *
      * @see Exception#Exception(String,Throwable)
      */
     public PlatformException( String message, Throwable cause )

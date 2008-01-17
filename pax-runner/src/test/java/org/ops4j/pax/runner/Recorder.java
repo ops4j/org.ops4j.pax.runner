@@ -21,5 +21,5 @@ public interface Recorder
 {
 
     void record( String string );
-    
+
 }

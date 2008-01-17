@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.startlevel.StartLevel;
 import org.ops4j.pax.runner.commons.Assert;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.InstallableBundle;
@@ -33,8 +35,6 @@ import org.ops4j.pax.runner.provision.Scanner;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.ServiceConstants;
 import org.ops4j.pax.runner.provision.UnsupportedSchemaException;
-import org.osgi.framework.BundleContext;
-import org.osgi.service.startlevel.StartLevel;
 
 /**
  * Implementation of Provision Service.
@@ -125,6 +125,7 @@ public class ProvisionServiceImpl
      * Creates a new installable set. The methods could be overrided by subclasses.
      *
      * @param installables a list of installables that makes up the set.
+     *
      * @return The installable bundles as an Iterable.
      */
     InstallableBundles createSet( final List<InstallableBundle> installables )
@@ -149,9 +150,12 @@ public class ProvisionServiceImpl
      *
      * @param scanner the scanner to use
      * @param path    the path part of the specification
+     *
      * @return A List of bundle references found by the scanner.
+     *
      * @throws ScannerException TODO
-     * @throws MalformedSpecificationException TODO
+     * @throws MalformedSpecificationException
+     *                          TODO
      */
     private List<BundleReference> scan( final Scanner scanner, final String path )
         throws ScannerException, MalformedSpecificationException

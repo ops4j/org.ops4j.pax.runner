@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -18,9 +19,9 @@
   <description>
     Pax Runner - Common utilities shared between modules. The jar is not required to be deployed alongside the artifacts
     that uses parts of it. The used parts are embeded into the artifact via maven depenency plugin + maven bundle
-    plugin. See details at http://wiki.ops4j.org/confluence/x/A4A6 
+    plugin. See details at http://wiki.ops4j.org/confluence/x/A4A6
   </description>
-  
+
   <url>http://wiki.ops4j.org/confluence/x/A4A6</url>
 
   <properties>

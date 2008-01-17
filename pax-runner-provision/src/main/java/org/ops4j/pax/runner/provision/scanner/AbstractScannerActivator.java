@@ -21,18 +21,18 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.ops4j.pax.runner.commons.Assert;
-import org.ops4j.pax.runner.commons.resolver.BundleContextResolver;
-import org.ops4j.pax.runner.commons.resolver.CompositeResolver;
-import org.ops4j.pax.runner.commons.resolver.DictionaryResolver;
-import org.ops4j.pax.runner.commons.resolver.Resolver;
-import org.ops4j.pax.runner.provision.Scanner;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedService;
+import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.pax.runner.commons.resolver.BundleContextResolver;
+import org.ops4j.pax.runner.commons.resolver.CompositeResolver;
+import org.ops4j.pax.runner.commons.resolver.DictionaryResolver;
+import org.ops4j.pax.runner.commons.resolver.Resolver;
+import org.ops4j.pax.runner.provision.Scanner;
 
 /**
  * Abstract bundle activator for scanners.

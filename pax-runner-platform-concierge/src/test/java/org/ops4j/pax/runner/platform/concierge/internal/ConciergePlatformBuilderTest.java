@@ -34,7 +34,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.ops4j.pax.runner.commons.file.FileUtils;
+import org.ops4j.io.FileUtils;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.LocalBundle;
@@ -171,7 +171,7 @@ public class ConciergePlatformBuilderTest
             new String[]{
                 "-Dosgi.maxLevel=100",
                 "-Dxargs="
-                + new File(new File(m_workDir, "concierge"),"config.ini").getAbsolutePath()
+                + new File( new File( m_workDir, "concierge" ), "config.ini" ).getAbsolutePath()
             },
             new ConciergePlatformBuilder( m_bundleContext, "version" ).getVMOptions( platformContext )
         );

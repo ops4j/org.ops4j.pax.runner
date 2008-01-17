@@ -127,5 +127,5 @@ public class AuditedPropertiesTest
         audited.setProperty( "filtered", "${${holder}" );
         assertEquals( "Filtered property value", "${value", audited.getProperty( "filtered" ) );
     }
-    
+
 }

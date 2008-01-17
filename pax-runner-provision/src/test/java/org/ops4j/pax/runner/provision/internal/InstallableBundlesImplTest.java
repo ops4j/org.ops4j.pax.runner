@@ -23,8 +23,8 @@ import java.util.List;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
-import org.ops4j.pax.runner.provision.InstallableBundle;
 import org.osgi.framework.BundleException;
+import org.ops4j.pax.runner.provision.InstallableBundle;
 
 public class InstallableBundlesImplTest
 {

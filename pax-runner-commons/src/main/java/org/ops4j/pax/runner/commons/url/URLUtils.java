@@ -127,9 +127,9 @@ public class URLUtils
     {
         final URLConnection conn = url.openConnection();
         prepareForAuthentication( conn );
-        if ( acceptAnyCertificate )
+        if( acceptAnyCertificate )
         {
-           prepareForSSL( conn );
+            prepareForSSL( conn );
         }
         return conn.getInputStream();
     }

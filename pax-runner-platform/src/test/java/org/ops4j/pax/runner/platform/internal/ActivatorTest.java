@@ -21,9 +21,6 @@ import java.util.Dictionary;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
-import org.ops4j.pax.runner.platform.Platform;
-import org.ops4j.pax.runner.platform.PlatformBuilder;
-import static org.ops4j.pax.runner.platform.internal.Capture.*;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
 import org.osgi.framework.ServiceEvent;
@@ -31,6 +28,9 @@ import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ManagedService;
+import org.ops4j.pax.runner.platform.Platform;
+import org.ops4j.pax.runner.platform.PlatformBuilder;
+import static org.ops4j.pax.runner.platform.internal.Capture.*;
 
 public class ActivatorTest
 {

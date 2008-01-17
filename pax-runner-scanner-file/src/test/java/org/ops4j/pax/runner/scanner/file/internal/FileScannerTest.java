@@ -25,7 +25,7 @@ import java.util.Properties;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
-import org.ops4j.pax.runner.commons.file.FileUtils;
+import org.ops4j.io.FileUtils;
 import org.ops4j.pax.runner.commons.resolver.Resolver;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
@@ -51,7 +51,7 @@ public class FileScannerTest
 
     @Test
     public void scanWithValidFileAndNoOptions()
-        throws ScannerException, MalformedURLException
+        throws Exception
     {
         Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
@@ -74,7 +74,7 @@ public class FileScannerTest
 
     @Test
     public void scanWithValidFileAndNoStart()
-        throws ScannerException, MalformedURLException
+        throws Exception
     {
         Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
@@ -85,7 +85,7 @@ public class FileScannerTest
         expect( config.getStartLevel() ).andReturn( null );
         expect( parser.shouldStart() ).andReturn( false );
         expect( parser.shouldUpdate() ).andReturn( null );
-        expect( config.shouldUpdate() ).andReturn( null );        
+        expect( config.shouldUpdate() ).andReturn( null );
 
         replay( parser, config );
         List<BundleReference> references =
@@ -99,7 +99,7 @@ public class FileScannerTest
 
     @Test
     public void scanWithValidFileAndStartLevel()
-        throws ScannerException, MalformedURLException
+        throws Exception
     {
         Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
@@ -138,7 +138,7 @@ public class FileScannerTest
 
     @Test
     public void scanWithEmptyFile()
-        throws ScannerException, MalformedURLException
+        throws Exception
     {
         Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
@@ -158,7 +158,7 @@ public class FileScannerTest
 
     @Test
     public void scanValidFileWithProperties()
-        throws ScannerException, MalformedURLException
+        throws Exception
     {
         Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );

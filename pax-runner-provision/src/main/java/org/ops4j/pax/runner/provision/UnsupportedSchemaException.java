@@ -30,6 +30,7 @@ public class UnsupportedSchemaException
 
     /**
      * @param message The exception message.
+     *
      * @see Exception#Exception(String)
      */
     public UnsupportedSchemaException( String message )
@@ -39,7 +40,8 @@ public class UnsupportedSchemaException
 
     /**
      * @param message The exception message.
-     * @param cause The original cause of the exception.
+     * @param cause   The original cause of the exception.
+     *
      * @see Exception#Exception(String,Throwable)
      */
     public UnsupportedSchemaException( String message, Throwable cause )

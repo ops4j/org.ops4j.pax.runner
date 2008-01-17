@@ -17,11 +17,11 @@
  */
 package org.ops4j.pax.runner.scanner.file.internal;
 
+import org.osgi.framework.BundleContext;
 import org.ops4j.pax.runner.commons.resolver.BundleContextResolver;
 import org.ops4j.pax.runner.commons.resolver.Resolver;
 import org.ops4j.pax.runner.provision.scanner.AbstractScannerActivator;
 import org.ops4j.pax.runner.scanner.file.ServiceConstants;
-import org.osgi.framework.BundleContext;
 
 /**
  * Bundle activator for file scanner.

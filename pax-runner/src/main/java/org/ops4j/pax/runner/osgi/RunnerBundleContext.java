@@ -22,7 +22,6 @@ import java.net.URL;
 import java.util.Dictionary;
 import java.util.List;
 import org.apache.felix.framework.FilterImpl;
-import org.ops4j.pax.runner.Context;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.Filter;
@@ -30,6 +29,7 @@ import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.ops4j.pax.runner.Context;
 
 public class RunnerBundleContext
     extends UnsupportedBundleContext

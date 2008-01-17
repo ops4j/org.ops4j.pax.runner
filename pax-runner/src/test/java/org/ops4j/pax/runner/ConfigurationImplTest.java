@@ -52,7 +52,9 @@ public class ConfigurationImplTest
     {
         Configuration config =
             new ConfigurationImpl( "classpath:org/ops4j/pax/runner/configuration/runner.properties" );
-        assertEquals( "platform.test", "org.ops4j.pax.runner.platform.Activator", config.getProperty( "platform.test" ) );
+        assertEquals( "platform.test", "org.ops4j.pax.runner.platform.Activator",
+                      config.getProperty( "platform.test" )
+        );
     }
 
 }

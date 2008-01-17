@@ -22,7 +22,7 @@ import java.net.MalformedURLException;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import org.ops4j.pax.runner.commons.file.FileUtils;
+import org.ops4j.io.FileUtils;
 
 public class ExtensionBasedProvisionSchemaResolverTest
 {
@@ -64,7 +64,7 @@ public class ExtensionBasedProvisionSchemaResolverTest
 
     @Test
     public void resolvePOMWithoutProtocol()
-        throws MalformedURLException
+        throws Exception
     {
         File file = FileUtils.getFileFromClasspath( "ebpsresolver/pom.xml" );
         assertEquals( "Resolved", "scan-pom:" + file.toURL().toExternalForm(),
@@ -86,7 +86,7 @@ public class ExtensionBasedProvisionSchemaResolverTest
 
     @Test
     public void resolveJarWithoutProtocol()
-        throws MalformedURLException
+        throws Exception
     {
         File file = FileUtils.getFileFromClasspath( "ebpsresolver/x.jar" );
         assertEquals( "Resolved", "scan-bundle:" + file.toURL().toExternalForm(),
@@ -114,7 +114,7 @@ public class ExtensionBasedProvisionSchemaResolverTest
 
     @Test
     public void resolveBundleWithoutProtocol()
-        throws MalformedURLException
+        throws Exception
     {
         File file = FileUtils.getFileFromClasspath( "ebpsresolver/x.bundle" );
         assertEquals( "Resolved", "scan-bundle:" + file.toURL().toExternalForm(),
@@ -142,7 +142,7 @@ public class ExtensionBasedProvisionSchemaResolverTest
 
     @Test
     public void resolveDirWithoutProtocol()
-        throws MalformedURLException
+        throws Exception
     {
         File file = FileUtils.getFileFromClasspath( "ebpsresolver/x.zip" );
         assertEquals( "Resolved", "scan-dir:" + file.toURL().toExternalForm(),
@@ -164,7 +164,7 @@ public class ExtensionBasedProvisionSchemaResolverTest
 
     @Test
     public void resolveAnyExtensionWithoutProtocol()
-        throws MalformedURLException
+        throws Exception
     {
         File file = FileUtils.getFileFromClasspath( "ebpsresolver/x.any" );
         assertEquals( "Resolved", "scan-file:" + file.toURL().toExternalForm(),
@@ -186,7 +186,7 @@ public class ExtensionBasedProvisionSchemaResolverTest
 
     @Test
     public void resolveNoExtensionWithoutProtocol()
-        throws MalformedURLException
+        throws Exception
     {
         File file = FileUtils.getFileFromClasspath( "ebpsresolver/x" );
         assertEquals( "Resolved", "scan-dir:" + file.toURL().toExternalForm(),
@@ -208,7 +208,7 @@ public class ExtensionBasedProvisionSchemaResolverTest
 
     @Test
     public void resolveSlashWithoutProtocol()
-        throws MalformedURLException
+        throws Exception
     {
         File file = FileUtils.getFileFromClasspath( "ebpsresolver/x/" );
         assertEquals( "Resolved", "scan-dir:" + file.toURL().toExternalForm(),
@@ -230,7 +230,7 @@ public class ExtensionBasedProvisionSchemaResolverTest
 
     @Test
     public void resolveBackSlashWithoutProtocol()
-        throws MalformedURLException
+        throws Exception
     {
         File file = FileUtils.getFileFromClasspath( "ebpsresolver/x" + File.separator );
         assertEquals( "Resolved", "scan-dir:" + file.toURL().toExternalForm(),

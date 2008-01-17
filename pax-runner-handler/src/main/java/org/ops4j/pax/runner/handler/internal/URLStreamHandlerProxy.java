@@ -22,9 +22,9 @@ import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
-import org.ops4j.pax.runner.commons.Assert;
 import org.osgi.service.url.URLStreamHandlerService;
 import org.osgi.service.url.URLStreamHandlerSetter;
+import org.ops4j.pax.runner.commons.Assert;
 
 /**
  * A proxy that get's registred with the JVM as URLStreamhandler but actualy delegates to the URLStreamHandlerService

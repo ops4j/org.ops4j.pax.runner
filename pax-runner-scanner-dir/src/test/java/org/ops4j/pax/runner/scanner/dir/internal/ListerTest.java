@@ -19,7 +19,7 @@ public abstract class ListerTest
     {
         Assert.assertNotNull( "Returned list is null", actual );
         Assert.assertEquals( "Number of urls", expected.length, actual.size() );
-        for ( URL url : expected )
+        for( URL url : expected )
         {
             Assert.assertTrue( "Missing expected: " + url.toExternalForm(), actual.contains( url ) );
         }

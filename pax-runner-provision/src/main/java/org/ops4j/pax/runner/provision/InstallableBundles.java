@@ -33,7 +33,9 @@ public interface InstallableBundles
      * Installs the available bundles.
      *
      * @return itself, for fluent api usage
-     * @throws org.osgi.framework.BundleException if an underlying problem occur in the OSGi framework.
+     *
+     * @throws org.osgi.framework.BundleException
+     *          if an underlying problem occur in the OSGi framework.
      */
     InstallableBundles install()
         throws BundleException;
