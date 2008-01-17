@@ -99,7 +99,7 @@ public class Run
     {
         Assert.notNull( "Command line", commandLine );
         Assert.notNull( "Configuration", config );
-        Assert.notNull( "Resolver", resolver );
+        Assert.notNull( "PropertyResolver", resolver );
 
         final ServiceRegistry serviceRegistry = new ServiceRegistry( null );
         final EventDispatcher dispatcher = EventDispatcher.start( new Logger( Logger.LOG_DEBUG ) );

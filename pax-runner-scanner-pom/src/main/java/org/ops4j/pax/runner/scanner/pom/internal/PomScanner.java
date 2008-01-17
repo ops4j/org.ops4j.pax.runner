@@ -29,7 +29,6 @@ import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 import org.ops4j.pax.runner.commons.Assert;
 import org.ops4j.pax.runner.commons.properties.SystemPropertyUtils;
-import org.ops4j.pax.runner.commons.resolver.Resolver;
 import org.ops4j.pax.runner.commons.xml.XmlUtils;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
@@ -39,6 +38,7 @@ import org.ops4j.pax.runner.provision.scanner.FileBundleReference;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfigurationImpl;
 import org.ops4j.pax.runner.scanner.pom.ServiceConstants;
+import org.ops4j.util.property.PropertyResolver;
 
 /**
  * A scanner that scans maven 2 pom files.
@@ -55,19 +55,19 @@ public class PomScanner
      */
     private static final Log LOGGER = LogFactory.getLog( PomScanner.class );
     /**
-     * Resolver used to resolve properties.
+     * PropertyResolver used to resolve properties.
      */
-    private Resolver m_resolver;
+    private PropertyResolver m_propertyResolver;
 
     /**
      * Creates a new file scanner.
      *
-     * @param resolver a resolver; mandatory
+     * @param propertyResolver a propertyResolver; mandatory
      */
-    public PomScanner( final Resolver resolver )
+    public PomScanner( final PropertyResolver propertyResolver )
     {
-        Assert.notNull( "Resolver", resolver );
-        m_resolver = resolver;
+        Assert.notNull( "PropertyResolver", propertyResolver );
+        m_propertyResolver = propertyResolver;
     }
 
     /**
@@ -304,14 +304,14 @@ public class PomScanner
     }
 
     /**
-     * Sets the resolver to use.
+     * Sets the propertyResolver to use.
      *
-     * @param resolver a resolver
+     * @param propertyResolver a propertyResolver
      */
-    public void setResolver( final Resolver resolver )
+    public void setResolver( final PropertyResolver propertyResolver )
     {
-        Assert.notNull( "Resolver", resolver );
-        m_resolver = resolver;
+        Assert.notNull( "PropertyResolver", propertyResolver );
+        m_propertyResolver = propertyResolver;
     }
 
     /**
@@ -337,7 +337,7 @@ public class PomScanner
      */
     ScannerConfiguration createConfiguration()
     {
-        return new ScannerConfigurationImpl( m_resolver, ServiceConstants.PID );
+        return new ScannerConfigurationImpl( m_propertyResolver, ServiceConstants.PID );
     }
 
 }

@@ -28,11 +28,10 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedService;
 import org.ops4j.pax.runner.commons.Assert;
-import org.ops4j.pax.runner.commons.resolver.BundleContextResolver;
-import org.ops4j.pax.runner.commons.resolver.CompositeResolver;
-import org.ops4j.pax.runner.commons.resolver.DictionaryResolver;
-import org.ops4j.pax.runner.commons.resolver.Resolver;
+import org.ops4j.pax.runner.commons.resolver.BundleContextPropertyResolver;
 import org.ops4j.pax.runner.provision.Scanner;
+import org.ops4j.util.property.DictionaryPropertyResolver;
+import org.ops4j.util.property.PropertyResolver;
 
 /**
  * Abstract bundle activator for scanners.
@@ -133,14 +132,14 @@ public abstract class AbstractScannerActivator<T extends Scanner>
                 {
                     if( config == null )
                     {
-                        setResolver( new BundleContextResolver( m_bundleContext ) );
+                        setResolver( new BundleContextPropertyResolver( m_bundleContext ) );
                     }
                     else
                     {
                         setResolver(
-                            new CompositeResolver(
-                                new DictionaryResolver( config ),
-                                new BundleContextResolver( m_bundleContext )
+                            new DictionaryPropertyResolver(
+                                config,
+                                new BundleContextPropertyResolver( m_bundleContext )
                             )
                         );
                     }
@@ -184,10 +183,10 @@ public abstract class AbstractScannerActivator<T extends Scanner>
     protected abstract String getSchema();
 
     /**
-     * Sets the resolver to use.
+     * Sets the propertyResolver to use.
      *
-     * @param resolver a resoler
+     * @param propertyResolver a resoler
      */
-    protected abstract void setResolver( Resolver resolver );
+    protected abstract void setResolver( PropertyResolver propertyResolver );
 }
 

@@ -35,12 +35,11 @@ import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedService;
 import org.osgi.util.tracker.ServiceTracker;
 import org.ops4j.pax.runner.commons.Assert;
-import org.ops4j.pax.runner.commons.resolver.BundleContextResolver;
-import org.ops4j.pax.runner.commons.resolver.CompositeResolver;
-import org.ops4j.pax.runner.commons.resolver.DictionaryResolver;
+import org.ops4j.pax.runner.commons.resolver.BundleContextPropertyResolver;
 import org.ops4j.pax.runner.platform.Platform;
 import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.ServiceConstants;
+import org.ops4j.util.property.DictionaryPropertyResolver;
 
 /**
  * Bundle activator for platform extender.
@@ -259,14 +258,15 @@ public class Activator
                         {
                             if( m_config == null )
                             {
-                                platform.setResolver( new BundleContextResolver( m_bundleContext ) );
+                                platform.setResolver( new BundleContextPropertyResolver( m_bundleContext ) );
                             }
                             else
                             {
-                                platform.setResolver( new CompositeResolver(
-                                    new DictionaryResolver( m_config ),
-                                    new BundleContextResolver( m_bundleContext )
-                                )
+                                platform.setResolver(
+                                    new DictionaryPropertyResolver(
+                                        config,
+                                        new BundleContextPropertyResolver( m_bundleContext )
+                                    )
                                 );
                             }
                         }
@@ -296,14 +296,15 @@ public class Activator
         {
             if( m_config == null )
             {
-                platform.setResolver( new BundleContextResolver( m_bundleContext ) );
+                platform.setResolver( new BundleContextPropertyResolver( m_bundleContext ) );
             }
             else
             {
-                platform.setResolver( new CompositeResolver(
-                    new DictionaryResolver( m_config ),
-                    new BundleContextResolver( m_bundleContext )
-                )
+                platform.setResolver(
+                    new DictionaryPropertyResolver(
+                        m_config,
+                        new BundleContextPropertyResolver( m_bundleContext )
+                    )
                 );
             }
         }

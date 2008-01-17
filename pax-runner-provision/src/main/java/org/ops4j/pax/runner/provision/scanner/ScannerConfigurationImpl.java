@@ -19,8 +19,8 @@ package org.ops4j.pax.runner.provision.scanner;
 
 import org.ops4j.pax.runner.commons.Assert;
 import org.ops4j.pax.runner.commons.resolver.ConfigurationMap;
-import org.ops4j.pax.runner.commons.resolver.Resolver;
 import org.ops4j.pax.runner.provision.ServiceConstants;
+import org.ops4j.util.property.PropertyResolver;
 
 /**
  * ScannerConfiguration implementation.
@@ -37,7 +37,7 @@ public class ScannerConfigurationImpl
     /**
      * Property resolver. Cannot be null.
      */
-    private final Resolver m_resolver;
+    private final PropertyResolver m_propertyResolver;
     /**
      * Persistent identifier for scanner.
      */
@@ -46,14 +46,14 @@ public class ScannerConfigurationImpl
     /**
      * Creates a new service configuration.
      *
-     * @param resolver resolver used to resolve properties; mandatory
-     * @param pid      scanner pid
+     * @param propertyResolver propertyResolver used to resolve properties; mandatory
+     * @param pid              scanner pid
      */
-    public ScannerConfigurationImpl( final Resolver resolver, final String pid )
+    public ScannerConfigurationImpl( final PropertyResolver propertyResolver, final String pid )
     {
-        Assert.notNull( "Property resolver", resolver );
+        Assert.notNull( "Property propertyResolver", propertyResolver );
         Assert.notNull( "PID", pid );
-        m_resolver = resolver;
+        m_propertyResolver = propertyResolver;
         m_pid = pid;
     }
 
@@ -64,7 +64,7 @@ public class ScannerConfigurationImpl
     {
         if( !contains( m_pid + ServiceConstants.PROPERTY_START_LEVEL ) )
         {
-            final String value = m_resolver.get( m_pid + ServiceConstants.PROPERTY_START_LEVEL );
+            final String value = m_propertyResolver.get( m_pid + ServiceConstants.PROPERTY_START_LEVEL );
             if( value != null )
             {
                 try
@@ -88,7 +88,7 @@ public class ScannerConfigurationImpl
     {
         if( !contains( m_pid + ServiceConstants.PROPERTY_START ) )
         {
-            final String value = m_resolver.get( m_pid + ServiceConstants.PROPERTY_START );
+            final String value = m_propertyResolver.get( m_pid + ServiceConstants.PROPERTY_START );
             if( value == null )
             {
                 return set( m_pid + ServiceConstants.PROPERTY_START, Boolean.TRUE );
@@ -108,7 +108,7 @@ public class ScannerConfigurationImpl
     {
         if( !contains( m_pid + ServiceConstants.PROPERTY_UPDATE ) )
         {
-            final String value = m_resolver.get( m_pid + ServiceConstants.PROPERTY_UPDATE );
+            final String value = m_propertyResolver.get( m_pid + ServiceConstants.PROPERTY_UPDATE );
             if( value == null )
             {
                 return set( m_pid + ServiceConstants.PROPERTY_UPDATE, Boolean.FALSE );

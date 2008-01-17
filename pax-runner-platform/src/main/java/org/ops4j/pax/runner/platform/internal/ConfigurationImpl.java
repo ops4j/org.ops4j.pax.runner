@@ -22,9 +22,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import org.ops4j.pax.runner.commons.Assert;
 import org.ops4j.pax.runner.commons.resolver.ConfigurationMap;
-import org.ops4j.pax.runner.commons.resolver.Resolver;
 import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.ServiceConstants;
+import org.ops4j.util.property.PropertyResolver;
 
 /**
  * Service Configuration implementation.
@@ -62,17 +62,17 @@ public class ConfigurationImpl
     /**
      * Property resolver. Cannot be null.
      */
-    private final Resolver m_resolver;
+    private final PropertyResolver m_propertyResolver;
 
     /**
      * Creates a new service configuration.
      *
-     * @param resolver resolver used to resolve properties; mandatory
+     * @param propertyResolver propertyResolver used to resolve properties; mandatory
      */
-    public ConfigurationImpl( final Resolver resolver )
+    public ConfigurationImpl( final PropertyResolver propertyResolver )
     {
-        Assert.notNull( "Property resolver", resolver );
-        m_resolver = resolver;
+        Assert.notNull( "Property propertyResolver", propertyResolver );
+        m_propertyResolver = propertyResolver;
     }
 
     /**
@@ -83,7 +83,7 @@ public class ConfigurationImpl
     {
         if( !contains( ServiceConstants.CONFIG_DEFINITION_URL ) )
         {
-            final String urlSpec = m_resolver.get( ServiceConstants.CONFIG_DEFINITION_URL );
+            final String urlSpec = m_propertyResolver.get( ServiceConstants.CONFIG_DEFINITION_URL );
             URL url = null;
             if( urlSpec != null )
             {
@@ -101,7 +101,7 @@ public class ConfigurationImpl
     {
         if( !contains( ServiceConstants.CONFIG_WORKING_DIRECTORY ) )
         {
-            String workDir = m_resolver.get( ServiceConstants.CONFIG_WORKING_DIRECTORY );
+            String workDir = m_propertyResolver.get( ServiceConstants.CONFIG_WORKING_DIRECTORY );
             if( workDir == null )
             {
                 workDir = DEFAULT_WORKING_DIRECTORY;
@@ -119,7 +119,7 @@ public class ConfigurationImpl
         // TODO unit test
         if( !contains( ServiceConstants.CONFIG_VMOPTIONS ) )
         {
-            final String vmOptions = m_resolver.get( ServiceConstants.CONFIG_VMOPTIONS );
+            final String vmOptions = m_propertyResolver.get( ServiceConstants.CONFIG_VMOPTIONS );
             if( vmOptions != null )
             {
                 return set( ServiceConstants.CONFIG_VMOPTIONS, vmOptions.split( " " ) );
@@ -143,7 +143,7 @@ public class ConfigurationImpl
         // TODO unit test
         if( !contains( ServiceConstants.CONFIG_CLASSPATH ) )
         {
-            String classpath = m_resolver.get( ServiceConstants.CONFIG_CLASSPATH );
+            String classpath = m_propertyResolver.get( ServiceConstants.CONFIG_CLASSPATH );
             if( classpath == null )
             {
                 classpath = "";
@@ -166,7 +166,7 @@ public class ConfigurationImpl
         {
             return set(
                 ServiceConstants.CONFIG_SYSTEM_PACKAGES,
-                m_resolver.get( ServiceConstants.CONFIG_SYSTEM_PACKAGES )
+                m_propertyResolver.get( ServiceConstants.CONFIG_SYSTEM_PACKAGES )
             );
         }
         return get( ServiceConstants.CONFIG_SYSTEM_PACKAGES );
@@ -179,7 +179,7 @@ public class ConfigurationImpl
     {
         if( !contains( ServiceConstants.CONFIG_EXECUTION_ENV ) )
         {
-            String javaVersion = m_resolver.get( ServiceConstants.CONFIG_EXECUTION_ENV );
+            String javaVersion = m_propertyResolver.get( ServiceConstants.CONFIG_EXECUTION_ENV );
             if( javaVersion == null )
             {
                 javaVersion = "J2SE-" + System.getProperty( "java.version" ).substring( 0, 3 );
@@ -196,7 +196,7 @@ public class ConfigurationImpl
     {
         if( !contains( ServiceConstants.CONFIG_JAVA_HOME ) )
         {
-            String javaHome = m_resolver.get( ServiceConstants.CONFIG_JAVA_HOME );
+            String javaHome = m_propertyResolver.get( ServiceConstants.CONFIG_JAVA_HOME );
             if( javaHome == null )
             {
                 javaHome = System.getProperty( "JAVA_HOME" );
@@ -228,7 +228,7 @@ public class ConfigurationImpl
     {
         if( !contains( ServiceConstants.CONFIG_USE_PERSISTED_STATE ) )
         {
-            String usePersistedState = m_resolver.get( ServiceConstants.CONFIG_USE_PERSISTED_STATE );
+            String usePersistedState = m_propertyResolver.get( ServiceConstants.CONFIG_USE_PERSISTED_STATE );
             if( usePersistedState == null )
             {
                 return set( ServiceConstants.CONFIG_USE_PERSISTED_STATE, Boolean.FALSE );
@@ -246,7 +246,7 @@ public class ConfigurationImpl
     {
         if( !contains( ServiceConstants.CONFIG_CONSOLE ) )
         {
-            String console = m_resolver.get( ServiceConstants.CONFIG_CONSOLE );
+            String console = m_propertyResolver.get( ServiceConstants.CONFIG_CONSOLE );
             if( console == null )
             {
                 return set( ServiceConstants.CONFIG_CONSOLE, Boolean.TRUE );
@@ -264,7 +264,7 @@ public class ConfigurationImpl
         if( !contains( ServiceConstants.CONFIG_OVERWRITE ) )
         {
             return set( ServiceConstants.CONFIG_OVERWRITE,
-                        Boolean.valueOf( m_resolver.get( ServiceConstants.CONFIG_OVERWRITE ) )
+                        Boolean.valueOf( m_propertyResolver.get( ServiceConstants.CONFIG_OVERWRITE ) )
             );
         }
         return get( ServiceConstants.CONFIG_OVERWRITE );
@@ -277,7 +277,7 @@ public class ConfigurationImpl
     {
         if( !contains( ServiceConstants.CONFIG_PROFILES ) )
         {
-            return set( ServiceConstants.CONFIG_PROFILES, m_resolver.get( ServiceConstants.CONFIG_PROFILES ) );
+            return set( ServiceConstants.CONFIG_PROFILES, m_propertyResolver.get( ServiceConstants.CONFIG_PROFILES ) );
         }
         return get( ServiceConstants.CONFIG_PROFILES );
     }
@@ -289,7 +289,7 @@ public class ConfigurationImpl
     {
         if( !contains( ServiceConstants.CONFIG_FRAMEWORK_PROFILE ) )
         {
-            String profile = m_resolver.get( ServiceConstants.CONFIG_FRAMEWORK_PROFILE );
+            String profile = m_propertyResolver.get( ServiceConstants.CONFIG_FRAMEWORK_PROFILE );
             if( profile == null )
             {
                 profile = DEFAULT_FRAMEWORK_PROFILE;
@@ -307,7 +307,7 @@ public class ConfigurationImpl
         if( !contains( ServiceConstants.CONFIG_CLEAN ) )
         {
             return set( ServiceConstants.CONFIG_CLEAN,
-                        Boolean.valueOf( m_resolver.get( ServiceConstants.CONFIG_CLEAN ) )
+                        Boolean.valueOf( m_propertyResolver.get( ServiceConstants.CONFIG_CLEAN ) )
             );
         }
         return get( ServiceConstants.CONFIG_CLEAN );
@@ -349,7 +349,7 @@ public class ConfigurationImpl
     {
         if( !contains( optionName ) )
         {
-            String startLevel = m_resolver.get( optionName );
+            String startLevel = m_propertyResolver.get( optionName );
             Integer startLevelAsInt = defaultValue;
             if( startLevel != null )
             {
@@ -375,7 +375,7 @@ public class ConfigurationImpl
         if( !contains( ServiceConstants.CONFIG_OVERWRITE_USER_BUNDLES ) )
         {
             return set( ServiceConstants.CONFIG_OVERWRITE_USER_BUNDLES,
-                        Boolean.valueOf( m_resolver.get( ServiceConstants.CONFIG_OVERWRITE_USER_BUNDLES ) )
+                        Boolean.valueOf( m_propertyResolver.get( ServiceConstants.CONFIG_OVERWRITE_USER_BUNDLES ) )
             );
         }
         return get( ServiceConstants.CONFIG_OVERWRITE_USER_BUNDLES );
@@ -389,7 +389,7 @@ public class ConfigurationImpl
         if( !contains( ServiceConstants.CONFIG_OVERWRITE_SYSTEM_BUNDLES ) )
         {
             return set( ServiceConstants.CONFIG_OVERWRITE_SYSTEM_BUNDLES,
-                        Boolean.valueOf( m_resolver.get( ServiceConstants.CONFIG_OVERWRITE_SYSTEM_BUNDLES ) )
+                        Boolean.valueOf( m_propertyResolver.get( ServiceConstants.CONFIG_OVERWRITE_SYSTEM_BUNDLES ) )
             );
         }
         return get( ServiceConstants.CONFIG_OVERWRITE_SYSTEM_BUNDLES );
@@ -403,7 +403,7 @@ public class ConfigurationImpl
         if( !contains( ServiceConstants.CONFIG_DEBUG_CLASS_LOADING ) )
         {
             return set( ServiceConstants.CONFIG_DEBUG_CLASS_LOADING,
-                        Boolean.valueOf( m_resolver.get( ServiceConstants.CONFIG_DEBUG_CLASS_LOADING ) )
+                        Boolean.valueOf( m_propertyResolver.get( ServiceConstants.CONFIG_DEBUG_CLASS_LOADING ) )
             );
         }
         return get( ServiceConstants.CONFIG_DEBUG_CLASS_LOADING );
@@ -413,7 +413,7 @@ public class ConfigurationImpl
     {
         if( !contains( ServiceConstants.CONFIG_DOWNLOAD_FEEDBACK ) )
         {
-            String downloadFeedback = m_resolver.get( ServiceConstants.CONFIG_DOWNLOAD_FEEDBACK );
+            String downloadFeedback = m_propertyResolver.get( ServiceConstants.CONFIG_DOWNLOAD_FEEDBACK );
             if( downloadFeedback == null )
             {
                 downloadFeedback = Boolean.TRUE.toString();

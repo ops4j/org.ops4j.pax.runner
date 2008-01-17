@@ -27,11 +27,11 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.ops4j.io.FileUtils;
-import org.ops4j.pax.runner.commons.resolver.Resolver;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
+import org.ops4j.util.property.PropertyResolver;
 
 public class DirScannerTest
 {
@@ -49,14 +49,14 @@ public class DirScannerTest
     public void scanWithNullURLSpec()
         throws ScannerException, MalformedSpecificationException
     {
-        new DirScanner( createMock( Resolver.class ) ).scan( null );
+        new DirScanner( createMock( PropertyResolver.class ) ).scan( null );
     }
 
     @Test( expected = MalformedSpecificationException.class )
     public void scanWithEmptyURLSpec()
         throws ScannerException, MalformedSpecificationException
     {
-        new DirScanner( createMock( Resolver.class ) ).scan( " " );
+        new DirScanner( createMock( PropertyResolver.class ) ).scan( " " );
     }
 
     @Test
@@ -202,7 +202,7 @@ public class DirScannerTest
 
     private DirScanner createScanner( final ScannerConfiguration config, final Parser parser )
     {
-        return new DirScanner( createMock( Resolver.class ) )
+        return new DirScanner( createMock( PropertyResolver.class ) )
         {
             @Override
             ScannerConfiguration createConfiguration()

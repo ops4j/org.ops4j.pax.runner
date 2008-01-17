@@ -21,11 +21,11 @@ import java.util.List;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
-import org.ops4j.pax.runner.commons.resolver.Resolver;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
+import org.ops4j.util.property.PropertyResolver;
 
 public class BundleScannerTest
 {
@@ -77,7 +77,7 @@ public class BundleScannerTest
 
     private BundleScanner createFileScanner( final ScannerConfiguration config )
     {
-        return new BundleScanner( createMock( Resolver.class ) )
+        return new BundleScanner( createMock( PropertyResolver.class ) )
         {
             @Override
             ScannerConfiguration createConfiguration()

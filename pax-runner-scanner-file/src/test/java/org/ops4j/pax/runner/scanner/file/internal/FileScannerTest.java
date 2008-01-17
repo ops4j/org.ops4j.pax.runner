@@ -26,11 +26,11 @@ import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.ops4j.io.FileUtils;
-import org.ops4j.pax.runner.commons.resolver.Resolver;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
+import org.ops4j.util.property.PropertyResolver;
 
 public class FileScannerTest
 {
@@ -39,14 +39,14 @@ public class FileScannerTest
     public void scanWithNullURLSpec()
         throws ScannerException, MalformedSpecificationException
     {
-        new FileScanner( createMock( Resolver.class ) ).scan( null );
+        new FileScanner( createMock( PropertyResolver.class ) ).scan( null );
     }
 
     @Test( expected = MalformedSpecificationException.class )
     public void scanWithEmptyURLSpec()
         throws ScannerException, MalformedSpecificationException
     {
-        new FileScanner( createMock( Resolver.class ) ).scan( " " );
+        new FileScanner( createMock( PropertyResolver.class ) ).scan( " " );
     }
 
     @Test
@@ -208,7 +208,7 @@ public class FileScannerTest
 
     private FileScanner createFileScanner( final ScannerConfiguration config, final Parser parser )
     {
-        return new FileScanner( createMock( Resolver.class ) )
+        return new FileScanner( createMock( PropertyResolver.class ) )
         {
             @Override
             ScannerConfiguration createConfiguration()

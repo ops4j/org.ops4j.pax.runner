@@ -21,6 +21,7 @@ import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.osgi.framework.BundleContext;
+import org.ops4j.util.property.PropertyResolver;
 
 public class BundleContextResolverTest
 {
@@ -28,7 +29,7 @@ public class BundleContextResolverTest
     @Test( expected = IllegalArgumentException.class )
     public void constructorWithNullBundleContext()
     {
-        new BundleContextResolver( null );
+        new BundleContextPropertyResolver( null );
     }
 
     @Test
@@ -37,8 +38,8 @@ public class BundleContextResolverTest
         BundleContext bc = createMock( BundleContext.class );
         expect( bc.getProperty( "ns.property" ) ).andReturn( "value" );
         replay( bc );
-        Resolver resolver = new BundleContextResolver( bc );
-        assertEquals( "Property", "value", resolver.get( "ns.property" ) );
+        PropertyResolver propertyResolver = new BundleContextPropertyResolver( bc );
+        assertEquals( "Property", "value", propertyResolver.get( "ns.property" ) );
         verify( bc );
     }
 
@@ -48,8 +49,8 @@ public class BundleContextResolverTest
         BundleContext bc = createMock( BundleContext.class );
         expect( bc.getProperty( "ns.property" ) ).andReturn( "" );
         replay( bc );
-        Resolver resolver = new BundleContextResolver( bc );
-        assertEquals( "Property", null, resolver.get( "ns.property" ) );
+        PropertyResolver propertyResolver = new BundleContextPropertyResolver( bc );
+        assertEquals( "Property", null, propertyResolver.get( "ns.property" ) );
         verify( bc );
     }
 

@@ -18,7 +18,9 @@
 package org.ops4j.pax.runner.commons.resolver;
 
 import org.osgi.framework.BundleContext;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
+import org.ops4j.util.property.FallbackPropertyResolver;
+import org.ops4j.util.property.PropertyResolver;
 
 /**
  * Resolves properties by first looking in an optional configured dictionary then if property not found looking in
@@ -27,8 +29,8 @@ import org.ops4j.pax.runner.commons.Assert;
  * @author Alin Dreghiciu
  * @since August 11, 2007
  */
-public class BundleContextResolver
-    implements Resolver
+public class BundleContextPropertyResolver
+    extends FallbackPropertyResolver
 {
 
     /**
@@ -37,13 +39,26 @@ public class BundleContextResolver
     private final BundleContext m_bundleContext;
 
     /**
-     * Creates a property resolver.
+     * Creates a property resolver without a fallback resolver.
      *
-     * @param bundleContext bundle context; mandatory
+     * @param bundleContext bundle context; cannot be null
      */
-    public BundleContextResolver( final BundleContext bundleContext )
+    public BundleContextPropertyResolver( final BundleContext bundleContext )
     {
-        Assert.notNull( "Bundle context", bundleContext );
+        this( bundleContext, null );
+    }
+
+    /**
+     * Creates a property resolver without a fallback resolver.
+     *
+     * @param bundleContext    bundle context; cannot be null
+     * @param fallbackResolver fallback resolver
+     */
+    public BundleContextPropertyResolver( final BundleContext bundleContext,
+                                          final PropertyResolver fallbackResolver )
+    {
+        super( fallbackResolver );
+        NullArgumentException.validateNotNull( bundleContext, "Bundle context" );
         m_bundleContext = bundleContext;
     }
 
@@ -56,7 +71,7 @@ public class BundleContextResolver
      *
      * @return value of property or null if property is not set or is empty.
      */
-    public String get( final String propertyName )
+    public String findProperty( final String propertyName )
     {
         String value = m_bundleContext.getProperty( propertyName );
         if( value != null && value.trim().length() == 0 )

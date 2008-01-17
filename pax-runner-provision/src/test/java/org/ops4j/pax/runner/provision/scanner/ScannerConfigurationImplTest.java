@@ -20,7 +20,7 @@ package org.ops4j.pax.runner.provision.scanner;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
-import org.ops4j.pax.runner.commons.resolver.Resolver;
+import org.ops4j.util.property.PropertyResolver;
 
 public class ScannerConfigurationImplTest
 {
@@ -36,12 +36,12 @@ public class ScannerConfigurationImplTest
     @Test
     public void getStartLevel()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( PID + ".startLevel" ) ).andReturn( "5" );
-        replay( resolver );
-        ScannerConfiguration config = new ScannerConfigurationImpl( resolver, PID );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( PID + ".startLevel" ) ).andReturn( "5" );
+        replay( propertyResolver );
+        ScannerConfiguration config = new ScannerConfigurationImpl( propertyResolver, PID );
         Integer startlevel = config.getStartLevel();
-        verify( resolver );
+        verify( propertyResolver );
         assertNotNull( "Start level is null", startlevel );
         assertEquals( "Start level", Integer.valueOf( 5 ), startlevel );
     }
@@ -49,36 +49,36 @@ public class ScannerConfigurationImplTest
     @Test
     public void getNotConfiguredStartLevel()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( PID + ".startLevel" ) ).andReturn( null );
-        replay( resolver );
-        ScannerConfiguration config = new ScannerConfigurationImpl( resolver, PID );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( PID + ".startLevel" ) ).andReturn( null );
+        replay( propertyResolver );
+        ScannerConfiguration config = new ScannerConfigurationImpl( propertyResolver, PID );
         Integer startlevel = config.getStartLevel();
-        verify( resolver );
+        verify( propertyResolver );
         assertEquals( "Start level", null, startlevel );
     }
 
     @Test
     public void getWrongConfiguredStartLevel()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( PID + ".startLevel" ) ).andReturn( "wrong" );
-        replay( resolver );
-        ScannerConfiguration config = new ScannerConfigurationImpl( resolver, PID );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( PID + ".startLevel" ) ).andReturn( "wrong" );
+        replay( propertyResolver );
+        ScannerConfiguration config = new ScannerConfigurationImpl( propertyResolver, PID );
         Integer startlevel = config.getStartLevel();
-        verify( resolver );
+        verify( propertyResolver );
         assertEquals( "Start level", null, startlevel );
     }
 
     @Test
     public void getStart()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( PID + ".start" ) ).andReturn( "false" );
-        replay( resolver );
-        ScannerConfiguration config = new ScannerConfigurationImpl( resolver, PID );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( PID + ".start" ) ).andReturn( "false" );
+        replay( propertyResolver );
+        ScannerConfiguration config = new ScannerConfigurationImpl( propertyResolver, PID );
         Boolean shouldStart = config.shouldStart();
-        verify( resolver );
+        verify( propertyResolver );
         assertNotNull( "Start is null", shouldStart );
         assertEquals( "Start", false, shouldStart );
     }
@@ -86,36 +86,36 @@ public class ScannerConfigurationImplTest
     @Test
     public void getNotConfiguredStart()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( PID + ".start" ) ).andReturn( null );
-        replay( resolver );
-        ScannerConfiguration config = new ScannerConfigurationImpl( resolver, PID );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( PID + ".start" ) ).andReturn( null );
+        replay( propertyResolver );
+        ScannerConfiguration config = new ScannerConfigurationImpl( propertyResolver, PID );
         Boolean shouldStart = config.shouldStart();
-        verify( resolver );
+        verify( propertyResolver );
         assertEquals( "Start", true, shouldStart );
     }
 
     @Test
     public void getWrongConfiguredStart()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( PID + ".start" ) ).andReturn( "wrong" );
-        replay( resolver );
-        ScannerConfiguration config = new ScannerConfigurationImpl( resolver, PID );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( PID + ".start" ) ).andReturn( "wrong" );
+        replay( propertyResolver );
+        ScannerConfiguration config = new ScannerConfigurationImpl( propertyResolver, PID );
         Boolean shouldStart = config.shouldStart();
-        verify( resolver );
+        verify( propertyResolver );
         assertEquals( "Start", false, shouldStart );
     }
 
     @Test
     public void getUpdate()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( PID + ".update" ) ).andReturn( "true" );
-        replay( resolver );
-        ScannerConfiguration config = new ScannerConfigurationImpl( resolver, PID );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( PID + ".update" ) ).andReturn( "true" );
+        replay( propertyResolver );
+        ScannerConfiguration config = new ScannerConfigurationImpl( propertyResolver, PID );
         Boolean update = config.shouldUpdate();
-        verify( resolver );
+        verify( propertyResolver );
         assertNotNull( "Update is null", update );
         assertEquals( "Update", true, update );
     }
@@ -123,24 +123,24 @@ public class ScannerConfigurationImplTest
     @Test
     public void getNotConfiguredUpdate()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( PID + ".update" ) ).andReturn( null );
-        replay( resolver );
-        ScannerConfiguration config = new ScannerConfigurationImpl( resolver, PID );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( PID + ".update" ) ).andReturn( null );
+        replay( propertyResolver );
+        ScannerConfiguration config = new ScannerConfigurationImpl( propertyResolver, PID );
         Boolean update = config.shouldUpdate();
-        verify( resolver );
+        verify( propertyResolver );
         assertEquals( "Update", false, update );
     }
 
     @Test
     public void getWrongConfiguredUpdate()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( PID + ".update" ) ).andReturn( "wrong" );
-        replay( resolver );
-        ScannerConfiguration config = new ScannerConfigurationImpl( resolver, PID );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( PID + ".update" ) ).andReturn( "wrong" );
+        replay( propertyResolver );
+        ScannerConfiguration config = new ScannerConfigurationImpl( propertyResolver, PID );
         Boolean update = config.shouldUpdate();
-        verify( resolver );
+        verify( propertyResolver );
         assertEquals( "Update", false, update );
     }
 

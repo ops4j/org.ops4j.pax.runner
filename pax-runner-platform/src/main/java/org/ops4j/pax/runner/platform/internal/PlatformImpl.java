@@ -45,9 +45,6 @@ import org.osgi.framework.Constants;
 import org.xml.sax.SAXException;
 import org.ops4j.io.FileUtils;
 import org.ops4j.pax.runner.commons.Assert;
-import org.ops4j.pax.runner.commons.resolver.CompositeResolver;
-import org.ops4j.pax.runner.commons.resolver.DictionaryResolver;
-import org.ops4j.pax.runner.commons.resolver.Resolver;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.LocalBundle;
@@ -55,6 +52,8 @@ import org.ops4j.pax.runner.platform.Platform;
 import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
+import org.ops4j.util.property.DictionaryPropertyResolver;
+import org.ops4j.util.property.PropertyResolver;
 
 /**
  * Handles the workflow of creating the platform. Concrete platforms should implement only the PlatformBuilder
@@ -81,9 +80,9 @@ public class PlatformImpl
      */
     private final PlatformBuilder m_platformBuilder;
     /**
-     * Resolver to be used.Injected to allow a Managed Service implementation.
+     * PropertyResolver to be used.Injected to allow a Managed Service implementation.
      */
-    private Resolver m_resolver;
+    private PropertyResolver m_propertyResolver;
     /**
      * Current bundle context.
      */
@@ -123,13 +122,13 @@ public class PlatformImpl
     }
 
     /**
-     * Sets the resolver to use.
+     * Sets the propertyResolver to use.
      *
-     * @param resolver a resolver
+     * @param propertyResolver a propertyResolver
      */
-    public void setResolver( final Resolver resolver )
+    public void setResolver( final PropertyResolver propertyResolver )
     {
-        m_resolver = resolver;
+        m_propertyResolver = propertyResolver;
     }
 
     /**
@@ -702,12 +701,12 @@ public class PlatformImpl
      */
     Configuration createConfiguration( final Dictionary config )
     {
-        Resolver resolver = m_resolver;
+        PropertyResolver propertyResolver = m_propertyResolver;
         if( config != null )
         {
-            resolver = new CompositeResolver( new DictionaryResolver( config ), m_resolver );
+            propertyResolver = new DictionaryPropertyResolver( config, m_propertyResolver );
         }
-        return new ConfigurationImpl( resolver );
+        return new ConfigurationImpl( propertyResolver );
     }
 
     /**

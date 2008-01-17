@@ -18,10 +18,10 @@
 package org.ops4j.pax.runner.scanner.dir.internal;
 
 import org.osgi.framework.BundleContext;
-import org.ops4j.pax.runner.commons.resolver.BundleContextResolver;
-import org.ops4j.pax.runner.commons.resolver.Resolver;
+import org.ops4j.pax.runner.commons.resolver.BundleContextPropertyResolver;
 import org.ops4j.pax.runner.provision.scanner.AbstractScannerActivator;
 import org.ops4j.pax.runner.scanner.dir.ServiceConstants;
+import org.ops4j.util.property.PropertyResolver;
 
 /**
  * Bundle activator for dir scanner.
@@ -39,7 +39,7 @@ public final class Activator
     @Override
     protected DirScanner createScanner( final BundleContext bundleContext )
     {
-        return new DirScanner( new BundleContextResolver( bundleContext ) );
+        return new DirScanner( new BundleContextPropertyResolver( bundleContext ) );
     }
 
     /**
@@ -64,9 +64,9 @@ public final class Activator
      * {@inheritDoc}
      */
     @Override
-    protected void setResolver( final Resolver resolver )
+    protected void setResolver( final PropertyResolver propertyResolver )
     {
-        getScanner().setResolver( resolver );
+        getScanner().setResolver( propertyResolver );
     }
 
 }

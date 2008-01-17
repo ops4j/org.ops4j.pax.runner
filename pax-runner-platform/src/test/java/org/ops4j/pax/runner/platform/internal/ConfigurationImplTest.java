@@ -22,8 +22,8 @@ import java.net.URL;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
-import org.ops4j.pax.runner.commons.resolver.Resolver;
 import org.ops4j.pax.runner.platform.Configuration;
+import org.ops4j.util.property.PropertyResolver;
 
 public class ConfigurationImplTest
 {
@@ -39,13 +39,15 @@ public class ConfigurationImplTest
     public void getDefinitionURL()
         throws MalformedURLException
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.definitionURL" ) ).andReturn( "file:definition.xml" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.definitionURL" ) ).andReturn(
+            "file:definition.xml"
+        );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Definition URL", new URL( "file:definition.xml" ), config.getDefinitionURL() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // expect a MalformedURLException when the property value is not good.
@@ -53,12 +55,14 @@ public class ConfigurationImplTest
     public void getMalformedDefinitionURL()
         throws MalformedURLException
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.definitionURL" ) ).andReturn( "xxx:definition.xml" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.definitionURL" ) ).andReturn(
+            "xxx:definition.xml"
+        );
 
-        replay( resolver );
-        new ConfigurationImpl( resolver ).getDefinitionURL();
-        verify( resolver );
+        replay( propertyResolver );
+        new ConfigurationImpl( propertyResolver ).getDefinitionURL();
+        verify( propertyResolver );
     }
 
     // test that it does not crash when definition url property is not set
@@ -66,13 +70,13 @@ public class ConfigurationImplTest
     public void getNotConfiguredDefinitionURL()
         throws MalformedURLException
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.definitionURL" ) ).andReturn( null );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.definitionURL" ) ).andReturn( null );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Definition URL", null, config.getDefinitionURL() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // normal flow
@@ -80,13 +84,15 @@ public class ConfigurationImplTest
     public void getWorkingDirectory()
         throws MalformedURLException
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.workingDirectory" ) ).andReturn( "myWorkingDirectory" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.workingDirectory" ) ).andReturn(
+            "myWorkingDirectory"
+        );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Working directory", "myWorkingDirectory", config.getWorkingDirectory() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // test that it returns "runner" when property is not set
@@ -94,74 +100,74 @@ public class ConfigurationImplTest
     public void getDefualtWorkingDirectory()
         throws MalformedURLException
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.workingDirectory" ) ).andReturn( null );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.workingDirectory" ) ).andReturn( null );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Default working directory", "runner", config.getWorkingDirectory() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // normal flow
     @Test
     public void getSystemPackages()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.systemPackages" ) ).andReturn( "systemPackages" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.systemPackages" ) ).andReturn( "systemPackages" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "System packages", "systemPackages", config.getSystemPackages() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // normal flow
     @Test
     public void getExecutionEnvironment()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.ee" ) ).andReturn( "some-ee" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.ee" ) ).andReturn( "some-ee" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Execution environment", "some-ee", config.getExecutionEnvironment() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // return the ee based on jvm version if option not set
     @Test
     public void getDefaultJavaVersion()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.ee" ) ).andReturn( null );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.ee" ) ).andReturn( null );
         String javaVersion = System.getProperty( "java.version" ).substring( 0, 3 );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Execution environment", "J2SE-" + javaVersion, config.getExecutionEnvironment() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // normal flow
     @Test
     public void getJavaHome()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.javaHome" ) ).andReturn( "javaHome" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.javaHome" ) ).andReturn( "javaHome" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Java home", "javaHome", config.getJavaHome() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // returns the home of the current running version
     @Test
     public void getDefaultJavaHome()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.javaHome" ) ).andReturn( null );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.javaHome" ) ).andReturn( null );
         String javaHome = System.getProperty( "JAVA_HOME" );
         if( javaHome == null )
         {
@@ -177,283 +183,283 @@ public class ConfigurationImplTest
                 javaHome = System.getProperty( "java.home" );
             }
         }
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Java home", javaHome, config.getJavaHome() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // normal flow
     @Test
     public void getProfileStartLevel()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.profileStartLevel" ) ).andReturn( "10" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.profileStartLevel" ) ).andReturn( "10" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Platform start level", Integer.valueOf( 10 ), config.getProfileStartLevel() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // default platform bundles start level is 1
     @Test
     public void getDefaultProfileStartLevel()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.profileStartLevel" ) ).andReturn( null );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.profileStartLevel" ) ).andReturn( null );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Platform start level", Integer.valueOf( 1 ), config.getProfileStartLevel() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // does not crash with an invalid value and returns the default value 1
     @Test
     public void getDefaultProfileStartLevelIfOptionIsInvalid()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.profileStartLevel" ) ).andReturn( "invalid" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.profileStartLevel" ) ).andReturn( "invalid" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Platform start level", Integer.valueOf( 1 ), config.getProfileStartLevel() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // normal flow
     @Test
     public void getStartLevel()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.startLevel" ) ).andReturn( "10" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.startLevel" ) ).andReturn( "10" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Platform start level", Integer.valueOf( 10 ), config.getStartLevel() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // default start level is 6
     @Test
     public void getDefaultStartLevel()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.startLevel" ) ).andReturn( null );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.startLevel" ) ).andReturn( null );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Platform start level", Integer.valueOf( 6 ), config.getStartLevel() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // does not crash with an invalid value and returns the default value 6
     @Test
     public void getDefaultStartLevelIfOptionIsInvalid()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.startLevel" ) ).andReturn( "invalid" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.startLevel" ) ).andReturn( "invalid" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Platform start level", Integer.valueOf( 6 ), config.getStartLevel() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // normal flow
     @Test
     public void getBundleStartLevel()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.bundleStartLevel" ) ).andReturn( "10" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.bundleStartLevel" ) ).andReturn( "10" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Bundles start level", Integer.valueOf( 10 ), config.getBundleStartLevel() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // default start level is 6
     @Test
     public void getDefaultBundleStartLevel()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.bundleStartLevel" ) ).andReturn( null );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.bundleStartLevel" ) ).andReturn( null );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Bundles start level", Integer.valueOf( 5 ), config.getBundleStartLevel() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // does not crash with an invalid value and returns the default value 6
     @Test
     public void getDefaultBundleStartLevelIfOptionIsInvalid()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.bundleStartLevel" ) ).andReturn( "invalid" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.bundleStartLevel" ) ).andReturn( "invalid" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Bundles start level", Integer.valueOf( 5 ), config.getBundleStartLevel() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // normal flow
     @Test
     public void usePersistedState()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.usePersistedState" ) ).andReturn( "true" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.usePersistedState" ) ).andReturn( "true" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Use persisted state", true, config.usePersistedState() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // test that an invalid value will not cause problems and will return false
     @Test
     public void usePersistedStateWithInvalidValue()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.usePersistedState" ) ).andReturn( "of course" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.usePersistedState" ) ).andReturn( "of course" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Use persisted state", false, config.usePersistedState() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // test that if value is not set it will not cause problems and will return false
     @Test
     public void usePersistedStateDefaultValue()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.usePersistedState" ) ).andReturn( null );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.usePersistedState" ) ).andReturn( null );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Use persisted state", false, config.usePersistedState() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // normal flow
     @Test
     public void startConsole()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.console" ) ).andReturn( "true" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.console" ) ).andReturn( "true" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Start console", true, config.startConsole() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // test that an invalid value will not cause problems and will return true.
     @Test
     public void startConsoleWithInvalidValue()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.console" ) ).andReturn( "of course" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.console" ) ).andReturn( "of course" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Start console", false, config.startConsole() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // test that an not set value (null) will not cause problems and will return true.
     @Test
     public void startConsoleWithNotSetValue()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.console" ) ).andReturn( null );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.console" ) ).andReturn( null );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Start console", true, config.startConsole() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // normal flow
     @Test
     public void getProfiles()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.profiles" ) ).andReturn( "myProfile" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.profiles" ) ).andReturn( "myProfile" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Profiles", "myProfile", config.getProfiles() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // normal flow
     @Test
     public void getFrameworkProfile()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.frameworkProfile" ) ).andReturn( "myProfile" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.frameworkProfile" ) ).andReturn( "myProfile" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Framework profile", "myProfile", config.getFrameworkProfile() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // normal flow
     @Test
     public void getDefaultFrameworkProfile()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.frameworkProfile" ) ).andReturn( null );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.frameworkProfile" ) ).andReturn( null );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Framework profile", "runner", config.getFrameworkProfile() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // normal flow
     @Test
     public void isOverwrite()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.overwrite" ) ).andReturn( "true" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.overwrite" ) ).andReturn( "true" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Overwrite", true, config.isOverwrite() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // test that an invalid value will not cause problems and will return false
     @Test
     public void isOverwriteWithInvalidValue()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.overwrite" ) ).andReturn( "of course" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.overwrite" ) ).andReturn( "of course" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Overwrite", false, config.isOverwrite() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // default value should be false
     @Test
     public void isOverwriteDefault()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.overwrite" ) ).andReturn( null );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.overwrite" ) ).andReturn( null );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Overwrite", false, config.isOverwrite() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     /**
@@ -462,13 +468,13 @@ public class ConfigurationImplTest
     @Test
     public void clean()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.clean" ) ).andReturn( "true" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.clean" ) ).andReturn( "true" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Clean", true, config.isCleanStart() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     /**
@@ -477,13 +483,13 @@ public class ConfigurationImplTest
     @Test
     public void cleanDefault()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.clean" ) ).andReturn( null );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.clean" ) ).andReturn( null );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Clean", false, config.isCleanStart() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     /**
@@ -492,13 +498,13 @@ public class ConfigurationImplTest
     @Test
     public void cleanWithInvalidValue()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.clean" ) ).andReturn( "of course" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.clean" ) ).andReturn( "of course" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Clean", false, config.isCleanStart() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     /**
@@ -508,13 +514,13 @@ public class ConfigurationImplTest
     public void getVMOptionsWithOneOption()
         throws MalformedURLException
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.vmOptions" ) ).andReturn( "-Xmx512m" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.vmOptions" ) ).andReturn( "-Xmx512m" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertArrayEquals( "Working directory", new String[]{ "-Xmx512m" }, config.getVMOptions() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     /**
@@ -524,13 +530,13 @@ public class ConfigurationImplTest
     public void getVMOptionsWithMoreOptions()
         throws MalformedURLException
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.vmOptions" ) ).andReturn( "-Xmx512m -Xms512m" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.vmOptions" ) ).andReturn( "-Xmx512m -Xms512m" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertArrayEquals( "Working directory", new String[]{ "-Xmx512m", "-Xms512m" }, config.getVMOptions() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     /**
@@ -540,13 +546,13 @@ public class ConfigurationImplTest
     public void getVMOptionsNotSet()
         throws MalformedURLException
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.vmOptions" ) ).andReturn( null );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.vmOptions" ) ).andReturn( null );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertArrayEquals( "Working directory", null, config.getVMOptions() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     /**
@@ -555,13 +561,13 @@ public class ConfigurationImplTest
     @Test
     public void isOverwriteUserBundles()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.overwriteUserBundles" ) ).andReturn( "true" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.overwriteUserBundles" ) ).andReturn( "true" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Overwrite user bundles", true, config.isOverwriteUserBundles() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     /**
@@ -570,13 +576,13 @@ public class ConfigurationImplTest
     @Test
     public void isOverwriteUserBundlesWithInvalidValue()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.overwriteUserBundles" ) ).andReturn( "of course" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.overwriteUserBundles" ) ).andReturn( "of course" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Overwrite user bundles", false, config.isOverwriteUserBundles() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     /**
@@ -585,13 +591,13 @@ public class ConfigurationImplTest
     @Test
     public void isOverwriteUserBundlesDefault()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.overwriteUserBundles" ) ).andReturn( null );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.overwriteUserBundles" ) ).andReturn( null );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Overwrite user bundles", false, config.isOverwriteUserBundles() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     /**
@@ -600,13 +606,13 @@ public class ConfigurationImplTest
     @Test
     public void isOverwriteSystemBundles()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.overwriteSystemBundles" ) ).andReturn( "true" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.overwriteSystemBundles" ) ).andReturn( "true" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Overwrite system bundles", true, config.isOverwriteSystemBundles() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     /**
@@ -615,13 +621,15 @@ public class ConfigurationImplTest
     @Test
     public void isOverwriteSystemBundlesWithInvalidValue()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.overwriteSystemBundles" ) ).andReturn( "of course" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.overwriteSystemBundles" ) ).andReturn(
+            "of course"
+        );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Overwrite system bundles", false, config.isOverwriteSystemBundles() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     /**
@@ -630,52 +638,52 @@ public class ConfigurationImplTest
     @Test
     public void isOverwriteSystemBundlesDefault()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.overwriteSystemBundles" ) ).andReturn( null );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.overwriteSystemBundles" ) ).andReturn( null );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Overwrite system bundles", false, config.isOverwriteSystemBundles() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // normal flow
     @Test
     public void isDebugClassLoading()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.debugClassLoading" ) ).andReturn( "true" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.debugClassLoading" ) ).andReturn( "true" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "DebugClassLoading", true, config.isDebugClassLoading() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // test that an invalid value will not cause problems and will return false
     @Test
     public void isDebugClassLoadingWithInvalidValue()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.debugClassLoading" ) ).andReturn( "of course" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.debugClassLoading" ) ).andReturn( "of course" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "DebugClassLoading", false, config.isDebugClassLoading() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     // default value should be false
     @Test
     public void isDebugClassLoadingDefault()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.debugClassLoading" ) ).andReturn( null );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.debugClassLoading" ) ).andReturn( null );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "DebugClassLoading", false, config.isDebugClassLoading() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     /**
@@ -684,13 +692,13 @@ public class ConfigurationImplTest
     @Test
     public void isDownloadFeebackDefault()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.downloadFeedback" ) ).andReturn( null );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.downloadFeedback" ) ).andReturn( null );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Download feedback", true, config.isDownloadFeedback() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 
     /**
@@ -699,12 +707,12 @@ public class ConfigurationImplTest
     @Test
     public void isDownloadFeedback()
     {
-        Resolver resolver = createMock( Resolver.class );
-        expect( resolver.get( "org.ops4j.pax.runner.platform.downloadFeedback" ) ).andReturn( "false" );
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.downloadFeedback" ) ).andReturn( "false" );
 
-        replay( resolver );
-        Configuration config = new ConfigurationImpl( resolver );
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
         assertEquals( "Download feedback", false, config.isDownloadFeedback() );
-        verify( resolver );
+        verify( propertyResolver );
     }
 }

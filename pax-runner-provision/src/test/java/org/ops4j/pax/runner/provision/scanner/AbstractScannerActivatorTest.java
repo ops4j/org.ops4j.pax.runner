@@ -22,8 +22,8 @@ import static org.easymock.EasyMock.*;
 import org.junit.Test;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.cm.ManagedService;
-import org.ops4j.pax.runner.commons.resolver.Resolver;
 import org.ops4j.pax.runner.provision.Scanner;
+import org.ops4j.util.property.PropertyResolver;
 
 public class AbstractScannerActivatorTest
 {
@@ -96,7 +96,7 @@ public class AbstractScannerActivatorTest
         }
 
         @Override
-        protected void setResolver( Resolver resolver )
+        protected void setResolver( PropertyResolver propertyResolver )
         {
             // do nothing
         }

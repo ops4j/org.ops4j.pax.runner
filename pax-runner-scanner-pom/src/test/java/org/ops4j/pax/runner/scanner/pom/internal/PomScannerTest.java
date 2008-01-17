@@ -26,12 +26,12 @@ import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.ops4j.io.FileUtils;
-import org.ops4j.pax.runner.commons.resolver.Resolver;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.scanner.FileBundleReference;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
+import org.ops4j.util.property.PropertyResolver;
 
 public class PomScannerTest
 {
@@ -40,14 +40,14 @@ public class PomScannerTest
     public void scanWithNullURLSpec()
         throws ScannerException, MalformedSpecificationException
     {
-        new PomScanner( createMock( Resolver.class ) ).scan( null );
+        new PomScanner( createMock( PropertyResolver.class ) ).scan( null );
     }
 
     @Test( expected = MalformedSpecificationException.class )
     public void scanWithEmptyURLSpec()
         throws ScannerException, MalformedSpecificationException
     {
-        new PomScanner( createMock( Resolver.class ) ).scan( " " );
+        new PomScanner( createMock( PropertyResolver.class ) ).scan( " " );
     }
 
     @Test( expected = ScannerException.class )
@@ -233,7 +233,7 @@ public class PomScannerTest
 
     private PomScanner createPomScanner( final ScannerConfiguration config, final Parser parser )
     {
-        return new PomScanner( createMock( Resolver.class ) )
+        return new PomScanner( createMock( PropertyResolver.class ) )
         {
             @Override
             ScannerConfiguration createConfiguration()

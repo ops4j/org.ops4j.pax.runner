@@ -4,4 +4,4 @@ src/main/resources,\
 @target/dependency/pax-runner-commons.jar!/org/apache/commons/logging/**,\
 @target/dependency/pax-runner-commons.jar!/org/ops4j/pax/runner/commons/*,\
 @target/dependency/pax-runner-commons.jar!/org/ops4j/pax/runner/commons/properties/*,\
-@target/dependency/pax-runner-commons.jar!/org/ops4j/pax/runner/commons/resolver/*
+@target/dependency/pax-runner-commons.jar!/org/ops4j/pax/runner/commons/propertyResolver/*
