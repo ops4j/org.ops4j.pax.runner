@@ -26,8 +26,8 @@ import java.io.OutputStream;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import org.ops4j.util.collections.PropertiesWriter;
 import org.ops4j.io.FileUtils;
+import org.ops4j.util.collections.PropertiesWriter;
 
 public class PropertiesWriterTest
 {
