@@ -34,7 +34,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.ops4j.io.FileUtils;
 import org.ops4j.pax.runner.commons.Assert;
-import org.ops4j.pax.runner.commons.properties.PropertiesWriter;
+import org.ops4j.util.collections.PropertiesWriter;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.LocalBundle;
