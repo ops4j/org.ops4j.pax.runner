@@ -49,6 +49,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.ops4j.pax.swissbox</groupId>
+      <artifactId>pax-swissbox-null-jcl</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
       <groupId>org.ops4j.pax.runner.pax-runner-internal</groupId>
       <artifactId>pax-runner-commons</artifactId>
       <version>0.6.0-SNAPSHOT</version>
