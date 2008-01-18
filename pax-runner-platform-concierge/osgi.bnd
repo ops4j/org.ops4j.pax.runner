@@ -1,7 +1,33 @@
-Bundle-Activator=${bundle.package}.internal.Activator
-Include-Resource=\
-src/main/resources,\
-@target/dependency/pax-runner-commons.jar!/org/apache/commons/logging/**,\
-@target/dependency/pax-runner-commons.jar!/org/ops4j/pax/runner/commons/*,\
-@target/dependency/pax-runner-commons.jar!/org/ops4j/pax/runner/commons/file/*,\
-@target/dependency/pax-runner-commons.jar!/org/ops4j/pax/runner/commons/properties/*
+Bundle-SymbolicName:\
+  ${bundle.symbolicName}
+
+Bundle-Version>:\
+  ${pom.version}
+
+Bundle-Activator:\
+  ${bundle.namespace}.internal.Activator
+
+Import-Package:\
+  javax.*,\
+  org.w3c.*,\
+  org.xml.*,\
+  org.osgi.framework; version="[1.0.0,2.0.0)",\
+  org.apache.commons.logging; version="[1.0.4,2.0.0)"; resolution:=optional,\
+  org.ops4j.pax.runner.platform; version="${pom.version}",\
+  org.ops4j.pax.runner.platform.builder; version="${pom.version}"
+
+Export-Package:
+
+Private-Package:\
+  ${bundle.namespace}.internal.*
+
+Embed-Dependency:\
+  *; scope=compile; type=!pom; inline=true
+
+Embed-Transitive: true
+
+-removeheaders:\
+  Include-Resource,\
+  Private-Package,\
+  Embed-Dependency,\
+  Embed-Transitive

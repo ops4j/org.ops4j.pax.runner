@@ -1,33 +1,47 @@
-Main-Class: org.ops4j.pax.runner.Run
-Include-Resource=\
-src/main/resources,\
-@target/dependency/pax-runner-handler.jar,\
-@target/dependency/pax-url-classpath.jar,\
-@target/dependency/pax-url-mvn.jar,\
-@target/dependency/pax-url-war.jar,\
-@target/dependency/pax-url-wrap.jar,\
-@target/dependency/pax-runner-platform.jar,\
-@target/dependency/pax-runner-platform-concierge.jar,\
-@target/dependency/pax-runner-platform-equinox.jar,\
-@target/dependency/pax-runner-platform-felix.jar,\
-@target/dependency/pax-runner-platform-knopflerfish.jar,\
-@target/dependency/pax-runner-provision.jar,\
-@target/dependency/pax-runner-scanner-bundle.jar,\
-@target/dependency/pax-runner-scanner-dir.jar,\
-@target/dependency/pax-runner-scanner-file.jar,\
-@target/dependency/pax-runner-scanner-pom.jar,\
-@target/dependency/pax-runner-commons.jar,\
-@target/dependency/osgi_R4_core.jar!/org/osgi/framework/*,\
-@target/dependency/osgi_R4_core.jar!/org/osgi/service/startlevel/*,\
-@target/dependency/osgi_R4_core.jar!/org/osgi/service/url/*,\
-@target/dependency/osgi_R4_compendium.jar!/org/osgi/service/cm/*,\
-@target/dependency/osgi_R4_compendium.jar!/org/osgi/util/tracker/*,\
-@target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/FilterImpl*.class,\
-@target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/Logger.class,\
-@target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/ServiceRegistry*.class,\
-@target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/ServiceReferenceImpl.class,\
-@target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/ServiceRegistrationImpl*.class,\
-@target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/util/ldap/*,\
-@target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/util/EventDispatcher*.class,\
-@target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/util/StringMap*.class
+Main-Class:\
+  org.ops4j.pax.runner.Run
+
+Bundle-SymbolicName:\
+  ${bundle.symbolicName}
+
+Bundle-Version>:\
+  ${pom.version}  
+
+Export-Package:
+
+Private-Package:\
+  aQute.*,\
+  META-INF.*,\
+  org.*; -split-package:=first
+
+#  ${bundle.namespace},\
+#  ${bundle.namespace}.osgi,\
+#  org.apache.commons.logging; -split-package:=first
+
+Include-Resource:\
+  src/main/resources/,\
+  @target/dependency/osgi_R4_core.jar!/org/osgi/framework/*,\
+  @target/dependency/osgi_R4_core.jar!/org/osgi/service/startlevel/*,\
+  @target/dependency/osgi_R4_core.jar!/org/osgi/service/url/*,\
+  @target/dependency/osgi_R4_compendium.jar!/org/osgi/service/cm/*,\
+  @target/dependency/osgi_R4_compendium.jar!/org/osgi/util/tracker/*,\
+  @target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/FilterImpl*.class,\
+  @target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/Logger.class,\
+  @target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/ServiceRegistry*.class,\
+  @target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/ServiceReferenceImpl.class,\
+  @target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/ServiceRegistrationImpl*.class,\
+  @target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/util/ldap/*,\
+  @target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/util/EventDispatcher*.class,\
+  @target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/util/StringMap*.class
+
+#Embed-Dependency:\
+#  *; scope=compile; type=!pom; inline=true
+
+#Embed-Transitive: true
+
+-removeheaders:\
+  Include-Resource,\
+  Private-Package,\
+  Embed-Dependency,\
+  Embed-Transitive
 
