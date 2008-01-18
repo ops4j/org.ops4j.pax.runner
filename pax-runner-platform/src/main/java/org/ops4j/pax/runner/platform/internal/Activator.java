@@ -35,10 +35,10 @@ import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedService;
 import org.osgi.util.tracker.ServiceTracker;
 import org.ops4j.lang.NullArgumentException;
-import org.ops4j.pax.runner.commons.resolver.BundleContextPropertyResolver;
 import org.ops4j.pax.runner.platform.Platform;
 import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.ServiceConstants;
+import org.ops4j.pax.swissbox.property.BundleContextPropertyResolver;
 import org.ops4j.util.property.DictionaryPropertyResolver;
 
 /**

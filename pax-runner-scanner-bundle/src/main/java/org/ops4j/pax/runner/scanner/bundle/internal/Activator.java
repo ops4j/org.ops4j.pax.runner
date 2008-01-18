@@ -1,9 +1,9 @@
 package org.ops4j.pax.runner.scanner.bundle.internal;
 
 import org.osgi.framework.BundleContext;
-import org.ops4j.pax.runner.commons.resolver.BundleContextPropertyResolver;
 import org.ops4j.pax.runner.provision.scanner.AbstractScannerActivator;
 import org.ops4j.pax.runner.scanner.bundle.ServiceConstants;
+import org.ops4j.pax.swissbox.property.BundleContextPropertyResolver;
 import org.ops4j.util.property.PropertyResolver;
 
 /**
