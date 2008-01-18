@@ -27,7 +27,7 @@ import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.commons.properties.SystemPropertyUtils;
 import org.ops4j.pax.runner.commons.xml.XmlUtils;
 import org.ops4j.pax.runner.provision.BundleReference;
@@ -66,7 +66,7 @@ public class PomScanner
      */
     public PomScanner( final PropertyResolver propertyResolver )
     {
-        Assert.notNull( "PropertyResolver", propertyResolver );
+        NullArgumentException.validateNotNull( propertyResolver, "PropertyResolver" );
         m_propertyResolver = propertyResolver;
     }
 
@@ -310,7 +310,7 @@ public class PomScanner
      */
     public void setResolver( final PropertyResolver propertyResolver )
     {
-        Assert.notNull( "PropertyResolver", propertyResolver );
+        NullArgumentException.validateNotNull( propertyResolver, "PropertyResolver" );
         m_propertyResolver = propertyResolver;
     }
 

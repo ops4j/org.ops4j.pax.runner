@@ -20,7 +20,7 @@ package org.ops4j.pax.runner.provision.internal;
 import java.util.Iterator;
 import java.util.List;
 import org.osgi.framework.BundleException;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.provision.InstallableBundle;
 import org.ops4j.pax.runner.provision.InstallableBundles;
 
@@ -40,7 +40,7 @@ public class InstallableBundlesImpl
      */
     public InstallableBundlesImpl( final List<InstallableBundle> installables )
     {
-        Assert.notNull( "List of installable bundles", installables );
+        NullArgumentException.validateNotNull( installables, "List of installable bundles" );
         m_installables = installables;
     }
 

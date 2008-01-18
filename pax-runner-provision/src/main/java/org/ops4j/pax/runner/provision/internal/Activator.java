@@ -25,7 +25,7 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.startlevel.StartLevel;
 import org.osgi.util.tracker.ServiceTracker;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.provision.ProvisionService;
 import org.ops4j.pax.runner.provision.Scanner;
 
@@ -65,7 +65,7 @@ public final class Activator
      */
     public void start( final BundleContext bundleContext )
     {
-        Assert.notNull( "Bundle context", bundleContext );
+        NullArgumentException.validateNotNull( bundleContext, "Bundle context" );
         m_bundleContext = bundleContext;
         registerProvisionService();
         trackStartLevelService();
@@ -83,7 +83,7 @@ public final class Activator
      */
     public void stop( final BundleContext bundleContext )
     {
-        Assert.notNull( "Bundle context", bundleContext );
+        NullArgumentException.validateNotNull( bundleContext, "Bundle context" );
         if( m_serviceTracker != null )
         {
             m_serviceTracker.close();
@@ -114,7 +114,7 @@ public final class Activator
             @Override
             public Object addingService( final ServiceReference serviceReference )
             {
-                Assert.notNull( "Service reference", serviceReference );
+                NullArgumentException.validateNotNull( serviceReference, "Service reference" );
                 LOGGER.debug( "Scanner available [" + serviceReference + "]" );
                 Object schema = serviceReference.getProperty( Scanner.SCHEMA_PROPERTY );
                 Scanner scanner = null;
@@ -181,7 +181,7 @@ public final class Activator
             @Override
             public Object addingService( final ServiceReference serviceReference )
             {
-                Assert.notNull( "Service reference", serviceReference );
+                NullArgumentException.validateNotNull( serviceReference, "Service reference" );
                 LOGGER.debug( "Start Level service available [" + serviceReference + "]" );
                 final StartLevel startLevel = (StartLevel) super.addingService( serviceReference );
                 if( startLevel != null )

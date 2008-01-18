@@ -20,7 +20,7 @@ package org.ops4j.pax.runner.platform.internal;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.commons.resolver.ConfigurationMap;
 import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.ServiceConstants;
@@ -71,7 +71,7 @@ public class ConfigurationImpl
      */
     public ConfigurationImpl( final PropertyResolver propertyResolver )
     {
-        Assert.notNull( "Property propertyResolver", propertyResolver );
+        NullArgumentException.validateNotNull( propertyResolver, "Property propertyResolver" );
         m_propertyResolver = propertyResolver;
     }
 

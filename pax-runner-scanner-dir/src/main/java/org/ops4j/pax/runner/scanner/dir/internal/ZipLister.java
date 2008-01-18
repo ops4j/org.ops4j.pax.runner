@@ -7,7 +7,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 
 /**
  * Implementation of lister that list content of a zip file.
@@ -41,9 +41,9 @@ public class ZipLister
      */
     public ZipLister( final URL baseURL, final Enumeration<? extends ZipEntry> zipEntries, final Pattern filter )
     {
-        Assert.notNull( "Base url", baseURL );
-        Assert.notNull( "Zip entries", zipEntries );
-        Assert.notNull( "Filter", filter );
+        NullArgumentException.validateNotNull( baseURL, "Base url" );
+        NullArgumentException.validateNotNull( zipEntries, "Zip entries" );
+        NullArgumentException.validateNotNull( filter, "Filter" );
         m_baseURL = baseURL;
         m_zipEntries = zipEntries;
         m_filter = filter;

@@ -25,7 +25,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.startlevel.StartLevel;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.InstallableBundle;
 import org.ops4j.pax.runner.provision.InstallableBundles;
@@ -71,7 +71,7 @@ public class ProvisionServiceImpl
      */
     public ProvisionServiceImpl( final BundleContext bundleContext )
     {
-        Assert.notNull( "Bundle context", bundleContext );
+        NullArgumentException.validateNotNull( bundleContext, "Bundle context" );
         m_bundleContext = bundleContext;
         m_scanners = new HashMap<String, Scanner>();
     }
@@ -186,8 +186,8 @@ public class ProvisionServiceImpl
      */
     public void addScanner( final Scanner scanner, final String scheme )
     {
-        Assert.notNull( "Scheme", scheme );
-        Assert.notNull( "Scanner", scanner );
+        NullArgumentException.validateNotNull( scheme, "Scheme" );
+        NullArgumentException.validateNotNull( scanner, "Scanner" );
         synchronized( m_scanners )
         {
             m_scanners.put( scheme, scanner );
@@ -202,7 +202,7 @@ public class ProvisionServiceImpl
      */
     public void removeScanner( final Scanner scanner )
     {
-        Assert.notNull( "Scanner", scanner );
+        NullArgumentException.validateNotNull( scanner, "Scanner" );
         synchronized( m_scanners )
         {
             for( Map.Entry<String, Scanner> entry : m_scanners.entrySet() )

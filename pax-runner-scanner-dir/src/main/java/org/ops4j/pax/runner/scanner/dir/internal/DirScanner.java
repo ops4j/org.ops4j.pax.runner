@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipFile;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.Scanner;
@@ -66,7 +66,7 @@ public class DirScanner
      */
     public DirScanner( final PropertyResolver propertyResolver )
     {
-        Assert.notNull( "PropertyResolver", propertyResolver );
+        NullArgumentException.validateNotNull( propertyResolver, "PropertyResolver" );
         m_propertyResolver = propertyResolver;
     }
 
@@ -295,7 +295,7 @@ public class DirScanner
      */
     public void setResolver( final PropertyResolver propertyResolver )
     {
-        Assert.notNull( "PropertyResolver", propertyResolver );
+        NullArgumentException.validateNotNull( propertyResolver, "PropertyResolver" );
         m_propertyResolver = propertyResolver;
     }
 

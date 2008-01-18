@@ -21,9 +21,7 @@ import java.net.URLStreamHandler;
 import java.net.URLStreamHandlerFactory;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 
 /**
  * An composite URLStreamHandlerFactory that used it's internal list of registred URLStreamHandlerFactories to find out
@@ -37,10 +35,6 @@ public class CompositeURLStreamHandlerFactory
     implements URLStreamHandlerFactory
 {
 
-    /**
-     * Logger.
-     */
-    private static final Log LOGGER = LogFactory.getLog( CompositeURLStreamHandlerFactory.class );
     /**
      * List of URLStreamHandlerFactories to delegate to.
      */
@@ -82,7 +76,7 @@ public class CompositeURLStreamHandlerFactory
      */
     public CompositeURLStreamHandlerFactory registerFactory( final URLStreamHandlerFactory factory )
     {
-        Assert.notNull( "Registered factory", factory );
+        NullArgumentException.validateNotNull( factory, "Registered factory" );
         m_factories.add( factory );
         return this;
     }
@@ -97,7 +91,7 @@ public class CompositeURLStreamHandlerFactory
      */
     public CompositeURLStreamHandlerFactory unregisterFactory( final URLStreamHandlerFactory factory )
     {
-        Assert.notNull( "Unregistered factory", factory );
+        NullArgumentException.validateNotNull( factory, "Unregistered factory" );
         m_factories.remove( factory );
         return this;
     }

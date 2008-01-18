@@ -21,7 +21,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.service.startlevel.StartLevel;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.InstallableBundle;
 
@@ -71,8 +71,8 @@ public class InstallableBundleImpl
     public InstallableBundleImpl( final BundleContext bundleContext, final BundleReference reference,
                                   final StartLevel startLevelService )
     {
-        Assert.notNull( "Bundle context", bundleContext );
-        Assert.notNull( "Bundle reference", reference );
+        NullArgumentException.validateNotNull( bundleContext, "Bundle context" );
+        NullArgumentException.validateNotNull( reference, "Bundle reference" );
         m_bundleContext = bundleContext;
         m_reference = reference;
         m_startLevelService = startLevelService;

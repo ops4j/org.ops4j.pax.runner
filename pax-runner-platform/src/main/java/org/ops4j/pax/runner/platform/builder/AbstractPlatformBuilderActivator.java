@@ -7,7 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.ServiceConstants;
 
@@ -42,7 +42,7 @@ public abstract class AbstractPlatformBuilderActivator
     public void start( final BundleContext bundleContext )
         throws Exception
     {
-        Assert.notNull( "Bundle context", bundleContext );
+        NullArgumentException.validateNotNull( bundleContext, "Bundle context" );
         m_bundleContext = bundleContext;
         registerPlatformBuilders( createPlatformBuilders( m_bundleContext ) );
         LOGGER.debug( "Platform builder [" + this + "] started" );
@@ -58,7 +58,7 @@ public abstract class AbstractPlatformBuilderActivator
     public void stop( final BundleContext bundleContext )
         throws Exception
     {
-        Assert.notNull( "Bundle context", bundleContext );
+        NullArgumentException.validateNotNull( bundleContext, "Bundle context" );
         if( m_platformBuilderServiceReg != null )
         {
             for( ServiceRegistration registration : m_platformBuilderServiceReg )

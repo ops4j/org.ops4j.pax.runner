@@ -35,7 +35,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.LocalBundle;
@@ -95,8 +95,8 @@ public class ConciergePlatformBuilder
      */
     public ConciergePlatformBuilder( final BundleContext bundleContext, final String version )
     {
-        Assert.notNull( "Bundle context", bundleContext );
-        Assert.notNull( "Version", version );
+        NullArgumentException.validateNotNull( bundleContext, "Bundle context" );
+        NullArgumentException.validateNotNull( version, "Version" );
         m_bundleContext = bundleContext;
         m_version = version;
     }
@@ -110,7 +110,7 @@ public class ConciergePlatformBuilder
     public void prepare( final PlatformContext context )
         throws PlatformException
     {
-        Assert.notNull( "Platform context", context );
+        NullArgumentException.validateNotNull( context, "Platform context" );
         final List<LocalBundle> bundles = context.getBundles();
         OutputStream os = null;
         try
@@ -306,7 +306,7 @@ public class ConciergePlatformBuilder
      */
     public String[] getVMOptions( final PlatformContext context )
     {
-        Assert.notNull( "Platform context", context );
+        NullArgumentException.validateNotNull( context, "Platform context" );
         return new String[]{
             "-Dosgi.maxLevel=100",
             "-Dxargs=" +

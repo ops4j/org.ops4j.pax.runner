@@ -30,7 +30,7 @@ import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.commons.xml.XmlUtils;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.BundleReferenceBean;
@@ -88,7 +88,7 @@ public class PlatformDefinitionImpl
     public PlatformDefinitionImpl( final InputStream inputStream, final Integer startLevel )
         throws IOException, ParserConfigurationException, SAXException
     {
-        Assert.notNull( "Input stream", inputStream );
+        NullArgumentException.validateNotNull( inputStream, "Input stream" );
         m_profiles = new HashMap<String, String>();
         m_bundles = new HashMap<String, List<BundleReference>>();
 

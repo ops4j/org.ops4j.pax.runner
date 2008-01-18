@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 
 /**
  * Implementation of lister that list content of a system file directory.
@@ -59,8 +59,8 @@ public class DirectoryLister
      */
     public DirectoryLister( final File dir, final Pattern filter )
     {
-        Assert.notNull( "Directory", dir );
-        Assert.notNull( "Filter", filter );
+        NullArgumentException.validateNotNull( dir, "Directory" );
+        NullArgumentException.validateNotNull( filter, "Filter" );
         m_dir = dir;
         m_filter = filter;
     }

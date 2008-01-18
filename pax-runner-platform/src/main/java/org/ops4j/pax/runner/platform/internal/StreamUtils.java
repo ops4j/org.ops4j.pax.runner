@@ -21,7 +21,7 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.commons.Info;
 
 /**
@@ -54,8 +54,8 @@ public class StreamUtils
     public static void streamCopy( final InputStream in, final BufferedOutputStream out, final ProgressBar progressBar )
         throws IOException
     {
-        Assert.notNull( "Input stream", in );
-        Assert.notNull( "Output stream", out );
+        NullArgumentException.validateNotNull( in, "Input stream" );
+        NullArgumentException.validateNotNull( out, "Output stream" );
         final long start = System.currentTimeMillis();
         int b = in.read();
         int counter = 0;
@@ -98,7 +98,7 @@ public class StreamUtils
     public static void streamCopy( final URL url, final BufferedOutputStream out, final ProgressBar progressBar )
         throws IOException
     {
-        Assert.notNull( "URL", url );
+        NullArgumentException.validateNotNull( url, "URL" );
         InputStream is = null;
         try
         {

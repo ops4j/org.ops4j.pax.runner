@@ -35,7 +35,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 
 public class XmlUtils
 {
@@ -77,14 +77,14 @@ public class XmlUtils
 
     public static Element getElement( final Document doc, final String path )
     {
-        Assert.notNull( "XML document", doc );
+        NullArgumentException.validateNotNull( doc, "XML document" );
         return getElement( doc.getDocumentElement(), path );
     }
 
     public static Element getElement( final Element element, final String path )
     {
-        Assert.notNull( "Element ", element );
-        Assert.notNull( "Element path", path );
+        NullArgumentException.validateNotNull( element, "Element " );
+        NullArgumentException.validateNotNull( path, "Element path" );
 
         Element current = element;
         StringTokenizer st = new StringTokenizer( path, "/", false );
@@ -107,14 +107,14 @@ public class XmlUtils
 
     public static List<Element> getElements( final Document doc, final String path )
     {
-        Assert.notNull( "Document", doc );
+        NullArgumentException.validateNotNull( doc, "Document" );
         return getElements( doc.getDocumentElement(), path );
     }
 
     public static List<Element> getElements( final Element element, final String path )
     {
-        Assert.notNull( "Element", element );
-        Assert.notNull( "Element path", path );
+        NullArgumentException.validateNotNull( element, "Element" );
+        NullArgumentException.validateNotNull( path, "Element path" );
         String lastElement;
         Element parent;
         if( path.contains( "/" ) )
@@ -160,14 +160,14 @@ public class XmlUtils
 
     public static String getTextContentOfElement( final Document doc, final String path )
     {
-        Assert.notNull( "XML document", doc );
+        NullArgumentException.validateNotNull( doc, "XML document" );
         return getTextContentOfElement( doc.getDocumentElement(), path );
     }
 
     public static String getTextContentOfElement( final Element element, final String path )
     {
-        Assert.notNull( "Element", element );
-        Assert.notNull( "Element path", path );
+        NullArgumentException.validateNotNull( element, "Element" );
+        NullArgumentException.validateNotNull( path, "Element path" );
 
         StringTokenizer st = new StringTokenizer( path, "/", false );
         Element currentElement = element;

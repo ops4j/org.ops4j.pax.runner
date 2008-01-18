@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 
 /**
  * Configuration implementation that reads properties from a properties file.
@@ -59,21 +59,21 @@ public class ConfigurationImpl
      */
     public ConfigurationImpl( final String url )
     {
-        Assert.notEmpty( "Configuration url", url );
+        NullArgumentException.validateNotEmpty( url, "Configuration url" );
         InputStream inputStream;
         try
         {
             if( url.startsWith( CLASSPATH_PROTOCOL ) )
             {
                 String actualConfigFileName = url.split( ":" )[ 1 ];
-                Assert.notEmpty( "configuration file name", actualConfigFileName );
+                NullArgumentException.validateNotEmpty( actualConfigFileName, "configuration file name" );
                 inputStream = getClass().getClassLoader().getResourceAsStream( actualConfigFileName );
             }
             else
             {
                 inputStream = new URL( url ).openStream();
             }
-            Assert.notNull( "Canot find url [" + url + "]", inputStream );
+            NullArgumentException.validateNotNull( inputStream, "Canot find url [" + url + "]" );
             m_properties = new Properties();
             m_properties.load( inputStream );
             LOGGER.info( "Using config [" + url + "]" );

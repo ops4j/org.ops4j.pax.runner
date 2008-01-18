@@ -17,7 +17,7 @@
  */
 package org.ops4j.pax.runner.provision.scanner;
 
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.commons.resolver.ConfigurationMap;
 import org.ops4j.pax.runner.provision.ServiceConstants;
 import org.ops4j.util.property.PropertyResolver;
@@ -51,8 +51,8 @@ public class ScannerConfigurationImpl
      */
     public ScannerConfigurationImpl( final PropertyResolver propertyResolver, final String pid )
     {
-        Assert.notNull( "Property propertyResolver", propertyResolver );
-        Assert.notNull( "PID", pid );
+        NullArgumentException.validateNotNull( propertyResolver, "Property propertyResolver" );
+        NullArgumentException.validateNotNull( pid, "PID" );
         m_propertyResolver = propertyResolver;
         m_pid = pid;
     }

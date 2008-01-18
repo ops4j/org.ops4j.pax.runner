@@ -24,7 +24,7 @@ import java.net.URLConnection;
 import java.net.URLStreamHandler;
 import org.osgi.service.url.URLStreamHandlerService;
 import org.osgi.service.url.URLStreamHandlerSetter;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 
 /**
  * A proxy that get's registred with the JVM as URLStreamhandler but actualy delegates to the URLStreamHandlerService
@@ -47,7 +47,7 @@ public class URLStreamHandlerProxy
      */
     public URLStreamHandlerProxy( final URLStreamHandlerService handler )
     {
-        Assert.notNull( "URL stream handler service", handler );
+        NullArgumentException.validateNotNull( handler, "URL stream handler service" );
         m_handler = handler;
     }
 

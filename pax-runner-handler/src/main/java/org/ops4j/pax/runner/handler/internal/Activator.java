@@ -25,7 +25,7 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.url.URLConstants;
 import org.osgi.service.url.URLStreamHandlerService;
 import org.osgi.util.tracker.ServiceTracker;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 
 /**
  * Bundle activator for url stream handler extender.
@@ -60,7 +60,7 @@ public class Activator
     public void start( final BundleContext bundleContext )
         throws Exception
     {
-        Assert.notNull( "Bundle context", bundleContext );
+        NullArgumentException.validateNotNull( bundleContext, "Bundle context" );
         m_bundleContext = bundleContext;
         m_extender = createExtender();
         m_extender.start();
@@ -80,7 +80,7 @@ public class Activator
     public void stop( final BundleContext bundleContext )
         throws Exception
     {
-        Assert.notNull( "Bundle context", bundleContext );
+        NullArgumentException.validateNotNull( bundleContext, "Bundle context" );
         if( m_serviceTracker != null )
         {
             m_serviceTracker.close();
@@ -106,7 +106,7 @@ public class Activator
             @Override
             public Object addingService( final ServiceReference serviceReference )
             {
-                Assert.notNull( "Service reference", serviceReference );
+                NullArgumentException.validateNotNull( serviceReference, "Service reference" );
                 LOGGER.debug( "URL stream handler service available [" + serviceReference + "]" );
                 // TODO check for class cast exception (very defensive)
                 final URLStreamHandlerService streamHandler =

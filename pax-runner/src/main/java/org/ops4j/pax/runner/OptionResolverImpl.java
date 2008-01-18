@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.commons.Info;
 
 /**
@@ -66,8 +66,8 @@ public class OptionResolverImpl
      */
     public OptionResolverImpl( final CommandLine commandLine, final Configuration configuration )
     {
-        Assert.notNull( "Command line", commandLine );
-        Assert.notNull( "Configuration", configuration );
+        NullArgumentException.validateNotNull( commandLine, "Command line" );
+        NullArgumentException.validateNotNull( configuration, "Configuration" );
         m_commandLine = commandLine;
         m_configuration = configuration;
         m_cache = new HashMap<String, String>();
@@ -78,7 +78,7 @@ public class OptionResolverImpl
      */
     public String get( final String name )
     {
-        Assert.notEmpty( "Option name", name );
+        NullArgumentException.validateNotEmpty( name, "Option name" );
         LOGGER.trace( "Resolving option [" + name + "]" );
         // if is in the cache just return it
         if( m_cache.containsKey( name ) )

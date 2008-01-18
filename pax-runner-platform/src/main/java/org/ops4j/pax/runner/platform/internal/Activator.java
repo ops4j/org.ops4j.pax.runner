@@ -34,7 +34,7 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedService;
 import org.osgi.util.tracker.ServiceTracker;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.commons.resolver.BundleContextPropertyResolver;
 import org.ops4j.pax.runner.platform.Platform;
 import org.ops4j.pax.runner.platform.PlatformBuilder;
@@ -98,7 +98,7 @@ public class Activator
     public void start( final BundleContext bundleContext )
         throws Exception
     {
-        Assert.notNull( "Bundle context", bundleContext );
+        NullArgumentException.validateNotNull( bundleContext, "Bundle context" );
         m_bundleContext = bundleContext;
         m_registrations = new HashMap<ServiceReference, ServiceRegistration>();
         m_platforms = Collections.synchronizedMap( new HashMap<ServiceReference, PlatformImpl>() );
@@ -120,7 +120,7 @@ public class Activator
     public void stop( final BundleContext bundleContext )
         throws Exception
     {
-        Assert.notNull( "Bundle context", bundleContext );
+        NullArgumentException.validateNotNull( bundleContext, "Bundle context" );
         if( m_serviceTracker != null )
         {
             m_serviceTracker.close();
@@ -160,7 +160,7 @@ public class Activator
             @Override
             public Object addingService( final ServiceReference serviceReference )
             {
-                Assert.notNull( "Service reference", serviceReference );
+                NullArgumentException.validateNotNull( serviceReference, "Service reference" );
                 LOGGER.debug( "Platform builder available [" + serviceReference + "]" );
                 final PlatformBuilder platformBuilder = (PlatformBuilder) super.addingService( serviceReference );
                 if( platformBuilder != null )

@@ -18,7 +18,7 @@
 package org.ops4j.pax.runner.platform;
 
 import java.net.URL;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 
 /**
  * A Java bean like implementation of Bundle reference.
@@ -128,7 +128,7 @@ public class BundleReferenceBean
 
     public void setURL( final URL url )
     {
-        Assert.notNull( "URL", url );
+        NullArgumentException.validateNotNull( url, "URL" );
         m_url = url;
     }
 

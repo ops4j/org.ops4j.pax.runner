@@ -27,7 +27,7 @@ import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedService;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.commons.resolver.BundleContextPropertyResolver;
 import org.ops4j.pax.runner.provision.Scanner;
 import org.ops4j.util.property.DictionaryPropertyResolver;
@@ -70,7 +70,7 @@ public abstract class AbstractScannerActivator<T extends Scanner>
     public void start( final BundleContext bundleContext )
         throws Exception
     {
-        Assert.notNull( "Bundle context", bundleContext );
+        NullArgumentException.validateNotNull( bundleContext, "Bundle context" );
         m_bundleContext = bundleContext;
         registerScanner();
         registerManagedService();
@@ -87,7 +87,7 @@ public abstract class AbstractScannerActivator<T extends Scanner>
      */
     public void stop( final BundleContext bundleContext )
     {
-        Assert.notNull( "Bundle context", bundleContext );
+        NullArgumentException.validateNotNull( bundleContext, "Bundle context" );
         if( m_scannerReg != null )
         {
             m_scannerReg.unregister();

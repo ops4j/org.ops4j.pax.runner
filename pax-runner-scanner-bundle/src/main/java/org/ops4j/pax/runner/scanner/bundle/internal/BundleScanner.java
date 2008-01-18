@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.Scanner;
@@ -59,7 +59,7 @@ public class BundleScanner
      */
     public BundleScanner( final PropertyResolver propertyResolver )
     {
-        Assert.notNull( "PropertyResolver", propertyResolver );
+        NullArgumentException.validateNotNull( propertyResolver, "PropertyResolver" );
         m_propertyResolver = propertyResolver;
     }
 
@@ -99,7 +99,7 @@ public class BundleScanner
      */
     public void setResolver( final PropertyResolver propertyResolver )
     {
-        Assert.notNull( "PropertyResolver", propertyResolver );
+        NullArgumentException.validateNotNull( propertyResolver, "PropertyResolver" );
         m_propertyResolver = propertyResolver;
     }
 

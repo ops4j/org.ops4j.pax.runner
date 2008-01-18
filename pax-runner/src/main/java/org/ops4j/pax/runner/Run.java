@@ -35,8 +35,8 @@ import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
+import org.ops4j.lang.NullArgumentException;
 import static org.ops4j.pax.runner.CommandLine.*;
-import org.ops4j.pax.runner.commons.Assert;
 import org.ops4j.pax.runner.osgi.RunnerBundle;
 import org.ops4j.pax.runner.osgi.RunnerBundleContext;
 import org.ops4j.pax.runner.osgi.RunnerStartLevel;
@@ -97,9 +97,9 @@ public class Run
      */
     Context createContext( final CommandLine commandLine, final Configuration config, final OptionResolver resolver )
     {
-        Assert.notNull( "Command line", commandLine );
-        Assert.notNull( "Configuration", config );
-        Assert.notNull( "PropertyResolver", resolver );
+        NullArgumentException.validateNotNull( commandLine, "Command line" );
+        NullArgumentException.validateNotNull( config, "Configuration" );
+        NullArgumentException.validateNotNull( resolver, "PropertyResolver" );
 
         final ServiceRegistry serviceRegistry = new ServiceRegistry( null );
         final EventDispatcher dispatcher = EventDispatcher.start( new Logger( Logger.LOG_DEBUG ) );
@@ -156,7 +156,7 @@ public class Run
             final String[] segments = option.split( "," );
             for( String segment : segments )
             {
-                Assert.notEmpty( "Handler entry", segment );
+                NullArgumentException.validateNotEmpty( segment, "Handler entry" );
                 LOGGER.debug( "Handler [" + segment + "]" );
                 final String activatorName = config.getProperty( segment );
                 if( activatorName == null || activatorName.trim().length() == 0 )
@@ -193,7 +193,7 @@ public class Run
         final String[] segments = option.split( "," );
         for( String segment : segments )
         {
-            Assert.notEmpty( "Scanner entry", segment );
+            NullArgumentException.validateNotEmpty( segment, "Scanner entry" );
             LOGGER.debug( "Scanner [" + segment + "]" );
             final String activatorName = context.getConfiguration().getProperty( segment );
             if( activatorName == null || activatorName.trim().length() == 0 )

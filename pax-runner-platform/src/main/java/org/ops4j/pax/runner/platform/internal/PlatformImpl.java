@@ -44,7 +44,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.xml.sax.SAXException;
 import org.ops4j.io.FileUtils;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.LocalBundle;
@@ -100,8 +100,8 @@ public class PlatformImpl
      */
     public PlatformImpl( final PlatformBuilder platformBuilder, final BundleContext bundleContext )
     {
-        Assert.notNull( "Platform builder", platformBuilder );
-        Assert.notNull( "Bundle context", bundleContext );
+        NullArgumentException.validateNotNull( platformBuilder, "Platform builder" );
+        NullArgumentException.validateNotNull( bundleContext, "Bundle context" );
         m_platformBuilder = platformBuilder;
         m_bundleContext = bundleContext;
         // initialize ee mappings
@@ -723,7 +723,7 @@ public class PlatformImpl
     PlatformDefinition createPlatformDefinition( final Configuration configuration )
         throws PlatformException
     {
-        Assert.notNull( "Configuration", configuration );
+        NullArgumentException.validateNotNull( configuration, "Configuration" );
         try
         {
             final URL definitionURL = configuration.getDefinitionURL();

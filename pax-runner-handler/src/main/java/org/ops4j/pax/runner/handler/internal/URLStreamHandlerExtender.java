@@ -25,7 +25,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.service.url.URLStreamHandlerService;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 
 /**
  * An extender that implements URLStreamHandlerFactory.
@@ -77,8 +77,8 @@ public class URLStreamHandlerExtender
         LOGGER.debug(
             "Registering protocols [" + Arrays.toString( protocols ) + "] to service [" + urlStreamHandlerService + "]"
         );
-        Assert.notEmpty( "Protocol", protocols );
-        Assert.notNull( "URL stream handler service", urlStreamHandlerService );
+        NullArgumentException.validateNotEmpty( protocols, "Protocol" );
+        NullArgumentException.validateNotNull( urlStreamHandlerService, "URL stream handler service" );
         for( String protocol : protocols )
         {
             m_proxies.put( protocol, createProxy( urlStreamHandlerService ) );
@@ -94,7 +94,7 @@ public class URLStreamHandlerExtender
     public void unregister( final String[] protocols )
     {
         LOGGER.debug( "Unregistering protocols [" + Arrays.toString( protocols ) + "]" );
-        Assert.notEmpty( "Protocols", protocols );
+        NullArgumentException.validateNotEmpty( protocols, "Protocols" );
         for( String protocol : protocols )
         {
             m_proxies.remove( protocol );
@@ -109,7 +109,7 @@ public class URLStreamHandlerExtender
      */
     public URLStreamHandler createURLStreamHandler( final String protocol )
     {
-        Assert.notEmpty( "Protocol", protocol );
+        NullArgumentException.validateNotEmpty( protocol, "Protocol" );
         return m_proxies.get( protocol );
     }
 

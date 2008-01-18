@@ -18,7 +18,7 @@
 package org.ops4j.pax.runner.platform.internal;
 
 import java.io.File;
-import org.ops4j.pax.runner.commons.Assert;
+import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.LocalBundle;
 
@@ -49,8 +49,8 @@ public class LocalBundleImpl
      */
     public LocalBundleImpl( final BundleReference bundleReference, final File file )
     {
-        Assert.notNull( "Bundle reference", bundleReference );
-        Assert.notNull( "File", file );
+        NullArgumentException.validateNotNull( bundleReference, "Bundle reference" );
+        NullArgumentException.validateNotNull( file, "File" );
         m_bundleReference = bundleReference;
         m_file = file;
     }
