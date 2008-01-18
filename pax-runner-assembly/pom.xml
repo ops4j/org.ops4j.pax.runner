@@ -5,8 +5,8 @@
 
   <parent>
     <relativePath>../</relativePath>
-    <groupId>org.ops4j.pax.runner.pax-runner-build</groupId>
-    <artifactId>pax-runner-build-root</artifactId>
+    <groupId>org.ops4j.pax</groupId>
+    <artifactId>runner</artifactId>
     <version>0.6.0-SNAPSHOT</version>
   </parent>
 
