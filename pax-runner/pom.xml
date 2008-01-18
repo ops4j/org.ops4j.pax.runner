@@ -51,7 +51,7 @@
             <Private-Package>${bundle.package},${bundle.package}.osgi</Private-Package>
             <Import-Package>!*</Import-Package>
             <Export-Package>!*</Export-Package>
-            <_include>-target/classes/META-INF/details.bnd</_include>
+            <_include>-target/classes/META-INF/osgi.bnd</_include>
           </instructions>
         </configuration>
       </plugin>

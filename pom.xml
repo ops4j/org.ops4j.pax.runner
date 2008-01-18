@@ -133,7 +133,7 @@
                 !${bundle.package}.internal,
                 ${bundle.package}.*;version="${project.version}"
               </Export-Package>
-              <_include>-target/classes/META-INF/details.bnd</_include>
+              <_include>-target/classes/META-INF/osgi.bnd</_include>
             </instructions>
           </configuration>
         </plugin>
