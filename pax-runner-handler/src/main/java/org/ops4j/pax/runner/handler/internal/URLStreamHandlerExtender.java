@@ -77,7 +77,7 @@ public class URLStreamHandlerExtender
         LOGGER.debug(
             "Registering protocols [" + Arrays.toString( protocols ) + "] to service [" + urlStreamHandlerService + "]"
         );
-        NullArgumentException.validateNotEmpty( protocols, "Protocol" );
+        NullArgumentException.validateNotEmptyContent( protocols, true, "Protocol" );
         NullArgumentException.validateNotNull( urlStreamHandlerService, "URL stream handler service" );
         for( String protocol : protocols )
         {
@@ -94,7 +94,7 @@ public class URLStreamHandlerExtender
     public void unregister( final String[] protocols )
     {
         LOGGER.debug( "Unregistering protocols [" + Arrays.toString( protocols ) + "]" );
-        NullArgumentException.validateNotEmpty( protocols, "Protocols" );
+        NullArgumentException.validateNotEmptyContent( protocols, true, "Protocols" );
         for( String protocol : protocols )
         {
             m_proxies.remove( protocol );
@@ -109,7 +109,7 @@ public class URLStreamHandlerExtender
      */
     public URLStreamHandler createURLStreamHandler( final String protocol )
     {
-        NullArgumentException.validateNotEmpty( protocol, "Protocol" );
+        NullArgumentException.validateNotEmpty( protocol, true, "Protocol" );
         return m_proxies.get( protocol );
     }
 
