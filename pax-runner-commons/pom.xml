@@ -31,28 +31,8 @@
 
   <build>
     <plugins>
-      <!--plugin>
-        <artifactId>maven-dependency-plugin</artifactId>
-      </plugin>
       <plugin>
-        <groupId>${maven.bundle.plugin.groupId}</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <Import-Package>
-              org.apache.commons.logging;resolution:=optional,
-              *
-            </Import-Package>
-            <Export-Package>
-              org.apache.commons.logging,
-              ${bundle.package}.*;version="${project.version}"
-            </Export-Package>
-          </instructions>
-        </configuration>
-      </plugin-->
-      <plugin>
-        <groupId>${maven.bundle.plugin.groupId}</groupId>
+        <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
       </plugin>
     </plugins>
