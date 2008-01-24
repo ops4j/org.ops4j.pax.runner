@@ -21,10 +21,10 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.ops4j.lang.NullArgumentException;
-import org.ops4j.pax.runner.commons.resolver.ConfigurationMap;
 import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.ServiceConstants;
 import org.ops4j.util.property.PropertyResolver;
+import org.ops4j.util.property.PropertyStore;
 
 /**
  * Service Configuration implementation.
@@ -34,7 +34,7 @@ import org.ops4j.util.property.PropertyResolver;
  * @since August 25, 2007
  */
 public class ConfigurationImpl
-    extends ConfigurationMap
+    extends PropertyStore
     implements Configuration
 {
 
@@ -71,7 +71,7 @@ public class ConfigurationImpl
      */
     public ConfigurationImpl( final PropertyResolver propertyResolver )
     {
-        NullArgumentException.validateNotNull( propertyResolver, "Property propertyResolver" );
+        NullArgumentException.validateNotNull( propertyResolver, "Property resolver" );
         m_propertyResolver = propertyResolver;
     }
 
