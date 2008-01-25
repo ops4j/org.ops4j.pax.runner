@@ -1,7 +1,6 @@
 <platform>
 
-  <name>Knopflerfish</name>
-
+  <name>Knopflerfish 2.0.3</name>
   <system>mvn:http://springframework.svn.sourceforge.net/svnroot/springframework/repos/repo-ext!knopflerfish/framework/2.0.3</system>
 
   <profile name="minimal" default="true">

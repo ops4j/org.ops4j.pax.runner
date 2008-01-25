@@ -1,7 +1,6 @@
 <platform>
 
-  <name>Knopflerfish</name>
-
+  <name>Knopflerfish 2.0.0</name>
   <system>mvn:org.knopflerfish.osgi/framework/2.0.0</system>
 
   <profile name="minimal" default="true">

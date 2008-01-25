@@ -1,7 +1,6 @@
 <platform>
 
-  <name>Concierge</name>
-
+  <name>Concierge 1.0 (RC1)</name>
   <system>mvn:ch.ethz.iks.concierge/concierge/1.0_RC1</system>
 
   <profile name="minimal" default="true">

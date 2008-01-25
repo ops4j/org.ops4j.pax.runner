@@ -1,7 +1,6 @@
 <platform>
 
-  <name>Eclipse platform 3.3.0</name>
-
+  <name>Equinox 3.3.0</name>
   <system>mvn:org.eclipse/osgi/3.3.0.v20070530</system>
 
   <profile name="minimal" default="true">
