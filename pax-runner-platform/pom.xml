@@ -39,7 +39,7 @@
   <dependencies>
     <dependency>
       <groupId>org.ops4j.pax.swissbox</groupId>
-      <artifactId>pax-swissbox-null-jcl</artifactId>
+      <artifactId>pax-swissbox-optional-jcl</artifactId>
       <optional>true</optional>
     </dependency>
     <dependency>
