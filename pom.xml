@@ -73,6 +73,7 @@
   </developers>
 
   <properties>
+    <dependency.base.version>0.5.0</dependency.base.version>
     <dependency.swissbox.version>0.1.0</dependency.swissbox.version>
   </properties>
 
@@ -116,19 +117,44 @@
     <dependencies>
       <dependency>
         <groupId>org.ops4j.base</groupId>
-        <artifactId>ops4j-base</artifactId>
-        <version>0.5.0-SNAPSHOT</version>
+        <artifactId>ops4j-base-lang</artifactId>
+        <version>${dependency.base.version}-SNAPSHOT</version>
+        <optional>true</optional>
+      </dependency>
+      <dependency>
+        <groupId>org.ops4j.base</groupId>
+        <artifactId>ops4j-base-io</artifactId>
+        <version>${dependency.base.version}-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.ops4j.base</groupId>
+        <artifactId>ops4j-base-util-collections</artifactId>
+        <version>${dependency.base.version}-SNAPSHOT</version>
+        <optional>true</optional>
+      </dependency>
+      <dependency>
+        <groupId>org.ops4j.base</groupId>
+        <artifactId>ops4j-base-util-xml</artifactId>
+        <version>${dependency.base.version}-SNAPSHOT</version>
+        <optional>true</optional>
+      </dependency>
+      <dependency>
+        <groupId>org.ops4j.base</groupId>
+        <artifactId>ops4j-base-util-property</artifactId>
+        <version>${dependency.base.version}-SNAPSHOT</version>
+        <optional>true</optional>
       </dependency>
       <dependency>
         <groupId>org.ops4j.pax.swissbox</groupId>
         <artifactId>pax-swissbox-optional-jcl</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>${dependency.swissbox.version}-SNAPSHOT</version>
         <optional>true</optional>
       </dependency>
       <dependency>
         <groupId>org.ops4j.pax.swissbox</groupId>
         <artifactId>pax-swissbox-property</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>${dependency.swissbox.version}-SNAPSHOT</version>
+        <optional>true</optional>
       </dependency>
       <!-- Provided dependencies -->
       <dependency>
@@ -147,10 +173,7 @@
   </dependencyManagement>
 
   <dependencies>
-    <dependency>
-      <groupId>org.ops4j.base</groupId>
-      <artifactId>ops4j-base</artifactId>
-    </dependency>
+    <!-- Provided dependencies -->
     <dependency>
       <groupId>org.osgi</groupId>
       <artifactId>osgi_R4_core</artifactId>
@@ -159,6 +182,7 @@
       <groupId>org.osgi</groupId>
       <artifactId>osgi_R4_compendium</artifactId>
     </dependency>
+    <!-- Testing dependencies -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

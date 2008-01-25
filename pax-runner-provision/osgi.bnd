@@ -10,9 +10,6 @@ Bundle-Activator:\
 Import-Package:\
   ${bundle.namespace}; version="${pom.version}",\
   ${bundle.namespace}.scanner; version="${pom.version}",\
-  javax.*,\
-  org.w3c.*,\
-  org.xml.*,\
   org.osgi.framework; version="[1.0.0,2.0.0)",\
   org.osgi.service.cm; version="[1.2.0,2.0.0)",\
   org.osgi.service.startlevel; version="[1.0.0,2.0.0)",\

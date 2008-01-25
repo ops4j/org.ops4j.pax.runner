@@ -10,13 +10,13 @@ Bundle-Activator:\
 Import-Package:\
   ${bundle.namespace}; version="${pom.version}",\
   ${bundle.namespace}.builder; version="${pom.version}",\
-  javax.*,\
-  org.w3c.*,\
-  org.xml.*,\
+  javax.xml.parsers,\
+  org.apache.commons.logging; version="[1.0.4,2.0.0)"; resolution:=optional,\
   org.osgi.framework; version="[1.0.0,2.0.0)",\
   org.osgi.service.cm; version="[1.2.0,2.0.0)",\
   org.osgi.util.tracker; version="[1.3.0,2.0.0)",\
-  org.apache.commons.logging; version="[1.0.4,2.0.0)"; resolution:=optional
+  org.w3c.dom,\
+  org.xml.sax
 
 Export-Package:\
   ${bundle.namespace}; version="${pom.version}",\

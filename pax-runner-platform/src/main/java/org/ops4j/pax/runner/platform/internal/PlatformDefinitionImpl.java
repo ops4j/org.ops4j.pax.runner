@@ -31,7 +31,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 import org.ops4j.lang.NullArgumentException;
-import org.ops4j.pax.runner.commons.xml.XmlUtils;
+import org.ops4j.util.xml.XmlUtils;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.BundleReferenceBean;
 

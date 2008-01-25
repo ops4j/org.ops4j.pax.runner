@@ -8,9 +8,6 @@ Bundle-Activator:\
   ${bundle.namespace}.internal.Activator
 
 Import-Package:\
-  javax.*,\
-  org.w3c.*,\
-  org.xml.*,\
   org.osgi.framework; version="[1.0.0,2.0.0)",\
   org.ops4j.pax.runner.provision; version="${pom.version}"
 
