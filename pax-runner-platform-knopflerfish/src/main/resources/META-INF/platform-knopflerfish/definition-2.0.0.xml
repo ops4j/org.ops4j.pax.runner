@@ -152,19 +152,19 @@
     </bundle>
     <bundle>
       <name>org.springframework.osgi.spring-osgi-annotation</name>
-      <url>mvn:http://s3.amazonaws.com/maven.springframework.org/milestone!org.springframework.osgi/spring-osgi-annotation</url>
+      <url>mvn:org.springframework.osgi/spring-osgi-annotation</url>
     </bundle>
     <bundle>
       <name>org.springframework.osgi.spring-osgi-core</name>
-      <url>mvn:http://s3.amazonaws.com/maven.springframework.org/milestone!org.springframework.osgi/spring-osgi-core</url>
+      <url>mvn:org.springframework.osgi/spring-osgi-core</url>
     </bundle>
     <bundle>
       <name>org.springframework.osgi.spring-osgi-extender</name>
-      <url>mvn:http://s3.amazonaws.com/maven.springframework.org/milestone!org.springframework.osgi/spring-osgi-extender</url>
+      <url>mvn:org.springframework.osgi/spring-osgi-extender</url>
     </bundle>
     <bundle>
       <name>org.springframework.osgi.spring-osgi-io</name>
-      <url>mvn:http://s3.amazonaws.com/maven.springframework.org/milestone!org.springframework.osgi/spring-osgi-io</url>
+      <url>mvn:org.springframework.osgi/spring-osgi-io</url>
     </bundle>
   </profile>
 
