@@ -17,10 +17,9 @@
 
   <name>OPS4J Pax Runner - Bundle scanner</name>
   <description>
-    OPS4J Pax Runner - Provision from an jar url. See details at http://wiki.ops4j.org/confluence/x/BIE6
+    OPS4J Pax Runner - Provision from an jar url.
+    See details at http://wiki.ops4j.org/confluence/x/BIE6.
   </description>
-
-  <url>http://wiki.ops4j.org/confluence/x/BIE6</url>
 
   <properties>
     <bundle.symbolicName>org.ops4j.pax.runner.scanner.bundle</bundle.symbolicName>

@@ -18,10 +18,9 @@
   <name>OPS4J Pax Runner - Platform Console</name>
   <description>
     OPS4J Pax Runner - Utility console that could be used to start platforms from a command line while in a running osgi
-    platform. See details at http://wiki.ops4j.org/confluence/x/c4A6
+    platform.
+    See details at http://wiki.ops4j.org/confluence/x/c4A6.
   </description>
-
-  <url>http://wiki.ops4j.org/confluence/x/c4A6</url>
 
   <properties>
     <bundle.symbolicName>org.ops4j.pax.runner.platform.console</bundle.symbolicName>

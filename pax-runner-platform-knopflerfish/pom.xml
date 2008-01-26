@@ -17,11 +17,9 @@
 
   <name>OPS4J Pax Runner - Knopflerfish Platfrom Builder</name>
   <description>
-    OPS4J Pax Runner - Knopflerfish Platform Builder. Creates knopflerfish specific artifacts. See details at
-    http://wiki.ops4j.org/confluence/x/HoA6
+    OPS4J Pax Runner - Knopflerfish Platform Builder. Creates Knopflerfish specific artifacts. 
+    See details at http://wiki.ops4j.org/confluence/x/HoA6.
   </description>
-
-  <url>http://wiki.ops4j.org/confluence/x/HoA6</url>
 
   <properties>
     <bundle.symbolicName>org.ops4j.pax.runner.platform.knopflerfish</bundle.symbolicName>

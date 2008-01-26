@@ -17,11 +17,9 @@
 
   <name>OPS4J Pax Runner - Handler</name>
   <description>
-    OPS4J Pax Runner - Handler extender to be used when running within pax runner. See details at
-    http://wiki.ops4j.org/confluence/x/A4A6
+    OPS4J Pax Runner - Handler extender to be used when running within pax runner.
+    See details at http://wiki.ops4j.org/confluence/x/A4A6.
   </description>
-
-  <url>http://wiki.ops4j.org/confluence/x/A4A6</url>
 
   <properties>
     <bundle.symbolicName>org.ops4j.pax.runner.handler</bundle.symbolicName>

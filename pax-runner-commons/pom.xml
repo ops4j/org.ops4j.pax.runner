@@ -19,10 +19,9 @@
   <description>
     Pax Runner - Common utilities shared between modules. The jar is not required to be deployed alongside the artifacts
     that uses parts of it. The used parts are embeded into the artifact via maven depenency plugin + maven bundle
-    plugin. See details at http://wiki.ops4j.org/confluence/x/A4A6
+    plugin.
+    See details at http://wiki.ops4j.org/confluence/x/A4A6.
   </description>
-
-  <url>http://wiki.ops4j.org/confluence/x/A4A6</url>
 
   <properties>
     <bundle.symbolicName>org.ops4j.pax.runner.commons</bundle.symbolicName>

@@ -17,10 +17,9 @@
 
   <name>OPS4J Pax Runner - Platform Extender</name>
   <description>
-    OPS4J Pax Runner - Extender for platform builders. See details at http://wiki.ops4j.org/confluence/x/c4A6
+    OPS4J Pax Runner - Extender for platform builders.
+    See details at http://wiki.ops4j.org/confluence/x/c4A6.
   </description>
-
-  <url>http://wiki.ops4j.org/confluence/x/c4A6</url>
 
   <properties>
     <bundle.symbolicName>org.ops4j.pax.runner.platform</bundle.symbolicName>
