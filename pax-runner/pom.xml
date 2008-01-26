@@ -81,22 +81,22 @@
     <dependency>
       <groupId>org.ops4j.pax.url</groupId>
       <artifactId>pax-url-classpath</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
+      <version>${dependency.url.version}</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.url</groupId>
       <artifactId>pax-url-mvn</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
+      <version>${dependency.url.version}</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.url</groupId>
       <artifactId>pax-url-war</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
+      <version>${dependency.url.version}</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.url</groupId>
       <artifactId>pax-url-wrap</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
+      <version>${dependency.url.version}</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
