@@ -36,7 +36,7 @@
               <goal>copy-dependencies</goal>
             </goals>
             <configuration>
-              <includeScope>provided</includeScope>
+              <includeScope>compile</includeScope>
               <stripVersion>true</stripVersion>
             </configuration>
           </execution>
