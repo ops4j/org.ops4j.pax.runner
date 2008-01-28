@@ -54,7 +54,7 @@
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.framework</artifactId>
       <version>1.0.0</version>
-      <scope>provided</scope>
+      <optional>true</optional>
       <exclusions>
         <!--
           remove bad dependency from the released felix 1.0.0 pom
@@ -67,84 +67,100 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>pax-runner-commons</artifactId>
-      <version>0.6.1-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>pax-runner-handler</artifactId>
-      <version>0.6.1-SNAPSHOT</version>
-    </dependency>
-    <dependency>
       <groupId>org.ops4j.pax.url</groupId>
       <artifactId>pax-url-classpath</artifactId>
       <version>${dependency.url.version}</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.url</groupId>
       <artifactId>pax-url-mvn</artifactId>
       <version>${dependency.url.version}</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.url</groupId>
       <artifactId>pax-url-war</artifactId>
       <version>${dependency.url.version}</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.url</groupId>
       <artifactId>pax-url-wrap</artifactId>
       <version>${dependency.url.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.runner</groupId>
+      <artifactId>pax-runner-commons</artifactId>
+      <version>0.6.1-SNAPSHOT</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.runner</groupId>
+      <artifactId>pax-runner-handler</artifactId>
+      <version>0.6.1-SNAPSHOT</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-provision</artifactId>
       <version>0.6.1-SNAPSHOT</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-scanner-bundle</artifactId>
       <version>0.6.1-SNAPSHOT</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-scanner-dir</artifactId>
       <version>0.6.1-SNAPSHOT</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-scanner-file</artifactId>
       <version>0.6.1-SNAPSHOT</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-scanner-pom</artifactId>
       <version>0.6.1-SNAPSHOT</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-platform</artifactId>
       <version>0.6.1-SNAPSHOT</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-platform-concierge</artifactId>
       <version>0.6.1-SNAPSHOT</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-platform-equinox</artifactId>
       <version>0.6.1-SNAPSHOT</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-platform-felix</artifactId>
       <version>0.6.1-SNAPSHOT</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-platform-knopflerfish</artifactId>
       <version>0.6.1-SNAPSHOT</version>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 
