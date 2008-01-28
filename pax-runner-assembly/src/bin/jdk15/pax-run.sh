@@ -4,8 +4,12 @@
 #
 #
 
-if [ -z "$PAX_HOME" ] ; then
-  PAX_HOME=$HOME/.pax
+SCRIPTS=`readlink $0`
+if [ "${SCRIPTS}" != "" ]
+then
+  SCRIPTS=`dirname $SCRIPTS`
+else
+  SCRIPTS=`dirname $0`
 fi
 
-exec java $JAVA_OPTS -jar $PAX_HOME/runner/bin/pax-runner-${project.version}.jar "$@"
+exec java $JAVA_OPTS -jar $SCRIPTS/pax-runner-${project.version}.jar "$@"

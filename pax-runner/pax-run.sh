@@ -5,6 +5,11 @@
 #
 
 SCRIPTS=`readlink $0`
-SCRIPTS=`dirname $SCRIPTS`
+if [ "${SCRIPTS}" != "" ]
+then
+  SCRIPTS=`dirname $SCRIPTS`
+else
+  SCRIPTS=`dirname $0`
+fi
 
 java $JAVA_OPTS -jar $SCRIPTS/target/pax-runner-0.6.0-SNAPSHOT.jar "$@"
