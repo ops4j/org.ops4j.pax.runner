@@ -39,11 +39,7 @@
     </bundle>
   </profile>
 
-  <profile name="war" extends="web">
-    <bundle>
-      <name>org.ops4j.pax.web.jsp</name>
-      <url>mvn:org.ops4j.pax.web/pax-web-jsp</url>
-    </bundle>
+  <profile name="war" extends="jsp">
     <bundle>
       <name>org.ops4j.pax.web.extender.war</name>
       <url>mvn:org.ops4j.pax.web-extender/pax-web-ex-war</url>
