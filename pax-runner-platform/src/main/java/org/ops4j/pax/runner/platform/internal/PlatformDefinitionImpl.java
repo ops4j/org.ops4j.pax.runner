@@ -31,9 +31,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 import org.ops4j.lang.NullArgumentException;
-import org.ops4j.util.xml.XmlUtils;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.BundleReferenceBean;
+import org.ops4j.util.xml.XmlUtils;
 
 /**
  * Implementation of platform definition that that reads definition form an xml.
@@ -105,55 +105,103 @@ public class PlatformDefinitionImpl
             m_systemPackageName = systemPackage;
         }
         m_packages = XmlUtils.getTextContentOfElement( doc, "packages" );
+        extractProfiles( doc, startLevel );
+        if( m_profiles.size() == 0 )
+        {
+            throw new IOException( "Invalid syntax: there should be at least one profile" );
+        }
+    }
+
+    /**
+     * Extracts profiles out of a parsed xml document.
+     *
+     * @param startLevel default start level for bundles
+     * @param doc        parsed xml document
+     *
+     * @throws java.io.IOException      re-thrown while parsing the input stream as xml or invalid syntax
+     * @throws javax.xml.parsers.ParserConfigurationException
+     *                                  re-thrown while parsing the input stream as xml
+     * @throws org.xml.sax.SAXException re-thrown while parsing the input stream as xml
+     */
+    private void extractProfiles( final Document doc, Integer startLevel )
+        throws IOException, ParserConfigurationException, SAXException
+    {
         final List<Element> profiles = XmlUtils.getElements( doc, "profile" );
         if( profiles != null )
         {
             for( Element profile : profiles )
             {
                 final String profileName = profile.getAttribute( "name" );
-                final Boolean profileDefault = Boolean.valueOf( profile.getAttribute( "default" ) );
-                String profileExtends = profile.getAttribute( "extends" );
-                if( profileExtends != null && profileExtends.trim().length() == 0 )
+                // if profile already exist first one wins
+                if( !m_profiles.containsKey( profileName ) )
                 {
-                    profileExtends = null;
-                }
-                if( profileName == null )
-                {
-                    throw new IOException( "Invalid syntax: all profiles must have a name" );
-                }
-                // if there is no other default profile first one is the default one
-                if( m_defaultProfile == null || profileDefault )
-                {
-                    m_defaultProfile = profileName;
-                }
-                m_profiles.put( profileName, profileExtends );
-                m_bundles.put( profileName, new ArrayList<BundleReference>() );
-                final List<Element> bundles = XmlUtils.getElements( profile, "bundle" );
-                if( bundles != null )
-                {
-                    for( Element bundle : bundles )
+                    final Boolean profileDefault = Boolean.valueOf( profile.getAttribute( "default" ) );
+                    String profileExtends = profile.getAttribute( "extends" );
+                    if( profileExtends != null && profileExtends.trim().length() == 0 )
                     {
-                        String name = XmlUtils.getTextContentOfElement( bundle, "name" );
-                        final String urlSpec = XmlUtils.getTextContentOfElement( bundle, "url" );
-                        if( urlSpec == null )
+                        profileExtends = null;
+                    }
+                    if( profileName == null )
+                    {
+                        throw new IOException( "Invalid syntax: all profiles must have a name" );
+                    }
+                    // if there is no other default profile first one is the default one
+                    if( m_defaultProfile == null || profileDefault )
+                    {
+                        m_defaultProfile = profileName;
+                    }
+                    m_profiles.put( profileName, profileExtends );
+                    m_bundles.put( profileName, new ArrayList<BundleReference>() );
+                    final List<Element> bundles = XmlUtils.getElements( profile, "bundle" );
+                    if( bundles != null )
+                    {
+                        for( Element bundle : bundles )
                         {
-                            throw new IOException( "Invalid syntax: bundle url not defined in profile " + profileName );
+                            String name = XmlUtils.getTextContentOfElement( bundle, "name" );
+                            final String urlSpec = XmlUtils.getTextContentOfElement( bundle, "url" );
+                            if( urlSpec == null )
+                            {
+                                throw new IOException(
+                                    "Invalid syntax: bundle url not defined in profile " + profileName
+                                );
+                            }
+                            final URL bundleURL = new URL( urlSpec );
+                            if( name == null )
+                            {
+                                name = urlSpec;
+                            }
+                            m_bundles.get( profileName )
+                                .add( new BundleReferenceBean( name, bundleURL, startLevel, true, false ) );
                         }
-                        final URL bundleURL = new URL( urlSpec );
-                        if( name == null )
-                        {
-                            name = urlSpec;
-                        }
-                        m_bundles.get( profileName )
-                            .add( new BundleReferenceBean( name, bundleURL, startLevel, true, false ) );
                     }
                 }
             }
         }
-        else
+        // parse included profiles
+        final List<Element> profileRefs = XmlUtils.getElements( doc, "profileRef" );
+        if( profileRefs != null )
         {
-            throw new IOException( "Invalid syntax: there should be at least one profile" );
-
+            for( Element profileRef : profileRefs )
+            {
+                final String href = profileRef.getAttribute( "href" );
+                if( href == null )
+                {
+                    throw new IOException( "Invalid syntax: all profileRefs must have an href attribute" );
+                }
+                InputStream is = null;
+                try
+                {
+                    is = new URL( href ).openStream();
+                    extractProfiles( XmlUtils.parseDoc( new URL( href ).openStream() ), startLevel );
+                }
+                finally
+                {
+                    if( is != null )
+                    {
+                        is.close();
+                    }
+                }
+            }
         }
     }
 
