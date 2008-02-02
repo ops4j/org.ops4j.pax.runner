@@ -20,11 +20,11 @@ Private-Package:\
 
 Include-Resource:\
   src/main/resources/,\
-  @target/dependency/osgi_R4_core.jar!/org/osgi/framework/*,\
-  @target/dependency/osgi_R4_core.jar!/org/osgi/service/startlevel/*,\
-  @target/dependency/osgi_R4_core.jar!/org/osgi/service/url/*,\
-  @target/dependency/osgi_R4_compendium.jar!/org/osgi/service/cm/*,\
-  @target/dependency/osgi_R4_compendium.jar!/org/osgi/util/tracker/*,\
+  @target/dependency/org.osgi.core.jar!/org/osgi/framework/*,\
+  @target/dependency/org.osgi.core.jar!/org/osgi/service/startlevel/*,\
+  @target/dependency/org.osgi.core.jar!/org/osgi/service/url/*,\
+  @target/dependency/org.osgi.compendium.jar!/org/osgi/service/cm/*,\
+  @target/dependency/org.osgi.compendium.jar!/org/osgi/util/tracker/*,\
   @target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/FilterImpl*.class,\
   @target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/Logger.class,\
   @target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/ServiceRegistry*.class,\
