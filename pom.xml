@@ -34,6 +34,7 @@
   <modules>
     <module>pax-runner-commons</module>
     <module>pax-runner-handler</module>
+    <module>pax-runner-obr</module>
     <module>pax-runner-provision</module>
     <module>pax-runner-provision-console</module>
     <module>pax-runner-scanner-bundle</module>
@@ -75,7 +76,7 @@
   <properties>
     <dependency.base.version>0.5.0</dependency.base.version>
     <dependency.swissbox.version>0.1.0</dependency.swissbox.version>
-    <dependency.url.version>0.1.0</dependency.url.version>
+    <dependency.url.version>0.2.0-SNAPSHOT</dependency.url.version>
   </properties>
 
   <build>
@@ -156,6 +157,37 @@
         <artifactId>pax-swissbox-property</artifactId>
         <version>${dependency.swissbox.version}</version>
         <optional>true</optional>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>org.apache.felix.bundlerepository</artifactId>
+        <version>1.0.0</version>
+        <optional>true</optional>
+        <!-- the following exclusions can be taken out once they are not anymore exported by felix obr -->
+        <exclusions>
+          <exclusion>
+            <groupId>net.sf.kxml</groupId>
+            <artifactId>kxml2</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>xmlpull</groupId>
+            <artifactId>xmlpull</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.shell</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.osgi.core</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>org.apache.felix.shell</artifactId>
+        <version>1.0.0</version>
+        <scope>provided</scope>
       </dependency>
       <!-- Provided dependencies -->
       <dependency>
