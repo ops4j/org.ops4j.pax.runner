@@ -130,6 +130,8 @@ public class Run
     public void start( final CommandLine commandLine, final Configuration config, final OptionResolver resolver )
     {
         final Context context = createContext( commandLine, config, resolver );
+        // install aditional services
+        installServices( context );
         // install aditional handlers
         installHandlers( context );
         // install provisioning and bundles
@@ -175,6 +177,7 @@ public class Run
             createActivator( HANDLER_SERVICE, serviceActivatorName, context );
         }
     }
+
 
     /**
      * Installs provisioning service and configured scanners.
@@ -224,13 +227,41 @@ public class Run
     }
 
     /**
+     * Installs additional services.
+     *
+     * @param context the running context
+     */
+    void installServices( final Context context )
+    {
+        LOGGER.debug( "Installing additional services" );
+        final String option = context.getOptionResolver().get( OPTION_SERVICES );
+        if( option != null )
+        {
+            final Configuration config = context.getConfiguration();
+            final String[] segments = option.split( "," );
+            for( String segment : segments )
+            {
+                NullArgumentException.validateNotEmpty( segment, "Service entry" );
+                LOGGER.debug( "Installing service [" + segment + "]" );
+                final String activatorName = config.getProperty( segment );
+                if( activatorName == null || activatorName.trim().length() == 0 )
+                {
+                    throw new ConfigurationException( "Service [" + segment + "] is not supported" );
+                }
+                createActivator( segment, activatorName, context );
+            }
+        }
+    }
+
+    /**
      * By using provision service it installs provisioned bundles.
      *
      * @param provisionService installed provision service
      * @param schemaResolver   a provision schema resolver
      * @param context          the running context
      */
-    void installBundles( final ProvisionService provisionService, final ProvisionSchemaResolver schemaResolver,
+    void installBundles( final ProvisionService provisionService,
+                         final ProvisionSchemaResolver schemaResolver,
                          final Context context )
     {
         LOGGER.debug( "Installing bundles" );

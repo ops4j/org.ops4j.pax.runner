@@ -78,6 +78,7 @@ public class RunTest
     @Test
     public void startFlow()
     {
+        m_recorder.record( "installServices()" );
         m_recorder.record( "installHandlers()" );
         m_recorder.record( "installScanners()" );
         m_recorder.record( "installBundles()" );
@@ -111,6 +112,13 @@ public class RunTest
             {
                 m_recorder.record( "installBundles()" );
             }
+
+            @Override
+            void installServices( final Context context )
+            {
+                m_recorder.record( "installServices()" );
+            }
+
         }.start( m_commandLine, m_config, m_resolver );
         verify( m_commandLine, m_config, m_recorder, m_resolver, m_bundleContext );
     }
@@ -170,6 +178,7 @@ public class RunTest
     @Test( expected = ConfigurationException.class )
     public void startWithInvalidHandlers()
     {
+        expect( m_resolver.get( "services" ) ).andReturn( null );
         expect( m_resolver.get( "handlers" ) ).andReturn( "handler.1" );
         expect( m_config.getProperty( "handler.service" ) ).andReturn( "handler.service.Activator" );
         expect( m_config.getProperty( "handler.1" ) ).andReturn( null );
