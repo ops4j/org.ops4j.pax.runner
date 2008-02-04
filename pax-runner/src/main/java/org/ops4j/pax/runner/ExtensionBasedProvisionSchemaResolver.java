@@ -87,6 +87,10 @@ public class ExtensionBasedProvisionSchemaResolver
                         {
                             schema = org.ops4j.pax.runner.scanner.bundle.ServiceConstants.SCHEMA;
                         }
+                        else if( "OBR".equals( extension ) )
+                        {
+                            schema = org.ops4j.pax.runner.scanner.obr.ServiceConstants.SCHEMA;
+                        }
                     }
                 }
             }

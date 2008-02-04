@@ -1,0 +1,70 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <relativePath>../</relativePath>
+    <groupId>org.ops4j.pax</groupId>
+    <artifactId>runner</artifactId>
+    <version>0.7.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.ops4j.pax.runner</groupId>
+  <artifactId>pax-runner-scanner-obr</artifactId>
+  <version>0.7.0-SNAPSHOT</version>
+  <packaging>bundle</packaging>
+
+  <name>OPS4J Pax Runner - OBR scanner</name>
+  <description>
+    OPS4J Pax Runner - Provision from an file containing obr references.
+    See details at http://wiki.ops4j.org/confluence/x/CABW.
+  </description>
+
+  <properties>
+    <bundle.symbolicName>org.ops4j.pax.runner.scanner.obr</bundle.symbolicName>
+    <bundle.namespace>org.ops4j.pax.runner.scanner.obr</bundle.namespace>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.ops4j.base</groupId>
+      <artifactId>ops4j-base-lang</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.base</groupId>
+      <artifactId>ops4j-base-util-property</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.swissbox</groupId>
+      <artifactId>pax-swissbox-optional-jcl</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.runner</groupId>
+      <artifactId>pax-runner-commons</artifactId>
+      <version>0.7.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.runner</groupId>
+      <artifactId>pax-runner-provision</artifactId>
+      <version>0.7.0-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <!-- Testing dependencies -->
+    <dependency>
+      <groupId>org.ops4j.base</groupId>
+      <artifactId>ops4j-base-io</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+</project>
