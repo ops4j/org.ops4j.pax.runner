@@ -42,12 +42,8 @@ public final class Activator
     @Override
     protected ObrScanner createScanner( final BundleContext bundleContext )
     {
-        final ReplaceableService<RepositoryAdmin> replaceableService =
-            new ReplaceableService<RepositoryAdmin>( bundleContext, RepositoryAdmin.class );
-        replaceableService.start();
         return new ObrScanner(
             new BundleContextPropertyResolver( bundleContext ),
-            replaceableService.getService(),
             new FilterValidator()
             {
                 /**

@@ -40,6 +40,7 @@
     <module>pax-runner-scanner-dir</module>
     <module>pax-runner-scanner-file</module>
     <module>pax-runner-scanner-obr</module>
+    <module>pax-runner-scanner-obr-script</module>    
     <module>pax-runner-scanner-pom</module>
     <module>pax-runner-platform</module>
     <module>pax-runner-platform-console</module>
