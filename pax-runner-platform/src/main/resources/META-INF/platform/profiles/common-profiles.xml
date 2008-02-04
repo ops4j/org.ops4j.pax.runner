@@ -10,7 +10,7 @@
   <profile name="config" extends="minimal">
     <bundle>
       <name>org.apache.felix.configadmin</name>
-      <url>mvn:http://cvs.apache.org/maven-snapshot-repository!org.apache.felix/org.apache.felix.configadmin/0.9.0-SNAPSHOT</url>
+      <url>mvn:org.apache.felix/org.apache.felix.configadmin/1.0.0</url>
     </bundle>
   </profile>
 
