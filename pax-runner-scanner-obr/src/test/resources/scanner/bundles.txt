@@ -1,14 +1,8 @@
 # a line comment that should be ignored
 # the following is an empty line that should be ignored
 
-# a simple bundle
-file:bundle1.txt
+# a bundle, no version
+bundle1
 
-# a bundle with start level
-file:bundle2.txt@5
-
-# a bundle with start level and no start
-file:bundle3.txt@5@nostart
-
-# a bundle with no start
-file:bundle4.txt@nostart
+# a bundle with version
+bundle2/1.0.0

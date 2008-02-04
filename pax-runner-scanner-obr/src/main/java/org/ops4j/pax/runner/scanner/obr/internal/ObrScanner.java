@@ -20,12 +20,16 @@ package org.ops4j.pax.runner.scanner.obr.internal;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.osgi.service.obr.RepositoryAdmin;
+import org.osgi.service.obr.Resolver;
+import org.osgi.service.obr.Resource;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.commons.properties.SystemPropertyUtils;
 import org.ops4j.pax.runner.provision.BundleReference;
@@ -69,16 +73,33 @@ public class ObrScanner
      * PropertyResolver used to resolve properties.
      */
     private PropertyResolver m_propertyResolver;
+    /**
+     * OBR Repository Admin.
+     */
+    private final RepositoryAdmin m_repositoryAdmin;
+    /**
+     * Filter syntax validator.
+     */
+    private final FilterValidator m_filterValidator;
 
     /**
      * Creates a new file scanner.
      *
      * @param propertyResolver a propertyResolver; mandatory
+     * @param repositoryAdmin  obr repository admin service
+     * @param filterValidator  filter syntax validator
      */
-    public ObrScanner( final PropertyResolver propertyResolver )
+    public ObrScanner( final PropertyResolver propertyResolver,
+                       final RepositoryAdmin repositoryAdmin,
+                       final FilterValidator filterValidator )
     {
         NullArgumentException.validateNotNull( propertyResolver, "Property resolver" );
+        NullArgumentException.validateNotNull( repositoryAdmin, "Repository Admin" );
+        NullArgumentException.validateNotNull( filterValidator, "Filter syntax validator" );
+
         m_propertyResolver = propertyResolver;
+        m_repositoryAdmin = repositoryAdmin;
+        m_filterValidator = filterValidator;
     }
 
     /**
@@ -99,10 +120,11 @@ public class ObrScanner
             try
             {
                 bufferedReader = new BufferedReader( new InputStreamReader( parser.getFileURL().openStream() ) );
-                Integer defaultStartLevel = getDefaultStartLevel( parser, config );
-                Boolean defaultStart = getDefaultStart( parser, config );
-                Boolean defaultUpdate = getDefaultUpdate( parser, config );
+                final Integer defaultStartLevel = getDefaultStartLevel( parser, config );
+                final Boolean defaultStart = getDefaultStart( parser, config );
+                final Boolean defaultUpdate = getDefaultUpdate( parser, config );
                 String line;
+                final Resolver resolver = m_repositoryAdmin.resolver();
                 while( ( line = bufferedReader.readLine() ) != null )
                 {
                     if( !"".equals( line.trim() ) && !line.trim().startsWith( COMMENT_SIGN ) )
@@ -121,10 +143,61 @@ public class ObrScanner
                         else
                         {
                             line = SystemPropertyUtils.resolvePlaceholders( line );
+                            // use obr repository admin to figure out if we have a resource that matches specs
+                            final Resource[] resources =
+                                m_repositoryAdmin.discoverResources( createObrFilter( line ) );
+                            // fail when no resource found
+                            if( resources == null || resources.length == 0 )
+                            {
+                                throw new ScannerException( "Coud not find the resource denoted by [" + line + "]" );
+                            }
+                            // add the resource to the list of resources to be resolved
+                            // TODO use the highest version not the first one as there can be more resources discovered
+                            final Resource selectedResource = resources[ 0 ];
+                            resolver.add( selectedResource );
                             references.add(
-                                new FileBundleReference( line, defaultStartLevel, defaultStart, defaultUpdate )
+                                new FileBundleReference(
+                                    selectedResource.getURL().toExternalForm(),
+                                    defaultStartLevel,
+                                    defaultStart,
+                                    defaultUpdate
+                                )
                             );
                         }
+                    }
+                }
+                // resolve the specified resources
+                resolver.resolve();
+                // add discovered required resources
+                final Resource[] requiredResources = resolver.getRequiredResources();
+                if( requiredResources != null && requiredResources.length > 0 )
+                {
+                    for( Resource resource : requiredResources )
+                    {
+                        references.add(
+                            new FileBundleReference(
+                                resource.getURL().toExternalForm(),
+                                defaultStartLevel,
+                                defaultStart,
+                                defaultUpdate
+                            )
+                        );
+                    }
+                }
+                // add discovered optional resources
+                final Resource[] optionalResources = resolver.getRequiredResources();
+                if( optionalResources != null && optionalResources.length > 0 )
+                {
+                    for( Resource resource : optionalResources )
+                    {
+                        references.add(
+                            new FileBundleReference(
+                                resource.getURL().toExternalForm(),
+                                defaultStartLevel,
+                                defaultStart,
+                                defaultUpdate
+                            )
+                        );
                     }
                 }
             }
@@ -141,6 +214,47 @@ public class ObrScanner
             throw new ScannerException( "Could not parse the provision file", e );
         }
         return references;
+    }
+
+    /**
+     * Creates an obr filter from an obr bundle reference. So a reference as symbolic-name/version will be transformed
+     * to (&(symbolicname=symbolic-name)(version=version))
+     *
+     * @param path obr bundle reference
+     *
+     * @return an obr filter
+     *
+     * @throws MalformedURLException if path doesn't conform to expected syntax or contains invalid chars
+     */
+    private String createObrFilter( final String path )
+        throws MalformedURLException
+    {
+        if( path == null || path.trim().length() == 0 )
+        {
+            throw new MalformedURLException( "OBR bundle reference cannot be null or empty" );
+        }
+        final String[] segments = path.split( "/" );
+        if( segments.length > 2 )
+        {
+            throw new MalformedURLException( "OBR bundle reference canot contain more then one '/'" );
+        }
+        final StringBuilder builder = new StringBuilder();
+        // add bundle symbolic name filter
+        builder.append( "(symbolicname=" ).append( segments[ 0 ] ).append( ")" );
+        if( !m_filterValidator.validate( builder.toString() ) )
+        {
+            throw new MalformedURLException( "Invalid symbolic name value." );
+        }
+        // add bundle version filter
+        if( segments.length > 1 )
+        {
+            builder.insert( 0, "(&" ).append( "(version=" ).append( segments[ 1 ] ).append( "))" );
+            if( !m_filterValidator.validate( builder.toString() ) )
+            {
+                throw new MalformedURLException( "Invalid version value." );
+            }
+        }
+        return builder.toString();
     }
 
     /**

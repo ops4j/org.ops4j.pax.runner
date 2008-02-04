@@ -18,9 +18,12 @@
 package org.ops4j.pax.runner.scanner.obr.internal;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.service.obr.RepositoryAdmin;
 import org.ops4j.pax.runner.provision.scanner.AbstractScannerActivator;
 import org.ops4j.pax.runner.scanner.obr.ServiceConstants;
 import org.ops4j.pax.swissbox.property.BundleContextPropertyResolver;
+import org.ops4j.pax.swissbox.tracker.ReplaceableService;
 import org.ops4j.util.property.PropertyResolver;
 
 /**
@@ -39,7 +42,32 @@ public final class Activator
     @Override
     protected ObrScanner createScanner( final BundleContext bundleContext )
     {
-        return new ObrScanner( new BundleContextPropertyResolver( bundleContext ) );
+        final ReplaceableService<RepositoryAdmin> replaceableService =
+            new ReplaceableService<RepositoryAdmin>( bundleContext, RepositoryAdmin.class );
+        replaceableService.start();
+        return new ObrScanner(
+            new BundleContextPropertyResolver( bundleContext ),
+            replaceableService.getService(),
+            new FilterValidator()
+            {
+                /**
+                 * Validates filter syntax by creating an OSGi filter. If an
+                 * @see FilterValidator#validate(String)
+                 */
+                public boolean validate( final String filter )
+                {
+                    try
+                    {
+                        bundleContext.createFilter( filter );
+                        return true;
+                    }
+                    catch( InvalidSyntaxException e )
+                    {
+                        return false;
+                    }
+                }
+            }
+        );
     }
 
     /**

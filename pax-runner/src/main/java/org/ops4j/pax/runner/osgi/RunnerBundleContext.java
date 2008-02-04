@@ -29,6 +29,7 @@ import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.framework.BundleListener;
 import org.ops4j.pax.runner.Context;
 
 public class RunnerBundleContext
@@ -161,5 +162,16 @@ public class RunnerBundleContext
         return m_bundle;
     }
 
+    @Override
+    public void addBundleListener( BundleListener bundleListener )
+    {
+        // do nothing, just support the method so no unsupported exception is thrown
+    }
 
+    @Override
+    public Bundle[] getBundles()
+    {
+        return new Bundle[0];
+    }
+    
 }
