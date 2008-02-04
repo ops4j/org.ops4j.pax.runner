@@ -40,7 +40,8 @@ public final class Activator
     {
         return new PlatformBuilder[]{
             new FelixPlatformBuilder( bundleContext, "1.0.0" ),
-            new FelixPlatformBuilder( bundleContext, "1.0.1" )
+            new FelixPlatformBuilder( bundleContext, "1.0.1" ),
+            new FelixPlatformBuilder( bundleContext, "1.0.3" )
         };
     }
 

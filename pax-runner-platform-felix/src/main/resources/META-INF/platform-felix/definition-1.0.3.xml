@@ -1,0 +1,43 @@
+<platform>
+
+  <name>Felix 1.0.3</name>
+  <system>mvn:org.apache.felix/org.apache.felix.main/1.0.3</system>
+
+  <packages>org.osgi.framework; version=1.3.0, org.osgi.service.packageadmin; version=1.2.0, org.osgi.service.startlevel; version=1.0.0, org.osgi.service.url; version=1.0.0, org.osgi.util.tracker; version=1.3.2 </packages>
+
+  <profile name="minimal" default="true">
+    <bundle>
+      <name>org.osgi.compendium</name>
+      <url>mvn:org.osgi/org.osgi.compendium/4.0.1</url>
+    </bundle>
+  </profile>
+
+  <profile name="tui" extends="minimal">
+    <bundle>
+      <name>org.apache.felix.shell</name>
+      <url>mvn:org.apache.felix/org.apache.felix.shell/1.0.0</url>
+    </bundle>
+    <bundle>
+      <name>org.apache.felix.shell.tui.plugin</name>
+      <url>mvn:org.apache.felix/org.apache.felix.shell.tui/1.0.0</url>
+    </bundle>
+  </profile>
+
+  <profile name="gui" extends="obr">
+    <bundle>
+      <name>org.apache.felix.shell</name>
+      <url>mvn:org.apache.felix/org.apache.felix.shell/1.0.0</url>
+    </bundle>
+    <bundle>
+      <name>org.apache.felix.shell.gui</name>
+      <url>mvn:http://cvs.apache.org/maven-snapshot-repository!org.apache.felix/org.apache.felix.shell.gui/0.9.0-incubator-SNAPSHOT</url>
+    </bundle>
+    <bundle>
+      <name>org.apache.felix.shell.gui.plugin</name>
+      <url>mvn:http://cvs.apache.org/maven-snapshot-repository!org.apache.felix/org.apache.felix.shell.gui.plugin/0.9.0-incubator-SNAPSHOT</url>
+    </bundle>
+  </profile>
+
+  <profileRef href="classpath:META-INF/platform/profiles/common-profiles.xml"/>
+
+</platform>
