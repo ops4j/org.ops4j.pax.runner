@@ -26,6 +26,32 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
+      <library name="org.apache.felix:org.osgi.core:1.0.0">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.core/1.0.0/org.osgi.core-1.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.core/1.0.0/org.osgi.core-1.0.0-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.core/1.0.0/org.osgi.core-1.0.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="org.apache.felix:org.osgi.service.obr:1.0.0">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.service.obr/1.0.0/org.osgi.service.obr-1.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.service.obr/1.0.0/org.osgi.service.obr-1.0.0-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.service.obr/1.0.0/org.osgi.service.obr-1.0.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
       <library name="org.easymock:easymock:2.3">
         <CLASSES>
           <root url="jar://$M2_REPO$/org/easymock/easymock/2.3/easymock-2.3.jar!/" />
@@ -51,7 +77,32 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="pax-runner-commons" exported="" />
+    <orderEntry type="module-library" exported="">
+      <library name="org.ops4j.base:ops4j-base-util-property:0.5.0">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.0/ops4j-base-util-property-0.5.0.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.0/ops4j-base-util-property-0.5.0-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.0/ops4j-base-util-property-0.5.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="org.ops4j.pax.swissbox:pax-swissbox-lifecycle:0.1.0">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-lifecycle/0.1.0/pax-swissbox-lifecycle-0.1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-lifecycle/0.1.0/pax-swissbox-lifecycle-0.1.0-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-lifecycle/0.1.0/pax-swissbox-lifecycle-0.1.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
     <orderEntry type="module-library" exported="">
       <library name="org.ops4j.pax.swissbox:pax-swissbox-optional-jcl:0.1.0">
         <CLASSES>
@@ -62,6 +113,32 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-optional-jcl/0.1.0/pax-swissbox-optional-jcl-0.1.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="org.ops4j.pax.swissbox:pax-swissbox-property:0.1.0">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-property/0.1.0/pax-swissbox-property-0.1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-property/0.1.0/pax-swissbox-property-0.1.0-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-property/0.1.0/pax-swissbox-property-0.1.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="org.ops4j.pax.swissbox:pax-swissbox-tracker:0.1.0">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-tracker/0.1.0/pax-swissbox-tracker-0.1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-tracker/0.1.0/pax-swissbox-tracker-0.1.0-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-tracker/0.1.0/pax-swissbox-tracker-0.1.0-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
