@@ -6,12 +6,12 @@
     <relativePath>../</relativePath>
     <groupId>org.ops4j.pax</groupId>
     <artifactId>runner</artifactId>
-    <version>0.7.1</version>
+    <version>0.7.2-SNAPSHOT</version>
   </parent>
 
   <groupId>org.ops4j.pax.runner</groupId>
   <artifactId>pax-runner-platform-console</artifactId>
-  <version>0.7.1</version>
+  <version>0.7.2-SNAPSHOT</version>
   <packaging>bundle</packaging>
 
   <name>OPS4J Pax Runner - Platform Console</name>
@@ -39,7 +39,7 @@
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-platform</artifactId>
-      <version>0.7.1</version>
+      <version>0.7.2-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
