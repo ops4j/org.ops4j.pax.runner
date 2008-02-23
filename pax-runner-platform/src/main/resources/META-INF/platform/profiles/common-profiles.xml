@@ -64,6 +64,13 @@
       <url>mvn:org.ops4j.pax.url/pax-url-wrap</url>
     </bundle>
   </profile>
+
+  <profile name="url+obr" extends="url,obr">
+    <bundle>
+      <name>org.ops4j.pax.url.obr</name>
+      <url>mvn:org.ops4j.pax.url/pax-url-obr</url>
+    </bundle>
+  </profile>  
   
   <profile name="spring-dm" extends="log">
     <bundle>
