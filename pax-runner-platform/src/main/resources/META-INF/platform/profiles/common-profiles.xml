@@ -45,6 +45,25 @@
       <url>mvn:org.ops4j.pax.web-extender/pax-web-ex-war</url>
     </bundle>
   </profile>
+
+  <profile name="url" extends="minimal">
+    <bundle>
+      <name>org.ops4j.pax.url.classpath</name>
+      <url>mvn:org.ops4j.pax.url/pax-url-classpath</url>
+    </bundle>
+    <bundle>
+      <name>org.ops4j.pax.url.mvn</name>
+      <url>mvn:org.ops4j.pax.url/pax-url-mvn</url>
+    </bundle>
+    <bundle>
+      <name>org.ops4j.pax.url.war</name>
+      <url>mvn:org.ops4j.pax.url/pax-url-war</url>
+    </bundle>
+    <bundle>
+      <name>org.ops4j.pax.url.wrap</name>
+      <url>mvn:org.ops4j.pax.url/pax-url-wrap</url>
+    </bundle>
+  </profile>
   
   <profile name="spring-dm" extends="log">
     <bundle>
