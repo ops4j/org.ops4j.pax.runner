@@ -64,6 +64,84 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="org.ops4j.base:ops4j-base-io:0.5.0">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.0/ops4j-base-io-0.5.0.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.0/ops4j-base-io-0.5.0-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.0/ops4j-base-io-0.5.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="org.ops4j.base:ops4j-base-lang:0.5.0">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-lang/0.5.0/ops4j-base-lang-0.5.0.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-lang/0.5.0/ops4j-base-lang-0.5.0-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-lang/0.5.0/ops4j-base-lang-0.5.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="org.ops4j.base:ops4j-base-monitors:0.5.0">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.0/ops4j-base-monitors-0.5.0.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.0/ops4j-base-monitors-0.5.0-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.0/ops4j-base-monitors-0.5.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="org.ops4j.base:ops4j-base-util-collections:0.5.0">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-collections/0.5.0/ops4j-base-util-collections-0.5.0.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-collections/0.5.0/ops4j-base-util-collections-0.5.0-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-collections/0.5.0/ops4j-base-util-collections-0.5.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="org.ops4j.base:ops4j-base-util-property:0.5.0">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.0/ops4j-base-util-property-0.5.0.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.0/ops4j-base-util-property-0.5.0-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.0/ops4j-base-util-property-0.5.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="org.ops4j.base:ops4j-base-util-xml:0.5.0">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-xml/0.5.0/ops4j-base-util-xml-0.5.0.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-xml/0.5.0/ops4j-base-util-xml-0.5.0-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-xml/0.5.0/ops4j-base-util-xml-0.5.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
     <orderEntry type="module" module-name="pax-runner-commons" exported="" />
     <orderEntry type="module" module-name="pax-runner-handler" exported="" />
     <orderEntry type="module" module-name="pax-runner-platform-concierge" exported="" />
@@ -78,67 +156,119 @@
     <orderEntry type="module" module-name="pax-runner-scanner-obr" exported="" />
     <orderEntry type="module" module-name="pax-runner-scanner-pom" exported="" />
     <orderEntry type="module-library" exported="">
-      <library name="org.ops4j.pax.url:pax-url-classpath:0.2.0">
+      <library name="org.ops4j.pax.swissbox:pax-swissbox-lifecycle:0.2.0">
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.2.0/pax-url-classpath-0.2.0.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-lifecycle/0.2.0/pax-swissbox-lifecycle-0.2.0.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.2.0/pax-url-classpath-0.2.0-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-lifecycle/0.2.0/pax-swissbox-lifecycle-0.2.0-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.2.0/pax-url-classpath-0.2.0-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-lifecycle/0.2.0/pax-swissbox-lifecycle-0.2.0-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="org.ops4j.pax.url:pax-url-mvn:0.2.0">
+      <library name="org.ops4j.pax.swissbox:pax-swissbox-optional-jcl:0.2.0">
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.2.0/pax-url-mvn-0.2.0.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-optional-jcl/0.2.0/pax-swissbox-optional-jcl-0.2.0.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.2.0/pax-url-mvn-0.2.0-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-optional-jcl/0.2.0/pax-swissbox-optional-jcl-0.2.0-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.2.0/pax-url-mvn-0.2.0-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-optional-jcl/0.2.0/pax-swissbox-optional-jcl-0.2.0-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="org.ops4j.pax.url:pax-url-obr:0.2.0">
+      <library name="org.ops4j.pax.swissbox:pax-swissbox-property:0.2.0">
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.2.0/pax-url-obr-0.2.0.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-property/0.2.0/pax-swissbox-property-0.2.0.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.2.0/pax-url-obr-0.2.0-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-property/0.2.0/pax-swissbox-property-0.2.0-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.2.0/pax-url-obr-0.2.0-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-property/0.2.0/pax-swissbox-property-0.2.0-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="org.ops4j.pax.url:pax-url-war:0.2.0">
+      <library name="org.ops4j.pax.swissbox:pax-swissbox-tracker:0.2.0">
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.2.0/pax-url-war-0.2.0.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-tracker/0.2.0/pax-swissbox-tracker-0.2.0.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.2.0/pax-url-war-0.2.0-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-tracker/0.2.0/pax-swissbox-tracker-0.2.0-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.2.0/pax-url-war-0.2.0-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-tracker/0.2.0/pax-swissbox-tracker-0.2.0-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="org.ops4j.pax.url:pax-url-wrap:0.2.0">
+      <library name="org.ops4j.pax.url:pax-url-classpath:0.2.1">
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.2.0/pax-url-wrap-0.2.0.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.2.1/pax-url-classpath-0.2.1.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.2.0/pax-url-wrap-0.2.0-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.2.1/pax-url-classpath-0.2.1-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.2.0/pax-url-wrap-0.2.0-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.2.1/pax-url-classpath-0.2.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="org.ops4j.pax.url:pax-url-mvn:0.2.1">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.2.1/pax-url-mvn-0.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.2.1/pax-url-mvn-0.2.1-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.2.1/pax-url-mvn-0.2.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="org.ops4j.pax.url:pax-url-obr:0.2.1">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.2.1/pax-url-obr-0.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.2.1/pax-url-obr-0.2.1-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.2.1/pax-url-obr-0.2.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="org.ops4j.pax.url:pax-url-war:0.2.1">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.2.1/pax-url-war-0.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.2.1/pax-url-war-0.2.1-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.2.1/pax-url-war-0.2.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="org.ops4j.pax.url:pax-url-wrap:0.2.1">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.2.1/pax-url-wrap-0.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.2.1/pax-url-wrap-0.2.1-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.2.1/pax-url-wrap-0.2.1-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
