@@ -79,7 +79,10 @@ public class DirectoryLister
         {
             if( m_filter == null || m_filter.matcher( fileName ).matches() )
             {
-                content.add( new File( m_dir, fileName ).toURL() );
+                File fileToAdd = new File( m_dir, fileName );
+                if (!fileToAdd.isHidden()) {
+                    content.add( fileToAdd.toURL() );
+                }
             }
         }
         return content;
