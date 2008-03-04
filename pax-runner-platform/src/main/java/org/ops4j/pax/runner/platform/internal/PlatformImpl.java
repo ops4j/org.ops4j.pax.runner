@@ -633,27 +633,37 @@ public class PlatformImpl
             String bundleVersion = manifest.getMainAttributes().getValue( Constants.BUNDLE_VERSION );
             if( checkAttributes )
             {
-
                 if( bundleSymbolicName == null && bundleName == null )
                 {
                     throw new PlatformException( "[" + url + "] is not a valid bundle" );
                 }
             }
-            else if( bundleSymbolicName == null )
+            String extension = ".jar";
+            if( bundleSymbolicName == null )
             {
-                return file.getName();
+                bundleSymbolicName = file.getName();
+                // extract extension
+                int extensionPos = bundleSymbolicName.indexOf( "." );
+                if( extensionPos > 0 )
+                {
+                    extension = bundleSymbolicName.substring( extensionPos );
+                    bundleSymbolicName = bundleSymbolicName.substring( 0, extensionPos );
+                }
+            }
+            else
+            {
+                // remove directives like "; singleton:=true"  
+                int semicolonPos = bundleSymbolicName.indexOf( ";" );
+                if( semicolonPos > 0 )
+                {
+                    bundleSymbolicName = bundleSymbolicName.substring( 0, semicolonPos );
+                }
             }
             if( bundleVersion == null )
             {
                 bundleVersion = "0.0.0";
             }
-            // remove directives like "; singleton:=true"
-            int semicolonPos = bundleSymbolicName.indexOf( ";" );
-            if( semicolonPos > 0 )
-            {
-                bundleSymbolicName = bundleSymbolicName.substring( 0, semicolonPos );
-            }
-            return bundleSymbolicName + "_" + bundleVersion + ".jar";
+            return bundleSymbolicName + "_" + bundleVersion + extension;
         }
         catch( IOException e )
         {
