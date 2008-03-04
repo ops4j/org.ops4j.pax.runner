@@ -21,7 +21,6 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,7 +58,8 @@ import org.ops4j.util.property.PropertyResolver;
 
 /**
  * Handles the workflow of creating the platform. Concrete platforms should implement only the PlatformBuilder
- * interface. TODO Add unit tests
+ * interface.
+ * TODO Add unit tests
  *
  * @author Alin Dreghiciu
  * @since August 19, 2007
@@ -97,7 +97,7 @@ public class PlatformImpl
      * Creates a new platform.
      *
      * @param platformBuilder concrete platform builder; mandatory
-     * @param bundleContext a bundle context
+     * @param bundleContext   a bundle context
      */
     public PlatformImpl( final PlatformBuilder platformBuilder, final BundleContext bundleContext )
     {
@@ -172,16 +172,23 @@ public class PlatformImpl
         LOGGER.info( "Downloading bundles..." );
         // download system package
         LOGGER.debug( "Download system package" );
-        final File systemFile = downloadSystemFile( workDir, definition, overwriteBundles || overwriteSystemBundles,
-            downloadFeeback );
+        final File systemFile = downloadSystemFile(
+            workDir, definition, overwriteBundles || overwriteSystemBundles, downloadFeeback
+        );
         // download the rest of the bundles
         final List<LocalBundle> bundlesToInstall = new ArrayList<LocalBundle>();
         LOGGER.debug( "Download platform bundles" );
-        bundlesToInstall.addAll( downloadPlatformBundles( workDir, definition, context, overwriteBundles
-            || overwriteSystemBundles, downloadFeeback ) );
+        bundlesToInstall.addAll(
+            downloadPlatformBundles(
+                workDir, definition, context, overwriteBundles || overwriteSystemBundles, downloadFeeback
+            )
+        );
         LOGGER.debug( "Download bundles" );
-        bundlesToInstall.addAll( downloadBundles( workDir, bundles, overwriteBundles || overwriteUserBundles,
-            downloadFeeback ) );
+        bundlesToInstall.addAll(
+            downloadBundles(
+                workDir, bundles, overwriteBundles || overwriteUserBundles, downloadFeeback
+            )
+        );
         context.setBundles( bundlesToInstall );
         context.setSystemPackages( createPackageList( configuration, definition ) );
 
@@ -189,10 +196,15 @@ public class PlatformImpl
         m_platformBuilder.prepare( context );
 
         // and finally start it up.
-        final CommandLineBuilder commandLine = new CommandLineBuilder().append( getJavaExecutable( configuration ) )
-            .append( configuration.getVMOptions() ).append( m_platformBuilder.getVMOptions( context ) ).append( "-cp" )
-            .append( systemFile.getAbsolutePath() + configuration.getClasspath() ).append( mainClassName ).append(
-                m_platformBuilder.getArguments( context ) ).append( getFrameworkOptions() );
+        final CommandLineBuilder commandLine = new CommandLineBuilder()
+            .append( getJavaExecutable( configuration ) )
+            .append( configuration.getVMOptions() )
+            .append( m_platformBuilder.getVMOptions( context ) )
+            .append( "-cp" )
+            .append( systemFile.getAbsolutePath() + configuration.getClasspath() )
+            .append( mainClassName )
+            .append( m_platformBuilder.getArguments( context ) )
+            .append( getFrameworkOptions() );
 
         LOGGER.debug( "Start command line [" + Arrays.toString( commandLine.toArray() ) + "]" );
 
@@ -202,7 +214,7 @@ public class PlatformImpl
     /**
      * Executes the process that contains the platform. Separated to be able to override in unit tests.
      *
-     * @param commandLine an array that makes up the command line
+     * @param commandLine      an array that makes up the command line
      * @param workingDirectory the working directory for th eprocess
      *
      * @throws PlatformException re-thrown if something goes wrong with executing the process
@@ -219,10 +231,7 @@ public class PlatformImpl
             errPipe = new Pipe( process.getErrorStream(), System.err ).start( "Error pipe" );
             outPipe = new Pipe( process.getInputStream(), System.out ).start( "Out pipe" );
             inPipe = new Pipe( process.getOutputStream(), System.in ).start( "In pipe" );
-            destroyFrameworkOnExit( process, new Pipe[]
-            {
-                inPipe, outPipe, errPipe
-            } );
+            destroyFrameworkOnExit( process, new Pipe[]{ inPipe, outPipe, errPipe } );
             LOGGER.info( "Starting platform [" + this + "]. Runner has succesfully finished his job!" );
             process.waitFor();
         }
@@ -255,29 +264,33 @@ public class PlatformImpl
      * Helper function to ensure shutdown of platform VM on Windows when Pax-Runner is Ctrl-C'd
      *
      * @param process the created process
-     * @param pipes pipes to be stopped
+     * @param pipes   pipes to be stopped
      */
     private void destroyFrameworkOnExit( final Process process, final Pipe[] pipes )
     {
-        Runtime.getRuntime().addShutdownHook( new Thread( new Runnable()
-        {
-            public void run()
-            {
-                LOGGER.info( "Shuting down platform..." );
-                try
+        Runtime.getRuntime().addShutdownHook(
+            new Thread(
+                new Runnable()
                 {
-                    for( Pipe pipe : pipes )
+                    public void run()
                     {
-                        pipe.stop();
+                        LOGGER.info( "Shuting down platform..." );
+                        try
+                        {
+                            for( Pipe pipe : pipes )
+                            {
+                                pipe.stop();
+                            }
+                        }
+                        finally
+                        {
+                            LOGGER.info( "Destroying platform process..." );
+                            process.destroy();
+                        }
                     }
                 }
-                finally
-                {
-                    LOGGER.info( "Destroying platform process..." );
-                    process.destroy();
-                }
-            }
-        } ) );
+            )
+        );
         LOGGER.debug( "Added shutdown hook." );
     }
 
@@ -322,9 +335,9 @@ public class PlatformImpl
     /**
      * Downloads the bundles that will be installed to the working directory.
      *
-     * @param bundles url of bundles to be installed
-     * @param workDir the directory where to download bundles
-     * @param overwrite if the bundles should be overwritten
+     * @param bundles         url of bundles to be installed
+     * @param workDir         the directory where to download bundles
+     * @param overwrite       if the bundles should be overwritten
      * @param downloadFeeback whether or not downloading process should display fne grained progres info
      *
      * @return a list of downloaded files
@@ -332,7 +345,7 @@ public class PlatformImpl
      * @throws PlatformException re-thrown
      */
     private List<LocalBundle> downloadBundles( final File workDir, final List<BundleReference> bundles,
-        final Boolean overwrite, final boolean downloadFeeback )
+                                               final Boolean overwrite, final boolean downloadFeeback )
         throws PlatformException
     {
         final List<LocalBundle> localBundles = new ArrayList<LocalBundle>();
@@ -345,8 +358,19 @@ public class PlatformImpl
                 {
                     throw new PlatformException( "Invalid url in bundle refrence [" + reference + "]" );
                 }
-                localBundles.add( new LocalBundleImpl( reference, download( workDir, url, reference.getName(),
-                    overwrite || reference.shouldUpdate(), true, downloadFeeback ) ) );
+                localBundles.add(
+                    new LocalBundleImpl(
+                        reference,
+                        download(
+                            workDir,
+                            url,
+                            reference.getName(),
+                            overwrite || reference.shouldUpdate(),
+                            true,
+                            downloadFeeback
+                        )
+                    )
+                );
             }
         }
         return localBundles;
@@ -355,10 +379,10 @@ public class PlatformImpl
     /**
      * Downsloads platform bundles to working dir.
      *
-     * @param workDir the directory where to download bundles
-     * @param definition to take the system package
+     * @param workDir         the directory where to download bundles
+     * @param definition      to take the system package
      * @param platformContext current platform context
-     * @param overwrite if the bundles should be overwritten
+     * @param overwrite       if the bundles should be overwritten
      * @param downloadFeeback whether or not downloading process should display fne grained progres info
      *
      * @return a list of downloaded files
@@ -366,7 +390,8 @@ public class PlatformImpl
      * @throws PlatformException re-thrown
      */
     private List<LocalBundle> downloadPlatformBundles( final File workDir, final PlatformDefinition definition,
-        final PlatformContext platformContext, final Boolean overwrite, final boolean downloadFeeback )
+                                                       final PlatformContext platformContext, final Boolean overwrite,
+                                                       final boolean downloadFeeback )
         throws PlatformException
     {
         final StringBuilder profiles = new StringBuilder();
@@ -384,16 +409,17 @@ public class PlatformImpl
             }
             profiles.append( builderProfile );
         }
-        return downloadBundles( workDir, definition.getPlatformBundles( profiles.toString() ), overwrite,
-            downloadFeeback );
+        return downloadBundles(
+            workDir, definition.getPlatformBundles( profiles.toString() ), overwrite, downloadFeeback
+        );
     }
 
     /**
      * Downloads the system file.
      *
-     * @param workDir the directory where to download bundles
-     * @param definition to take the system package
-     * @param overwrite if the bundles should be overwritten
+     * @param workDir         the directory where to download bundles
+     * @param definition      to take the system package
+     * @param overwrite       if the bundles should be overwritten
      * @param downloadFeeback whether or not downloading process should display fne grained progres info
      *
      * @return the system file
@@ -401,20 +427,21 @@ public class PlatformImpl
      * @throws PlatformException re-thrown
      */
     private File downloadSystemFile( final File workDir, final PlatformDefinition definition, final Boolean overwrite,
-        final boolean downloadFeeback )
+                                     final boolean downloadFeeback )
         throws PlatformException
     {
-        return download( workDir, definition.getSystemPackage(), definition.getSystemPackageName(), overwrite, false,
-            downloadFeeback );
+        return download(
+            workDir, definition.getSystemPackage(), definition.getSystemPackageName(), overwrite, false, downloadFeeback
+        );
     }
 
     /**
      * Downloads files from urls.
      *
-     * @param workDir the directory where to download bundles
-     * @param url of the file to be downloaded
-     * @param displayName to be shown during download
-     * @param overwrite if the bundles should be overwritten
+     * @param workDir         the directory where to download bundles
+     * @param url             of the file to be downloaded
+     * @param displayName     to be shown during download
+     * @param overwrite       if the bundles should be overwritten
      * @param checkAttributes whether or not to check attributes in the manifest
      * @param downloadFeeback whether or not downloading process should display fne grained progres info
      *
@@ -423,7 +450,7 @@ public class PlatformImpl
      * @throws PlatformException if the url could not be downloaded
      */
     private File download( final File workDir, final URL url, final String displayName, final Boolean overwrite,
-        final boolean checkAttributes, final boolean downloadFeeback )
+                           final boolean checkAttributes, final boolean downloadFeeback )
         throws PlatformException
     {
         LOGGER.debug( "Downloading [" + url + "]" );
@@ -582,8 +609,8 @@ public class PlatformImpl
      * Validate that the file is an valid bundle. A valid bundle will be a loadable jar file that has manifes and the
      * manifest contains at least an entry for Bundle-SymboliName.
      *
-     * @param file file to be validated
-     * @param url original url from where the bundle was created.
+     * @param file            file to be validated
+     * @param url             original url from where the bundle was created.
      * @param checkAttributes whether or not to check attributes in the manifest
      *
      * @throws PlatformException if the jar is not a valid bundle
@@ -669,12 +696,13 @@ public class PlatformImpl
      * and option 1.2 is true then the option value must be an url of a file that contains pkgs.<br/> 2. + additional
      * packages from systemPackages option<br/> 3. + list of packages contributed by the platform (see felix case)<br/>
      *
-     * @param configuration configuration in use
+     * @param configuration      configuration in use
      * @param platformDefinition a platform definition
      *
      * @return comma separated list of packages
      *
-     * @throws org.ops4j.pax.runner.platform.PlatformException if packages file not found or can't be read
+     * @throws org.ops4j.pax.runner.platform.PlatformException
+     *          if packages file not found or can't be read
      */
     String createPackageList( final Configuration configuration, final PlatformDefinition platformDefinition )
         throws PlatformException
@@ -695,7 +723,7 @@ public class PlatformImpl
                     {
                         reader = new BufferedReader( new InputStreamReader( url.openStream() ) );
                         String line;
-                        while( (line = reader.readLine()) != null )
+                        while( ( line = reader.readLine() ) != null )
                         {
                             line = line.trim();
                             // dont add empty lines and packages that we already have
@@ -810,7 +838,8 @@ public class PlatformImpl
      *
      * @return a platform definition
      *
-     * @throws org.ops4j.pax.runner.platform.PlatformException in case of an invalid platform definition
+     * @throws org.ops4j.pax.runner.platform.PlatformException
+     *          in case of an invalid platform definition
      */
     PlatformDefinition createPlatformDefinition( final Configuration configuration )
         throws PlatformException
@@ -858,7 +887,7 @@ public class PlatformImpl
      * Check if the variable is not null. If null throw an illegal argument exception.
      *
      * @param object the object to be checked
-     * @param name a nem to be used when making up the exception message
+     * @param name   a nem to be used when making up the exception message
      *
      * @return the passed object if not null
      */
