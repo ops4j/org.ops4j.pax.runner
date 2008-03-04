@@ -18,6 +18,7 @@
 package org.ops4j.pax.runner.platform.internal;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 import static org.easymock.EasyMock.*;
+
 import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -75,22 +77,25 @@ public class PlatformImplTest
         FileUtils.delete( new File( m_workDir ) );
     }
 
-    @Test( expected = IllegalArgumentException.class )
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithNullPlatformBuilder()
-        throws IOException, PlatformException
+        throws IOException,
+        PlatformException
     {
         new PlatformImpl( null, m_bundleContext );
     }
 
-    @Test( expected = IllegalArgumentException.class )
+    @Test(expected = IllegalArgumentException.class)
     public void constructorWithNullBundleContext()
-        throws IOException, PlatformException
+        throws IOException,
+        PlatformException
     {
         new PlatformImpl( m_builder, null );
     }
 
     public String createPackageList( final String ee, final String packages )
-        throws MalformedURLException, PlatformException
+        throws MalformedURLException,
+        PlatformException
     {
         expect( m_config.getExecutionEnvironment() ).andReturn( ee );
         expect( m_config.getSystemPackages() ).andReturn( packages );
@@ -110,13 +115,8 @@ public class PlatformImplTest
     {
         expect( m_bundleContext.getBundle() ).andReturn( m_bundle );
         expect( m_bundle.getResource( "META-INF/platform/ee/J2SE-1.5.packages" ) ).andReturn(
-            FileUtils.getFileFromClasspath( "platform/systemPackages.txt" ).toURL()
-        );
-        assertEquals(
-            "System packages",
-            "system.package.1, system.package.2",
-            createPackageList( "J2SE-1.5", null )
-        );
+            FileUtils.getFileFromClasspath( "platform/systemPackages.txt" ).toURL() );
+        assertEquals( "System packages", "system.package.1, system.package.2", createPackageList( "J2SE-1.5", null ) );
     }
 
     // test returned packages when there is a user defined packages option
@@ -126,13 +126,9 @@ public class PlatformImplTest
     {
         expect( m_bundleContext.getBundle() ).andReturn( m_bundle );
         expect( m_bundle.getResource( "META-INF/platform/ee/J2SE-1.5.packages" ) ).andReturn(
-            FileUtils.getFileFromClasspath( "platform/systemPackages.txt" ).toURL()
-        );
-        assertEquals(
-            "System packages",
-            "system.package.1, system.package.2, u.p.1, u.p.2",
-            createPackageList( "J2SE-1.5", "u.p.1, u.p.2" )
-        );
+            FileUtils.getFileFromClasspath( "platform/systemPackages.txt" ).toURL() );
+        assertEquals( "System packages", "system.package.1, system.package.2, u.p.1, u.p.2", createPackageList(
+            "J2SE-1.5", "u.p.1, u.p.2" ) );
     }
 
     // test returned packages when the ee is an valid url
@@ -140,29 +136,17 @@ public class PlatformImplTest
     public void createPackageListWithURLEE()
         throws Exception
     {
-        assertEquals(
-            "System packages",
-            "system.package.1, system.package.2",
-            createPackageList(
-                FileUtils.getFileFromClasspath( "platform/systemPackages.txt" ).toURL().toExternalForm(),
-                null
-            )
-        );
+        assertEquals( "System packages", "system.package.1, system.package.2", createPackageList( FileUtils
+            .getFileFromClasspath( "platform/systemPackages.txt" ).toURL().toExternalForm(), null ) );
     }
 
     // test that no packages are in use when ee is NONE
     @Test
     public void createPackageListNONE()
-        throws MalformedURLException, PlatformException
+        throws MalformedURLException,
+        PlatformException
     {
-        assertEquals(
-            "System packages",
-            "",
-            createPackageList(
-                "NONE",
-                null
-            )
-        );
+        assertEquals( "System packages", "", createPackageList( "NONE", null ) );
     }
 
     // test returned packages when the ee is a valid url but has incorect letter case
@@ -172,35 +156,19 @@ public class PlatformImplTest
     {
         expect( m_bundleContext.getBundle() ).andReturn( m_bundle );
         expect( m_bundle.getResource( "META-INF/platform/ee/J2SE-1.5.packages" ) ).andReturn(
-            FileUtils.getFileFromClasspath( "platform/systemPackages.txt" ).toURL()
-        );
-        assertEquals(
-            "System packages",
-            "system.package.1, system.package.2",
-            createPackageList(
-                "j2se-1.5",
-                null
-            )
-        );
+            FileUtils.getFileFromClasspath( "platform/systemPackages.txt" ).toURL() );
+        assertEquals( "System packages", "system.package.1, system.package.2", createPackageList( "j2se-1.5", null ) );
     }
 
     // test returned packages when the ee is an invalid url
-    @Test( expected = PlatformException.class )
+    @Test(expected = PlatformException.class)
     public void createPackageListWithInvalidEE()
         throws Exception
     {
         expect( m_bundleContext.getBundle() ).andReturn( m_bundle );
         expect( m_bundle.getResource( "META-INF/platform/ee/J2SE-1.5.packages" ) ).andReturn(
-            FileUtils.getFileFromClasspath( "platform/systemPackages.txt" ).toURL()
-        );
-        assertEquals(
-            "System packages",
-            "system.package.1, system.package.2",
-            createPackageList(
-                "invalid",
-                null
-            )
-        );
+            FileUtils.getFileFromClasspath( "platform/systemPackages.txt" ).toURL() );
+        assertEquals( "System packages", "system.package.1, system.package.2", createPackageList( "invalid", null ) );
     }
 
     // test returned packages when there are more EEs
@@ -210,23 +178,19 @@ public class PlatformImplTest
     {
         expect( m_bundleContext.getBundle() ).andReturn( m_bundle );
         expect( m_bundle.getResource( "META-INF/platform/ee/J2SE-1.4.packages" ) ).andReturn(
-            FileUtils.getFileFromClasspath( "platform/systemPackages.txt" ).toURL()
-        );
+            FileUtils.getFileFromClasspath( "platform/systemPackages.txt" ).toURL() );
         expect( m_bundleContext.getBundle() ).andReturn( m_bundle );
         expect( m_bundle.getResource( "META-INF/platform/ee/J2SE-1.5.packages" ) ).andReturn(
-            FileUtils.getFileFromClasspath( "platform/systemPackages2.txt" ).toURL()
-        );
-        assertEquals(
-            "System packages",
-            "system.package.1, system.package.2, system.package.3",
-            createPackageList( "J2SE-1.4,J2SE-1.5", null )
-        );
+            FileUtils.getFileFromClasspath( "platform/systemPackages2.txt" ).toURL() );
+        assertEquals( "System packages", "system.package.1, system.package.2, system.package.3", createPackageList(
+            "J2SE-1.4,J2SE-1.5", null ) );
     }
 
     // normal flow
     @Test
     public void getJavaExecutable()
-        throws MalformedURLException, PlatformException
+        throws MalformedURLException,
+        PlatformException
     {
         expect( m_config.getJavaHome() ).andReturn( "javaHome" );
 
@@ -237,9 +201,10 @@ public class PlatformImplTest
     }
 
     // test that a platform exception is thrown when there is no java home
-    @Test( expected = PlatformException.class )
+    @Test(expected = PlatformException.class)
     public void getJavaExecutableWithInvalidJavaHome()
-        throws MalformedURLException, PlatformException
+        throws MalformedURLException,
+        PlatformException
     {
         expect( m_config.getJavaHome() ).andReturn( null );
 
@@ -253,12 +218,8 @@ public class PlatformImplTest
         throws Exception
     {
         List<BundleReference> bundles = new ArrayList<BundleReference>();
-        bundles.add(
-            new BundleReferenceBean( FileUtils.getFileFromClasspath( "platform/bundle1.jar" ).toURL() )
-        );
-        bundles.add(
-            new BundleReferenceBean( FileUtils.getFileFromClasspath( "platform/bundle2.jar" ).toURL() )
-        );
+        bundles.add( new BundleReferenceBean( FileUtils.getFileFromClasspath( "platform/bundle1.jar" ).toURL() ) );
+        bundles.add( new BundleReferenceBean( FileUtils.getFileFromClasspath( "platform/bundle2.jar" ).toURL() ) );
         start( bundles );
     }
 
@@ -271,26 +232,23 @@ public class PlatformImplTest
     }
 
     // expected to throw an exception the bundle is a plain file not a jar
-    @Test( expected = PlatformException.class )
+    @Test(expected = PlatformException.class)
     public void startWithNotAJarBundle()
         throws Exception
     {
         List<BundleReference> bundles = new ArrayList<BundleReference>();
-        bundles.add(
-            new BundleReferenceBean( FileUtils.getFileFromClasspath( "platform/invalid.jar" ).toURL() )
-        );
+        bundles.add( new BundleReferenceBean( FileUtils.getFileFromClasspath( "platform/invalid.jar" ).toURL() ) );
         start( bundles );
     }
 
     // expected to throw an exception since bundle is jar that does not have a manifest entry for symbolic name
-    @Test( expected = PlatformException.class )
+    @Test(expected = PlatformException.class)
     public void startWithAJarWithNoManifestAttr()
         throws Exception
     {
         List<BundleReference> bundles = new ArrayList<BundleReference>();
-        bundles.add(
-            new BundleReferenceBean( FileUtils.getFileFromClasspath( "platform/noManifestAttr.jar" ).toURL() )
-        );
+        bundles
+            .add( new BundleReferenceBean( FileUtils.getFileFromClasspath( "platform/noManifestAttr.jar" ).toURL() ) );
         start( bundles );
     }
 
@@ -324,9 +282,8 @@ public class PlatformImplTest
         expect( m_definition.getSystemPackage() ).andReturn( systemBundleURL );
         expect( m_definition.getSystemPackageName() ).andReturn( "system package" );
         List<BundleReference> platformBundles = new ArrayList<BundleReference>();
-        platformBundles.add(
-            new BundleReferenceBean( FileUtils.getFileFromClasspath( "platform/platform.jar" ).toURL() )
-        );
+        platformBundles
+            .add( new BundleReferenceBean( FileUtils.getFileFromClasspath( "platform/platform.jar" ).toURL() ) );
         // from downloadPlatformBundles()
         expect( m_context.getConfiguration() ).andReturn( m_config );
         expect( m_builder.getRequiredProfile( m_context ) ).andReturn( null );
@@ -336,10 +293,19 @@ public class PlatformImplTest
         m_context.setSystemPackages( "systemPackages" );
         m_builder.prepare( m_context );
         expect( m_config.getProfiles() ).andReturn( null );
-        expect( m_config.getVMOptions() ).andReturn( new String[]{ "-Xmx512m", "-Xms128m" } );
-        expect( m_builder.getVMOptions( m_context ) ).andReturn( new String[]{ "-Dproperty=value" } );
+        expect( m_config.getVMOptions() ).andReturn( new String[]
+        {
+            "-Xmx512m", "-Xms128m"
+        } );
+        expect( m_builder.getVMOptions( m_context ) ).andReturn( new String[]
+        {
+            "-Dproperty=value"
+        } );
         expect( m_config.getClasspath() ).andReturn( "" );
-        expect( m_builder.getArguments( m_context ) ).andReturn( new String[]{ "arg1" } );
+        expect( m_builder.getArguments( m_context ) ).andReturn( new String[]
+        {
+            "arg1"
+        } );
         expect( m_context.getWorkingDirectory() ).andReturn( new File( m_workDir ) );
 
         replay( m_builder, m_definition, m_config, m_context, m_bundleContext, m_bundle );
@@ -347,8 +313,182 @@ public class PlatformImplTest
         verify( m_builder, m_definition, m_config, m_context, m_bundleContext, m_bundle );
     }
 
-    private class TestPlatform
-        extends PlatformImpl
+    @Test(expected=PlatformException.class)
+    public void validateBundleAndGetFilenameWithNoManifestNoCheckAttributes()
+        throws MalformedURLException,
+        FileNotFoundException,
+        PlatformException
+    {
+        replay( m_builder, m_bundleContext, m_config );
+        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        URL url = new URL( "http://dummyUrl" );
+        boolean checkAttributes = false;
+        File file = FileUtils.getFileFromClasspath( "platform/withoutManifest.jar" );
+        platform.validateBundleAndGetFilename( file, url, checkAttributes );
+    }
+
+    @Test(expected = PlatformException.class)
+    public void validateBundleAndGetFilenameWIthNoManifestAndCheckAttributes()
+        throws MalformedURLException,
+        FileNotFoundException,
+        PlatformException
+    {
+        replay( m_builder, m_bundleContext, m_config );
+        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        URL url = new URL( "http://dummyUrl" );
+        boolean checkAttributes = true;
+        File file = FileUtils.getFileFromClasspath( "platform/withoutManifest.jar" );
+        platform.validateBundleAndGetFilename( file, url, checkAttributes );
+    }
+
+    @Test
+    public void validateBundleAndGetFilenameWithNoManifestAttrNoCheckAttributes()
+        throws MalformedURLException,
+        FileNotFoundException,
+        PlatformException
+    {
+        replay( m_builder, m_bundleContext, m_config );
+        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        URL url = new URL( "http://dummyUrl" );
+        boolean checkAttributes = false;
+        File file = FileUtils.getFileFromClasspath( "platform/noManifestAttr.jar" );
+        assertEquals( file.getName(), platform.validateBundleAndGetFilename( file, url, checkAttributes ) );
+        verify( m_builder, m_bundleContext, m_config );
+    }
+
+    @Test(expected = PlatformException.class)
+    public void validateBundleAndGetFilenameWIthNoManifestAttrAndCheckAttributes()
+        throws MalformedURLException,
+        FileNotFoundException,
+        PlatformException
+    {
+        replay( m_builder, m_bundleContext, m_config );
+        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        URL url = new URL( "http://dummyUrl" );
+        boolean checkAttributes = true;
+        File file = FileUtils.getFileFromClasspath( "platform/noManifestAttr.jar" );
+        platform.validateBundleAndGetFilename( file, url, checkAttributes );
+    }
+    @Test(expected = PlatformException.class)
+    public void validateBundleAndGetFilenameInvalidNoCheckAttributes()
+        throws MalformedURLException,
+        FileNotFoundException,
+        PlatformException
+    {
+        replay( m_builder, m_bundleContext, m_config );
+        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        URL url = new URL( "http://dummyUrl" );
+        boolean checkAttributes = false;
+        File file = FileUtils.getFileFromClasspath( "platform/invalid.jar" );
+        platform.validateBundleAndGetFilename( file, url, checkAttributes ) ;
+    }
+
+    @Test(expected = PlatformException.class)
+    public void validateBundleAndGetFilenameInvalidCheckAttributes()
+        throws MalformedURLException,
+        FileNotFoundException,
+        PlatformException
+    {
+        replay( m_builder, m_bundleContext, m_config );
+        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        URL url = new URL( "http://dummyUrl" );
+        boolean checkAttributes = true;
+        File file = FileUtils.getFileFromClasspath( "platform/invalid.jar" );
+        platform.validateBundleAndGetFilename( file, url, checkAttributes );
+    }
+
+    @Test
+    public void validateBundleAndGetFilename1NoCheckAttributes()
+        throws MalformedURLException,
+        FileNotFoundException,
+        PlatformException
+    {
+        replay( m_builder, m_bundleContext, m_config );
+        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        URL url = new URL( "http://dummyUrl" );
+        boolean checkAttributes = false;
+        File file = FileUtils.getFileFromClasspath( "platform/bundle1.jar" );
+        assertEquals( "bundle2_0.0.0.jar", platform.validateBundleAndGetFilename( file, url, checkAttributes ) );
+        verify( m_builder, m_bundleContext, m_config );
+    }
+
+    @Test
+    public void validateBundleAndGetFilename1CheckAttributes()
+        throws MalformedURLException,
+        FileNotFoundException,
+        PlatformException
+    {
+        replay( m_builder, m_bundleContext, m_config );
+        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        URL url = new URL( "http://dummyUrl" );
+        boolean checkAttributes = true;
+        File file = FileUtils.getFileFromClasspath( "platform/bundle1.jar" );
+        assertEquals( "bundle2_0.0.0.jar", platform.validateBundleAndGetFilename( file, url, checkAttributes ) );
+        verify( m_builder, m_bundleContext, m_config );
+    }
+
+    @Test
+    public void validateBundleAndGetFilenameWithVersionNoCheckAttributes()
+        throws MalformedURLException,
+        FileNotFoundException,
+        PlatformException
+    {
+        replay( m_builder, m_bundleContext, m_config );
+        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        URL url = new URL( "http://dummyUrl" );
+        boolean checkAttributes = false;
+        File file = FileUtils.getFileFromClasspath( "platform/bundleWithVersion.jar" );
+        assertEquals( "bundle2_1.2.3.jar", platform.validateBundleAndGetFilename( file, url, checkAttributes ) );
+        verify( m_builder, m_bundleContext, m_config );
+    }
+
+    @Test
+    public void validateBundleAndGetFilenameWithVersionCheckAttributes()
+        throws MalformedURLException,
+        FileNotFoundException,
+        PlatformException
+    {
+        replay( m_builder, m_bundleContext, m_config );
+        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        URL url = new URL( "http://dummyUrl" );
+        boolean checkAttributes = true;
+        File file = FileUtils.getFileFromClasspath( "platform/bundleWithVersion.jar" );
+        assertEquals( "bundle2_1.2.3.jar", platform.validateBundleAndGetFilename( file, url, checkAttributes ) );
+        verify( m_builder, m_bundleContext, m_config );
+    }
+
+    @Test
+    public void validateBundleAndGetFilenameWithSemicolonNoCheckAttributes()
+        throws MalformedURLException,
+        FileNotFoundException,
+        PlatformException
+    {
+        replay( m_builder, m_bundleContext, m_config );
+        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        URL url = new URL( "http://dummyUrl" );
+        boolean checkAttributes = false;
+        File file = FileUtils.getFileFromClasspath( "platform/bundleWithSemicolon.jar" );
+        assertEquals( "bundleWithSemicolon_0.0.0.jar", platform.validateBundleAndGetFilename( file, url, checkAttributes ) );
+        verify( m_builder, m_bundleContext, m_config );
+    }
+
+    @Test
+    public void validateBundleAndGetFilenameWithSemicolonCheckAttributes()
+        throws MalformedURLException,
+        FileNotFoundException,
+        PlatformException
+    {
+        replay( m_builder, m_bundleContext, m_config );
+        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        URL url = new URL( "http://dummyUrl" );
+        boolean checkAttributes = true;
+        File file = FileUtils.getFileFromClasspath( "platform/bundleWithSemicolon.jar" );
+        assertEquals( "bundleWithSemicolon_0.0.0.jar", platform.validateBundleAndGetFilename( file, url, checkAttributes ) );
+        verify( m_builder, m_bundleContext, m_config );
+    }
+
+
+    private class TestPlatform extends PlatformImpl
     {
 
         TestPlatform()
