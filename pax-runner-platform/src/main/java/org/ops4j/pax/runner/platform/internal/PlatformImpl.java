@@ -454,7 +454,7 @@ public class PlatformImpl
         throws PlatformException
     {
         LOGGER.debug( "Downloading [" + url + "]" );
-        File downloadedBundlesFile = new File( workDir, "downloaded_bundles.properties" );
+        File downloadedBundlesFile = new File( workDir, "bundles/downloaded_bundles.properties" );
         Properties fileNamesForUrls = loadProperties( downloadedBundlesFile );
 
         String downloadedFileName = fileNamesForUrls.getProperty( url.toExternalForm() );
