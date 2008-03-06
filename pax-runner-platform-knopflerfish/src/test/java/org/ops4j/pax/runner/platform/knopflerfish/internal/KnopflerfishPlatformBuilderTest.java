@@ -34,6 +34,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.ops4j.io.FileUtils;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
@@ -168,9 +169,35 @@ public class KnopflerfishPlatformBuilderTest
     {
         PlatformContext platformContext = createMock( PlatformContext.class );
 
+        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( m_configuration.getBootDelegation() ).andReturn( "javax.*" );
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
 
-        replay( m_bundleContext, platformContext );
+        replay( m_configuration, m_bundleContext, platformContext );
+        assertArrayEquals(
+            "System properties",
+            new String[]{
+                "-Dorg.knopflerfish.framework.usingwrapperscript=false",
+                "-Dorg.knopflerfish.framework.exitonshutdown=true",
+                "-Dorg.osgi.framework.dir="
+                + m_workDir.getAbsolutePath() + File.separator + "knopflerfish" + File.separator + "fwdir",
+                "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=javax.*"
+            },
+            new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).getVMOptions( platformContext )
+        );
+        verify( m_configuration, m_bundleContext, platformContext );
+    }
+
+    @Test
+    public void getVMOptionsWithoutBootDelegation()
+    {
+        PlatformContext platformContext = createMock( PlatformContext.class );
+
+        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( m_configuration.getBootDelegation() ).andReturn( null );
+        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
+
+        replay( m_configuration, m_bundleContext, platformContext );
         assertArrayEquals(
             "System properties",
             new String[]{
@@ -181,7 +208,7 @@ public class KnopflerfishPlatformBuilderTest
             },
             new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).getVMOptions( platformContext )
         );
-        verify( m_bundleContext, platformContext );
+        verify( m_configuration, m_bundleContext, platformContext );
     }
 
     @Test( expected = IllegalArgumentException.class )

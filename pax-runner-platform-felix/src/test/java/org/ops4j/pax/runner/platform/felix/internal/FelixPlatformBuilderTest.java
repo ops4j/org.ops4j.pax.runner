@@ -33,6 +33,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.ops4j.io.FileUtils;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
@@ -159,11 +160,37 @@ public class FelixPlatformBuilderTest
     {
         PlatformContext platformContext = createMock( PlatformContext.class );
 
+        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( m_configuration.getBootDelegation() ).andReturn( "javax.*" );
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
 
-        replay( m_bundleContext, platformContext );
+        replay( m_configuration, m_bundleContext, platformContext );
         assertArrayEquals(
-            "System properties",
+            "System options",
+            new String[]{
+                "-Dfelix.config.properties="
+                + m_workDir.toURI() + "/felix/config.ini",
+                "-Dfelix.cache.dir="
+                + m_workDir.getAbsolutePath() + File.separator + "felix" + File.separator + "cache",
+                "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=javax.*"
+            },
+            new FelixPlatformBuilder( m_bundleContext, "version" ).getVMOptions( platformContext )
+        );
+        verify( m_configuration, m_bundleContext, platformContext );
+    }
+
+    @Test
+    public void getVMOptionsWithoutBootDelegation()
+    {
+        PlatformContext platformContext = createMock( PlatformContext.class );
+
+        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( m_configuration.getBootDelegation() ).andReturn( null );
+        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
+
+        replay( m_configuration, m_bundleContext, platformContext );
+        assertArrayEquals(
+            "System options",
             new String[]{
                 "-Dfelix.config.properties="
                 + m_workDir.toURI() + "/felix/config.ini",
@@ -172,7 +199,7 @@ public class FelixPlatformBuilderTest
             },
             new FelixPlatformBuilder( m_bundleContext, "version" ).getVMOptions( platformContext )
         );
-        verify( m_bundleContext, platformContext );
+        verify( m_configuration, m_bundleContext, platformContext );
     }
 
     @Test( expected = IllegalArgumentException.class )

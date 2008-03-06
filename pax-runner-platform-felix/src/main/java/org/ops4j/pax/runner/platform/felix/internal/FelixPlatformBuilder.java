@@ -25,6 +25,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
@@ -322,15 +324,27 @@ public class FelixPlatformBuilder
     public String[] getVMOptions( final PlatformContext context )
     {
         NullArgumentException.validateNotNull( context, "Platform context" );
+
+        final Collection<String> vmOptions = new ArrayList<String>();
         final File workingDirectory = context.getWorkingDirectory();
-        return new String[]{
+        vmOptions.add(
             "-Dfelix.config.properties=" + workingDirectory.toURI()
             + "/" + CONFIG_DIRECTORY
-            + "/" + CONFIG_INI,
+            + "/" + CONFIG_INI
+        );
+        vmOptions.add(
             "-Dfelix.cache.dir=" + workingDirectory.getAbsolutePath()
             + File.separator + CONFIG_DIRECTORY
             + File.separator + CACHE_DIRECTORY
-        };
+        );
+        final String bootDelegation = context.getConfiguration().getBootDelegation();
+        if( bootDelegation != null )
+        {
+            vmOptions.add(
+                "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=" + bootDelegation
+            );
+        }
+        return vmOptions.toArray( new String[vmOptions.size()] );
     }
 
     /**
