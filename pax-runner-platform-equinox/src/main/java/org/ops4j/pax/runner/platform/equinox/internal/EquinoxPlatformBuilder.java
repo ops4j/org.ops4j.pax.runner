@@ -432,8 +432,16 @@ public class EquinoxPlatformBuilder
     public String[] getVMOptions( final PlatformContext context )
     {
         NullArgumentException.validateNotNull( context, "Platform context" );
+        final StringBuilder bootDelegation = new StringBuilder();
+        String bootDelegationOption = context.getConfiguration().getBootDelegation();
+        if( bootDelegationOption != null )
+        {
+            bootDelegation.append( bootDelegationOption ).append( "," );
+        }
+        bootDelegation.append( BOOT_DELEGATION_PACKAGES );
+        System.out.println( bootDelegation.toString() );
         return new String[]{
-            "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=" + BOOT_DELEGATION_PACKAGES,
+            "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=" + bootDelegation.toString(),
             "-D" + Constants.FRAMEWORK_SYSTEMPACKAGES + "=" + context.getSystemPackages()
         };
     }

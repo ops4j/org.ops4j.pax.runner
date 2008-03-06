@@ -101,6 +101,9 @@ public interface ServiceConstants
      * The servive property name under which the platform version should be registered.
      */
     static final String PROPERTY_PROVIDER_VERSION = "version";
-
+    /**
+     * Boot delegation property name.
+     */
+    static final String CONFIG_BOOT_DELEGATION = PID + ".bootDelegation";
 
 }

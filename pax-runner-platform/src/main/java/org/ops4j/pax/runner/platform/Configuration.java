@@ -188,4 +188,13 @@ public interface Configuration
      * @return value of download feedback option
      */
     Boolean isDownloadFeedback();
+
+    /**
+     * Returns a comma separated list of boot delegation packages according to OSGi core specs 3.2.3 (in 4.0.1). If not
+     * set it should return null.
+     * The returned value should not be an empty string and should not end with a comma (",").
+     *
+     * @return value of boot delegation option
+     */
+    String getBootDelegation();
 }

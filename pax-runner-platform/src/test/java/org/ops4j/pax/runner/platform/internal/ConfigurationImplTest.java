@@ -715,4 +715,81 @@ public class ConfigurationImplTest
         assertEquals( "Download feedback", false, config.isDownloadFeedback() );
         verify( propertyResolver );
     }
+
+    // normal flow
+    @Test
+    public void getBootDelegation()
+    {
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.bootDelegation" ) ).andReturn( " javax.* " );
+
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
+        assertEquals( "Boot Delegation", "javax.*", config.getBootDelegation() );
+        verify( propertyResolver );
+    }
+
+    /**
+     * Test that returned value is null when option is not set.
+     */
+    @Test
+    public void getBootDelegationWhenOptionIsNotSet()
+    {
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.bootDelegation" ) ).andReturn( null );
+
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
+        assertEquals( "Boot Delegation", null, config.getBootDelegation() );
+        verify( propertyResolver );
+    }
+
+    /**
+     * Test that returned value is null when option is not empty.
+     * Also tests that the spaces are trimmed.
+     */
+    @Test
+    public void getBootDelegationWhenOptionIsEmpty()
+    {
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.bootDelegation" ) ).andReturn( "  " );
+
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
+        assertEquals( "Boot Delegation", null, config.getBootDelegation() );
+        verify( propertyResolver );
+    }
+
+    /**
+     * Test that returned value is null when option is set but contains only a comma.
+     * Also tests that the spaces are trimmed.
+     */
+    @Test
+    public void getBootDelegationWhenOptionIsOnlyComma()
+    {
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.bootDelegation" ) ).andReturn( " , " );
+
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
+        assertEquals( "Boot Delegation", null, config.getBootDelegation() );
+        verify( propertyResolver );
+    }
+
+    /**
+     * Test that returned value is null when option ends with a comma.
+     * Also tests that the spaces are trimmed.
+     */
+    @Test
+    public void getBootDelegationWhenOptionEndsWithComma()
+    {
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.bootDelegation" ) ).andReturn( " javax.*, " );
+
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
+        assertEquals( "Boot Delegation", "javax.*", config.getBootDelegation() );
+        verify( propertyResolver );
+    }
+
 }

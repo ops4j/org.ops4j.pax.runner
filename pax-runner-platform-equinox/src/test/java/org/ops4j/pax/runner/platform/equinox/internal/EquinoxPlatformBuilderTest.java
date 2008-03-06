@@ -244,21 +244,23 @@ public class EquinoxPlatformBuilderTest
     }
 
     @Test
-    public void getVMOPtions()
+    public void getVMOptions()
     {
         PlatformContext platformContext = createMock( PlatformContext.class );
+        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( m_configuration.getBootDelegation() ).andReturn( "javax.*" );
         expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
 
-        replay( m_bundleContext, platformContext );
+        replay( m_configuration, m_bundleContext, platformContext );
         assertArrayEquals(
             "System properties",
             new String[]{
-                "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=java.*",
+                "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=javax.*,java.*",
                 "-D" + Constants.FRAMEWORK_SYSTEMPACKAGES + "=sys.package.one,sys.package.two"
             },
             new EquinoxPlatformBuilder( m_bundleContext, "version" ).getVMOptions( platformContext )
         );
-        verify( m_bundleContext, platformContext );
+        verify(m_configuration,  m_bundleContext, platformContext );
     }
 
     @Test( expected = IllegalArgumentException.class )

@@ -30,7 +30,7 @@ import org.ops4j.util.property.PropertyStore;
  * Service Configuration implementation.
  *
  * @author Alin Dreghiciu
- * @see org.ops4j.pax.runner.platform.Configuration
+ * @see Configuration
  * @since August 25, 2007
  */
 public class ConfigurationImpl
@@ -409,6 +409,9 @@ public class ConfigurationImpl
         return get( ServiceConstants.CONFIG_DEBUG_CLASS_LOADING );
     }
 
+    /**
+     * @see Configuration#isDownloadFeedback()
+     */
     public Boolean isDownloadFeedback()
     {
         if( !contains( ServiceConstants.CONFIG_DOWNLOAD_FEEDBACK ) )
@@ -424,4 +427,30 @@ public class ConfigurationImpl
         }
         return get( ServiceConstants.CONFIG_OVERWRITE_SYSTEM_BUNDLES );
     }
+
+    /**
+     * @see Configuration#getBootDelegation()
+     */
+    public String getBootDelegation()
+    {
+        if( !contains( ServiceConstants.CONFIG_BOOT_DELEGATION ) )
+        {
+            String bootDelegation = m_propertyResolver.get( ServiceConstants.CONFIG_BOOT_DELEGATION );
+            if( bootDelegation != null )
+            {
+                bootDelegation = bootDelegation.trim();
+                if( bootDelegation.endsWith( "," ) )
+                {
+                    bootDelegation = bootDelegation.substring( 0, bootDelegation.length() - 1 );
+                }
+                if( bootDelegation.length() == 0 )
+                {
+                    bootDelegation = null;
+                }
+            }
+            return set( ServiceConstants.CONFIG_BOOT_DELEGATION, bootDelegation );
+        }
+        return get( ServiceConstants.CONFIG_BOOT_DELEGATION );
+    }
+
 }
