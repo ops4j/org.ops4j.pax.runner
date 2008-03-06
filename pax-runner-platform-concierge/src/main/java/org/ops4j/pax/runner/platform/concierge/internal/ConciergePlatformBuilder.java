@@ -26,6 +26,7 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
@@ -307,15 +308,28 @@ public class ConciergePlatformBuilder
     public String[] getVMOptions( final PlatformContext context )
     {
         NullArgumentException.validateNotNull( context, "Platform context" );
-        return new String[]{
-            "-Dosgi.maxLevel=100",
-            "-Dxargs=" +
-            new File( context.getWorkingDirectory(), CONFIG_DIRECTORY + File.separator + CONFIG_INI
-            ).getAbsolutePath()
-        };
-        // the propertyosgi.maxLevel is a workarround on the fact that concierge will not start/install the bundles if
+
+        final Collection<String> vmOptions = new ArrayList<String>();
+        final File workingDirectory = context.getWorkingDirectory();
+        // TODO Check if the following is soled in newer version of conceirge
+        // the property osgi.maxLevel is a workarround on the fact that concierge will not start/install the bundles if
         // there is a gap between the start level of the bundles. So, we force him to iterate to all start level
         // Actually the value should be the highest bundle start level + 1 but we take the risk for the moment
+        vmOptions.add(
+            "-Dosgi.maxLevel=100"
+        );
+        vmOptions.add(
+            "-Dxargs="
+            + new File( workingDirectory, CONFIG_DIRECTORY + File.separator + CONFIG_INI ).getAbsolutePath()
+        );
+        final String bootDelegation = context.getConfiguration().getBootDelegation();
+        if( bootDelegation != null )
+        {
+            vmOptions.add(
+                "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=" + bootDelegation
+            );
+        }
+        return vmOptions.toArray( new String[vmOptions.size()] );
     }
 
     /**
