@@ -458,10 +458,11 @@ public class PlatformImpl
         Properties fileNamesForUrls = loadProperties( downloadedBundlesFile );
 
         String downloadedFileName = fileNamesForUrls.getProperty( url.toExternalForm() );
+        String hashFileName = "" + url.toExternalForm().hashCode();
         if( downloadedFileName == null )
         {
             // destination will be made based on the hashcode of the url to be downloaded
-            downloadedFileName = url.toExternalForm().hashCode() + ".jar";
+            downloadedFileName = hashFileName + ".jar";
 
         }
         File destination = new File( workDir, "bundles/" + downloadedFileName );
@@ -473,7 +474,7 @@ public class PlatformImpl
         {
             try
             {
-                String newFileName = validateBundleAndGetFilename( destination, url, checkAttributes );
+                String newFileName = validateBundleAndGetFilename( url, destination, hashFileName, checkAttributes );
                 if( !destination.getName().equals( newFileName ) )
                 {
                     throw new PlatformException( "File " + destination + " should have name " + newFileName );
@@ -523,7 +524,7 @@ public class PlatformImpl
                 throw new PlatformException( "[" + url + "] could not be downloaded", e );
             }
         }
-        String newFileName = validateBundleAndGetFilename( destination, url, checkAttributes );
+        String newFileName = validateBundleAndGetFilename( url, destination, hashFileName, checkAttributes );
         File newDestination = new File( destination.getParentFile(), newFileName );
         if( !newFileName.equals( destination.getName() ) )
         {
@@ -609,19 +610,26 @@ public class PlatformImpl
      * Validate that the file is an valid bundle. A valid bundle will be a loadable jar file that has manifes and the
      * manifest contains at least an entry for Bundle-SymboliName.
      *
-     * @param file            file to be validated
-     * @param url             original url from where the bundle was created.
-     * @param checkAttributes whether or not to check attributes in the manifest
+     * @param url                       original url from where the bundle was created.
+     * @param file                      file to be validated
+     * @param defaultBundleSymbolicName default bundle symbolic name to be used if manifest does not have a bundle
+     *                                  symbolic name
+     * @param checkAttributes           whether or not to check attributes in the manifest
+     *
+     * @return file name based on bundle symbolic name and version
      *
      * @throws PlatformException if the jar is not a valid bundle
      */
-    String validateBundleAndGetFilename( final File file, final URL url, boolean checkAttributes )
+    String validateBundleAndGetFilename( final URL url,
+                                         final File file,
+                                         final String defaultBundleSymbolicName,
+                                         final boolean checkAttributes )
         throws PlatformException
     {
-        // verify that is a valid jar. Do not verify that is signed (the false param).
         JarFile jar = null;
         try
         {
+            // verify that is a valid jar. Do not verify that is signed (the false param).
             jar = new JarFile( file, false );
             final Manifest manifest = jar.getManifest();
             if( manifest == null )
@@ -638,17 +646,9 @@ public class PlatformImpl
                     throw new PlatformException( "[" + url + "] is not a valid bundle" );
                 }
             }
-            String extension = ".jar";
             if( bundleSymbolicName == null )
             {
-                bundleSymbolicName = file.getName();
-                // extract extension
-                int extensionPos = bundleSymbolicName.indexOf( "." );
-                if( extensionPos > 0 )
-                {
-                    extension = bundleSymbolicName.substring( extensionPos );
-                    bundleSymbolicName = bundleSymbolicName.substring( 0, extensionPos );
-                }
+                bundleSymbolicName = defaultBundleSymbolicName;
             }
             else
             {
@@ -663,7 +663,7 @@ public class PlatformImpl
             {
                 bundleVersion = "0.0.0";
             }
-            return bundleSymbolicName + "_" + bundleVersion + extension;
+            return bundleSymbolicName + "_" + bundleVersion + ".jar";
         }
         catch( IOException e )
         {

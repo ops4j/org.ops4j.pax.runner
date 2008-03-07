@@ -314,10 +314,10 @@ public class PlatformImplTest
     {
         replay( m_builder, m_bundleContext, m_config );
         PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
-        URL url = new URL( "http://dummyUrl" );
         boolean checkAttributes = false;
         File file = FileUtils.getFileFromClasspath( "platform/withoutManifest.jar" );
-        platform.validateBundleAndGetFilename( file, url, checkAttributes );
+        URL url = file.toURL();
+        platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes );
     }
 
     @Test( expected = PlatformException.class )
@@ -326,10 +326,10 @@ public class PlatformImplTest
     {
         replay( m_builder, m_bundleContext, m_config );
         PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
-        URL url = new URL( "http://dummyUrl" );
         boolean checkAttributes = true;
         File file = FileUtils.getFileFromClasspath( "platform/withoutManifest.jar" );
-        platform.validateBundleAndGetFilename( file, url, checkAttributes );
+        URL url = file.toURL();
+        platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes );
     }
 
     @Test
@@ -338,12 +338,12 @@ public class PlatformImplTest
     {
         replay( m_builder, m_bundleContext, m_config );
         PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
-        URL url = new URL( "http://dummyUrl" );
         boolean checkAttributes = false;
         File file = FileUtils.getFileFromClasspath( "platform/noManifestAttr.jar" );
+        URL url = file.toURL();
         assertEquals(
-            file.getName().replace( ".jar", "_0.0.0.jar" ),
-            platform.validateBundleAndGetFilename( file, url, checkAttributes )
+            "defaultBSN_0.0.0.jar",
+            platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes )
         );
         verify( m_builder, m_bundleContext, m_config );
     }
@@ -354,10 +354,10 @@ public class PlatformImplTest
     {
         replay( m_builder, m_bundleContext, m_config );
         PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
-        URL url = new URL( "http://dummyUrl" );
         boolean checkAttributes = true;
         File file = FileUtils.getFileFromClasspath( "platform/noManifestAttr.jar" );
-        platform.validateBundleAndGetFilename( file, url, checkAttributes );
+        URL url = file.toURL();
+        platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes );
     }
 
     @Test( expected = PlatformException.class )
@@ -366,10 +366,10 @@ public class PlatformImplTest
     {
         replay( m_builder, m_bundleContext, m_config );
         PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
-        URL url = new URL( "http://dummyUrl" );
         boolean checkAttributes = false;
         File file = FileUtils.getFileFromClasspath( "platform/invalid.jar" );
-        platform.validateBundleAndGetFilename( file, url, checkAttributes );
+        URL url = file.toURL();
+        platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes );
     }
 
     @Test( expected = PlatformException.class )
@@ -378,10 +378,10 @@ public class PlatformImplTest
     {
         replay( m_builder, m_bundleContext, m_config );
         PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
-        URL url = new URL( "http://dummyUrl" );
         boolean checkAttributes = true;
         File file = FileUtils.getFileFromClasspath( "platform/invalid.jar" );
-        platform.validateBundleAndGetFilename( file, url, checkAttributes );
+        URL url = file.toURL();
+        platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes );
     }
 
     @Test
@@ -390,10 +390,13 @@ public class PlatformImplTest
     {
         replay( m_builder, m_bundleContext, m_config );
         PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
-        URL url = new URL( "http://dummyUrl" );
         boolean checkAttributes = false;
         File file = FileUtils.getFileFromClasspath( "platform/bundle1.jar" );
-        assertEquals( "bundle2_0.0.0.jar", platform.validateBundleAndGetFilename( file, url, checkAttributes ) );
+        URL url = file.toURL();
+        assertEquals(
+            "bundle2_0.0.0.jar",
+            platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes )
+        );
         verify( m_builder, m_bundleContext, m_config );
     }
 
@@ -403,10 +406,13 @@ public class PlatformImplTest
     {
         replay( m_builder, m_bundleContext, m_config );
         PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
-        URL url = new URL( "http://dummyUrl" );
         boolean checkAttributes = true;
         File file = FileUtils.getFileFromClasspath( "platform/bundle1.jar" );
-        assertEquals( "bundle2_0.0.0.jar", platform.validateBundleAndGetFilename( file, url, checkAttributes ) );
+        URL url = file.toURL();
+        assertEquals(
+            "bundle2_0.0.0.jar",
+            platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes )
+        );
         verify( m_builder, m_bundleContext, m_config );
     }
 
@@ -416,10 +422,13 @@ public class PlatformImplTest
     {
         replay( m_builder, m_bundleContext, m_config );
         PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
-        URL url = new URL( "http://dummyUrl" );
         boolean checkAttributes = false;
         File file = FileUtils.getFileFromClasspath( "platform/bundleWithVersion.jar" );
-        assertEquals( "bundle2_1.2.3.jar", platform.validateBundleAndGetFilename( file, url, checkAttributes ) );
+        URL url = file.toURL();
+        assertEquals(
+            "bundle2_1.2.3.jar",
+            platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes )
+        );
         verify( m_builder, m_bundleContext, m_config );
     }
 
@@ -429,10 +438,13 @@ public class PlatformImplTest
     {
         replay( m_builder, m_bundleContext, m_config );
         PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
-        URL url = new URL( "http://dummyUrl" );
         boolean checkAttributes = true;
         File file = FileUtils.getFileFromClasspath( "platform/bundleWithVersion.jar" );
-        assertEquals( "bundle2_1.2.3.jar", platform.validateBundleAndGetFilename( file, url, checkAttributes ) );
+        URL url = file.toURL();
+        assertEquals(
+            "bundle2_1.2.3.jar",
+            platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes )
+        );
         verify( m_builder, m_bundleContext, m_config );
     }
 
@@ -442,11 +454,12 @@ public class PlatformImplTest
     {
         replay( m_builder, m_bundleContext, m_config );
         PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
-        URL url = new URL( "http://dummyUrl" );
         boolean checkAttributes = false;
         File file = FileUtils.getFileFromClasspath( "platform/bundleWithSemicolon.jar" );
-        assertEquals( "bundleWithSemicolon_0.0.0.jar",
-                      platform.validateBundleAndGetFilename( file, url, checkAttributes )
+        URL url = file.toURL();
+        assertEquals(
+            "bundleWithSemicolon_0.0.0.jar",
+            platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes )
         );
         verify( m_builder, m_bundleContext, m_config );
     }
@@ -457,11 +470,12 @@ public class PlatformImplTest
     {
         replay( m_builder, m_bundleContext, m_config );
         PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
-        URL url = new URL( "http://dummyUrl" );
         boolean checkAttributes = true;
         File file = FileUtils.getFileFromClasspath( "platform/bundleWithSemicolon.jar" );
-        assertEquals( "bundleWithSemicolon_0.0.0.jar",
-                      platform.validateBundleAndGetFilename( file, url, checkAttributes )
+        URL url = file.toURL();
+        assertEquals(
+            "bundleWithSemicolon_0.0.0.jar",
+            platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes )
         );
         verify( m_builder, m_bundleContext, m_config );
     }
