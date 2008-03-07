@@ -20,6 +20,11 @@ package org.ops4j.pax.runner.platform.internal;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.osgi.framework.Constants;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.ServiceConstants;
@@ -38,6 +43,10 @@ public class ConfigurationImpl
     implements Configuration
 {
 
+    /**
+     * Logger.
+     */
+    private static final Log LOGGER = LogFactory.getLog( ConfigurationImpl.class );
     /**
      * Default working directory.
      */
@@ -122,7 +131,36 @@ public class ConfigurationImpl
             final String vmOptions = m_propertyResolver.get( ServiceConstants.CONFIG_VMOPTIONS );
             if( vmOptions != null )
             {
-                return set( ServiceConstants.CONFIG_VMOPTIONS, vmOptions.split( " " ) );
+                if( vmOptions.contains( "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=" ) )
+                {
+                    LOGGER.warn(
+                        "WARNING!: Setting boot delegation packages should be done via --bootDelegation/bd option"
+                        + " not by using " + Constants.FRAMEWORK_BOOTDELEGATION + " system variable"
+                    );
+                }
+                if( vmOptions.contains( "-cp" ) )
+                {
+                    LOGGER.warn(
+                        "WARNING!: Setting class path should be done via --classpath/cp option"
+                        + " not by using -cp as vm option"
+                    );
+                }
+                final Collection<String> options = new ArrayList<String>();
+                for( String option : vmOptions.split( " " ) )
+                {
+                    if( option.trim().length() > 0 )
+                    {
+                        options.add( option );
+                    }
+                }
+                if( options.size() > 0 )
+                {
+                    return set( ServiceConstants.CONFIG_VMOPTIONS, options.toArray( new String[options.size()] ) );
+                }
+                else
+                {
+                    return set( ServiceConstants.CONFIG_VMOPTIONS, null );
+                }
             }
             else
             {
