@@ -31,7 +31,7 @@ public interface Platform
 {
 
     /**
-     * Starts the platform.
+     * Starts the platform and waits for it to exit.
      *
      * @param bundles            a list of bundles to be included in the target platform; optional
      * @param platformProperties platform properties to be available in the started platform; optional
@@ -41,6 +41,21 @@ public interface Platform
      *          if something goes wrong
      */
     void start( List<BundleReference> bundles, Properties platformProperties, Dictionary config )
+        throws PlatformException;
+
+    /**
+     * Starts the platform as a daemon process, and returns immediately.
+     *
+     * @param bundles            a list of bundles to be included in the target platform; optional
+     * @param platformProperties platform properties to be available in the started platform; optional
+     * @param config             service configuration properties
+     *
+     * @return framework process
+     * 
+     * @throws org.ops4j.pax.runner.platform.PlatformException
+     *          if something goes wrong
+     */
+    Process startAsDaemon( List<BundleReference> bundles, Properties platformProperties, Dictionary config )
         throws PlatformException;
 
 }

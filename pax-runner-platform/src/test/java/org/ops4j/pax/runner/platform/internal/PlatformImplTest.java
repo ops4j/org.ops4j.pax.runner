@@ -509,11 +509,12 @@ public class PlatformImplTest
         }
 
         @Override
-        void executeProcess( final String[] commandLine, final File workingDirectory )
+        Process executeProcess( final String[] commandLine, final File workingDirectory )
             throws PlatformException
         {
             assertNotNull( "Command line cannot be null", commandLine );
             assertNotNull( "Working directory cannot be null", workingDirectory );
+            return null;
         }
 
         @Override

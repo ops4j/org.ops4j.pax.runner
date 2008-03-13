@@ -138,6 +138,28 @@ public class PlatformImpl
     public void start( final List<BundleReference> bundles, final Properties properties, final Dictionary config )
         throws PlatformException
     {
+        Process frameworkProcess = startAsDaemon( bundles, properties, config );
+        if( null != frameworkProcess )
+        {
+            try
+            {
+                LOGGER.debug( "Waiting for framework exit." );
+                frameworkProcess.waitFor();
+            }
+            catch( InterruptedException e )
+            {
+                throw new PlatformException( "Launcher was interrupted", e );
+            }
+        }
+    }
+
+    /**
+     * @see Platform#startAsDaemon(java.util.List,java.util.Properties,Dictionary)
+     */
+    public Process startAsDaemon( final List<BundleReference> bundles, final Properties properties,
+        final Dictionary config )
+        throws PlatformException
+    {
         LOGGER.debug( "Preparing platform [" + this + "]" );
         // we should fail fast so let's do first what is easy
         final String mainClassName = m_platformBuilder.getMainClassName();
@@ -208,7 +230,7 @@ public class PlatformImpl
 
         LOGGER.debug( "Start command line [" + Arrays.toString( commandLine.toArray() ) + "]" );
 
-        executeProcess( commandLine.toArray(), context.getWorkingDirectory() );
+        return executeProcess( commandLine.toArray(), context.getWorkingDirectory() );
     }
 
     /**
@@ -217,81 +239,93 @@ public class PlatformImpl
      * @param commandLine      an array that makes up the command line
      * @param workingDirectory the working directory for th eprocess
      *
+     * @return framework process
+     *
      * @throws PlatformException re-thrown if something goes wrong with executing the process
      */
-    void executeProcess( final String[] commandLine, final File workingDirectory )
+    Process executeProcess( final String[] commandLine, final File workingDirectory )
         throws PlatformException
     {
-        Pipe errPipe = null;
-        Pipe outPipe = null;
-        Pipe inPipe = null;
+        final Process process;
         try
         {
-            Process process = Runtime.getRuntime().exec( commandLine, null, workingDirectory );
-            errPipe = new Pipe( process.getErrorStream(), System.err ).start( "Error pipe" );
-            outPipe = new Pipe( process.getInputStream(), System.out ).start( "Out pipe" );
-            inPipe = new Pipe( process.getOutputStream(), System.in ).start( "In pipe" );
-            destroyFrameworkOnExit( process, new Pipe[]{ inPipe, outPipe, errPipe } );
-            LOGGER.info( "Starting platform [" + this + "]. Runner has succesfully finished his job!" );
-            process.waitFor();
+            process = Runtime.getRuntime().exec( commandLine, null, workingDirectory );
         }
         catch( IOException e )
         {
             throw new PlatformException( "Could not start up the process", e );
         }
-        catch( InterruptedException e )
+
+        Thread cleanupHandler = new Thread( new Runnable()
         {
-            throw new PlatformException( "Could not start up the process", e );
-        }
-        finally
-        {
-            if( inPipe != null )
+            public void run()
             {
-                inPipe.stop();
+                Thread streamHandler = createStreamHandler( process );
+                Runtime.getRuntime().addShutdownHook( streamHandler );
+                LOGGER.debug( "Added shutdown hook." );
+
+                try
+                {
+                    LOGGER.debug( "Waiting for framework exit." );
+                    process.waitFor();
+                }
+                catch( InterruptedException e )
+                {
+                    LOGGER.debug( e );
+                }
+                finally
+                {
+                    LOGGER.debug( "Early shutdown." );
+                    Runtime.getRuntime().removeShutdownHook( streamHandler );
+                    streamHandler.run();
+                }
             }
-            if( outPipe != null )
-            {
-                outPipe.stop();
-            }
-            if( errPipe != null )
-            {
-                errPipe.stop();
-            }
-        }
+        }, "Pax-Runner cleanup thread" );
+
+        // must start cleanup handler now
+        cleanupHandler.setDaemon( true );
+        cleanupHandler.start();
+
+        LOGGER.info( "Starting platform [" + this + "]. Runner has successfully finished his job!" );
+
+        return process;
     }
 
     /**
-     * Helper function to ensure shutdown of platform VM on Windows when Pax-Runner is Ctrl-C'd
-     *
+     * Create helper thread to handle I/O streams
+     * 
      * @param process the created process
-     * @param pipes   pipes to be stopped
+     * @return stream handler
      */
-    private void destroyFrameworkOnExit( final Process process, final Pipe[] pipes )
+    private Thread createStreamHandler( final Process process )
     {
-        Runtime.getRuntime().addShutdownHook(
-            new Thread(
-                new Runnable()
+        LOGGER.debug( "Creating stream pipes." );
+
+        final Pipe errPipe = new Pipe( process.getErrorStream(), System.err ).start( "Error pipe" );
+        final Pipe outPipe = new Pipe( process.getInputStream(), System.out ).start( "Out pipe" );
+        final Pipe inPipe = new Pipe( process.getOutputStream(), System.in ).start( "In pipe" );
+
+        Thread streamHandler = new Thread( new Runnable()
+        {
+            public void run()
+            {
+                LOGGER.info( "Shutting down platform..." );
+                try
                 {
-                    public void run()
-                    {
-                        LOGGER.info( "Shuting down platform..." );
-                        try
-                        {
-                            for( Pipe pipe : pipes )
-                            {
-                                pipe.stop();
-                            }
-                        }
-                        finally
-                        {
-                            LOGGER.info( "Destroying platform process..." );
-                            process.destroy();
-                        }
-                    }
+                    inPipe.stop();
+                    outPipe.stop();
+                    errPipe.stop();
                 }
-            )
-        );
-        LOGGER.debug( "Added shutdown hook." );
+                finally
+                {
+                    LOGGER.info( "Destroying platform process..." );
+                    process.destroy();
+                }
+            }
+        }, "Pax-Runner stream thread" );
+
+        streamHandler.setDaemon( true );
+        return streamHandler;
     }
 
     /**
