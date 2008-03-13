@@ -121,13 +121,39 @@ public class Run
     }
 
     /**
-     * Starts runner.
+     * Starts runner and waits for framework process to exit.
      *
      * @param commandLine comand line to use
      * @param config      configuration to use
      * @param resolver    an option resolver
      */
     public void start( final CommandLine commandLine, final Configuration config, final OptionResolver resolver )
+    {
+        Process frameworkProcess = startAsDaemon( commandLine, config, resolver );
+        if( null != frameworkProcess )
+        {
+            try
+            {
+                LOGGER.debug( "Waiting for framework exit." );
+                frameworkProcess.waitFor();
+            }
+            catch( InterruptedException e )
+            {
+                LOGGER.debug( "Launcher was interrupted", e );
+            }
+        }
+    }
+
+    /**
+     * Starts runner and returns immediately.
+     *
+     * @param commandLine comand line to use
+     * @param config      configuration to use
+     * @param resolver    an option resolver
+     *
+     * @return framework process
+     */
+    public Process startAsDaemon( final CommandLine commandLine, final Configuration config, final OptionResolver resolver )
     {
         final Context context = createContext( commandLine, config, resolver );
         // install aditional services
@@ -139,7 +165,7 @@ public class Run
         // stop the dispatcher as there are no longer events around
         EventDispatcher.shutdown();
         // install platform and start it up
-        startPlatform( installPlatform( context ), context );
+        return startPlatform( installPlatform( context ), context );
     }
 
     /**
@@ -380,12 +406,14 @@ public class Run
     }
 
     /**
-     * Startes the installed platform.
+     * Starts the installed platform.
      *
      * @param context  the running context
      * @param platform installed platform
+     *
+     * @return framework process, null if not started as a daemon
      */
-    private void startPlatform( final Platform platform, final Context context )
+    private Process startPlatform( final Platform platform, final Context context )
     {
         LOGGER.debug( "Starting platform" );
         if( platform == null )
@@ -411,7 +439,7 @@ public class Run
         }
         try
         {
-            platform.start( references, context.getSystemProperties(), null );
+            return platform.startAsDaemon( references, context.getSystemProperties(), null );
         }
         catch( PlatformException e )
         {
@@ -475,7 +503,7 @@ public class Run
         }
         System.out.println( "         ___" );
         System.out.println( "        /  /" );
-        System.out.println( "       /  / Ops, there has been a problem!" );
+        System.out.println( "       /  / Oops, there has been a problem!" );
         System.out.println( "      /  /  " );
         System.out.println( "     /__/   " + message );
         System.out.println( "    ___" );
@@ -496,7 +524,32 @@ public class Run
     /**
      * {@inheritDoc}
      */
-    public static void main( final String... args )
+    public static void main( String... args )
+    {
+        startFramework( false, args );
+    }
+
+    /**
+     * Start runner based on command-line arguments.
+     *
+     * @param args command-line arguments
+     *
+     * @return framework process
+     */
+    public static Process start( String...args )
+    {
+        return startFramework( true, args );
+    }
+
+    /**
+     * Start runner based on command-line arguments.
+     *
+     * @param asDaemon when false, wait for framework to exit
+     * @param args     command-line arguments
+     *
+     * @return framework process, null if not started as daemon
+     */
+    private static Process startFramework( boolean asDaemon, final String... args )
     {
         try
         {
@@ -510,11 +563,23 @@ public class Run
                 configURL = "classpath:META-INF/runner.properties";
             }
             final Configuration config = new ConfigurationImpl( configURL );
-            new Run().start(
-                commandLine,
-                config,
-                new OptionResolverImpl( commandLine, config )
-            );
+
+            if( asDaemon )
+            {
+                return new Run().startAsDaemon(
+                    commandLine,
+                    config,
+                    new OptionResolverImpl( commandLine, config )
+                );
+            }
+            else
+            {
+                new Run().start(
+                    commandLine,
+                    config,
+                    new OptionResolverImpl( commandLine, config )
+                );
+            }
         }
         catch( Throwable t )
         {
@@ -522,6 +587,8 @@ public class Run
             // TODO eliminate system exit as in this case it should runner should be shutdown nicely by stopping the running services
             System.exit( 1 );
         }
+
+        return null;
     }
 
     /**
