@@ -275,9 +275,16 @@ public class PlatformImpl
                 }
                 finally
                 {
-                    LOGGER.debug( "Early shutdown." );
-                    Runtime.getRuntime().removeShutdownHook( streamHandler );
-                    streamHandler.run();
+                    try
+                    {
+                        Runtime.getRuntime().removeShutdownHook( streamHandler );
+                        LOGGER.debug( "Early shutdown." );
+                        streamHandler.run();
+                    }
+                    catch( IllegalStateException e )
+                    {
+                        LOGGER.debug( "Shutdown already in progress." );
+                    }
                 }
             }
         }, "Pax-Runner cleanup thread" );
@@ -309,22 +316,21 @@ public class PlatformImpl
         {
             public void run()
             {
-                LOGGER.info( "Shutting down platform..." );
                 try
                 {
-                    inPipe.stop();
-                    outPipe.stop();
-                    errPipe.stop();
-                }
-                finally
-                {
-                    LOGGER.info( "Destroying platform process..." );
                     process.destroy();
                 }
+                catch( Exception e )
+                {
+                    // ignore if already shutting down
+                }
+
+                inPipe.stop();
+                outPipe.stop();
+                errPipe.stop();
             }
         }, "Pax-Runner stream thread" );
 
-        streamHandler.setDaemon( true );
         return streamHandler;
     }
 
