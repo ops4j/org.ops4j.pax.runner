@@ -538,7 +538,15 @@ public class Run
      */
     public static void main( String... args )
     {
-        startFramework( false, args );
+        try
+        {
+            startFramework( false, args );
+        }
+        catch( Throwable t )
+        {
+            showError( t );
+            System.exit( 1 );
+        }
     }
 
     /**
@@ -563,41 +571,32 @@ public class Run
      */
     private static Process startFramework( boolean asDaemon, final String... args )
     {
-        try
+        showLogo();
+
+        final CommandLine commandLine = new CommandLineImpl( args );
+        initializeLogger( commandLine );
+        String configURL = commandLine.getOption( OPTION_CONFIG );
+        if( configURL == null )
         {
-            showLogo();
-
-            final CommandLine commandLine = new CommandLineImpl( args );
-            initializeLogger( commandLine );
-            String configURL = commandLine.getOption( OPTION_CONFIG );
-            if( configURL == null )
-            {
-                configURL = "classpath:META-INF/runner.properties";
-            }
-            final Configuration config = new ConfigurationImpl( configURL );
-
-            if( asDaemon )
-            {
-                return new Run().startAsDaemon(
-                    commandLine,
-                    config,
-                    new OptionResolverImpl( commandLine, config )
-                );
-            }
-            else
-            {
-                new Run().start(
-                    commandLine,
-                    config,
-                    new OptionResolverImpl( commandLine, config )
-                );
-            }
+            configURL = "classpath:META-INF/runner.properties";
         }
-        catch( Throwable t )
+        final Configuration config = new ConfigurationImpl( configURL );
+
+        if( asDaemon )
         {
-            showError( t );
-            // TODO eliminate system exit as in this case it should runner should be shutdown nicely by stopping the running services
-            System.exit( 1 );
+            return new Run().startAsDaemon(
+                commandLine,
+                config,
+                new OptionResolverImpl( commandLine, config )
+            );
+        }
+        else
+        {
+            new Run().start(
+                commandLine,
+                config,
+                new OptionResolverImpl( commandLine, config )
+            );
         }
 
         return null;
