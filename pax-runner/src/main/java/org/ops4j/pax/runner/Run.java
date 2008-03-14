@@ -129,23 +129,11 @@ public class Run
      */
     public void start( final CommandLine commandLine, final Configuration config, final OptionResolver resolver )
     {
-        Process frameworkProcess = startAsDaemon( commandLine, config, resolver );
-        if( null != frameworkProcess )
-        {
-            try
-            {
-                LOGGER.debug( "Waiting for framework exit." );
-                frameworkProcess.waitFor();
-            }
-            catch( InterruptedException e )
-            {
-                LOGGER.debug( "Launcher was interrupted", e );
-            }
-        }
+        start( commandLine, config, resolver, false );
     }
 
     /**
-     * Starts runner and returns immediately.
+     * Starts runner and returns immediately without wrapping I/O.
      *
      * @param commandLine comand line to use
      * @param config      configuration to use
@@ -154,6 +142,21 @@ public class Run
      * @return framework process
      */
     public Process startAsDaemon( final CommandLine commandLine, final Configuration config, final OptionResolver resolver )
+    {
+        return start( commandLine, config, resolver, true );
+    }
+
+    /**
+     * Starts selected platform in a separate process.
+     *
+     * @param commandLine comand line to use
+     * @param config      configuration to use
+     * @param resolver    an option resolver
+     * @param asDaemon    when true, don't wait for the framework to finish or wrap I/O
+     *
+     * @return framework process
+     */
+    private Process start( final CommandLine commandLine, final Configuration config, final OptionResolver resolver, final boolean asDaemon )
     {
         final Context context = createContext( commandLine, config, resolver );
         // install aditional services
@@ -165,7 +168,7 @@ public class Run
         // stop the dispatcher as there are no longer events around
         EventDispatcher.shutdown();
         // install platform and start it up
-        return startPlatform( installPlatform( context ), context );
+        return startPlatform( installPlatform( context ), context, asDaemon );
     }
 
     /**
@@ -410,10 +413,11 @@ public class Run
      *
      * @param context  the running context
      * @param platform installed platform
+     * @param asDaemon when true, don't wait for the framework to finish or wrap I/O
      *
      * @return framework process, null if not started as a daemon
      */
-    private Process startPlatform( final Platform platform, final Context context )
+    private Process startPlatform( final Platform platform, final Context context, final boolean asDaemon )
     {
         LOGGER.debug( "Starting platform" );
         if( platform == null )
@@ -439,7 +443,15 @@ public class Run
         }
         try
         {
-            return platform.startAsDaemon( references, context.getSystemProperties(), null );
+            if( asDaemon )
+            {
+                return platform.startAsDaemon( references, context.getSystemProperties(), null );
+            }
+            else
+            {
+                platform.start( references, context.getSystemProperties(), null );
+                return null;
+            }
         }
         catch( PlatformException e )
         {
