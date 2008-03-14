@@ -44,7 +44,7 @@ public interface Platform
         throws PlatformException;
 
     /**
-     * Starts the platform as a daemon process, and returns immediately.
+     * Starts the platform as a daemon process, and returns immediately without wrapping I/O.
      *
      * @param bundles            a list of bundles to be included in the target platform; optional
      * @param platformProperties platform properties to be available in the started platform; optional

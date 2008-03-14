@@ -143,6 +143,7 @@ public class PlatformImpl
         {
             try
             {
+                addCleanupHandler( frameworkProcess );
                 LOGGER.debug( "Waiting for framework exit." );
                 frameworkProcess.waitFor();
             }
@@ -256,12 +257,24 @@ public class PlatformImpl
             throw new PlatformException( "Could not start up the process", e );
         }
 
+        LOGGER.info( "Starting platform [" + this + "]. Runner has successfully finished his job!" );
+
+        return process;
+    }
+
+    /**
+     * Create cleanup thread to safely clean up after the external framework process
+     * 
+     * @param process framework process
+     */
+    private void addCleanupHandler( final Process process )
+    {
         Thread cleanupHandler = new Thread( new Runnable()
         {
             public void run()
             {
-                Thread streamHandler = createStreamHandler( process );
-                Runtime.getRuntime().addShutdownHook( streamHandler );
+                Thread shutdownHook = createShutdownHook( process );
+                Runtime.getRuntime().addShutdownHook( shutdownHook );
                 LOGGER.debug( "Added shutdown hook." );
 
                 try
@@ -277,9 +290,9 @@ public class PlatformImpl
                 {
                     try
                     {
-                        Runtime.getRuntime().removeShutdownHook( streamHandler );
+                        Runtime.getRuntime().removeShutdownHook( shutdownHook );
                         LOGGER.debug( "Early shutdown." );
-                        streamHandler.run();
+                        shutdownHook.run();
                     }
                     catch( IllegalStateException e )
                     {
@@ -292,27 +305,24 @@ public class PlatformImpl
         // must start cleanup handler now
         cleanupHandler.setDaemon( true );
         cleanupHandler.start();
-
-        LOGGER.info( "Starting platform [" + this + "]. Runner has successfully finished his job!" );
-
-        return process;
     }
 
     /**
-     * Create helper thread to handle I/O streams
-     * 
-     * @param process the created process
+     * Create helper thread to safely shutdown the external framework process
+     *
+     * @param process framework process
+     *
      * @return stream handler
      */
-    private Thread createStreamHandler( final Process process )
+    private Thread createShutdownHook( final Process process )
     {
-        LOGGER.debug( "Creating stream pipes." );
+        LOGGER.debug( "Wrapping stream I/O." );
 
         final Pipe errPipe = new Pipe( process.getErrorStream(), System.err ).start( "Error pipe" );
         final Pipe outPipe = new Pipe( process.getInputStream(), System.out ).start( "Out pipe" );
         final Pipe inPipe = new Pipe( process.getOutputStream(), System.in ).start( "In pipe" );
 
-        Thread streamHandler = new Thread( new Runnable()
+        Thread shutdownHook = new Thread( new Runnable()
         {
             public void run()
             {
@@ -329,9 +339,9 @@ public class PlatformImpl
                 outPipe.stop();
                 errPipe.stop();
             }
-        }, "Pax-Runner stream thread" );
+        }, "Pax-Runner shutdown hook" );
 
-        return streamHandler;
+        return shutdownHook;
     }
 
     /**
