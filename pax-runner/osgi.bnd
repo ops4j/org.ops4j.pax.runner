@@ -12,11 +12,11 @@ Export-Package:
 Private-Package:\
   aQute.*,\
   META-INF.*,\
-  org.*; -split-package:=first
+  org.*; -split-package:=merge-first
 
 #  ${bundle.namespace},\
 #  ${bundle.namespace}.osgi,\
-#  org.apache.commons.logging; -split-package:=first
+#  org.apache.commons.logging; -split-package:=merge-first
 
 Include-Resource:\
   src/main/resources/,\
