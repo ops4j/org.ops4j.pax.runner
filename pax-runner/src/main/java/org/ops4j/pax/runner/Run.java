@@ -42,6 +42,7 @@ import org.ops4j.pax.runner.osgi.RunnerBundleContext;
 import org.ops4j.pax.runner.osgi.RunnerStartLevel;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.BundleReferenceBean;
+import org.ops4j.pax.runner.platform.JavaRunner;
 import org.ops4j.pax.runner.platform.Platform;
 import org.ops4j.pax.runner.platform.PlatformException;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
@@ -121,7 +122,7 @@ public class Run
     }
 
     /**
-     * Starts runner and waits for framework process to exit.
+     * Starts runner.
      *
      * @param commandLine comand line to use
      * @param config      configuration to use
@@ -129,34 +130,18 @@ public class Run
      */
     public void start( final CommandLine commandLine, final Configuration config, final OptionResolver resolver )
     {
-        start( commandLine, config, resolver, false );
+        start( commandLine, config, resolver, null );
     }
 
     /**
-     * Starts runner and returns immediately without wrapping I/O.
+     * Starts runner.
      *
      * @param commandLine comand line to use
      * @param config      configuration to use
      * @param resolver    an option resolver
-     *
-     * @return framework process
+     * @param runner      Java runner service
      */
-    public Process startAsDaemon( final CommandLine commandLine, final Configuration config, final OptionResolver resolver )
-    {
-        return start( commandLine, config, resolver, true );
-    }
-
-    /**
-     * Starts selected platform in a separate process.
-     *
-     * @param commandLine comand line to use
-     * @param config      configuration to use
-     * @param resolver    an option resolver
-     * @param asDaemon    when true, don't wait for the framework to finish or wrap I/O
-     *
-     * @return framework process
-     */
-    private Process start( final CommandLine commandLine, final Configuration config, final OptionResolver resolver, final boolean asDaemon )
+    public void start( final CommandLine commandLine, final Configuration config, final OptionResolver resolver, final JavaRunner runner )
     {
         final Context context = createContext( commandLine, config, resolver );
         // install aditional services
@@ -168,7 +153,7 @@ public class Run
         // stop the dispatcher as there are no longer events around
         EventDispatcher.shutdown();
         // install platform and start it up
-        return startPlatform( installPlatform( context ), context, asDaemon );
+        startPlatform( installPlatform( context ), context, runner );
     }
 
     /**
@@ -413,11 +398,9 @@ public class Run
      *
      * @param context  the running context
      * @param platform installed platform
-     * @param asDaemon when true, don't wait for the framework to finish or wrap I/O
-     *
-     * @return framework process, null if not started as a daemon
+     * @param runner   Java runner service
      */
-    private Process startPlatform( final Platform platform, final Context context, final boolean asDaemon )
+    private void startPlatform( final Platform platform, final Context context, final JavaRunner runner )
     {
         LOGGER.debug( "Starting platform" );
         if( platform == null )
@@ -443,15 +426,7 @@ public class Run
         }
         try
         {
-            if( asDaemon )
-            {
-                return platform.startAsDaemon( references, context.getSystemProperties(), null );
-            }
-            else
-            {
-                platform.start( references, context.getSystemProperties(), null );
-                return null;
-            }
+            platform.start( references, context.getSystemProperties(), null, runner );
         }
         catch( PlatformException e )
         {
@@ -536,11 +511,11 @@ public class Run
     /**
      * {@inheritDoc}
      */
-    public static void main( String... args )
+    public static void main( final String... args )
     {
         try
         {
-            startFramework( false, args );
+            main( null, args );
         }
         catch( Throwable t )
         {
@@ -550,26 +525,12 @@ public class Run
     }
 
     /**
-     * Start runner based on command-line arguments.
+     * Start OSGi framework based on command-line arguments, using external Java runner service.
      *
-     * @param args command-line arguments
-     *
-     * @return framework process
+     * @param runner Java runner service
+     * @param args   command-line arguments
      */
-    public static Process start( String...args )
-    {
-        return startFramework( true, args );
-    }
-
-    /**
-     * Start runner based on command-line arguments.
-     *
-     * @param asDaemon when false, wait for framework to exit
-     * @param args     command-line arguments
-     *
-     * @return framework process, null if not started as daemon
-     */
-    private static Process startFramework( boolean asDaemon, final String... args )
+    public static void main( final JavaRunner runner, final String... args )
     {
         showLogo();
 
@@ -581,25 +542,12 @@ public class Run
             configURL = "classpath:META-INF/runner.properties";
         }
         final Configuration config = new ConfigurationImpl( configURL );
-
-        if( asDaemon )
-        {
-            return new Run().startAsDaemon(
-                commandLine,
-                config,
-                new OptionResolverImpl( commandLine, config )
-            );
-        }
-        else
-        {
-            new Run().start(
-                commandLine,
-                config,
-                new OptionResolverImpl( commandLine, config )
-            );
-        }
-
-        return null;
+        new Run().start(
+            commandLine,
+            config,
+            new OptionResolverImpl( commandLine, config ),
+            runner
+        );
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
- * Copyright 2007 Alin Dreghiciu.
+ * Copyright 2007 Alin Dreghiciu, Stuart McCulloch.
  *
  * Licensed  under the  Apache License,  Version 2.0  (the "License");
  * you may not use  this file  except in  compliance with the License.
@@ -48,6 +48,7 @@ import org.ops4j.io.FileUtils;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
+import org.ops4j.pax.runner.platform.JavaRunner;
 import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.Platform;
 import org.ops4j.pax.runner.platform.PlatformBuilder;
@@ -61,7 +62,7 @@ import org.ops4j.util.property.PropertyResolver;
  * interface.
  * TODO Add unit tests
  *
- * @author Alin Dreghiciu
+ * @author Alin Dreghiciu, Stuart McCulloch
  * @since August 19, 2007
  */
 public class PlatformImpl
@@ -138,27 +139,13 @@ public class PlatformImpl
     public void start( final List<BundleReference> bundles, final Properties properties, final Dictionary config )
         throws PlatformException
     {
-        Process frameworkProcess = startAsDaemon( bundles, properties, config );
-        if( null != frameworkProcess )
-        {
-            try
-            {
-                addCleanupHandler( frameworkProcess );
-                LOGGER.debug( "Waiting for framework exit." );
-                frameworkProcess.waitFor();
-            }
-            catch( InterruptedException e )
-            {
-                throw new PlatformException( "Launcher was interrupted", e );
-            }
-        }
+        start( bundles, properties, config, null );
     }
 
     /**
-     * @see Platform#startAsDaemon(java.util.List,java.util.Properties,Dictionary)
+     * @see Platform#start(java.util.List,java.util.Properties,Dictionary,JavaRunner)
      */
-    public Process startAsDaemon( final List<BundleReference> bundles, final Properties properties,
-        final Dictionary config )
+    public void start( final List<BundleReference> bundles, final Properties properties, final Dictionary config, final JavaRunner runner )
         throws PlatformException
     {
         LOGGER.debug( "Preparing platform [" + this + "]" );
@@ -219,38 +206,59 @@ public class PlatformImpl
         m_platformBuilder.prepare( context );
 
         // and finally start it up.
-        final CommandLineBuilder commandLine = new CommandLineBuilder()
-            .append( getJavaExecutable( configuration ) )
-            .append( configuration.getVMOptions() )
-            .append( m_platformBuilder.getVMOptions( context ) )
-            .append( "-cp" )
-            .append( systemFile.getAbsolutePath() + configuration.getClasspath() )
-            .append( mainClassName )
-            .append( m_platformBuilder.getArguments( context ) )
-            .append( getFrameworkOptions() );
+        if( null == runner )
+        {
+            final CommandLineBuilder commandLine = new CommandLineBuilder()
+                .append( getJavaExecutable( configuration ) )
+                .append( configuration.getVMOptions() )
+                .append( m_platformBuilder.getVMOptions( context ) )
+                .append( "-cp" )
+                .append( systemFile.getAbsolutePath() + configuration.getClasspath() )
+                .append( mainClassName )
+                .append( m_platformBuilder.getArguments( context ) )
+                .append( getFrameworkOptions() );
 
-        LOGGER.debug( "Start command line [" + Arrays.toString( commandLine.toArray() ) + "]" );
+            LOGGER.debug( "Start command line [" + Arrays.toString( commandLine.toArray() ) + "]" );
 
-        return executeProcess( commandLine.toArray(), context.getWorkingDirectory() );
+            executeProcess( commandLine.toArray(), context.getWorkingDirectory() );
+        }
+        // or use an external Java runner service
+        else
+        {
+            final CommandLineBuilder vmOptions = new CommandLineBuilder();
+            vmOptions.append( configuration.getVMOptions() );
+            vmOptions.append( m_platformBuilder.getVMOptions( context ) );
+
+            final String[] classpath = ( systemFile.getAbsolutePath() + configuration.getClasspath() ).split( File.pathSeparator );
+
+            final CommandLineBuilder programOptions = new CommandLineBuilder();
+            programOptions.append( m_platformBuilder.getArguments( context ) );
+            programOptions.append( getFrameworkOptions() );
+
+            LOGGER.debug( "Start " + runner.getClass() + " [" + mainClassName + "]" );
+            LOGGER.debug( "vmOptions      [" + Arrays.toString( vmOptions.toArray() ) + "]" );
+            LOGGER.debug( "classpath      [" + Arrays.toString( classpath ) + "]" );
+            LOGGER.debug( "programOptions [" + Arrays.toString( programOptions.toArray() ) + "]" );
+
+            runner.exec( vmOptions.toArray(), classpath, mainClassName, programOptions.toArray() );
+        }        
     }
-
+        
     /**
      * Executes the process that contains the platform. Separated to be able to override in unit tests.
      *
      * @param commandLine      an array that makes up the command line
      * @param workingDirectory the working directory for th eprocess
      *
-     * @return framework process
-     *
      * @throws PlatformException re-thrown if something goes wrong with executing the process
      */
-    Process executeProcess( final String[] commandLine, final File workingDirectory )
+    void executeProcess( final String[] commandLine, final File workingDirectory )
         throws PlatformException
     {
-        final Process process;
+        final Process frameworkProcess;
         try
         {
-            process = Runtime.getRuntime().exec( commandLine, null, workingDirectory );
+            frameworkProcess = Runtime.getRuntime().exec( commandLine, null, workingDirectory );
         }
         catch( IOException e )
         {
@@ -259,52 +267,32 @@ public class PlatformImpl
 
         LOGGER.info( "Starting platform [" + this + "]. Runner has successfully finished his job!" );
 
-        return process;
-    }
+        Thread shutdownHook = createShutdownHook( frameworkProcess );
+        Runtime.getRuntime().addShutdownHook( shutdownHook );
+        LOGGER.debug( "Added shutdown hook." );
 
-    /**
-     * Create cleanup thread to safely clean up after the external framework process
-     * 
-     * @param process framework process
-     */
-    private void addCleanupHandler( final Process process )
-    {
-        Thread cleanupHandler = new Thread( new Runnable()
+        try
         {
-            public void run()
+            LOGGER.debug( "Waiting for framework exit." );
+            frameworkProcess.waitFor();
+        }
+        catch( InterruptedException e )
+        {
+            LOGGER.debug( e );
+        }
+        finally
+        {
+            try
             {
-                Thread shutdownHook = createShutdownHook( process );
-                Runtime.getRuntime().addShutdownHook( shutdownHook );
-                LOGGER.debug( "Added shutdown hook." );
-
-                try
-                {
-                    LOGGER.debug( "Waiting for framework exit." );
-                    process.waitFor();
-                }
-                catch( InterruptedException e )
-                {
-                    LOGGER.debug( e );
-                }
-                finally
-                {
-                    try
-                    {
-                        Runtime.getRuntime().removeShutdownHook( shutdownHook );
-                        LOGGER.debug( "Early shutdown." );
-                        shutdownHook.run();
-                    }
-                    catch( IllegalStateException e )
-                    {
-                        LOGGER.debug( "Shutdown already in progress." );
-                    }
-                }
+                Runtime.getRuntime().removeShutdownHook( shutdownHook );
+                LOGGER.debug( "Early shutdown." );
+                shutdownHook.run();
             }
-        }, "Pax-Runner cleanup thread" );
-
-        // must start cleanup handler now
-        cleanupHandler.setDaemon( true );
-        cleanupHandler.start();
+            catch( IllegalStateException e )
+            {
+                LOGGER.debug( "Shutdown already in progress." );
+            }
+        }
     }
 
     /**
