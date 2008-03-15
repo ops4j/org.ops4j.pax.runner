@@ -314,6 +314,10 @@ public class PlatformImpl
         {
             public void run()
             {
+                inPipe.stop();
+                outPipe.stop();
+                errPipe.stop();
+
                 try
                 {
                     process.destroy();
@@ -322,10 +326,6 @@ public class PlatformImpl
                 {
                     // ignore if already shutting down
                 }
-
-                inPipe.stop();
-                outPipe.stop();
-                errPipe.stop();
             }
         }, "Pax-Runner shutdown hook" );
 
