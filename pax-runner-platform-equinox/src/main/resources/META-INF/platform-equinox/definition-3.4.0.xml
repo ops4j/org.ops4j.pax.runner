@@ -1,7 +1,7 @@
 <platform>
 
-  <name>Equinox 3.4.0 (M4)</name>
-  <system>mvn:org.eclipse/osgi/3.4.0.v20071207</system>
+  <name>Equinox 3.4.0 (M5)</name>
+  <system>mvn:org.eclipse/osgi/3.4.0.v20080205</system>
 
   <profile name="minimal" default="true">
     <bundle>
