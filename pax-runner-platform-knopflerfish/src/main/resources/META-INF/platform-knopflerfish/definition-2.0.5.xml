@@ -1,7 +1,7 @@
 <platform>
 
-  <name>Knopflerfish 2.0.3</name>
-  <system>mvn:org.knopflerfish.osgi/framework/2.0.4</system>
+  <name>Knopflerfish 2.0.5</name>
+  <system>mvn:org.knopflerfish.osgi/framework/2.0.5</system>
 
   <profileRef href="classpath:META-INF/platform-knopflerfish/profiles-2.0.3-2.0.5.xml"/>
 
