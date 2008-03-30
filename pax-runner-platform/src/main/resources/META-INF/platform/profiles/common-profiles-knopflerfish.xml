@@ -22,4 +22,15 @@
     </bundle>
   </profile>
 
+  <profile name="http-knopflerfish" extends="minimal">
+    <bundle>
+      <name>Servlet API 2.1</name>
+      <url>mvn:org.apache.felix/javax.servlet/1.0.0</url>
+    </bundle>
+    <bundle>
+      <name>Knopflerfish HTTP Server (HTTP Service)</name>
+      <url>http://www.knopflerfish.org/repo/jars/http/http_all-2.1.0.jar</url>
+    </bundle>
+  </profile>
+
 </profiles>

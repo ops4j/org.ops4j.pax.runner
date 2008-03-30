@@ -1,10 +1,7 @@
 <profiles>
 
-  <profile name="config-equinox" extends="minimal">
-    <bundle>
-      <name>org.apache.felix.configadmin</name>
-      <url>mvn:org.apache.felix/org.apache.felix.configadmin/1.0.0</url>
-    </bundle>
-  </profile>
+  <profile name="config-equinox" extends="config-felix"/>
+  <profile name="ds-equinox" extends="ds-felix"/>
+  <profile name="http-equinox" extends="web"/>
 
 </profiles>

@@ -66,6 +66,7 @@
 
   <profile name="config" extends="config-knopflerfish"/>
   <profile name="ds" extends="ds-knopflerfish"/>
+  <profile name="http" extends="http-knopflerfish"/>
 
   <profileRef href="classpath:META-INF/platform/profiles/common-profiles.xml"/>
 

@@ -2,6 +2,7 @@
 
   <profile name="config" extends="config-equinox"/>
   <profile name="ds" extends="ds-equinox"/>
+  <profile name="http" extends="http-equinox"/>
 
   <profileRef href="classpath:META-INF/platform/profiles/common-profiles.xml"/>
 

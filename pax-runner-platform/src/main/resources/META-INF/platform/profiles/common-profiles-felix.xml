@@ -21,4 +21,11 @@
     </bundle>
   </profile>
 
+  <profile name="http-felix" extends="minimal">
+    <bundle>
+      <name>Felix HTTP Service</name>
+      <url>mvn:http://cvs.apache.org/maven-snapshot-repository@snapshots!org.apache.felix/org.apache.felix.http.jetty</url>
+    </bundle>
+  </profile>
+
 </profiles>

@@ -25,16 +25,17 @@
     </bundle>
     <bundle>
       <name>org.apache.felix.shell.gui</name>
-      <url>mvn:http://cvs.apache.org/maven-snapshot-repository!org.apache.felix/org.apache.felix.shell.gui/0.9.0-incubator-SNAPSHOT</url>
+      <url>mvn:http://cvs.apache.org/maven-snapshot-repository@snapshots!org.apache.felix/org.apache.felix.shell.gui/0.9.0-incubator-SNAPSHOT</url>
     </bundle>
     <bundle>
       <name>org.apache.felix.shell.gui.plugin</name>
-      <url>mvn:http://cvs.apache.org/maven-snapshot-repository!org.apache.felix/org.apache.felix.shell.gui.plugin/0.9.0-incubator-SNAPSHOT</url>
+      <url>mvn:http://cvs.apache.org/maven-snapshot-repository@snapshots!org.apache.felix/org.apache.felix.shell.gui.plugin/0.9.0-incubator-SNAPSHOT</url>
     </bundle>
   </profile>
 
   <profile name="config" extends="config-felix"/>
   <profile name="ds" extends="ds-felix"/>
+  <profile name="http" extends="http-felix"/>
 
   <profileRef href="classpath:META-INF/platform/profiles/common-profiles.xml"/>
 
