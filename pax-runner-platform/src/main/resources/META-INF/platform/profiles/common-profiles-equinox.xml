@@ -1,7 +1,40 @@
 <profiles>
 
-  <profile name="config-equinox" extends="config-felix"/>
-  <profile name="ds-equinox" extends="ds-felix"/>
-  <profile name="http-equinox" extends="web"/>
+  <profile name="config-equinox" extends="minimal">
+    <bundle>
+      <name>Equinox Drops Configuration Admin</name>
+      <url>http://download.eclipse.org/eclipse/equinox/drops/I20080328-1410/org.eclipse.equinox.cm_1.0.0.v20080310.jar</url>
+    </bundle>
+  </profile>
+
+  <profile name="ds-equinox" extends="minimal">
+    <bundle>
+      <name>Equinox Drops Equinox Utils</name>
+      <url>http://download.eclipse.org/eclipse/equinox/drops/I20080328-1410/org.eclipse.equinox.util_1.0.0.v20080303.jar</url>
+    </bundle>
+    <bundle>
+      <name>Equinox Drops Configuration Admin</name>
+      <url>http://download.eclipse.org/eclipse/equinox/drops/I20080328-1410/org.eclipse.equinox.ds_1.0.0.v20080310.jar</url>
+    </bundle>
+  </profile>
+  
+  <profile name="http-equinox" extends="log">
+    <bundle>
+      <name>Equinox Drops HTTP Service (Jetty)</name>
+      <url>http://download.eclipse.org/eclipse/equinox/drops/R-3.3.2-200802211800/org.eclipse.equinox.http.jetty_1.0.1.R33x_v20070816.jar</url>
+    </bundle>
+    <bundle>
+      <name>Equinox Drops HTTP Servlet</name>
+      <url>http://download.eclipse.org/eclipse/equinox/drops/R-3.3.2-200802211800/org.eclipse.equinox.http.servlet_1.0.1.R33x_v20070816.jar</url>
+    </bundle>
+    <bundle>
+      <name>Equinox Drops Servlet API</name>
+      <url>http://download.eclipse.org/eclipse/equinox/drops/R-3.3.2-200802211800/javax.servlet_2.4.0.v200706111738.jar</url>
+    </bundle>
+    <bundle>
+      <name>Equinox Drops Jetty</name>
+      <url>http://download.eclipse.org/eclipse/equinox/drops/R-3.3.2-200802211800/org.mortbay.jetty_5.1.11.v200706111724.jar</url>
+    </bundle>
+  </profile>
 
 </profiles>
