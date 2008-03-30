@@ -24,8 +24,8 @@
 
   <profile name="http-knopflerfish" extends="minimal">
     <bundle>
-      <name>Servlet API 2.1</name>
-      <url>mvn:org.apache.felix/javax.servlet/1.0.0</url>
+      <name>Equinox Drops Servlet API 2.4</name>
+      <url>http://download.eclipse.org/eclipse/equinox/drops/R-3.3.2-200802211800/javax.servlet_2.4.0.v200706111738.jar</url>
     </bundle>
     <bundle>
       <name>Knopflerfish HTTP Server (HTTP Service)</name>

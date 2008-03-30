@@ -28,7 +28,7 @@
       <url>http://download.eclipse.org/eclipse/equinox/drops/R-3.3.2-200802211800/org.eclipse.equinox.http.servlet_1.0.1.R33x_v20070816.jar</url>
     </bundle>
     <bundle>
-      <name>Equinox Drops Servlet API</name>
+      <name>Equinox Drops Servlet API 2.4</name>
       <url>http://download.eclipse.org/eclipse/equinox/drops/R-3.3.2-200802211800/javax.servlet_2.4.0.v200706111738.jar</url>
     </bundle>
     <bundle>
