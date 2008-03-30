@@ -1,0 +1,8 @@
+<platform>
+
+  <profile name="config" extends="config-equinox"/>
+  <profile name="ds" extends="ds-equinox"/>
+
+  <profileRef href="classpath:META-INF/platform/profiles/common-profiles.xml"/>
+
+</platform>

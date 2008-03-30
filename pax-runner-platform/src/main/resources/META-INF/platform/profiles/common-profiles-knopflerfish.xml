@@ -2,12 +2,23 @@
 
   <profile name="config-knopflerfish" extends="minimal">
     <bundle>
-      <name>org.knopflerfish.bundle.log</name>
+      <name>Knopflerfish Logging API</name>
       <url>http://www.knopflerfish.org/repo/jars/log/log_api-2.0.0.jar</url>
     </bundle>
     <bundle>
-      <name>org.knopflerfish.bundle.cm</name>
+      <name>Knopflerfish Configuration Admin</name>
       <url>http://www.knopflerfish.org/repo/jars/cm/cm_all-2.0.0.jar</url>
+    </bundle>
+  </profile>
+
+  <profile name="ds-knopflerfish" extends="minimal">
+    <bundle>
+      <name>Knopflerfish Logging API</name>
+      <url>http://www.knopflerfish.org/repo/jars/log/log_api-2.0.0.jar</url>
+    </bundle>
+    <bundle>
+      <name>Knopflerfish Declarative Services</name>
+      <url>http://www.knopflerfish.org/repo/jars/component/component_all-2.0.0.jar</url>
     </bundle>
   </profile>
 
