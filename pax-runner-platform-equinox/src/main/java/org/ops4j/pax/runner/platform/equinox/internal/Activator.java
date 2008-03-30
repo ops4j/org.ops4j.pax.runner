@@ -42,6 +42,7 @@ public final class Activator
             new EquinoxPlatformBuilder( bundleContext, "3.2.1" ),
             new EquinoxPlatformBuilder( bundleContext, "3.3.0" ),
             new EquinoxPlatformBuilder( bundleContext, "3.3.1" ),
+            new EquinoxPlatformBuilder( bundleContext, "3.3.2" ),
             new EquinoxPlatformBuilder( bundleContext, "3.4.0" )
         };
     }
