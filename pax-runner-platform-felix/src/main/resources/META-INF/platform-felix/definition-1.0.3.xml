@@ -38,6 +38,8 @@
     </bundle>
   </profile>
 
+  <profile name="config" extends="config-felix"/>
+
   <profileRef href="classpath:META-INF/platform/profiles/common-profiles.xml"/>
 
 </platform>

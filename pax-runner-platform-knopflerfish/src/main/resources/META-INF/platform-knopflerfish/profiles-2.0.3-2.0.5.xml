@@ -64,16 +64,7 @@
     </bundle>
   </profile>
 
-  <profile name="config" extends="minimal">
-    <bundle>
-      <name>org.knopflerfish.bundle.log</name>
-      <url>http://www.knopflerfish.org/repo/jars/log/log_api-2.0.0.jar</url>
-    </bundle>
-    <bundle>
-      <name>org.knopflerfish.bundle.cm</name>
-      <url>http://www.knopflerfish.org/repo/jars/cm/cm_all-2.0.0.jar</url>
-    </bundle>
-  </profile>
+  <profile name="config" extends="config-knopflerfish"/>
 
   <profileRef href="classpath:META-INF/platform/profiles/common-profiles.xml"/>
 

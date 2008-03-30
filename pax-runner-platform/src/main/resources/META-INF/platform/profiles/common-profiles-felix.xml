@@ -1,0 +1,17 @@
+<profiles>
+
+  <profile name="obr" extends="minimal">
+    <bundle>
+      <name>org.apache.felix.bundlerepository</name>
+      <url>mvn:org.apache.felix/org.apache.felix.bundlerepository/1.0.0</url>
+    </bundle>
+  </profile>
+
+  <profile name="config-felix" extends="minimal">
+    <bundle>
+      <name>org.apache.felix.configadmin</name>
+      <url>mvn:org.apache.felix/org.apache.felix.configadmin/1.0.0</url>
+    </bundle>
+  </profile>
+
+</profiles>

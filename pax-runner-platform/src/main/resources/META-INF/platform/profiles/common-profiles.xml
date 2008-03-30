@@ -7,13 +7,6 @@
     </bundle>
   </profile>
 
-  <profile name="config" extends="minimal">
-    <bundle>
-      <name>org.apache.felix.configadmin</name>
-      <url>mvn:org.apache.felix/org.apache.felix.configadmin/1.0.0</url>
-    </bundle>
-  </profile>
-
   <profile name="log" extends="minimal">
     <bundle>
       <name>org.ops4j.pax.logging.api</name>
@@ -126,5 +119,9 @@
       <url>mvn:org.springframework.osgi/spring-osgi-io</url>
     </bundle>
   </profile>
+
+  <profileRef href="classpath:META-INF/platform/profiles/common-profiles-equinox.xml"/>
+  <profileRef href="classpath:META-INF/platform/profiles/common-profiles-felix.xml"/>
+  <profileRef href="classpath:META-INF/platform/profiles/common-profiles-knopflerfish.xml"/>
 
 </profiles>
