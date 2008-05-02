@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module relativePaths="false" type="JAVA_MODULE" version="4">
+<module relativePaths="true" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
     <exclude-output />
@@ -9,10 +9,39 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/target/classes" />
+      <excludeFolder url="file://$MODULE_DIR$/target/surefire-reports" />
+      <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
+      <library name="org.osgi:org.osgi.core:4.0.1">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/osgi/org.osgi.core/4.0.1/org.osgi.core-4.0.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/org/osgi/org.osgi.core/4.0.1/org.osgi.core-4.0.1-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/osgi/org.osgi.core/4.0.1/org.osgi.core-4.0.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="org.osgi:org.osgi.compendium:4.0.1">
+        <CLASSES>
+          <root url="jar://$M2_REPO$/org/osgi/org.osgi.compendium/4.0.1/org.osgi.compendium-4.0.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$M2_REPO$/org/osgi/org.osgi.compendium/4.0.1/org.osgi.compendium-4.0.1-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$M2_REPO$/org/osgi/org.osgi.compendium/4.0.1/org.osgi.compendium-4.0.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
       <library name="junit:junit:4.4">
         <CLASSES>
           <root url="jar://$M2_REPO$/junit/junit/4.4/junit-4.4.jar!/" />
@@ -25,7 +54,7 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library name="org.easymock:easymock:2.3">
         <CLASSES>
           <root url="jar://$M2_REPO$/org/easymock/easymock/2.3/easymock-2.3.jar!/" />
@@ -35,19 +64,6 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar://$M2_REPO$/org/easymock/easymock/2.3/easymock-2.3-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="org.ops4j.base:ops4j-base-io:0.5.0">
-        <CLASSES>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.0/ops4j-base-io-0.5.0.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.0/ops4j-base-io-0.5.0-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.0/ops4j-base-io-0.5.0-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -65,19 +81,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="org.ops4j.base:ops4j-base-monitors:0.5.0">
-        <CLASSES>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.0/ops4j-base-monitors-0.5.0.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.0/ops4j-base-monitors-0.5.0-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.0/ops4j-base-monitors-0.5.0-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
       <library name="org.ops4j.base:ops4j-base-util-property:0.5.0">
         <CLASSES>
           <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.0/ops4j-base-util-property-0.5.0.jar!/" />
@@ -90,8 +93,6 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="pax-runner-commons" exported="" />
-    <orderEntry type="module" module-name="pax-runner-provision" exported="" />
     <orderEntry type="module-library" exported="">
       <library name="org.ops4j.pax.swissbox:pax-swissbox-optional-jcl:0.2.0">
         <CLASSES>
@@ -105,42 +106,31 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="org.ops4j.pax.swissbox:pax-swissbox-property:0.2.0">
+    <orderEntry type="module" module-name="pax-runner-commons" exported="" />
+    <orderEntry type="module" module-name="pax-runner-provision" exported="" />
+    <orderEntry type="module-library">
+      <library name="org.ops4j.base:ops4j-base-io:0.5.0">
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-property/0.2.0/pax-swissbox-property-0.2.0.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.0/ops4j-base-io-0.5.0.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-property/0.2.0/pax-swissbox-property-0.2.0-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.0/ops4j-base-io-0.5.0-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-property/0.2.0/pax-swissbox-property-0.2.0-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.0/ops4j-base-io-0.5.0-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="org.osgi:org.osgi.compendium:4.0.1">
+    <orderEntry type="module-library">
+      <library name="org.ops4j.base:ops4j-base-monitors:0.5.0">
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/osgi/org.osgi.compendium/4.0.1/org.osgi.compendium-4.0.1.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.0/ops4j-base-monitors-0.5.0.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/org/osgi/org.osgi.compendium/4.0.1/org.osgi.compendium-4.0.1-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.0/ops4j-base-monitors-0.5.0-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/osgi/org.osgi.compendium/4.0.1/org.osgi.compendium-4.0.1-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="org.osgi:org.osgi.core:4.0.1">
-        <CLASSES>
-          <root url="jar://$M2_REPO$/org/osgi/org.osgi.core/4.0.1/org.osgi.core-4.0.1.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$M2_REPO$/org/osgi/org.osgi.core/4.0.1/org.osgi.core-4.0.1-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$M2_REPO$/org/osgi/org.osgi.core/4.0.1/org.osgi.core-4.0.1-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.0/ops4j-base-monitors-0.5.0-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
