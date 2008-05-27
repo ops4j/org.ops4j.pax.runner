@@ -245,6 +245,7 @@ public class PomScanner
         if( text != null )
         {
             text = SystemPropertyUtils.resolvePlaceholders( text );
+            text = text.trim();
         }
         return text;
     }

@@ -23,6 +23,17 @@
       <artifactId>third-dependency</artifactId>
       <version>0.3</version>
     </dependency>
+    <dependency>
+      <groupId>
+        org.ops4j.pax.runner
+      </groupId>
+      <artifactId>
+        forth-dependency
+      </artifactId>
+      <version>
+        0.3
+      </version>
+    </dependency>
   </dependencies>
 
 </project>
