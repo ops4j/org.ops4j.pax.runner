@@ -14,7 +14,7 @@
   <version>0.10.0-SNAPSHOT</version>
   <packaging>bundle</packaging>
 
-  <name>OPS4J Pax Runner - Concierge Platfrom Builder</name>
+  <name>OPS4J Pax Runner - Concierge Platform Builder</name>
   <description>
     OPS4J Pax Runner - Concierge Platform Builder. Creates knopflerfish specific artifacts.
     See details at http://wiki.ops4j.org/confluence/x/HoA6.
