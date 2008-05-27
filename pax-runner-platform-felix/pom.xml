@@ -14,7 +14,7 @@
   <version>0.10.0-SNAPSHOT</version>
   <packaging>bundle</packaging>
 
-  <name>OPS4J Pax Runner - Felix Platfrom Builder</name>
+  <name>OPS4J Pax Runner - Felix Platform Builder</name>
   <description>
     OPS4J Pax Runner - Felix Platform Builder. Creates Felix specific artifacts.
     See details at http://wiki.ops4j.org/confluence/x/HIA6.
