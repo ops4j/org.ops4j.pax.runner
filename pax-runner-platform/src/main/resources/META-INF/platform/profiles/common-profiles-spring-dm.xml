@@ -2,24 +2,25 @@
 
   <profile name="spring" extends="log">
     <bundle>
-      <name>org.springframework.spring-aop</name>
-      <url>mvn:org.springframework/spring-aop</url>
+      <name>org.springframework.aop</name>
+      <url>mvn:org.springframework/org.springframework.aop</url>
     </bundle>
     <bundle>
-      <name>org.springframework.spring-beans</name>
-      <url>mvn:org.springframework/spring-beans</url>
+      <name>org.springframework.beans</name>
+      <url>mvn:org.springframework/org.springframework.beans</url>
     </bundle>
     <bundle>
-      <name>org.springframework.spring-context</name>
-      <url>mvn:org.springframework/spring-context</url>
+      <name>org.springframework.context</name>
+      <url>mvn:org.springframework/org.springframework.context</url>
     </bundle>
     <bundle>
-      <name>org.springframework.spring-context-support</name>
-      <url>mvn:org.springframework/spring-context-support</url>
+      <name>org.springframework.context.support</name>
+      <name>org.springframework.context.support</name>
+      <url>mvn:org.springframework/org.springframework.context.support</url>
     </bundle>
     <bundle>
-      <name>org.springframework.spring-core</name>
-      <url>mvn:org.springframework/spring-core</url>
+      <name>org.springframework.core</name>
+      <url>mvn:org.springframework/org.springframework.core</url>
     </bundle>
   </profile>
 
