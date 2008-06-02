@@ -2,6 +2,10 @@
 
   <profile name="spring" extends="log">
     <bundle>
+      <name>com.springsource.org.aopalliance</name>
+      <url>mvn:org.aopalliance/com.springsource.org.aopalliance/1.0.0</url>
+    </bundle>    
+    <bundle>
       <name>org.springframework.aop</name>
       <url>mvn:org.springframework/org.springframework.aop</url>
     </bundle>
@@ -25,10 +29,6 @@
   </profile>
 
   <profile name="spring-dm" extends="spring,log">
-    <bundle>
-      <name>com.springsource.org.aopalliance</name>
-      <url>mvn:org.aopalliance/com.springsource.org.aopalliance/1.0.0</url>
-    </bundle>
     <bundle>
       <name>org.springframework.osgi.asm.osgi</name>
       <url>mvn:http://s3.amazonaws.com/maven.springframework.org/osgi@snapshots!org.springframework.osgi/asm.osgi/2.2.3-SNAPSHOT</url>
@@ -61,6 +61,10 @@
 
   <profile name="spring-2.5.2" extends="log">
     <bundle>
+      <name>com.springsource.org.aopalliance</name>
+      <url>mvn:org.aopalliance/com.springsource.org.aopalliance/1.0.0</url>
+    </bundle>
+    <bundle>
       <name>org.springframework.spring-aop</name>
       <url>mvn:org.springframework/spring-aop/2.5.2</url>
     </bundle>
@@ -83,10 +87,6 @@
   </profile>
 
   <profile name="spring-dm-1.0.2" extends="spring-2.5.2,log">
-    <bundle>
-      <name>com.springsource.org.aopalliance</name>
-      <url>mvn:org.aopalliance/com.springsource.org.aopalliance/1.0.0</url>
-    </bundle>
     <bundle>
       <name>org.springframework.osgi.asm.osgi</name>
       <url>mvn:http://s3.amazonaws.com/maven.springframework.org/osgi@snapshots!org.springframework.osgi/asm.osgi/2.2.3-SNAPSHOT</url>
