@@ -80,7 +80,7 @@ public class DirectoryLister
             if( m_filter == null || m_filter.matcher( fileName ).matches() )
             {
                 File fileToAdd = new File( m_dir, fileName );
-                if (!fileToAdd.isHidden()) {
+                if ( !fileToAdd.isHidden() && !fileName.startsWith( "." ) ) {
                     content.add( fileToAdd.toURL() );
                 }
             }
