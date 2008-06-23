@@ -83,7 +83,7 @@ public class Run
     {
         if( LOGGER == null )
         {
-            LOGGER = LogFactory.getLog( Run.class, LogLevel.INFO );
+            createLogger( LogLevel.INFO );
         }
     }
 
@@ -141,7 +141,8 @@ public class Run
      * @param resolver    an option resolver
      * @param runner      Java runner service
      */
-    public void start( final CommandLine commandLine, final Configuration config, final OptionResolver resolver, final JavaRunner runner )
+    public void start( final CommandLine commandLine, final Configuration config, final OptionResolver resolver,
+                       final JavaRunner runner )
     {
         final Context context = createContext( commandLine, config, resolver );
         // install aditional services
@@ -191,7 +192,6 @@ public class Run
             createActivator( HANDLER_SERVICE, serviceActivatorName, context );
         }
     }
-
 
     /**
      * Installs provisioning service and configured scanners.
@@ -562,17 +562,37 @@ public class Run
         {
             try
             {
-                LOGGER = LogFactory.getLog( Run.class, LogLevel.valueOf( debug.toUpperCase() ) );
+                createLogger( LogLevel.valueOf( debug.toUpperCase() ) );
             }
             catch( Exception ignore )
             {
-                LOGGER = LogFactory.getLog( Run.class, LogLevel.INFO );
+                createLogger( LogLevel.INFO );
                 LOGGER.warn( "Unknown debug option [" + debug + "], switching to INFO" );
             }
         }
         else
         {
-            LOGGER = LogFactory.getLog( Run.class, LogLevel.INFO );
+            createLogger( LogLevel.INFO );
+        }
+    }
+
+    /**
+     * Creates the logger to use at the specified log level. The log level is only supported by the "special" JCL
+     * implementation embedded into Pax Runner. In case that the JCL in the classpath in snot the embedded one it will
+     * fallback to standard JCL usage.
+     *
+     * @param logLevel log level to use
+     */
+    private static void createLogger( final LogLevel logLevel )
+    {
+        try
+        {
+            LOGGER = LogFactory.getLog( Run.class, logLevel );
+        }
+        catch( NoSuchMethodError ignore )
+        {
+            // fall back to standard JCL
+            LOGGER = LogFactory.getLog( Run.class );
         }
     }
 
