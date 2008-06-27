@@ -1,12 +1,12 @@
 <platform>
 
-  <name>Equinox 3.4.0 (M5) (v20080205)</name>
-  <system>mvn:org.eclipse/osgi/3.4.0.v20080205</system>
+  <name>Equinox 3.4.0 (v20080205)</name>
+  <system>mvn:org.eclipse/osgi/3.4.0.v20080605-1900</system>
 
   <profile name="minimal" default="true">
     <bundle>
       <name>Eclipse utilities</name>
-      <url>mvn:org.eclipse.osgi/util/3.1.200.v20070605</url>
+      <url>mvn:org.eclipse.osgi/util/3.1.300.v20080303</url>
     </bundle>
     <bundle>
       <name>Eclipse compendium services</name>
