@@ -2,19 +2,19 @@
 
   <profile name="config-equinox" extends="minimal">
     <bundle>
-      <name>Equinox Drops Configuration Admin</name>
-      <url>http://download.eclipse.org/eclipse/equinox/drops/S-3.4RC2-200805230100/org.eclipse.equinox.cm_1.0.0.v20080509-1800.jar</url>
+      <name>Equinox Configuration Admin (3.4.0)</name>
+      <url>mvn:org.eclipse.equinox/cm/1.0.0.v20080509-1800</url>
     </bundle>
   </profile>
 
   <profile name="ds-equinox" extends="minimal">
     <bundle>
-      <name>Equinox Drops Equinox Utils</name>
-      <url>http://download.eclipse.org/eclipse/equinox/drops/S-3.4RC2-200805230100/org.eclipse.equinox.util_1.0.0.v20080414.jar</url>
+      <name>Equinox Utils (3.4.0)</name>
+      <url>mvn:org.eclipse.equinox/util/1.0.0.v20080414</url>
     </bundle>
     <bundle>
-      <name>Equinox Drops Configuration Admin</name>
-      <url>http://download.eclipse.org/eclipse/equinox/drops/S-3.4RC2-200805230100/org.eclipse.equinox.ds_1.0.0.v20080427-0830.jar</url>
+      <name>Equinox Declarative Services (3.4.0)</name>
+      <url>mvn:org.eclipse.equinox/ds/1.0.0.v20080427-0830</url>
     </bundle>
   </profile>
   
