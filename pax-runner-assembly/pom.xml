@@ -6,12 +6,12 @@
     <relativePath>../</relativePath>
     <groupId>org.ops4j.pax</groupId>
     <artifactId>runner</artifactId>
-    <version>0.12.0-SNAPSHOT</version>
+    <version>0.12.0</version>
   </parent>
 
   <groupId>org.ops4j.pax.runner</groupId>
   <artifactId>pax-runner-assembly</artifactId>
-  <version>0.12.0-SNAPSHOT</version>
+  <version>0.12.0</version>
   <packaging>pom</packaging>
 
   <name>OPS4J Pax Runner - Assembly</name>
@@ -82,12 +82,12 @@
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner</artifactId>
-      <version>0.12.0-SNAPSHOT</version>
+      <version>0.12.0</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner</artifactId>
-      <version>0.12.0-SNAPSHOT</version>
+      <version>0.12.0</version>
       <classifier>jdk14</classifier>
     </dependency>
   </dependencies>
