@@ -86,7 +86,61 @@
     </bundle>
   </profile>
 
-  <profile name="spring-dm-1.0.2" extends="spring-2.5.2,log">
+  <profile name="spring-2.5.1" extends="log">
+    <bundle>
+      <name>com.springsource.org.aopalliance</name>
+      <url>mvn:org.aopalliance/com.springsource.org.aopalliance/1.0.0</url>
+    </bundle>
+    <bundle>
+      <name>org.springframework.spring-aop</name>
+      <url>mvn:org.springframework/spring-aop/2.5.1</url>
+    </bundle>
+    <bundle>
+      <name>org.springframework.spring-beans</name>
+      <url>mvn:org.springframework/spring-beans/2.5.1</url>
+    </bundle>
+    <bundle>
+      <name>org.springframework.spring-context</name>
+      <url>mvn:org.springframework/spring-context/2.5.1</url>
+    </bundle>
+    <bundle>
+      <name>org.springframework.spring-core</name>
+      <url>mvn:org.springframework/spring-core/2.5.1</url>
+    </bundle>
+  </profile>
+
+  <profile name="spring-dm-1.0.3" extends="spring-2.5.1">
+    <bundle>
+      <name>org.springframework.osgi.asm.osgi</name>
+      <url>mvn:http://s3.amazonaws.com/maven.springframework.org/osgi@snapshots!org.springframework.osgi/asm.osgi/2.2.3-SNAPSHOT</url>
+    </bundle>
+    <bundle>
+      <name>com.springsource.edu.emory.mathcs.backport</name>
+      <url>mvn:edu.emory.mathcs.backport/com.springsource.edu.emory.mathcs.backport/3.0.0</url>
+    </bundle>
+    <bundle>
+      <name>com.springsource.net.sf.cglib</name>
+      <url>mvn:net.sourceforge.cglib/com.springsource.net.sf.cglib/2.1.3</url>
+    </bundle>
+    <bundle>
+      <name>org.springframework.osgi.spring-osgi-annotation</name>
+      <url>mvn:org.springframework.osgi/spring-osgi-annotation/1.0.3</url>
+    </bundle>
+    <bundle>
+      <name>org.springframework.osgi.spring-osgi-core</name>
+      <url>mvn:org.springframework.osgi/spring-osgi-core/1.0.3</url>
+    </bundle>
+    <bundle>
+      <name>org.springframework.osgi.spring-osgi-extender</name>
+      <url>mvn:org.springframework.osgi/spring-osgi-extender/1.0.3</url>
+    </bundle>
+    <bundle>
+      <name>org.springframework.osgi.spring-osgi-io</name>
+      <url>mvn:org.springframework.osgi/spring-osgi-io/1.0.3</url>
+    </bundle>
+  </profile>
+
+  <profile name="spring-dm-1.0.2" extends="spring-2.5.1">
     <bundle>
       <name>org.springframework.osgi.asm.osgi</name>
       <url>mvn:http://s3.amazonaws.com/maven.springframework.org/osgi@snapshots!org.springframework.osgi/asm.osgi/2.2.3-SNAPSHOT</url>
