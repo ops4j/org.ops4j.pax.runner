@@ -9,10 +9,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/target/classes" />
-      <excludeFolder url="file://$MODULE_DIR$/target/dependency" />
-      <excludeFolder url="file://$MODULE_DIR$/target/surefire-reports" />
-      <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -95,67 +91,67 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="org.ops4j.pax.url:pax-url-classpath:0.3.1">
+      <library name="org.ops4j.pax.url:pax-url-classpath:0.3.2">
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.3.1/pax-url-classpath-0.3.1.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.3.2/pax-url-classpath-0.3.2.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.3.1/pax-url-classpath-0.3.1-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.3.2/pax-url-classpath-0.3.2-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.3.1/pax-url-classpath-0.3.1-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.3.2/pax-url-classpath-0.3.2-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="org.ops4j.pax.url:pax-url-mvn:0.3.1">
+      <library name="org.ops4j.pax.url:pax-url-mvn:0.3.2">
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.3.1/pax-url-mvn-0.3.1.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.3.2/pax-url-mvn-0.3.2.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.3.1/pax-url-mvn-0.3.1-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.3.2/pax-url-mvn-0.3.2-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.3.1/pax-url-mvn-0.3.1-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.3.2/pax-url-mvn-0.3.2-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="org.ops4j.pax.url:pax-url-obr:0.3.1">
+      <library name="org.ops4j.pax.url:pax-url-obr:0.3.2">
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.3.1/pax-url-obr-0.3.1.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.3.2/pax-url-obr-0.3.2.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.3.1/pax-url-obr-0.3.1-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.3.2/pax-url-obr-0.3.2-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.3.1/pax-url-obr-0.3.1-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.3.2/pax-url-obr-0.3.2-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="org.ops4j.pax.url:pax-url-war:0.3.1">
+      <library name="org.ops4j.pax.url:pax-url-war:0.3.2">
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.3.1/pax-url-war-0.3.1.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.3.2/pax-url-war-0.3.2.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.3.1/pax-url-war-0.3.1-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.3.2/pax-url-war-0.3.2-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.3.1/pax-url-war-0.3.1-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.3.2/pax-url-war-0.3.2-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="org.ops4j.pax.url:pax-url-wrap:0.3.1">
+      <library name="org.ops4j.pax.url:pax-url-wrap:0.3.2">
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.3.1/pax-url-wrap-0.3.1.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.3.2/pax-url-wrap-0.3.2.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.3.1/pax-url-wrap-0.3.1-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.3.2/pax-url-wrap-0.3.2-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.3.1/pax-url-wrap-0.3.1-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.3.2/pax-url-wrap-0.3.2-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

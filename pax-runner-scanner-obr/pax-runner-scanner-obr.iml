@@ -9,9 +9,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/target/classes" />
-      <excludeFolder url="file://$MODULE_DIR$/target/surefire-reports" />
-      <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -133,8 +130,8 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="pax-runner-commons" exported="" />
-    <orderEntry type="module" module-name="pax-runner-provision" exported="" />
-    <orderEntry type="module-library">
+    <orderEntry type="module" module-name="pax-runner-scanner-common" exported="" />
+    <orderEntry type="module-library" exported="">
       <library name="org.ops4j.pax.swissbox:pax-swissbox-property:0.2.0">
         <CLASSES>
           <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-property/0.2.0/pax-swissbox-property-0.2.0.jar!/" />
@@ -147,6 +144,7 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="pax-runner-provision" exported="" />
     <orderEntry type="module-library">
       <library name="org.apache.felix:org.osgi.service.obr:1.0.0">
         <CLASSES>
