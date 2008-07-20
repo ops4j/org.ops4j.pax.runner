@@ -19,6 +19,7 @@
  */
 package org.ops4j.pax.runner;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -469,9 +470,42 @@ public class Run
         System.out.println( " /  /    /  / /  / / _\\ \\" );
         System.out.println( "/__/    /__/ /__/ /_/ /_/" );
         System.out.println();
-        System.out.println( "Pax Runner from OPS4J - http://www.ops4j.org" );
-        System.out.println( "--------------------------------------------" );
+        final String logo = "Pax Runner " + getVersion() + "from OPS4J - http://www.ops4j.org";
+        System.out.println( logo );
+        System.out.println(
+            "--------------------------------------------------------------------------------------------------------"
+                .substring( 0, logo.length() )
+        );
         System.out.println();
+    }
+
+    /**
+     * Discovers the Pax Runner version. If version cannot be determined returns an empty string.
+     *
+     * @return pax runner version
+     */
+    private static String getVersion()
+    {
+        try
+        {
+            final InputStream is = Run.class.getClassLoader().getResourceAsStream( "META-INF/runner.version" );
+            if( is != null )
+            {
+                final Properties properties = new Properties();
+                properties.load( is );
+                final String version = properties.getProperty( "version" );
+                if( version != null )
+                {
+                    return "(" + version + ") ";
+                }
+                return "";
+            }
+            return "";
+        }
+        catch( Exception ignore )
+        {
+            return "";
+        }
     }
 
     /**

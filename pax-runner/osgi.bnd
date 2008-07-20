@@ -19,7 +19,6 @@ Private-Package:\
 #  org.apache.commons.logging; -split-package:=merge-first
 
 Include-Resource:\
-  src/main/resources/,\
   @target/dependency/org.osgi.core.jar!/org/osgi/framework/*,\
   @target/dependency/org.osgi.core.jar!/org/osgi/service/startlevel/*,\
   @target/dependency/org.osgi.core.jar!/org/osgi/service/url/*,\
