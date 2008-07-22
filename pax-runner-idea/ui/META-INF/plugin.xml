@@ -25,25 +25,18 @@
   <vendor>OPS4J - Open Participation Software for Java</vendor>
   <idea-version since-build="3000"/>
   <module-components>
-    <component>
-      <implementation-class>org.ops4j.osgidea.module.OsgiModuleEditorsProvider</implementation-class>
-    </component>
-    <component>
-      <interface-class>org.ops4j.osgidea.module.packages.PackageManager</interface-class>
-      <implementation-class>org.ops4j.osgidea.module.packages.PackageManagerImpl</implementation-class>
-    </component>
   </module-components>
-  <resource-bundle xmlns="">org.ops4j.osgidea.OsgiResourceBundle</resource-bundle>
+  <resource-bundle xmlns="">org.ops4j.pax.OsgiResourceBundle</resource-bundle>
 
   <project-components>
   </project-components>
 
   <application-components>
     <component>
-      <implementation-class>org.ops4j.osgidea.OsgiPlugin</implementation-class>
+      <implementation-class>org.ops4j.pax.OsgiPlugin</implementation-class>
       </component>
     <component>
-      <implementation-class>org.ops4j.osgidea.runner.PaxRunnerType</implementation-class>
+      <implementation-class>org.ops4j.pax.idea.runner.PaxRunnerType</implementation-class>
     </component>
   </application-components>
 </idea-plugin>

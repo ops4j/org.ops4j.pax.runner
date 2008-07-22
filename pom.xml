@@ -51,6 +51,7 @@
     <module>pax-runner-platform-knopflerfish</module>
     <module>pax-runner</module>
     <module>pax-runner-assembly</module>
+    <module>pax-runner-idea</module>
   </modules>
 
   <developers>
@@ -215,6 +216,11 @@
         <artifactId>org.osgi.compendium</artifactId>
         <version>4.0.1</version>
         <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>commons-logging</groupId>
+        <artifactId>commons-logging-api</artifactId>
+        <version>1.1</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

@@ -2,20 +2,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.ops4j.pax.cursor</groupId>
-    <artifactId>idea</artifactId>
-    <version>0.7.0-SNAPSHOT</version>
+    <groupId>org.ops4j.pax.runner</groupId>
+    <artifactId>pax-runner-idea</artifactId>
+    <version>0.13.0-SNAPSHOT</version>
   </parent>
-  <groupId>org.ops4j.pax.cursor</groupId>
-  <artifactId>osgidea</artifactId>
-  <name>Pax Runner IDEA plugin</name>
-  <version>0.3.0-SNAPSHOT</version>
+  <groupId>org.ops4j.pax.runner</groupId>
+  <artifactId>pax-runner-idea-ui</artifactId>
+  <name>Pax Runner - IntelliJ IDEA plugin - UI</name>
+  <version>0.13.0-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
-      <groupId>biz.aqute</groupId>
-      <artifactId>bnd</artifactId>
-      <version>0.9.4</version>
+      <groupId>org.ops4j.pax.cursor</groupId>
+      <artifactId>model</artifactId>
+      <version>0.13.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.intellij</groupId>
@@ -43,34 +43,8 @@
       <version>7757</version>
     </dependency>
     <dependency>
-      <groupId>jdom</groupId>
-      <artifactId>jdom</artifactId>
-      <version>1.0</version>
-    </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.12</version>
-    </dependency>
-    <dependency>
-      <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>common</artifactId>
-      <version>0.3.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>model</artifactId>
-      <version>0.3.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>repoman</artifactId>
-      <version>0.3.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>runner</artifactId>
-      <version>0.3.0-SNAPSHOT</version>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging-api</artifactId>
     </dependency>
   </dependencies>
 </project>

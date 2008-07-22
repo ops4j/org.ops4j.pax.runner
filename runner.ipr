@@ -339,30 +339,50 @@
   <component name="ProjectFileVersion" converted="true" />
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/pax-runner/pax-runner.iml" filepath="$PROJECT_DIR$/pax-runner/pax-runner.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-assembly/pax-runner-assembly.iml" filepath="$PROJECT_DIR$/pax-runner-assembly/pax-runner-assembly.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-commons/pax-runner-commons.iml" filepath="$PROJECT_DIR$/pax-runner-commons/pax-runner-commons.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-handler/pax-runner-handler.iml" filepath="$PROJECT_DIR$/pax-runner-handler/pax-runner-handler.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform/pax-runner-platform.iml" filepath="$PROJECT_DIR$/pax-runner-platform/pax-runner-platform.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-concierge/pax-runner-platform-concierge.iml" filepath="$PROJECT_DIR$/pax-runner-platform-concierge/pax-runner-platform-concierge.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-console/pax-runner-platform-console.iml" filepath="$PROJECT_DIR$/pax-runner-platform-console/pax-runner-platform-console.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-equinox/pax-runner-platform-equinox.iml" filepath="$PROJECT_DIR$/pax-runner-platform-equinox/pax-runner-platform-equinox.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-felix/pax-runner-platform-felix.iml" filepath="$PROJECT_DIR$/pax-runner-platform-felix/pax-runner-platform-felix.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-knopflerfish/pax-runner-platform-knopflerfish.iml" filepath="$PROJECT_DIR$/pax-runner-platform-knopflerfish/pax-runner-platform-knopflerfish.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-provision/pax-runner-provision.iml" filepath="$PROJECT_DIR$/pax-runner-provision/pax-runner-provision.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-provision-console/pax-runner-provision-console.iml" filepath="$PROJECT_DIR$/pax-runner-provision-console/pax-runner-provision-console.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-bundle/pax-runner-scanner-bundle.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-bundle/pax-runner-scanner-bundle.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-common/pax-runner-scanner-common.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-common/pax-runner-scanner-common.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-dir/pax-runner-scanner-dir.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-dir/pax-runner-scanner-dir.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-file/pax-runner-scanner-file.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-file/pax-runner-scanner-file.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-obr/pax-runner-scanner-obr.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-obr/pax-runner-scanner-obr.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-obr-script/pax-runner-scanner-obr-script.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-obr-script/pax-runner-scanner-obr-script.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-pom/pax-runner-scanner-pom.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-pom/pax-runner-scanner-pom.iml" />
-      <module fileurl="file://$PROJECT_DIR$/runner.iml" filepath="$PROJECT_DIR$/runner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner/pax-runner.iml" filepath="$PROJECT_DIR$/pax-runner/pax-runner.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-assembly/pax-runner-assembly.iml" filepath="$PROJECT_DIR$/pax-runner-assembly/pax-runner-assembly.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-commons/pax-runner-commons.iml" filepath="$PROJECT_DIR$/pax-runner-commons/pax-runner-commons.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-handler/pax-runner-handler.iml" filepath="$PROJECT_DIR$/pax-runner-handler/pax-runner-handler.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-idea/pax-runner-idea.iml" filepath="$PROJECT_DIR$/pax-runner-idea/pax-runner-idea.iml" group="runner and modules/pax-runner-idea and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-idea/model/pax-runner-idea-model.iml" filepath="$PROJECT_DIR$/pax-runner-idea/model/pax-runner-idea-model.iml" group="runner and modules/pax-runner-idea and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-idea/ui/pax-runner-idea-ui.iml" filepath="$PROJECT_DIR$/pax-runner-idea/ui/pax-runner-idea-ui.iml" group="runner and modules/pax-runner-idea and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform/pax-runner-platform.iml" filepath="$PROJECT_DIR$/pax-runner-platform/pax-runner-platform.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-concierge/pax-runner-platform-concierge.iml" filepath="$PROJECT_DIR$/pax-runner-platform-concierge/pax-runner-platform-concierge.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-console/pax-runner-platform-console.iml" filepath="$PROJECT_DIR$/pax-runner-platform-console/pax-runner-platform-console.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-equinox/pax-runner-platform-equinox.iml" filepath="$PROJECT_DIR$/pax-runner-platform-equinox/pax-runner-platform-equinox.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-felix/pax-runner-platform-felix.iml" filepath="$PROJECT_DIR$/pax-runner-platform-felix/pax-runner-platform-felix.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-knopflerfish/pax-runner-platform-knopflerfish.iml" filepath="$PROJECT_DIR$/pax-runner-platform-knopflerfish/pax-runner-platform-knopflerfish.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-provision/pax-runner-provision.iml" filepath="$PROJECT_DIR$/pax-runner-provision/pax-runner-provision.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-provision-console/pax-runner-provision-console.iml" filepath="$PROJECT_DIR$/pax-runner-provision-console/pax-runner-provision-console.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-bundle/pax-runner-scanner-bundle.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-bundle/pax-runner-scanner-bundle.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-common/pax-runner-scanner-common.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-common/pax-runner-scanner-common.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-dir/pax-runner-scanner-dir.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-dir/pax-runner-scanner-dir.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-file/pax-runner-scanner-file.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-file/pax-runner-scanner-file.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-obr/pax-runner-scanner-obr.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-obr/pax-runner-scanner-obr.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-obr-script/pax-runner-scanner-obr-script.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-obr-script/pax-runner-scanner-obr-script.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-pom/pax-runner-scanner-pom.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-pom/pax-runner-scanner-pom.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/runner.iml" filepath="$PROJECT_DIR$/runner.iml" group="runner and modules" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="1.5" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
+  </component>
+  <component name="ProjectRunConfigurationManager">
+    <configuration default="false" name="Pax Runner idea Plugin" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="pax-runner-idea-ui" />
+      <option name="VM_PARAMETERS" value="-XX:MaxPermSize=120m" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <RunnerSettings RunnerId="JProfiler">
+        <option name="WINDOW" value="false" />
+        <option name="JVMPI" value="false" />
+        <option name="INTERPRETED" value="false" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method>
+        <option name="Make" value="true" />
+      </method>
+    </configuration>
   </component>
   <component name="ResourceManagerContainer">
     <option name="myResourceBundles">
@@ -382,8 +402,5 @@
     <mapping directory="" vcs="svn" />
   </component>
   <component name="WebServicesPlugin" addRequiredLibraries="true" />
-  <UsedPathMacros>
-    <macro name="M2_REPO" />
-  </UsedPathMacros>
 </project>
 

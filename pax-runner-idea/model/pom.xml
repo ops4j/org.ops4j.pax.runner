@@ -2,14 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.ops4j.pax.cursor</groupId>
-    <artifactId>idea</artifactId>
-    <version>0.7.0-SNAPSHOT</version>
+    <groupId>org.ops4j.pax.runner</groupId>
+    <artifactId>pax-runner-idea</artifactId>
+    <version>0.13.0-SNAPSHOT</version>
   </parent>
   <groupId>org.ops4j.pax.cursor</groupId>
   <artifactId>model</artifactId>
-  <name>Pax Runner Model</name>
-  <version>0.3.0-SNAPSHOT</version>
+  <name>Pax Runner - IntelliJ IDEA plugin - Model</name>
+  <version>0.13.0-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
@@ -29,7 +29,7 @@
     </dependency>
     <dependency>
       <groupId>org.ops4j.base</groupId>
-      <artifactId>ops4j-base</artifactId>
+      <artifactId>ops4j-base-lang</artifactId>
     </dependency>
   </dependencies>
 </project>
