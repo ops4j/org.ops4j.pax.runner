@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -30,29 +31,94 @@
     <connection>scm:svn:https://scm.ops4j.org/repos/ops4j/projects/pax/runner</connection>
     <developerConnection>scm:svn:https://scm.ops4j.org/repos/ops4j/projects/pax/runner</developerConnection>
   </scm>
-
-  <modules>
-    <module>pax-runner-commons</module>
-    <module>pax-runner-handler</module>
-    <module>pax-runner-provision</module>
-    <module>pax-runner-provision-console</module>
-    <module>pax-runner-scanner-common</module>
-    <module>pax-runner-scanner-bundle</module>
-    <module>pax-runner-scanner-dir</module>
-    <module>pax-runner-scanner-file</module>
-    <module>pax-runner-scanner-obr</module>
-    <module>pax-runner-scanner-obr-script</module>    
-    <module>pax-runner-scanner-pom</module>
-    <module>pax-runner-platform</module>
-    <module>pax-runner-platform-console</module>
-    <module>pax-runner-platform-concierge</module>
-    <module>pax-runner-platform-equinox</module>
-    <module>pax-runner-platform-felix</module>
-    <module>pax-runner-platform-knopflerfish</module>
-    <module>pax-runner</module>
-    <module>pax-runner-assembly</module>
-    <module>pax-runner-idea</module>
-  </modules>
+  <profiles>
+    <profile>
+      <id>default</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>pax-runner-commons</module>
+        <module>pax-runner-handler</module>
+        <module>pax-runner-provision</module>
+        <module>pax-runner-provision-console</module>
+        <module>pax-runner-scanner-common</module>
+        <module>pax-runner-scanner-bundle</module>
+        <module>pax-runner-scanner-dir</module>
+        <module>pax-runner-scanner-file</module>
+        <module>pax-runner-scanner-obr</module>
+        <module>pax-runner-scanner-obr-script</module>
+        <module>pax-runner-scanner-pom</module>
+        <module>pax-runner-platform</module>
+        <module>pax-runner-platform-console</module>
+        <module>pax-runner-platform-concierge</module>
+        <module>pax-runner-platform-equinox</module>
+        <module>pax-runner-platform-felix</module>
+        <module>pax-runner-platform-knopflerfish</module>
+        <module>pax-runner-executor</module>
+        <module>pax-runner-executor-bucket</module>
+        <module>pax-runner</module>
+        <module>pax-runner-assembly</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>all</id>
+      <modules>
+        <module>pax-runner-commons</module>
+        <module>pax-runner-handler</module>
+        <module>pax-runner-provision</module>
+        <module>pax-runner-provision-console</module>
+        <module>pax-runner-scanner-common</module>
+        <module>pax-runner-scanner-bundle</module>
+        <module>pax-runner-scanner-dir</module>
+        <module>pax-runner-scanner-file</module>
+        <module>pax-runner-scanner-obr</module>
+        <module>pax-runner-scanner-obr-script</module>
+        <module>pax-runner-scanner-pom</module>
+        <module>pax-runner-platform</module>
+        <module>pax-runner-platform-console</module>
+        <module>pax-runner-platform-concierge</module>
+        <module>pax-runner-platform-equinox</module>
+        <module>pax-runner-platform-felix</module>
+        <module>pax-runner-platform-knopflerfish</module>
+        <module>pax-runner-executor</module>
+        <module>pax-runner-executor-bucket</module>
+        <module>pax-runner</module>
+        <module>pax-runner-assembly</module>
+        <module>pax-runner-idea</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>scanner</id>
+      <modules>
+        <module>pax-runner-scanner-common</module>
+        <module>pax-runner-scanner-bundle</module>
+        <module>pax-runner-scanner-dir</module>
+        <module>pax-runner-scanner-file</module>
+        <module>pax-runner-scanner-obr</module>
+        <module>pax-runner-scanner-obr-script</module>
+        <module>pax-runner-scanner-pom</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>platform</id>
+      <modules>
+        <module>pax-runner-platform</module>
+        <module>pax-runner-platform-console</module>
+        <module>pax-runner-platform-concierge</module>
+        <module>pax-runner-platform-equinox</module>
+        <module>pax-runner-platform-felix</module>
+        <module>pax-runner-platform-knopflerfish</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>executor</id>
+      <modules>
+        <module>pax-runner-executor</module>
+        <module>pax-runner-executor-bucket</module>
+      </modules>
+    </profile>
+  </profiles>
 
   <developers>
     <developer>
