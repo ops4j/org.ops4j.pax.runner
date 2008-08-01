@@ -56,6 +56,18 @@ public class Pipe
             return this;
         }
 
+        if( m_in != m_processStream )
+        {
+            try
+            {
+                m_in.available();
+            }
+            catch( IOException e )
+            {
+                return this;
+            }
+        }
+
         m_thread = new Thread( this, name );
         m_thread.setDaemon( true );
         m_thread.start();
@@ -91,7 +103,6 @@ public class Pipe
         {
             try
             {
-
                 int bytesRead = m_in.read( cbuf, 0, 8192 );
                 if( bytesRead == -1 )
                 {
@@ -114,10 +125,6 @@ public class Pipe
             if( m_in == m_processStream )
             {
                 m_in.close();
-            }
-            else
-            {
-                m_out.close();
             }
         }
         catch( IOException e )
