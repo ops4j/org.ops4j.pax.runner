@@ -206,8 +206,8 @@ public class PomScanner
         {
             type = null;
         }
-        // we only support jars
-        if( type != null && !type.equalsIgnoreCase( "jar" ) )
+        // deploy any artifact type (jar, war, etc.) except pom
+        if( type != null && type.equalsIgnoreCase( "pom" ) )
         {
             return null;
         }
