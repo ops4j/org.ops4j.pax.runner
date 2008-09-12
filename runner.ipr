@@ -215,6 +215,35 @@
     <option name="IS_EMACS_ERRORS_MODE" value="true" />
     <option name="ADDITIONAL_OPTIONS_STRING" value="" />
   </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pax-runner/pom.xml" />
+        <option value="$PROJECT_DIR$/pax-runner-assembly/pom.xml" />
+        <option value="$PROJECT_DIR$/pax-runner-commons/pom.xml" />
+        <option value="$PROJECT_DIR$/pax-runner-handler/pom.xml" />
+        <option value="$PROJECT_DIR$/pax-runner-idea/pom.xml" />
+        <option value="$PROJECT_DIR$/pax-runner-idea/model/pom.xml" />
+        <option value="$PROJECT_DIR$/pax-runner-idea/ui/pom.xml" />
+        <option value="$PROJECT_DIR$/pax-runner-platform/pom.xml" />
+        <option value="$PROJECT_DIR$/pax-runner-platform-concierge/pom.xml" />
+        <option value="$PROJECT_DIR$/pax-runner-platform-console/pom.xml" />
+        <option value="$PROJECT_DIR$/pax-runner-platform-equinox/pom.xml" />
+        <option value="$PROJECT_DIR$/pax-runner-platform-felix/pom.xml" />
+        <option value="$PROJECT_DIR$/pax-runner-platform-knopflerfish/pom.xml" />
+        <option value="$PROJECT_DIR$/pax-runner-provision/pom.xml" />
+        <option value="$PROJECT_DIR$/pax-runner-provision-console/pom.xml" />
+        <option value="$PROJECT_DIR$/pax-runner-scanner-bundle/pom.xml" />
+        <option value="$PROJECT_DIR$/pax-runner-scanner-common/pom.xml" />
+        <option value="$PROJECT_DIR$/pax-runner-scanner-dir/pom.xml" />
+        <option value="$PROJECT_DIR$/pax-runner-scanner-file/pom.xml" />
+        <option value="$PROJECT_DIR$/pax-runner-scanner-obr/pom.xml" />
+        <option value="$PROJECT_DIR$/pax-runner-scanner-obr-script/pom.xml" />
+        <option value="$PROJECT_DIR$/pax-runner-scanner-pom/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
+    </option>
+  </component>
   <component name="Palette2">
     <group name="Swing">
       <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
@@ -342,6 +371,8 @@
       <module fileurl="file://$PROJECT_DIR$/pax-runner/pax-runner.iml" filepath="$PROJECT_DIR$/pax-runner/pax-runner.iml" group="runner and modules" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-assembly/pax-runner-assembly.iml" filepath="$PROJECT_DIR$/pax-runner-assembly/pax-runner-assembly.iml" group="runner and modules" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-commons/pax-runner-commons.iml" filepath="$PROJECT_DIR$/pax-runner-commons/pax-runner-commons.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-executor/pax-runner-executor.iml" filepath="$PROJECT_DIR$/pax-runner-executor/pax-runner-executor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-executor-bucket/pax-runner-executor-bucket.iml" filepath="$PROJECT_DIR$/pax-runner-executor-bucket/pax-runner-executor-bucket.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-handler/pax-runner-handler.iml" filepath="$PROJECT_DIR$/pax-runner-handler/pax-runner-handler.iml" group="runner and modules" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-idea/pax-runner-idea.iml" filepath="$PROJECT_DIR$/pax-runner-idea/pax-runner-idea.iml" group="runner and modules/pax-runner-idea and modules" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-idea/model/pax-runner-idea-model.iml" filepath="$PROJECT_DIR$/pax-runner-idea/model/pax-runner-idea-model.iml" group="runner and modules/pax-runner-idea and modules" />
@@ -398,9 +429,15 @@
     <option name="GENERATE_IIOP_STUBS" value="false" />
     <option name="ADDITIONAL_OPTIONS_STRING" value="" />
   </component>
+  <component name="SvnBranchConfigurationManager">
+    <option name="myVersion" value="123" />
+  </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="svn" />
   </component>
   <component name="WebServicesPlugin" addRequiredLibraries="true" />
+  <UsedPathMacros>
+    <macro name="M2_REPO" />
+  </UsedPathMacros>
 </project>
 
