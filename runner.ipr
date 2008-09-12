@@ -371,12 +371,12 @@
       <module fileurl="file://$PROJECT_DIR$/pax-runner/pax-runner.iml" filepath="$PROJECT_DIR$/pax-runner/pax-runner.iml" group="runner and modules" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-assembly/pax-runner-assembly.iml" filepath="$PROJECT_DIR$/pax-runner-assembly/pax-runner-assembly.iml" group="runner and modules" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-commons/pax-runner-commons.iml" filepath="$PROJECT_DIR$/pax-runner-commons/pax-runner-commons.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-executor/pax-runner-executor.iml" filepath="$PROJECT_DIR$/pax-runner-executor/pax-runner-executor.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-executor-bucket/pax-runner-executor-bucket.iml" filepath="$PROJECT_DIR$/pax-runner-executor-bucket/pax-runner-executor-bucket.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-executor/pax-runner-executor.iml" filepath="$PROJECT_DIR$/pax-runner-executor/pax-runner-executor.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-executor-bucket/pax-runner-executor-bucket.iml" filepath="$PROJECT_DIR$/pax-runner-executor-bucket/pax-runner-executor-bucket.iml" group="runner and modules" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-handler/pax-runner-handler.iml" filepath="$PROJECT_DIR$/pax-runner-handler/pax-runner-handler.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-idea/pax-runner-idea.iml" filepath="$PROJECT_DIR$/pax-runner-idea/pax-runner-idea.iml" group="runner and modules/pax-runner-idea and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-idea/model/pax-runner-idea-model.iml" filepath="$PROJECT_DIR$/pax-runner-idea/model/pax-runner-idea-model.iml" group="runner and modules/pax-runner-idea and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-idea/ui/pax-runner-idea-ui.iml" filepath="$PROJECT_DIR$/pax-runner-idea/ui/pax-runner-idea-ui.iml" group="runner and modules/pax-runner-idea and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-idea/pax-runner-idea.iml" filepath="$PROJECT_DIR$/pax-runner-idea/pax-runner-idea.iml" group="pax-runner-idea and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-idea/model/pax-runner-idea-model.iml" filepath="$PROJECT_DIR$/pax-runner-idea/model/pax-runner-idea-model.iml" group="pax-runner-idea and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-idea/ui/pax-runner-idea-ui.iml" filepath="$PROJECT_DIR$/pax-runner-idea/ui/pax-runner-idea-ui.iml" group="pax-runner-idea and modules" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-platform/pax-runner-platform.iml" filepath="$PROJECT_DIR$/pax-runner-platform/pax-runner-platform.iml" group="runner and modules" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-concierge/pax-runner-platform-concierge.iml" filepath="$PROJECT_DIR$/pax-runner-platform-concierge/pax-runner-platform-concierge.iml" group="runner and modules" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-console/pax-runner-platform-console.iml" filepath="$PROJECT_DIR$/pax-runner-platform-console/pax-runner-platform-console.iml" group="runner and modules" />
