@@ -2,18 +2,18 @@
 
   <profile name="minimal" default="true">
     <bundle>
-      <name>org.osgi.compendium</name>
+      <name>org.osgi.compendium (4.1.0)</name>
       <url>mvn:org.osgi/org.osgi.compendium/4.1.0</url>
     </bundle>
   </profile>
 
   <profile name="tui" extends="minimal">
     <bundle>
-      <name>org.apache.felix.shell</name>
+      <name>org.apache.felix.shell (1.0.2)</name>
       <url>mvn:org.apache.felix/org.apache.felix.shell/1.0.2</url>
     </bundle>
     <bundle>
-      <name>org.apache.felix.shell.tui.plugin</name>
+      <name>org.apache.felix.shell.tui.plugin (1.0.2)</name>
       <url>mvn:org.apache.felix/org.apache.felix.shell.tui/1.0.2</url>
     </bundle>
   </profile>
