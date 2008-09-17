@@ -135,6 +135,32 @@ public class Run
     }
 
     /**
+     * Creates a Java runner based on "runner" option.
+     *
+     * @param resolver an option resolver
+     *
+     * @return a java runner
+     */
+    JavaRunner createJavaRunner( final OptionResolver resolver )
+    {
+        NullArgumentException.validateNotNull( resolver, "PropertyResolver" );
+
+        LOGGER.debug( "Creating Java Runner" );
+        final String executor = resolver.get( OPTION_EXECUTOR );
+        if( executor == null || executor.trim().length() == 0 )
+        {
+            LOGGER.info( "Using default executor" );
+            return null;
+        }
+        if( "noop".equalsIgnoreCase( executor ) )
+        {
+            LOGGER.info( "Using noop executor" );
+            return new NoopJavaRunner();
+        }
+        throw new ConfigurationException( "Executor [" + executor + "] is not supported" );
+    }
+
+    /**
      * Starts runner.
      *
      * @param commandLine comand line to use
@@ -155,7 +181,7 @@ public class Run
         // stop the dispatcher as there are no longer events around
         EventDispatcher.shutdown();
         // install platform and start it up
-        startPlatform( installPlatform( context ), context, runner );
+        startPlatform( installPlatform( context ), context, runner == null ? createJavaRunner( resolver ) : runner );
     }
 
     /**

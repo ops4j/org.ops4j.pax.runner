@@ -49,6 +49,10 @@ public interface CommandLine
      */
     static final String OPTION_PLATFORM = "platform";
     /**
+     * Executor option.
+     */
+    static final String OPTION_EXECUTOR = "executor";
+    /**
      * Services option.
      */
     static final String OPTION_SERVICES = "services";

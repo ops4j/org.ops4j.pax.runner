@@ -26,6 +26,7 @@ import org.junit.Test;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.ServiceReference;
+import org.ops4j.pax.runner.platform.JavaRunner;
 import org.ops4j.pax.runner.platform.Platform;
 import org.ops4j.pax.runner.provision.InstallableBundles;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
@@ -82,6 +83,7 @@ public class RunTest
         m_recorder.record( "installHandlers()" );
         m_recorder.record( "installScanners()" );
         m_recorder.record( "installBundles()" );
+        m_recorder.record( "createJavaRunner()" );
         m_recorder.record( "installPlatform()" );
         replay( m_commandLine, m_config, m_recorder, m_resolver, m_bundleContext );
         new Run()
@@ -119,7 +121,14 @@ public class RunTest
                 m_recorder.record( "installServices()" );
             }
 
-        }.start( m_commandLine, m_config, m_resolver );
+            @Override
+            JavaRunner createJavaRunner( OptionResolver resolver )
+            {
+                m_recorder.record( "createJavaRunner()" );
+                return null;
+            }
+
+        }.start( m_commandLine, m_config, m_resolver, null );
         verify( m_commandLine, m_config, m_recorder, m_resolver, m_bundleContext );
     }
 
@@ -178,6 +187,7 @@ public class RunTest
     @Test( expected = ConfigurationException.class )
     public void startWithInvalidHandlers()
     {
+        expect( m_resolver.get( "executor" ) ).andReturn( null );
         expect( m_resolver.get( "services" ) ).andReturn( null );
         expect( m_resolver.get( "handlers" ) ).andReturn( "handler.1" );
         expect( m_config.getProperty( "handler.service" ) ).andReturn( "handler.service.Activator" );
