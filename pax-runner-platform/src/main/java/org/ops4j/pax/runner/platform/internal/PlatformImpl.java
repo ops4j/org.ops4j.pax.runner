@@ -56,6 +56,7 @@ import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
 import org.ops4j.util.property.DictionaryPropertyResolver;
 import org.ops4j.util.property.PropertyResolver;
+import org.ops4j.io.Pipe;
 
 /**
  * Handles the workflow of creating the platform. Concrete platforms should implement only the PlatformBuilder
