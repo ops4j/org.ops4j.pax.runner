@@ -26,14 +26,14 @@
   <idea-version since-build="3000"/>
   <module-components>
   </module-components>
-  <resource-bundle xmlns="">org.ops4j.pax.OsgiResourceBundle</resource-bundle>
+  <resource-bundle>org.ops4j.pax.idea.runner.OsgiResourceBundle</resource-bundle>
 
   <project-components>
   </project-components>
 
   <application-components>
     <component>
-      <implementation-class>org.ops4j.pax.OsgiPlugin</implementation-class>
+      <implementation-class>org.ops4j.pax.idea.runner.OsgiPlugin</implementation-class>
       </component>
     <component>
       <implementation-class>org.ops4j.pax.idea.runner.PaxRunnerType</implementation-class>

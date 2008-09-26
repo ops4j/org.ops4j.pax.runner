@@ -15,18 +15,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ops4j.pax;
+package org.ops4j.pax.idea.runner;
 
 import com.intellij.openapi.components.ApplicationComponent;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class OsgiPlugin
     implements ApplicationComponent
 {
+    private static Log m_logger = LogFactory.getLog( OsgiPlugin.class );
 
     public OsgiPlugin()
     {
+        m_logger.debug( "OsgiPlugin()" );
     }
 
     /**
