@@ -103,6 +103,12 @@ public class Pipe
         {
             try
             {
+                if( m_in.available() == 0 )
+                {
+                    // don't block in case this thread is being stopped...
+                    try {Thread.sleep(100);} catch (InterruptedException e) {}
+                    continue;
+                }
                 int bytesRead = m_in.read( cbuf, 0, 8192 );
                 if( bytesRead == -1 )
                 {
