@@ -12,4 +12,4 @@ else
   SCRIPTS=`dirname $0`
 fi
 
-java $JAVA_OPTS -jar $SCRIPTS/target/pax-runner-0.13.1-SNAPSHOT.jar "$@"
+java $JAVA_OPTS -jar $SCRIPTS/target/pax-runner-0.14.0-SNAPSHOT.jar "$@"
