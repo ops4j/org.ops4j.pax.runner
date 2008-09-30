@@ -1,4 +1,7 @@
 javax.accessibility
+javax.crypto
+javax.crypto.interfaces
+javax.crypto.spec
 javax.imageio
 javax.imageio.event
 javax.imageio.metadata
