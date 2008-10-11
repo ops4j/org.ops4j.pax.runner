@@ -21,6 +21,7 @@ package org.ops4j.pax.runner;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Properties;
 import org.apache.commons.logging.Log;
@@ -46,6 +47,7 @@ import org.ops4j.pax.runner.platform.BundleReferenceBean;
 import org.ops4j.pax.runner.platform.JavaRunner;
 import org.ops4j.pax.runner.platform.Platform;
 import org.ops4j.pax.runner.platform.PlatformException;
+import org.ops4j.pax.runner.platform.ServiceConstants;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionService;
 import org.ops4j.pax.runner.provision.ScannerException;
@@ -430,6 +432,7 @@ public class Run
     private void startPlatform( final Platform platform, final Context context, final JavaRunner runner )
     {
         LOGGER.debug( "Starting platform" );
+        
         if( platform == null )
         {
             throw new RuntimeException( "Could not resolve a platform" );
@@ -453,7 +456,14 @@ public class Run
         }
         try
         {
-            platform.start( references, context.getSystemProperties(), null, runner );
+            final String classpath = context.getOptionResolver().get("classpath");
+            Properties config = null;
+            if( classpath != null )
+            {
+                config = new Properties();
+                config.put( ServiceConstants.CONFIG_CLASSPATH, classpath );
+            }
+            platform.start( references, context.getSystemProperties(), config, runner );
         }
         catch( PlatformException e )
         {
