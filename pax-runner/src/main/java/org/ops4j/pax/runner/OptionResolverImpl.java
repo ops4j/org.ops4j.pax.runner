@@ -100,6 +100,11 @@ public class OptionResolverImpl
                 for( String entry : aliases )
                 {
                     value = m_commandLine.getOption( entry );
+                    // let's also try out a case insensitive version
+                    if ( value == null)
+                    {
+                        value = m_commandLine.getOption( entry.toLowerCase() );
+                    }
                     // we get out on first found
                     if( value != null )
                     {
