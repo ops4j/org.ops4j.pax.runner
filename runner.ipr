@@ -372,9 +372,6 @@
       <module fileurl="file://$PROJECT_DIR$/pax-runner-assembly/pax-runner-assembly.iml" filepath="$PROJECT_DIR$/pax-runner-assembly/pax-runner-assembly.iml" group="runner and modules" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-commons/pax-runner-commons.iml" filepath="$PROJECT_DIR$/pax-runner-commons/pax-runner-commons.iml" group="runner and modules" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-handler/pax-runner-handler.iml" filepath="$PROJECT_DIR$/pax-runner-handler/pax-runner-handler.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-idea/pax-runner-idea.iml" filepath="$PROJECT_DIR$/pax-runner-idea/pax-runner-idea.iml" group="pax-runner-idea and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-idea/model/pax-runner-idea-model.iml" filepath="$PROJECT_DIR$/pax-runner-idea/model/pax-runner-idea-model.iml" group="pax-runner-idea and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-idea/ui/pax-runner-idea-ui.iml" filepath="$PROJECT_DIR$/pax-runner-idea/ui/pax-runner-idea-ui.iml" group="pax-runner-idea and modules" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-platform/pax-runner-platform.iml" filepath="$PROJECT_DIR$/pax-runner-platform/pax-runner-platform.iml" group="runner and modules" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-concierge/pax-runner-platform-concierge.iml" filepath="$PROJECT_DIR$/pax-runner-platform-concierge/pax-runner-platform-concierge.iml" group="runner and modules" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-console/pax-runner-platform-console.iml" filepath="$PROJECT_DIR$/pax-runner-platform-console/pax-runner-platform-console.iml" group="runner and modules" />
@@ -398,7 +395,7 @@
   </component>
   <component name="ProjectRunConfigurationManager">
     <configuration default="false" name="Pax Runner idea Plugin" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
-      <module name="pax-runner-idea-ui" />
+      <module name="" />
       <option name="VM_PARAMETERS" value="-XX:MaxPermSize=120m" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <RunnerSettings RunnerId="JProfiler">
