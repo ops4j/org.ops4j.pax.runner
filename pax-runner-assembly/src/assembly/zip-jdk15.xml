@@ -17,10 +17,10 @@
     <dependencySet>
       <outputDirectory>bin</outputDirectory>
       <includes>
-        <include>*:pax-runner:*</include>
+        <include>org.ops4j.pax.runner:pax-runner:jar</include>
       </includes>
       <excludes>
-        <exclude>*:*:*:jdk14</exclude>
+        <exclude>org.ops4j.pax.runner:pax-runner:jar:jdk14</exclude>
       </excludes>
     </dependencySet>
   </dependencySets>

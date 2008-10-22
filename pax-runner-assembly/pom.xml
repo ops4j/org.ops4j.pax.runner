@@ -54,7 +54,7 @@
               <goal>attached</goal>
             </goals>
             <configuration>
-              <appendAssemblyId>false</appendAssemblyId>
+              <appendAssemblyId>true</appendAssemblyId>
               <descriptors>
                 <descriptor>src/assembly/zip-jdk15.xml</descriptor>
               </descriptors>

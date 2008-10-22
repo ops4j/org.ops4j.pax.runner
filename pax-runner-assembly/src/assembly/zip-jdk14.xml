@@ -15,10 +15,9 @@
   </fileSets>
   <dependencySets>
     <dependencySet>
-      <outputFileNameMapping>${artifactId}-${version}-jdk14.${extension}</outputFileNameMapping>
       <outputDirectory>bin</outputDirectory>
       <includes>
-        <include>*:pax-runner:*:jdk14</include>
+        <include>org.ops4j.pax.runner:pax-runner:jar:jdk14</include>
       </includes>
     </dependencySet>
   </dependencySets>
