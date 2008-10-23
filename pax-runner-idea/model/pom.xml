@@ -4,12 +4,12 @@
   <parent>
     <groupId>org.ops4j.pax.runner</groupId>
     <artifactId>pax-runner-idea</artifactId>
-    <version>0.14.1-SNAPSHOT</version>
+    <version>0.14.2-SNAPSHOT</version>
   </parent>
   <groupId>org.ops4j.pax.cursor</groupId>
   <artifactId>model</artifactId>
   <name>Pax Runner - IntelliJ IDEA plugin - Model</name>
-  <version>0.14.1-SNAPSHOT</version>
+  <version>0.14.2-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
