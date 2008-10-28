@@ -59,4 +59,27 @@ public class CommandLineImplTest
         assertEquals( "Option value", "true", commandLine.getOption( "simpleOption" ) );
     }
 
+    @Test
+    public void arrayValue()
+    {
+        CommandLine commandLine = new CommandLineImpl( "--array=v1", "--array=v2" );
+        assertEquals( "Option value", "v1", commandLine.getOption( "array" ) );
+        assertArrayEquals( "Option value", new String[]{ "v1", "v2" }, commandLine.getMultipleOption( "array" ) );
+    }
+
+    @Test
+    public void arrayOneValue()
+    {
+        CommandLine commandLine = new CommandLineImpl( "--array=v1" );
+        assertEquals( "Option value", "v1", commandLine.getOption( "array" ) );
+        assertArrayEquals( "Option value", new String[]{ "v1" }, commandLine.getMultipleOption( "array" ) );
+    }
+
+    @Test
+    public void arrayValueNotDefined()
+    {
+        CommandLine commandLine = new CommandLineImpl( "--some" );
+        assertArrayEquals( "Option value", new String[0], commandLine.getMultipleOption( "array" ) );
+    }
+
 }

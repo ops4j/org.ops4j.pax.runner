@@ -26,8 +26,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,7 +57,7 @@ public class CommandLineImpl implements CommandLine
     /**
      * Options as properties.
      */
-    private final Properties m_options;
+    private final Map<String, List<String>> m_options;
     /**
      * List of arguments.
      */
@@ -69,7 +70,7 @@ public class CommandLineImpl implements CommandLine
      */
     public CommandLineImpl( final String... args )
     {
-        m_options = new Properties();
+        m_options = new HashMap<String, List<String>>();
         m_arguments = new ArrayList<String>();
         parseArguments( Arrays.asList( args ) );
         String argsURL = getOption( "args" );
@@ -127,7 +128,17 @@ public class CommandLineImpl implements CommandLine
      */
     public String getOption( final String key )
     {
-        return m_options.getProperty( key );
+        final List<String> values = m_options.get( key );
+        return values == null || values.size() == 0 ? null : values.get( 0 );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String[] getMultipleOption( final String key )
+    {
+        final List<String> values = m_options.get( key );
+        return values == null || values.size() == 0 ? new String[0] : values.toArray( new String[values.size()] );
     }
 
     /**
@@ -155,29 +166,26 @@ public class CommandLineImpl implements CommandLine
                 key = matcher.group( 1 );
                 value = matcher.group( 2 );
             }
-            if( !m_options.containsKey( key ) )
+            if( value == null )
             {
-                if( value != null )
+                value = "true";
+                if( key.startsWith( "no" ) && key.length() > 2 )
                 {
-                    m_options.put( key, value );
-                }
-                else
-                {
-                    if( key.startsWith( "no" ) && key.length() > 2 )
+                    String actualKey = key.substring( 2, 3 ).toLowerCase();
+                    if( key.length() >= 3 )
                     {
-                        String actualKey = key.substring( 2, 3 ).toLowerCase();
-                        if( key.length() >= 3 )
-                        {
-                            actualKey = actualKey + key.substring( 3 );
-                        }
-                        m_options.put( actualKey, "false" );
+                        key = actualKey + key.substring( 3 );
                     }
-                    else
-                    {
-                        m_options.put( key, "true" );
-                    }
+                    value = "false";
                 }
             }
+            List<String> values = m_options.get( key );
+            if( values == null )
+            {
+                values = new ArrayList<String>();
+                m_options.put( key, values );
+            }
+            values.add( value );
         }
     }
 
@@ -247,13 +255,13 @@ public class CommandLineImpl implements CommandLine
                 .append( "]" );
         }
         builder.append( "Options: " );
-        for( Object key : m_options.keySet() )
+        for( Map.Entry<String, List<String>> entry : m_options.entrySet() )
         {
             builder
                 .append( "[" )
-                .append( key )
+                .append( entry.getKey() )
                 .append( "=" )
-                .append( m_options.getProperty( (String) key ) )
+                .append( entry.getValue() )
                 .append( "]" );
         }
         return builder.toString();

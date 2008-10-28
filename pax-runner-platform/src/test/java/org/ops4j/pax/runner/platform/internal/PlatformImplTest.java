@@ -304,7 +304,7 @@ public class PlatformImplTest
         expect( m_context.getWorkingDirectory() ).andReturn( new File( m_workDir ) );
 
         replay( m_builder, m_definition, m_config, m_context, m_bundleContext, m_bundle );
-        new TestPlatform().start( bundles, null, null );
+        new TestPlatform().start( null, bundles, null, null );
         verify( m_builder, m_definition, m_config, m_context, m_bundleContext, m_bundle );
     }
 

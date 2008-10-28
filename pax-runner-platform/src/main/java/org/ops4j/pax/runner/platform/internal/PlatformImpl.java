@@ -45,18 +45,20 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.xml.sax.SAXException;
 import org.ops4j.io.FileUtils;
+import org.ops4j.io.Pipe;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.JavaRunner;
 import org.ops4j.pax.runner.platform.LocalBundle;
+import org.ops4j.pax.runner.platform.LocalSystemFile;
 import org.ops4j.pax.runner.platform.Platform;
 import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
+import org.ops4j.pax.runner.platform.SystemFileReference;
 import org.ops4j.util.property.DictionaryPropertyResolver;
 import org.ops4j.util.property.PropertyResolver;
-import org.ops4j.io.Pipe;
 
 /**
  * Handles the workflow of creating the platform. Concrete platforms should implement only the PlatformBuilder
@@ -135,18 +137,20 @@ public class PlatformImpl
     }
 
     /**
-     * @see Platform#start(java.util.List,java.util.Properties,Dictionary)
+     * @see Platform#start(java.util.List,java.util.List,java.util.Properties,Dictionary)
      */
-    public void start( final List<BundleReference> bundles, final Properties properties, final Dictionary config )
+    public void start( final List<SystemFileReference> systemFiles, final List<BundleReference> bundles,
+                       final Properties properties, final Dictionary config )
         throws PlatformException
     {
-        start( bundles, properties, config, null );
+        start( systemFiles, bundles, properties, config, null );
     }
 
     /**
-     * @see Platform#start(java.util.List,java.util.Properties,Dictionary,JavaRunner)
+     * @see Platform#start(java.util.List,java.util.List,java.util.Properties,Dictionary,JavaRunner)
      */
-    public void start( final List<BundleReference> bundles, final Properties properties, final Dictionary config, final JavaRunner runner )
+    public void start( final List<SystemFileReference> systemFiles, final List<BundleReference> bundles,
+                       final Properties properties, final Dictionary config, final JavaRunner runner )
         throws PlatformException
     {
         LOGGER.debug( "Preparing platform [" + this + "]" );
@@ -186,6 +190,9 @@ public class PlatformImpl
         final File systemFile = downloadSystemFile(
             workDir, definition, overwriteBundles || overwriteSystemBundles, downloadFeeback
         );
+        LOGGER.debug( "Download additional system libraries" );
+        final List<LocalSystemFile> locaSystemFiles =
+            downloadSystemFiles( workDir, systemFiles, overwriteBundles || overwriteSystemBundles, downloadFeeback );
         // download the rest of the bundles
         final List<LocalBundle> bundlesToInstall = new ArrayList<LocalBundle>();
         LOGGER.debug( "Download platform bundles" );
@@ -214,7 +221,7 @@ public class PlatformImpl
                 .append( configuration.getVMOptions() )
                 .append( m_platformBuilder.getVMOptions( context ) )
                 .append( "-cp" )
-                .append( systemFile.getAbsolutePath() + configuration.getClasspath() )
+                .append( buildClassPath( systemFile, locaSystemFiles, configuration ) )
                 .append( mainClassName )
                 .append( m_platformBuilder.getArguments( context ) )
                 .append( getFrameworkOptions() );
@@ -230,7 +237,8 @@ public class PlatformImpl
             vmOptions.append( configuration.getVMOptions() );
             vmOptions.append( m_platformBuilder.getVMOptions( context ) );
 
-            final String[] classpath = ( systemFile.getAbsolutePath() + configuration.getClasspath() ).split( File.pathSeparator );
+            final String[] classpath =
+                ( systemFile.getAbsolutePath() + configuration.getClasspath() ).split( File.pathSeparator );
 
             final CommandLineBuilder programOptions = new CommandLineBuilder();
             programOptions.append( m_platformBuilder.getArguments( context ) );
@@ -242,9 +250,57 @@ public class PlatformImpl
             LOGGER.debug( "programOptions [" + Arrays.toString( programOptions.toArray() ) + "]" );
 
             runner.exec( vmOptions.toArray(), classpath, mainClassName, programOptions.toArray() );
-        }        
+        }
     }
-        
+
+    /**
+     * Builds the classpath java startup option out of specified system files (prepended/appended), framework jar and
+     * classpath option.
+     *
+     * @param systemFile    framework system files
+     * @param systemFiles   local system files references
+     * @param configuration configuration to get the classpath option
+     */
+    private String buildClassPath( final File systemFile, final List<LocalSystemFile> systemFiles,
+                                   final Configuration configuration )
+    {
+        final StringBuilder prepend = new StringBuilder();
+        final StringBuilder append = new StringBuilder();
+        for( LocalSystemFile ref : systemFiles )
+        {
+            if( ref.getSystemFileReference().shouldPrepend() )
+            {
+                if( prepend.length() != 0 )
+                {
+                    prepend.append( File.pathSeparator );
+                }
+                prepend.append( ref.getFile().getAbsolutePath() );
+            }
+            else
+            {
+                if( append.length() != 0 )
+                {
+                    append.append( File.pathSeparator );
+                }
+                append.append( ref.getFile().getAbsolutePath() );
+            }
+        }
+        if( prepend.length() != 0 )
+        {
+            prepend.append( File.pathSeparator );
+        }
+        if( append.length() != 0 )
+        {
+            append.insert( 0, File.pathSeparator );
+        }
+        final StringBuilder classPath = new StringBuilder();
+        classPath.append( prepend );
+        classPath.append( systemFile.getAbsolutePath() );
+        classPath.append( append );
+        classPath.append( configuration.getClasspath() );
+        return classPath.toString();
+    }
+
     /**
      * Executes the process that contains the platform. Separated to be able to override in unit tests.
      *
@@ -328,7 +384,8 @@ public class PlatformImpl
                     // ignore if already shutting down
                 }
             }
-        }, "Pax-Runner shutdown hook" );
+        }, "Pax-Runner shutdown hook"
+        );
 
         return shutdownHook;
     }
@@ -472,6 +529,38 @@ public class PlatformImpl
         return download(
             workDir, definition.getSystemPackage(), definition.getSystemPackageName(), overwrite, false, downloadFeeback
         );
+    }
+
+    /**
+     * Downloads additional system files that will be added to the classpath.
+     *
+     * @param workDir         the directory where to download bundles
+     * @param systemFiles     list of system files references
+     * @param overwrite       if the systemFiles should be overwritten
+     * @param downloadFeeback whether or not downloading process should display fne grained progres info
+     *
+     * @return the system file
+     *
+     * @throws PlatformException re-thrown
+     */
+    private List<LocalSystemFile> downloadSystemFiles( final File workDir, final List<SystemFileReference> systemFiles,
+                                                       final Boolean overwrite, final boolean downloadFeeback )
+        throws PlatformException
+    {
+        final List<LocalSystemFile> downloaded = new ArrayList<LocalSystemFile>();
+        if( systemFiles != null )
+        {
+            for( SystemFileReference reference : systemFiles )
+            {
+                downloaded.add(
+                    new LocalSystemFileImpl(
+                        reference,
+                        download( workDir, reference.getURL(), reference.getName(), overwrite, false, downloadFeeback )
+                    )
+                );
+            }
+        }
+        return downloaded;
     }
 
     /**

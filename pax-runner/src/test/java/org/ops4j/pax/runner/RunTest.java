@@ -18,6 +18,7 @@
 package org.ops4j.pax.runner;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
@@ -28,6 +29,7 @@ import org.osgi.framework.BundleException;
 import org.osgi.framework.ServiceReference;
 import org.ops4j.pax.runner.platform.JavaRunner;
 import org.ops4j.pax.runner.platform.Platform;
+import org.ops4j.pax.runner.platform.SystemFileReference;
 import org.ops4j.pax.runner.provision.InstallableBundles;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionService;
@@ -85,6 +87,7 @@ public class RunTest
         m_recorder.record( "installBundles()" );
         m_recorder.record( "createJavaRunner()" );
         m_recorder.record( "installPlatform()" );
+        m_recorder.record( "determineSystemFiles()" );
         replay( m_commandLine, m_config, m_recorder, m_resolver, m_bundleContext );
         new Run()
         {
@@ -128,6 +131,12 @@ public class RunTest
                 return null;
             }
 
+            @Override
+            List<SystemFileReference> determineSystemFiles( Context context )
+            {
+                m_recorder.record( "determineSystemFiles()" );
+                return Collections.emptyList();
+            }
         }.start( m_commandLine, m_config, m_resolver, null );
         verify( m_commandLine, m_config, m_recorder, m_resolver, m_bundleContext );
     }

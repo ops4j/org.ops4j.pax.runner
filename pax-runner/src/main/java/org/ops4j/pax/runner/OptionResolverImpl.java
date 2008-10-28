@@ -19,6 +19,7 @@ package org.ops4j.pax.runner;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Arrays;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.lang.NullArgumentException;
@@ -56,7 +57,11 @@ public class OptionResolverImpl
     /**
      * Options cache.
      */
-    private final Map<String, String> m_cache;
+    private final Map<String, String> m_cacheOptions;
+    /**
+     * Multiple options cache.
+     */
+    private final Map<String, String[]> m_cacheMultipleOptions;
 
     /**
      * Creates anew option resolver.
@@ -70,7 +75,8 @@ public class OptionResolverImpl
         NullArgumentException.validateNotNull( configuration, "Configuration" );
         m_commandLine = commandLine;
         m_configuration = configuration;
-        m_cache = new HashMap<String, String>();
+        m_cacheOptions = new HashMap<String, String>();
+        m_cacheMultipleOptions = new HashMap<String, String[]>();
     }
 
     /**
@@ -81,9 +87,9 @@ public class OptionResolverImpl
         NullArgumentException.validateNotEmpty( name, "Option name" );
         LOGGER.trace( "Resolving option [" + name + "]" );
         // if is in the cache just return it
-        if( m_cache.containsKey( name ) )
+        if( m_cacheOptions.containsKey( name ) )
         {
-            final String value = m_cache.get( name );
+            final String value = m_cacheOptions.get( name );
             LOGGER.trace( "Option [" + name + "] resolved to [" + value + "]" );
             return value;
         }
@@ -101,7 +107,7 @@ public class OptionResolverImpl
                 {
                     value = m_commandLine.getOption( entry );
                     // let's also try out a case insensitive version
-                    if ( value == null)
+                    if( value == null )
                     {
                         value = m_commandLine.getOption( entry.toLowerCase() );
                     }
@@ -148,7 +154,7 @@ public class OptionResolverImpl
             }
             value = newValue.toString();
         }
-        m_cache.put( name, value );
+        m_cacheOptions.put( name, value );
         LOGGER.trace( "Option [" + name + "] resolved to [" + value + "]" );
         return value;
     }
@@ -164,6 +170,80 @@ public class OptionResolverImpl
             throw new MissingOptionException( name );
         }
         return value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String[] getMultiple( final String name )
+    {
+        NullArgumentException.validateNotEmpty( name, "Option name" );
+        LOGGER.trace( "Resolving option [" + name + "]" );
+        // if is in the cache just return it
+        if( m_cacheMultipleOptions.containsKey( name ) )
+        {
+            final String[] values = m_cacheMultipleOptions.get( name );
+            LOGGER.trace( "Option [" + name + "] resolved to [" + Arrays.toString( values ) + "]" );
+            return values;
+        }
+        // then look in the command line
+        String[] values = m_commandLine.getMultipleOption( name );
+        // maybe there is an alias for it
+        if( values.length == 0 )
+        {
+            final String alias = m_configuration.getProperty( "alias." + name );
+            if( alias != null && alias.trim().length() > 0 )
+            {
+                // alias could be a comma separated set of possibilities
+                String[] aliases = alias.split( "," );
+                for( String entry : aliases )
+                {
+                    values = m_commandLine.getMultipleOption( entry );
+                    // let's also try out a case insensitive version
+                    if( values.length == 0 )
+                    {
+                        values = m_commandLine.getMultipleOption( entry.toLowerCase() );
+                    }
+                    // we get out on first found
+                    if( values.length == 0 )
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+        // try to replace the shortcuts
+        if( values.length > 0 )
+        {
+            int index = 0;
+            for( String value : values )
+            {
+                // the value must be a comma separated list so replace each value
+                final String[] segments = value.split( "," );
+                final StringBuilder newValue = new StringBuilder();
+                for( String segment : segments )
+                {
+                    if( newValue.length() > 0 )
+                    {
+                        newValue.append( "," );
+                    }
+                    final String replacer = m_configuration.getProperty( "alias." + name + "." + segment );
+                    if( replacer != null )
+                    {
+                        newValue.append( replacer );
+                    }
+                    else
+                    {
+                        newValue.append( segment );
+                    }
+                }
+                values[index] = newValue.toString();
+                index++;
+            }
+        }
+        m_cacheMultipleOptions.put( name, values );
+        LOGGER.trace( "Option [" + name + "] resolved to [" + Arrays.toString( values ) + "]" );
+        return values;
     }
 
 }

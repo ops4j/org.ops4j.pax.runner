@@ -75,7 +75,7 @@ public final class Activator
                             bundles.add( new BundleReferenceBean( new URL( url ) ) );
                         }
                     }
-                    service.start( bundles, null, null );
+                    service.start( null, bundles, null, null );
                 }
             }
             catch( Exception e )

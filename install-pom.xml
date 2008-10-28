@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.ops4j.pax</groupId>
+    <artifactId>master</artifactId>
+    <version>1.10</version>
+  </parent>
+
+  <groupId>org.ops4j.pax</groupId>
+  <artifactId>install-pom</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>OPS4J Pax Runner - Install Platforms</name>
+  <description>
+    OPS4J Pax Runner - POM used for downloading framework jars to local repo for easy usage.
+  </description>
+
+  <dependencies>
+    <!-- Felix -->
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.main</artifactId>
+      <version>1.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.main</artifactId>
+      <version>1.0.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.main</artifactId>
+      <version>1.0.4</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.main</artifactId>
+      <version>1.2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.main</artifactId>
+      <version>1.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.main</artifactId>
+      <version>1.2.2</version>
+    </dependency>
+  </dependencies>
+
+  <repositories>
+    <repository>
+      <id>ops4j.releases</id>
+      <url>http://repository.ops4j.org/maven2</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+</project>

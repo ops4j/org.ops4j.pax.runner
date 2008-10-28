@@ -60,6 +60,14 @@ public interface CommandLine
      * Platform version option.
      */
     static final String OPTION_PLATFORM_VERSION = "version";
+    /**
+     * Boot classpath prepended option.
+     */
+    static final String OPTION_BOOT_CP_PREPEND = "bcp/p";
+    /**
+     * Boot classpath appended option.
+     */
+    static final String OPTION_BOOT_CP_APPEND = "bcp/a";      
 
     /**
      * Returns the value of an option by key. If option is not defined returns null.
@@ -69,6 +77,15 @@ public interface CommandLine
      * @return The option value.
      */
     String getOption( String key );
+
+    /**
+     * Returns the values of an array option (multiple values) by key. If option is not defined returns empty array.
+     *
+     * @param key option key
+     *
+     * @return The option values as array.
+     */
+    String[] getMultipleOption( String key );    
 
     /**
      * Returns the list of all arguments.

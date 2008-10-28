@@ -33,6 +33,7 @@ public interface Platform
     /**
      * Starts the platform using the internal Java runner service and waits for it to exit.
      *
+     * @param systemFiles        a list of system files to be available in the classpath; optional
      * @param bundles            a list of bundles to be included in the target platform; optional
      * @param platformProperties platform properties to be available in the started platform; optional
      * @param config             service configuration properties
@@ -40,12 +41,14 @@ public interface Platform
      * @throws org.ops4j.pax.runner.platform.PlatformException
      *          if something goes wrong
      */
-    void start( List<BundleReference> bundles, Properties platformProperties, Dictionary config )
+    void start( List<SystemFileReference> systemFiles, List<BundleReference> bundles, Properties platformProperties,
+                Dictionary config )
         throws PlatformException;
 
     /**
      * Starts the platform using an external Java runner service, which may not wait for it to exit.
      *
+     * @param systemFiles        a list of system files to be available in the classpath; optional
      * @param bundles            a list of bundles to be included in the target platform; optional
      * @param platformProperties platform properties to be available in the started platform; optional
      * @param config             service configuration properties
@@ -54,7 +57,8 @@ public interface Platform
      * @throws org.ops4j.pax.runner.platform.PlatformException
      *          if something goes wrong
      */
-    void start( List<BundleReference> bundles, Properties platformProperties, Dictionary config, JavaRunner runner )
+    void start( List<SystemFileReference> systemFiles, List<BundleReference> bundles, Properties platformProperties,
+                Dictionary config, JavaRunner runner )
         throws PlatformException;
 
 }

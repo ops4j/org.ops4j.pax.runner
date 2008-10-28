@@ -20,6 +20,8 @@
 package org.ops4j.pax.runner;
 
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -46,6 +48,8 @@ import org.ops4j.pax.runner.platform.BundleReferenceBean;
 import org.ops4j.pax.runner.platform.JavaRunner;
 import org.ops4j.pax.runner.platform.Platform;
 import org.ops4j.pax.runner.platform.PlatformException;
+import org.ops4j.pax.runner.platform.SystemFileReference;
+import org.ops4j.pax.runner.platform.SystemFileReferenceBean;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionService;
 import org.ops4j.pax.runner.provision.ScannerException;
@@ -453,12 +457,41 @@ public class Run
         }
         try
         {
-            platform.start( references, context.getSystemProperties(), null, runner );
+            platform.start( determineSystemFiles( context ), references, context.getSystemProperties(), null, runner );
         }
         catch( PlatformException e )
         {
             throw new RuntimeException( e );
         }
+    }
+
+    List<SystemFileReference> determineSystemFiles( final Context context )
+    {
+        final List<SystemFileReference> systemFiles = new ArrayList<SystemFileReference>();
+        try
+        {
+            final String[] bcppUrls = context.getOptionResolver().getMultiple( CommandLine.OPTION_BOOT_CP_PREPEND );
+            if( bcppUrls.length > 0 )
+            {
+                for( String url : bcppUrls )
+                {
+                    systemFiles.add( new SystemFileReferenceBean( url, new URL( url ), true ) );
+                }
+            }
+            final String[] bcpaUrls = context.getOptionResolver().getMultiple( CommandLine.OPTION_BOOT_CP_APPEND );
+            if( bcpaUrls.length > 0 )
+            {
+                for( String url : bcpaUrls )
+                {
+                    systemFiles.add( new SystemFileReferenceBean( url, new URL( url ), false ) );
+                }
+            }
+        }
+        catch( MalformedURLException e )
+        {
+            throw new RuntimeException( e );
+        }
+        return systemFiles;
     }
 
     /**
