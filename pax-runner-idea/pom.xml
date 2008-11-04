@@ -5,11 +5,11 @@
   <parent>
     <groupId>org.ops4j.pax</groupId>
     <artifactId>runner</artifactId>
-    <version>0.15.0-SNAPSHOT</version>
+    <version>0.15.1-SNAPSHOT</version>
   </parent>
   <groupId>org.ops4j.pax.runner</groupId>
   <artifactId>pax-runner-idea</artifactId>
-  <version>0.15.0-SNAPSHOT</version>
+  <version>0.15.1-SNAPSHOT</version>
   <name>Pax Runner - IntelliJ IDEA plugin</name>
   <packaging>pom</packaging>
 
