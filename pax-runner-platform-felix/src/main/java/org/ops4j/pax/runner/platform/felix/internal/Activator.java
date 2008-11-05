@@ -39,14 +39,14 @@ public final class Activator
     protected PlatformBuilder[] createPlatformBuilders( final BundleContext bundleContext )
     {
         return new PlatformBuilder[]{
-            new FelixPlatformBuilder( bundleContext, "1.0.0" ),
-            new FelixPlatformBuilder( bundleContext, "1.0.1" ),
-            new FelixPlatformBuilder( bundleContext, "1.0.3" ),
-            new FelixPlatformBuilder( bundleContext, "1.0.4" ),
-            new FelixPlatformBuilder( bundleContext, "1.2.0" ),
-            new FelixPlatformBuilder( bundleContext, "1.2.1" ),
-            new FelixPlatformBuilder( bundleContext, "1.2.2" ),
-            new FelixPlatformBuilder( bundleContext, "1.4.0" )
+            new FelixPlatformBuilderF100T122( bundleContext, "1.0.0" ),
+            new FelixPlatformBuilderF100T122( bundleContext, "1.0.1" ),
+            new FelixPlatformBuilderF100T122( bundleContext, "1.0.3" ),
+            new FelixPlatformBuilderF100T122( bundleContext, "1.0.4" ),
+            new FelixPlatformBuilderF100T122( bundleContext, "1.2.0" ),
+            new FelixPlatformBuilderF100T122( bundleContext, "1.2.1" ),
+            new FelixPlatformBuilderF100T122( bundleContext, "1.2.2" ),
+            new FelixPlatformBuilderF140( bundleContext, "1.4.0" )
         };
     }
 

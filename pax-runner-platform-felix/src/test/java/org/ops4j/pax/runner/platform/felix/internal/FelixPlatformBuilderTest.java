@@ -70,13 +70,13 @@ public class FelixPlatformBuilderTest
     @Test( expected = IllegalArgumentException.class )
     public void constructorWithNullBundleContext()
     {
-        new FelixPlatformBuilder( null, "version" );
+        new FelixPlatformBuilderF100T122( null, "version" );
     }
 
     @Test( expected = IllegalArgumentException.class )
     public void constructorWithNullVersion()
     {
-        new FelixPlatformBuilder( m_bundleContext, null );
+        new FelixPlatformBuilderF100T122( m_bundleContext, null );
     }
 
     @Test
@@ -86,7 +86,7 @@ public class FelixPlatformBuilderTest
         assertEquals(
             "Main class name",
             "org.apache.felix.main.Main",
-            new FelixPlatformBuilder( m_bundleContext, "version" ).getMainClassName()
+            new FelixPlatformBuilderF100T122( m_bundleContext, "version" ).getMainClassName()
         );
         verify( m_bundleContext );
     }
@@ -105,7 +105,7 @@ public class FelixPlatformBuilderTest
         replay( m_bundleContext, bundle );
         assertNotNull(
             "Definition input stream",
-            new FelixPlatformBuilder( m_bundleContext, "1.0.0" ).getDefinition()
+            new FelixPlatformBuilderF100T122( m_bundleContext, "1.0.0" ).getDefinition()
         );
         verify( m_bundleContext, bundle );
     }
@@ -121,7 +121,7 @@ public class FelixPlatformBuilderTest
         replay( m_bundleContext, m_configuration, platformContext );
         assertNull(
             "Required profiles is not null",
-            new FelixPlatformBuilder( m_bundleContext, "version" ).getRequiredProfile( platformContext )
+            new FelixPlatformBuilderF100T122( m_bundleContext, "version" ).getRequiredProfile( platformContext )
         );
         verify( m_bundleContext, m_configuration, platformContext );
     }
@@ -138,7 +138,7 @@ public class FelixPlatformBuilderTest
         assertEquals(
             "Required profiles",
             "tui",
-            new FelixPlatformBuilder( m_bundleContext, "version" ).getRequiredProfile( platformContext )
+            new FelixPlatformBuilderF100T122( m_bundleContext, "version" ).getRequiredProfile( platformContext )
         );
         verify( m_bundleContext, m_configuration, platformContext );
     }
@@ -150,7 +150,7 @@ public class FelixPlatformBuilderTest
 
         replay( m_bundleContext, m_configuration, platformContext );
         assertNull( "Arguments is not not null",
-                    new FelixPlatformBuilder( m_bundleContext, "version" ).getArguments( platformContext )
+                    new FelixPlatformBuilderF100T122( m_bundleContext, "version" ).getArguments( platformContext )
         );
         verify( m_bundleContext, m_configuration, platformContext );
     }
@@ -174,7 +174,7 @@ public class FelixPlatformBuilderTest
                 + m_workDir.getAbsolutePath() + File.separator + "felix" + File.separator + "cache",
                 "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=javax.*"
             },
-            new FelixPlatformBuilder( m_bundleContext, "version" ).getVMOptions( platformContext )
+            new FelixPlatformBuilderF100T122( m_bundleContext, "version" ).getVMOptions( platformContext )
         );
         verify( m_configuration, m_bundleContext, platformContext );
     }
@@ -197,7 +197,7 @@ public class FelixPlatformBuilderTest
                 "-Dfelix.cache.dir="
                 + m_workDir.getAbsolutePath() + File.separator + "felix" + File.separator + "cache"
             },
-            new FelixPlatformBuilder( m_bundleContext, "version" ).getVMOptions( platformContext )
+            new FelixPlatformBuilderF100T122( m_bundleContext, "version" ).getVMOptions( platformContext )
         );
         verify( m_configuration, m_bundleContext, platformContext );
     }
@@ -206,7 +206,7 @@ public class FelixPlatformBuilderTest
     public void getSystemPropertiesWithNullPlatformContext()
     {
         replay( m_bundleContext );
-        new FelixPlatformBuilder( m_bundleContext, "version" ).getVMOptions( null );
+        new FelixPlatformBuilderF100T122( m_bundleContext, "version" ).getVMOptions( null );
         verify( m_bundleContext );
     }
 
@@ -215,7 +215,7 @@ public class FelixPlatformBuilderTest
         throws PlatformException
     {
         replay( m_bundleContext );
-        new FelixPlatformBuilder( m_bundleContext, "version" ).prepare( null );
+        new FelixPlatformBuilderF100T122( m_bundleContext, "version" ).prepare( null );
         verify( m_bundleContext );
     }
 
@@ -241,7 +241,7 @@ public class FelixPlatformBuilderTest
         expect( platformContext.getProperties() ).andReturn( properties );
 
         replay( m_bundleContext, m_configuration, platformContext );
-        new FelixPlatformBuilder( m_bundleContext, "version" ).prepare( platformContext );
+        new FelixPlatformBuilderF100T122( m_bundleContext, "version" ).prepare( platformContext );
         verify( m_bundleContext, m_configuration, platformContext );
 
         compareFiles(
@@ -315,7 +315,7 @@ public class FelixPlatformBuilderTest
         replay( m_bundleContext, m_configuration, platformContext, bundle1, bundle2, bundle3, reference1, reference2,
                 reference3, bundle4, reference4
         );
-        new FelixPlatformBuilder( m_bundleContext, "version" ).prepare( platformContext );
+        new FelixPlatformBuilderF100T122( m_bundleContext, "version" ).prepare( platformContext );
         verify( m_bundleContext, m_configuration, platformContext, bundle1, bundle2, bundle3, reference1, reference2,
                 reference3, bundle4, reference4
         );
@@ -405,7 +405,7 @@ public class FelixPlatformBuilderTest
         expect( platformContext.getProperties() ).andReturn( null );
 
         replay( m_bundleContext, m_configuration, platformContext );
-        new FelixPlatformBuilder( m_bundleContext, "version" ).prepare( platformContext );
+        new FelixPlatformBuilderF100T122( m_bundleContext, "version" ).prepare( platformContext );
         verify( m_bundleContext, m_configuration, platformContext );
     }
 
