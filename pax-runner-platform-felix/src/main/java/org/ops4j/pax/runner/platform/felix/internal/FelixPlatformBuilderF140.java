@@ -126,8 +126,7 @@ public class FelixPlatformBuilderF140
             // make sure the configuration directory exists
             final File configDirectory = new File( workingDirectory, CONFIG_DIRECTORY );
             configDirectory.mkdirs();
-            // make sure that the cache file exists
-            //new File( configDirectory, CACHE_DIRECTORY ).mkdirs();
+            
             // create the configuration file
             final File configFile = new File( configDirectory, CONFIG_INI );
             configFile.createNewFile();
