@@ -155,20 +155,13 @@ public class FelixPlatformBuilderF140
             {
                 writer.append( "felix.startlevel.bundle", bundleStartLevel.toString() );
             }
-            // default profile
-            final String profile = configuration.getFrameworkProfile();
-            if( profile != null )
+
+            final Boolean usePersistedState = configuration.usePersistedState();
+            if( usePersistedState != null && !usePersistedState )
             {
-                writer.append( "felix.cache.profile", profile );
-                final Boolean usePersistedState = configuration.usePersistedState();
-                if( usePersistedState != null && !usePersistedState )
-                {
-                    final File profileDirectory =
-                        new File( configDirectory, CACHE_DIRECTORY + File.separator + profile );
-                    LOGGER.trace( "Cleaning profile folder [" + profileDirectory + "]" );
-                    FileUtils.delete( profileDirectory );
-                }
+                writer.append( "org.osgi.framework.storage.clean", "onFirstInit" );
             }
+
             // system packages
             writer.append( Constants.FRAMEWORK_SYSTEMPACKAGES, context.getSystemPackages() );
 
