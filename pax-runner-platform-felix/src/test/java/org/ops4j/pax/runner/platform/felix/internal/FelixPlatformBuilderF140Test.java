@@ -170,8 +170,6 @@ public class FelixPlatformBuilderF140Test
             new String[]{
                 "-Dfelix.config.properties="
                 + m_workDir.toURI() + "/felix/config.ini",
-                "-Dfelix.cache.dir="
-                + m_workDir.getAbsolutePath() + File.separator + "felix" + File.separator + "cache",
                 "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=javax.*"
             },
             new FelixPlatformBuilderF140( m_bundleContext, "version" ).getVMOptions( platformContext )
@@ -194,8 +192,6 @@ public class FelixPlatformBuilderF140Test
             new String[]{
                 "-Dfelix.config.properties="
                 + m_workDir.toURI() + "/felix/config.ini",
-                "-Dfelix.cache.dir="
-                + m_workDir.getAbsolutePath() + File.separator + "felix" + File.separator + "cache"
             },
             new FelixPlatformBuilderF140( m_bundleContext, "version" ).getVMOptions( platformContext )
         );
@@ -244,11 +240,17 @@ public class FelixPlatformBuilderF140Test
         new FelixPlatformBuilderF140( m_bundleContext, "version" ).prepare( platformContext );
         verify( m_bundleContext, m_configuration, platformContext );
 
+        Map<String, String> replacements = new HashMap<String, String>();
+        replacements.put(
+            "${storage}",
+            new File( m_workDir, "felix" + File.separator + "cache" + File.separator + "runner" ).getAbsolutePath()
+        );
+
         compareFiles(
-            FileUtils.getFileFromClasspath( "felixplatformbuilder/configWithNoBundles.ini" ),
+            FileUtils.getFileFromClasspath( "felixplatformbuilder/configWithNoBundles140.ini" ),
             new File( m_workDir + "/felix/config.ini" ),
             true,
-            null
+            replacements
         );
     }
 
@@ -320,6 +322,10 @@ public class FelixPlatformBuilderF140Test
         );
 
         Map<String, String> replacements = new HashMap<String, String>();
+        replacements.put(
+            "${storage}",
+            new File( m_workDir, "felix" + File.separator + "cache" + File.separator + "runner" ).getAbsolutePath()
+        );
         replacements.put( "${bundle1.path}", new File( "bundle1.jar" ).toURL().toExternalForm() );
         replacements.put( "${bundle2.path}", new File( "bundle2.jar" ).toURL().toExternalForm() );
         replacements.put( "${bundle3.path}", new File( "bundle3.jar" ).toURL().toExternalForm() );

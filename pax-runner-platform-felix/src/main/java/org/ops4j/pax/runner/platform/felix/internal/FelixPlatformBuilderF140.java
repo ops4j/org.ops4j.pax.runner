@@ -34,7 +34,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
-import org.ops4j.io.FileUtils;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
@@ -77,7 +76,7 @@ public class FelixPlatformBuilderF140
     /**
      * Caching directory.
      */
-    private static final String CACHE_DIRECTORY = "cache";
+    private static final String CACHE_DIRECTORY = "cache" + File.separator + "runner";
     /**
      * Profile name to be used when console should be started.
      */
@@ -143,6 +142,11 @@ public class FelixPlatformBuilderF140
             writer.append( "#############################" );
             writer.append( " Felix settings" );
             writer.append( "#############################" );
+
+            // storage directory
+            final File cacheDirectory = new File( configDirectory, CACHE_DIRECTORY );
+            writer.append( "org.osgi.framework.storage", cacheDirectory.getAbsolutePath() );
+
             // framework start level
             final Integer startLevel = configuration.getStartLevel();
             if( startLevel != null )
@@ -324,11 +328,6 @@ public class FelixPlatformBuilderF140
             "-Dfelix.config.properties=" + workingDirectory.toURI()
             + "/" + CONFIG_DIRECTORY
             + "/" + CONFIG_INI
-        );
-        vmOptions.add(
-            "-Dfelix.cache.dir=" + workingDirectory.getAbsolutePath()
-            + File.separator + CONFIG_DIRECTORY
-            + File.separator + CACHE_DIRECTORY
         );
         final String bootDelegation = context.getConfiguration().getBootDelegation();
         if( bootDelegation != null )
