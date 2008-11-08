@@ -147,7 +147,7 @@ public class FelixPlatformBuilderF100T122
             final Integer startLevel = configuration.getStartLevel();
             if( startLevel != null )
             {
-                writer.append( "felix.startlevel.framework" );
+                writer.append( "felix.startlevel.framework", startLevel.toString() );
             }
             // bundle start level
             final Integer bundleStartLevel = configuration.getBundleStartLevel();
