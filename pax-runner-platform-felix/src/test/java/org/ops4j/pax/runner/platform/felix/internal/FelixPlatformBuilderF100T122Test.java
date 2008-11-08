@@ -41,7 +41,7 @@ import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
 
-public class FelixPlatformBuilderTest
+public class FelixPlatformBuilderF100T122Test
 {
 
     private File m_workDir;
