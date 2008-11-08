@@ -147,7 +147,7 @@ public class FelixPlatformBuilderF140
             final Integer startLevel = configuration.getStartLevel();
             if( startLevel != null )
             {
-                writer.append( "org.osgi.framework.startlevel" );
+                writer.append( "org.osgi.framework.startlevel", startLevel.toString() );
             }
             // bundle start level
             final Integer bundleStartLevel = configuration.getBundleStartLevel();
