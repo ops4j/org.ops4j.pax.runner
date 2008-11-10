@@ -88,7 +88,7 @@ public class Run
     {
         if( LOGGER == null )
         {
-            createLogger( LogLevel.INFO );
+            createLogger();
         }
     }
 
@@ -683,6 +683,22 @@ public class Run
             LOGGER = LogFactory.getLog( Run.class, logLevel );
         }
         catch( NoSuchMethodError ignore )
+        {
+            // fall back to standard JCL
+            LOGGER = LogFactory.getLog( Run.class );
+        }
+    }
+
+    /**
+     * Creates a default logger at INFo level.
+     */
+    private static void createLogger()
+    {
+        try
+        {
+            createLogger( LogLevel.INFO );
+        }
+        catch( NoClassDefFoundError ignore )
         {
             // fall back to standard JCL
             LOGGER = LogFactory.getLog( Run.class );
