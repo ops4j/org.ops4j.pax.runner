@@ -59,7 +59,7 @@ public class LogFactory
     {
         if( m_log == null )
         {
-            m_log = NullLog.newInstance();
+            m_log = PaxRunnerLog.newInstance();
         }
         return m_log;
     }
@@ -68,7 +68,7 @@ public class LogFactory
     {
         if( m_log == null )
         {
-            m_log = NullLog.newInstance( logLevel );
+            m_log = PaxRunnerLog.newInstance( logLevel );
         }
         return m_log;
     }

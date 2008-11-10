@@ -20,13 +20,13 @@ package org.apache.commons.logging;
 import static org.apache.commons.logging.LogLevel.*;
 import org.ops4j.pax.runner.commons.Info;
 
-public class NullLog implements Log
+public class PaxRunnerLog implements Log
 {
 
     private final LogLevel m_logLevel;
     private static Log m_me;
 
-    private NullLog( LogLevel logLevel )
+    private PaxRunnerLog( LogLevel logLevel )
     {
         m_logLevel = logLevel;
     }
@@ -213,7 +213,7 @@ public class NullLog implements Log
     {
         if( m_me == null )
         {
-            m_me = new NullLog( logLevel );
+            m_me = new PaxRunnerLog( logLevel );
         }
         return m_me;
     }
