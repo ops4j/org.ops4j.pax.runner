@@ -68,67 +68,67 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="org.ops4j.base:ops4j-base-io:0.5.1">
+      <library name="org.ops4j.base:ops4j-base-io:0.5.3-SNAPSHOT">
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.1/ops4j-base-io-0.5.1.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.3-SNAPSHOT/ops4j-base-io-0.5.3-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.1/ops4j-base-io-0.5.1-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.3-SNAPSHOT/ops4j-base-io-0.5.3-SNAPSHOT-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.1/ops4j-base-io-0.5.1-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.3-SNAPSHOT/ops4j-base-io-0.5.3-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="org.ops4j.base:ops4j-base-lang:0.5.1">
+      <library name="org.ops4j.base:ops4j-base-lang:0.5.3-SNAPSHOT">
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-lang/0.5.1/ops4j-base-lang-0.5.1.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-lang/0.5.3-SNAPSHOT/ops4j-base-lang-0.5.3-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-lang/0.5.1/ops4j-base-lang-0.5.1-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-lang/0.5.3-SNAPSHOT/ops4j-base-lang-0.5.3-SNAPSHOT-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-lang/0.5.1/ops4j-base-lang-0.5.1-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-lang/0.5.3-SNAPSHOT/ops4j-base-lang-0.5.3-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="org.ops4j.base:ops4j-base-monitors:0.5.1">
+      <library name="org.ops4j.base:ops4j-base-monitors:0.5.3-SNAPSHOT">
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.1/ops4j-base-monitors-0.5.1.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.3-SNAPSHOT/ops4j-base-monitors-0.5.3-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.1/ops4j-base-monitors-0.5.1-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.3-SNAPSHOT/ops4j-base-monitors-0.5.3-SNAPSHOT-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.1/ops4j-base-monitors-0.5.1-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.3-SNAPSHOT/ops4j-base-monitors-0.5.3-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="org.ops4j.base:ops4j-base-util-xml:0.5.1">
+      <library name="org.ops4j.base:ops4j-base-util-xml:0.5.3-SNAPSHOT">
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-xml/0.5.1/ops4j-base-util-xml-0.5.1.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-xml/0.5.3-SNAPSHOT/ops4j-base-util-xml-0.5.3-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-xml/0.5.1/ops4j-base-util-xml-0.5.1-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-xml/0.5.3-SNAPSHOT/ops4j-base-util-xml-0.5.3-SNAPSHOT-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-xml/0.5.1/ops4j-base-util-xml-0.5.1-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-xml/0.5.3-SNAPSHOT/ops4j-base-util-xml-0.5.3-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="org.ops4j.base:ops4j-base-util-collections:0.5.1">
+      <library name="org.ops4j.base:ops4j-base-util-collections:0.5.3-SNAPSHOT">
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-collections/0.5.1/ops4j-base-util-collections-0.5.1.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-collections/0.5.3-SNAPSHOT/ops4j-base-util-collections-0.5.3-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-collections/0.5.1/ops4j-base-util-collections-0.5.1-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-collections/0.5.3-SNAPSHOT/ops4j-base-util-collections-0.5.3-SNAPSHOT-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-collections/0.5.1/ops4j-base-util-collections-0.5.1-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-collections/0.5.3-SNAPSHOT/ops4j-base-util-collections-0.5.3-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -159,15 +159,15 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="org.ops4j.base:ops4j-base-util-property:0.5.1">
+      <library name="org.ops4j.base:ops4j-base-util-property:0.5.3-SNAPSHOT">
         <CLASSES>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.1/ops4j-base-util-property-0.5.1.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.3-SNAPSHOT/ops4j-base-util-property-0.5.3-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.1/ops4j-base-util-property-0.5.1-javadoc.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.3-SNAPSHOT/ops4j-base-util-property-0.5.3-SNAPSHOT-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.1/ops4j-base-util-property-0.5.1-sources.jar!/" />
+          <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.3-SNAPSHOT/ops4j-base-util-property-0.5.3-SNAPSHOT-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
