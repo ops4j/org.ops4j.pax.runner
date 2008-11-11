@@ -3,14 +3,14 @@
   <profile name="config-felix" extends="minimal">
     <bundle>
       <name>Felix Configuration Admin</name>
-      <url>mvn:org.apache.felix/org.apache.felix.configadmin/1.0.1</url>
+      <url>mvn:org.apache.felix/org.apache.felix.configadmin/1.0.4</url>
     </bundle>
   </profile>
 
   <profile name="ds-felix" extends="minimal">
     <bundle>
       <name>Felix Service Component Runtime (Declarative Services)</name>
-      <url>mvn:org.apache.felix/org.apache.felix.scr/1.0.0</url>
+      <url>mvn:org.apache.felix/org.apache.felix.scr/1.0.6</url>
     </bundle>
   </profile>
 
