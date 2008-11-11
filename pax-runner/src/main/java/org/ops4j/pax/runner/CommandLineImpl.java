@@ -62,6 +62,10 @@ public class CommandLineImpl implements CommandLine
      * List of arguments.
      */
     private final List<String> m_arguments;
+    /**
+     * URL of configuration file (if any); 
+     */
+    private final String m_argsURL;
 
     /**
      * Creates a new Command line by parsing every argument into an option or argument.
@@ -101,6 +105,7 @@ public class CommandLineImpl implements CommandLine
                 throw new RuntimeException( "Arguments could not be read from [" + argsURL + "]", e );
             }
         }
+        m_argsURL = argsURL;
     }
 
     /**
@@ -147,6 +152,14 @@ public class CommandLineImpl implements CommandLine
     public List<String> getArguments()
     {
         return m_arguments;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getArgumentsFileURL()
+    {
+        return m_argsURL;
     }
 
     /**

@@ -81,6 +81,7 @@ public class RunTest
     @Test
     public void startFlow()
     {
+        expect( m_commandLine.getArgumentsFileURL() ).andReturn( null );
         m_recorder.record( "installServices()" );
         m_recorder.record( "installHandlers()" );
         m_recorder.record( "installScanners()" );
@@ -196,6 +197,7 @@ public class RunTest
     @Test( expected = ConfigurationException.class )
     public void startWithInvalidHandlers()
     {
+        expect( m_commandLine.getArgumentsFileURL() ).andReturn( null );
         expect( m_resolver.get( "executor" ) ).andReturn( null );
         expect( m_resolver.get( "services" ) ).andReturn( null );
         expect( m_resolver.get( "handlers" ) ).andReturn( "handler.1" );

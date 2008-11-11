@@ -67,7 +67,7 @@ public interface CommandLine
     /**
      * Boot classpath appended option.
      */
-    static final String OPTION_BOOT_CP_APPEND = "bcp/a";      
+    static final String OPTION_BOOT_CP_APPEND = "bcp/a";
 
     /**
      * Returns the value of an option by key. If option is not defined returns null.
@@ -85,7 +85,7 @@ public interface CommandLine
      *
      * @return The option values as array.
      */
-    String[] getMultipleOption( String key );    
+    String[] getMultipleOption( String key );
 
     /**
      * Returns the list of all arguments.
@@ -93,5 +93,12 @@ public interface CommandLine
      * @return list of arguments
      */
     List<String> getArguments();
+
+    /**
+     * Returns the URL of used arguments file (if any) or null if no arguments file is used.
+     *
+     * @return URl of arguments file.
+     */
+    String getArgumentsFileURL();
 
 }
