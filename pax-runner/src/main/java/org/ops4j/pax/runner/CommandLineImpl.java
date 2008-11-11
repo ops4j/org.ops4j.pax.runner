@@ -63,7 +63,7 @@ public class CommandLineImpl implements CommandLine
      */
     private final List<String> m_arguments;
     /**
-     * URL of configuration file (if any); 
+     * URL of configuration file (if any);
      */
     private final String m_argsURL;
 
@@ -78,7 +78,12 @@ public class CommandLineImpl implements CommandLine
         m_arguments = new ArrayList<String>();
         parseArguments( Arrays.asList( args ) );
         String argsURL = getOption( "args" );
-        if( argsURL == null )
+        boolean useArgsFile = argsURL == null || !argsURL.equalsIgnoreCase( "false" );
+        if( !useArgsFile )
+        {
+            argsURL = null;
+        }
+        if( argsURL == null && useArgsFile )
         {
             // use a default args file if available
             final File defaultArgsFile = new File( DEFAULT_ARGS_FILE_NAME );
