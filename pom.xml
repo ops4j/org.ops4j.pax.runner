@@ -40,7 +40,6 @@
         <module>pax-runner-commons</module>
         <module>pax-runner-handler</module>
         <module>pax-runner-provision</module>
-        <module>pax-runner-provision-console</module>
         <module>pax-runner-scanner-common</module>
         <module>pax-runner-scanner-bundle</module>
         <module>pax-runner-scanner-dir</module>
@@ -49,7 +48,6 @@
         <module>pax-runner-scanner-obr-script</module>
         <module>pax-runner-scanner-pom</module>
         <module>pax-runner-platform</module>
-        <module>pax-runner-platform-console</module>
         <module>pax-runner-platform-concierge</module>
         <module>pax-runner-platform-equinox</module>
         <module>pax-runner-platform-felix</module>
@@ -65,7 +63,6 @@
         <module>pax-runner-commons</module>
         <module>pax-runner-handler</module>
         <module>pax-runner-provision</module>
-        <module>pax-runner-provision-console</module>
         <module>pax-runner-scanner-common</module>
         <module>pax-runner-scanner-bundle</module>
         <module>pax-runner-scanner-dir</module>
@@ -74,7 +71,6 @@
         <module>pax-runner-scanner-obr-script</module>
         <module>pax-runner-scanner-pom</module>
         <module>pax-runner-platform</module>
-        <module>pax-runner-platform-console</module>
         <module>pax-runner-platform-concierge</module>
         <module>pax-runner-platform-equinox</module>
         <module>pax-runner-platform-felix</module>
@@ -100,7 +96,6 @@
       <id>platform</id>
       <modules>
         <module>pax-runner-platform</module>
-        <module>pax-runner-platform-console</module>
         <module>pax-runner-platform-concierge</module>
         <module>pax-runner-platform-equinox</module>
         <module>pax-runner-platform-felix</module>
