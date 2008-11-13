@@ -6,7 +6,7 @@
     <relativePath>../</relativePath>
     <groupId>org.ops4j.pax</groupId>
     <artifactId>runner</artifactId>
-    <version>0.16.0</version>
+    <version>0.16.1-SNAPSHOT</version>
   </parent>
 
   <groupId>org.ops4j.pax.runner</groupId>
@@ -53,7 +53,7 @@
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner</artifactId>
-      <version>0.16.0</version>
+      <version>0.16.1-SNAPSHOT</version>
       <optional>true</optional>
     </dependency>
   </dependencies>
