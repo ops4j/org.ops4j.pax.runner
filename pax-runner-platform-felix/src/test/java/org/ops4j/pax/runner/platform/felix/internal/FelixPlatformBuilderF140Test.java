@@ -243,7 +243,7 @@ public class FelixPlatformBuilderF140Test
         Map<String, String> replacements = new HashMap<String, String>();
         replacements.put(
             "${storage}",
-            new File( m_workDir, "felix" + File.separator + "cache" + File.separator + "runner" ).getAbsolutePath()
+            new File( m_workDir, "felix" + File.separator + "cache" + File.separator + "runner" ).getAbsolutePath().replace( File.separatorChar, '/' )
         );
 
         compareFiles(
@@ -324,7 +324,7 @@ public class FelixPlatformBuilderF140Test
         Map<String, String> replacements = new HashMap<String, String>();
         replacements.put(
             "${storage}",
-            new File( m_workDir, "felix" + File.separator + "cache" + File.separator + "runner" ).getAbsolutePath()
+            new File( m_workDir, "felix" + File.separator + "cache" + File.separator + "runner" ).getAbsolutePath().replace( File.separatorChar, '/' )
         );
         replacements.put( "${bundle1.path}", new File( "bundle1.jar" ).toURL().toExternalForm() );
         replacements.put( "${bundle2.path}", new File( "bundle2.jar" ).toURL().toExternalForm() );

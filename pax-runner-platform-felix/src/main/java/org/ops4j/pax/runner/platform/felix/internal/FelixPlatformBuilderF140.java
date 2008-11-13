@@ -144,7 +144,8 @@ public class FelixPlatformBuilderF140
 
             // storage directory
             final File cacheDirectory = new File( configDirectory, CACHE_DIRECTORY );
-            writer.append( "org.osgi.framework.storage", cacheDirectory.getAbsolutePath() );
+            writer.append( "org.osgi.framework.storage",
+                cacheDirectory.getAbsolutePath().replace( File.separatorChar, '/' ) );
 
             // framework start level
             final Integer startLevel = configuration.getStartLevel();
