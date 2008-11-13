@@ -1,40 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project relativePaths="true" version="4">
-  <component name="AntConfiguration">
-    <defaultAnt bundledAnt="true" />
-  </component>
   <component name="BuildJarProjectSettings">
     <option name="BUILD_JARS_ON_MAKE" value="false" />
-  </component>
-  <component name="CodeStyleProjectProfileManger">
-    <option name="PROJECT_PROFILE" />
-    <option name="USE_PROJECT_LEVEL_SETTINGS" value="false" />
   </component>
   <component name="CodeStyleSettingsManager">
     <option name="PER_PROJECT_SETTINGS">
       <value>
-        <option name="JAVA_INDENT_OPTIONS">
-          <value>
-            <option name="INDENT_SIZE" value="4" />
-            <option name="CONTINUATION_INDENT_SIZE" value="4" />
-            <option name="TAB_SIZE" value="4" />
-            <option name="USE_TAB_CHARACTER" value="false" />
-            <option name="SMART_TABS" value="false" />
-            <option name="LABEL_INDENT_SIZE" value="0" />
-            <option name="LABEL_INDENT_ABSOLUTE" value="false" />
-          </value>
-        </option>
-        <option name="XML_INDENT_OPTIONS">
-          <value>
-            <option name="INDENT_SIZE" value="2" />
-            <option name="CONTINUATION_INDENT_SIZE" value="4" />
-            <option name="TAB_SIZE" value="2" />
-            <option name="USE_TAB_CHARACTER" value="false" />
-            <option name="SMART_TABS" value="false" />
-            <option name="LABEL_INDENT_SIZE" value="0" />
-            <option name="LABEL_INDENT_ABSOLUTE" value="false" />
-          </value>
-        </option>
         <option name="LINE_SEPARATOR" value="&#10;" />
         <option name="BRACE_STYLE" value="2" />
         <option name="CLASS_BRACE_STYLE" value="2" />
@@ -59,6 +30,7 @@
         <option name="SPACE_WITHIN_CATCH_PARENTHESES" value="true" />
         <option name="SPACE_WITHIN_SWITCH_PARENTHESES" value="true" />
         <option name="SPACE_WITHIN_SYNCHRONIZED_PARENTHESES" value="true" />
+        <option name="SPACE_WITHIN_CAST_PARENTHESES" value="true" />
         <option name="SPACE_WITHIN_BRACKETS" value="true" />
         <option name="SPACE_WITHIN_ARRAY_INITIALIZER_BRACES" value="true" />
         <option name="SPACE_BEFORE_IF_PARENTHESES" value="false" />
@@ -67,20 +39,6 @@
         <option name="SPACE_BEFORE_CATCH_PARENTHESES" value="false" />
         <option name="SPACE_BEFORE_SWITCH_PARENTHESES" value="false" />
         <option name="SPACE_BEFORE_SYNCHRONIZED_PARENTHESES" value="false" />
-        <option name="FIELD_NAME_PREFIX" value="m_" />
-        <option name="CLASS_COUNT_TO_USE_IMPORT_ON_DEMAND" value="200" />
-        <option name="NAMES_COUNT_TO_USE_IMPORT_ON_DEMAND" value="0" />
-        <option name="PACKAGES_TO_USE_IMPORT_ON_DEMAND">
-          <value />
-        </option>
-        <option name="IMPORT_LAYOUT_TABLE">
-          <value>
-            <package name="java" withSubpackages="true" />
-            <package name="javax" withSubpackages="true" />
-            <package name="" withSubpackages="true" />
-            <package name="org.ops4j" withSubpackages="true" />
-          </value>
-        </option>
         <option name="CALL_PARAMETERS_WRAP" value="1" />
         <option name="CALL_PARAMETERS_RPAREN_ON_NEXT_LINE" value="true" />
         <option name="METHOD_PARAMETERS_WRAP" value="1" />
@@ -114,6 +72,15 @@
         <option name="VARIABLE_ANNOTATION_WRAP" value="5" />
         <option name="SPACE_WITHIN_ANNOTATION_PARENTHESES" value="true" />
         <option name="ENUM_CONSTANTS_WRAP" value="5" />
+        <ADDITIONAL_INDENT_OPTIONS fileType="groovy">
+          <option name="INDENT_SIZE" value="2" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
         <ADDITIONAL_INDENT_OPTIONS fileType="gsp">
           <option name="INDENT_SIZE" value="2" />
           <option name="CONTINUATION_INDENT_SIZE" value="8" />
@@ -143,15 +110,6 @@
         </ADDITIONAL_INDENT_OPTIONS>
         <ADDITIONAL_INDENT_OPTIONS fileType="jsp">
           <option name="INDENT_SIZE" value="4" />
-          <option name="CONTINUATION_INDENT_SIZE" value="8" />
-          <option name="TAB_SIZE" value="4" />
-          <option name="USE_TAB_CHARACTER" value="false" />
-          <option name="SMART_TABS" value="false" />
-          <option name="LABEL_INDENT_SIZE" value="0" />
-          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
-        </ADDITIONAL_INDENT_OPTIONS>
-        <ADDITIONAL_INDENT_OPTIONS fileType="txt">
-          <option name="INDENT_SIZE" value="2" />
           <option name="CONTINUATION_INDENT_SIZE" value="8" />
           <option name="TAB_SIZE" value="4" />
           <option name="USE_TAB_CHARACTER" value="false" />
@@ -189,10 +147,47 @@
       <entry name="?*.html" />
       <entry name="?*.dtd" />
       <entry name="?*.tld" />
+      <entry name="?*.ftl" />
     </wildcardResourcePatterns>
   </component>
-  <component name="DependenciesAnalyzeManager">
-    <option name="myForwardDirection" value="false" />
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="DebuggerManager">
+    <breakpoint_any>
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </breakpoint_any>
+    <breakpoint_rules />
+    <ui_properties />
   </component>
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
@@ -204,18 +199,8 @@
     <option name="ADDITIONAL_OPTIONS_STRING" value="" />
     <option name="MAXIMUM_HEAP_SIZE" value="128" />
   </component>
-  <component name="EclipseEmbeddedCompilerSettings">
-    <option name="DEBUGGING_INFO" value="true" />
-    <option name="GENERATE_NO_WARNINGS" value="true" />
-    <option name="DEPRECATION" value="false" />
-    <option name="ADDITIONAL_OPTIONS_STRING" value="" />
-    <option name="MAXIMUM_HEAP_SIZE" value="128" />
-  </component>
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
-  <component name="EntryPointsManager">
-    <entry_points version="2.0" />
-  </component>
-  <component name="IdProvider" IDEtalkID="4451B5B5A99F7794544410A3C9A2B92B" />
+  <component name="IdProvider" IDEtalkID="93B249E5D4B9BB128F1E094F9FA4138A" />
   <component name="InspectionProjectProfileManager">
     <option name="PROJECT_PROFILE" value="Project Default" />
     <option name="USE_PROJECT_LEVEL_SETTINGS" value="false" />
@@ -224,6 +209,23 @@
       <profile version="1.0" is_locked="false">
         <option name="myName" value="Project Default" />
         <option name="myLocal" value="false" />
+        <inspection_tool class="UNUSED_SYMBOL" level="WARNING" enabled="true">
+          <option name="LOCAL_VARIABLE" value="true" />
+          <option name="FIELD" value="true" />
+          <option name="METHOD" value="true" />
+          <option name="CLASS" value="true" />
+          <option name="PARAMETER" value="true" />
+          <option name="REPORT_PARAMETER_FOR_PUBLIC_METHODS" value="true" />
+          <option name="INJECTION_ANNOS">
+            <value>
+              <list size="3">
+                <item index="0" class="java.lang.String" itemvalue="org.qi4j.injection.scope.Service" />
+                <item index="1" class="java.lang.String" itemvalue="org.qi4j.injection.scope.Structure" />
+                <item index="2" class="java.lang.String" itemvalue="org.qi4j.injection.scope.This" />
+              </list>
+            </value>
+          </option>
+        </inspection_tool>
       </profile>
     </profiles>
     <list size="0" />
@@ -263,28 +265,6 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/pax-runner/pom.xml" />
-        <option value="$PROJECT_DIR$/pax-runner-assembly/pom.xml" />
-        <option value="$PROJECT_DIR$/pax-runner-commons/pom.xml" />
-        <option value="$PROJECT_DIR$/pax-runner-handler/pom.xml" />
-        <option value="$PROJECT_DIR$/pax-runner-idea/pom.xml" />
-        <option value="$PROJECT_DIR$/pax-runner-idea/model/pom.xml" />
-        <option value="$PROJECT_DIR$/pax-runner-idea/ui/pom.xml" />
-        <option value="$PROJECT_DIR$/pax-runner-platform/pom.xml" />
-        <option value="$PROJECT_DIR$/pax-runner-platform-concierge/pom.xml" />
-        <option value="$PROJECT_DIR$/pax-runner-platform-console/pom.xml" />
-        <option value="$PROJECT_DIR$/pax-runner-platform-equinox/pom.xml" />
-        <option value="$PROJECT_DIR$/pax-runner-platform-felix/pom.xml" />
-        <option value="$PROJECT_DIR$/pax-runner-platform-knopflerfish/pom.xml" />
-        <option value="$PROJECT_DIR$/pax-runner-provision/pom.xml" />
-        <option value="$PROJECT_DIR$/pax-runner-provision-console/pom.xml" />
-        <option value="$PROJECT_DIR$/pax-runner-scanner-bundle/pom.xml" />
-        <option value="$PROJECT_DIR$/pax-runner-scanner-common/pom.xml" />
-        <option value="$PROJECT_DIR$/pax-runner-scanner-dir/pom.xml" />
-        <option value="$PROJECT_DIR$/pax-runner-scanner-file/pom.xml" />
-        <option value="$PROJECT_DIR$/pax-runner-scanner-obr/pom.xml" />
-        <option value="$PROJECT_DIR$/pax-runner-scanner-obr-script/pom.xml" />
-        <option value="$PROJECT_DIR$/pax-runner-scanner-pom/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
@@ -293,6 +273,10 @@
         <option value="default" />
       </list>
     </option>
+  </component>
+  <component name="ModuleEditorState">
+    <option name="LAST_EDITED_MODULE_NAME" />
+    <option name="LAST_EDITED_TAB_NAME" />
   </component>
   <component name="Palette2">
     <group name="Swing">
@@ -419,53 +403,46 @@
     <option name="projectName" value="runner" />
   </component>
   <component name="ProjectFileVersion" converted="true" />
+  <component name="ProjectLevelVcsManager">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-idea/model/model.iml" filepath="$PROJECT_DIR$/pax-runner-idea/model/model.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner/pax-runner.iml" filepath="$PROJECT_DIR$/pax-runner/pax-runner.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-assembly/pax-runner-assembly.iml" filepath="$PROJECT_DIR$/pax-runner-assembly/pax-runner-assembly.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-commons/pax-runner-commons.iml" filepath="$PROJECT_DIR$/pax-runner-commons/pax-runner-commons.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-handler/pax-runner-handler.iml" filepath="$PROJECT_DIR$/pax-runner-handler/pax-runner-handler.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-idea/pax-runner-idea.iml" filepath="$PROJECT_DIR$/pax-runner-idea/pax-runner-idea.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-idea/ui/pax-runner-idea-ui.iml" filepath="$PROJECT_DIR$/pax-runner-idea/ui/pax-runner-idea-ui.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-no-jcl/pax-runner-no-jcl.iml" filepath="$PROJECT_DIR$/pax-runner-no-jcl/pax-runner-no-jcl.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform/pax-runner-platform.iml" filepath="$PROJECT_DIR$/pax-runner-platform/pax-runner-platform.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-concierge/pax-runner-platform-concierge.iml" filepath="$PROJECT_DIR$/pax-runner-platform-concierge/pax-runner-platform-concierge.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-console/pax-runner-platform-console.iml" filepath="$PROJECT_DIR$/pax-runner-platform-console/pax-runner-platform-console.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-equinox/pax-runner-platform-equinox.iml" filepath="$PROJECT_DIR$/pax-runner-platform-equinox/pax-runner-platform-equinox.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-felix/pax-runner-platform-felix.iml" filepath="$PROJECT_DIR$/pax-runner-platform-felix/pax-runner-platform-felix.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-knopflerfish/pax-runner-platform-knopflerfish.iml" filepath="$PROJECT_DIR$/pax-runner-platform-knopflerfish/pax-runner-platform-knopflerfish.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-provision/pax-runner-provision.iml" filepath="$PROJECT_DIR$/pax-runner-provision/pax-runner-provision.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-provision-console/pax-runner-provision-console.iml" filepath="$PROJECT_DIR$/pax-runner-provision-console/pax-runner-provision-console.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-bundle/pax-runner-scanner-bundle.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-bundle/pax-runner-scanner-bundle.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-common/pax-runner-scanner-common.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-common/pax-runner-scanner-common.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-dir/pax-runner-scanner-dir.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-dir/pax-runner-scanner-dir.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-file/pax-runner-scanner-file.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-file/pax-runner-scanner-file.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-obr/pax-runner-scanner-obr.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-obr/pax-runner-scanner-obr.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-obr-script/pax-runner-scanner-obr-script.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-obr-script/pax-runner-scanner-obr-script.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-pom/pax-runner-scanner-pom.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-pom/pax-runner-scanner-pom.iml" group="runner and modules" />
-      <module fileurl="file://$PROJECT_DIR$/runner.iml" filepath="$PROJECT_DIR$/runner.iml" group="runner and modules" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner/pax-runner.iml" filepath="$PROJECT_DIR$/pax-runner/pax-runner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-assembly/pax-runner-assembly.iml" filepath="$PROJECT_DIR$/pax-runner-assembly/pax-runner-assembly.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-commons/pax-runner-commons.iml" filepath="$PROJECT_DIR$/pax-runner-commons/pax-runner-commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-handler/pax-runner-handler.iml" filepath="$PROJECT_DIR$/pax-runner-handler/pax-runner-handler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-no-jcl/pax-runner-no-jcl.iml" filepath="$PROJECT_DIR$/pax-runner-no-jcl/pax-runner-no-jcl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform/pax-runner-platform.iml" filepath="$PROJECT_DIR$/pax-runner-platform/pax-runner-platform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-concierge/pax-runner-platform-concierge.iml" filepath="$PROJECT_DIR$/pax-runner-platform-concierge/pax-runner-platform-concierge.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-console/pax-runner-platform-console.iml" filepath="$PROJECT_DIR$/pax-runner-platform-console/pax-runner-platform-console.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-equinox/pax-runner-platform-equinox.iml" filepath="$PROJECT_DIR$/pax-runner-platform-equinox/pax-runner-platform-equinox.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-felix/pax-runner-platform-felix.iml" filepath="$PROJECT_DIR$/pax-runner-platform-felix/pax-runner-platform-felix.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-knopflerfish/pax-runner-platform-knopflerfish.iml" filepath="$PROJECT_DIR$/pax-runner-platform-knopflerfish/pax-runner-platform-knopflerfish.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-provision/pax-runner-provision.iml" filepath="$PROJECT_DIR$/pax-runner-provision/pax-runner-provision.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-provision-console/pax-runner-provision-console.iml" filepath="$PROJECT_DIR$/pax-runner-provision-console/pax-runner-provision-console.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-bundle/pax-runner-scanner-bundle.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-bundle/pax-runner-scanner-bundle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-common/pax-runner-scanner-common.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-common/pax-runner-scanner-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-dir/pax-runner-scanner-dir.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-dir/pax-runner-scanner-dir.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-file/pax-runner-scanner-file.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-file/pax-runner-scanner-file.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-obr/pax-runner-scanner-obr.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-obr/pax-runner-scanner-obr.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-obr-script/pax-runner-scanner-obr-script.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-obr-script/pax-runner-scanner-obr-script.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-pom/pax-runner-scanner-pom.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-pom/pax-runner-scanner-pom.iml" />
+      <module fileurl="file://$PROJECT_DIR$/runner.iml" filepath="$PROJECT_DIR$/runner.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.5" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/out" />
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
   </component>
-  <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="Pax Runner idea Plugin" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
-      <module name="" />
-      <option name="VM_PARAMETERS" value="-XX:MaxPermSize=120m" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <RunnerSettings RunnerId="JProfiler">
-        <option name="WINDOW" value="false" />
-        <option name="JVMPI" value="false" />
-        <option name="INTERPRETED" value="false" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method>
-        <option name="Make" value="true" />
-      </method>
-    </configuration>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="ResourceManagerContainer">
     <option name="myResourceBundles">
@@ -481,29 +458,86 @@
     <option name="GENERATE_IIOP_STUBS" value="false" />
     <option name="ADDITIONAL_OPTIONS_STRING" value="" />
   </component>
+  <component name="RunManager">
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit" enabled="false" merge="false" runner="emma">
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="ADDITIONAL_CLASS_PATH" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application" enabled="false" merge="false" runner="emma">
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+    </configuration>
+    <list size="0" />
+    <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
+      <Host>localhost</Host>
+      <Port>5050</Port>
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnBranchConfigurationManager">
-    <option name="myConfigurationMap">
-      <map>
-        <entry key="$PROJECT_DIR$">
-          <value>
-            <SvnBranchConfiguration>
-              <option name="branchUrls">
-                <list>
-                  <option value="https://scm.ops4j.org/repos/ops4j/qa/pax/runner-0.13.0" />
-                </list>
-              </option>
-              <option name="trunkUrl" value="https://scm.ops4j.org/repos/ops4j/projects/pax/runner" />
-            </SvnBranchConfiguration>
-          </value>
-        </entry>
-      </map>
-    </option>
     <option name="myVersion" value="124" />
+  </component>
+  <component name="SvnConfiguration">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="UPDATE_RUN_STATUS" value="false" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="svn" />
   </component>
   <component name="WebServicesPlugin" addRequiredLibraries="true" />
+  <component name="XPathView.XPathProjectComponent">
+    <history />
+    <find-history />
+  </component>
   <component name="libraryTable">
     <library name="Maven: org.osgi:org.osgi.core:4.0.1">
       <CLASSES>
@@ -571,37 +605,15 @@
         <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-lang/0.5.3/ops4j-base-lang-0.5.3-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.ops4j.base:ops4j-base-util-collections:0.5.3">
+    <library name="Maven: org.ops4j.base:ops4j-base-util-property:0.5.3">
       <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-collections/0.5.3/ops4j-base-util-collections-0.5.3.jar!/" />
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.3/ops4j-base-util-property-0.5.3.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-collections/0.5.3/ops4j-base-util-collections-0.5.3-javadoc.jar!/" />
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.3/ops4j-base-util-property-0.5.3-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-collections/0.5.3/ops4j-base-util-collections-0.5.3-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.base:ops4j-base-io:0.5.3">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.3/ops4j-base-io-0.5.3.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.3/ops4j-base-io-0.5.3-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.3/ops4j-base-io-0.5.3-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.base:ops4j-base-util-xml:0.5.3">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-xml/0.5.3/ops4j-base-util-xml-0.5.3.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-xml/0.5.3/ops4j-base-util-xml-0.5.3-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-xml/0.5.3/ops4j-base-util-xml-0.5.3-sources.jar!/" />
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.3/ops4j-base-util-property-0.5.3-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.ops4j.pax.swissbox:pax-swissbox-property:0.2.0">
@@ -615,15 +627,92 @@
         <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-property/0.2.0/pax-swissbox-property-0.2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.ops4j.base:ops4j-base-util-property:0.5.3">
+    <library name="Maven: org.ops4j.base:ops4j-base-io:0.5.3">
       <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.3/ops4j-base-util-property-0.5.3.jar!/" />
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.3/ops4j-base-io-0.5.3.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.3/ops4j-base-util-property-0.5.3-javadoc.jar!/" />
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.3/ops4j-base-io-0.5.3-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.3/ops4j-base-util-property-0.5.3-sources.jar!/" />
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.3/ops4j-base-io-0.5.3-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.base:ops4j-base-monitors:0.5.3">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.3/ops4j-base-monitors-0.5.3.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.3/ops4j-base-monitors-0.5.3-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.3/ops4j-base-monitors-0.5.3-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.base:ops4j-base-util-xml:0.5.3">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-xml/0.5.3/ops4j-base-util-xml-0.5.3.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-xml/0.5.3/ops4j-base-util-xml-0.5.3-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-xml/0.5.3/ops4j-base-util-xml-0.5.3-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.base:ops4j-base-util-collections:0.5.3">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-collections/0.5.3/ops4j-base-util-collections-0.5.3.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-collections/0.5.3/ops4j-base-util-collections-0.5.3-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-collections/0.5.3/ops4j-base-util-collections-0.5.3-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.swissbox:pax-swissbox-tracker:0.2.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-tracker/0.2.0/pax-swissbox-tracker-0.2.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-tracker/0.2.0/pax-swissbox-tracker-0.2.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-tracker/0.2.0/pax-swissbox-tracker-0.2.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.swissbox:pax-swissbox-lifecycle:0.2.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-lifecycle/0.2.0/pax-swissbox-lifecycle-0.2.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-lifecycle/0.2.0/pax-swissbox-lifecycle-0.2.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-lifecycle/0.2.0/pax-swissbox-lifecycle-0.2.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.felix:org.osgi.service.obr:1.0.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.service.obr/1.0.0/org.osgi.service.obr-1.0.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.service.obr/1.0.0/org.osgi.service.obr-1.0.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.service.obr/1.0.0/org.osgi.service.obr-1.0.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.felix:org.osgi.core:1.0.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.core/1.0.0/org.osgi.core-1.0.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.core/1.0.0/org.osgi.core-1.0.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.core/1.0.0/org.osgi.core-1.0.0-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.apache.felix:org.apache.felix.framework:1.0.0">
@@ -701,160 +790,6 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.3.2/pax-url-wrap-0.3.2-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.swissbox:pax-swissbox-tracker:0.2.0">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-tracker/0.2.0/pax-swissbox-tracker-0.2.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-tracker/0.2.0/pax-swissbox-tracker-0.2.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-tracker/0.2.0/pax-swissbox-tracker-0.2.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.swissbox:pax-swissbox-lifecycle:0.2.0">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-lifecycle/0.2.0/pax-swissbox-lifecycle-0.2.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-lifecycle/0.2.0/pax-swissbox-lifecycle-0.2.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-lifecycle/0.2.0/pax-swissbox-lifecycle-0.2.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.apache.felix:org.osgi.service.obr:1.0.0">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.service.obr/1.0.0/org.osgi.service.obr-1.0.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.service.obr/1.0.0/org.osgi.service.obr-1.0.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.service.obr/1.0.0/org.osgi.service.obr-1.0.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.apache.felix:org.osgi.core:1.0.0">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.core/1.0.0/org.osgi.core-1.0.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.core/1.0.0/org.osgi.core-1.0.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.core/1.0.0/org.osgi.core-1.0.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: javax.xml.bind:jaxb-api:2.0">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/javax/xml/bind/jaxb-api/2.0/jaxb-api-2.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/javax/xml/bind/jaxb-api/2.0/jaxb-api-2.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/javax/xml/bind/jaxb-api/2.0/jaxb-api-2.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: javax.xml.bind:jaxb-impl:2.0.2">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/javax/xml/bind/jaxb-impl/2.0.2/jaxb-impl-2.0.2.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/javax/xml/bind/jaxb-impl/2.0.2/jaxb-impl-2.0.2-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/javax/xml/bind/jaxb-impl/2.0.2/jaxb-impl-2.0.2-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: javax.xml.bind:jsr173_api:1.0">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/javax/xml/bind/jsr173_api/1.0/jsr173_api-1.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/javax/xml/bind/jsr173_api/1.0/jsr173_api-1.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/javax/xml/bind/jsr173_api/1.0/jsr173_api-1.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: com.intellij:openapi:7757">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/com/intellij/openapi/7757/openapi-7757.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/com/intellij/openapi/7757/openapi-7757-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/com/intellij/openapi/7757/openapi-7757-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: com.intellij:extensions:7757">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/com/intellij/extensions/7757/extensions-7757.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/com/intellij/extensions/7757/extensions-7757-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/com/intellij/extensions/7757/extensions-7757-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: com.intellij:idea:7757">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/com/intellij/idea/7757/idea-7757.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/com/intellij/idea/7757/idea-7757-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/com/intellij/idea/7757/idea-7757-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: com.intellij:forms_rt:7757">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/com/intellij/forms_rt/7757/forms_rt-7757.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/com/intellij/forms_rt/7757/forms_rt-7757-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/com/intellij/forms_rt/7757/forms_rt-7757-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.jetbrains:annotations:7757">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/jetbrains/annotations/7757/annotations-7757.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/jetbrains/annotations/7757/annotations-7757-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/jetbrains/annotations/7757/annotations-7757-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: commons-logging:commons-logging-api:1.1">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/commons-logging/commons-logging-api/1.1/commons-logging-api-1.1.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/commons-logging/commons-logging-api/1.1/commons-logging-api-1.1-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/commons-logging/commons-logging-api/1.1/commons-logging-api-1.1-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.base:ops4j-base-monitors:0.5.3">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.3/ops4j-base-monitors-0.5.3.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.3/ops4j-base-monitors-0.5.3-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.3/ops4j-base-monitors-0.5.3-sources.jar!/" />
       </SOURCES>
     </library>
   </component>
