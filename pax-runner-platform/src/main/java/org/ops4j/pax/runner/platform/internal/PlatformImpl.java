@@ -112,7 +112,10 @@ public class PlatformImpl
         // initialize ee mappings
         m_eeMappings = new HashMap<String, String>();
         m_eeMappings.put( "CDC-1.0/Foundation-1.0".toUpperCase(), "CDC-1.0/Foundation-1.0.packages" );
+        m_eeMappings.put( "CDC-1.1/Foundation-1.1".toUpperCase(), "CDC-1.1/Foundation-1.1.packages" );
+        m_eeMappings.put( "OSGi/Minimum-1.0".toUpperCase(), "OSGi/Minimum-1.0.packages" );
         m_eeMappings.put( "OSGi/Minimum-1.1".toUpperCase(), "OSGi/Minimum-1.1.packages" );
+        m_eeMappings.put( "OSGi/Minimum-1.2".toUpperCase(), "OSGi/Minimum-1.2.packages" );
         m_eeMappings.put( "JRE-1.1".toUpperCase(), "JRE-1.1.packages" );
         m_eeMappings.put( "J2SE-1.2".toUpperCase(), "J2SE-1.2.packages" );
         m_eeMappings.put( "J2SE-1.3".toUpperCase(), "J2SE-1.3.packages" );
