@@ -33,6 +33,7 @@ public class PlatformContextImpl
     private Properties m_properties;
     private String m_systemPackages;
     private Configuration m_configuration;
+    private String m_executionEnvironment;
 
     /**
      * {@inheritDoc}
@@ -114,4 +115,19 @@ public class PlatformContextImpl
         m_configuration = configuration;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public String getExecutionEnvironment()
+    {
+        return m_executionEnvironment;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setExecutionEnvironment( String executionEnvironment )
+    {
+        m_executionEnvironment = executionEnvironment;
+    }
 }

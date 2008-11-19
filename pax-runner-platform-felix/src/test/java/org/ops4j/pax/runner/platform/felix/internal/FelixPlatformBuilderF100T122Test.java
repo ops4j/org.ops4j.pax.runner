@@ -231,6 +231,7 @@ public class FelixPlatformBuilderF100T122Test
         expect( platformContext.getBundles() ).andReturn( null );
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
         expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1,EE-2" );
         expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );
@@ -302,6 +303,7 @@ public class FelixPlatformBuilderF100T122Test
         expect( platformContext.getBundles() ).andReturn( bundles );
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
         expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1,EE-2" );
         expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
         expect( m_configuration.getStartLevel() ).andReturn( 10 );
         expect( m_configuration.getBundleStartLevel() ).andReturn( 20 );
@@ -397,6 +399,7 @@ public class FelixPlatformBuilderF100T122Test
         expect( platformContext.getBundles() ).andReturn( null );
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
         expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1,EE-2" );
         expect( platformContext.getSystemPackages() ).andReturn( null );
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );

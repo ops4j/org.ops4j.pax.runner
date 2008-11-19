@@ -52,7 +52,7 @@ public class PlatformImplTest
 
     @Before
     public void setUp()
-        throws IOException
+        throws IOException, PlatformException
     {
         m_builder = createMock( PlatformBuilder.class );
         m_definition = createMock( PlatformDefinition.class );
@@ -86,109 +86,6 @@ public class PlatformImplTest
         throws Exception
     {
         new PlatformImpl( m_builder, null );
-    }
-
-    public String createPackageList( final String ee, final String packages )
-        throws Exception
-    {
-        expect( m_config.getExecutionEnvironment() ).andReturn( ee );
-        expect( m_config.getSystemPackages() ).andReturn( packages );
-        expect( m_definition.getPackages() ).andReturn( null );
-
-        replay( m_builder, m_bundleContext, m_bundle, m_config, m_definition );
-        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
-        String systemPackages = platform.createPackageList( m_config, m_definition );
-        verify( m_builder, m_bundleContext, m_bundle, m_config, m_definition );
-        return systemPackages;
-    }
-
-    // test returned packages when there is no user defined packages option
-    @Test
-    public void createPackageListWithNoUserDefinedPackages()
-        throws Exception
-    {
-        expect( m_bundleContext.getBundle() ).andReturn( m_bundle );
-        expect( m_bundle.getResource( "META-INF/platform/ee/J2SE-1.5.packages" ) ).andReturn(
-            FileUtils.getFileFromClasspath( "platform/systemPackages.txt" ).toURL()
-        );
-        assertEquals( "System packages", "system.package.1, system.package.2", createPackageList( "J2SE-1.5", null ) );
-    }
-
-    // test returned packages when there is a user defined packages option
-    @Test
-    public void createPackageListWithUserDefinedPackages()
-        throws Exception
-    {
-        expect( m_bundleContext.getBundle() ).andReturn( m_bundle );
-        expect( m_bundle.getResource( "META-INF/platform/ee/J2SE-1.5.packages" ) ).andReturn(
-            FileUtils.getFileFromClasspath( "platform/systemPackages.txt" ).toURL()
-        );
-        assertEquals( "System packages", "system.package.1, system.package.2, u.p.1, u.p.2", createPackageList(
-            "J2SE-1.5", "u.p.1, u.p.2"
-        )
-        );
-    }
-
-    // test returned packages when the ee is an valid url
-    @Test
-    public void createPackageListWithURLEE()
-        throws Exception
-    {
-        assertEquals( "System packages", "system.package.1, system.package.2", createPackageList( FileUtils
-            .getFileFromClasspath( "platform/systemPackages.txt" ).toURL().toExternalForm(), null
-        )
-        );
-    }
-
-    // test that no packages are in use when ee is NONE
-    @Test
-    public void createPackageListNONE()
-        throws Exception
-    {
-        assertEquals( "System packages", "", createPackageList( "NONE", null ) );
-    }
-
-    // test returned packages when the ee is a valid url but has incorect letter case
-    @Test
-    public void createPackageListLetterCase()
-        throws Exception
-    {
-        expect( m_bundleContext.getBundle() ).andReturn( m_bundle );
-        expect( m_bundle.getResource( "META-INF/platform/ee/J2SE-1.5.packages" ) ).andReturn(
-            FileUtils.getFileFromClasspath( "platform/systemPackages.txt" ).toURL()
-        );
-        assertEquals( "System packages", "system.package.1, system.package.2", createPackageList( "j2se-1.5", null ) );
-    }
-
-    // test returned packages when the ee is an invalid url
-    @Test( expected = PlatformException.class )
-    public void createPackageListWithInvalidEE()
-        throws Exception
-    {
-        expect( m_bundleContext.getBundle() ).andReturn( m_bundle );
-        expect( m_bundle.getResource( "META-INF/platform/ee/J2SE-1.5.packages" ) ).andReturn(
-            FileUtils.getFileFromClasspath( "platform/systemPackages.txt" ).toURL()
-        );
-        assertEquals( "System packages", "system.package.1, system.package.2", createPackageList( "invalid", null ) );
-    }
-
-    // test returned packages when there are more EEs
-    @Test
-    public void createPackageListWithMoreEEs()
-        throws Exception
-    {
-        expect( m_bundleContext.getBundle() ).andReturn( m_bundle );
-        expect( m_bundle.getResource( "META-INF/platform/ee/J2SE-1.4.packages" ) ).andReturn(
-            FileUtils.getFileFromClasspath( "platform/systemPackages.txt" ).toURL()
-        );
-        expect( m_bundleContext.getBundle() ).andReturn( m_bundle );
-        expect( m_bundle.getResource( "META-INF/platform/ee/J2SE-1.5.packages" ) ).andReturn(
-            FileUtils.getFileFromClasspath( "platform/systemPackages2.txt" ).toURL()
-        );
-        assertEquals( "System packages", "system.package.1, system.package.2, system.package.3", createPackageList(
-            "J2SE-1.4,J2SE-1.5", null
-        )
-        );
     }
 
     // normal flow
@@ -257,7 +154,7 @@ public class PlatformImplTest
 
     // test that platform starts even if the system jar is not a bundle by itself
     @Test
-    public void startWithoutBundlesAndAsystemJarThatIsNotBunlde()
+    public void startWithoutBundlesAndASystemJarThatIsNotBunlde()
         throws Exception
     {
         start( null, FileUtils.getFileFromClasspath( "platform/noManifestAttr.jar" ).toURL() );
@@ -294,10 +191,14 @@ public class PlatformImplTest
         expect( m_definition.getPlatformBundles( "" ) ).andReturn( platformBundles );
         // from start()
         m_context.setBundles( (List<LocalBundle>) notNull() );
-        m_context.setSystemPackages( "systemPackages" );
         m_builder.prepare( m_context );
         expect( m_config.getProfiles() ).andReturn( null );
+        expect( m_config.getExecutionEnvironment() ).andReturn( "NONE" );
+        expect( m_config.getSystemPackages() ).andReturn( null );
         expect( m_config.getVMOptions() ).andReturn( new String[]{ "-Xmx512m", "-Xms128m" } );
+        expect( ( m_definition.getPackages() ) ).andReturn( null );
+        m_context.setSystemPackages( "" );
+        m_context.setExecutionEnvironment( "" );
         expect( m_builder.getVMOptions( m_context ) ).andReturn( new String[]{ "-Dproperty=value" } );
         expect( m_config.getClasspath() ).andReturn( "" );
         expect( m_builder.getArguments( m_context ) ).andReturn( new String[]{ "arg1" } );
@@ -514,14 +415,6 @@ public class PlatformImplTest
         {
             assertNotNull( "Command line cannot be null", commandLine );
             assertNotNull( "Working directory cannot be null", workingDirectory );
-        }
-
-        @Override
-        String createPackageList( final Configuration configuration, final PlatformDefinition platformDefinition )
-            throws PlatformException
-        {
-            assertNotNull( "Configuration cannot be null", configuration );
-            return "systemPackages";
         }
 
         @Override

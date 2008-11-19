@@ -169,6 +169,10 @@ public class FelixPlatformBuilderF100T122
                     FileUtils.delete( profileDirectory );
                 }
             }
+
+            // execution environments
+            writer.append( Constants.FRAMEWORK_EXECUTIONENVIRONMENT, context.getExecutionEnvironment() );
+
             // system packages
             writer.append( Constants.FRAMEWORK_SYSTEMPACKAGES, context.getSystemPackages() );
 

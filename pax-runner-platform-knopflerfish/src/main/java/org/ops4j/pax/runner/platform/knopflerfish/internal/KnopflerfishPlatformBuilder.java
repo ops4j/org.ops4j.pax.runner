@@ -163,6 +163,7 @@ public class KnopflerfishPlatformBuilder
                 .append( "-Dorg.knopflerfish.framework.debug.startlevel", "false" )
                 .append( "-Dorg.knopflerfish.framework.debug.ldap", "false" )
                 .append( "-Dorg.knopflerfish.startlevel.use", "true" )
+                .append( "-D" + Constants.FRAMEWORK_EXECUTIONENVIRONMENT, context.getExecutionEnvironment() )
                 .append( "-D" + Constants.FRAMEWORK_SYSTEMPACKAGES, context.getSystemPackages() )
                 .append();
 

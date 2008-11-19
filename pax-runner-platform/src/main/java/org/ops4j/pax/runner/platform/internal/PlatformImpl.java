@@ -18,24 +18,17 @@
 package org.ops4j.pax.runner.platform.internal;
 
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 import javax.xml.parsers.ParserConfigurationException;
@@ -92,10 +85,6 @@ public class PlatformImpl
      * Current bundle context.
      */
     private final BundleContext m_bundleContext;
-    /**
-     * Mapping between upper case ee name and the relative location of packages file.
-     */
-    private Map<String, String> m_eeMappings;
 
     /**
      * Creates a new platform.
@@ -109,24 +98,6 @@ public class PlatformImpl
         NullArgumentException.validateNotNull( bundleContext, "Bundle context" );
         m_platformBuilder = platformBuilder;
         m_bundleContext = bundleContext;
-        // initialize ee mappings
-        m_eeMappings = new HashMap<String, String>();
-        m_eeMappings.put( "CDC-1.0/Foundation-1.0".toUpperCase(), "CDC-1.0/Foundation-1.0.packages" );
-        m_eeMappings.put( "CDC-1.1/Foundation-1.1".toUpperCase(), "CDC-1.1/Foundation-1.1.packages" );
-        m_eeMappings.put( "OSGi/Minimum-1.0".toUpperCase(), "OSGi/Minimum-1.0.packages" );
-        m_eeMappings.put( "OSGi/Minimum-1.1".toUpperCase(), "OSGi/Minimum-1.1.packages" );
-        m_eeMappings.put( "OSGi/Minimum-1.2".toUpperCase(), "OSGi/Minimum-1.2.packages" );
-        m_eeMappings.put( "JRE-1.1".toUpperCase(), "JRE-1.1.packages" );
-        m_eeMappings.put( "J2SE-1.2".toUpperCase(), "J2SE-1.2.packages" );
-        m_eeMappings.put( "J2SE-1.3".toUpperCase(), "J2SE-1.3.packages" );
-        m_eeMappings.put( "J2SE-1.4".toUpperCase(), "J2SE-1.4.packages" );
-        m_eeMappings.put( "J2SE-1.5".toUpperCase(), "J2SE-1.5.packages" );
-        m_eeMappings.put( "J2SE-1.6".toUpperCase(), "JavaSE-1.6.packages" );
-        m_eeMappings.put( "JavaSE-1.6".toUpperCase(), "JavaSE-1.6.packages" );
-        m_eeMappings.put( "PersonalJava-1.1".toUpperCase(), "PersonalJava-1.1.packages" );
-        m_eeMappings.put( "PersonalJava-1.2".toUpperCase(), "PersonalJava-1.2.packages" );
-        m_eeMappings.put( "CDC-1.0/PersonalBasis-1.0".toUpperCase(), "CDC-1.0/PersonalBasis-1.0.packages" );
-        m_eeMappings.put( "CDC-1.0/PersonalJava-1.0".toUpperCase(), "CDC-1.0/PersonalJava-1.0.packages" );
     }
 
     /**
@@ -211,7 +182,11 @@ public class PlatformImpl
             )
         );
         context.setBundles( bundlesToInstall );
-        context.setSystemPackages( createPackageList( configuration, definition ) );
+        final ExecutionEnvironment ee = new ExecutionEnvironment( configuration.getExecutionEnvironment() );
+        context.setSystemPackages(
+            createPackageList( ee.getSystemPackages(), configuration.getSystemPackages(), definition.getPackages() )
+        );
+        context.setExecutionEnvironment( ee.getExecutionEnvironment() );
 
         // and then ask the platform builder to prepare platform for start up (e.g. create configuration file)
         m_platformBuilder.prepare( context );
@@ -831,127 +806,43 @@ public class PlatformImpl
     }
 
     /**
-     * Returns a comma separated list of system packages, constructed from:<br/> 1. execution envoronment option<br/>
-     * 1.1. if option vale is NONE => no packages<br/> 1.2. if option is one of the standard ee => use the
-     * corresponding package list<br/> 1.3. if not set => determine based on current jvm<br/> 1.4. if option is set
-     * and option 1.2 is true then the option value must be an url of a file that contains pkgs.<br/> 2. + additional
-     * packages from systemPackages option<br/> 3. + list of packages contributed by the platform (see felix case)<br/>
+     * Returns a comma separated list of system packages, constructed from:<br/>
+     * 1. execution envoronment packages<br/>
+     * 2. + additional packages from systemPackages option<br/>
+     * 3. + list of packages contributed by the platform (see felix case)
      *
-     * @param configuration      configuration in use
-     * @param platformDefinition a platform definition
+     * @param eePackages       execution environment packages
+     * @param userPackages     user defined packages
+     * @param platformPackages platform defined packages
      *
      * @return comma separated list of packages
-     *
-     * @throws org.ops4j.pax.runner.platform.PlatformException
-     *          if packages file not found or can't be read
      */
-    String createPackageList( final Configuration configuration, final PlatformDefinition platformDefinition )
-        throws PlatformException
+    private String createPackageList( final String eePackages,
+                                      final String userPackages,
+                                      final String platformPackages )
     {
-        final StringBuffer packages = new StringBuffer();
-        final String ee = configuration.getExecutionEnvironment();
-        if( !"NONE".equalsIgnoreCase( ee ) )
-        {
-            // we make an union of the packages form each ee so let's have a unique set for it
-            final Set<String> unique = new HashSet<String>();
-            for( String segment : ee.split( "," ) )
-            {
-                final URL url = discoverExecutionEnvironmentURL( segment );
-                BufferedReader reader = null;
-                try
-                {
-                    try
-                    {
-                        reader = new BufferedReader( new InputStreamReader( url.openStream() ) );
-                        String line;
-                        while( ( line = reader.readLine() ) != null )
-                        {
-                            line = line.trim();
-                            // dont add empty lines and packages that we already have
-                            if( line.length() > 0 && !unique.contains( line ) )
-                            {
-                                if( packages.length() > 0 )
-                                {
-                                    packages.append( ", " );
-                                }
-                                packages.append( line );
-                                unique.add( line );
-                            }
-                        }
-                    }
-                    finally
-                    {
-                        if( reader != null )
-                        {
-                            reader.close();
-                        }
-                    }
-                }
-                catch( IOException e )
-                {
-                    throw new PlatformException( "Could not read packages from execution environment", e );
-                }
-            }
-        }
+        final StringBuilder packages = new StringBuilder();
+        packages.append( eePackages );
+
         // append used defined packages
-        final String userPackages = configuration.getSystemPackages();
         if( userPackages != null && userPackages.trim().length() > 0 )
         {
             if( packages.length() > 0 )
             {
-                packages.append( ", " );
+                packages.append( "," );
             }
             packages.append( userPackages );
         }
         // append platform specific packages
-        final String platformPackages = platformDefinition.getPackages();
         if( platformPackages != null && platformPackages.trim().length() > 0 )
         {
             if( packages.length() > 0 )
             {
-                packages.append( ", " );
+                packages.append( "," );
             }
             packages.append( platformPackages );
         }
         return packages.toString();
-    }
-
-    /**
-     * Retruns the url of a file containing the execution environment packages
-     *
-     * @param ee execution environment name
-     *
-     * @return url of the file
-     *
-     * @throws PlatformException if execution environment could not be determined or found
-     */
-    private URL discoverExecutionEnvironmentURL( final String ee )
-        throws PlatformException
-    {
-        URL url;
-        final String relativeFileName = m_eeMappings.get( ee.toUpperCase() );
-        if( relativeFileName != null )
-        {
-            url = m_bundleContext.getBundle().getResource( EE_FILES_ROOT + relativeFileName );
-            if( url == null )
-            {
-                throw new PlatformException( "Execution environment [" + ee + "] not supported" );
-            }
-            LOGGER.info( "Execution environment [" + ee + "]" );
-        }
-        else
-        {
-            try
-            {
-                url = new URL( ee );
-                LOGGER.info( "Execution environment [" + url.toExternalForm() + "]" );
-            }
-            catch( MalformedURLException e )
-            {
-                throw new PlatformException( "Execution environment [" + ee + "] could not be found", e );
-            }
-        }
-        return url;
     }
 
     /**

@@ -441,7 +441,8 @@ public class EquinoxPlatformBuilder
         bootDelegation.append( BOOT_DELEGATION_PACKAGES );
         return new String[]{
             "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=" + bootDelegation.toString(),
-            "-D" + Constants.FRAMEWORK_SYSTEMPACKAGES + "=" + context.getSystemPackages()
+            "-D" + Constants.FRAMEWORK_SYSTEMPACKAGES + "=" + context.getSystemPackages(),
+            "-D" + Constants.FRAMEWORK_EXECUTIONENVIRONMENT + "=" + context.getExecutionEnvironment()
         };
     }
 

@@ -241,6 +241,7 @@ public class KnopflerfishPlatformBuilderTest
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
         expect( platformContext.getConfiguration() ).andReturn( m_configuration );
         expect( m_configuration.usePersistedState() ).andReturn( false );
+        expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1,EE-2" );
         expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );
@@ -312,6 +313,7 @@ public class KnopflerfishPlatformBuilderTest
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
         expect( platformContext.getConfiguration() ).andReturn( m_configuration );
         expect( m_configuration.usePersistedState() ).andReturn( false );
+        expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1,EE-2" );
         expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
         expect( m_configuration.getStartLevel() ).andReturn( 10 );
         expect( m_configuration.getBundleStartLevel() ).andReturn( 20 );
@@ -405,6 +407,7 @@ public class KnopflerfishPlatformBuilderTest
         expect( platformContext.getBundles() ).andReturn( null );
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
         expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1,EE-2" );
         expect( platformContext.getSystemPackages() ).andReturn( null );
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );
@@ -416,7 +419,7 @@ public class KnopflerfishPlatformBuilderTest
         verify( m_bundleContext, m_configuration, platformContext );
     }
 
-    // cahce folder should not exist after returning
+    // cache folder should not exist after returning
     @Test
     public void usePersistedStateWithExistingFolder()
         throws IOException, PlatformException

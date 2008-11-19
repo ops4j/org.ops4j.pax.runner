@@ -249,6 +249,7 @@ public class EquinoxPlatformBuilderTest
         PlatformContext platformContext = createMock( PlatformContext.class );
         expect( platformContext.getConfiguration() ).andReturn( m_configuration );
         expect( m_configuration.getBootDelegation() ).andReturn( "javax.*" );
+        expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1,EE-2" );
         expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
 
         replay( m_configuration, m_bundleContext, platformContext );
@@ -256,7 +257,8 @@ public class EquinoxPlatformBuilderTest
             "System options",
             new String[]{
                 "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=javax.*,java.*",
-                "-D" + Constants.FRAMEWORK_SYSTEMPACKAGES + "=sys.package.one,sys.package.two"
+                "-D" + Constants.FRAMEWORK_SYSTEMPACKAGES + "=sys.package.one,sys.package.two",
+                "-D" + Constants.FRAMEWORK_EXECUTIONENVIRONMENT + "=EE-1,EE-2",
             },
             new EquinoxPlatformBuilder( m_bundleContext, "version" ).getVMOptions( platformContext )
         );
@@ -269,6 +271,7 @@ public class EquinoxPlatformBuilderTest
         PlatformContext platformContext = createMock( PlatformContext.class );
         expect( platformContext.getConfiguration() ).andReturn( m_configuration );
         expect( m_configuration.getBootDelegation() ).andReturn( null );
+        expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1" );
         expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
 
         replay( m_configuration, m_bundleContext, platformContext );
@@ -276,7 +279,8 @@ public class EquinoxPlatformBuilderTest
             "System options",
             new String[]{
                 "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=java.*",
-                "-D" + Constants.FRAMEWORK_SYSTEMPACKAGES + "=sys.package.one,sys.package.two"
+                "-D" + Constants.FRAMEWORK_SYSTEMPACKAGES + "=sys.package.one,sys.package.two",
+                "-D" + Constants.FRAMEWORK_EXECUTIONENVIRONMENT + "=EE-1",
             },
             new EquinoxPlatformBuilder( m_bundleContext, "version" ).getVMOptions( platformContext )
         );

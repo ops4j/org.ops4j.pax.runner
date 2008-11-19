@@ -103,4 +103,18 @@ public interface PlatformContext
      */
     void setConfiguration( Configuration configuration );
 
+    /**
+     * Sets the execution environment.
+     *
+     * @param executionEnvironment comma separated list of supported execution environments
+     */
+    void setExecutionEnvironment( String executionEnvironment );
+
+    /**
+     * Returns the execution environments.
+     *
+     * @return comma separated list of framewok supported execution environments.
+     */
+    String getExecutionEnvironment();
+
 }

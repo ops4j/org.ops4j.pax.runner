@@ -126,7 +126,7 @@ public class FelixPlatformBuilderF140
             // make sure the configuration directory exists
             final File configDirectory = new File( workingDirectory, CONFIG_DIRECTORY );
             configDirectory.mkdirs();
-            
+
             // create the configuration file
             final File configFile = new File( configDirectory, CONFIG_INI );
             configFile.createNewFile();
@@ -145,7 +145,8 @@ public class FelixPlatformBuilderF140
             // storage directory
             final File cacheDirectory = new File( configDirectory, CACHE_DIRECTORY );
             writer.append( "org.osgi.framework.storage",
-                cacheDirectory.getAbsolutePath().replace( File.separatorChar, '/' ) );
+                           cacheDirectory.getAbsolutePath().replace( File.separatorChar, '/' )
+            );
 
             // framework start level
             final Integer startLevel = configuration.getStartLevel();
@@ -153,6 +154,7 @@ public class FelixPlatformBuilderF140
             {
                 writer.append( "org.osgi.framework.startlevel", startLevel.toString() );
             }
+
             // bundle start level
             final Integer bundleStartLevel = configuration.getBundleStartLevel();
             if( bundleStartLevel != null )
@@ -165,6 +167,9 @@ public class FelixPlatformBuilderF140
             {
                 writer.append( "org.osgi.framework.storage.clean", "onFirstInit" );
             }
+
+            // execution environments
+            writer.append( Constants.FRAMEWORK_EXECUTIONENVIRONMENT, context.getExecutionEnvironment() );
 
             // system packages
             writer.append( Constants.FRAMEWORK_SYSTEMPACKAGES, context.getSystemPackages() );
