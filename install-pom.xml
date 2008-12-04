@@ -15,9 +15,7 @@
   <packaging>pom</packaging>
 
   <name>OPS4J Pax Runner - Install Platforms</name>
-  <description>
-    OPS4J Pax Runner - POM used for downloading framework jars to local repo for easy usage.
-  </description>
+  <description>OPS4J Pax Runner - POM used for downloading framework jars to local repo for easy usage.</description>
 
   <dependencies>
     <!-- Felix -->
