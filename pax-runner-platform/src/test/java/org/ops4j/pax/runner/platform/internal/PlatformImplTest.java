@@ -34,6 +34,7 @@ import org.ops4j.io.FileUtils;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.BundleReferenceBean;
 import org.ops4j.pax.runner.platform.Configuration;
+import org.ops4j.pax.runner.platform.JavaRunner;
 import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.PlatformContext;
@@ -78,39 +79,7 @@ public class PlatformImplTest
     public void constructorWithNullPlatformBuilder()
         throws Exception
     {
-        new PlatformImpl( null, m_bundleContext );
-    }
-
-    @Test( expected = IllegalArgumentException.class )
-    public void constructorWithNullBundleContext()
-        throws Exception
-    {
-        new PlatformImpl( m_builder, null );
-    }
-
-    // normal flow
-    @Test
-    public void getJavaExecutable()
-        throws Exception
-    {
-        expect( m_config.getJavaHome() ).andReturn( "javaHome" );
-
-        replay( m_builder, m_bundleContext, m_config );
-        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
-        assertEquals( "Java executable", "javaHome/bin/java", platform.getJavaExecutable( m_config ) );
-        verify( m_builder, m_bundleContext, m_config );
-    }
-
-    // test that a platform exception is thrown when there is no java home
-    @Test( expected = PlatformException.class )
-    public void getJavaExecutableWithInvalidJavaHome()
-        throws Exception
-    {
-        expect( m_config.getJavaHome() ).andReturn( null );
-
-        replay( m_builder, m_bundleContext, m_config );
-        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
-        platform.getJavaExecutable( m_config );
+        new PlatformImpl( null );
     }
 
     @Test
@@ -169,6 +138,11 @@ public class PlatformImplTest
     public void start( final List<BundleReference> bundles, URL systemBundleURL )
         throws Exception
     {
+        final JavaRunner javaRunner = createMock( JavaRunner.class );
+        javaRunner.exec( (String[]) notNull(), (String[]) notNull(), (String) notNull(), (String[]) notNull(),
+                         (String) notNull(), (File) notNull()
+        );
+
         expect( m_builder.getMainClassName() ).andReturn( "Main" );
         m_context.setProperties( null );
         m_context.setConfiguration( m_config );
@@ -179,6 +153,7 @@ public class PlatformImplTest
         expect( m_config.isOverwriteUserBundles() ).andReturn( false );
         expect( m_config.isOverwriteSystemBundles() ).andReturn( false );
         expect( m_config.isDownloadFeedback() ).andReturn( false );
+        expect( m_config.getJavaHome() ).andReturn( "javaHome" );
         expect( m_definition.getSystemPackage() ).andReturn( systemBundleURL );
         expect( m_definition.getSystemPackageName() ).andReturn( "system package" );
         List<BundleReference> platformBundles = new ArrayList<BundleReference>();
@@ -202,11 +177,10 @@ public class PlatformImplTest
         expect( m_builder.getVMOptions( m_context ) ).andReturn( new String[]{ "-Dproperty=value" } );
         expect( m_config.getClasspath() ).andReturn( "" );
         expect( m_builder.getArguments( m_context ) ).andReturn( new String[]{ "arg1" } );
-        expect( m_context.getWorkingDirectory() ).andReturn( new File( m_workDir ) );
 
-        replay( m_builder, m_definition, m_config, m_context, m_bundleContext, m_bundle );
-        new TestPlatform().start( null, bundles, null, null );
-        verify( m_builder, m_definition, m_config, m_context, m_bundleContext, m_bundle );
+        replay( m_builder, m_definition, m_config, m_context, m_bundleContext, m_bundle, javaRunner );
+        new TestPlatform().start( null, bundles, null, null, javaRunner );
+        verify( m_builder, m_definition, m_config, m_context, m_bundleContext, m_bundle, javaRunner );
     }
 
     @Test( expected = PlatformException.class )
@@ -214,7 +188,7 @@ public class PlatformImplTest
         throws Exception
     {
         replay( m_builder, m_bundleContext, m_config );
-        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        PlatformImpl platform = new PlatformImpl( m_builder );
         boolean checkAttributes = false;
         File file = FileUtils.getFileFromClasspath( "platform/withoutManifest.jar" );
         URL url = file.toURL();
@@ -226,7 +200,7 @@ public class PlatformImplTest
         throws Exception
     {
         replay( m_builder, m_bundleContext, m_config );
-        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        PlatformImpl platform = new PlatformImpl( m_builder );
         boolean checkAttributes = true;
         File file = FileUtils.getFileFromClasspath( "platform/withoutManifest.jar" );
         URL url = file.toURL();
@@ -238,7 +212,7 @@ public class PlatformImplTest
         throws Exception
     {
         replay( m_builder, m_bundleContext, m_config );
-        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        PlatformImpl platform = new PlatformImpl( m_builder );
         boolean checkAttributes = false;
         File file = FileUtils.getFileFromClasspath( "platform/noManifestAttr.jar" );
         URL url = file.toURL();
@@ -254,7 +228,7 @@ public class PlatformImplTest
         throws Exception
     {
         replay( m_builder, m_bundleContext, m_config );
-        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        PlatformImpl platform = new PlatformImpl( m_builder );
         boolean checkAttributes = true;
         File file = FileUtils.getFileFromClasspath( "platform/noManifestAttr.jar" );
         URL url = file.toURL();
@@ -266,7 +240,7 @@ public class PlatformImplTest
         throws Exception
     {
         replay( m_builder, m_bundleContext, m_config );
-        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        PlatformImpl platform = new PlatformImpl( m_builder );
         boolean checkAttributes = false;
         File file = FileUtils.getFileFromClasspath( "platform/invalid.jar" );
         URL url = file.toURL();
@@ -278,7 +252,7 @@ public class PlatformImplTest
         throws Exception
     {
         replay( m_builder, m_bundleContext, m_config );
-        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        PlatformImpl platform = new PlatformImpl( m_builder );
         boolean checkAttributes = true;
         File file = FileUtils.getFileFromClasspath( "platform/invalid.jar" );
         URL url = file.toURL();
@@ -290,7 +264,7 @@ public class PlatformImplTest
         throws Exception
     {
         replay( m_builder, m_bundleContext, m_config );
-        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        PlatformImpl platform = new PlatformImpl( m_builder );
         boolean checkAttributes = false;
         File file = FileUtils.getFileFromClasspath( "platform/bundle1.jar" );
         URL url = file.toURL();
@@ -306,7 +280,7 @@ public class PlatformImplTest
         throws Exception
     {
         replay( m_builder, m_bundleContext, m_config );
-        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        PlatformImpl platform = new PlatformImpl( m_builder );
         boolean checkAttributes = true;
         File file = FileUtils.getFileFromClasspath( "platform/bundle1.jar" );
         URL url = file.toURL();
@@ -322,7 +296,7 @@ public class PlatformImplTest
         throws Exception
     {
         replay( m_builder, m_bundleContext, m_config );
-        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        PlatformImpl platform = new PlatformImpl( m_builder );
         boolean checkAttributes = false;
         File file = FileUtils.getFileFromClasspath( "platform/bundleWithVersion.jar" );
         URL url = file.toURL();
@@ -338,7 +312,7 @@ public class PlatformImplTest
         throws Exception
     {
         replay( m_builder, m_bundleContext, m_config );
-        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        PlatformImpl platform = new PlatformImpl( m_builder );
         boolean checkAttributes = true;
         File file = FileUtils.getFileFromClasspath( "platform/bundleWithVersion.jar" );
         URL url = file.toURL();
@@ -354,7 +328,7 @@ public class PlatformImplTest
         throws Exception
     {
         replay( m_builder, m_bundleContext, m_config );
-        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        PlatformImpl platform = new PlatformImpl( m_builder );
         boolean checkAttributes = false;
         File file = FileUtils.getFileFromClasspath( "platform/bundleWithSemicolon.jar" );
         URL url = file.toURL();
@@ -370,7 +344,7 @@ public class PlatformImplTest
         throws Exception
     {
         replay( m_builder, m_bundleContext, m_config );
-        PlatformImpl platform = new PlatformImpl( m_builder, m_bundleContext );
+        PlatformImpl platform = new PlatformImpl( m_builder );
         boolean checkAttributes = true;
         File file = FileUtils.getFileFromClasspath( "platform/bundleWithSemicolon.jar" );
         URL url = file.toURL();
@@ -387,7 +361,7 @@ public class PlatformImplTest
         TestPlatform()
             throws PlatformException
         {
-            super( m_builder, m_bundleContext );
+            super( m_builder );
         }
 
         @Override
@@ -409,20 +383,6 @@ public class PlatformImplTest
             return m_context;
         }
 
-        @Override
-        void executeProcess( final String[] commandLine, final File workingDirectory )
-            throws PlatformException
-        {
-            assertNotNull( "Command line cannot be null", commandLine );
-            assertNotNull( "Working directory cannot be null", workingDirectory );
-        }
-
-        @Override
-        String getJavaExecutable( final Configuration configuration )
-            throws PlatformException
-        {
-            return "javaExecutable";
-        }
     }
 
 }

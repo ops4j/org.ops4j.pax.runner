@@ -34,14 +34,13 @@ import java.util.jar.Manifest;
 import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.xml.sax.SAXException;
 import org.ops4j.io.FileUtils;
-import org.ops4j.io.Pipe;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
+import org.ops4j.pax.runner.platform.DefaultJavaRunner;
 import org.ops4j.pax.runner.platform.JavaRunner;
 import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.LocalSystemFile;
@@ -81,23 +80,16 @@ public class PlatformImpl
      * PropertyResolver to be used.Injected to allow a Managed Service implementation.
      */
     private PropertyResolver m_propertyResolver;
-    /**
-     * Current bundle context.
-     */
-    private final BundleContext m_bundleContext;
 
     /**
      * Creates a new platform.
      *
      * @param platformBuilder concrete platform builder; mandatory
-     * @param bundleContext   a bundle context
      */
-    public PlatformImpl( final PlatformBuilder platformBuilder, final BundleContext bundleContext )
+    public PlatformImpl( final PlatformBuilder platformBuilder )
     {
         NullArgumentException.validateNotNull( platformBuilder, "Platform builder" );
-        NullArgumentException.validateNotNull( bundleContext, "Bundle context" );
         m_platformBuilder = platformBuilder;
-        m_bundleContext = bundleContext;
     }
 
     /**
@@ -111,20 +103,10 @@ public class PlatformImpl
     }
 
     /**
-     * @see Platform#start(java.util.List,java.util.List,java.util.Properties,Dictionary)
-     */
-    public void start( final List<SystemFileReference> systemFiles, final List<BundleReference> bundles,
-                       final Properties properties, final Dictionary config )
-        throws PlatformException
-    {
-        start( systemFiles, bundles, properties, config, null );
-    }
-
-    /**
      * @see Platform#start(java.util.List,java.util.List,java.util.Properties,Dictionary,JavaRunner)
      */
     public void start( final List<SystemFileReference> systemFiles, final List<BundleReference> bundles,
-                       final Properties properties, final Dictionary config, final JavaRunner runner )
+                       final Properties properties, final Dictionary config, final JavaRunner javaRunner )
         throws PlatformException
     {
         LOGGER.debug( "Preparing platform [" + this + "]" );
@@ -191,44 +173,38 @@ public class PlatformImpl
         // and then ask the platform builder to prepare platform for start up (e.g. create configuration file)
         m_platformBuilder.prepare( context );
 
-        // and finally start it up.
-        if( null == runner )
+        final CommandLineBuilder vmOptions = new CommandLineBuilder();
+        vmOptions.append( configuration.getVMOptions() );
+        vmOptions.append( m_platformBuilder.getVMOptions( context ) );
+
+        final String[] classpath = buildClassPath( systemFile, locaSystemFiles, configuration );
+
+        final CommandLineBuilder programOptions = new CommandLineBuilder();
+        programOptions.append( m_platformBuilder.getArguments( context ) );
+        programOptions.append( getFrameworkOptions() );
+
+        JavaRunner runner = javaRunner;
+        if( runner == null )
         {
-            final CommandLineBuilder commandLine = new CommandLineBuilder()
-                .append( getJavaExecutable( configuration ) )
-                .append( configuration.getVMOptions() )
-                .append( m_platformBuilder.getVMOptions( context ) )
-                .append( "-cp" )
-                .append( buildClassPath( systemFile, locaSystemFiles, configuration ) )
-                .append( mainClassName )
-                .append( m_platformBuilder.getArguments( context ) )
-                .append( getFrameworkOptions() );
-
-            LOGGER.debug( "Start command line [" + Arrays.toString( commandLine.toArray() ) + "]" );
-
-            executeProcess( commandLine.toArray(), context.getWorkingDirectory() );
+            runner = new DefaultJavaRunner();
         }
-        // or use an external Java runner service
-        else
-        {
-            final CommandLineBuilder vmOptions = new CommandLineBuilder();
-            vmOptions.append( configuration.getVMOptions() );
-            vmOptions.append( m_platformBuilder.getVMOptions( context ) );
+        final String javaHome = configuration.getJavaHome();
 
-            final String[] classpath =
-                ( systemFile.getAbsolutePath() + configuration.getClasspath() ).split( File.pathSeparator );
+        LOGGER.debug( "Start " + runner.getClass() + " [" + mainClassName + "]" );
+        LOGGER.debug( "vmOptions      [" + Arrays.toString( vmOptions.toArray() ) + "]" );
+        LOGGER.debug( "classpath      [" + Arrays.toString( classpath ) + "]" );
+        LOGGER.debug( "programOptions [" + Arrays.toString( programOptions.toArray() ) + "]" );
+        LOGGER.debug( "javaHome [" + javaHome + "]" );
+        LOGGER.debug( "workingDir [" + workDir + "]" );
 
-            final CommandLineBuilder programOptions = new CommandLineBuilder();
-            programOptions.append( m_platformBuilder.getArguments( context ) );
-            programOptions.append( getFrameworkOptions() );
-
-            LOGGER.debug( "Start " + runner.getClass() + " [" + mainClassName + "]" );
-            LOGGER.debug( "vmOptions      [" + Arrays.toString( vmOptions.toArray() ) + "]" );
-            LOGGER.debug( "classpath      [" + Arrays.toString( classpath ) + "]" );
-            LOGGER.debug( "programOptions [" + Arrays.toString( programOptions.toArray() ) + "]" );
-
-            runner.exec( vmOptions.toArray(), classpath, mainClassName, programOptions.toArray() );
-        }
+        runner.exec(
+            vmOptions.toArray(),
+            classpath,
+            mainClassName,
+            programOptions.toArray(),
+            javaHome,
+            workDir
+        );
     }
 
     /**
@@ -238,9 +214,12 @@ public class PlatformImpl
      * @param systemFile    framework system files
      * @param systemFiles   local system files references
      * @param configuration configuration to get the classpath option
+     *
+     * @return array of classpath entries
      */
-    private String buildClassPath( final File systemFile, final List<LocalSystemFile> systemFiles,
-                                   final Configuration configuration )
+    private String[] buildClassPath( final File systemFile,
+                                     final List<LocalSystemFile> systemFiles,
+                                     final Configuration configuration )
     {
         final StringBuilder prepend = new StringBuilder();
         final StringBuilder append = new StringBuilder();
@@ -276,96 +255,8 @@ public class PlatformImpl
         classPath.append( systemFile.getAbsolutePath() );
         classPath.append( append );
         classPath.append( configuration.getClasspath() );
-        return classPath.toString();
-    }
 
-    /**
-     * Executes the process that contains the platform. Separated to be able to override in unit tests.
-     *
-     * @param commandLine      an array that makes up the command line
-     * @param workingDirectory the working directory for th eprocess
-     *
-     * @throws PlatformException re-thrown if something goes wrong with executing the process
-     */
-    void executeProcess( final String[] commandLine, final File workingDirectory )
-        throws PlatformException
-    {
-        final Process frameworkProcess;
-        try
-        {
-            frameworkProcess = Runtime.getRuntime().exec( commandLine, null, workingDirectory );
-        }
-        catch( IOException e )
-        {
-            throw new PlatformException( "Could not start up the process", e );
-        }
-
-        LOGGER.info( "Starting platform [" + this + "]. Runner has successfully finished his job!" );
-
-        Thread shutdownHook = createShutdownHook( frameworkProcess );
-        Runtime.getRuntime().addShutdownHook( shutdownHook );
-        LOGGER.debug( "Added shutdown hook." );
-
-        try
-        {
-            LOGGER.debug( "Waiting for framework exit." );
-            frameworkProcess.waitFor();
-        }
-        catch( InterruptedException e )
-        {
-            LOGGER.debug( e );
-        }
-        finally
-        {
-            try
-            {
-                Runtime.getRuntime().removeShutdownHook( shutdownHook );
-                LOGGER.debug( "Early shutdown." );
-                shutdownHook.run();
-            }
-            catch( IllegalStateException e )
-            {
-                LOGGER.debug( "Shutdown already in progress." );
-            }
-        }
-    }
-
-    /**
-     * Create helper thread to safely shutdown the external framework process
-     *
-     * @param process framework process
-     *
-     * @return stream handler
-     */
-    private Thread createShutdownHook( final Process process )
-    {
-        LOGGER.debug( "Wrapping stream I/O." );
-
-        final Pipe errPipe = new Pipe( process.getErrorStream(), System.err ).start( "Error pipe" );
-        final Pipe outPipe = new Pipe( process.getInputStream(), System.out ).start( "Out pipe" );
-        final Pipe inPipe = new Pipe( process.getOutputStream(), System.in ).start( "In pipe" );
-
-        Thread shutdownHook = new Thread( new Runnable()
-        {
-            public void run()
-            {
-                inPipe.stop();
-                outPipe.stop();
-                errPipe.stop();
-
-                try
-                {
-                    process.destroy();
-                }
-                catch( Exception e )
-                {
-                    // ignore if already shutting down
-                }
-            }
-        }, "Pax-Runner shutdown hook"
-        );
-
-        return shutdownHook;
+        return classPath.toString().split( File.pathSeparator );
     }
 
     /**
@@ -384,26 +275,6 @@ public class PlatformImpl
             options = property.split( " " );
         }
         return options;
-    }
-
-    /**
-     * Return path to java executable.
-     *
-     * @param configuration configuration in use
-     *
-     * @return path to java executable
-     *
-     * @throws PlatformException if java home could not be located
-     */
-    String getJavaExecutable( final Configuration configuration )
-        throws PlatformException
-    {
-        final String javaHome = configuration.getJavaHome();
-        if( javaHome == null )
-        {
-            throw new PlatformException( "JAVA_HOME is not set." );
-        }
-        return javaHome + "/bin/java";
     }
 
     /**

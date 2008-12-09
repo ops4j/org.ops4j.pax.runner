@@ -1,5 +1,6 @@
 package org.ops4j.pax.runner;
 
+import java.io.File;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.pax.runner.platform.JavaRunner;
@@ -23,7 +24,12 @@ public class NoopJavaRunner
     /**
      * {@inheritDoc}
      */
-    public void exec( String[] vmOptions, String[] classpath, String mainClass, String[] programOptions )
+    public void exec( final String[] vmOptions,
+                      final String[] classpath,
+                      final String mainClass,
+                      final String[] programOptions,
+                      final String javaHome,
+                      final File workingDir )
         throws PlatformException
     {
         LOGGER.info( "Skipping platform start and exit immediately" );

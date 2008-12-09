@@ -17,6 +17,7 @@
  */
 package org.ops4j.pax.runner.platform;
 
+import java.io.File;
 
 /**
  * Simple API for an external Java runner service.
@@ -34,11 +35,18 @@ public interface JavaRunner
      * @param classpath      application class path
      * @param mainClass      main program entry point
      * @param programOptions program specific options
+     * @param javaHome       java home directory
+     * @param workingDir     working directory
      *
      * @throws org.ops4j.pax.runner.platform.PlatformException
      *          if something goes wrong
      */
-    void exec( String[] vmOptions, String[] classpath, String mainClass, String[] programOptions )
+    void exec( String[] vmOptions,
+               String[] classpath,
+               String mainClass,
+               String[] programOptions,
+               String javaHome,
+               File workingDir )
         throws PlatformException;
 
 }

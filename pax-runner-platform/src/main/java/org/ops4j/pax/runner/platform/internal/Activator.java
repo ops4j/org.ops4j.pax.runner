@@ -290,7 +290,7 @@ public class Activator
      */
     Platform createPlatform( final PlatformBuilder platformBuilder )
     {
-        final PlatformImpl platform = new PlatformImpl( platformBuilder, m_bundleContext );
+        final PlatformImpl platform = new PlatformImpl( platformBuilder );
         m_lock.lock();
         try
         {
