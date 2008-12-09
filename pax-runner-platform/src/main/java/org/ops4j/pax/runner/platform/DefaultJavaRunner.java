@@ -72,7 +72,7 @@ public class DefaultJavaRunner
      *
      * @throws PlatformException re-thrown if something goes wrong with executing the process
      */
-    void executeProcess( final String[] commandLine, final File workingDirectory )
+    private void executeProcess( final String[] commandLine, final File workingDirectory )
         throws PlatformException
     {
         final Process frameworkProcess;
