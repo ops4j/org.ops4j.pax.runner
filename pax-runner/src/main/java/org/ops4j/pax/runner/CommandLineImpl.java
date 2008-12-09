@@ -26,6 +26,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +77,7 @@ public class CommandLineImpl implements CommandLine
     {
         m_options = new HashMap<String, List<String>>();
         m_arguments = new ArrayList<String>();
-        parseArguments( Arrays.asList( args ) );
+        parseArguments( args == null ? Collections.<String>emptyList() : Arrays.asList( args ) );
         String argsURL = getOption( "args" );
         boolean useArgsFile = argsURL == null || !argsURL.equalsIgnoreCase( "false" );
         if( !useArgsFile )

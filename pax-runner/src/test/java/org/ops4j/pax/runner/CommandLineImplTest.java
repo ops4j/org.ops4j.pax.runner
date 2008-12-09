@@ -24,6 +24,12 @@ public class CommandLineImplTest
 {
 
     @Test
+    public void nullOption()
+    {
+        new CommandLineImpl( null );
+    }
+
+    @Test
     public void simpleOption()
     {
         CommandLine commandLine = new CommandLineImpl( "--simpleOption=simpleValue" );
