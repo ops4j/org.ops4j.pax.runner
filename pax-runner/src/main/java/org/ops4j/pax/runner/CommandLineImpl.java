@@ -56,6 +56,12 @@ public class CommandLineImpl implements CommandLine
     private static final String DEFAULT_ARGS_FILE_NAME = "runner.args";
 
     /**
+     * Default line comment for DEFAULT_ARGS_FILE_NAME files
+     */
+    private static final char LINE_COMMENT_PREFIX = '#';
+
+
+    /**
      * Options as properties.
      */
     private final Map<String, List<String>> m_options;
@@ -242,7 +248,7 @@ public class CommandLineImpl implements CommandLine
             String line;
             while( ( line = bufferedReader.readLine() ) != null )
             {
-                if( !skipEmptyLines || line.trim().length() > 0 )
+                if( ( !skipEmptyLines || line.trim().length() > 0) && line.charAt(0) !=  LINE_COMMENT_PREFIX )
                 {
                     content.add( line );
                 }
