@@ -1,5 +1,6 @@
 /*
  * Copyright 2008 Stuart McCulloch.
+ * Copyright 2008 Alin Dreghiciu.
  *
  * Licensed  under the  Apache License,  Version 2.0  (the "License");
  * you may not use  this file  except in  compliance with the License.
@@ -23,6 +24,7 @@ import java.io.File;
  * Simple API for an external Java runner service.
  *
  * @author Stuart McCulloch
+ * @author Alin Dreghiciu (adreghiciu@gmail.com)
  * @since March 14, 2008
  */
 public interface JavaRunner

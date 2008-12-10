@@ -32,25 +32,61 @@ import org.ops4j.pax.runner.platform.internal.CommandLineBuilder;
  * @since 0.6.1, December 09, 2008
  */
 public class DefaultJavaRunner
-    implements JavaRunner
+    implements StoppableJavaRunner
 {
 
     /**
      * Logger.
      */
-    private static final Log LOGGER = LogFactory.getLog( DefaultJavaRunner.class );
+    private static final Log LOG = LogFactory.getLog( DefaultJavaRunner.class );
+
+    /**
+     * If the execution should wait for platform shutdown.
+     */
+    private final boolean m_wait;
+    /**
+     * Framework process.
+     */
+    private Process m_frameworkProcess;
+    /**
+     * Shutdown hook.
+     */
+    private Thread m_shutdownHook;
+
+    /**
+     * Constructor.
+     */
+    public DefaultJavaRunner()
+    {
+        this( true );
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param wait should wait for framework exis
+     */
+    public DefaultJavaRunner( boolean wait )
+    {
+        m_wait = wait;
+    }
 
     /**
      * {@inheritDoc}
      */
-    public void exec( final String[] vmOptions,
-                      final String[] classpath,
-                      final String mainClass,
-                      final String[] programOptions,
-                      final String javaHome,
-                      final File workingDirectory )
+    public synchronized void exec( final String[] vmOptions,
+                                   final String[] classpath,
+                                   final String mainClass,
+                                   final String[] programOptions,
+                                   final String javaHome,
+                                   final File workingDirectory )
         throws PlatformException
     {
+        if( m_frameworkProcess != null )
+        {
+            throw new PlatformException( "Platform already started" );
+        }
+
         final CommandLineBuilder commandLine = new CommandLineBuilder()
             .append( getJavaExecutable( javaHome ) )
             .append( vmOptions )
@@ -59,60 +95,56 @@ public class DefaultJavaRunner
             .append( mainClass )
             .append( programOptions );
 
-        LOGGER.debug( "Start command line [" + Arrays.toString( commandLine.toArray() ) + "]" );
+        LOG.debug( "Start command line [" + Arrays.toString( commandLine.toArray() ) + "]" );
 
-        executeProcess( commandLine.toArray(), workingDirectory );
-    }
-
-    /**
-     * Executes the process that contains the platform. Separated to be able to override in unit tests.
-     *
-     * @param commandLine      an array that makes up the command line
-     * @param workingDirectory the working directory for th eprocess
-     *
-     * @throws PlatformException re-thrown if something goes wrong with executing the process
-     */
-    private void executeProcess( final String[] commandLine, final File workingDirectory )
-        throws PlatformException
-    {
-        final Process frameworkProcess;
         try
         {
-            frameworkProcess = Runtime.getRuntime().exec( commandLine, null, workingDirectory );
+            LOG.debug( "Starting platform process." );
+            m_frameworkProcess = Runtime.getRuntime().exec( commandLine.toArray(), null, workingDirectory );
         }
         catch( IOException e )
         {
             throw new PlatformException( "Could not start up the process", e );
         }
 
-        LOGGER.info( "Starting platform [" + this + "]. Runner has successfully finished his job!" );
-
-        Thread shutdownHook = createShutdownHook( frameworkProcess );
-        Runtime.getRuntime().addShutdownHook( shutdownHook );
-        LOGGER.debug( "Added shutdown hook." );
+        m_shutdownHook = createShutdownHook( m_frameworkProcess );
+        Runtime.getRuntime().addShutdownHook( m_shutdownHook );
+        LOG.debug( "Added shutdown hook." );
+        LOG.info( "Runner has successfully finished his job!" );
 
         try
         {
-            LOGGER.debug( "Waiting for framework exit." );
-            frameworkProcess.waitFor();
-        }
-        catch( InterruptedException e )
-        {
-            LOGGER.debug( e );
-        }
-        finally
-        {
-            try
+            if( m_wait )
             {
-                Runtime.getRuntime().removeShutdownHook( shutdownHook );
-                LOGGER.debug( "Early shutdown." );
-                shutdownHook.run();
-            }
-            catch( IllegalStateException e )
-            {
-                LOGGER.debug( "Shutdown already in progress." );
+                LOG.debug( "Waiting for framework exit." );
+                m_frameworkProcess.waitFor();
+                shutdown();
             }
         }
+        catch( Throwable e )
+        {
+            LOG.debug( "Early shutdown.", e );
+            shutdown();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public synchronized void shutdown()
+    {
+        try
+        {
+            Runtime.getRuntime().removeShutdownHook( m_shutdownHook );
+            m_frameworkProcess = null;
+            m_shutdownHook.run();
+            m_shutdownHook = null;
+        }
+        catch( IllegalStateException e )
+        {
+            LOG.debug( "Shutdown already in progress." );
+        }
+        LOG.info( "Platform has been shutdown." );
     }
 
     /**
@@ -124,7 +156,7 @@ public class DefaultJavaRunner
      */
     private Thread createShutdownHook( final Process process )
     {
-        LOGGER.debug( "Wrapping stream I/O." );
+        LOG.debug( "Wrapping stream I/O." );
 
         final Pipe errPipe = new Pipe( process.getErrorStream(), System.err ).start( "Error pipe" );
         final Pipe outPipe = new Pipe( process.getInputStream(), System.out ).start( "Out pipe" );
