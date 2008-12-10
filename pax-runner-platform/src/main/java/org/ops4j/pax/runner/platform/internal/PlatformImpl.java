@@ -190,12 +190,12 @@ public class PlatformImpl
         }
         final String javaHome = configuration.getJavaHome();
 
-        LOGGER.debug( "Start " + runner.getClass() + " [" + mainClassName + "]" );
-        LOGGER.debug( "vmOptions      [" + Arrays.toString( vmOptions.toArray() ) + "]" );
-        LOGGER.debug( "classpath      [" + Arrays.toString( classpath ) + "]" );
-        LOGGER.debug( "programOptions [" + Arrays.toString( programOptions.toArray() ) + "]" );
-        LOGGER.debug( "javaHome [" + javaHome + "]" );
-        LOGGER.debug( "workingDir [" + workDir + "]" );
+        LOGGER.debug( "Using " + runner.getClass() + " [" + mainClassName + "]" );
+        LOGGER.debug( "VM options:       [" + Arrays.toString( vmOptions.toArray() ) + "]" );
+        LOGGER.debug( "Classpath:        [" + Arrays.toString( classpath ) + "]" );
+        LOGGER.debug( "Platform options: [" + Arrays.toString( programOptions.toArray() ) + "]" );
+        LOGGER.debug( "Java home:        [" + javaHome + "]" );
+        LOGGER.debug( "Working dir:      [" + workDir + "]" );
 
         runner.exec(
             vmOptions.toArray(),
