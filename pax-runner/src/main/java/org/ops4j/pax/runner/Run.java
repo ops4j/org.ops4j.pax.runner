@@ -93,6 +93,115 @@ public class Run
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public static void main( final String... args )
+    {
+        try
+        {
+            main( null, args );
+        }
+        catch( Throwable t )
+        {
+            showError( t );
+            System.exit( 1 );
+        }
+    }
+
+    /**
+     * Start OSGi framework based on command-line arguments, using external Java runner service.
+     *
+     * @param runner java runner service
+     * @param args   command-line arguments
+     */
+    public static void main( final JavaRunner runner, final String... args )
+    {
+        showLogo();
+
+        final CommandLine commandLine = new CommandLineImpl( args );
+        initializeLogger( commandLine );
+        String configURL = commandLine.getOption( OPTION_CONFIG );
+        if( configURL == null )
+        {
+            configURL = "classpath:META-INF/runner.properties";
+        }
+        final Configuration config = new ConfigurationImpl( configURL );
+        new Run().start(
+            commandLine,
+            config,
+            new OptionResolverImpl( commandLine, config ),
+            runner
+        );
+    }
+
+    /**
+     * Starts runner.
+     *
+     * @param runner java runner service
+     * @param args   command-line arguments
+     */
+    public static void start( final JavaRunner runner, final String... args )
+    {
+        final CommandLine commandLine = new CommandLineImpl( args );
+        String configURL = commandLine.getOption( OPTION_CONFIG );
+        if( configURL == null )
+        {
+            configURL = "classpath:META-INF/runner.properties";
+        }
+        final Configuration config = new ConfigurationImpl( configURL );
+        new Run().start(
+            commandLine,
+            config,
+            new OptionResolverImpl( commandLine, config ),
+            runner
+        );
+    }
+
+    /**
+     * Starts runner.
+     *
+     * @param commandLine comand line to use
+     * @param config      configuration to use
+     * @param resolver    an option resolver
+     */
+    public void start( final CommandLine commandLine, final Configuration config, final OptionResolver resolver )
+    {
+        start( commandLine, config, resolver, null );
+    }
+
+    /**
+     * Starts runner with a java runner.
+     *
+     * @param commandLine comand line to use
+     * @param config      configuration to use
+     * @param resolver    an option resolver
+     * @param runner      java runner service
+     */
+    public void start( final CommandLine commandLine, final Configuration config, final OptionResolver resolver,
+                       final JavaRunner runner )
+    {
+        final Context context = createContext( commandLine, config, resolver );
+        if( commandLine.getArgumentsFileURL() != null )
+        {
+            LOGGER.info( "Using arguments from command line and " + commandLine.getArgumentsFileURL() );
+        }
+        else
+        {
+            LOGGER.info( "Using only arguments from command line" );
+        }
+        // install aditional services
+        installServices( context );
+        // install aditional handlers
+        installHandlers( context );
+        // install provisioning and bundles
+        installBundles( installScanners( context ), new ExtensionBasedProvisionSchemaResolver(), context );
+        // stop the dispatcher as there are no longer events around
+        EventDispatcher.shutdown();
+        // install platform and start it up
+        startPlatform( installPlatform( context ), context, runner == null ? createJavaRunner( resolver ) : runner );
+    }
+
+    /**
      * Creates and initialize the context.
      *
      * @param commandLine comand line to use
@@ -127,18 +236,6 @@ public class Run
     }
 
     /**
-     * Starts runner.
-     *
-     * @param commandLine comand line to use
-     * @param config      configuration to use
-     * @param resolver    an option resolver
-     */
-    public void start( final CommandLine commandLine, final Configuration config, final OptionResolver resolver )
-    {
-        start( commandLine, config, resolver, null );
-    }
-
-    /**
      * Creates a Java runner based on "runner" option.
      *
      * @param resolver an option resolver
@@ -162,38 +259,6 @@ public class Run
             return new NoopJavaRunner();
         }
         throw new ConfigurationException( "Executor [" + executor + "] is not supported" );
-    }
-
-    /**
-     * Starts runner.
-     *
-     * @param commandLine comand line to use
-     * @param config      configuration to use
-     * @param resolver    an option resolver
-     * @param runner      Java runner service
-     */
-    public void start( final CommandLine commandLine, final Configuration config, final OptionResolver resolver,
-                       final JavaRunner runner )
-    {
-        final Context context = createContext( commandLine, config, resolver );
-        if( commandLine.getArgumentsFileURL() != null )
-        {
-            LOGGER.info( "Using arguments from command line and " + commandLine.getArgumentsFileURL() );
-        }
-        else
-        {
-            LOGGER.info( "Using only arguments from command line" );
-        }
-        // install aditional services
-        installServices( context );
-        // install aditional handlers
-        installHandlers( context );
-        // install provisioning and bundles
-        installBundles( installScanners( context ), new ExtensionBasedProvisionSchemaResolver(), context );
-        // stop the dispatcher as there are no longer events around
-        EventDispatcher.shutdown();
-        // install platform and start it up
-        startPlatform( installPlatform( context ), context, runner == null ? createJavaRunner( resolver ) : runner );
     }
 
     /**
@@ -607,48 +672,6 @@ public class Run
             t.printStackTrace();
         }
 
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public static void main( final String... args )
-    {
-        try
-        {
-            main( null, args );
-        }
-        catch( Throwable t )
-        {
-            showError( t );
-            System.exit( 1 );
-        }
-    }
-
-    /**
-     * Start OSGi framework based on command-line arguments, using external Java runner service.
-     *
-     * @param runner Java runner service
-     * @param args   command-line arguments
-     */
-    public static void main( final JavaRunner runner, final String... args )
-    {
-        showLogo();
-
-        final CommandLine commandLine = new CommandLineImpl( args );
-        initializeLogger( commandLine );
-        String configURL = commandLine.getOption( OPTION_CONFIG );
-        if( configURL == null )
-        {
-            configURL = "classpath:META-INF/runner.properties";
-        }
-        final Configuration config = new ConfigurationImpl( configURL );
-        new Run().start(
-            commandLine,
-            config,
-            new OptionResolverImpl( commandLine, config ),
-            runner
-        );
     }
 
     /**
