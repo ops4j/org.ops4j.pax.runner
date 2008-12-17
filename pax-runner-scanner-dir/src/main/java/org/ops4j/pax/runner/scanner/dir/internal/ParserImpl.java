@@ -21,6 +21,7 @@ package org.ops4j.pax.runner.scanner.dir.internal;
 import java.net.MalformedURLException;
 import java.util.regex.Pattern;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
+import org.ops4j.pax.runner.scanner.dir.ServiceConstants;
 
 /**
  * Implementation of parser.
@@ -37,25 +38,9 @@ public class ParserImpl
      */
     private static final String SYNTAX = "directory_url[!filter][@start_level][@nostart][@update]";
     /**
-     * Separator for options.
-     */
-    private static final String SEPARATOR_OPTIONS = "@";
-    /**
-     * Separator for filter.
-     */
-    private static final String SEPARATTOR_FILTER = "!/";
-    /**
      * Default filter to be used if none specified (match all entries form the root directory, not recursive.
      */
     private static final String DEFAULT_FILTER = "*";
-    /**
-     * Start option.
-     */
-    private static final String NO_START = "nostart";
-    /**
-     * Update option.
-     */
-    private static final String UPDATE = "update";
 
     /**
      * URL to file containing the bundles to be installed.
@@ -93,16 +78,16 @@ public class ParserImpl
         {
             throw new MalformedSpecificationException( "Path cannot be null or empty. Syntax " + SYNTAX );
         }
-        if( path.startsWith( SEPARATOR_OPTIONS ) || path.endsWith( SEPARATOR_OPTIONS ) )
+        if( path.startsWith( org.ops4j.pax.runner.provision.ServiceConstants.SEPARATOR_OPTION ) || path.endsWith( org.ops4j.pax.runner.provision.ServiceConstants.SEPARATOR_OPTION ) )
         {
             throw new MalformedSpecificationException(
-                "Path cannot start or end with " + SEPARATOR_OPTIONS + ". Syntax " + SYNTAX
+                "Path cannot start or end with " + org.ops4j.pax.runner.provision.ServiceConstants.SEPARATOR_OPTION + ". Syntax " + SYNTAX
             );
         }
-        final String[] segments = path.split( SEPARATOR_OPTIONS );
+        final String[] segments = path.split( org.ops4j.pax.runner.provision.ServiceConstants.SEPARATOR_OPTION );
         try
         {
-            final String[] urlParts = segments[ 0 ].split( SEPARATTOR_FILTER );
+            final String[] urlParts = segments[ 0 ].split( ServiceConstants.SEPARATOR_FILTER );
             String url = urlParts[ 0 ];
             if( url.endsWith( "!" ) )
             {
@@ -142,12 +127,12 @@ public class ParserImpl
     private void parseSegment( final String segment )
         throws MalformedSpecificationException
     {
-        if( m_shouldStart == null && segment.equalsIgnoreCase( NO_START ) )
+        if( m_shouldStart == null && segment.equalsIgnoreCase( org.ops4j.pax.runner.provision.ServiceConstants.OPTION_NO_START ) )
         {
             m_shouldStart = false;
             return;
         }
-        if( m_shouldUpdate == null && segment.equalsIgnoreCase( UPDATE ) )
+        if( m_shouldUpdate == null && segment.equalsIgnoreCase( org.ops4j.pax.runner.provision.ServiceConstants.OPTION_UPDATE ) )
         {
             m_shouldUpdate = true;
             return;

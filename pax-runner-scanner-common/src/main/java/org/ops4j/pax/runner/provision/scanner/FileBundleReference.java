@@ -20,6 +20,7 @@ package org.ops4j.pax.runner.provision.scanner;
 import java.net.MalformedURLException;
 import org.ops4j.pax.runner.provision.BundleReferenceBean;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
+import org.ops4j.pax.runner.provision.ServiceConstants;
 
 /**
  * Represents an entry in the scanned file..
@@ -35,18 +36,6 @@ public class FileBundleReference
      * Syntax for the url; to be shown on exception messages.
      */
     private static final String SYNTAX = "bundle_url[@start_level][@nostart][@update]";
-    /**
-     * Separator for options.
-     */
-    private static final String SEPARATOR = "@";
-    /**
-     * Start option.
-     */
-    private static final String NO_START = "nostart";
-    /**
-     * Update option.
-     */
-    private static final String UPDATE = "update";
 
     /**
      * Creates a new bundle reference based on a bundle reference.
@@ -67,13 +56,13 @@ public class FileBundleReference
         {
             throw new MalformedSpecificationException( "Path cannot be empty. Syntax " + SYNTAX );
         }
-        if( reference.startsWith( SEPARATOR ) || reference.endsWith( SEPARATOR ) )
+        if( reference.startsWith( ServiceConstants.SEPARATOR_OPTION ) || reference.endsWith( ServiceConstants.SEPARATOR_OPTION ) )
         {
             throw new MalformedSpecificationException(
-                "Path cannot start or end with " + SEPARATOR + ". Syntax " + SYNTAX
+                "Path cannot start or end with " + ServiceConstants.SEPARATOR_OPTION + ". Syntax " + SYNTAX
             );
         }
-        String[] segments = reference.split( SEPARATOR );
+        String[] segments = reference.split( ServiceConstants.SEPARATOR_OPTION );
         setLocation( segments[ 0 ] );
         if( segments.length > 1 )
         {
@@ -102,14 +91,17 @@ public class FileBundleReference
     /**
      * Creates a new bundle reference based on a bundle reference with default start level and start options.
      *
-     * @param reference          the bundle reference specification
-     * @param defaultStartLevel  default start level if not set on the bundle reference
-     * @param defaultShouldStart default start if not set on the bundle reference
+     * @param reference           the bundle reference specification
+     * @param defaultStartLevel   default start level if not set on the bundle reference
+     * @param defaultShouldStart  default start if not set on the bundle reference
+     * @param defaultShouldUpdate default update if not set on the bundle reference
      *
      * @throws MalformedURLException if the reference is malformed
      */
-    public FileBundleReference( final String reference, final Integer defaultStartLevel,
-                                final Boolean defaultShouldStart, final Boolean defaultShouldUpdate )
+    public FileBundleReference( final String reference,
+                                final Integer defaultStartLevel,
+                                final Boolean defaultShouldStart,
+                                final Boolean defaultShouldUpdate )
         throws MalformedURLException
     {
         this( reference );
@@ -139,12 +131,12 @@ public class FileBundleReference
     private void parseSegment( final String segment )
         throws MalformedURLException
     {
-        if( shouldStart() == null && segment.equalsIgnoreCase( NO_START ) )
+        if( shouldStart() == null && segment.equalsIgnoreCase( ServiceConstants.OPTION_NO_START ) )
         {
             setShouldStart( false );
             return;
         }
-        if( shouldUpdate() == null && segment.equalsIgnoreCase( UPDATE ) )
+        if( shouldUpdate() == null && segment.equalsIgnoreCase( ServiceConstants.OPTION_UPDATE ) )
         {
             setShouldUpdate( true );
             return;

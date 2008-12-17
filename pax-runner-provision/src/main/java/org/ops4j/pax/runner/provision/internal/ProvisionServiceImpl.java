@@ -87,12 +87,12 @@ public class ProvisionServiceImpl
         {
             throw new MalformedSpecificationException( "Specification cannot be null or empty" );
         }
-        if( !spec.contains( ServiceConstants.SCHEME_SEPARATOR ) )
+        if( !spec.contains( ServiceConstants.SEPARATOR_SCHEME ) )
         {
             throw new UnsupportedSchemaException( "Provisioning scheme is not specified" );
         }
-        String scheme = spec.substring( 0, spec.indexOf( ServiceConstants.SCHEME_SEPARATOR ) );
-        String path = spec.substring( spec.indexOf( ServiceConstants.SCHEME_SEPARATOR ) + 1 );
+        String scheme = spec.substring( 0, spec.indexOf( ServiceConstants.SEPARATOR_SCHEME ) );
+        String path = spec.substring( spec.indexOf( ServiceConstants.SEPARATOR_SCHEME ) + 1 );
         Scanner scanner = m_scanners.get( scheme );
         if( scanner == null )
         {

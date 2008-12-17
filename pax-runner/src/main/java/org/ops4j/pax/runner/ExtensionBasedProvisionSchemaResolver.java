@@ -109,7 +109,7 @@ public class ExtensionBasedProvisionSchemaResolver
                 // ignore as this should not happen if the file exists
             }
         }
-        return schema + org.ops4j.pax.runner.provision.ServiceConstants.SCHEME_SEPARATOR + resolved + options;
+        return schema + org.ops4j.pax.runner.provision.ServiceConstants.SEPARATOR_SCHEME + resolved + options;
     }
 
 }

@@ -59,7 +59,7 @@ public interface Parser
     /**
      * Returns the filter that entries should match or null if no filter was specified.
      *
-     * @return a filer
+     * @return a filter
      */
     Pattern getFilter();
 }

@@ -12,7 +12,20 @@ public interface ServiceConstants
     /**
      * Scheme separator.
      */
-    static final String SCHEME_SEPARATOR = ":";
+    static final String SEPARATOR_SCHEME = ":";
+    /**
+     * Separator for options.
+     */
+    static String SEPARATOR_OPTION = "@";
+    /**
+     * Start option.
+     */
+    static String OPTION_NO_START = "nostart";
+    /**
+     * Update option.
+     */
+    static String OPTION_UPDATE = "update";
+
     /**
      * Start level configuration property name (used by scanners).
      */
@@ -26,4 +39,5 @@ public interface ServiceConstants
      * Update configuration property name (used by scanners).
      */
     static final String PROPERTY_UPDATE = ".update";
+
 }
