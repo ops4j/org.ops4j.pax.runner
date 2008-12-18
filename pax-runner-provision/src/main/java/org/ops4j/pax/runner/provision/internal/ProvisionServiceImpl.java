@@ -82,7 +82,7 @@ public class ProvisionServiceImpl
     public InstallableBundles scan( final String spec )
         throws MalformedSpecificationException, ScannerException
     {
-        LOGGER.info( "Provision from [" + spec + "]" );
+        LOGGER.debug( "Provision from [" + spec + "]" );
         if( spec == null || spec.trim().length() == 0 )
         {
             throw new MalformedSpecificationException( "Specification cannot be null or empty" );
