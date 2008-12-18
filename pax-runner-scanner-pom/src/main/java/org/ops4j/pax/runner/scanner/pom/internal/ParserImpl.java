@@ -20,6 +20,7 @@ package org.ops4j.pax.runner.scanner.pom.internal;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
+import static org.ops4j.pax.runner.provision.ServiceConstants.*;
 
 /**
  * Implementation of parser.
@@ -36,18 +37,6 @@ public class ParserImpl
      */
     private static final String SYNTAX =
         "scan-pom:pom_xml_url[@start_level][@nostart][@update][@nodep][@noartifact][@wrapdep][@wrapartifact]";
-    /**
-     * Separator for options.
-     */
-    private static final String SEPARATOR = "@";
-    /**
-     * Start option.
-     */
-    private static final String NO_START = "nostart";
-    /**
-     * Update option.
-     */
-    private static final String UPDATE = "update";
 
     /**
      * URL of pom file.
@@ -81,13 +70,13 @@ public class ParserImpl
         {
             throw new MalformedSpecificationException( "Path cannot be null or empty. Syntax " + SYNTAX );
         }
-        if( path.startsWith( SEPARATOR ) || path.endsWith( SEPARATOR ) )
+        if( path.startsWith( SEPARATOR_OPTION ) || path.endsWith( SEPARATOR_OPTION ) )
         {
             throw new MalformedSpecificationException(
-                "Path cannot start or end with " + SEPARATOR + ". Syntax " + SYNTAX
+                "Path cannot start or end with " + SEPARATOR_OPTION + ". Syntax " + SYNTAX
             );
         }
-        String[] segments = path.split( SEPARATOR );
+        String[] segments = path.split( SEPARATOR_OPTION );
         try
         {
             m_pomURL = new URL( segments[ 0 ] );
@@ -116,12 +105,12 @@ public class ParserImpl
     private void parseSegment( final String segment )
         throws MalformedSpecificationException
     {
-        if( m_shouldStart == null && segment.equalsIgnoreCase( NO_START ) )
+        if( m_shouldStart == null && segment.equalsIgnoreCase( OPTION_NO_START ) )
         {
             m_shouldStart = false;
             return;
         }
-        if( m_shouldUpdate == null && segment.equalsIgnoreCase( UPDATE ) )
+        if( m_shouldUpdate == null && segment.equalsIgnoreCase( OPTION_UPDATE ) )
         {
             m_shouldUpdate = true;
             return;
