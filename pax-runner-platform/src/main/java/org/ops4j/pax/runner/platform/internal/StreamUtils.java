@@ -21,6 +21,8 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.commons.Info;
 
@@ -33,6 +35,11 @@ import org.ops4j.pax.runner.commons.Info;
  */
 public class StreamUtils
 {
+
+    /**
+     * Logger.
+     */
+    private static final Log LOGGER = LogFactory.getLog( StreamUtils.class );
 
     /**
      * Utility class. Ment to be used via static methods.
@@ -201,7 +208,7 @@ public class StreamUtils
         public CoarseGrainedProgressBar( final String downloadTargetName )
         {
             m_downloadTargetName = downloadTargetName;
-            Info.print( downloadTargetName + " : downloading...\r" );
+            LOGGER.info( downloadTargetName + " : downloading..." );
         }
 
         public void increment( final long bytes, final long kbps )
@@ -212,7 +219,7 @@ public class StreamUtils
 
         public void stop()
         {
-            Info.println( m_downloadTargetName + " : " + m_bytes + " bytes @ [ " + m_kbps + "kBps ]" );
+            LOGGER.info( m_downloadTargetName + " : " + m_bytes + " bytes @ [ " + m_kbps + "kBps ]" );
         }
 
     }
