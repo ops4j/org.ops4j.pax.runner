@@ -109,7 +109,8 @@ public class PlatformImpl
                        final Properties properties, final Dictionary config, final JavaRunner javaRunner )
         throws PlatformException
     {
-        LOGGER.debug( "Preparing platform [" + this + "]" );
+        LOGGER.info( "Preparing framework [" + this + "]" );
+
         // we should fail fast so let's do first what is easy
         final String mainClassName = m_platformBuilder.getMainClassName();
         if( mainClassName == null || mainClassName.trim().length() == 0 )
