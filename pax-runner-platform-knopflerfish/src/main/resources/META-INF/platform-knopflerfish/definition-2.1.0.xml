@@ -71,6 +71,8 @@
   <profile name="ds" extends="ds-knopflerfish"/>
   <profile name="http" extends="http-knopflerfish"/>
 
-  <profileRef href="classpath:META-INF/platform/profiles/common-profiles.xml"/>  
+  <profileRef href="classpath:META-INF/platform/profiles/common-profiles.xml"/>
+  <profileRef href="classpath:META-INF/platform/profiles/common-profiles-equinox.xml"/>
+  <profileRef href="classpath:META-INF/platform/profiles/common-profiles-felix.xml"/>
 
 </platform>
