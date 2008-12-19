@@ -70,21 +70,21 @@
   <profile name="log-knopflerfish" extends="minimal">
     <bundle>
       <name>Knopflerfish Logging</name>
-      <url>http://www.knopflerfish.org/releases/2.0.5/osgi/jars/log/log_all-2.0.0.jar</url>
+      <url>http://www.knopflerfish.org/releases/2.0.5/jars/log/log_all-2.0.0.jar</url>
     </bundle>
   </profile>
 
   <profile name="config" extends="log-knopflerfish">
     <bundle>
       <name>Knopflerfish Configuration Admin</name>
-      <url>http://www.knopflerfish.org/releases/2.0.5/osgi/jars/cm/cm_all-2.0.0.jar</url>
+      <url>http://www.knopflerfish.org/releases/2.0.5/jars/cm/cm_all-2.0.0.jar</url>
     </bundle>
   </profile>
 
   <profile name="ds" extends="log-knopflerfish">
     <bundle>
       <name>Knopflerfish Declarative Services</name>
-      <url>http://www.knopflerfish.org/releases/2.0.5/osgi/jars/component/component_all-2.0.0.jar</url>
+      <url>http://www.knopflerfish.org/releases/2.0.5/jars/component/component_all-2.0.0.jar</url>
     </bundle>
   </profile>
 
@@ -97,7 +97,7 @@
     </bundle>
     <bundle>
       <name>Knopflerfish HTTP Server (HTTP Service)</name>
-      <url>http://www.knopflerfish.org/releases/2.0.5/osgi/jars/http/http_all-2.1.0.jar</url>
+      <url>http://www.knopflerfish.org/releases/2.0.5/jars/http/http_all-2.1.0.jar</url>
     </bundle>
   </profile>
 
