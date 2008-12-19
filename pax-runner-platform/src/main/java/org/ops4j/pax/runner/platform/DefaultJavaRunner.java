@@ -24,6 +24,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.io.Pipe;
 import org.ops4j.pax.runner.platform.internal.CommandLineBuilder;
+import org.ops4j.pax.runner.commons.Info;
 
 /**
  * Default Java Runner.
@@ -109,9 +110,12 @@ public class DefaultJavaRunner
 
         m_shutdownHook = createShutdownHook( m_frameworkProcess );
         Runtime.getRuntime().addShutdownHook( m_shutdownHook );
+        
         LOG.debug( "Added shutdown hook." );
         LOG.info( "Runner has successfully finished his job!" );
 
+        Info.println(); // print an empty line
+        
         try
         {
             if( m_wait )
