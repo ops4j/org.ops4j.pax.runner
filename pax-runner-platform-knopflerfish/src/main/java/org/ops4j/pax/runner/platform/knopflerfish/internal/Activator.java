@@ -40,6 +40,8 @@ public final class Activator
     {
         return new PlatformBuilder[]{
             new KnopflerfishPlatformBuilder( bundleContext, "2.0.0" ),
+            new KnopflerfishPlatformBuilder( bundleContext, "2.0.1" ),
+            new KnopflerfishPlatformBuilder( bundleContext, "2.0.2" ),
             new KnopflerfishPlatformBuilder( bundleContext, "2.0.3" ),
             new KnopflerfishPlatformBuilder( bundleContext, "2.0.4" ),
             new KnopflerfishPlatformBuilder( bundleContext, "2.0.5" ),

@@ -1,42 +1,42 @@
 <platform>
 
-  <name>Knopflerfish 2.1.0</name>
-  <system>mvn:org.knopflerfish.osgi/framework/2.1.0</system>
+  <name>Knopflerfish 2.0.1</name>
+  <system>mvn:org.knopflerfish.osgi/framework/2.0.2</system>
 
   <profile name="minimal" default="true">
     <bundle>
       <name>org.osgi.compendium</name>
       <url>mvn:org.osgi/org.osgi.compendium/4.0.1</url>
     </bundle>
-  </profile>
+  </profile>  
 
   <profile name="tui" extends="minimal">
     <bundle>
       <name>org.knopflerfish.bundle.console</name>
-      <url>http://www.knopflerfish.org/releases/2.1.0/jars/console/console_all-2.0.0.jar</url>
+      <url>http://www.knopflerfish.org/releases/2.0.2/jars/console/console_all-2.0.0.jar</url>
     </bundle>
     <bundle>
       <name>org.knopflerfish.bundle.consoletty</name>
-      <url>http://www.knopflerfish.org/releases/2.1.0/jars/consoletty/consoletty-2.0.0.jar</url>
+      <url>http://www.knopflerfish.org/releases/2.0.2/jars/consoletty/consoletty-2.0.0.jar</url>
     </bundle>
     <bundle>
       <name>org.knopflerfish.bundle.frameworkcommands</name>
-      <url>http://www.knopflerfish.org/releases/2.1.0/jars/frameworkcommands/frameworkcommands-2.0.0.jar</url>
+      <url>http://www.knopflerfish.org/releases/2.0.2/jars/frameworkcommands/frameworkcommands-2.0.0.jar</url>
     </bundle>
   </profile>
 
   <profile name="gui" extends="minimal,config">
     <bundle>
       <name>org.knopflerfish.bundle.cm_desktop</name>
-      <url>http://www.knopflerfish.org/releases/2.1.0/jars/cm_desktop/cm_desktop-2.0.1.jar</url>
+      <url>http://www.knopflerfish.org/releases/2.0.2/jars/cm_desktop/cm_desktop-2.0.0.jar</url>
     </bundle>
     <bundle>
       <name>org.knopflerfish.bundle.desktop</name>
-      <url>http://www.knopflerfish.org/releases/2.1.0/jars/desktop/desktop_all-2.0.1.jar</url>
+      <url>http://www.knopflerfish.org/releases/2.0.2/jars/desktop/desktop_all-2.0.0.jar</url>
     </bundle>
     <bundle>
       <name>org.knopflerfish.bundle.kf_metatype</name>
-      <url>http://www.knopflerfish.org/releases/2.1.0/jars/kf_metatype/kf_metatype_all-2.0.0.jar</url>
+      <url>http://www.knopflerfish.org/releases/2.0.2/jars/kf_metatype/kf_metatype_all-2.0.0.jar</url>
     </bundle>
     <bundle>
       <name>org.knopflerfish.bundle.kxml</name>
@@ -44,47 +44,47 @@
     </bundle>
     <bundle>
       <name>org.knopflerfish.bundle.log</name>
-      <url>http://www.knopflerfish.org/releases/2.1.0/jars/log/log_api-2.0.0.jar</url>
+      <url>http://www.knopflerfish.org/releases/2.0.2/jars/log/log_api-2.0.0.jar</url>
     </bundle>
     <bundle>
       <name>org.knopflerfish.bundle.metatype</name>
-      <url>http://www.knopflerfish.org/releases/2.1.0/jars/metatype/metatype-2.0.0.jar</url>
+      <url>http://www.knopflerfish.org/releases/2.0.2/jars/metatype/metatype-2.0.0.jar</url>
     </bundle>
     <bundle>
       <name>org.knopflerfish.bundle.remotefw</name>
-      <url>http://www.knopflerfish.org/releases/2.1.0/jars/remotefw/remotefw_api-2.0.0.jar</url>
+      <url>http://www.knopflerfish.org/releases/2.0.2/jars/remotefw/remotefw_api-2.0.0.jar</url>
     </bundle>
     <bundle>
       <name>org.knopflerfish.bundle.util</name>
-      <url>http://www.knopflerfish.org/releases/2.1.0/jars/util/util-2.0.0.jar</url>
+      <url>http://www.knopflerfish.org/releases/2.0.2/jars/util/util-2.0.0.jar</url>
     </bundle>
   </profile>
 
   <profile name="obr" extends="gui">
     <bundle>
       <name>org.knopflerfish.bundle.bundlerepository</name>
-      <url>http://www.knopflerfish.org/releases/2.1.0/jars/bundlerepository/bundlerepository_all-2.0.1.jar</url>
+      <url>http://www.knopflerfish.org/releases/2.0.2/jars/bundlerepository/bundlerepository_all-2.0.0.jar</url>
     </bundle>
   </profile>
 
   <profile name="log-knopflerfish" extends="minimal">
     <bundle>
       <name>Knopflerfish Logging</name>
-      <url>http://www.knopflerfish.org/releases/2.1.0/osgi/jars/log/log_all-2.0.1.jar</url>
+      <url>http://www.knopflerfish.org/releases/2.0.2/osgi/jars/log/log_all-2.0.0.jar</url>
     </bundle>
   </profile>
 
   <profile name="config" extends="log-knopflerfish">
     <bundle>
       <name>Knopflerfish Configuration Admin</name>
-      <url>http://www.knopflerfish.org/releases/2.1.0/osgi/jars/cm/cm_all-2.0.1.jar</url>
+      <url>http://www.knopflerfish.org/releases/2.0.2/osgi/jars/cm/cm_all-2.0.0.jar</url>
     </bundle>
   </profile>
 
   <profile name="ds" extends="log-knopflerfish">
     <bundle>
       <name>Knopflerfish Declarative Services</name>
-      <url>http://www.knopflerfish.org/releases/2.1.0/osgi/jars/component/component_all-2.0.0.jar</url>
+      <url>http://www.knopflerfish.org/releases/2.0.2/osgi/jars/component/component_all-2.0.0.jar</url>
     </bundle>
   </profile>
 
@@ -97,7 +97,7 @@
     </bundle>
     <bundle>
       <name>Knopflerfish HTTP Server (HTTP Service)</name>
-      <url>http://www.knopflerfish.org/releases/2.1.0/osgi/jars/http/http_all-2.1.0.jar</url>
+      <url>http://www.knopflerfish.org/releases/2.0.2/osgi/jars/http/http_all-2.0.0.jar</url>
     </bundle>
   </profile>
 

@@ -69,7 +69,7 @@
 
   <profile name="log-knopflerfish" extends="minimal">
     <bundle>
-      <name>Knopflerfish Logging API</name>
+      <name>Knopflerfish Logging</name>
       <url>http://www.knopflerfish.org/releases/2.2.0/osgi/jars/log/log_all-2.0.1.jar</url>
     </bundle>
   </profile>

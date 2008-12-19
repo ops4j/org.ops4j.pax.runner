@@ -3,6 +3,106 @@
   <name>Knopflerfish 2.0.5</name>
   <system>mvn:org.knopflerfish.osgi/framework/2.0.5</system>
 
-  <profileRef href="classpath:META-INF/platform-knopflerfish/profiles-2.0.3-2.0.5.xml"/>
+  <profile name="minimal" default="true">
+    <bundle>
+      <name>org.osgi.compendium</name>
+      <url>mvn:org.osgi/org.osgi.compendium/4.0.1</url>
+    </bundle>
+  </profile>  
+
+  <profile name="tui" extends="minimal">
+    <bundle>
+      <name>org.knopflerfish.bundle.console</name>
+      <url>http://www.knopflerfish.org/releases/2.0.5/jars/console/console_all-2.0.0.jar</url>
+    </bundle>
+    <bundle>
+      <name>org.knopflerfish.bundle.consoletty</name>
+      <url>http://www.knopflerfish.org/releases/2.0.5/jars/consoletty/consoletty-2.0.0.jar</url>
+    </bundle>
+    <bundle>
+      <name>org.knopflerfish.bundle.frameworkcommands</name>
+      <url>http://www.knopflerfish.org/releases/2.0.5/jars/frameworkcommands/frameworkcommands-2.0.0.jar</url>
+    </bundle>
+  </profile>
+
+  <profile name="gui" extends="minimal,config">
+    <bundle>
+      <name>org.knopflerfish.bundle.cm_desktop</name>
+      <url>http://www.knopflerfish.org/releases/2.0.5/jars/cm_desktop/cm_desktop-2.0.0.jar</url>
+    </bundle>
+    <bundle>
+      <name>org.knopflerfish.bundle.desktop</name>
+      <url>http://www.knopflerfish.org/releases/2.0.5/jars/desktop/desktop_all-2.0.0.jar</url>
+    </bundle>
+    <bundle>
+      <name>org.knopflerfish.bundle.kf_metatype</name>
+      <url>http://www.knopflerfish.org/releases/2.0.5/jars/kf_metatype/kf_metatype_all-2.0.0.jar</url>
+    </bundle>
+    <bundle>
+      <name>org.knopflerfish.bundle.kxml</name>
+      <url>mvn:org.knopflerfish.bundle.kxml/kxml/1.0</url>
+    </bundle>
+    <bundle>
+      <name>org.knopflerfish.bundle.log</name>
+      <url>http://www.knopflerfish.org/releases/2.0.5/jars/log/log_api-2.0.0.jar</url>
+    </bundle>
+    <bundle>
+      <name>org.knopflerfish.bundle.metatype</name>
+      <url>http://www.knopflerfish.org/releases/2.0.5/jars/metatype/metatype-2.0.0.jar</url>
+    </bundle>
+    <bundle>
+      <name>org.knopflerfish.bundle.remotefw</name>
+      <url>http://www.knopflerfish.org/releases/2.0.5/jars/remotefw/remotefw_api-2.0.0.jar</url>
+    </bundle>
+    <bundle>
+      <name>org.knopflerfish.bundle.util</name>
+      <url>http://www.knopflerfish.org/releases/2.0.5/jars/util/util-2.0.0.jar</url>
+    </bundle>
+  </profile>
+
+  <profile name="obr" extends="gui">
+    <bundle>
+      <name>org.knopflerfish.bundle.bundlerepository</name>
+      <url>http://www.knopflerfish.org/releases/2.0.5/jars/bundlerepository/bundlerepository_all-2.0.0.jar</url>
+    </bundle>
+  </profile>
+
+  <profile name="log-knopflerfish" extends="minimal">
+    <bundle>
+      <name>Knopflerfish Logging</name>
+      <url>http://www.knopflerfish.org/releases/2.0.5/osgi/jars/log/log_all-2.0.0.jar</url>
+    </bundle>
+  </profile>
+
+  <profile name="config" extends="log-knopflerfish">
+    <bundle>
+      <name>Knopflerfish Configuration Admin</name>
+      <url>http://www.knopflerfish.org/releases/2.0.5/osgi/jars/cm/cm_all-2.0.0.jar</url>
+    </bundle>
+  </profile>
+
+  <profile name="ds" extends="log-knopflerfish">
+    <bundle>
+      <name>Knopflerfish Declarative Services</name>
+      <url>http://www.knopflerfish.org/releases/2.0.5/osgi/jars/component/component_all-2.0.0.jar</url>
+    </bundle>
+  </profile>
+
+  <profile name="http" extends="minimal">
+    <bundle>
+      <name>Equinox Drops Servlet API 2.4</name>
+      <url>
+        http://download.eclipse.org/eclipse/equinox/drops/R-3.3.2-200802211800/javax.servlet_2.4.0.v200706111738.jar
+      </url>
+    </bundle>
+    <bundle>
+      <name>Knopflerfish HTTP Server (HTTP Service)</name>
+      <url>http://www.knopflerfish.org/releases/2.0.5/osgi/jars/http/http_all-2.1.0.jar</url>
+    </bundle>
+  </profile>
+
+  <profileRef href="classpath:META-INF/platform/profiles/common-profiles.xml"/>
+  <profileRef href="classpath:META-INF/platform/profiles/common-profiles-equinox.xml"/>
+  <profileRef href="classpath:META-INF/platform/profiles/common-profiles-felix.xml"/> 
 
 </platform>

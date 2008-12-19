@@ -5,5 +5,8 @@
   <profile name="http" extends="http-equinox"/>
 
   <profileRef href="classpath:META-INF/platform/profiles/common-profiles.xml"/>
+  <profileRef href="classpath:META-INF/platform/profiles/common-profiles-equinox.xml"/>
+  <profileRef href="classpath:META-INF/platform/profiles/common-profiles-felix.xml"/>
+  <profileRef href="classpath:META-INF/platform/profiles/common-profiles-knopflerfish.xml"/>
 
 </platform>

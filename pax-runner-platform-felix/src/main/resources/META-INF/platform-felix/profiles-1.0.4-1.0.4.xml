@@ -25,11 +25,15 @@
     </bundle>
     <bundle>
       <name>org.apache.felix.shell.gui</name>
-      <url>mvn:http://cvs.apache.org/maven-snapshot-repository@snapshots!org.apache.felix/org.apache.felix.shell.gui/0.9.0-incubator-SNAPSHOT</url>
+      <url>
+        mvn:http://cvs.apache.org/maven-snapshot-repository@snapshots!org.apache.felix/org.apache.felix.shell.gui/0.9.0-incubator-SNAPSHOT
+      </url>
     </bundle>
     <bundle>
       <name>org.apache.felix.shell.gui.plugin</name>
-      <url>mvn:http://cvs.apache.org/maven-snapshot-repository@snapshots!org.apache.felix/org.apache.felix.shell.gui.plugin/0.9.0-incubator-SNAPSHOT</url>
+      <url>
+        mvn:http://cvs.apache.org/maven-snapshot-repository@snapshots!org.apache.felix/org.apache.felix.shell.gui.plugin/0.9.0-incubator-SNAPSHOT
+      </url>
     </bundle>
   </profile>
 
@@ -38,5 +42,8 @@
   <profile name="http" extends="http-felix"/>
 
   <profileRef href="classpath:META-INF/platform/profiles/common-profiles.xml"/>
+  <profileRef href="classpath:META-INF/platform/profiles/common-profiles-equinox.xml"/>
+  <profileRef href="classpath:META-INF/platform/profiles/common-profiles-felix.xml"/>
+  <profileRef href="classpath:META-INF/platform/profiles/common-profiles-knopflerfish.xml"/>
 
 </platform>

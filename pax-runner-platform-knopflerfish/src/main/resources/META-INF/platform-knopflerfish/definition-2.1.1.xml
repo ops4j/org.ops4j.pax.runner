@@ -69,8 +69,8 @@
 
   <profile name="log-knopflerfish" extends="minimal">
     <bundle>
-      <name>Knopflerfish Configuration Admin</name>
-      <url>http://www.knopflerfish.org/releases/2.1.1/osgi/jars/cm/cm_all-2.0.1.jar</url>
+      <name>Knopflerfish Logging</name>
+      <url>http://www.knopflerfish.org/releases/2.1.1/osgi/jars/log/log_all-2.0.1.jar</url>
     </bundle>
   </profile>
 
