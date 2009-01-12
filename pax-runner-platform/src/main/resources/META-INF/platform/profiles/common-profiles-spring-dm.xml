@@ -18,8 +18,8 @@
       <url>mvn:org.springframework/spring-context</url>
     </bundle>
     <bundle>
-      <name>org.springframework.context.support</name>
-      <url>mvn:org.springframework/spring-support</url>
+      <name>org.springframework.context</name>
+      <url>mvn:org.springframework/spring-context-support</url>
     </bundle>
     <bundle>
       <name>org.springframework.core</name>
