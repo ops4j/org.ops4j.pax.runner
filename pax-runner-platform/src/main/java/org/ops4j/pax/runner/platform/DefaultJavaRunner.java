@@ -88,11 +88,20 @@ public class DefaultJavaRunner
             throw new PlatformException( "Platform already started" );
         }
 
+        final StringBuilder cp = new StringBuilder();
+        
+        for (String path : classpath) {
+            if (cp.length() != 0) {
+                cp.append(File.pathSeparator );
+            }
+            cp.append(path);
+        }
+        
         final CommandLineBuilder commandLine = new CommandLineBuilder()
             .append( getJavaExecutable( javaHome ) )
             .append( vmOptions )
             .append( "-cp" )
-            .append( classpath )
+            .append( cp.toString() )
             .append( mainClass )
             .append( programOptions );
 
