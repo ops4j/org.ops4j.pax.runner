@@ -3,7 +3,7 @@
   <profile name="config-felix" extends="minimal">
     <bundle>
       <name>Felix Configuration Admin</name>
-      <url>mvn:org.apache.felix/org.apache.felix.configadmin/1.0.4</url>
+      <url>mvn:org.apache.felix/org.apache.felix.configadmin/1.0.8</url>
     </bundle>
   </profile>
 
