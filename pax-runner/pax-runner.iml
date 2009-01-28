@@ -17,7 +17,8 @@
     <orderEntry type="library" name="Maven: junit:junit:4.4" level="project" />
     <orderEntry type="library" name="Maven: org.easymock:easymock:2.3" level="project" />
     <orderEntry type="library" name="Maven: org.apache.felix:org.apache.felix.framework:1.0.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.felix:org.apache.felix.bundlerepository:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.felix:org.apache.felix.bundlerepository:1.2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.felix:org.osgi.service.obr:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-classpath:0.3.3" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-mvn:0.3.3" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-obr:0.3.3" level="project" />

@@ -220,7 +220,7 @@
       <dependency>
         <groupId>org.apache.felix</groupId>
         <artifactId>org.apache.felix.bundlerepository</artifactId>
-        <version>1.0.0</version>
+        <version>1.2.1</version>
         <optional>true</optional>
         <!-- the following exclusions can be taken out once they are not anymore exported by felix obr -->
         <exclusions>

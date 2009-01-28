@@ -825,6 +825,17 @@
         <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.3.3/pax-url-wrap-0.3.3-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Maven: org.apache.felix:org.apache.felix.bundlerepository:1.2.1">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/felix/org.apache.felix.bundlerepository/1.2.1/org.apache.felix.bundlerepository-1.2.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/felix/org.apache.felix.bundlerepository/1.2.1/org.apache.felix.bundlerepository-1.2.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/felix/org.apache.felix.bundlerepository/1.2.1/org.apache.felix.bundlerepository-1.2.1-sources.jar!/" />
+      </SOURCES>
+    </library>
   </component>
   <UsedPathMacros>
     <macro name="M2_REPO" />
