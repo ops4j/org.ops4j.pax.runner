@@ -6,12 +6,12 @@
     <relativePath>../</relativePath>
     <groupId>org.ops4j.pax</groupId>
     <artifactId>runner</artifactId>
-    <version>0.17.1-SNAPSHOT</version>
+    <version>0.17.1</version>
   </parent>
 
   <groupId>org.ops4j.pax.runner</groupId>
   <artifactId>pax-runner-platform-felix</artifactId>
-  <version>0.17.1-SNAPSHOT</version>
+  <version>0.17.1</version>
   <packaging>bundle</packaging>
 
   <name>OPS4J Pax Runner - Felix Platform Builder</name>
@@ -55,12 +55,12 @@
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-commons</artifactId>
-      <version>0.17.1-SNAPSHOT</version>
+      <version>0.17.1</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-platform</artifactId>
-      <version>0.17.1-SNAPSHOT</version>
+      <version>0.17.1</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
