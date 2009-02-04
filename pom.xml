@@ -129,7 +129,7 @@
   <properties>
     <dependency.base.version>0.5.3</dependency.base.version>
     <dependency.swissbox.version>0.2.0</dependency.swissbox.version>
-    <dependency.url.version>0.3.3</dependency.url.version>
+    <dependency.url.version>0.3.4-SNAPSHOT</dependency.url.version>
   </properties>
 
   <build>
