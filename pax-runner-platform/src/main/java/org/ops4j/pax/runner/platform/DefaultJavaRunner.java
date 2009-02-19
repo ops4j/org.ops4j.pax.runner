@@ -23,8 +23,8 @@ import java.util.Arrays;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.io.Pipe;
-import org.ops4j.pax.runner.platform.internal.CommandLineBuilder;
 import org.ops4j.pax.runner.commons.Info;
+import org.ops4j.pax.runner.platform.internal.CommandLineBuilder;
 
 /**
  * Default Java Runner.
@@ -89,14 +89,16 @@ public class DefaultJavaRunner
         }
 
         final StringBuilder cp = new StringBuilder();
-        
-        for (String path : classpath) {
-            if (cp.length() != 0) {
-                cp.append(File.pathSeparator );
+
+        for( String path : classpath )
+        {
+            if( cp.length() != 0 )
+            {
+                cp.append( File.pathSeparator );
             }
-            cp.append(path);
+            cp.append( path );
         }
-        
+
         final CommandLineBuilder commandLine = new CommandLineBuilder()
             .append( getJavaExecutable( javaHome ) )
             .append( vmOptions )
@@ -119,25 +121,28 @@ public class DefaultJavaRunner
 
         m_shutdownHook = createShutdownHook( m_frameworkProcess );
         Runtime.getRuntime().addShutdownHook( m_shutdownHook );
-        
+
         LOG.debug( "Added shutdown hook." );
         LOG.info( "Runner has successfully finished his job!" );
 
-        Info.println(); // print an empty line
-        
-        try
+        if( m_wait )
         {
-            if( m_wait )
+            try
             {
                 LOG.debug( "Waiting for framework exit." );
+                Info.println(); // print an empty line
                 m_frameworkProcess.waitFor();
                 shutdown();
             }
+            catch( Throwable e )
+            {
+                LOG.debug( "Early shutdown.", e );
+                shutdown();
+            }
         }
-        catch( Throwable e )
+        else
         {
-            LOG.debug( "Early shutdown.", e );
-            shutdown();
+            Info.println(); // print an empty line
         }
     }
 
@@ -180,6 +185,9 @@ public class DefaultJavaRunner
             {
                 public void run()
                 {
+                    Info.println(); // print an empty line
+                    LOG.debug( "Unwrapping stream I/O." );
+
                     inPipe.stop();
                     outPipe.stop();
                     errPipe.stop();
