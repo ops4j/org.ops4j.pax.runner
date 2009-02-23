@@ -169,46 +169,18 @@ public class KnopflerfishPlatformBuilderTest
     {
         PlatformContext platformContext = createMock( PlatformContext.class );
 
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
-        expect( m_configuration.getBootDelegation() ).andReturn( "javax.*" );
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
 
-        replay( m_configuration, m_bundleContext, platformContext );
+        replay( m_bundleContext, platformContext );
         assertArrayEquals(
             "System properties",
             new String[]{
-                "-Dorg.knopflerfish.framework.usingwrapperscript=false",
-                "-Dorg.knopflerfish.framework.exitonshutdown=true",
-                "-Dorg.osgi.framework.dir="
-                + m_workDir.getAbsolutePath() + File.separator + "knopflerfish" + File.separator + "fwdir",
-                "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=javax.*"
-            },
-            new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).getVMOptions( platformContext )
-        );
-        verify( m_configuration, m_bundleContext, platformContext );
-    }
-
-    @Test
-    public void getVMOptionsWithoutBootDelegation()
-    {
-        PlatformContext platformContext = createMock( PlatformContext.class );
-
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
-        expect( m_configuration.getBootDelegation() ).andReturn( null );
-        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-
-        replay( m_configuration, m_bundleContext, platformContext );
-        assertArrayEquals(
-            "System properties",
-            new String[]{
-                "-Dorg.knopflerfish.framework.usingwrapperscript=false",
-                "-Dorg.knopflerfish.framework.exitonshutdown=true",
                 "-Dorg.osgi.framework.dir="
                 + m_workDir.getAbsolutePath() + File.separator + "knopflerfish" + File.separator + "fwdir"
             },
             new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).getVMOptions( platformContext )
         );
-        verify( m_configuration, m_bundleContext, platformContext );
+        verify( m_bundleContext, platformContext );
     }
 
     @Test( expected = IllegalArgumentException.class )
@@ -239,9 +211,10 @@ public class KnopflerfishPlatformBuilderTest
 
         expect( platformContext.getBundles() ).andReturn( null );
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( platformContext.getConfiguration() ).andReturn( m_configuration ).times( 2 );
         expect( m_configuration.usePersistedState() ).andReturn( false );
         expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1,EE-2" );
+        expect( m_configuration.getBootDelegation() ).andReturn( "javax.*" );
         expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );
@@ -311,12 +284,13 @@ public class KnopflerfishPlatformBuilderTest
 
         expect( platformContext.getBundles() ).andReturn( bundles );
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( platformContext.getConfiguration() ).andReturn( m_configuration ).times( 2 );
         expect( m_configuration.usePersistedState() ).andReturn( false );
         expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1,EE-2" );
+        expect( m_configuration.getBootDelegation() ).andReturn( null );
         expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
         expect( m_configuration.getStartLevel() ).andReturn( 10 );
-        expect( m_configuration.getBundleStartLevel() ).andReturn( 20 );
+        expect( m_configuration.getBundleStartLevel() ).andReturn( 20 ).times( 2 );
 
         Properties properties = new Properties();
         properties.setProperty( "myProperty", "myValue" );
@@ -406,8 +380,9 @@ public class KnopflerfishPlatformBuilderTest
 
         expect( platformContext.getBundles() ).andReturn( null );
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( platformContext.getConfiguration() ).andReturn( m_configuration ).times( 2 );
         expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1,EE-2" );
+        expect( m_configuration.getBootDelegation() ).andReturn( null );
         expect( platformContext.getSystemPackages() ).andReturn( null );
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );

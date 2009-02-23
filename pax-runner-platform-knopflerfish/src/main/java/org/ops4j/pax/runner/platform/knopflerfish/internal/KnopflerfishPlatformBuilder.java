@@ -153,31 +153,51 @@ public class KnopflerfishPlatformBuilder
             writer.append( " Knopflerfish settings" );
             writer.append( "#############################" );
             // varios settings
-            writer
-                .append( "-Dorg.osgi.provisioning.spid", "knopflerfish" )
-                .append( "-Dorg.knopflerfish.verbosity", "0" )
-                .append( "-Doscar.repository.url", "http://www.knopflerfish.org/repo/repository.xml" )
-                .append( "-Dorg.knopflerfish.framework.debug.packages", "false" )
-                .append( "-Dorg.knopflerfish.framework.debug.errors", "true" )
-                .append( "-Dorg.knopflerfish.framework.debug.classloader", "false" )
-                .append( "-Dorg.knopflerfish.framework.debug.startlevel", "false" )
-                .append( "-Dorg.knopflerfish.framework.debug.ldap", "false" )
-                .append( "-Dorg.knopflerfish.startlevel.use", "true" )
-                .append( "-D" + Constants.FRAMEWORK_EXECUTIONENVIRONMENT, context.getExecutionEnvironment() )
-                .append( "-D" + Constants.FRAMEWORK_SYSTEMPACKAGES, context.getSystemPackages() )
-                .append();
-
-            // framework start level
-            final Integer startLevel = configuration.getStartLevel();
-            if( startLevel != null )
             {
-                writer.appendRaw( "-startlevel " + startLevel.toString() );
+                writer
+                    .append( "-Dorg.osgi.provisioning.spid", "knopflerfish" )
+                    .append( "-Dorg.knopflerfish.verbosity", "0" )
+                    .append( "-Doscar.repository.url", "http://www.knopflerfish.org/repo/repository.xml" )
+                    .append( "-Dorg.knopflerfish.framework.usingwrapperscript", "false" )
+                    .append( "-Dorg.knopflerfish.framework.exitonshutdown", "true" )
+                    .append( "-Dorg.knopflerfish.framework.debug.packages", "false" )
+                    .append( "-Dorg.knopflerfish.framework.debug.errors", "true" )
+                    .append( "-Dorg.knopflerfish.framework.debug.classloader", "false" )
+                    .append( "-Dorg.knopflerfish.framework.debug.startlevel", "false" )
+                    .append( "-Dorg.knopflerfish.framework.debug.ldap", "false" )
+                    .append( "-Dorg.knopflerfish.startlevel.use", "true" );
+            }
+            // framework start level
+            {
+                final Integer startLevel = configuration.getStartLevel();
+                if( startLevel != null )
+                {
+                    writer.appendRaw( "-startlevel " + startLevel.toString() );
+                }
             }
             // bundle start level
-            final Integer bundleStartLevel = configuration.getBundleStartLevel();
-            if( bundleStartLevel != null )
             {
-                writer.appendRaw( "-initlevel " + bundleStartLevel.toString() );
+                final Integer bundleStartLevel = configuration.getBundleStartLevel();
+                if( bundleStartLevel != null )
+                {
+                    writer.appendRaw( "-initlevel " + bundleStartLevel.toString() );
+                }
+            }
+            // execution environments
+            {
+                writer.append( "-D" + Constants.FRAMEWORK_EXECUTIONENVIRONMENT, context.getExecutionEnvironment() );
+            }
+            // boot delegation packages
+            {
+                final String bootDelegation = context.getConfiguration().getBootDelegation();
+                if( bootDelegation != null )
+                {
+                    writer.append( "-D" + Constants.FRAMEWORK_BOOTDELEGATION, bootDelegation );
+                }
+            }
+            // system packages
+            {
+                writer.append( "-D" + Constants.FRAMEWORK_SYSTEMPACKAGES, context.getSystemPackages() );
             }
 
             if( bundles != null && bundles.size() > 0 )
@@ -186,7 +206,7 @@ public class KnopflerfishPlatformBuilder
                 writer.append( "#############################" );
                 writer.append( " Client bundles to install" );
                 writer.append( "#############################" );
-                appendBundles( writer, bundles, bundleStartLevel );
+                appendBundles( writer, bundles, configuration.getBundleStartLevel() );
             }
 
             writer.append();
@@ -338,23 +358,10 @@ public class KnopflerfishPlatformBuilder
         final Collection<String> vmOptions = new ArrayList<String>();
         final File workingDirectory = context.getWorkingDirectory();
         vmOptions.add(
-            "-Dorg.knopflerfish.framework.usingwrapperscript=false"
-        );
-        vmOptions.add(
-            "-Dorg.knopflerfish.framework.exitonshutdown=true"
-        );
-        vmOptions.add(
             "-Dorg.osgi.framework.dir=" + workingDirectory.getAbsolutePath()
             + File.separator + CONFIG_DIRECTORY
             + File.separator + CACHE_DIRECTORY
         );
-        final String bootDelegation = context.getConfiguration().getBootDelegation();
-        if( bootDelegation != null )
-        {
-            vmOptions.add(
-                "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=" + bootDelegation
-            );
-        }
         return vmOptions.toArray( new String[vmOptions.size()] );
     }
 
