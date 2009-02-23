@@ -127,18 +127,7 @@ public class DefaultJavaRunner
 
         if( m_wait )
         {
-            try
-            {
-                LOG.debug( "Waiting for framework exit." );
-                Info.println(); // print an empty line
-                m_frameworkProcess.waitFor();
-                shutdown();
-            }
-            catch( Throwable e )
-            {
-                LOG.debug( "Early shutdown.", e );
-                shutdown();
-            }
+            waitForExit();
         }
         else
         {
@@ -163,6 +152,25 @@ public class DefaultJavaRunner
             LOG.debug( "Shutdown already in progress." );
         }
         LOG.info( "Platform has been shutdown." );
+    }
+
+    /**
+     * Wait till the framework process exits.
+     */
+    public synchronized void waitForExit()
+    {
+        try
+        {
+            LOG.debug( "Waiting for framework exit." );
+            Info.println(); // print an empty line
+            m_frameworkProcess.waitFor();
+            shutdown();
+        }
+        catch( Throwable e )
+        {
+            LOG.debug( "Early shutdown.", e );
+            shutdown();
+        }
     }
 
     /**
