@@ -33,7 +33,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.ops4j.io.FileUtils;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
@@ -160,35 +159,9 @@ public class FelixPlatformBuilderF100T122Test
     {
         PlatformContext platformContext = createMock( PlatformContext.class );
 
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
-        expect( m_configuration.getBootDelegation() ).andReturn( "javax.*" );
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
 
-        replay( m_configuration, m_bundleContext, platformContext );
-        assertArrayEquals(
-            "System options",
-            new String[]{
-                "-Dfelix.config.properties="
-                + m_workDir.toURI() + "/felix/config.ini",
-                "-Dfelix.cache.dir="
-                + m_workDir.getAbsolutePath() + File.separator + "felix" + File.separator + "cache",
-                "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=javax.*"
-            },
-            new FelixPlatformBuilderF100T122( m_bundleContext, "version" ).getVMOptions( platformContext )
-        );
-        verify( m_configuration, m_bundleContext, platformContext );
-    }
-
-    @Test
-    public void getVMOptionsWithoutBootDelegation()
-    {
-        PlatformContext platformContext = createMock( PlatformContext.class );
-
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
-        expect( m_configuration.getBootDelegation() ).andReturn( null );
-        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-
-        replay( m_configuration, m_bundleContext, platformContext );
+        replay( m_bundleContext, platformContext );
         assertArrayEquals(
             "System options",
             new String[]{
@@ -199,7 +172,7 @@ public class FelixPlatformBuilderF100T122Test
             },
             new FelixPlatformBuilderF100T122( m_bundleContext, "version" ).getVMOptions( platformContext )
         );
-        verify( m_configuration, m_bundleContext, platformContext );
+        verify( m_bundleContext, platformContext );
     }
 
     @Test( expected = IllegalArgumentException.class )
@@ -230,8 +203,9 @@ public class FelixPlatformBuilderF100T122Test
 
         expect( platformContext.getBundles() ).andReturn( null );
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( platformContext.getConfiguration() ).andReturn( m_configuration ).times( 2 );
         expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1,EE-2" );
+        expect( m_configuration.getBootDelegation() ).andReturn( "javax.*" );
         expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );
@@ -302,11 +276,12 @@ public class FelixPlatformBuilderF100T122Test
 
         expect( platformContext.getBundles() ).andReturn( bundles );
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( platformContext.getConfiguration() ).andReturn( m_configuration ).times( 2 );
         expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1,EE-2" );
+        expect( m_configuration.getBootDelegation() ).andReturn( null );
         expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
         expect( m_configuration.getStartLevel() ).andReturn( 10 );
-        expect( m_configuration.getBundleStartLevel() ).andReturn( 20 );
+        expect( m_configuration.getBundleStartLevel() ).andReturn( 20 ).times( 2 );
         expect( m_configuration.getFrameworkProfile() ).andReturn( "myProfile" );
         expect( m_configuration.usePersistedState() ).andReturn( false );
 
@@ -398,8 +373,9 @@ public class FelixPlatformBuilderF100T122Test
 
         expect( platformContext.getBundles() ).andReturn( null );
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
+        expect( platformContext.getConfiguration() ).andReturn( m_configuration ).times( 2 );
         expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1,EE-2" );
+        expect( m_configuration.getBootDelegation() ).andReturn( null );
         expect( platformContext.getSystemPackages() ).andReturn( null );
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );

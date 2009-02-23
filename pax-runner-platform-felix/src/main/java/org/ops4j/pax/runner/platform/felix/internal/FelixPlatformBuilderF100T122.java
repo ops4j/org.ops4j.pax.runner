@@ -143,38 +143,55 @@ public class FelixPlatformBuilderF100T122
             writer.append( "#############################" );
             writer.append( " Felix settings" );
             writer.append( "#############################" );
+
             // framework start level
-            final Integer startLevel = configuration.getStartLevel();
-            if( startLevel != null )
             {
-                writer.append( "felix.startlevel.framework", startLevel.toString() );
-            }
-            // bundle start level
-            final Integer bundleStartLevel = configuration.getBundleStartLevel();
-            if( bundleStartLevel != null )
-            {
-                writer.append( "felix.startlevel.bundle", bundleStartLevel.toString() );
-            }
-            // default profile
-            final String profile = configuration.getFrameworkProfile();
-            if( profile != null )
-            {
-                writer.append( "felix.cache.profile", profile );
-                final Boolean usePersistedState = configuration.usePersistedState();
-                if( usePersistedState != null && !usePersistedState )
+                final Integer startLevel = configuration.getStartLevel();
+                if( startLevel != null )
                 {
-                    final File profileDirectory =
-                        new File( configDirectory, CACHE_DIRECTORY + File.separator + profile );
-                    LOGGER.trace( "Cleaning profile folder [" + profileDirectory + "]" );
-                    FileUtils.delete( profileDirectory );
+                    writer.append( "felix.startlevel.framework", startLevel.toString() );
                 }
             }
-
+            // bundle start level
+            {
+                final Integer bundleStartLevel = configuration.getBundleStartLevel();
+                if( bundleStartLevel != null )
+                {
+                    writer.append( "felix.startlevel.bundle", bundleStartLevel.toString() );
+                }
+            }
+            // default profile
+            {
+                final String profile = configuration.getFrameworkProfile();
+                if( profile != null )
+                {
+                    writer.append( "felix.cache.profile", profile );
+                    final Boolean usePersistedState = configuration.usePersistedState();
+                    if( usePersistedState != null && !usePersistedState )
+                    {
+                        final File profileDirectory =
+                            new File( configDirectory, CACHE_DIRECTORY + File.separator + profile );
+                        LOGGER.trace( "Cleaning profile folder [" + profileDirectory + "]" );
+                        FileUtils.delete( profileDirectory );
+                    }
+                }
+            }
             // execution environments
-            writer.append( Constants.FRAMEWORK_EXECUTIONENVIRONMENT, context.getExecutionEnvironment() );
-
+            {
+                writer.append( Constants.FRAMEWORK_EXECUTIONENVIRONMENT, context.getExecutionEnvironment() );
+            }
+            // boot delegation
+            {
+                final String bootDelegation = context.getConfiguration().getBootDelegation();
+                if( bootDelegation != null )
+                {
+                    writer.append( Constants.FRAMEWORK_BOOTDELEGATION, bootDelegation );
+                }
+            }
             // system packages
-            writer.append( Constants.FRAMEWORK_SYSTEMPACKAGES, context.getSystemPackages() );
+            {
+                writer.append( Constants.FRAMEWORK_SYSTEMPACKAGES, context.getSystemPackages() );
+            }
 
             if( bundles != null && bundles.size() > 0 )
             {
@@ -182,7 +199,7 @@ public class FelixPlatformBuilderF100T122
                 writer.append( "#############################" );
                 writer.append( " Client bundles to install" );
                 writer.append( "#############################" );
-                appendBundles( writer, bundles, bundleStartLevel );
+                appendBundles( writer, bundles, configuration.getBundleStartLevel() );
             }
 
             writer.append();
@@ -341,13 +358,6 @@ public class FelixPlatformBuilderF100T122
             + File.separator + CONFIG_DIRECTORY
             + File.separator + CACHE_DIRECTORY
         );
-        final String bootDelegation = context.getConfiguration().getBootDelegation();
-        if( bootDelegation != null )
-        {
-            vmOptions.add(
-                "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=" + bootDelegation
-            );
-        }
         return vmOptions.toArray( new String[vmOptions.size()] );
     }
 

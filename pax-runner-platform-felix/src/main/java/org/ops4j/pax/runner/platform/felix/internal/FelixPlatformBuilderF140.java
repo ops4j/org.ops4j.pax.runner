@@ -143,36 +143,52 @@ public class FelixPlatformBuilderF140
             writer.append( "#############################" );
 
             // storage directory
-            final File cacheDirectory = new File( configDirectory, CACHE_DIRECTORY );
-            writer.append( "org.osgi.framework.storage",
-                           cacheDirectory.getAbsolutePath().replace( File.separatorChar, '/' )
-            );
-
+            {
+                final File cacheDirectory = new File( configDirectory, CACHE_DIRECTORY );
+                writer.append( "org.osgi.framework.storage",
+                               cacheDirectory.getAbsolutePath().replace( File.separatorChar, '/' )
+                );
+            }
             // framework start level
-            final Integer startLevel = configuration.getStartLevel();
-            if( startLevel != null )
             {
-                writer.append( "org.osgi.framework.startlevel", startLevel.toString() );
+                final Integer startLevel = configuration.getStartLevel();
+                if( startLevel != null )
+                {
+                    writer.append( "org.osgi.framework.startlevel", startLevel.toString() );
+                }
             }
-
             // bundle start level
-            final Integer bundleStartLevel = configuration.getBundleStartLevel();
-            if( bundleStartLevel != null )
             {
-                writer.append( "felix.startlevel.bundle", bundleStartLevel.toString() );
+                final Integer bundleStartLevel = configuration.getBundleStartLevel();
+                if( bundleStartLevel != null )
+                {
+                    writer.append( "felix.startlevel.bundle", bundleStartLevel.toString() );
+                }
             }
-
-            final Boolean usePersistedState = configuration.usePersistedState();
-            if( usePersistedState != null && !usePersistedState )
+            // use persisted state
             {
-                writer.append( "org.osgi.framework.storage.clean", "onFirstInit" );
+                final Boolean usePersistedState = configuration.usePersistedState();
+                if( usePersistedState != null && !usePersistedState )
+                {
+                    writer.append( "org.osgi.framework.storage.clean", "onFirstInit" );
+                }
             }
-
             // execution environments
-            writer.append( Constants.FRAMEWORK_EXECUTIONENVIRONMENT, context.getExecutionEnvironment() );
-
+            {
+                writer.append( Constants.FRAMEWORK_EXECUTIONENVIRONMENT, context.getExecutionEnvironment() );
+            }
+            // boot delegation packages
+            {
+                final String bootDelegation = context.getConfiguration().getBootDelegation();
+                if( bootDelegation != null )
+                {
+                    writer.append( Constants.FRAMEWORK_BOOTDELEGATION, bootDelegation );
+                }
+            }
             // system packages
-            writer.append( Constants.FRAMEWORK_SYSTEMPACKAGES, context.getSystemPackages() );
+            {
+                writer.append( Constants.FRAMEWORK_SYSTEMPACKAGES, context.getSystemPackages() );
+            }
 
             if( bundles != null && bundles.size() > 0 )
             {
@@ -180,7 +196,7 @@ public class FelixPlatformBuilderF140
                 writer.append( "#############################" );
                 writer.append( " Client bundles to install" );
                 writer.append( "#############################" );
-                appendBundles( writer, bundles, bundleStartLevel );
+                appendBundles( writer, bundles, configuration.getBundleStartLevel() );
             }
 
             writer.append();
@@ -334,13 +350,6 @@ public class FelixPlatformBuilderF140
             + "/" + CONFIG_DIRECTORY
             + "/" + CONFIG_INI
         );
-        final String bootDelegation = context.getConfiguration().getBootDelegation();
-        if( bootDelegation != null )
-        {
-            vmOptions.add(
-                "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=" + bootDelegation
-            );
-        }
         return vmOptions.toArray( new String[vmOptions.size()] );
     }
 
