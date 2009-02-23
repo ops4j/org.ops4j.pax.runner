@@ -34,7 +34,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.ops4j.io.FileUtils;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
@@ -247,52 +246,12 @@ public class EquinoxPlatformBuilderTest
     public void getVMOptions()
     {
         PlatformContext platformContext = createMock( PlatformContext.class );
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
-        expect( m_configuration.getBootDelegation() ).andReturn( "javax.*" );
-        expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1,EE-2" );
-        expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
 
-        replay( m_configuration, m_bundleContext, platformContext );
-        assertArrayEquals(
-            "System options",
-            new String[]{
-                "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=javax.*,java.*",
-                "-D" + Constants.FRAMEWORK_SYSTEMPACKAGES + "=sys.package.one,sys.package.two",
-                "-D" + Constants.FRAMEWORK_EXECUTIONENVIRONMENT + "=EE-1,EE-2",
-            },
+        replay( m_bundleContext, platformContext );
+        assertNull(
             new EquinoxPlatformBuilder( m_bundleContext, "version" ).getVMOptions( platformContext )
         );
-        verify( m_configuration, m_bundleContext, platformContext );
-    }
-
-    @Test
-    public void getVMOptionsWithoutBootDelegation()
-    {
-        PlatformContext platformContext = createMock( PlatformContext.class );
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
-        expect( m_configuration.getBootDelegation() ).andReturn( null );
-        expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1" );
-        expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
-
-        replay( m_configuration, m_bundleContext, platformContext );
-        assertArrayEquals(
-            "System options",
-            new String[]{
-                "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=java.*",
-                "-D" + Constants.FRAMEWORK_SYSTEMPACKAGES + "=sys.package.one,sys.package.two",
-                "-D" + Constants.FRAMEWORK_EXECUTIONENVIRONMENT + "=EE-1",
-            },
-            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getVMOptions( platformContext )
-        );
-        verify( m_configuration, m_bundleContext, platformContext );
-    }
-
-    @Test( expected = IllegalArgumentException.class )
-    public void getSystemPropertiesWithNullPlatformContext()
-    {
-        replay( m_bundleContext );
-        new EquinoxPlatformBuilder( m_bundleContext, "version" ).getVMOptions( null );
-        verify( m_bundleContext );
+        verify( m_bundleContext, platformContext );
     }
 
     @Test( expected = IllegalArgumentException.class )
@@ -317,6 +276,9 @@ public class EquinoxPlatformBuilderTest
         expect( m_configuration.usePersistedState() ).andReturn( false );
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );
+        expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1,EE-2" );
+        expect( m_configuration.getBootDelegation() ).andReturn( "javax.*" );
+        expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
         expect( platformContext.getBundles() ).andReturn( null );
         expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir ).anyTimes();
         expect( m_configuration.isDebugClassLoading() ).andReturn( false );
@@ -345,10 +307,14 @@ public class EquinoxPlatformBuilderTest
     {
         PlatformContext platformContext = createMock( PlatformContext.class );
 
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration ).anyTimes();
+        expect( platformContext.getConfiguration() ).andReturn( m_configuration ).times( 3 );
         expect( m_configuration.usePersistedState() ).andReturn( false );
         expect( m_configuration.getStartLevel() ).andReturn( 10 );
         expect( m_configuration.getBundleStartLevel() ).andReturn( 20 );
+        expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1,EE-2" );
+        expect( m_configuration.getBootDelegation() ).andReturn( null );
+        expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
+
         List<LocalBundle> bundles = new ArrayList<LocalBundle>();
 
         // a bunlde with start level that should start

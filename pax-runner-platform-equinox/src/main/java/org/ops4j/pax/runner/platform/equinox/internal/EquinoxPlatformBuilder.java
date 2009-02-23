@@ -157,21 +157,52 @@ public class EquinoxPlatformBuilder
             writer.append( "#############################" );
             writer.append( " Equinox settings" );
             writer.append( "#############################" );
-            writer.append( "eclipse.ignoreApp", "true" );
-            final Boolean usePersistedState = configuration.usePersistedState();
-            if( usePersistedState != null && !usePersistedState )
+            // there is no aclipse application
             {
-                writer.append( "osgi.clean", "true" );
+                writer.append( "eclipse.ignoreApp", "true" );
             }
-            final Integer startLevel = configuration.getStartLevel();
-            if( startLevel != null )
+            // use persisted state
             {
-                writer.append( "osgi.startLevel", startLevel.toString() );
+                final Boolean usePersistedState = configuration.usePersistedState();
+                if( usePersistedState != null && !usePersistedState )
+                {
+                    writer.append( "osgi.clean", "true" );
+                }
             }
-            final Integer bundleStartLevel = configuration.getBundleStartLevel();
-            if( bundleStartLevel != null )
+            // framework start level
             {
-                writer.append( "osgi.bundles.defaultStartLevel", bundleStartLevel.toString() );
+                final Integer startLevel = configuration.getStartLevel();
+                if( startLevel != null )
+                {
+                    writer.append( "osgi.startLevel", startLevel.toString() );
+                }
+            }
+            // bundle start level
+            {
+                final Integer bundleStartLevel = configuration.getBundleStartLevel();
+                if( bundleStartLevel != null )
+                {
+                    writer.append( "osgi.bundles.defaultStartLevel", bundleStartLevel.toString() );
+                }
+            }
+            // execution environments
+            {
+                writer.append( Constants.FRAMEWORK_EXECUTIONENVIRONMENT, context.getExecutionEnvironment() );
+            }
+            // boot delegation
+            {
+                final StringBuilder bootDelegation = new StringBuilder();
+                String bootDelegationOption = context.getConfiguration().getBootDelegation();
+                if( bootDelegationOption != null )
+                {
+                    bootDelegation.append( bootDelegationOption ).append( "," );
+                }
+                bootDelegation.append( BOOT_DELEGATION_PACKAGES );
+                writer.append( Constants.FRAMEWORK_BOOTDELEGATION, bootDelegation.toString() );
+            }
+            // system packages
+            {
+                writer.append( Constants.FRAMEWORK_SYSTEMPACKAGES, context.getSystemPackages() );
             }
 
             if( bundles != null && bundles.size() > 0 )
@@ -426,24 +457,14 @@ public class EquinoxPlatformBuilder
     }
 
     /**
+     * return snull as there are no additional virtual machien arguments.
+     *
      * @see org.ops4j.pax.runner.platform.PlatformBuilder
      *      #getVMOptions(org.ops4j.pax.runner.platform.PlatformContext)
      */
     public String[] getVMOptions( final PlatformContext context )
     {
-        NullArgumentException.validateNotNull( context, "Platform context" );
-        final StringBuilder bootDelegation = new StringBuilder();
-        String bootDelegationOption = context.getConfiguration().getBootDelegation();
-        if( bootDelegationOption != null )
-        {
-            bootDelegation.append( bootDelegationOption ).append( "," );
-        }
-        bootDelegation.append( BOOT_DELEGATION_PACKAGES );
-        return new String[]{
-            "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=" + bootDelegation.toString(),
-            "-D" + Constants.FRAMEWORK_SYSTEMPACKAGES + "=" + context.getSystemPackages(),
-            "-D" + Constants.FRAMEWORK_EXECUTIONENVIRONMENT + "=" + context.getExecutionEnvironment()
-        };
+        return null;
     }
 
     /**
