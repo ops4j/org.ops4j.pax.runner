@@ -698,7 +698,7 @@ public class PlatformImpl
         }
         catch( IOException e )
         {
-           throw new PlatformException( "[" + url + "] is not a jar.", e );
+            throw new PlatformException( "[" + url + "] is not a jar.", e );
         }
         finally
         {
@@ -721,14 +721,14 @@ public class PlatformImpl
     {
         BufferedOutputStream bout = null;
         BufferedInputStream bin = null;
-
+        File tmp = null;
         try
         {
             LOGGER.debug( "Auto .. [" + url + "] .. " );
             String symbolicName = url.toExternalForm().replaceAll( "[^a-zA-Z_0-9.-]", "_" );
             URL wrapped = new URL( "wrap:" + file.toURL().toExternalForm() + "$Bundle-SymbolicName=" + symbolicName );
 
-            File tmp = File.createTempFile( file.getName(), "tmp" );
+            tmp = File.createTempFile( file.getName(), "tmp" );
             bout = new BufferedOutputStream( new FileOutputStream( tmp ) );
             StreamUtils.streamCopy( wrapped.openStream(), bout, null );
             bout.close();
@@ -739,14 +739,12 @@ public class PlatformImpl
             StreamUtils.streamCopy( bin, bout, null );
             bout.close();
 
-            // delete temporary file
-            tmp.delete();
-
             LOGGER.debug( "Automatically wrapped [" + url + "] to a bundle." );
         }
         catch( IOException e )
         {
-             throw new PlatformException( "Tried to convert [" + url + "] to a bundle but failed.", e );
+            // leave as is because some artefacts might be ok to be not wrapped as a bundle.
+            LOGGER.info( "Tried to convert [" + url + "] to a bundle but failed.", e );
         }
         finally
         {
@@ -772,6 +770,18 @@ public class PlatformImpl
 
             }
             catch( IOException ioE )
+            {
+
+            }
+
+            try
+            {
+                if( tmp != null )
+                {
+                    tmp.delete();
+                }
+            }
+            catch( Exception e )
             {
 
             }
