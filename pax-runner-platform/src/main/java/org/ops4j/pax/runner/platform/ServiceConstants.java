@@ -66,7 +66,7 @@ public interface ServiceConstants
      */
     static final String CONFIG_USE_PERSISTED_STATE = PID + ".usePersistedState";
     /**
-     * UsePersistedState platform configuration property name.
+     * auto wrap platform configuration property name.
      */
     static final String CONFIG_AUTO_WRAP = PID + ".autoWrap";
     /**
