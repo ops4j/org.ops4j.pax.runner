@@ -51,6 +51,7 @@ import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
 import org.ops4j.pax.runner.platform.SystemFileReference;
+import org.ops4j.pax.runner.platform.ServiceConstants;
 import org.ops4j.util.property.DictionaryPropertyResolver;
 import org.ops4j.util.property.PropertyResolver;
 
@@ -505,7 +506,11 @@ public class PlatformImpl
             }
         }
 
-        wrapNonBundleJar( destination, url );
+        if( m_propertyResolver != null && "true".equals( m_propertyResolver.get( ServiceConstants.CONFIG_AUTO_WRAP ) ) )
+        {
+            wrapNonBundleJar( destination, url );
+        }
+        
         String newFileName = validateBundleAndGetFilename( url, destination, hashFileName, checkAttributes );
         File newDestination = new File( destination.getParentFile(), newFileName );
         if( !newFileName.equals( destination.getName() ) )
@@ -676,6 +681,7 @@ public class PlatformImpl
     private void wrapNonBundleJar( File file, URL url )
         throws PlatformException
     {
+
         JarFile jar = null;
         try
         {
