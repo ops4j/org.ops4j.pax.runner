@@ -717,20 +717,22 @@ public class PlatformImpl
         try
         {
             URL wrapped = new URL( "wrap:" + file.toURL().toExternalForm() );
-            LOGGER.debug( "going to wrap this: " + wrapped );
 
-             File tmp = File.createTempFile( file.getName(), "tmp" );
-             bout = new BufferedOutputStream( new FileOutputStream( tmp ) );
-             StreamUtils.streamCopy( wrapped.openStream(), bout, null );
-             bout.close();
+            File tmp = File.createTempFile( file.getName(), "tmp" );
+            bout = new BufferedOutputStream( new FileOutputStream( tmp ) );
+            StreamUtils.streamCopy( wrapped.openStream(), bout, null );
+            bout.close();
 
-             // write it back to original location (overwrite)
-             bout = new BufferedOutputStream( new FileOutputStream( file ) );
-             bin = new BufferedInputStream( new FileInputStream( tmp ) );
-             StreamUtils.streamCopy( bin, bout, null );
-             bout.close();
+            // write it back to original location (overwrite)
+            bout = new BufferedOutputStream( new FileOutputStream( file ) );
+            bin = new BufferedInputStream( new FileInputStream( tmp ) );
+            StreamUtils.streamCopy( bin, bout, null );
+            bout.close();
 
-            LOGGER.debug( "Automatically wrapped to [" + url + "] to a bundle." );
+            // delete temporary file
+            tmp.delete();
+
+            LOGGER.debug( "Automatically wrapped [" + url + "] to a bundle." );
         }
         catch( MalformedURLException e )
         {
