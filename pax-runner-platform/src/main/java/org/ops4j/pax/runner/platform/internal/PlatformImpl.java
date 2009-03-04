@@ -674,6 +674,7 @@ public class PlatformImpl
      * @param url  the original url for reference purposes
      */
     private void wrapNonBundleJar( File file, URL url )
+        throws PlatformException
     {
         JarFile jar = null;
         try
@@ -697,7 +698,7 @@ public class PlatformImpl
         }
         catch( IOException e )
         {
-            // will be handled on other place anyway.
+           throw new PlatformException( "[" + url + "] is not a jar.", e );
         }
         finally
         {
@@ -716,6 +717,7 @@ public class PlatformImpl
     }
 
     private void wrap( File file, URL url )
+        throws PlatformException
     {
         BufferedOutputStream bout = null;
         BufferedInputStream bin = null;
@@ -742,13 +744,9 @@ public class PlatformImpl
 
             LOGGER.debug( "Automatically wrapped [" + url + "] to a bundle." );
         }
-        catch( MalformedURLException e )
-        {
-
-        }
         catch( IOException e )
         {
-            e.printStackTrace();
+             throw new PlatformException( "Tried to convert [" + url + "] to a bundle but failed.", e );
         }
         finally
         {
