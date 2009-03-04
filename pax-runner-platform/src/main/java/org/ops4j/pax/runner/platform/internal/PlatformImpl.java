@@ -23,7 +23,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.BufferedInputStream;
 import java.net.URL;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Dictionary;
@@ -502,6 +504,8 @@ public class PlatformImpl
                 throw new PlatformException( "[" + url + "] could not be downloaded", e );
             }
         }
+
+        validateBundleOrWrapBundle( destination, url );
         String newFileName = validateBundleAndGetFilename( url, destination, hashFileName, checkAttributes );
         File newDestination = new File( destination.getParentFile(), newFileName );
         if( !newFileName.equals( destination.getName() ) )
@@ -585,7 +589,7 @@ public class PlatformImpl
     }
 
     /**
-     * Validate that the file is an valid bundle. A valid bundle will be a loadable jar file that has manifes and the
+     * Validate that the file is an valid bundle. A valid bundle will be a loadable jar file that has manifest and the
      * manifest contains at least an entry for Bundle-SymboliName.
      *
      * @param url                       original url from where the bundle was created.
@@ -659,6 +663,109 @@ public class PlatformImpl
                 {
                     // just ignore as this is less probably to happen.
                 }
+            }
+        }
+    }
+
+    private void validateBundleOrWrapBundle( File file, URL url )
+    {
+        JarFile jar = null;
+        try
+        {
+            // verify that is a valid jar. Do not verify that is signed (the false param).
+
+            jar = new JarFile( file, false );
+            final Manifest manifest = jar.getManifest();
+            if( manifest == null )
+            {
+                wrap( file, url );
+            }
+            String bundleSymbolicName = manifest.getMainAttributes().getValue( Constants.BUNDLE_SYMBOLICNAME );
+
+            if( bundleSymbolicName == null )
+            {
+                wrap( file, url );
+            }
+
+
+        }
+        catch( IOException e )
+        {
+            // will be handled on other place anyway.
+        }
+        finally
+        {
+            if( jar != null )
+            {
+                try
+                {
+                    jar.close();
+                }
+                catch( IOException ignore )
+                {
+                    // just ignore as this is less probably to happen.
+                }
+            }
+        }
+    }
+
+    private void wrap( File file, URL url )
+    {
+        BufferedOutputStream bout = null;
+        BufferedInputStream bin = null;
+
+        try
+        {
+            URL wrapped = new URL( "wrap:" + file.toURL().toExternalForm() );
+            LOGGER.debug( "going to wrap this: " + wrapped );
+
+             File tmp = File.createTempFile( file.getName(), "tmp" );
+             bout = new BufferedOutputStream( new FileOutputStream( tmp ) );
+             StreamUtils.streamCopy( wrapped.openStream(), bout, null );
+             bout.close();
+
+             // write it back to original location (overwrite)
+             bout = new BufferedOutputStream( new FileOutputStream( file ) );
+             bin = new BufferedInputStream( new FileInputStream( tmp ) );
+             StreamUtils.streamCopy( bin, bout, null );
+             bout.close();
+
+            LOGGER.debug( "Automatically wrapped to [" + url + "] to a bundle." );
+        }
+        catch( MalformedURLException e )
+        {
+
+        }
+        catch( IOException e )
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if( bin != null )
+                {
+                    bin.close();
+                }
+
+            }
+            catch( IOException ioE )
+            {
+
+            }
+
+            try
+            {
+                if( bout != null )
+                {
+                    bout.close();
+                }
+
+            }
+            catch( IOException ioE )
+            {
+
             }
         }
     }
