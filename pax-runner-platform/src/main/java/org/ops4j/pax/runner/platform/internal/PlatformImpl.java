@@ -505,7 +505,7 @@ public class PlatformImpl
             }
         }
 
-        validateBundleOrWrapBundle( destination, url );
+        wrapNonBundleJar( destination, url );
         String newFileName = validateBundleAndGetFilename( url, destination, hashFileName, checkAttributes );
         File newDestination = new File( destination.getParentFile(), newFileName );
         if( !newFileName.equals( destination.getName() ) )
@@ -667,7 +667,13 @@ public class PlatformImpl
         }
     }
 
-    private void validateBundleOrWrapBundle( File file, URL url )
+    /**
+     * This pipes
+     *
+     * @param file
+     * @param url  the original url for reference purposes
+     */
+    private void wrapNonBundleJar( File file, URL url )
     {
         JarFile jar = null;
         try
@@ -716,7 +722,9 @@ public class PlatformImpl
 
         try
         {
-            URL wrapped = new URL( "wrap:" + file.toURL().toExternalForm() );
+            LOGGER.debug( "Auto .. [" + url + "] .. " );
+            String symbolicName = url.toExternalForm().replaceAll( "[^a-zA-Z_0-9.-]", "_" );
+            URL wrapped = new URL( "wrap:" + file.toURL().toExternalForm() + "$Bundle-SymbolicName=" + symbolicName );
 
             File tmp = File.createTempFile( file.getName(), "tmp" );
             bout = new BufferedOutputStream( new FileOutputStream( tmp ) );
