@@ -183,6 +183,11 @@
       </dependency>
       <dependency>
         <groupId>org.ops4j.base</groupId>
+        <artifactId>ops4j-base-net</artifactId>
+        <version>${dependency.base.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.ops4j.base</groupId>
         <artifactId>ops4j-base-util-collections</artifactId>
         <version>${dependency.base.version}</version>
         <optional>true</optional>

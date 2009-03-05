@@ -44,7 +44,7 @@ import org.ops4j.pax.runner.platform.PlatformException;
 import org.ops4j.util.collections.PropertiesWriter;
 
 /**
- * Platform builder for felix platform before 1.4.0.
+ * Platform builder for felix platform after 1.4.0.
  *
  * @author Alin Dreghiciu
  * @since 0.16.0, November 05, 2008
