@@ -19,6 +19,7 @@
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-lang:0.5.3" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-io:0.5.3" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-monitors:0.5.3" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-net:0.5.3" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-collections:0.5.3" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-optional-jcl:0.2.0" level="project" />
     <orderEntry type="module" module-name="pax-runner-commons" exported="" />
