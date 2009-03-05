@@ -461,6 +461,7 @@ public class Run
                 throw new ConfigurationException( "Could not resolve a version for platform [" + platform + "]" );
             }
         }
+        version = version.toUpperCase();
         final String activatorName = context.getConfiguration().getProperty( platform + "." + version );
         if( activatorName == null || activatorName.trim().length() == 0 )
         {
