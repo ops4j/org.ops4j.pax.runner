@@ -45,8 +45,8 @@
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-monitors:0.5.3" level="project" />
     <orderEntry type="module" module-name="pax-runner-platform-concierge" />
     <orderEntry type="module" module-name="pax-runner-platform-equinox" />
-    <orderEntry type="module" module-name="pax-runner-platform-felix" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-net:0.5.3" level="project" />
+    <orderEntry type="module" module-name="pax-runner-platform-felix" />
     <orderEntry type="module" module-name="pax-runner-platform-knopflerfish" />
   </component>
 </module>
