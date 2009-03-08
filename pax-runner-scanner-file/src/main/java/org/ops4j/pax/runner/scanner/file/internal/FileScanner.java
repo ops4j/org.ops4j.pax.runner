@@ -121,9 +121,10 @@ public class FileScanner
                         else
                         {
                             line = SystemPropertyUtils.resolvePlaceholders( line );
-                            references.add(
-                                new FileBundleReference( line, defaultStartLevel, defaultStart, defaultUpdate )
-                            );
+                            final FileBundleReference reference =
+                                new FileBundleReference( line, defaultStartLevel, defaultStart, defaultUpdate );
+                            references.add( reference );
+                            LOGGER.info( "Installing bundle [" + reference + "]" );
                         }
                     }
                 }

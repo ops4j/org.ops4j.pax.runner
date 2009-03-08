@@ -403,14 +403,14 @@ public class Run
                     {
                         try
                         {
-                            provisionService.scan( provisionURL ).install();
+                            provisionService.wrap( provisionService.scan( provisionURL ) ).install();
                         }
                         catch( UnsupportedSchemaException e )
                         {
                             final String resolvedProvisionURL = schemaResolver.resolve( provisionURL );
                             if( resolvedProvisionURL != null && !resolvedProvisionURL.equals( provisionURL ) )
                             {
-                                provisionService.scan( resolvedProvisionURL ).install();
+                                provisionService.wrap( provisionService.scan( resolvedProvisionURL ) ).install();
                             }
                             else
                             {

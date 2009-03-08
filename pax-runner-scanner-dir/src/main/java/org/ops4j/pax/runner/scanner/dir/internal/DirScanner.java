@@ -228,7 +228,10 @@ public class DirScanner
         {
             for( URL url : urls )
             {
-                references.add( new FileBundleReference( url.toExternalForm(), startLevel, shouldStart, update ) );
+                final FileBundleReference reference =
+                    new FileBundleReference( url.toExternalForm(), startLevel, shouldStart, update );
+                references.add( reference );
+                LOGGER.info( "Installing bundle [" + reference + "]" );
             }
         }
         return references;

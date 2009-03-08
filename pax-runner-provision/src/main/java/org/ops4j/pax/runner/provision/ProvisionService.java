@@ -17,6 +17,8 @@
  */
 package org.ops4j.pax.runner.provision;
 
+import java.util.List;
+
 /**
  * Provision service allow unified provisioning based on provisioning scheme.
  *
@@ -36,13 +38,22 @@ public interface ProvisionService
      *
      * @param spec the provisioning spec
      *
-     * @return a set of installable bundle
+     * @return a list of bundle refrences
      *
      * @throws MalformedSpecificationException
      *                          if the scheme is not available or the string could not be parsed
      * @throws ScannerException if a scanning process related exception occured
      */
-    InstallableBundles scan( String spec )
+    List<BundleReference> scan( String spec )
         throws MalformedSpecificationException, ScannerException;
+
+    /**
+     * Wraps a list of bundle refrences as installables..
+     *
+     * @param bundleReferences a list of bundle references
+     *
+     * @return a set of installables
+     */
+    InstallableBundles wrap( final List<BundleReference> bundleReferences );
 
 }

@@ -29,7 +29,6 @@ import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.commons.properties.SystemPropertyUtils;
-import org.ops4j.util.xml.XmlUtils;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.Scanner;
@@ -39,6 +38,7 @@ import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfigurationImpl;
 import org.ops4j.pax.runner.scanner.pom.ServiceConstants;
 import org.ops4j.util.property.PropertyResolver;
+import org.ops4j.util.xml.XmlUtils;
 
 /**
  * A scanner that scans maven 2 pom files.
@@ -120,10 +120,11 @@ public class PomScanner
                         final String dependencyURL = composeURL( dependency, "type" );
                         if( dependencyURL != null )
                         {
-                            references.add( new FileBundleReference( dependencyURL, defaultStartLevel, defaultStart,
-                                                                     defaultUpdate
-                            )
+                            final FileBundleReference reference = new FileBundleReference(
+                                dependencyURL, defaultStartLevel, defaultStart, defaultUpdate
                             );
+                            references.add( reference );
+                            LOGGER.info( "Installing bundle [" + reference + "]" );
                         }
                     }
                 }

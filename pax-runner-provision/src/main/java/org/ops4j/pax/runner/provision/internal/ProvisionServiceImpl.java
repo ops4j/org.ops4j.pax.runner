@@ -79,7 +79,7 @@ public class ProvisionServiceImpl
     /**
      * @see org.ops4j.pax.runner.provision.ProvisionService#scan(String)
      */
-    public InstallableBundles scan( final String spec )
+    public List<BundleReference> scan( final String spec )
         throws MalformedSpecificationException, ScannerException
     {
         LOGGER.debug( "Provision from [" + spec + "]" );
@@ -98,7 +98,7 @@ public class ProvisionServiceImpl
         {
             throw new UnsupportedSchemaException( "Unknown provisioning scheme [" + scheme + "]" );
         }
-        return wrap( scan( scanner, path ) );
+        return scan( scanner, path );
     }
 
     /**
@@ -108,7 +108,7 @@ public class ProvisionServiceImpl
      *
      * @return a set of installables
      */
-    InstallableBundles wrap( final List<BundleReference> bundleReferences )
+    public InstallableBundles wrap( final List<BundleReference> bundleReferences )
     {
         List<InstallableBundle> installables = new ArrayList<InstallableBundle>();
         if( bundleReferences != null )
@@ -161,19 +161,9 @@ public class ProvisionServiceImpl
         throws ScannerException, MalformedSpecificationException
     {
         List<BundleReference> references = scanner.scan( path );
-        if( LOGGER.isInfoEnabled() )
+        if( LOGGER.isWarnEnabled() && references == null )
         {
-            if( references != null )
-            {
-                for( BundleReference reference : references )
-                {
-                    LOGGER.info( "Installing bundle [" + reference + "]" );
-                }
-            }
-            else
-            {
-                LOGGER.warn( "Scanner did not return any bundle to install for [" + references + "]" );
-            }
+            LOGGER.warn( "Scanner did not return any bundle to install for [" + path + "]" );
         }
         return references;
     }

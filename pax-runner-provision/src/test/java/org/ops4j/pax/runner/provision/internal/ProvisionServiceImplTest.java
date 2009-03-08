@@ -27,6 +27,7 @@ import org.osgi.framework.BundleContext;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.InstallableBundles;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
+import org.ops4j.pax.runner.provision.ProvisionService;
 import org.ops4j.pax.runner.provision.Scanner;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.UnsupportedSchemaException;
@@ -74,7 +75,7 @@ public class ProvisionServiceImplTest
         replay( scanner, reference );
         ProvisionServiceImpl service = new ProvisionServiceImpl( createMock( BundleContext.class ) );
         service.addScanner( scanner, "scheme" );
-        InstallableBundles set = service.scan( "scheme:anURL" );
+        InstallableBundles set = service.wrap( service.scan( "scheme:anURL" ) );
         assertNotNull( "Returned installable bundles set is null", set );
         Iterator it = set.iterator();
         assertNotNull( "Returned iterator is null", it );
@@ -92,7 +93,7 @@ public class ProvisionServiceImplTest
         replay( scanner );
         ProvisionServiceImpl service = new ProvisionServiceImpl( createMock( BundleContext.class ) );
         service.addScanner( scanner, "scheme" );
-        InstallableBundles set = service.scan( "scheme:anURL" );
+        InstallableBundles set = service.wrap( service.scan( "scheme:anURL" ) );
         assertNotNull( "Returned installable bundles set is null", set );
         Iterator it = set.iterator();
         assertNotNull( "Returned iterator is null", it );
