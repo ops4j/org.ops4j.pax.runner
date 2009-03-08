@@ -32,6 +32,7 @@
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-property:0.2.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-property:0.5.3" level="project" />
     <orderEntry type="module" module-name="pax-runner-scanner-bundle" />
+    <orderEntry type="module" module-name="pax-runner-scanner-composite" />
     <orderEntry type="module" module-name="pax-runner-scanner-dir" />
     <orderEntry type="module" module-name="pax-runner-scanner-file" />
     <orderEntry type="module" module-name="pax-runner-scanner-obr" />

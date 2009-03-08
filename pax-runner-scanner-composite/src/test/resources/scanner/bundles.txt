@@ -1,0 +1,14 @@
+# a line comment that should be ignored
+# the following is an empty line that should be ignored
+
+# a simple bundle
+scan-bundle:file:bundle1.txt
+
+# a bundle with start level
+scan-file:file:foo.bundles@5
+
+# a bundle with start level and no start
+scan-dir:file:foo@5@nostart
+
+# a bundle with no start
+scan-pom:mvn:group/artifact@nostart
