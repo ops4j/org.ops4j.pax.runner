@@ -117,9 +117,21 @@ public class CompositeScanner
                 Integer defaultStartLevel = getDefaultStartLevel( parser, config );
                 Boolean defaultStart = getDefaultStart( parser, config );
                 Boolean defaultUpdate = getDefaultUpdate( parser, config );
+
                 Properties localPlaceholders = new Properties();
-                localPlaceholders.setProperty( "this.relative", new URL( parser.getFileURL(), "." ).toExternalForm() );
-                localPlaceholders.setProperty( "this.absolute", new URL( parser.getFileURL(), "/" ).toExternalForm() );
+                String relativeUrlProp = new URL( parser.getFileURL(), "." ).toExternalForm();
+                if( relativeUrlProp.endsWith( "/" ) )
+                {
+                    relativeUrlProp = relativeUrlProp.substring( 0, relativeUrlProp.length() - 1 );
+                }
+                localPlaceholders.setProperty( "this.relative",  relativeUrlProp);
+                String absoluteUrlProp = new URL( parser.getFileURL(), "/" ).toExternalForm();
+                if( absoluteUrlProp.endsWith( "/" ) )
+                {
+                    absoluteUrlProp = absoluteUrlProp.substring( 0, absoluteUrlProp.length() - 1 );
+                }
+                localPlaceholders.setProperty( "this.absolute", absoluteUrlProp );
+
                 String line;
                 while( ( line = bufferedReader.readLine() ) != null )
                 {
