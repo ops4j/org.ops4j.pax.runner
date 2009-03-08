@@ -21,8 +21,10 @@ import java.util.List;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
+import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
+import org.ops4j.pax.runner.provision.ProvisionSpec;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
 import org.ops4j.util.property.PropertyResolver;
@@ -30,32 +32,11 @@ import org.ops4j.util.property.PropertyResolver;
 public class BundleScannerTest
 {
 
-    @Test( expected = MalformedSpecificationException.class )
+    @Test( expected = NullArgumentException.class )
     public void scanWithNullURLSpec()
         throws ScannerException, MalformedSpecificationException
     {
-        ScannerConfiguration config = createMock( ScannerConfiguration.class );
-
-        expect( config.getStartLevel() ).andReturn( null );
-        expect( config.shouldStart() ).andReturn( null );
-        expect( config.shouldUpdate() ).andReturn( null );
-
-        replay( config );
-        List<BundleReference> references = createFileScanner( config ).scan( null );
-    }
-
-    @Test( expected = MalformedSpecificationException.class )
-    public void scanWithEmptyURLSpec()
-        throws ScannerException, MalformedSpecificationException
-    {
-        ScannerConfiguration config = createMock( ScannerConfiguration.class );
-
-        expect( config.getStartLevel() ).andReturn( null );
-        expect( config.shouldStart() ).andReturn( null );
-        expect( config.shouldUpdate() ).andReturn( null );
-
-        replay( config );
-        List<BundleReference> references = createFileScanner( config ).scan( " " );
+        new BundleScanner( createMock( PropertyResolver.class ) ).scan( null );
     }
 
     @Test
@@ -69,13 +50,15 @@ public class BundleScannerTest
         expect( config.shouldUpdate() ).andReturn( null );
 
         replay( config );
-        List<BundleReference> references = createFileScanner( config ).scan( "file:bundle.jar" );
+        List<BundleReference> references = createBundleScanner( config ).scan(
+            new ProvisionSpec( "scan-bundle:file:bundle.jar" )
+        );
         assertNotNull( "Returned bundle references list is null", references );
         assertEquals( "Nuber of bundles", 1, references.size() );
         verify( config );
     }
 
-    private BundleScanner createFileScanner( final ScannerConfiguration config )
+    private BundleScanner createBundleScanner( final ScannerConfiguration config )
     {
         return new BundleScanner( createMock( PropertyResolver.class ) )
         {

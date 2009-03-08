@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 import org.junit.Assert;
 import org.junit.Test;
+import org.ops4j.pax.runner.provision.ProvisionSpec;
 
 public abstract class ListerTest
 {
@@ -30,7 +31,7 @@ public abstract class ListerTest
         throws MalformedURLException
     {
         verifyContent(
-            createLister( ParserImpl.parseFilter( "bundle1.jar" ) ).list(),
+            createLister( ProvisionSpec.parseFilter( "bundle1.jar" ) ).list(),
             asURL( "bundle1.jar" )
         );
     }
@@ -40,7 +41,7 @@ public abstract class ListerTest
         throws MalformedURLException
     {
         verifyContent(
-            createLister( ParserImpl.parseFilter( "bundle1.*" ) ).list(),
+            createLister( ProvisionSpec.parseFilter( "bundle1.*" ) ).list(),
             asURL( "bundle1.jar" )
         );
     }
@@ -50,7 +51,7 @@ public abstract class ListerTest
         throws MalformedURLException
     {
         verifyContent(
-            createLister( ParserImpl.parseFilter( "bundle*.jar" ) ).list(),
+            createLister( ProvisionSpec.parseFilter( "bundle*.jar" ) ).list(),
             asURL( "bundle1.jar" ),
             asURL( "bundle2.jar" )
         );
@@ -61,7 +62,7 @@ public abstract class ListerTest
         throws MalformedURLException
     {
         verifyContent(
-            createLister( ParserImpl.parseFilter( "*.jar" ) ).list(),
+            createLister( ProvisionSpec.parseFilter( "*.jar" ) ).list(),
             asURL( "bundle1.jar" ),
             asURL( "bundle2.jar" )
         );
@@ -72,7 +73,7 @@ public abstract class ListerTest
         throws MalformedURLException
     {
         verifyContent(
-            createLister( ParserImpl.parseFilter( ".jar" ) ).list()
+            createLister( ProvisionSpec.parseFilter( ".jar" ) ).list()
         );
     }
 
@@ -81,7 +82,7 @@ public abstract class ListerTest
         throws MalformedURLException
     {
         verifyContent(
-            createLister( ParserImpl.parseFilter( "**" ) ).list(),
+            createLister( ProvisionSpec.parseFilter( "**" ) ).list(),
             asURL( "bundle1.jar" ),
             asURL( "bundle2.jar" ),
             asURL( "subdir/bundle3.jar" ),
@@ -94,7 +95,7 @@ public abstract class ListerTest
         throws MalformedURLException
     {
         verifyContent(
-            createLister( ParserImpl.parseFilter( "**/*.jar" ) ).list(),
+            createLister( ProvisionSpec.parseFilter( "**/*.jar" ) ).list(),
             asURL( "subdir/bundle3.jar" ),
             asURL( "subdir/subdir/bundle4.jar" )
         );
@@ -105,7 +106,7 @@ public abstract class ListerTest
         throws MalformedURLException
     {
         verifyContent(
-            createLister( ParserImpl.parseFilter( "*" ) ).list(),
+            createLister( ProvisionSpec.parseFilter( "*" ) ).list(),
             asURL( "bundle1.jar" ),
             asURL( "bundle2.jar" )
         );
@@ -116,7 +117,7 @@ public abstract class ListerTest
         throws MalformedURLException
     {
         verifyContent(
-            createLister( ParserImpl.parseFilter( "subdir/**" ) ).list(),
+            createLister( ProvisionSpec.parseFilter( "subdir/**" ) ).list(),
             asURL( "subdir/bundle3.jar" ),
             asURL( "subdir/subdir/bundle4.jar" )
         );
@@ -127,7 +128,7 @@ public abstract class ListerTest
         throws MalformedURLException
     {
         verifyContent(
-            createLister( ParserImpl.parseFilter( "subdir/*" ) ).list(),
+            createLister( ProvisionSpec.parseFilter( "subdir/*" ) ).list(),
             asURL( "subdir/bundle3.jar" )
         );
     }
@@ -137,7 +138,7 @@ public abstract class ListerTest
         throws MalformedURLException
     {
         verifyContent(
-            createLister( ParserImpl.parseFilter( "subdir" ) ).list()
+            createLister( ProvisionSpec.parseFilter( "subdir" ) ).list()
         );
     }
 
@@ -146,7 +147,7 @@ public abstract class ListerTest
         throws MalformedURLException
     {
         verifyContent(
-            createLister( ParserImpl.parseFilter( "**/subdir" ) ).list()
+            createLister( ProvisionSpec.parseFilter( "**/subdir" ) ).list()
         );
     }
 
@@ -155,7 +156,7 @@ public abstract class ListerTest
         throws MalformedURLException
     {
         verifyContent(
-            createLister( ParserImpl.parseFilter( "**/subdir/*" ) ).list(),
+            createLister( ProvisionSpec.parseFilter( "**/subdir/*" ) ).list(),
             asURL( "subdir/subdir/bundle4.jar" )
         );
     }
@@ -165,7 +166,7 @@ public abstract class ListerTest
         throws MalformedURLException
     {
         verifyContent(
-            createLister( ParserImpl.parseFilter( "**subdir/*" ) ).list(),
+            createLister( ProvisionSpec.parseFilter( "**subdir/*" ) ).list(),
             asURL( "subdir/bundle3.jar" ),
             asURL( "subdir/subdir/bundle4.jar" )
         );
@@ -176,7 +177,7 @@ public abstract class ListerTest
         throws MalformedURLException
     {
         verifyContent(
-            createLister( ParserImpl.parseFilter( "**/*" ) ).list(),
+            createLister( ProvisionSpec.parseFilter( "**/*" ) ).list(),
             asURL( "subdir/bundle3.jar" ),
             asURL( "subdir/subdir/bundle4.jar" )
         );

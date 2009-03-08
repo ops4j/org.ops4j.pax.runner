@@ -19,7 +19,6 @@ package org.ops4j.pax.runner.scanner.pom.internal;
 
 import java.io.File;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 import java.util.Properties;
 import static org.easymock.EasyMock.*;
@@ -28,6 +27,7 @@ import org.junit.Test;
 import org.ops4j.io.FileUtils;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
+import org.ops4j.pax.runner.provision.ProvisionSpec;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.scanner.FileBundleReference;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
@@ -36,80 +36,78 @@ import org.ops4j.util.property.PropertyResolver;
 public class PomScannerTest
 {
 
-    @Test( expected = MalformedSpecificationException.class )
+    @Test( expected = IllegalArgumentException.class )
     public void scanWithNullURLSpec()
         throws ScannerException, MalformedSpecificationException
     {
         new PomScanner( createMock( PropertyResolver.class ) ).scan( null );
     }
 
-    @Test( expected = MalformedSpecificationException.class )
-    public void scanWithEmptyURLSpec()
-        throws ScannerException, MalformedSpecificationException
-    {
-        new PomScanner( createMock( PropertyResolver.class ) ).scan( " " );
-    }
-
     @Test( expected = ScannerException.class )
     public void scanWithInvalidFile()
         throws ScannerException, MalformedURLException
     {
-        Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
 
-        expect( parser.getPomURL() ).andReturn( new URL( "file:inexistent" ) );
         expect( config.getCertificateCheck() ).andReturn( false );
 
-        replay( parser, config );
-        createPomScanner( config, parser ).scan( "file:inexistent" );
-        verify( parser, config );
+        replay( config );
+        createPomScanner( config ).scan( new ProvisionSpec( "scan-pom:file:inexistent" ) );
+        verify( config );
     }
 
-    public void scan( BundleReference[] expected, Integer startLevel, Boolean shouldStart, Boolean update,
+    public void scan( BundleReference[] expected, Integer startLevel, Boolean shouldStart, Boolean shouldUpdate,
                       String pomFile )
         throws Exception
     {
-        Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
         File file = FileUtils.getFileFromClasspath( pomFile );
 
-        expect( parser.getPomURL() ).andReturn( file.toURL() );
-        expect( parser.getStartLevel() ).andReturn( startLevel );
-        if( startLevel == null )
+        String spec = "scan-pom:" + file.toURL().toExternalForm();
+        if( startLevel != null )
+        {
+            spec += "@" + startLevel;
+        }
+        else
         {
             expect( config.getStartLevel() ).andReturn( null );
         }
-        expect( parser.shouldStart() ).andReturn( shouldStart );
-        if( shouldStart == null )
+        if( shouldStart != null && !shouldStart )
+        {
+            spec += "@nostart";
+        }
+        else
         {
             expect( config.shouldStart() ).andReturn( null );
         }
-        expect( parser.shouldUpdate() ).andReturn( update );
-        if( update == null )
+        if( shouldUpdate != null )
+        {
+            spec += "@update";
+        }
+        else
         {
             expect( config.shouldUpdate() ).andReturn( null );
         }
         expect( config.getCertificateCheck() ).andReturn( false );
 
-        replay( parser, config );
-        List<BundleReference> references = createPomScanner( config, parser ).scan( file.toURL().toExternalForm() );
+        replay( config );
+        List<BundleReference> references = createPomScanner( config ).scan( new ProvisionSpec( spec ) );
         assertNotNull( "Returned bundle references list is null", references );
         assertArrayEquals( "Bundles", expected, references.toArray() );
-        verify( parser, config );
+        verify( config );
     }
 
     @Test
     public void scanWithValidPomAndNoOptions()
         throws Exception
     {
-        BundleReference[] expected = new BundleReference[]
-            {
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/main-artifact/0.1.0-SNAPSHOT", null, null, null ),
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/first-dependency/0.1.0/jar", null, null, null ),
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/second-dependency", null, null, null ),
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/third-dependency/0.3", null, null, null ),
-                new FileBundleReference( "mvn:org.ops4j.pax.runner/forth-dependency/0.3", null, null, null )
-            };
+        BundleReference[] expected = new BundleReference[]{
+            new FileBundleReference( "mvn:org.ops4j.pax.runner/main-artifact/0.1.0-SNAPSHOT", null, null, null ),
+            new FileBundleReference( "mvn:org.ops4j.pax.runner/first-dependency/0.1.0/jar", null, null, null ),
+            new FileBundleReference( "mvn:org.ops4j.pax.runner/second-dependency", null, null, null ),
+            new FileBundleReference( "mvn:org.ops4j.pax.runner/third-dependency/0.3", null, null, null ),
+            new FileBundleReference( "mvn:org.ops4j.pax.runner/forth-dependency/0.3", null, null, null )
+        };
         scan( expected, null, null, null, "scanner/pom.xml" );
     }
 
@@ -238,7 +236,7 @@ public class PomScannerTest
         scan( expected, null, null, null, "scanner/pomWithPropertiesInDependency.xml" );
     }
 
-    private PomScanner createPomScanner( final ScannerConfiguration config, final Parser parser )
+    private PomScanner createPomScanner( final ScannerConfiguration config )
     {
         return new PomScanner( createMock( PropertyResolver.class ) )
         {
@@ -248,12 +246,6 @@ public class PomScannerTest
                 return config;
             }
 
-            @Override
-            Parser createParser( final String urlSpec )
-                throws MalformedSpecificationException
-            {
-                return parser;
-            }
         };
     }
 

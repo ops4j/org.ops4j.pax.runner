@@ -36,15 +36,15 @@ public interface Scanner
     /**
      * Based on the path the scanner should return a list of bundles references for bundles that should be installed.
      *
-     * @param path scanner specif provisioning path.
+     * @param provisionSpec provisioning specification
      *
      * @return a list of bundle references
      *
-     * @throws ScannerException if an exception eccured durring scanning
+     * @throws ScannerException - If an exception eccured during scanning
      * @throws MalformedSpecificationException
-     *                          if the path is malformed
+     *                          - If the path is malformed
      */
-    List<BundleReference> scan( String path )
+    List<BundleReference> scan( ProvisionSpec provisionSpec )
         throws MalformedSpecificationException, ScannerException;
 
 }

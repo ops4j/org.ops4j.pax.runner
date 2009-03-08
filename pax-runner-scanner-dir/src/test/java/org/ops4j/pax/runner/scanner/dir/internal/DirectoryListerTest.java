@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import org.junit.Before;
 import org.junit.Test;
 import org.ops4j.io.FileUtils;
+import org.ops4j.pax.runner.provision.ProvisionSpec;
 
 public class DirectoryListerTest
     extends ListerTest
@@ -37,7 +38,7 @@ public class DirectoryListerTest
     public void cosntructorWithNullDir()
         throws MalformedURLException
     {
-        new DirectoryLister( null, ParserImpl.parseFilter( "*" ) ).list();
+        new DirectoryLister( null, ProvisionSpec.parseFilter( "*" ) ).list();
     }
 
     @Test( expected = IllegalArgumentException.class )

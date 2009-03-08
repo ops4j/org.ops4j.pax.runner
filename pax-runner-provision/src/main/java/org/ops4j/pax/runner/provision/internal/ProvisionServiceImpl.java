@@ -31,9 +31,9 @@ import org.ops4j.pax.runner.provision.InstallableBundle;
 import org.ops4j.pax.runner.provision.InstallableBundles;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionService;
+import org.ops4j.pax.runner.provision.ProvisionSpec;
 import org.ops4j.pax.runner.provision.Scanner;
 import org.ops4j.pax.runner.provision.ScannerException;
-import org.ops4j.pax.runner.provision.ServiceConstants;
 import org.ops4j.pax.runner.provision.UnsupportedSchemaException;
 
 /**
@@ -83,22 +83,13 @@ public class ProvisionServiceImpl
         throws MalformedSpecificationException, ScannerException
     {
         LOGGER.debug( "Provision from [" + spec + "]" );
-        if( spec == null || spec.trim().length() == 0 )
-        {
-            throw new MalformedSpecificationException( "Specification cannot be null or empty" );
-        }
-        if( !spec.contains( ServiceConstants.SEPARATOR_SCHEME ) )
-        {
-            throw new UnsupportedSchemaException( "Provisioning scheme is not specified" );
-        }
-        String scheme = spec.substring( 0, spec.indexOf( ServiceConstants.SEPARATOR_SCHEME ) );
-        String path = spec.substring( spec.indexOf( ServiceConstants.SEPARATOR_SCHEME ) + 1 );
-        Scanner scanner = m_scanners.get( scheme );
+        final ProvisionSpec provisionSpec = new ProvisionSpec( spec );
+        Scanner scanner = m_scanners.get( provisionSpec.getScheme() );
         if( scanner == null )
         {
-            throw new UnsupportedSchemaException( "Unknown provisioning scheme [" + scheme + "]" );
+            throw new UnsupportedSchemaException( "Unknown provisioning scheme [" + provisionSpec.getScheme() + "]" );
         }
-        return scan( scanner, path );
+        return scan( scanner, provisionSpec );
     }
 
     /**
@@ -149,7 +140,7 @@ public class ProvisionServiceImpl
      * Uses the scanner to scan the bundles.
      *
      * @param scanner the scanner to use
-     * @param path    the path part of the specification
+     * @param spec    the path part of the specification
      *
      * @return A List of bundle references found by the scanner.
      *
@@ -157,13 +148,13 @@ public class ProvisionServiceImpl
      * @throws MalformedSpecificationException
      *                          TODO
      */
-    private List<BundleReference> scan( final Scanner scanner, final String path )
+    private List<BundleReference> scan( final Scanner scanner, final ProvisionSpec spec )
         throws ScannerException, MalformedSpecificationException
     {
-        List<BundleReference> references = scanner.scan( path );
+        List<BundleReference> references = scanner.scan( spec );
         if( LOGGER.isWarnEnabled() && references == null )
         {
-            LOGGER.warn( "Scanner did not return any bundle to install for [" + path + "]" );
+            LOGGER.warn( "Scanner did not return any bundle to install for [" + spec + "]" );
         }
         return references;
     }

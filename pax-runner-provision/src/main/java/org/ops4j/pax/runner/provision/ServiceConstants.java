@@ -18,6 +18,10 @@ public interface ServiceConstants
      */
     static String SEPARATOR_OPTION = "@";
     /**
+     * Separator for filter.
+     */
+    static String SEPARATOR_FILTER = "!/";    
+    /**
      * Start option.
      */
     static String OPTION_NO_START = "nostart";

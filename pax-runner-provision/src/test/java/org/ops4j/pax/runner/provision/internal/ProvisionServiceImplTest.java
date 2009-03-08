@@ -27,7 +27,7 @@ import org.osgi.framework.BundleContext;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.InstallableBundles;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
-import org.ops4j.pax.runner.provision.ProvisionService;
+import org.ops4j.pax.runner.provision.ProvisionSpec;
 import org.ops4j.pax.runner.provision.Scanner;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.UnsupportedSchemaException;
@@ -60,7 +60,7 @@ public class ProvisionServiceImplTest
     public void scanWithUnknownScheme()
         throws MalformedSpecificationException, ScannerException
     {
-        new ProvisionServiceImpl( createMock( BundleContext.class ) ).scan( "noscheme:" );
+        new ProvisionServiceImpl( createMock( BundleContext.class ) ).scan( "noscheme:file:foo" );
     }
 
     @Test
@@ -71,7 +71,7 @@ public class ProvisionServiceImplTest
         BundleReference reference = createMock( BundleReference.class );
         List<BundleReference> references = new ArrayList<BundleReference>();
         references.add( reference );
-        expect( scanner.scan( "anURL" ) ).andReturn( references );
+        expect( scanner.scan( (ProvisionSpec) anyObject() ) ).andReturn( references );
         replay( scanner, reference );
         ProvisionServiceImpl service = new ProvisionServiceImpl( createMock( BundleContext.class ) );
         service.addScanner( scanner, "scheme" );
@@ -89,7 +89,7 @@ public class ProvisionServiceImplTest
         throws MalformedSpecificationException, ScannerException
     {
         Scanner scanner = createMock( Scanner.class );
-        expect( scanner.scan( "anURL" ) ).andReturn( null );
+        expect( scanner.scan( (ProvisionSpec) anyObject() ) ).andReturn( null );
         replay( scanner );
         ProvisionServiceImpl service = new ProvisionServiceImpl( createMock( BundleContext.class ) );
         service.addScanner( scanner, "scheme" );

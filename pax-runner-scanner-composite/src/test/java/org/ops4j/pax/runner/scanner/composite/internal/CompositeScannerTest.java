@@ -19,7 +19,6 @@ package org.ops4j.pax.runner.scanner.composite.internal;
 
 import java.io.File;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -27,9 +26,11 @@ import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.ops4j.io.FileUtils;
+import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionService;
+import org.ops4j.pax.runner.provision.ProvisionSpec;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
 import org.ops4j.util.property.PropertyResolver;
@@ -43,7 +44,7 @@ import org.ops4j.util.property.PropertyResolver;
 public class CompositeScannerTest
 {
 
-    @Test( expected = MalformedSpecificationException.class )
+    @Test( expected = NullArgumentException.class )
     public void scanWithNullURLSpec()
         throws ScannerException, MalformedSpecificationException
     {
@@ -53,31 +54,16 @@ public class CompositeScannerTest
         ).scan( null );
     }
 
-    @Test( expected = MalformedSpecificationException.class )
-    public void scanWithEmptyURLSpec()
-        throws ScannerException, MalformedSpecificationException
-    {
-        new CompositeScanner(
-            createMock( PropertyResolver.class ),
-            createMock( ProvisionService.class )
-        ).scan( " " );
-    }
-
     @Test
     public void scan()
         throws Exception
     {
-        Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
         ProvisionService provisionService = createMock( ProvisionService.class );
         File file = FileUtils.getFileFromClasspath( "scanner/bundles.txt" );
 
-        expect( parser.getFileURL() ).andReturn( file.toURL() ).anyTimes();
-        expect( parser.getStartLevel() ).andReturn( null );
         expect( config.getStartLevel() ).andReturn( null );
-        expect( parser.shouldStart() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
-        expect( parser.shouldUpdate() ).andReturn( null );
         expect( config.shouldUpdate() ).andReturn( null );
         expect( config.getCertificateCheck() ).andReturn( false );
         List<BundleReference> refs = new ArrayList<BundleReference>();
@@ -87,76 +73,69 @@ public class CompositeScannerTest
         expect( provisionService.scan( "scan-dir:file:foo@5@nostart" ) ).andReturn( refs );
         expect( provisionService.scan( "scan-pom:mvn:group/artifact@nostart" ) ).andReturn( refs );
 
-        replay( parser, config, provisionService );
-        List<BundleReference> references = createScanner( config, parser, provisionService )
-            .scan( file.toURL().toExternalForm() );
+        replay( config, provisionService );
+        List<BundleReference> references = createScanner( config, provisionService ).scan(
+            new ProvisionSpec( "scan-composite:" + file.toURL().toExternalForm() )
+        );
         assertNotNull( "Returned bundle references list is null", references );
         assertEquals( "Nuber of bundles", 4, references.size() );
-        verify( parser, config, provisionService );
+        verify( config, provisionService );
     }
 
     @Test( expected = ScannerException.class )
     public void scanWithInvalidFile()
         throws ScannerException, MalformedURLException
     {
-        Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
         ProvisionService provisionService = createMock( ProvisionService.class );
 
-        expect( parser.getFileURL() ).andReturn( new URL( "file:inexistent" ) );
         expect( config.getCertificateCheck() ).andReturn( false );
 
-        replay( parser, config, provisionService );
-        createScanner( config, parser, provisionService ).scan( "file:inexistent" );
-        verify( parser, config, provisionService );
+        replay( config, provisionService );
+        createScanner( config, provisionService ).scan(
+            new ProvisionSpec( "scan-composite:file:inexistent" )
+        );
+        verify( config, provisionService );
     }
 
     @Test
     public void scanWithEmptyFile()
         throws Exception
     {
-        Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
         ProvisionService provisionService = createMock( ProvisionService.class );
         File file = FileUtils.getFileFromClasspath( "scanner/empty.txt" );
 
-        expect( parser.getFileURL() ).andReturn( file.toURL() ).anyTimes();
-        expect( parser.getStartLevel() ).andReturn( 10 );
-        expect( parser.shouldStart() ).andReturn( true );
-        expect( parser.shouldUpdate() ).andReturn( true );
+        expect( config.shouldStart() ).andReturn( true );
         expect( config.getCertificateCheck() ).andReturn( false );
 
-        replay( parser, config, provisionService );
-        List<BundleReference> references = createScanner( config, parser, provisionService )
-            .scan( file.toURL().toExternalForm() );
+        replay( config, provisionService );
+        List<BundleReference> references = createScanner( config, provisionService ).scan(
+            new ProvisionSpec( "scan-composite:" + file.toURL().toExternalForm() + "@10@update" )
+        );
         assertNotNull( "Returned bundle references list is null", references );
         assertEquals( "Nuber of bundles", 0, references.size() );
-        verify( parser, config, provisionService );
+        verify( config, provisionService );
     }
 
     @Test
     public void scanValidFileWithProperties()
         throws Exception
     {
-        Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
         ProvisionService provisionService = createMock( ProvisionService.class );
         final Recorder recorder = createMock( Recorder.class );
         File file = FileUtils.getFileFromClasspath( "scanner/properties.txt" );
 
-        expect( parser.getFileURL() ).andReturn( file.toURL() ).anyTimes();
-        expect( parser.getStartLevel() ).andReturn( null );
         expect( config.getStartLevel() ).andReturn( null );
-        expect( parser.shouldStart() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
-        expect( parser.shouldUpdate() ).andReturn( null );
         expect( config.shouldUpdate() ).andReturn( null );
         expect( config.getCertificateCheck() ).andReturn( false );
 
         recorder.record( "prop.1=value.1" );
         recorder.record( "prop.2=value.2" );
 
-        replay( parser, config, recorder, provisionService );
+        replay( config, recorder, provisionService );
         Properties sysPropsBackup = System.getProperties();
         try
         {
@@ -173,10 +152,11 @@ public class CompositeScannerTest
 
                 }
             );
-            List<BundleReference> references = createScanner( config, parser, provisionService )
-                .scan( file.toURL().toExternalForm() );
+            List<BundleReference> references = createScanner( config, provisionService ).scan(
+                new ProvisionSpec( "scan-composite:" + file.toURL().toExternalForm() )
+            );
             assertNotNull( "Returned bundle references list is null", references );
-            verify( parser, config, recorder, provisionService );
+            verify( config, recorder, provisionService );
         }
         finally
         {
@@ -187,7 +167,6 @@ public class CompositeScannerTest
     }
 
     private CompositeScanner createScanner( final ScannerConfiguration config,
-                                            final Parser parser,
                                             final ProvisionService provisionService )
     {
         return new CompositeScanner(
@@ -201,12 +180,6 @@ public class CompositeScannerTest
                 return config;
             }
 
-            @Override
-            Parser createParser( final String urlSpec )
-                throws MalformedSpecificationException
-            {
-                return parser;
-            }
         };
     }
 

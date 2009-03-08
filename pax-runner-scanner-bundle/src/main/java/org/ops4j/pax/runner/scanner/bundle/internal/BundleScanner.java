@@ -25,6 +25,7 @@ import org.apache.commons.logging.LogFactory;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
+import org.ops4j.pax.runner.provision.ProvisionSpec;
 import org.ops4j.pax.runner.provision.Scanner;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.scanner.FileBundleReference;
@@ -65,19 +66,20 @@ public class BundleScanner
 
     /**
      * Reads the bundles from the file specified by the urlSpec.
-     *
-     * @param urlSpec url spec to the text file containing the bundle.
+     * {@inheritDoc}
      */
-    public List<BundleReference> scan( final String urlSpec )
+    public List<BundleReference> scan( final ProvisionSpec provisionSpec )
         throws MalformedSpecificationException, ScannerException
     {
-        LOGGER.debug( "Scanning [" + urlSpec + "]" );
+        NullArgumentException.validateNotNull( provisionSpec, "Provision spec" );
+
+        LOGGER.debug( "Scanning [" + provisionSpec.getPath() + "]" );
         final List<BundleReference> references = new ArrayList<BundleReference>();
         final ScannerConfiguration config = createConfiguration();
         try
         {
             final FileBundleReference reference = new FileBundleReference(
-                urlSpec,
+                provisionSpec.getPath(),
                 config.getStartLevel(),
                 config.shouldStart(),
                 config.shouldUpdate()

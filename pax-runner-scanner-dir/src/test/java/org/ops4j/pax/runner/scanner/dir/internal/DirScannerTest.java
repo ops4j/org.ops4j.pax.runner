@@ -21,14 +21,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.util.List;
-import java.util.regex.Pattern;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
-import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.ops4j.io.FileUtils;
+import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
+import org.ops4j.pax.runner.provision.ProvisionSpec;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
 import org.ops4j.util.property.PropertyResolver;
@@ -36,171 +37,131 @@ import org.ops4j.util.property.PropertyResolver;
 public class DirScannerTest
 {
 
-    private Pattern m_filter;
-
-    @Before
-    public void setUp()
-        throws MalformedSpecificationException
-    {
-        m_filter = ParserImpl.parseFilter( "*.jar" );
-    }
-
-    @Test( expected = MalformedSpecificationException.class )
+    @Test( expected = NullArgumentException.class )
     public void scanWithNullURLSpec()
         throws ScannerException, MalformedSpecificationException
     {
         new DirScanner( createMock( PropertyResolver.class ) ).scan( null );
     }
 
-    @Test( expected = MalformedSpecificationException.class )
-    public void scanWithEmptyURLSpec()
-        throws ScannerException, MalformedSpecificationException
-    {
-        new DirScanner( createMock( PropertyResolver.class ) ).scan( " " );
-    }
-
     @Test
     public void scanDir()
         throws ScannerException, MalformedURLException, FileNotFoundException
     {
-        Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
         File file = FileUtils.getFileFromClasspath( "dirscanner" );
 
-        expect( parser.getURL() ).andReturn( file.getAbsolutePath() );
-        expect( parser.getFilter() ).andReturn( m_filter );
-        expect( parser.getStartLevel() ).andReturn( null );
         expect( config.getStartLevel() ).andReturn( null );
-        expect( parser.shouldStart() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
-        expect( parser.shouldUpdate() ).andReturn( null );
         expect( config.shouldUpdate() ).andReturn( null );
 
-        replay( parser, config );
-        List<BundleReference> references = createScanner( config, parser ).scan( file.getAbsolutePath() );
+        replay( config );
+        List<BundleReference> references = createScanner( config ).scan(
+            new ProvisionSpec( "scan-dir:" + file.getAbsolutePath() + "!/*.jar" )
+        );
         assertNotNull( "Returned bundle references list is null", references );
         assertEquals( "Number of bundles", 2, references.size() );
-        verify( parser, config );
+        verify( config );
     }
 
     @Test
     public void scanDirFromFileURL()
         throws ScannerException, MalformedURLException, FileNotFoundException
     {
-        Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
         File file = FileUtils.getFileFromClasspath( "dirscanner" );
 
-        expect( parser.getURL() ).andReturn( file.toURL().toExternalForm() );
-        expect( parser.getFilter() ).andReturn( m_filter );
-        expect( parser.getStartLevel() ).andReturn( null );
         expect( config.getStartLevel() ).andReturn( null );
-        expect( parser.shouldStart() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
-        expect( parser.shouldUpdate() ).andReturn( null );
         expect( config.shouldUpdate() ).andReturn( null );
 
-        replay( parser, config );
-        List<BundleReference> references = createScanner( config, parser ).scan( file.toURL().toExternalForm() );
+        replay( config );
+        List<BundleReference> references = createScanner( config ).scan(
+            new ProvisionSpec( "scan-dir:" + file.toURL().toExternalForm() + "!/*.jar" )
+        );
         assertNotNull( "Returned bundle references list is null", references );
         assertEquals( "Number of bundles", 2, references.size() );
-        verify( parser, config );
+        verify( config );
     }
 
     @Test( expected = MalformedSpecificationException.class )
     public void scanDirFromHttpURL()
         throws ScannerException, MalformedURLException
     {
-        Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
 
-        expect( parser.getURL() ).andReturn( "http:myserver/mydir" );
-        expect( parser.getFilter() ).andReturn( m_filter );
-        expect( parser.getStartLevel() ).andReturn( null );
         expect( config.getStartLevel() ).andReturn( null );
-        expect( parser.shouldStart() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
-        expect( parser.shouldUpdate() ).andReturn( null );
         expect( config.shouldUpdate() ).andReturn( null );
 
-        replay( parser, config );
-        createScanner( config, parser ).scan( "http:myserver/myfile" );
-        verify( parser, config );
+        replay( config );
+        createScanner( config ).scan(
+            new ProvisionSpec( "scan-dir:http:myserver/myfile!/*.jar" )
+        );
+        verify( config );
     }
 
     @Test
     public void scanZip()
         throws ScannerException, MalformedURLException, FileNotFoundException
     {
-        Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
         File file = FileUtils.getFileFromClasspath( "dirscanner.zip" );
 
-        expect( parser.getURL() ).andReturn( file.getAbsolutePath() );
-        expect( parser.getFilter() ).andReturn( m_filter );
-        expect( parser.getStartLevel() ).andReturn( null );
         expect( config.getStartLevel() ).andReturn( null );
-        expect( parser.shouldStart() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
-        expect( parser.shouldUpdate() ).andReturn( null );
         expect( config.shouldUpdate() ).andReturn( null );
 
-        replay( parser, config );
-        List<BundleReference> references = createScanner( config, parser ).scan( file.getAbsolutePath() );
+        replay( config );
+        List<BundleReference> references = createScanner( config ).scan(
+            new ProvisionSpec( "scan-dir:" + file.getAbsolutePath() + "!/*.jar" )
+        );
         assertNotNull( "Returned bundle references list is null", references );
         assertEquals( "Number of bundles", 2, references.size() );
-        verify( parser, config );
+        verify( config );
     }
 
     @Test
     public void scanZipFromFileURL()
         throws ScannerException, MalformedURLException, FileNotFoundException
     {
-        Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
         File file = FileUtils.getFileFromClasspath( "dirscanner.zip" );
 
-        expect( parser.getURL() ).andReturn( file.toURL().toExternalForm() );
-        expect( parser.getFilter() ).andReturn( m_filter );
-        expect( parser.getStartLevel() ).andReturn( null );
         expect( config.getStartLevel() ).andReturn( null );
-        expect( parser.shouldStart() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
-        expect( parser.shouldUpdate() ).andReturn( null );
         expect( config.shouldUpdate() ).andReturn( null );
 
-        replay( parser, config );
-        List<BundleReference> references = createScanner( config, parser ).scan( file.toURL().toExternalForm() );
+        replay( config );
+        List<BundleReference> references = createScanner( config ).scan(
+            new ProvisionSpec( "scan-dir:" + file.toURL().toExternalForm() + "!/*.jar" )
+        );
         assertNotNull( "Returned bundle references list is null", references );
         assertEquals( "Number of bundles", 2, references.size() );
-        verify( parser, config );
+        verify( config );
     }
 
-    // TODO resolve test
-    //@Test
+    @Test
+    @Ignore
     public void scanZipFromHttpURL()
         throws ScannerException, MalformedURLException
     {
-        Parser parser = createMock( Parser.class );
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
 
-        expect( parser.getURL() ).andReturn( "http:myserver/my.zip" );
-        expect( parser.getFilter() ).andReturn( m_filter );
-        expect( parser.getStartLevel() ).andReturn( null );
         expect( config.getStartLevel() ).andReturn( null );
-        expect( parser.shouldStart() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
-        expect( parser.shouldUpdate() ).andReturn( null );
         expect( config.shouldUpdate() ).andReturn( null );
 
-        replay( parser, config );
-        List<BundleReference> references = createScanner( config, parser ).scan( "http:myserver/my.zip" );
+        replay( config );
+        List<BundleReference> references = createScanner( config ).scan(
+            new ProvisionSpec( "scan-dir:http:myserver/my.zip!/*.jar" )
+        );
         assertNotNull( "Returned bundle references list is null", references );
         assertEquals( "Number of bundles", 2, references.size() );
-        verify( parser, config );
+        verify( config );
     }
 
-    private DirScanner createScanner( final ScannerConfiguration config, final Parser parser )
+    private DirScanner createScanner( final ScannerConfiguration config )
     {
         return new DirScanner( createMock( PropertyResolver.class ) )
         {
@@ -208,13 +169,6 @@ public class DirScannerTest
             ScannerConfiguration createConfiguration()
             {
                 return config;
-            }
-
-            @Override
-            Parser createParser( final String urlSpec )
-                throws MalformedSpecificationException
-            {
-                return parser;
             }
         };
     }

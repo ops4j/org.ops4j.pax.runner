@@ -35,9 +35,4 @@ public interface ServiceConstants
      */
     static final String SCHEMA = "scan-dir";
 
-    /**
-     * Separator for filter.
-     */
-    String SEPARATOR_FILTER = "!/";
-
 }

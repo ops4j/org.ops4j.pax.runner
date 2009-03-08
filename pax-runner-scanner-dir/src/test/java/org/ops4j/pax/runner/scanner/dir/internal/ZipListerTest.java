@@ -9,6 +9,7 @@ import java.util.zip.ZipFile;
 import org.junit.Before;
 import org.junit.Test;
 import org.ops4j.io.FileUtils;
+import org.ops4j.pax.runner.provision.ProvisionSpec;
 
 public class ZipListerTest extends ListerTest
 {
@@ -40,14 +41,14 @@ public class ZipListerTest extends ListerTest
     public void cosntructorWithNullBaseURL()
         throws MalformedURLException
     {
-        new ZipLister( null, m_zip.entries(), ParserImpl.parseFilter( "*" ) ).list();
+        new ZipLister( null, m_zip.entries(), ProvisionSpec.parseFilter( "*" ) ).list();
     }
 
     @Test( expected = IllegalArgumentException.class )
     public void cosntructorWithNullZip()
         throws MalformedURLException
     {
-        new ZipLister( m_baseURL, null, ParserImpl.parseFilter( "*" ) ).list();
+        new ZipLister( m_baseURL, null, ProvisionSpec.parseFilter( "*" ) ).list();
     }
 
     @Test( expected = IllegalArgumentException.class )

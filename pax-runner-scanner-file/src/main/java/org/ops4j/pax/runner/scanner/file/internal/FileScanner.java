@@ -31,6 +31,7 @@ import org.ops4j.net.URLUtils;
 import org.ops4j.pax.runner.commons.properties.SystemPropertyUtils;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
+import org.ops4j.pax.runner.provision.ProvisionSpec;
 import org.ops4j.pax.runner.provision.Scanner;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.scanner.FileBundleReference;
@@ -84,15 +85,15 @@ public class FileScanner
 
     /**
      * Reads the bundles from the file specified by the urlSpec.
-     *
-     * @param urlSpec url spec to the text file containing the bundle.
+     * {@inheritDoc}
      */
-    public List<BundleReference> scan( final String urlSpec )
+    public List<BundleReference> scan( final ProvisionSpec provisionSpec )
         throws MalformedSpecificationException, ScannerException
     {
-        LOGGER.debug( "Scanning [" + urlSpec + "]" );
+        NullArgumentException.validateNotNull( provisionSpec, "Provision spec" );
+        
+        LOGGER.debug( "Scanning [" + provisionSpec.getPath() + "]" );
         List<BundleReference> references = new ArrayList<BundleReference>();
-        Parser parser = createParser( urlSpec );
         ScannerConfiguration config = createConfiguration();
         BufferedReader bufferedReader = null;
         try
@@ -102,14 +103,14 @@ public class FileScanner
                 bufferedReader = new BufferedReader(
                     new InputStreamReader(
                         URLUtils.prepareInputStream(
-                            parser.getFileURL(),
+                            provisionSpec.getPathAsUrl(),
                             !config.getCertificateCheck()
                         )
                     )
                 );
-                Integer defaultStartLevel = getDefaultStartLevel( parser, config );
-                Boolean defaultStart = getDefaultStart( parser, config );
-                Boolean defaultUpdate = getDefaultUpdate( parser, config );
+                Integer defaultStartLevel = getDefaultStartLevel( provisionSpec, config );
+                Boolean defaultStart = getDefaultStart( provisionSpec, config );
+                Boolean defaultUpdate = getDefaultUpdate( provisionSpec, config );
                 String line;
                 while( ( line = bufferedReader.readLine() ) != null )
                 {
@@ -155,14 +156,14 @@ public class FileScanner
     /**
      * Returns the default start level by first looking at the parser and if not set fallback to configuration.
      *
-     * @param parser a parser
-     * @param config a configuration
+     * @param provisionSpec provision spec
+     * @param config        a configuration
      *
      * @return default start level or null if nos set.
      */
-    private Integer getDefaultStartLevel( Parser parser, ScannerConfiguration config )
+    private Integer getDefaultStartLevel( ProvisionSpec provisionSpec, ScannerConfiguration config )
     {
-        Integer startLevel = parser.getStartLevel();
+        Integer startLevel = provisionSpec.getStartLevel();
         if( startLevel == null )
         {
             startLevel = config.getStartLevel();
@@ -173,14 +174,14 @@ public class FileScanner
     /**
      * Returns the default start by first looking at the parser and if not set fallback to configuration.
      *
-     * @param parser a parser
-     * @param config a configuration
+     * @param provisionSpec provision spec
+     * @param config        a configuration
      *
      * @return default start level or null if nos set.
      */
-    private Boolean getDefaultStart( final Parser parser, final ScannerConfiguration config )
+    private Boolean getDefaultStart( final ProvisionSpec provisionSpec, final ScannerConfiguration config )
     {
-        Boolean start = parser.shouldStart();
+        Boolean start = provisionSpec.shouldStart();
         if( start == null )
         {
             start = config.shouldStart();
@@ -191,14 +192,14 @@ public class FileScanner
     /**
      * Returns the default update by first looking at the parser and if not set fallback to configuration.
      *
-     * @param parser a parser
-     * @param config a configuration
+     * @param provisionSpec provision spec
+     * @param config        a configuration
      *
      * @return default update or null if nos set.
      */
-    private Boolean getDefaultUpdate( final Parser parser, final ScannerConfiguration config )
+    private Boolean getDefaultUpdate( final ProvisionSpec provisionSpec, final ScannerConfiguration config )
     {
-        Boolean update = parser.shouldUpdate();
+        Boolean update = provisionSpec.shouldUpdate();
         if( update == null )
         {
             update = config.shouldUpdate();
@@ -215,22 +216,6 @@ public class FileScanner
     {
         NullArgumentException.validateNotNull( propertyResolver, "PropertyResolver" );
         m_propertyResolver = propertyResolver;
-    }
-
-    /**
-     * Creates a parser.
-     *
-     * @param urlSpec url spec to the text file containing the bundles.
-     *
-     * @return a parser
-     *
-     * @throws org.ops4j.pax.runner.provision.MalformedSpecificationException
-     *          rethrown from parser
-     */
-    Parser createParser( final String urlSpec )
-        throws MalformedSpecificationException
-    {
-        return new ParserImpl( urlSpec );
     }
 
     /**
