@@ -16,6 +16,7 @@
 
 package org.ops4j.pax.runner.commons.properties;
 
+import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -34,6 +35,8 @@ import org.apache.commons.logging.LogFactory;
 public abstract class SystemPropertyUtils
 {
 
+    private static final Log LOGGER = LogFactory.getLog( SystemPropertyUtils.class );
+
     /**
      * Prefix for system property placeholders: "${"
      */
@@ -44,11 +47,8 @@ public abstract class SystemPropertyUtils
      */
     public static final String PLACEHOLDER_SUFFIX = "}";
 
-    private static final Log logger = LogFactory.getLog( SystemPropertyUtils.class );
-
     /**
-     * Resolve ${...} placeholders in the given text,
-     * replacing them with corresponding system property values.
+     * Resolve ${...} placeholders in the given text, replacing them with corresponding system property values.
      *
      * @param text the String to resolve
      *
@@ -57,7 +57,25 @@ public abstract class SystemPropertyUtils
      * @see #PLACEHOLDER_PREFIX
      * @see #PLACEHOLDER_SUFFIX
      */
-    public static String resolvePlaceholders( String text )
+    public static String resolvePlaceholders( final String text )
+    {
+        return resolvePlaceholders( text, new Properties() );
+    }
+
+    /**
+     * Resolve ${...} placeholders in the given text, replacing them with corresponding property values or system
+     * property values.
+     *
+     * @param text       the String to resolve
+     * @param properties properties to be searched beside system properties
+     *
+     * @return the resolved String
+     *
+     * @see #PLACEHOLDER_PREFIX
+     * @see #PLACEHOLDER_SUFFIX
+     */
+    public static String resolvePlaceholders( final String text,
+                                              final Properties properties )
     {
         StringBuffer buf = new StringBuffer( text );
 
@@ -71,11 +89,15 @@ public abstract class SystemPropertyUtils
                 int nextIndex = endIndex + PLACEHOLDER_SUFFIX.length();
                 try
                 {
-                    String propVal = System.getProperty( placeholder );
+                    String propVal = properties.getProperty( placeholder );
                     if( propVal == null )
                     {
-                        // Fall back to searching the system environment.
-                        propVal = System.getenv( placeholder );
+                        propVal = System.getProperty( placeholder );
+                        if( propVal == null )
+                        {
+                            // Fall back to searching the system environment.
+                            propVal = System.getenv( placeholder );
+                        }
                     }
                     if( propVal != null )
                     {
@@ -84,9 +106,9 @@ public abstract class SystemPropertyUtils
                     }
                     else
                     {
-                        if( logger.isWarnEnabled() )
+                        if( LOGGER.isWarnEnabled() )
                         {
-                            logger.warn( "Could not resolve placeholder '" + placeholder + "' in [" + text +
+                            LOGGER.warn( "Could not resolve placeholder '" + placeholder + "' in [" + text +
                                          "] as system property: neither system property nor environment variable found"
                             );
                         }
@@ -94,9 +116,9 @@ public abstract class SystemPropertyUtils
                 }
                 catch( Throwable ex )
                 {
-                    if( logger.isWarnEnabled() )
+                    if( LOGGER.isWarnEnabled() )
                     {
-                        logger.warn( "Could not resolve placeholder '" + placeholder + "' in [" + text +
+                        LOGGER.warn( "Could not resolve placeholder '" + placeholder + "' in [" + text +
                                      "] as system property: " + ex
                         );
                     }
