@@ -33,6 +33,8 @@
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-property:0.5.3" level="project" />
     <orderEntry type="module" module-name="pax-runner-scanner-bundle" />
     <orderEntry type="module" module-name="pax-runner-scanner-composite" />
+    <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-net:0.5.3" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-monitors:0.5.3" level="project" />
     <orderEntry type="module" module-name="pax-runner-scanner-dir" />
     <orderEntry type="module" module-name="pax-runner-scanner-file" />
     <orderEntry type="module" module-name="pax-runner-scanner-obr" />
@@ -43,10 +45,8 @@
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-collections:0.5.3" level="project" />
     <orderEntry type="module" module-name="pax-runner-platform" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-io:0.5.3" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-monitors:0.5.3" level="project" />
     <orderEntry type="module" module-name="pax-runner-platform-concierge" />
     <orderEntry type="module" module-name="pax-runner-platform-equinox" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-net:0.5.3" level="project" />
     <orderEntry type="module" module-name="pax-runner-platform-felix" />
     <orderEntry type="module" module-name="pax-runner-platform-knopflerfish" />
   </component>

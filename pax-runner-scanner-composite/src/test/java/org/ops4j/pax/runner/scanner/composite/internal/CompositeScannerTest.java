@@ -72,13 +72,14 @@ public class CompositeScannerTest
         ProvisionService provisionService = createMock( ProvisionService.class );
         File file = FileUtils.getFileFromClasspath( "scanner/bundles.txt" );
 
-        expect( parser.getFileURL() ).andReturn( file.toURL() );
+        expect( parser.getFileURL() ).andReturn( file.toURL() ).anyTimes();
         expect( parser.getStartLevel() ).andReturn( null );
         expect( config.getStartLevel() ).andReturn( null );
         expect( parser.shouldStart() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
         expect( parser.shouldUpdate() ).andReturn( null );
         expect( config.shouldUpdate() ).andReturn( null );
+        expect( config.getCertificateCheck() ).andReturn( false );
         List<BundleReference> refs = new ArrayList<BundleReference>();
         refs.add( createMock( BundleReference.class ) );
         expect( provisionService.scan( "scan-bundle:file:bundle1.txt" ) ).andReturn( refs );
@@ -103,6 +104,7 @@ public class CompositeScannerTest
         ProvisionService provisionService = createMock( ProvisionService.class );
 
         expect( parser.getFileURL() ).andReturn( new URL( "file:inexistent" ) );
+        expect( config.getCertificateCheck() ).andReturn( false );
 
         replay( parser, config, provisionService );
         createScanner( config, parser, provisionService ).scan( "file:inexistent" );
@@ -118,10 +120,11 @@ public class CompositeScannerTest
         ProvisionService provisionService = createMock( ProvisionService.class );
         File file = FileUtils.getFileFromClasspath( "scanner/empty.txt" );
 
-        expect( parser.getFileURL() ).andReturn( file.toURL() );
+        expect( parser.getFileURL() ).andReturn( file.toURL() ).anyTimes();
         expect( parser.getStartLevel() ).andReturn( 10 );
         expect( parser.shouldStart() ).andReturn( true );
         expect( parser.shouldUpdate() ).andReturn( true );
+        expect( config.getCertificateCheck() ).andReturn( false );
 
         replay( parser, config, provisionService );
         List<BundleReference> references = createScanner( config, parser, provisionService )
@@ -141,13 +144,14 @@ public class CompositeScannerTest
         final Recorder recorder = createMock( Recorder.class );
         File file = FileUtils.getFileFromClasspath( "scanner/properties.txt" );
 
-        expect( parser.getFileURL() ).andReturn( file.toURL() );
+        expect( parser.getFileURL() ).andReturn( file.toURL() ).anyTimes();
         expect( parser.getStartLevel() ).andReturn( null );
         expect( config.getStartLevel() ).andReturn( null );
         expect( parser.shouldStart() ).andReturn( null );
         expect( config.shouldStart() ).andReturn( null );
         expect( parser.shouldUpdate() ).andReturn( null );
         expect( config.shouldUpdate() ).andReturn( null );
+        expect( config.getCertificateCheck() ).andReturn( false );
 
         recorder.record( "prop.1=value.1" );
         recorder.record( "prop.2=value.2" );

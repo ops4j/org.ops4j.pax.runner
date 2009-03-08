@@ -20,13 +20,16 @@ package org.ops4j.pax.runner.scanner.composite.internal;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.lang.NullArgumentException;
+import org.ops4j.net.URLUtils;
 import org.ops4j.pax.runner.commons.properties.SystemPropertyUtils;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
@@ -70,7 +73,7 @@ public class CompositeScanner
      */
     private PropertyResolver m_propertyResolver;
     /**
-     * Provision service used to scan composed specs. 
+     * Provision service used to scan composed specs.
      */
     private final ProvisionService m_provisionService;
 
@@ -106,10 +109,17 @@ public class CompositeScanner
         {
             try
             {
-                bufferedReader = new BufferedReader( new InputStreamReader( parser.getFileURL().openStream() ) );
+                bufferedReader = new BufferedReader(
+                    new InputStreamReader(
+                        URLUtils.prepareInputStream( parser.getFileURL(), !config.getCertificateCheck() )
+                    )
+                );
                 Integer defaultStartLevel = getDefaultStartLevel( parser, config );
                 Boolean defaultStart = getDefaultStart( parser, config );
                 Boolean defaultUpdate = getDefaultUpdate( parser, config );
+                Properties localPlaceholders = new Properties();
+                localPlaceholders.setProperty( "this.relative", new URL( parser.getFileURL(), "." ).toExternalForm() );
+                localPlaceholders.setProperty( "this.absolute", new URL( parser.getFileURL(), "/" ).toExternalForm() );
                 String line;
                 while( ( line = bufferedReader.readLine() ) != null )
                 {
@@ -123,12 +133,12 @@ public class CompositeScanner
                                 throw new ScannerException( "Invalid property: " + line );
                             }
                             String value = matcher.group( 2 );
-                            value = SystemPropertyUtils.resolvePlaceholders( value );
+                            value = SystemPropertyUtils.resolvePlaceholders( value, localPlaceholders );
                             System.setProperty( matcher.group( 1 ), value );
                         }
                         else
                         {
-                            line = SystemPropertyUtils.resolvePlaceholders( line );
+                            line = SystemPropertyUtils.resolvePlaceholders( line, localPlaceholders );
                             final List<BundleReference> scanned = m_provisionService.scan( line );
                             if( scanned != null && scanned.size() > 0 )
                             {
