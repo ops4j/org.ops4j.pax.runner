@@ -388,6 +388,27 @@ public class Run
             throw new RuntimeException( "Could not resolve a provision service" );
         }
         List<String> arguments = context.getCommandLine().getArguments();
+        final String profilesOption = context.getOptionResolver().get( OPTION_PROFILES );
+        if( profilesOption != null && profilesOption.trim().length() > 0 )
+        {
+            if( arguments == null )
+            {
+                arguments = new ArrayList<String>();
+            }
+            final String profilesRepo = context.getOptionResolver().get( OPTION_PROFILES_REPO );
+            final String[] profiles = profilesOption.split( "," );
+            for( String profile : profiles )
+            {
+                arguments.add(
+                    org.ops4j.pax.runner.scanner.composite.ServiceConstants.SCHEMA
+                    + org.ops4j.pax.runner.provision.ServiceConstants.SEPARATOR_SCHEME
+                    + profilesRepo
+                    + "/"
+                    + profile
+                    + ".profile"
+                );
+            }
+        }
         if( arguments != null )
         {
             // backup properties and replace them with audited properties

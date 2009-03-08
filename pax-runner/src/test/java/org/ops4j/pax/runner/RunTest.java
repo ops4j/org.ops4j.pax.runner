@@ -27,6 +27,7 @@ import org.junit.Test;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.ServiceReference;
+import static org.ops4j.pax.runner.CommandLine.*;
 import org.ops4j.pax.runner.platform.JavaRunner;
 import org.ops4j.pax.runner.platform.Platform;
 import org.ops4j.pax.runner.platform.SystemFileReference;
@@ -371,6 +372,7 @@ public class RunTest
         InstallableBundles installables = createMock( InstallableBundles.class );
         List<BundleReference> references = new ArrayList<BundleReference>();
 
+        expect( m_resolver.get( OPTION_PROFILES ) ).andReturn( null );
         List<String> args = new ArrayList<String>();
         args.add( "scan-file:file:bundles1.txt" );
         args.add( "scan-file:file:bundles2.txt" );
@@ -404,6 +406,7 @@ public class RunTest
         List<BundleReference> references = new ArrayList<BundleReference>();
         ProvisionSchemaResolver schemaResolver = createMock( ProvisionSchemaResolver.class );
 
+        expect( m_resolver.get( OPTION_PROFILES ) ).andReturn( null );
         List<String> args = new ArrayList<String>();
         args.add( "bundles.txt" );
         expect( m_commandLine.getArguments() ).andReturn( args );

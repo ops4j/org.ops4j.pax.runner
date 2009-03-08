@@ -68,6 +68,14 @@ public interface CommandLine
      * Boot classpath appended option.
      */
     static final String OPTION_BOOT_CP_APPEND = "bcp/a";
+    /**
+     * Profiles option.
+     */
+    static final String OPTION_PROFILES = "profiles";
+    /**
+     * Profiles repository.
+     */
+    static final String OPTION_PROFILES_REPO = "profilesRepository";
 
     /**
      * Returns the value of an option by key. If option is not defined returns null.
