@@ -51,7 +51,7 @@ public final class Activator
             new ProvisionService()
             {
                 //TODO looking up th eservice each time is not good performance wise.
-                // The problem is that using a service tracker will fail due to our RunnerBundle
+                // The problem is that using a service tracker will fail due to our RunnerBundle with a ClassCastException
                 public List<BundleReference> scan( String spec )
                     throws MalformedSpecificationException, ScannerException
                 {
