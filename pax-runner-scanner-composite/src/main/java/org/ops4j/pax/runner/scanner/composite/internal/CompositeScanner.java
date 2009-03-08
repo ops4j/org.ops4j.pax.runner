@@ -154,6 +154,18 @@ public class CompositeScanner
                         else
                         {
                             line = SystemPropertyUtils.resolvePlaceholders( line, localPlaceholders );
+                            final ProvisionSpec spec = new ProvisionSpec( line );
+                            if( !spec.isPathValidUrl() )
+                            {
+                                line = new ProvisionSpec(
+                                    spec.getScheme(),
+                                    new URL( provisionSpec.getPathAsUrl(), spec.getPath() ).toExternalForm(),
+                                    spec.getFilter(),
+                                    spec.getStartLevel(),
+                                    spec.shouldStart(),
+                                    spec.shouldUpdate()
+                                ).toExternalForm();
+                            }
                             final List<BundleReference> scanned = m_provisionService.scan( line );
                             if( scanned != null && scanned.size() > 0 )
                             {

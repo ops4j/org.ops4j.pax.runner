@@ -19,6 +19,7 @@ package org.ops4j.pax.runner.scanner.composite.internal;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -71,14 +72,18 @@ public class CompositeScannerTest
         expect( provisionService.scan( "scan-bundle:file:bundle1.txt" ) ).andReturn( refs );
         expect( provisionService.scan( "scan-file:file:foo.bundles@5" ) ).andReturn( refs );
         expect( provisionService.scan( "scan-dir:file:foo@5@nostart" ) ).andReturn( refs );
-        expect( provisionService.scan( "scan-pom:mvn:group/artifact@nostart" ) ).andReturn( refs );
+        expect( provisionService.scan( "scan-pom:http:somewhere/foo/pom.xml@nostart" ) ).andReturn( refs );
+        expect( provisionService.scan(
+            "scan-file:" + new URL( file.toURL(), "relative" ).toExternalForm() + "@5@nostart@update"
+        )
+        ).andReturn( refs );
 
         replay( config, provisionService );
         List<BundleReference> references = createScanner( config, provisionService ).scan(
             new ProvisionSpec( "scan-composite:" + file.toURL().toExternalForm() )
         );
         assertNotNull( "Returned bundle references list is null", references );
-        assertEquals( "Nuber of bundles", 4, references.size() );
+        assertEquals( "Nuber of bundles", 5, references.size() );
         verify( config, provisionService );
     }
 
