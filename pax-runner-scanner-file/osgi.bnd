@@ -9,9 +9,10 @@ Bundle-Activator:\
 
 Import-Package:\
   ${bundle.namespace}; version="${pom.version}",\
+  javax.net.ssl,\
   org.osgi.framework; version="[1.0.0,2.0.0)",\
   org.ops4j.pax.runner.provision; version="${pom.version}",\
-    org.apache.commons.logging; version="[1.0.4,2.0.0)"; resolution:=optional,\
+  org.apache.commons.logging; version="[1.0.4,2.0.0)"; resolution:=optional,\
   org.osgi.service.cm; version="[1.2.0,2.0.0)"
 
 Export-Package:\

@@ -58,6 +58,7 @@ public class PomScannerTest
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
 
         expect( parser.getPomURL() ).andReturn( new URL( "file:inexistent" ) );
+        expect( config.getCertificateCheck() ).andReturn( false );
 
         replay( parser, config );
         createPomScanner( config, parser ).scan( "file:inexistent" );
@@ -88,6 +89,7 @@ public class PomScannerTest
         {
             expect( config.shouldUpdate() ).andReturn( null );
         }
+        expect( config.getCertificateCheck() ).andReturn( false );
 
         replay( parser, config );
         List<BundleReference> references = createPomScanner( config, parser ).scan( file.toURL().toExternalForm() );

@@ -28,6 +28,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 import org.ops4j.lang.NullArgumentException;
+import org.ops4j.net.URLUtils;
 import org.ops4j.pax.runner.commons.properties.SystemPropertyUtils;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
@@ -87,7 +88,7 @@ public class PomScanner
         {
             try
             {
-                inputStream = parser.getPomURL().openStream();
+                inputStream = URLUtils.prepareInputStream( parser.getPomURL(), !config.getCertificateCheck() );
                 final Document doc = XmlUtils.parseDoc( inputStream );
                 final Integer defaultStartLevel = getDefaultStartLevel( parser, config );
                 final Boolean defaultStart = getDefaultStart( parser, config );

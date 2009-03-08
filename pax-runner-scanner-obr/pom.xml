@@ -41,6 +41,10 @@
     </dependency>
     <dependency>
       <groupId>org.ops4j.base</groupId>
+      <artifactId>ops4j-base-net</artifactId>
+    </dependency>    
+    <dependency>
+      <groupId>org.ops4j.base</groupId>
       <artifactId>ops4j-base-util-property</artifactId>
     </dependency>
     <dependency>

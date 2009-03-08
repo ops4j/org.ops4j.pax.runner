@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.lang.NullArgumentException;
+import org.ops4j.net.URLUtils;
 import org.ops4j.pax.runner.commons.properties.SystemPropertyUtils;
 import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
@@ -98,7 +99,14 @@ public class FileScanner
         {
             try
             {
-                bufferedReader = new BufferedReader( new InputStreamReader( parser.getFileURL().openStream() ) );
+                bufferedReader = new BufferedReader(
+                    new InputStreamReader(
+                        URLUtils.prepareInputStream(
+                            parser.getFileURL(),
+                            !config.getCertificateCheck()
+                        )
+                    )
+                );
                 Integer defaultStartLevel = getDefaultStartLevel( parser, config );
                 Boolean defaultStart = getDefaultStart( parser, config );
                 Boolean defaultUpdate = getDefaultUpdate( parser, config );

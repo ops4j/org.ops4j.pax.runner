@@ -64,6 +64,7 @@ public class FileScannerTest
         expect( config.shouldStart() ).andReturn( null );
         expect( parser.shouldUpdate() ).andReturn( null );
         expect( config.shouldUpdate() ).andReturn( null );
+        expect( config.getCertificateCheck() ).andReturn( false );
 
         replay( parser, config );
         List<BundleReference> references = createFileScanner( config, parser ).scan( file.toURL().toExternalForm() );
@@ -86,6 +87,7 @@ public class FileScannerTest
         expect( parser.shouldStart() ).andReturn( false );
         expect( parser.shouldUpdate() ).andReturn( null );
         expect( config.shouldUpdate() ).andReturn( null );
+        expect( config.getCertificateCheck() ).andReturn( false );
 
         replay( parser, config );
         List<BundleReference> references =
@@ -111,6 +113,7 @@ public class FileScannerTest
         expect( config.shouldStart() ).andReturn( null );
         expect( parser.shouldUpdate() ).andReturn( null );
         expect( config.shouldUpdate() ).andReturn( null );
+        expect( config.getCertificateCheck() ).andReturn( false );
 
         replay( parser, config );
         List<BundleReference> references =
@@ -130,6 +133,7 @@ public class FileScannerTest
         ScannerConfiguration config = createMock( ScannerConfiguration.class );
 
         expect( parser.getFileURL() ).andReturn( new URL( "file:inexistent" ) );
+        expect( config.getCertificateCheck() ).andReturn( false );
 
         replay( parser, config );
         createFileScanner( config, parser ).scan( "file:inexistent" );
@@ -148,6 +152,7 @@ public class FileScannerTest
         expect( parser.getStartLevel() ).andReturn( 10 );
         expect( parser.shouldStart() ).andReturn( true );
         expect( parser.shouldUpdate() ).andReturn( true );
+        expect( config.getCertificateCheck() ).andReturn( false );
 
         replay( parser, config );
         List<BundleReference> references = createFileScanner( config, parser ).scan( file.toURL().toExternalForm() );
@@ -172,6 +177,7 @@ public class FileScannerTest
         expect( config.shouldStart() ).andReturn( null );
         expect( parser.shouldUpdate() ).andReturn( null );
         expect( config.shouldUpdate() ).andReturn( null );
+        expect( config.getCertificateCheck() ).andReturn( false );
 
         recorder.record( "prop.1=value.1" );
         recorder.record( "prop.2=value.2" );
