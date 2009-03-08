@@ -20,15 +20,23 @@ public interface ServiceConstants
     /**
      * Separator for filter.
      */
-    static String SEPARATOR_FILTER = "!/";    
+    static String SEPARATOR_FILTER = "!/";
     /**
      * Start option.
+     */
+    static String OPTION_START = "start";    
+    /**
+     * No start option.
      */
     static String OPTION_NO_START = "nostart";
     /**
      * Update option.
      */
     static String OPTION_UPDATE = "update";
+    /**
+     * No update option.
+     */
+    static String OPTION_NO_UPDATE = "noupdate";    
 
     /**
      * Start level configuration property name (used by scanners).

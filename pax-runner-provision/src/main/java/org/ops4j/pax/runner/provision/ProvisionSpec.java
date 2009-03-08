@@ -45,9 +45,9 @@ public class ProvisionSpec
      */
     private final String m_path;
     /**
-     * Provisioning spec options.
+     * Filter part of the provisioning spec.
      */
-    private final String[] m_options;
+    private final String m_filter;
     /**
      * The start level option.
      */
@@ -61,9 +61,9 @@ public class ProvisionSpec
      */
     private Boolean m_shouldUpdate;
     /**
-     * Filter.
+     * Filter as pattern.
      */
-    private Pattern m_filter;
+    private Pattern m_filterPattern;
 
     /**
      * Constructor.
@@ -100,16 +100,10 @@ public class ProvisionSpec
         final String[] optionsSegments = fullPath.split( SEPARATOR_OPTION );
         if( optionsSegments.length > 1 )
         {
-            m_options = new String[optionsSegments.length - 1];
             for( int i = 1; i < optionsSegments.length; i++ )
             {
-                m_options[ i - 1 ] = optionsSegments[ i ].trim();
-                parseSegment( m_options[ i - 1 ] );
+                parseSegment( optionsSegments[ i ].trim() );
             }
-        }
-        else
-        {
-            m_options = new String[0];
         }
         final String[] pathSegments = optionsSegments[ 0 ].split( ServiceConstants.SEPARATOR_FILTER );
         String path = pathSegments[ 0 ];
@@ -120,11 +114,38 @@ public class ProvisionSpec
         m_path = path;
         if( pathSegments.length > 1 )
         {
-            m_filter = parseFilter( pathSegments[ 1 ] );
+            m_filter = pathSegments[ 1 ];
+            m_filterPattern = parseFilter( m_filter );
         }
         else
         {
-            m_filter = parseFilter( DEFAULT_FILTER );
+            m_filter = null;
+            m_filterPattern = parseFilter( DEFAULT_FILTER );
+        }
+    }
+
+    public ProvisionSpec( final String scheme,
+                          final String path,
+                          final String filter,
+                          final Integer startLevel,
+                          final Boolean shouldStart,
+                          final Boolean shouldUpdate )
+        throws MalformedSpecificationException
+    {
+
+        m_scheme = scheme;
+        m_path = path;
+        m_filter = filter;
+        m_startLevel = startLevel;
+        m_shouldStart = shouldStart;
+        m_shouldUpdate = shouldUpdate;
+        if( m_filter == null )
+        {
+            m_filterPattern = parseFilter( DEFAULT_FILTER );
+        }
+        else
+        {
+            m_filterPattern = parseFilter( m_filter );
         }
     }
 
@@ -162,16 +183,6 @@ public class ProvisionSpec
     }
 
     /**
-     * Getter.
-     *
-     * @return options
-     */
-    public String[] getOptions()
-    {
-        return m_options;
-    }
-
-    /**
      * Verify if the path is an valid url.
      *
      * @return true if path is a valid url, false otherwise
@@ -196,17 +207,35 @@ public class ProvisionSpec
      */
     private void parseSegment( final String segment )
     {
-        if( m_shouldStart == null && segment.equalsIgnoreCase( OPTION_NO_START ) )
+        if( segment.equalsIgnoreCase( OPTION_START ) )
         {
-            m_shouldStart = false;
-            return;
+            if( m_shouldStart == null )
+            {
+                m_shouldStart = true;
+            }
         }
-        if( m_shouldUpdate == null && segment.equalsIgnoreCase( OPTION_UPDATE ) )
+        else if( segment.equalsIgnoreCase( OPTION_NO_START ) )
         {
-            m_shouldUpdate = true;
-            return;
+            if( m_shouldStart == null )
+            {
+                m_shouldStart = false;
+            }
         }
-        if( m_startLevel == null )
+        else if( segment.equalsIgnoreCase( OPTION_UPDATE ) )
+        {
+            if( m_shouldUpdate == null )
+            {
+                m_shouldUpdate = true;
+            }
+        }
+        else if( segment.equalsIgnoreCase( OPTION_NO_UPDATE ) )
+        {
+            if( m_shouldUpdate == null )
+            {
+                m_shouldUpdate = false;
+            }
+        }
+        else if( m_startLevel == null )
         {
             try
             {
@@ -304,9 +333,65 @@ public class ProvisionSpec
      *
      * @return filter
      */
-    public Pattern getFilter()
+    public String getFilter()
     {
         return m_filter;
+    }
+
+    /**
+     * Getter.
+     *
+     * @return filter
+     */
+    public Pattern getFilterPattern()
+    {
+        return m_filterPattern;
+    }
+
+    /**
+     * Constructs a string representation of this provision spec.
+     *
+     * @return a string representation of the object
+     */
+    public String toExternalForm()
+    {
+        final StringBuilder form = new StringBuilder()
+            .append( getScheme() )
+            .append( SEPARATOR_SCHEME )
+            .append( getPath() );
+
+        if( m_filter != null )
+        {
+            form.append( SEPARATOR_FILTER ).append( m_filter );
+        }
+        if( m_startLevel != null )
+        {
+            form.append( SEPARATOR_OPTION ).append( m_startLevel );
+        }
+        if( m_shouldStart != null )
+        {
+            if( m_shouldStart )
+            {
+                form.append( SEPARATOR_OPTION ).append( OPTION_START );
+            }
+            else
+            {
+                form.append( SEPARATOR_OPTION ).append( OPTION_NO_START );
+            }
+        }
+        if( m_shouldUpdate != null )
+        {
+            if( m_shouldUpdate )
+            {
+                form.append( SEPARATOR_OPTION ).append( OPTION_UPDATE );
+            }
+            else
+            {
+                form.append( SEPARATOR_OPTION ).append( OPTION_NO_UPDATE );
+            }
+        }
+
+        return form.toString();
     }
 
 }

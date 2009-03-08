@@ -100,7 +100,7 @@ public class ProvisionSpecTest
     {
         ProvisionSpec parser = new ProvisionSpec( "scan:file:/dir!" );
         assertEquals( "URL", "file:/dir", parser.getPath() );
-        assertEquals( "Filter", "[^/]*", parser.getFilter().pattern() );
+        assertEquals( "Filter", "[^/]*", parser.getFilterPattern().pattern() );
     }
 
     @Test
@@ -109,7 +109,7 @@ public class ProvisionSpecTest
     {
         ProvisionSpec parser = new ProvisionSpec( "scan:file:/dir!/" );
         assertEquals( "URL", "file:/dir", parser.getPath() );
-        assertEquals( "Filter", "[^/]*", parser.getFilter().pattern() );
+        assertEquals( "Filter", "[^/]*", parser.getFilterPattern().pattern() );
     }
 
     @Test
@@ -118,8 +118,8 @@ public class ProvisionSpecTest
     {
         ProvisionSpec parser = new ProvisionSpec( "scan:file:/dir!/aFilter" );
         assertEquals( "URL", "file:/dir", parser.getPath() );
-        assertNotNull( "Filter was not supposed to be null", parser.getFilter() );
-        assertEquals( "Filter", "aFilter", parser.getFilter().pattern() );
+        assertNotNull( "Filter was not supposed to be null", parser.getFilterPattern() );
+        assertEquals( "Filter", "aFilter", parser.getFilterPattern().pattern() );
     }
 
     @Test
@@ -128,8 +128,8 @@ public class ProvisionSpecTest
     {
         ProvisionSpec parser = new ProvisionSpec( "scan:file:/dir!/**" );
         assertEquals( "URL", "file:/dir", parser.getPath() );
-        assertNotNull( "Filter was not supposed to be null", parser.getFilter() );
-        assertEquals( "Filter", ".*", parser.getFilter().pattern() );
+        assertNotNull( "Filter was not supposed to be null", parser.getFilterPattern() );
+        assertEquals( "Filter", ".*", parser.getFilterPattern().pattern() );
     }
 
     @Test
@@ -138,8 +138,8 @@ public class ProvisionSpecTest
     {
         ProvisionSpec parser = new ProvisionSpec( "scan:file:/dir!/**/" );
         assertEquals( "URL", "file:/dir", parser.getPath() );
-        assertNotNull( "Filter was not supposed to be null", parser.getFilter() );
-        assertEquals( "Filter", ".*/", parser.getFilter().pattern() );
+        assertNotNull( "Filter was not supposed to be null", parser.getFilterPattern() );
+        assertEquals( "Filter", ".*/", parser.getFilterPattern().pattern() );
     }
 
     @Test
@@ -148,8 +148,8 @@ public class ProvisionSpecTest
     {
         ProvisionSpec parser = new ProvisionSpec( "scan:file:/dir!/**/aFilter" );
         assertEquals( "URL", "file:/dir", parser.getPath() );
-        assertNotNull( "Filter was not supposed to be null", parser.getFilter() );
-        assertEquals( "Filter", ".*/aFilter", parser.getFilter().pattern() );
+        assertNotNull( "Filter was not supposed to be null", parser.getFilterPattern() );
+        assertEquals( "Filter", ".*/aFilter", parser.getFilterPattern().pattern() );
     }
 
     @Test
@@ -158,7 +158,7 @@ public class ProvisionSpecTest
     {
         ProvisionSpec parser = new ProvisionSpec( "scan:file:/dir!/*" );
         assertEquals( "URL", "file:/dir", parser.getPath() );
-        assertEquals( "Filter", "[^/]*", parser.getFilter().pattern() );
+        assertEquals( "Filter", "[^/]*", parser.getFilterPattern().pattern() );
     }
 
     @Test
@@ -167,7 +167,7 @@ public class ProvisionSpecTest
     {
         ProvisionSpec parser = new ProvisionSpec( "scan:file:/dir" );
         assertEquals( "URL", "file:/dir", parser.getPath() );
-        assertEquals( "Filter", "[^/]*", parser.getFilter().pattern() );
+        assertEquals( "Filter", "[^/]*", parser.getFilterPattern().pattern() );
     }
 
 }

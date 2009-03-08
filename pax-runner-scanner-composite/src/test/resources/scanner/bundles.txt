@@ -11,4 +11,4 @@ scan-file:file:foo.bundles@5
 scan-dir:file:foo@5@nostart
 
 # a bundle with no start
-scan-pom:mvn:group/artifact@nostart
+scan-pom:http:somewhere/foo@nostart

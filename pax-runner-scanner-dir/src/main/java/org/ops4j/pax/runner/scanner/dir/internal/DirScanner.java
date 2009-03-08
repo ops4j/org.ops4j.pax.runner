@@ -82,7 +82,7 @@ public class DirScanner
         
         LOGGER.debug( "Scanning [" + provisionSpec.getPath() + "]" );
         final ScannerConfiguration config = createConfiguration();
-        final Pattern filter = provisionSpec.getFilter();
+        final Pattern filter = provisionSpec.getFilterPattern();
         final String spec = provisionSpec.getPath();
         final Integer defaultStartLevel = getDefaultStartLevel( provisionSpec, config );
         final Boolean defaultStart = getDefaultStart( provisionSpec, config );
