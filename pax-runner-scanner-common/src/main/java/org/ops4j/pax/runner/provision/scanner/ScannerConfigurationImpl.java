@@ -120,4 +120,19 @@ public class ScannerConfigurationImpl
         }
         return get( m_pid + ServiceConstants.PROPERTY_UPDATE );
     }
+
+    /**
+     * @see ScannerConfiguration#getCertificateCheck()
+     */
+    public Boolean getCertificateCheck()
+    {
+        if( !contains( m_pid + ServiceConstants.PROPERTY_CERTIFICATE_CHECK ) )
+        {
+            return set( m_pid + ServiceConstants.PROPERTY_CERTIFICATE_CHECK,
+                        Boolean.valueOf( m_propertyResolver.get( m_pid + ServiceConstants.PROPERTY_CERTIFICATE_CHECK ) )
+            );
+        }
+        return get( m_pid + ServiceConstants.PROPERTY_CERTIFICATE_CHECK );
+    }
+    
 }

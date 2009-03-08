@@ -40,4 +40,9 @@ public interface ServiceConstants
      */
     static final String PROPERTY_UPDATE = ".update";
 
+    /**
+     * Certificate check configuration property name.
+     */
+    static final String PROPERTY_CERTIFICATE_CHECK = ".certificateCheck";    
+
 }
