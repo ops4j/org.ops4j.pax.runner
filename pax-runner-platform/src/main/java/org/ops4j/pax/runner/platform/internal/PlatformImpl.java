@@ -510,7 +510,7 @@ public class PlatformImpl
         {
             wrapNonBundleJar( destination, url );
         }
-        
+
         String newFileName = validateBundleAndGetFilename( url, destination, hashFileName, checkAttributes );
         File newDestination = new File( destination.getParentFile(), newFileName );
         if( !newFileName.equals( destination.getName() ) )
@@ -686,20 +686,21 @@ public class PlatformImpl
         try
         {
             // verify that is a valid jar. Do not verify that is signed (the false param).
-
             jar = new JarFile( file, false );
             final Manifest manifest = jar.getManifest();
             if( manifest == null )
             {
                 wrap( file, url );
             }
-            String bundleSymbolicName = manifest.getMainAttributes().getValue( Constants.BUNDLE_SYMBOLICNAME );
-
-            if( bundleSymbolicName == null )
+            else
             {
-                wrap( file, url );
-            }
+                String bundleSymbolicName = manifest.getMainAttributes().getValue( Constants.BUNDLE_SYMBOLICNAME );
 
+                if( bundleSymbolicName == null )
+                {
+                    wrap( file, url );
+                }
+            }
 
         }
         catch( IOException e )
@@ -730,7 +731,6 @@ public class PlatformImpl
         File tmp = null;
         try
         {
-            LOGGER.debug( "Auto .. [" + url + "] .. " );
             String symbolicName = url.toExternalForm().replaceAll( "[^a-zA-Z_0-9.-]", "_" );
             URL wrapped = new URL( "wrap:" + file.toURL().toExternalForm() + "$Bundle-SymbolicName=" + symbolicName );
 
