@@ -78,7 +78,7 @@ public class StreamUtils
             {
                 out.write( b );
                 b = in.read();
-                counter = ( counter + 1 ) % 1024;
+                counter = ( counter + 1 ) % 102400;
                 if( counter == 0 )
                 {
                     feedbackBar.increment( bytes, bytes / Math.max( System.currentTimeMillis() - start, 1 ) );
@@ -168,6 +168,7 @@ public class StreamUtils
         implements ProgressBar
     {
 
+        int counter = 0;
         /**
          * Name of the downloaded artifact.
          */
@@ -182,6 +183,7 @@ public class StreamUtils
         public void increment( final long bytes, final long kbps )
         {
             Info.print( m_downloadTargetName + " : " + bytes + " bytes @ [ " + kbps + "kBps ]\r" );
+            counter++;
         }
 
         public void stop()
