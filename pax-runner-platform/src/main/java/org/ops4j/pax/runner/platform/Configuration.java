@@ -205,5 +205,13 @@ public interface Configuration
      * @return value of auto wrap option
      */
     Boolean isAutoWrap();
+
+    /**
+     * Returns true if the provisioning urls should be the ones provided by scanners or the local cashed ones.
+     * Default value is "false".
+     *
+     * @return value of use original urls option
+     */
+    Boolean useOriginalUrls();    
     
 }

@@ -49,6 +49,7 @@ import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
 import org.ops4j.pax.runner.platform.SystemFileReference;
+import org.ops4j.pax.runner.platform.SystemFileReferenceBean;
 import org.ops4j.util.property.DictionaryPropertyResolver;
 import org.ops4j.util.property.PropertyResolver;
 
@@ -101,8 +102,11 @@ public class PlatformImpl
     /**
      * @see Platform#start(java.util.List,java.util.List,java.util.Properties,Dictionary,JavaRunner)
      */
-    public void start( final List<SystemFileReference> systemFiles, final List<BundleReference> bundles,
-                       final Properties properties, final Dictionary config, final JavaRunner javaRunner )
+    public void start( final List<SystemFileReference> systemFiles,
+                       final List<BundleReference> bundles,
+                       final Properties properties,
+                       final Dictionary config,
+                       final JavaRunner javaRunner )
         throws PlatformException
     {
         LOGGER.info( "Preparing framework [" + this + "]" );
@@ -138,14 +142,25 @@ public class PlatformImpl
         final Boolean overwriteSystemBundles = configuration.isOverwriteSystemBundles();
         final Boolean downloadFeeback = configuration.isDownloadFeedback();
         LOGGER.info( "Downloading bundles..." );
+
         // download system package
         LOGGER.debug( "Download system package" );
         final File systemFile = downloadSystemFile(
             workDir, definition, overwriteBundles || overwriteSystemBundles, downloadFeeback
         );
+
         LOGGER.debug( "Download additional system libraries" );
-        final List<LocalSystemFile> locaSystemFiles =
-            downloadSystemFiles( workDir, systemFiles, overwriteBundles || overwriteSystemBundles, downloadFeeback );
+        final List<LocalSystemFile> localSystemFiles = downloadSystemFiles(
+            workDir, systemFiles, overwriteBundles || overwriteSystemBundles, downloadFeeback
+        );
+        if( configuration.useOriginalUrls() )
+        {
+            localSystemFiles.addAll(
+                downloadSystemFiles(
+                    workDir, getUrlHandlers(), overwriteBundles || overwriteSystemBundles, downloadFeeback
+                )
+            );
+        }
         // download the rest of the bundles
         final List<BundleReference> bundlesToInstall = new ArrayList<BundleReference>();
         LOGGER.debug( "Download platform bundles" );
@@ -157,7 +172,8 @@ public class PlatformImpl
         LOGGER.debug( "Download bundles" );
         bundlesToInstall.addAll(
             downloadBundles(
-                workDir, bundles, overwriteBundles || overwriteUserBundles, downloadFeeback, configuration.isAutoWrap()
+                workDir, bundles, overwriteBundles || overwriteUserBundles, downloadFeeback,
+                configuration.isAutoWrap(), configuration.useOriginalUrls()
             )
         );
         context.setBundles( bundlesToInstall );
@@ -173,8 +189,12 @@ public class PlatformImpl
         final CommandLineBuilder vmOptions = new CommandLineBuilder();
         vmOptions.append( configuration.getVMOptions() );
         vmOptions.append( m_platformBuilder.getVMOptions( context ) );
+        if( configuration.useOriginalUrls() )
+        {
+            vmOptions.append( "-Djava.protocol.handler.pkgs=org.ops4j.pax.url" );
+        }
 
-        final String[] classpath = buildClassPath( systemFile, locaSystemFiles, configuration, context );
+        final String[] classpath = buildClassPath( systemFile, localSystemFiles, configuration, context );
 
         final CommandLineBuilder programOptions = new CommandLineBuilder();
         programOptions.append( m_platformBuilder.getArguments( context ) );
@@ -202,6 +222,32 @@ public class PlatformImpl
             javaHome,
             workDir
         );
+    }
+
+    private List<SystemFileReference> getUrlHandlers()
+        throws PlatformException
+    {
+        final List<SystemFileReference> urlHandlers = new ArrayList<SystemFileReference>();
+        try
+        {
+            urlHandlers.add(
+                new SystemFileReferenceBean( "Pax URL mvn: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-mvn" ) )
+            );
+            urlHandlers.add(
+                new SystemFileReferenceBean( "Pax URL link: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-link" ) )
+            );
+            urlHandlers.add(
+                new SystemFileReferenceBean( "Pax URL war: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-war" ) )
+            );
+            urlHandlers.add(
+                new SystemFileReferenceBean( "Pax URL wrap: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-wrap" ) )
+            );
+        }
+        catch( MalformedURLException e )
+        {
+            throw new PlatformException( "Cannot download url handlers", e );
+        }
+        return urlHandlers;
     }
 
     /**
@@ -285,6 +331,7 @@ public class PlatformImpl
      * @param overwrite       if the bundles should be overwritten
      * @param downloadFeeback whether or not downloading process should display fne grained progres info
      * @param autoWrap        wheather or not auto wrapping should take place
+     * @param useOriginalUrls if the provisioned bundles should be cached or not
      *
      * @return a list of downloaded files
      *
@@ -294,7 +341,8 @@ public class PlatformImpl
                                                    final List<BundleReference> bundles,
                                                    final Boolean overwrite,
                                                    final boolean downloadFeeback,
-                                                   final boolean autoWrap )
+                                                   final boolean autoWrap,
+                                                   final boolean useOriginalUrls )
         throws PlatformException
     {
         final List<BundleReference> localBundles = new ArrayList<BundleReference>();
@@ -318,19 +366,26 @@ public class PlatformImpl
                         LOGGER.warn( "Could not auto wrap url [" + url + "] due to: " + e.getMessage() );
                     }
                 }
-                localBundles.add(
-                    new LocalBundleReference(
-                        reference,
-                        download(
-                            workDir,
-                            url,
-                            reference.getName(),
-                            overwrite || reference.shouldUpdate(),
-                            true,
-                            downloadFeeback
+                if( useOriginalUrls )
+                {
+                    localBundles.add( reference );
+                }
+                else
+                {
+                    localBundles.add(
+                        new LocalBundleReference(
+                            reference,
+                            download(
+                                workDir,
+                                url,
+                                reference.getName(),
+                                overwrite || reference.shouldUpdate(),
+                                true,
+                                downloadFeeback
+                            )
                         )
-                    )
-                );
+                    );
+                }
             }
         }
         return localBundles;
@@ -376,7 +431,8 @@ public class PlatformImpl
             definition.getPlatformBundles( profiles.toString() ),
             overwrite,
             downloadFeeback,
-            false // do not autowrap, as framework related bundles are mostly alreay bundles
+            false, // do not autowrap, as framework related bundles are mostly alreay bundles,
+            false // framework bundles are always downloaded
         );
     }
 
@@ -392,7 +448,9 @@ public class PlatformImpl
      *
      * @throws PlatformException re-thrown
      */
-    private File downloadSystemFile( final File workDir, final PlatformDefinition definition, final Boolean overwrite,
+    private File downloadSystemFile( final File workDir,
+                                     final PlatformDefinition definition,
+                                     final Boolean overwrite,
                                      final boolean downloadFeeback )
         throws PlatformException
     {
@@ -418,8 +476,10 @@ public class PlatformImpl
      *
      * @throws PlatformException re-thrown
      */
-    private List<LocalSystemFile> downloadSystemFiles( final File workDir, final List<SystemFileReference> systemFiles,
-                                                       final Boolean overwrite, final boolean downloadFeeback )
+    private List<LocalSystemFile> downloadSystemFiles( final File workDir,
+                                                       final List<SystemFileReference> systemFiles,
+                                                       final Boolean overwrite,
+                                                       final boolean downloadFeeback )
         throws PlatformException
     {
         final List<LocalSystemFile> downloaded = new ArrayList<LocalSystemFile>();

@@ -109,5 +109,9 @@ public interface ServiceConstants
      * Boot delegation property name.
      */
     static final String CONFIG_BOOT_DELEGATION = PID + ".bootDelegation";
+    /**
+     * Use original URls property name.
+     */
+    static final String CONFIG_USE_ORIGINAL_URLS = PID + ".useOriginalUrls";    
 
 }

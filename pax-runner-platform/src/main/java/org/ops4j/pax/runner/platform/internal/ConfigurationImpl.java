@@ -505,4 +505,18 @@ public class ConfigurationImpl
         return get( ServiceConstants.CONFIG_AUTO_WRAP );
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public Boolean useOriginalUrls()
+    {
+        if( !contains( ServiceConstants.CONFIG_USE_ORIGINAL_URLS ) )
+        {
+            return set( ServiceConstants.CONFIG_USE_ORIGINAL_URLS,
+                        Boolean.valueOf( m_propertyResolver.get( ServiceConstants.CONFIG_USE_ORIGINAL_URLS ) )
+            );
+        }
+        return get( ServiceConstants.CONFIG_USE_ORIGINAL_URLS );
+    }
+
 }

@@ -389,9 +389,12 @@ public class EquinoxPlatformBuilder
             {
                 throw new PlatformException( "The file from bundle to install cannot be null" );
             }
-            final StringBuilder builder = new StringBuilder()
-                .append( "reference:" )
-                .append( context.normalizeAsUrl( url ) );
+            final StringBuilder builder = new StringBuilder();
+            if( "file".equals( url.getProtocol() ) )
+            {
+                builder.append( "reference:" );
+            }
+            builder.append( context.normalizeAsUrl( url ) );
 
             final Integer startLevel = reference.getStartLevel();
             if( startLevel != null )

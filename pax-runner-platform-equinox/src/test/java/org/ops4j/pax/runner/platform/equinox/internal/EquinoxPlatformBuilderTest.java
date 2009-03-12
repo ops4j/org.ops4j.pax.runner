@@ -421,4 +421,5 @@ public class EquinoxPlatformBuilderTest
             compareFiles( actual, expected, false, replacements );
         }
     }
+
 }
