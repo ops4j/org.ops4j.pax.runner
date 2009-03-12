@@ -43,7 +43,6 @@ import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.DefaultJavaRunner;
 import org.ops4j.pax.runner.platform.JavaRunner;
-import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.LocalSystemFile;
 import org.ops4j.pax.runner.platform.Platform;
 import org.ops4j.pax.runner.platform.PlatformBuilder;
@@ -148,7 +147,7 @@ public class PlatformImpl
         final List<LocalSystemFile> locaSystemFiles =
             downloadSystemFiles( workDir, systemFiles, overwriteBundles || overwriteSystemBundles, downloadFeeback );
         // download the rest of the bundles
-        final List<LocalBundle> bundlesToInstall = new ArrayList<LocalBundle>();
+        final List<BundleReference> bundlesToInstall = new ArrayList<BundleReference>();
         LOGGER.debug( "Download platform bundles" );
         bundlesToInstall.addAll(
             downloadPlatformBundles(
@@ -291,14 +290,14 @@ public class PlatformImpl
      *
      * @throws PlatformException re-thrown
      */
-    private List<LocalBundle> downloadBundles( final File workDir,
-                                               final List<BundleReference> bundles,
-                                               final Boolean overwrite,
-                                               final boolean downloadFeeback,
-                                               final boolean autoWrap )
+    private List<BundleReference> downloadBundles( final File workDir,
+                                                   final List<BundleReference> bundles,
+                                                   final Boolean overwrite,
+                                                   final boolean downloadFeeback,
+                                                   final boolean autoWrap )
         throws PlatformException
     {
-        final List<LocalBundle> localBundles = new ArrayList<LocalBundle>();
+        final List<BundleReference> localBundles = new ArrayList<BundleReference>();
         if( bundles != null )
         {
             for( BundleReference reference : bundles )
@@ -320,7 +319,7 @@ public class PlatformImpl
                     }
                 }
                 localBundles.add(
-                    new LocalBundleImpl(
+                    new LocalBundleReference(
                         reference,
                         download(
                             workDir,
@@ -350,11 +349,11 @@ public class PlatformImpl
      *
      * @throws PlatformException re-thrown
      */
-    private List<LocalBundle> downloadPlatformBundles( final File workDir,
-                                                       final PlatformDefinition definition,
-                                                       final PlatformContext platformContext,
-                                                       final Boolean overwrite,
-                                                       final boolean downloadFeeback )
+    private List<BundleReference> downloadPlatformBundles( final File workDir,
+                                                           final PlatformDefinition definition,
+                                                           final PlatformContext platformContext,
+                                                           final Boolean overwrite,
+                                                           final boolean downloadFeeback )
         throws PlatformException
     {
         final StringBuilder profiles = new StringBuilder();

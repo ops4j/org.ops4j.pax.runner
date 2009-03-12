@@ -35,7 +35,6 @@ import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.BundleReferenceBean;
 import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.JavaRunner;
-import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
@@ -166,7 +165,7 @@ public class PlatformImplTest
         expect( m_builder.getRequiredProfile( m_context ) ).andReturn( null );
         expect( m_definition.getPlatformBundles( "" ) ).andReturn( platformBundles );
         // from start()
-        m_context.setBundles( (List<LocalBundle>) notNull() );
+        m_context.setBundles( (List<BundleReference>) notNull() );
         m_builder.prepare( m_context );
         expect( m_config.getProfiles() ).andReturn( null );
         expect( m_config.getExecutionEnvironment() ).andReturn( "NONE" );

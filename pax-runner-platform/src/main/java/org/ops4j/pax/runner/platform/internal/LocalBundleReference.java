@@ -18,18 +18,19 @@
 package org.ops4j.pax.runner.platform.internal;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.platform.BundleReference;
-import org.ops4j.pax.runner.platform.LocalBundle;
 
 /**
- * A Java bean like implementation of local bundle.
+ * A {@link BundleReference} pointing to a local downloaded file.
  *
  * @author Alin Dreghiciu
  * @since August 20, 2007
  */
-public class LocalBundleImpl
-    implements LocalBundle
+public class LocalBundleReference
+    implements BundleReference
 {
 
     /**
@@ -47,28 +48,60 @@ public class LocalBundleImpl
      * @param bundleReference a bundle reference; mandatory
      * @param file            corresponding file; mandatory
      */
-    public LocalBundleImpl( final BundleReference bundleReference, final File file )
+    public LocalBundleReference( final BundleReference bundleReference, final File file )
     {
         NullArgumentException.validateNotNull( bundleReference, "Bundle reference" );
         NullArgumentException.validateNotNull( file, "File" );
+
         m_bundleReference = bundleReference;
         m_file = file;
     }
 
     /**
-     * @see LocalBundle#getBundleReference()
+     * {@inheritDoc}
      */
-    public BundleReference getBundleReference()
+    public String getName()
     {
-        return m_bundleReference;
+        return m_bundleReference.getName();
     }
 
     /**
-     * @see LocalBundle#getFile()
+     * {@inheritDoc}
      */
-    public File getFile()
+    public URL getURL()
     {
-        return m_file;
+        try
+        {
+            return m_file.toURL();
+        }
+        catch( MalformedURLException e )
+        {
+            throw new RuntimeException( e );
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Integer getStartLevel()
+    {
+        return m_bundleReference.getStartLevel();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Boolean shouldStart()
+    {
+        return m_bundleReference.shouldStart();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Boolean shouldUpdate()
+    {
+        return m_bundleReference.shouldUpdate();
     }
 
     /**
@@ -79,9 +112,9 @@ public class LocalBundleImpl
         return new StringBuilder()
             .append( "{" )
             .append( "file=" )
-            .append( getFile() )
+            .append( m_file )
             .append( ",reference=" )
-            .append( getBundleReference() )
+            .append( m_bundleReference )
             .append( "}" )
             .toString();
     }

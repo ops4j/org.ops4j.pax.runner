@@ -39,7 +39,6 @@ import org.osgi.framework.Constants;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
-import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
@@ -111,7 +110,7 @@ public class ConciergePlatformBuilder
         throws PlatformException
     {
         NullArgumentException.validateNotNull( context, "Platform context" );
-        final List<LocalBundle> bundles = context.getBundles();
+        final List<BundleReference> bundles = context.getBundles();
         OutputStream os = null;
         try
         {
@@ -222,21 +221,19 @@ public class ConciergePlatformBuilder
      *                                        if one of the bundles does not have a file
      */
     private void appendBundles( final PropertiesWriter writer,
-                                final List<LocalBundle> bundles,
+                                final List<BundleReference> bundles,
                                 final PlatformContext context,
                                 final Integer defaultStartlevel )
         throws MalformedURLException, PlatformException
     {
         Map<Integer, List<String>> bundlesPerStartlevel = new Hashtable<Integer, List<String>>();
-        for( LocalBundle bundle : bundles )
+        for( BundleReference reference : bundles )
         {
-            File bundleFile = bundle.getFile();
+            URL bundleFile = reference.getURL();
             if( bundleFile == null )
             {
                 throw new PlatformException( "The file from bundle to install cannot be null" );
             }
-
-            final BundleReference reference = bundle.getBundleReference();
 
             String propertyName = "-install ";
             final Boolean shouldStart = reference.shouldStart();

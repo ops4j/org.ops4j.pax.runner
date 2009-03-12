@@ -36,7 +36,6 @@ import org.osgi.framework.BundleContext;
 import org.ops4j.io.FileUtils;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
-import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
 import org.ops4j.pax.runner.platform.internal.PlatformContextImpl;
@@ -223,43 +222,35 @@ public class FelixPlatformBuilderF100T122Test
         throws PlatformException, IOException
     {
 
-        List<LocalBundle> bundles = new ArrayList<LocalBundle>();
+        List<BundleReference> bundles = new ArrayList<BundleReference>();
 
         // a bunlde with start level that should start
-        LocalBundle bundle1 = createMock( LocalBundle.class );
+        BundleReference bundle1 = createMock( BundleReference.class );
         bundles.add( bundle1 );
-        BundleReference reference1 = createMock( BundleReference.class );
-        expect( bundle1.getFile() ).andReturn( new File( m_workDir, "bundles/bundle1.jar" ) );
-        expect( bundle1.getBundleReference() ).andReturn( reference1 );
-        expect( reference1.getStartLevel() ).andReturn( 10 );
-        expect( reference1.shouldStart() ).andReturn( true );
+        expect( bundle1.getURL() ).andReturn( new File( m_workDir, "bundles/bundle1.jar" ).toURL() );
+        expect( bundle1.getStartLevel() ).andReturn( 10 );
+        expect( bundle1.shouldStart() ).andReturn( true );
 
         // a bundle with only start level that should not start
-        LocalBundle bundle2 = createMock( LocalBundle.class );
+        BundleReference bundle2 = createMock( BundleReference.class );
         bundles.add( bundle2 );
-        BundleReference reference2 = createMock( BundleReference.class );
-        expect( bundle2.getFile() ).andReturn( new File( m_workDir, "bundles/bundle2.jar" ) );
-        expect( bundle2.getBundleReference() ).andReturn( reference2 );
-        expect( reference2.getStartLevel() ).andReturn( 10 );
-        expect( reference2.shouldStart() ).andReturn( null );
+        expect( bundle2.getURL() ).andReturn( new File( m_workDir, "bundles/bundle2.jar" ).toURL() );
+        expect( bundle2.getStartLevel() ).andReturn( 10 );
+        expect( bundle2.shouldStart() ).andReturn( null );
 
         // a bunlde without start level that should start
-        LocalBundle bundle3 = createMock( LocalBundle.class );
+        BundleReference bundle3 = createMock( BundleReference.class );
         bundles.add( bundle3 );
-        BundleReference reference3 = createMock( BundleReference.class );
-        expect( bundle3.getFile() ).andReturn( new File( m_workDir, "bundles/bundle3.jar" ) );
-        expect( bundle3.getBundleReference() ).andReturn( reference3 );
-        expect( reference3.getStartLevel() ).andReturn( null );
-        expect( reference3.shouldStart() ).andReturn( true );
+        expect( bundle3.getURL() ).andReturn( new File( m_workDir, "bundles/bundle3.jar" ).toURL() );
+        expect( bundle3.getStartLevel() ).andReturn( null );
+        expect( bundle3.shouldStart() ).andReturn( true );
 
         // a bundle without start level that should not start
-        LocalBundle bundle4 = createMock( LocalBundle.class );
+        BundleReference bundle4 = createMock( BundleReference.class );
         bundles.add( bundle4 );
-        BundleReference reference4 = createMock( BundleReference.class );
-        expect( bundle4.getFile() ).andReturn( new File( m_workDir, "bundles/bundle4.jar" ) );
-        expect( bundle4.getBundleReference() ).andReturn( reference4 );
-        expect( reference4.getStartLevel() ).andReturn( null );
-        expect( reference4.shouldStart() ).andReturn( null );
+        expect( bundle4.getURL() ).andReturn( new File( m_workDir, "bundles/bundle4.jar" ).toURL() );
+        expect( bundle4.getStartLevel() ).andReturn( null );
+        expect( bundle4.shouldStart() ).andReturn( null );
 
         m_platformContext.setBundles( bundles );
         m_platformContext.setExecutionEnvironment( "EE-1,EE-2" );
@@ -275,13 +266,11 @@ public class FelixPlatformBuilderF100T122Test
         expect( m_configuration.usePersistedState() ).andReturn( false );
 
         replay( m_bundleContext, m_configuration,
-                bundle1, bundle2, bundle3,
-                reference1, reference2, reference3, bundle4, reference4
+                bundle1, bundle2, bundle3, bundle4
         );
         new FelixPlatformBuilderF100T122( m_bundleContext, "version" ).prepare( m_platformContext );
         verify( m_bundleContext, m_configuration,
-                bundle1, bundle2, bundle3,
-                reference1, reference2, reference3, bundle4, reference4
+                bundle1, bundle2, bundle3, bundle4
         );
 
         Map<String, String> replacements = new HashMap<String, String>();

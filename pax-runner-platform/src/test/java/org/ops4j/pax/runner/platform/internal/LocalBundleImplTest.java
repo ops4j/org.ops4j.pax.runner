@@ -28,19 +28,19 @@ public class LocalBundleImplTest
     @Test( expected = IllegalArgumentException.class )
     public void constructorWithNullBundleReference()
     {
-        new LocalBundleImpl( null, new File( "aFile" ) );
+        new LocalBundleReference( null, new File( "aFile" ) );
     }
 
     @Test( expected = IllegalArgumentException.class )
     public void constructorWithNullFile()
     {
-        new LocalBundleImpl( createMock( BundleReference.class ), null );
+        new LocalBundleReference( createMock( BundleReference.class ), null );
     }
 
     @Test
     public void constructor()
     {
-        new LocalBundleImpl( createMock( BundleReference.class ), new File( "aFile" ) );
+        new LocalBundleReference( createMock( BundleReference.class ), new File( "aFile" ) );
     }
 
 }

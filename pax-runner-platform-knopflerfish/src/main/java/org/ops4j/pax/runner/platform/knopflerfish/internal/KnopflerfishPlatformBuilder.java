@@ -38,7 +38,6 @@ import org.ops4j.io.FileUtils;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
-import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
@@ -119,7 +118,7 @@ public class KnopflerfishPlatformBuilder
         throws PlatformException
     {
         NullArgumentException.validateNotNull( context, "Platform context" );
-        final List<LocalBundle> bundles = context.getBundles();
+        final List<BundleReference> bundles = context.getBundles();
         OutputStream os = null;
         try
         {
@@ -270,22 +269,21 @@ public class KnopflerfishPlatformBuilder
      *                                        if one of the bundles does not have a file
      */
     private void appendBundles( final PropertiesWriter writer,
-                                final List<LocalBundle> bundles,
+                                final List<BundleReference> bundles,
                                 final PlatformContext context,
                                 final Integer defaultStartlevel )
         throws MalformedURLException, PlatformException
     {
-        for( LocalBundle bundle : bundles )
+        for( BundleReference reference : bundles )
         {
-            File bundleFile = bundle.getFile();
-            if( bundleFile == null )
+            URL url = reference.getURL();
+            if( url == null )
             {
-                throw new PlatformException( "The file from bundle to install cannot be null" );
+                throw new PlatformException( "URL of the bundle to install cannot be null" );
             }
 
             String propertyName;
 
-            final BundleReference reference = bundle.getBundleReference();
             final Boolean shouldStart = reference.shouldStart();
             if( shouldStart != null && shouldStart )
             {
@@ -295,8 +293,8 @@ public class KnopflerfishPlatformBuilder
             {
                 propertyName = "-install ";
             }
-            // TODO knopflerfish does not support start level per bundle. Workaround ?
-            writer.appendRaw( propertyName + context.normalizeAsUrl( bundleFile ) );
+            // TODO knopflerfish does not support start level per reference. Workaround ?
+            writer.appendRaw( propertyName + context.normalizeAsUrl( url ) );
         }
     }
 

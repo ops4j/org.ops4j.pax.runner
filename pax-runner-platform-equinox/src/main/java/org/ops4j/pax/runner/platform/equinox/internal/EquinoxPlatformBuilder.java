@@ -37,7 +37,6 @@ import org.osgi.framework.Constants;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
-import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
@@ -141,7 +140,7 @@ public class EquinoxPlatformBuilder
     private void createConfigIniFile( final PlatformContext context )
         throws PlatformException
     {
-        final List<LocalBundle> bundles = context.getBundles();
+        final List<BundleReference> bundles = context.getBundles();
         OutputStream os = null;
         try
         {
@@ -379,22 +378,21 @@ public class EquinoxPlatformBuilder
      *                                        if one of the bundles does not have a file
      */
     private void appendBundles( final PropertiesWriter writer,
-                                final List<LocalBundle> bundles,
+                                final List<BundleReference> bundles,
                                 final PlatformContext context )
         throws MalformedURLException, PlatformException
     {
-        for( LocalBundle bundle : bundles )
+        for( BundleReference reference : bundles )
         {
-            File bundleFile = bundle.getFile();
-            if( bundleFile == null )
+            URL url = reference.getURL();
+            if( url == null )
             {
                 throw new PlatformException( "The file from bundle to install cannot be null" );
             }
             final StringBuilder builder = new StringBuilder()
                 .append( "reference:" )
-                .append( context.normalizeAsUrl( bundleFile ) );
+                .append( context.normalizeAsUrl( url ) );
 
-            final BundleReference reference = bundle.getBundleReference();
             final Integer startLevel = reference.getStartLevel();
             if( startLevel != null )
             {

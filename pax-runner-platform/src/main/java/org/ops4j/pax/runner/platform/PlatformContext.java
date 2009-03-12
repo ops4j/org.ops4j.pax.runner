@@ -20,6 +20,7 @@ package org.ops4j.pax.runner.platform;
 import java.io.File;
 import java.util.List;
 import java.util.Properties;
+import java.net.URL;
 
 /**
  * PlatformImpl start context.
@@ -37,14 +38,14 @@ public interface PlatformContext
      *
      * @return a list of local bundles
      */
-    List<LocalBundle> getBundles();
+    List<BundleReference> getBundles();
 
     /**
      * Sets the client bundles to be installed.
      *
      * @param platformBundles a list of Local Bundles
      */
-    void setBundles( List<LocalBundle> platformBundles );
+    void setBundles( List<BundleReference> platformBundles );
 
     /**
      * Returns the working directory.
@@ -120,6 +121,8 @@ public interface PlatformContext
     /**
      * Returns the file in relative form (compared to working directory)
      *
+     * @param file file to normalize
+     *
      * @return the file in relative form (compared to working directory)
      */
     String normalizeAsPath( File file );
@@ -127,9 +130,21 @@ public interface PlatformContext
     /**
      * Returns the file in relative form as url (compared to working directory)
      *
+     * @param file file to normalize
+     *
      * @return the file in relative form as url (compared to working directory)
      */
     String normalizeAsUrl( File file );
+
+    /**
+     * Returns the url in relative form as url (compared to working directory).
+     * The normalization is done only in case that the url is a file url.
+     *
+     * @param url url to normalize
+     *
+     * @return the url in relative form as url (compared to working directory)
+     */
+    String normalizeAsUrl( URL url );    
 
 
 }

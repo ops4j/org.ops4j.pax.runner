@@ -37,7 +37,6 @@ import org.osgi.framework.Constants;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
-import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
@@ -118,7 +117,7 @@ public class FelixPlatformBuilderF140
         throws PlatformException
     {
         NullArgumentException.validateNotNull( context, "Platform context" );
-        final List<LocalBundle> bundles = context.getBundles();
+        final List<BundleReference> bundles = context.getBundles();
         OutputStream os = null;
         try
         {
@@ -261,22 +260,21 @@ public class FelixPlatformBuilderF140
      *                                        if one of the bundles does not have a file
      */
     private void appendBundles( final PropertiesWriter writer,
-                                final List<LocalBundle> bundles,
+                                final List<BundleReference> bundles,
                                 final PlatformContext context,
                                 final Integer defaultStartlevel )
         throws MalformedURLException, PlatformException
     {
-        for( LocalBundle bundle : bundles )
+        for( BundleReference reference : bundles )
         {
-            File bundleFile = bundle.getFile();
-            if( bundleFile == null )
+            URL url = reference.getURL();
+            if( url == null )
             {
                 throw new PlatformException( "The file from bundle to install cannot be null" );
             }
             final StringBuilder propertyName = new StringBuilder()
                 .append( "felix.auto" );
 
-            final BundleReference reference = bundle.getBundleReference();
             final Boolean shouldStart = reference.shouldStart();
             if( shouldStart != null && shouldStart )
             {
@@ -297,7 +295,7 @@ public class FelixPlatformBuilderF140
             }
             // PAXRUNNER-41
             // url of the file must be quoted otherwise will be considered as two separated files by Felix
-            writer.append( propertyName.toString(), "\"" + context.normalizeAsUrl( bundleFile ) + "\"" );
+            writer.append( propertyName.toString(), "\"" + context.normalizeAsUrl( url ) + "\"" );
         }
     }
 

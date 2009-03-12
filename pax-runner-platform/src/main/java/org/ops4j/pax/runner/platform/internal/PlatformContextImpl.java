@@ -19,12 +19,13 @@ package org.ops4j.pax.runner.platform.internal;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
-import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.PlatformContext;
 
 public class PlatformContextImpl
@@ -33,7 +34,7 @@ public class PlatformContextImpl
 
     private static Log LOG = LogFactory.getLog( PlatformContextImpl.class );
 
-    private List<LocalBundle> m_bundles;
+    private List<BundleReference> m_bundles;
     private File m_workingDirectory;
     private Properties m_properties;
     private String m_systemPackages;
@@ -43,7 +44,7 @@ public class PlatformContextImpl
     /**
      * {@inheritDoc}
      */
-    public List<LocalBundle> getBundles()
+    public List<BundleReference> getBundles()
     {
         return m_bundles;
     }
@@ -51,7 +52,7 @@ public class PlatformContextImpl
     /**
      * {@inheritDoc}
      */
-    public void setBundles( final List<LocalBundle> bundles )
+    public void setBundles( final List<BundleReference> bundles )
     {
         m_bundles = bundles;
     }
@@ -136,14 +137,32 @@ public class PlatformContextImpl
         m_executionEnvironment = executionEnvironment;
     }
 
-    public String normalizeAsPath( File file )
+    /**
+     * {@inheritDoc}
+     */
+    public String normalizeAsPath( final File file )
     {
         return normalizePath( getWorkingDirectory(), file );
     }
 
-    public String normalizeAsUrl( File file )
+    /**
+     * {@inheritDoc}
+     */
+    public String normalizeAsUrl( final File file )
     {
         return "file:" + normalizePath( getWorkingDirectory(), file );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String normalizeAsUrl( final URL url )
+    {
+        if( "file".equals( url.getProtocol() ) )
+        {
+            return "file:" + normalizePath( getWorkingDirectory(), new File( url.getFile() ) );
+        }
+        return url.toExternalForm();
     }
 
     /**

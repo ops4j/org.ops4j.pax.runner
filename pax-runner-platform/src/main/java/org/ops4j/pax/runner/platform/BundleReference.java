@@ -18,6 +18,7 @@
 package org.ops4j.pax.runner.platform;
 
 import java.net.URL;
+import java.net.MalformedURLException;
 
 /**
  * Metadata about the bundle.

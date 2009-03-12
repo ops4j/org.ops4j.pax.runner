@@ -153,7 +153,7 @@ public class BundleReferenceBean
             return false;
         }
         final BundleReference another = (BundleReference) object;
-        return m_name.equals( another.getName() ) && m_url.equals( another.getURL() );
+        return getName().equals( another.getName() ) && getURL().equals( another.getURL() );
     }
 
     /**
