@@ -56,7 +56,7 @@ public class LocalSystemFileImpl
     }
 
     /**
-     * @see org.ops4j.pax.runner.platform.LocalSystemFile#getSystemFileReference()
+     * {@inheritDoc}
      */
     public SystemFileReference getSystemFileReference()
     {
@@ -64,7 +64,7 @@ public class LocalSystemFileImpl
     }
 
     /**
-     * @see org.ops4j.pax.runner.platform.LocalBundle#getFile()
+     * {@inheritDoc}
      */
     public File getFile()
     {
@@ -72,8 +72,9 @@ public class LocalSystemFileImpl
     }
 
     /**
-     * @see Object#toString()
+     * {@inheritDoc}
      */
+    @Override
     public String toString()
     {
         return new StringBuilder()
