@@ -17,13 +17,13 @@
  */
 package org.ops4j.pax.runner.platform.internal;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.BufferedInputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,7 +50,6 @@ import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
 import org.ops4j.pax.runner.platform.SystemFileReference;
-import org.ops4j.pax.runner.platform.ServiceConstants;
 import org.ops4j.util.property.DictionaryPropertyResolver;
 import org.ops4j.util.property.PropertyResolver;
 
@@ -163,7 +162,7 @@ public class PlatformImpl
         LOGGER.debug( "Download bundles" );
         bundlesToInstall.addAll(
             downloadBundles(
-                workDir, bundles, overwriteBundles || overwriteUserBundles, downloadFeeback
+                workDir, bundles, overwriteBundles || overwriteUserBundles, downloadFeeback, configuration.isAutoWrap()
             )
         );
         context.setBundles( bundlesToInstall );
@@ -289,13 +288,17 @@ public class PlatformImpl
      * @param workDir         the directory where to download bundles
      * @param overwrite       if the bundles should be overwritten
      * @param downloadFeeback whether or not downloading process should display fne grained progres info
+     * @param autoWrap        wheather or not auto wrapping should take place
      *
      * @return a list of downloaded files
      *
      * @throws PlatformException re-thrown
      */
-    private List<LocalBundle> downloadBundles( final File workDir, final List<BundleReference> bundles,
-                                               final Boolean overwrite, final boolean downloadFeeback )
+    private List<LocalBundle> downloadBundles( final File workDir,
+                                               final List<BundleReference> bundles,
+                                               final Boolean overwrite,
+                                               final boolean downloadFeeback,
+                                               final boolean autoWrap )
         throws PlatformException
     {
         final List<LocalBundle> localBundles = new ArrayList<LocalBundle>();
@@ -317,7 +320,8 @@ public class PlatformImpl
                             reference.getName(),
                             overwrite || reference.shouldUpdate(),
                             true,
-                            downloadFeeback
+                            downloadFeeback,
+                            autoWrap
                         )
                     )
                 );
@@ -333,14 +337,16 @@ public class PlatformImpl
      * @param definition      to take the system package
      * @param platformContext current platform context
      * @param overwrite       if the bundles should be overwritten
-     * @param downloadFeeback whether or not downloading process should display fne grained progres info
+     * @param downloadFeeback whether or not downloading process should display fine grained progres info
      *
      * @return a list of downloaded files
      *
      * @throws PlatformException re-thrown
      */
-    private List<LocalBundle> downloadPlatformBundles( final File workDir, final PlatformDefinition definition,
-                                                       final PlatformContext platformContext, final Boolean overwrite,
+    private List<LocalBundle> downloadPlatformBundles( final File workDir,
+                                                       final PlatformDefinition definition,
+                                                       final PlatformContext platformContext,
+                                                       final Boolean overwrite,
                                                        final boolean downloadFeeback )
         throws PlatformException
     {
@@ -360,7 +366,11 @@ public class PlatformImpl
             profiles.append( builderProfile );
         }
         return downloadBundles(
-            workDir, definition.getPlatformBundles( profiles.toString() ), overwrite, downloadFeeback
+            workDir,
+            definition.getPlatformBundles( profiles.toString() ),
+            overwrite,
+            downloadFeeback,
+            false // do not autowrap, as framework related bundles are mostly alreay bundles
         );
     }
 
@@ -381,7 +391,13 @@ public class PlatformImpl
         throws PlatformException
     {
         return download(
-            workDir, definition.getSystemPackage(), definition.getSystemPackageName(), overwrite, false, downloadFeeback
+            workDir,
+            definition.getSystemPackage(),
+            definition.getSystemPackageName(),
+            overwrite,
+            false,
+            downloadFeeback,
+            false
         );
     }
 
@@ -409,7 +425,15 @@ public class PlatformImpl
                 downloaded.add(
                     new LocalSystemFileImpl(
                         reference,
-                        download( workDir, reference.getURL(), reference.getName(), overwrite, false, downloadFeeback )
+                        download(
+                            workDir,
+                            reference.getURL(),
+                            reference.getName(),
+                            overwrite,
+                            false,
+                            downloadFeeback,
+                            false // do not autowrap as system files are not required to be bundles
+                            )
                     )
                 );
             }
@@ -425,14 +449,20 @@ public class PlatformImpl
      * @param displayName     to be shown during download
      * @param overwrite       if the bundles should be overwritten
      * @param checkAttributes whether or not to check attributes in the manifest
-     * @param downloadFeeback whether or not downloading process should display fne grained progres info
+     * @param downloadFeeback whether or not downloading process should display fine grained progres info
+     * @param autoWrap        wheather or not auto wrapping should take place
      *
      * @return the File corresponding to the downloaded file.
      *
      * @throws PlatformException if the url could not be downloaded
      */
-    private File download( final File workDir, final URL url, final String displayName, final Boolean overwrite,
-                           final boolean checkAttributes, final boolean downloadFeeback )
+    private File download( final File workDir,
+                           final URL url,
+                           final String displayName,
+                           final Boolean overwrite,
+                           final boolean checkAttributes,
+                           final boolean downloadFeeback,
+                           final boolean autoWrap )
         throws PlatformException
     {
         LOGGER.debug( "Downloading [" + url + "]" );
@@ -507,7 +537,7 @@ public class PlatformImpl
             }
         }
 
-        if( m_propertyResolver != null && "true".equals( m_propertyResolver.get( ServiceConstants.CONFIG_AUTO_WRAP ) ) )
+        if( autoWrap )
         {
             wrapNonBundleJar( destination, url );
         }

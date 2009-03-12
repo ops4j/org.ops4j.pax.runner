@@ -491,4 +491,18 @@ public class ConfigurationImpl
         return get( ServiceConstants.CONFIG_BOOT_DELEGATION );
     }
 
+    /**
+     * @see Configuration#isAutoWrap()
+     */
+    public Boolean isAutoWrap()
+    {
+        if( !contains( ServiceConstants.CONFIG_AUTO_WRAP ) )
+        {
+            return set( ServiceConstants.CONFIG_AUTO_WRAP,
+                        Boolean.valueOf( m_propertyResolver.get( ServiceConstants.CONFIG_AUTO_WRAP ) )
+            );
+        }
+        return get( ServiceConstants.CONFIG_AUTO_WRAP );
+    }
+
 }

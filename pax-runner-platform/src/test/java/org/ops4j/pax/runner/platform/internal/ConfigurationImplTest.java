@@ -792,4 +792,43 @@ public class ConfigurationImplTest
         verify( propertyResolver );
     }
 
+    // normal flow
+    @Test
+    public void isAutoWrap()
+    {
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.autoWrap" ) ).andReturn( "true" );
+
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
+        assertEquals( "Auto Wrap", true, config.isAutoWrap() );
+        verify( propertyResolver );
+    }
+
+    // test that an invalid value will not cause problems and will return false
+    @Test
+    public void isAutoWrapWithInvalidValue()
+    {
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.autoWrap" ) ).andReturn( "of course" );
+
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
+        assertEquals( "Auto Wrap", false, config.isAutoWrap() );
+        verify( propertyResolver );
+    }
+
+    // default value should be false
+    @Test
+    public void isAutoWrapDefault()
+    {
+        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
+        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.autoWrap" ) ).andReturn( null );
+
+        replay( propertyResolver );
+        Configuration config = new ConfigurationImpl( propertyResolver );
+        assertEquals( "Auto Wrap", false, config.isAutoWrap() );
+        verify( propertyResolver );
+    }
+
 }

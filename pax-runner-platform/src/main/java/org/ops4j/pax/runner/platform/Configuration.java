@@ -182,7 +182,7 @@ public interface Configuration
     Boolean isDebugClassLoading();
 
     /**
-     * Retrurns true if detailed information about downloading process should be displayed.
+     * Returns true if detailed information about downloading process should be displayed.
      * Default value is true.
      *
      * @return value of download feedback option
@@ -197,4 +197,13 @@ public interface Configuration
      * @return value of boot delegation option
      */
     String getBootDelegation();
+
+    /**
+     * Returns true if not osgi compliant jars should be automatically wrapped (transformed to osgi compliant).
+     * Default value is false.
+     *
+     * @return value of auto wrap option
+     */
+    Boolean isAutoWrap();
+    
 }
