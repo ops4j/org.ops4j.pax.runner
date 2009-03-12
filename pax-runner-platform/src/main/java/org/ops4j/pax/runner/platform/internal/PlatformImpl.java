@@ -17,13 +17,13 @@
  */
 package org.ops4j.pax.runner.platform.internal;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,10 +69,6 @@ public class PlatformImpl
      * Logger.
      */
     private static final Log LOGGER = LogFactory.getLog( PlatformImpl.class );
-    /**
-     * relative location of ee packages root.
-     */
-    private static final String EE_FILES_ROOT = "META-INF/platform/ee/";
     /**
      * Concrete platform builder as equinox, felix, kf.
      */
@@ -216,13 +212,14 @@ public class PlatformImpl
      * @param systemFile    framework system files
      * @param systemFiles   local system files references
      * @param configuration configuration to get the classpath option
-     * @param context
+     * @param context       platform context
      *
      * @return array of classpath entries
      */
     private String[] buildClassPath( final File systemFile,
                                      final List<LocalSystemFile> systemFiles,
-                                     final Configuration configuration, PlatformContext context )
+                                     final Configuration configuration,
+                                     final PlatformContext context )
     {
         final StringBuilder prepend = new StringBuilder();
         final StringBuilder append = new StringBuilder();
@@ -306,10 +303,21 @@ public class PlatformImpl
         {
             for( BundleReference reference : bundles )
             {
-                final URL url = reference.getURL();
+                URL url = reference.getURL();
                 if( url == null )
                 {
                     throw new PlatformException( "Invalid url in bundle refrence [" + reference + "]" );
+                }
+                if( autoWrap )
+                {
+                    try
+                    {
+                        url = new URL( "wrap:" + url.toExternalForm() );
+                    }
+                    catch( MalformedURLException e )
+                    {
+                        LOGGER.warn( "Could not auto wrap url [" + url + "] due to: " + e.getMessage() );
+                    }
                 }
                 localBundles.add(
                     new LocalBundleImpl(
@@ -320,8 +328,7 @@ public class PlatformImpl
                             reference.getName(),
                             overwrite || reference.shouldUpdate(),
                             true,
-                            downloadFeeback,
-                            autoWrap
+                            downloadFeeback
                         )
                     )
                 );
@@ -396,8 +403,7 @@ public class PlatformImpl
             definition.getSystemPackageName(),
             overwrite,
             false,
-            downloadFeeback,
-            false
+            downloadFeeback
         );
     }
 
@@ -431,9 +437,8 @@ public class PlatformImpl
                             reference.getName(),
                             overwrite,
                             false,
-                            downloadFeeback,
-                            false // do not autowrap as system files are not required to be bundles
-                            )
+                            downloadFeeback
+                        )
                     )
                 );
             }
@@ -450,7 +455,6 @@ public class PlatformImpl
      * @param overwrite       if the bundles should be overwritten
      * @param checkAttributes whether or not to check attributes in the manifest
      * @param downloadFeeback whether or not downloading process should display fine grained progres info
-     * @param autoWrap        wheather or not auto wrapping should take place
      *
      * @return the File corresponding to the downloaded file.
      *
@@ -461,8 +465,7 @@ public class PlatformImpl
                            final String displayName,
                            final Boolean overwrite,
                            final boolean checkAttributes,
-                           final boolean downloadFeeback,
-                           final boolean autoWrap )
+                           final boolean downloadFeeback )
         throws PlatformException
     {
         LOGGER.debug( "Downloading [" + url + "]" );
@@ -535,11 +538,6 @@ public class PlatformImpl
             {
                 throw new PlatformException( "[" + url + "] could not be downloaded", e );
             }
-        }
-
-        if( autoWrap )
-        {
-            wrapNonBundleJar( destination, url );
         }
 
         String newFileName = validateBundleAndGetFilename( url, destination, hashFileName, checkAttributes );
@@ -699,128 +697,6 @@ public class PlatformImpl
                 {
                     // just ignore as this is less probably to happen.
                 }
-            }
-        }
-    }
-
-    /**
-     * This pipes
-     *
-     * @param file
-     * @param url  the original url for reference purposes
-     */
-    private void wrapNonBundleJar( File file, URL url )
-        throws PlatformException
-    {
-
-        JarFile jar = null;
-        try
-        {
-            // verify that is a valid jar. Do not verify that is signed (the false param).
-            jar = new JarFile( file, false );
-            final Manifest manifest = jar.getManifest();
-            if( manifest == null )
-            {
-                wrap( file, url );
-            }
-            else
-            {
-                String bundleSymbolicName = manifest.getMainAttributes().getValue( Constants.BUNDLE_SYMBOLICNAME );
-
-                if( bundleSymbolicName == null )
-                {
-                    wrap( file, url );
-                }
-            }
-
-        }
-        catch( IOException e )
-        {
-            throw new PlatformException( "[" + url + "] is not a jar.", e );
-        }
-        finally
-        {
-            if( jar != null )
-            {
-                try
-                {
-                    jar.close();
-                }
-                catch( IOException ignore )
-                {
-                    // just ignore as this is less probably to happen.
-                }
-            }
-        }
-    }
-
-    private void wrap( File file, URL url )
-        throws PlatformException
-    {
-        BufferedOutputStream bout = null;
-        BufferedInputStream bin = null;
-        File tmp = null;
-        try
-        {
-            String symbolicName = url.toExternalForm().replaceAll( "[^a-zA-Z_0-9.-]", "_" );
-            URL wrapped = new URL( "wrap:" + file.toURL().toExternalForm() + "$Bundle-SymbolicName=" + symbolicName );
-
-            tmp = File.createTempFile( file.getName(), "tmp" );
-            bout = new BufferedOutputStream( new FileOutputStream( tmp ) );
-            StreamUtils.streamCopy( wrapped.openStream(), bout, null );
-            bout.close();
-
-            // write it back to original location (overwrite)
-            bout = new BufferedOutputStream( new FileOutputStream( file ) );
-            bin = new BufferedInputStream( new FileInputStream( tmp ) );
-            StreamUtils.streamCopy( bin, bout, null );
-            bout.close();
-
-            LOGGER.debug( "Automatically wrapped [" + url + "] to a bundle." );
-        }
-        catch( IOException e )
-        {
-            // leave as is because some artefacts might be ok to be not wrapped as a bundle.
-            LOGGER.info( "Tried to convert [" + url + "] to a bundle but failed.", e );
-        }
-        finally
-        {
-            try
-            {
-                if( bin != null )
-                {
-                    bin.close();
-                }
-
-            }
-            catch( IOException ioE )
-            {
-
-            }
-
-            try
-            {
-                if( bout != null )
-                {
-                    bout.close();
-                }
-
-            }
-            catch( IOException ioE )
-            {
-
-            }
-
-            try
-            {
-                if( tmp != null )
-                {
-                    tmp.delete();
-                }
-            }
-            catch( Exception e )
-            {
-
             }
         }
     }
