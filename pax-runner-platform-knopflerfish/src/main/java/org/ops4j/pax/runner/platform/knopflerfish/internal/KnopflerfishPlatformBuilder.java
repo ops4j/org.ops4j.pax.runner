@@ -112,7 +112,7 @@ public class KnopflerfishPlatformBuilder
     /**
      * Creates a config.ini file under the working directory/knopflerfish directory.
      *
-     * @see org.ops4j.pax.runner.platform.PlatformBuilder
+     * @see PlatformBuilder
      *      #prepare(org.ops4j.pax.runner.platform.PlatformContext)
      */
     public void prepare( final PlatformContext context )
@@ -206,7 +206,7 @@ public class KnopflerfishPlatformBuilder
                 writer.append( "#############################" );
                 writer.append( " Client bundles to install" );
                 writer.append( "#############################" );
-                appendBundles( writer, bundles, configuration.getBundleStartLevel() );
+                appendBundles( writer, bundles, context, configuration.getBundleStartLevel() );
             }
 
             writer.append();
@@ -262,13 +262,16 @@ public class KnopflerfishPlatformBuilder
      *
      * @param writer            a property writer
      * @param bundles           bundles to write
-     * @param defaultStartlevel default start level for bundles. used if no start level is set on bundles.
+     * @param context           platform context
+     * @param defaultStartlevel default start level for bundles. used if no start level is set on bundles
      *
      * @throws java.net.MalformedURLException re-thrown from getting the file url
      * @throws org.ops4j.pax.runner.platform.PlatformException
      *                                        if one of the bundles does not have a file
      */
-    private void appendBundles( final PropertiesWriter writer, final List<LocalBundle> bundles,
+    private void appendBundles( final PropertiesWriter writer,
+                                final List<LocalBundle> bundles,
+                                final PlatformContext context,
                                 final Integer defaultStartlevel )
         throws MalformedURLException, PlatformException
     {
@@ -280,7 +283,7 @@ public class KnopflerfishPlatformBuilder
                 throw new PlatformException( "The file from bundle to install cannot be null" );
             }
 
-            String propertyName = null;
+            String propertyName;
 
             final BundleReference reference = bundle.getBundleReference();
             final Boolean shouldStart = reference.shouldStart();
@@ -293,7 +296,7 @@ public class KnopflerfishPlatformBuilder
                 propertyName = "-install ";
             }
             // TODO knopflerfish does not support start level per bundle. Workaround ?
-            writer.appendRaw( propertyName + bundleFile.toURL().toExternalForm() );
+            writer.appendRaw( propertyName + context.normalizeAsUrl( bundleFile ) );
         }
     }
 
@@ -317,7 +320,7 @@ public class KnopflerfishPlatformBuilder
     }
 
     /**
-     * @see org.ops4j.pax.runner.platform.PlatformBuilder#getMainClassName()
+     * @see PlatformBuilder#getMainClassName()
      */
     public String getMainClassName()
     {
@@ -325,31 +328,22 @@ public class KnopflerfishPlatformBuilder
     }
 
     /**
-     * @see org.ops4j.pax.runner.platform.PlatformBuilder
+     * @see PlatformBuilder
      *      #getArguments(org.ops4j.pax.runner.platform.PlatformContext)
      */
     public String[] getArguments( final PlatformContext context )
     {
         NullArgumentException.validateNotNull( context, "Platform context" );
-        try
-        {
-            return new String[]{
-                "-xargs",
-                new File( context.getWorkingDirectory(), CONFIG_DIRECTORY + File.separator + CONFIG_INI
-                ).getAbsoluteFile()
-                    .toURL().toExternalForm()
-            };
-        }
-        catch( MalformedURLException e )
-        {
-            // TODO shall a platform exception be thrown instead of RuntimeException?
-            throw new RuntimeException( e );
-        }
+        return new String[]{
+            "-xargs",
+            context.normalizeAsUrl(
+                new File( new File( context.getWorkingDirectory(), CONFIG_DIRECTORY ), CONFIG_INI )
+            )
+        };
     }
 
     /**
-     * @see org.ops4j.pax.runner.platform.PlatformBuilder
-     *      #getVMOptions(org.ops4j.pax.runner.platform.PlatformContext)
+     * @see PlatformBuilder#getVMOptions(PlatformContext)
      */
     public String[] getVMOptions( final PlatformContext context )
     {
@@ -358,15 +352,14 @@ public class KnopflerfishPlatformBuilder
         final Collection<String> vmOptions = new ArrayList<String>();
         final File workingDirectory = context.getWorkingDirectory();
         vmOptions.add(
-            "-Dorg.osgi.framework.dir=" + workingDirectory.getAbsolutePath()
-            + File.separator + CONFIG_DIRECTORY
-            + File.separator + CACHE_DIRECTORY
+            "-Dorg.osgi.framework.dir="
+            + context.normalizeAsPath( new File( new File( workingDirectory, CONFIG_DIRECTORY ), CACHE_DIRECTORY ) )
         );
         return vmOptions.toArray( new String[vmOptions.size()] );
     }
 
     /**
-     * @see org.ops4j.pax.runner.platform.PlatformBuilder#getDefinition()
+     * @see PlatformBuilder#getDefinition()
      */
     public InputStream getDefinition()
         throws IOException
@@ -383,7 +376,7 @@ public class KnopflerfishPlatformBuilder
     /**
      * If the console option is set then it will return the tui profile otherwise will return null.
      *
-     * @see org.ops4j.pax.runner.platform.PlatformBuilder
+     * @see PlatformBuilder
      *      #getRequiredProfile(org.ops4j.pax.runner.platform.PlatformContext)
      */
     public String getRequiredProfile( final PlatformContext context )

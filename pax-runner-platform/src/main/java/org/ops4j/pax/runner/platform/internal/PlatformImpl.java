@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.BufferedInputStream;
 import java.net.URL;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Dictionary;
@@ -181,7 +180,7 @@ public class PlatformImpl
         vmOptions.append( configuration.getVMOptions() );
         vmOptions.append( m_platformBuilder.getVMOptions( context ) );
 
-        final String[] classpath = buildClassPath( systemFile, locaSystemFiles, configuration );
+        final String[] classpath = buildClassPath( systemFile, locaSystemFiles, configuration, context );
 
         final CommandLineBuilder programOptions = new CommandLineBuilder();
         programOptions.append( m_platformBuilder.getArguments( context ) );
@@ -218,15 +217,17 @@ public class PlatformImpl
      * @param systemFile    framework system files
      * @param systemFiles   local system files references
      * @param configuration configuration to get the classpath option
+     * @param context
      *
      * @return array of classpath entries
      */
     private String[] buildClassPath( final File systemFile,
                                      final List<LocalSystemFile> systemFiles,
-                                     final Configuration configuration )
+                                     final Configuration configuration, PlatformContext context )
     {
         final StringBuilder prepend = new StringBuilder();
         final StringBuilder append = new StringBuilder();
+
         for( LocalSystemFile ref : systemFiles )
         {
             if( ref.getSystemFileReference().shouldPrepend() )
@@ -235,7 +236,7 @@ public class PlatformImpl
                 {
                     prepend.append( File.pathSeparator );
                 }
-                prepend.append( ref.getFile().getAbsolutePath() );
+                prepend.append( context.normalizeAsPath( ref.getFile() ) );
             }
             else
             {
@@ -243,7 +244,7 @@ public class PlatformImpl
                 {
                     append.append( File.pathSeparator );
                 }
-                append.append( ref.getFile().getAbsolutePath() );
+                append.append( context.normalizeAsPath( ref.getFile() ) );
             }
         }
         if( prepend.length() != 0 )
@@ -256,7 +257,7 @@ public class PlatformImpl
         }
         final StringBuilder classPath = new StringBuilder();
         classPath.append( prepend );
-        classPath.append( systemFile.getAbsolutePath() );
+        classPath.append( context.normalizeAsPath( systemFile ) );
         classPath.append( append );
         classPath.append( configuration.getClasspath() );
 
@@ -886,10 +887,12 @@ public class PlatformImpl
             InputStream inputStream = null;
             if( definitionURL != null )
             {
+                LOGGER.debug( "loading definition from url " + definitionURL.toExternalForm() );
                 inputStream = definitionURL.openStream();
             }
             if( inputStream == null )
             {
+                LOGGER.debug( "loading definition from builder." );
                 inputStream = m_platformBuilder.getDefinition();
             }
             return new PlatformDefinitionImpl( inputStream, configuration.getProfileStartLevel() );

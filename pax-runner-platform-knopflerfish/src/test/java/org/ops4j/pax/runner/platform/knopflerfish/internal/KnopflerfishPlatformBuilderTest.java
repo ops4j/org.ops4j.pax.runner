@@ -34,13 +34,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.ops4j.io.FileUtils;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
+import org.ops4j.pax.runner.platform.internal.PlatformContextImpl;
 
 public class KnopflerfishPlatformBuilderTest
 {
@@ -48,6 +48,7 @@ public class KnopflerfishPlatformBuilderTest
     private File m_workDir;
     private BundleContext m_bundleContext;
     private Configuration m_configuration;
+    private PlatformContext m_platformContext;
 
     @Before
     public void setUp()
@@ -60,6 +61,9 @@ public class KnopflerfishPlatformBuilderTest
         m_workDir = new File( m_workDir.getAbsolutePath() );
         m_workDir.mkdirs();
         m_workDir.deleteOnExit();
+        m_platformContext = new PlatformContextImpl();
+        m_platformContext.setConfiguration( m_configuration );
+        m_platformContext.setWorkingDirectory( m_workDir );
     }
 
     @After
@@ -114,73 +118,59 @@ public class KnopflerfishPlatformBuilderTest
     @Test
     public void getRequiredProfilesWithoutConsole()
     {
-        PlatformContext platformContext = createMock( PlatformContext.class );
-
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
         expect( m_configuration.startConsole() ).andReturn( null );
 
-        replay( m_bundleContext, m_configuration, platformContext );
+        replay( m_bundleContext, m_configuration );
         assertNull(
             "Required profiles is not null",
-            new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).getRequiredProfile( platformContext )
+            new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).getRequiredProfile( m_platformContext )
         );
-        verify( m_bundleContext, m_configuration, platformContext );
+        verify( m_bundleContext, m_configuration );
     }
 
     @Test
     public void getRequiredProfilesWithConsole()
     {
-        PlatformContext platformContext = createMock( PlatformContext.class );
-
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
         expect( m_configuration.startConsole() ).andReturn( true );
 
-        replay( m_bundleContext, m_configuration, platformContext );
+        replay( m_bundleContext, m_configuration );
         assertEquals(
             "Required profiles",
             "tui",
-            new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).getRequiredProfile( platformContext )
+            new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).getRequiredProfile( m_platformContext )
         );
-        verify( m_bundleContext, m_configuration, platformContext );
+        verify( m_bundleContext, m_configuration );
     }
 
     @Test
     public void getArguments()
         throws MalformedURLException
     {
-        PlatformContext platformContext = createMock( PlatformContext.class );
-
-        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-
-        replay( m_bundleContext, platformContext );
+        replay( m_bundleContext );
         assertArrayEquals(
             "Arguments",
             new String[]{
                 "-xargs",
-                new File( m_workDir, "knopflerfish/config.ini" ).getAbsoluteFile().toURL().toExternalForm(),
+                m_platformContext.normalizeAsUrl( new File( m_workDir, "knopflerfish/config.ini" ) ),
             },
-            new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).getArguments( platformContext )
+            new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).getArguments( m_platformContext )
         );
-        verify( m_bundleContext, platformContext );
+        verify( m_bundleContext );
     }
 
     @Test
     public void getVMOptions()
     {
-        PlatformContext platformContext = createMock( PlatformContext.class );
-
-        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-
-        replay( m_bundleContext, platformContext );
+        replay( m_bundleContext );
         assertArrayEquals(
             "System properties",
             new String[]{
                 "-Dorg.osgi.framework.dir="
-                + m_workDir.getAbsolutePath() + File.separator + "knopflerfish" + File.separator + "fwdir"
+                + m_platformContext.normalizeAsPath( new File( m_workDir, "knopflerfish/fwdir" ) )
             },
-            new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).getVMOptions( platformContext )
+            new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).getVMOptions( m_platformContext )
         );
-        verify( m_bundleContext, platformContext );
+        verify( m_bundleContext );
     }
 
     @Test( expected = IllegalArgumentException.class )
@@ -207,25 +197,20 @@ public class KnopflerfishPlatformBuilderTest
     public void prepareWithoutBundles()
         throws PlatformException, IOException
     {
-        PlatformContext platformContext = createMock( PlatformContext.class );
+        m_platformContext.setExecutionEnvironment( "EE-1,EE-2" );
+        m_platformContext.setSystemPackages( "sys.package.one,sys.package.two" );
+        Properties properties = new Properties();
+        properties.setProperty( "myProperty", "myValue" );
+        m_platformContext.setProperties( properties );
 
-        expect( platformContext.getBundles() ).andReturn( null );
-        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration ).times( 2 );
         expect( m_configuration.usePersistedState() ).andReturn( false );
-        expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1,EE-2" );
         expect( m_configuration.getBootDelegation() ).andReturn( "javax.*" );
-        expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );
 
-        Properties properties = new Properties();
-        properties.setProperty( "myProperty", "myValue" );
-        expect( platformContext.getProperties() ).andReturn( properties );
-
-        replay( m_bundleContext, m_configuration, platformContext );
-        new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).prepare( platformContext );
-        verify( m_bundleContext, m_configuration, platformContext );
+        replay( m_bundleContext, m_configuration );
+        new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).prepare( m_platformContext );
+        verify( m_bundleContext, m_configuration );
 
         compareFiles(
             FileUtils.getFileFromClasspath( "knopflerfishplatformbuilder/configWithNoBundles.ini" ),
@@ -242,15 +227,13 @@ public class KnopflerfishPlatformBuilderTest
     public void prepare()
         throws PlatformException, IOException
     {
-        PlatformContext platformContext = createMock( PlatformContext.class );
-
         List<LocalBundle> bundles = new ArrayList<LocalBundle>();
 
         // a bunlde with start level that should start
         LocalBundle bundle1 = createMock( LocalBundle.class );
         bundles.add( bundle1 );
         BundleReference reference1 = createMock( BundleReference.class );
-        expect( bundle1.getFile() ).andReturn( new File( "bundle1.jar" ) );
+        expect( bundle1.getFile() ).andReturn( new File( m_workDir, "bundles/bundle1.jar" ) );
         expect( bundle1.getBundleReference() ).andReturn( reference1 );
         //expect( reference1.getStartLevel() ).andReturn( 10 );
         expect( reference1.shouldStart() ).andReturn( true );
@@ -259,7 +242,7 @@ public class KnopflerfishPlatformBuilderTest
         LocalBundle bundle2 = createMock( LocalBundle.class );
         bundles.add( bundle2 );
         BundleReference reference2 = createMock( BundleReference.class );
-        expect( bundle2.getFile() ).andReturn( new File( "bundle2.jar" ) );
+        expect( bundle2.getFile() ).andReturn( new File( m_workDir, "bundles/bundle2.jar" ) );
         expect( bundle2.getBundleReference() ).andReturn( reference2 );
         //expect( reference2.getStartLevel() ).andReturn( 10 );
         expect( reference2.shouldStart() ).andReturn( null );
@@ -268,7 +251,7 @@ public class KnopflerfishPlatformBuilderTest
         LocalBundle bundle3 = createMock( LocalBundle.class );
         bundles.add( bundle3 );
         BundleReference reference3 = createMock( BundleReference.class );
-        expect( bundle3.getFile() ).andReturn( new File( "bundle3.jar" ) );
+        expect( bundle3.getFile() ).andReturn( new File( m_workDir, "bundles/bundle3.jar" ) );
         expect( bundle3.getBundleReference() ).andReturn( reference3 );
         //expect( reference3.getStartLevel() ).andReturn( null );
         expect( reference3.shouldStart() ).andReturn( true );
@@ -277,38 +260,50 @@ public class KnopflerfishPlatformBuilderTest
         LocalBundle bundle4 = createMock( LocalBundle.class );
         bundles.add( bundle4 );
         BundleReference reference4 = createMock( BundleReference.class );
-        expect( bundle4.getFile() ).andReturn( new File( "bundle4.jar" ) );
+        expect( bundle4.getFile() ).andReturn( new File( m_workDir, "bundles/bundle4.jar" ) );
         expect( bundle4.getBundleReference() ).andReturn( reference4 );
         //expect( reference4.getStartLevel() ).andReturn( null );
         expect( reference4.shouldStart() ).andReturn( null );
 
-        expect( platformContext.getBundles() ).andReturn( bundles );
-        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration ).times( 2 );
         expect( m_configuration.usePersistedState() ).andReturn( false );
-        expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1,EE-2" );
         expect( m_configuration.getBootDelegation() ).andReturn( null );
-        expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
         expect( m_configuration.getStartLevel() ).andReturn( 10 );
         expect( m_configuration.getBundleStartLevel() ).andReturn( 20 ).times( 2 );
 
+        m_platformContext.setBundles( bundles );
+        m_platformContext.setExecutionEnvironment( "EE-1,EE-2" );
+        m_platformContext.setSystemPackages( "sys.package.one,sys.package.two" );
         Properties properties = new Properties();
         properties.setProperty( "myProperty", "myValue" );
-        expect( platformContext.getProperties() ).andReturn( properties );
+        m_platformContext.setProperties( properties );
 
-        replay( m_bundleContext, m_configuration, platformContext, bundle1, bundle2, bundle3, reference1, reference2,
-                reference3, bundle4, reference4
+        replay( m_bundleContext, m_configuration,
+                bundle1, bundle2, bundle3,
+                reference1, reference2, reference3, bundle4, reference4
         );
-        new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).prepare( platformContext );
-        verify( m_bundleContext, m_configuration, platformContext, bundle1, bundle2, bundle3, reference1, reference2,
-                reference3, bundle4, reference4
+        new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).prepare( m_platformContext );
+        verify( m_bundleContext, m_configuration,
+                bundle1, bundle2, bundle3,
+                reference1, reference2, reference3, bundle4, reference4
         );
 
         Map<String, String> replacements = new HashMap<String, String>();
-        replacements.put( "${bundle1.path}", new File( "bundle1.jar" ).toURL().toExternalForm() );
-        replacements.put( "${bundle2.path}", new File( "bundle2.jar" ).toURL().toExternalForm() );
-        replacements.put( "${bundle3.path}", new File( "bundle3.jar" ).toURL().toExternalForm() );
-        replacements.put( "${bundle4.path}", new File( "bundle4.jar" ).toURL().toExternalForm() );
+        replacements.put(
+            "${bundle1.path}",
+            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle1.jar" ) )
+        );
+        replacements.put(
+            "${bundle2.path}",
+            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle2.jar" ) )
+        );
+        replacements.put(
+            "${bundle3.path}",
+            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle3.jar" ) )
+        );
+        replacements.put(
+            "${bundle4.path}",
+            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle4.jar" ) )
+        );
 
         compareFiles(
             FileUtils.getFileFromClasspath( "knopflerfishplatformbuilder/config.ini" ),
@@ -376,22 +371,14 @@ public class KnopflerfishPlatformBuilderTest
     public void clean( boolean usePersistedState )
         throws PlatformException, IOException
     {
-        PlatformContext platformContext = createMock( PlatformContext.class );
-
-        expect( platformContext.getBundles() ).andReturn( null );
-        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration ).times( 2 );
-        expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1,EE-2" );
         expect( m_configuration.getBootDelegation() ).andReturn( null );
-        expect( platformContext.getSystemPackages() ).andReturn( null );
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );
         expect( m_configuration.usePersistedState() ).andReturn( usePersistedState );
-        expect( platformContext.getProperties() ).andReturn( null );
 
-        replay( m_bundleContext, m_configuration, platformContext );
-        new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).prepare( platformContext );
-        verify( m_bundleContext, m_configuration, platformContext );
+        replay( m_bundleContext, m_configuration );
+        new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).prepare( m_platformContext );
+        verify( m_bundleContext, m_configuration );
     }
 
     // cache folder should not exist after returning

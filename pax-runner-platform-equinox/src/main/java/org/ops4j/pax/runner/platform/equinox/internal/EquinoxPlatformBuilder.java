@@ -26,6 +26,7 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
@@ -65,10 +66,6 @@ public class EquinoxPlatformBuilder
      */
     private static final String ARG_CONFIGURATION = "-configuration";
     /**
-     * Installation directory argument name.
-     */
-    private static final String ARG_INSTALL = "-install";
-    /**
      * Console argument name.
      */
     private static final String ARG_CONSOLE = "-console";
@@ -76,6 +73,14 @@ public class EquinoxPlatformBuilder
      * Debug options file argument name.
      */
     private static final String ARG_DEBUG = "-debug";
+    /**
+     * System property specifying the eclipse install area.
+     */
+    private static final String PROP_INSTALL_AREA = "osgi.install.area";
+    /**
+     * System property specifying the parent directory of equinox jar.
+     */
+    private static final String PROP_SYSPATH = "osgi.syspath";
     /**
      * Name of the main class from Equinox.
      */
@@ -122,7 +127,7 @@ public class EquinoxPlatformBuilder
     /**
      * Creates a config.ini file under the working directory/equinox directory.
      *
-     * @see org.ops4j.pax.runner.platform.PlatformBuilder
+     * @see PlatformBuilder
      *      #prepare(org.ops4j.pax.runner.platform.PlatformContext)
      */
     public void prepare( final PlatformContext context )
@@ -160,6 +165,12 @@ public class EquinoxPlatformBuilder
             // there is no aclipse application
             {
                 writer.append( "eclipse.ignoreApp", "true" );
+            }
+            // Set "osgi.syspath" property = System property specifying the parent directory of equinox jar
+            // It is not supposed to be set by user (pax runner) but if this is not set relative urls used for bundles
+            // to be installed are calculated relative to "runner/bundles" instead of user dir = "runner"
+            {
+                writer.append( PROP_SYSPATH, context.normalizeAsPath( context.getWorkingDirectory() ) );
             }
             // use persisted state
             {
@@ -211,7 +222,7 @@ public class EquinoxPlatformBuilder
                 writer.append( "#############################" );
                 writer.append( " Client bundles to install" );
                 writer.append( "#############################" );
-                appendBundles( writer, bundles );
+                appendBundles( writer, bundles, context );
             }
 
             writer.append();
@@ -361,12 +372,15 @@ public class EquinoxPlatformBuilder
      *
      * @param writer  a property writer
      * @param bundles bundles to write
+     * @param context platform context
      *
      * @throws java.net.MalformedURLException re-thrown from getting the file url
      * @throws org.ops4j.pax.runner.platform.PlatformException
      *                                        if one of the bundles does not have a file
      */
-    private void appendBundles( final PropertiesWriter writer, final List<LocalBundle> bundles )
+    private void appendBundles( final PropertiesWriter writer,
+                                final List<LocalBundle> bundles,
+                                final PlatformContext context )
         throws MalformedURLException, PlatformException
     {
         for( LocalBundle bundle : bundles )
@@ -378,7 +392,7 @@ public class EquinoxPlatformBuilder
             }
             final StringBuilder builder = new StringBuilder()
                 .append( "reference:" )
-                .append( bundleFile.toURL().toExternalForm() );
+                .append( context.normalizeAsUrl( bundleFile ) );
 
             final BundleReference reference = bundle.getBundleReference();
             final Integer startLevel = reference.getStartLevel();
@@ -423,7 +437,7 @@ public class EquinoxPlatformBuilder
     }
 
     /**
-     * @see org.ops4j.pax.runner.platform.PlatformBuilder#getMainClassName()
+     * @see PlatformBuilder#getMainClassName()
      */
     public String getMainClassName()
     {
@@ -431,13 +445,14 @@ public class EquinoxPlatformBuilder
     }
 
     /**
-     * @see org.ops4j.pax.runner.platform.PlatformBuilder
+     * @see PlatformBuilder
      *      #getArguments(org.ops4j.pax.runner.platform.PlatformContext)
      */
     public String[] getArguments( final PlatformContext context )
     {
         NullArgumentException.validateNotNull( context, "Platform context" );
-        final String workingDirectory = context.getWorkingDirectory().getAbsolutePath();
+
+        final File workingDirectory = context.getWorkingDirectory();
         final List<String> arguments = new ArrayList<String>();
         final Boolean startConsole = context.getConfiguration().startConsole();
         if( startConsole != null && startConsole )
@@ -445,30 +460,36 @@ public class EquinoxPlatformBuilder
             arguments.add( ARG_CONSOLE );
         }
         arguments.add( ARG_CONFIGURATION );
-        arguments.add( workingDirectory + File.separator + CONFIG_DIRECTORY );
+        arguments.add( context.normalizeAsPath( new File( workingDirectory, CONFIG_DIRECTORY ) ) );
         if( isOptionsFileNeeded( context.getConfiguration() ) )
         {
             arguments.add( ARG_DEBUG );
-            arguments.add( workingDirectory + File.separator + CONFIG_DIRECTORY + File.separator + OPTIONS );
+            arguments.add(
+                context.normalizeAsPath( new File( new File( workingDirectory, CONFIG_DIRECTORY ), OPTIONS ) )
+            );
         }
-        arguments.add( ARG_INSTALL );
-        arguments.add( workingDirectory );
-        return arguments.toArray( new String[0] );
+        return arguments.toArray( new String[arguments.size()] );
     }
 
     /**
      * return snull as there are no additional virtual machien arguments.
      *
-     * @see org.ops4j.pax.runner.platform.PlatformBuilder
-     *      #getVMOptions(org.ops4j.pax.runner.platform.PlatformContext)
+     * @see PlatformBuilder#getVMOptions(PlatformContext)
      */
     public String[] getVMOptions( final PlatformContext context )
     {
-        return null;
+        NullArgumentException.validateNotNull( context, "Platform context" );
+
+        final Collection<String> vmOptions = new ArrayList<String>();
+        vmOptions.add(
+            "-D" + PROP_INSTALL_AREA + "="
+            + context.normalizeAsPath( new File( context.getWorkingDirectory(), CONFIG_DIRECTORY ) )
+        );
+        return vmOptions.toArray( new String[vmOptions.size()] );
     }
 
     /**
-     * @see org.ops4j.pax.runner.platform.PlatformBuilder#getDefinition()
+     * @see PlatformBuilder#getDefinition()
      */
     public InputStream getDefinition()
         throws IOException
@@ -485,7 +506,7 @@ public class EquinoxPlatformBuilder
     /**
      * Return null as there is no profile required by equinox.
      *
-     * @see org.ops4j.pax.runner.platform.PlatformBuilder
+     * @see PlatformBuilder
      *      #getRequiredProfile(org.ops4j.pax.runner.platform.PlatformContext)
      */
     public String getRequiredProfile( final PlatformContext context )

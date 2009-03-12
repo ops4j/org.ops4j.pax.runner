@@ -199,7 +199,7 @@ public class FelixPlatformBuilderF100T122
                 writer.append( "#############################" );
                 writer.append( " Client bundles to install" );
                 writer.append( "#############################" );
-                appendBundles( writer, bundles, configuration.getBundleStartLevel() );
+                appendBundles( writer, bundles, context, configuration.getBundleStartLevel() );
             }
 
             writer.append();
@@ -256,13 +256,16 @@ public class FelixPlatformBuilderF100T122
      *
      * @param writer            a property writer
      * @param bundles           bundles to write
+     * @param context           platform context
      * @param defaultStartlevel default start level for bundles. used if no start level is set on bundles.
      *
      * @throws java.net.MalformedURLException re-thrown from getting the file url
      * @throws org.ops4j.pax.runner.platform.PlatformException
      *                                        if one of the bundles does not have a file
      */
-    private void appendBundles( final PropertiesWriter writer, final List<LocalBundle> bundles,
+    private void appendBundles( final PropertiesWriter writer,
+                                final List<LocalBundle> bundles,
+                                final PlatformContext context,
                                 final Integer defaultStartlevel )
         throws MalformedURLException, PlatformException
     {
@@ -297,7 +300,7 @@ public class FelixPlatformBuilderF100T122
             }
             // PAXRUNNER-41
             // url of the file must be quoted otherwise will be considered as two separated files by Felix
-            writer.append( propertyName.toString(), "\"" + bundleFile.toURL().toExternalForm() + "\"" );
+            writer.append( propertyName.toString(), "\"" + context.normalizeAsUrl( bundleFile ) + "\"" );
         }
     }
 
@@ -349,14 +352,12 @@ public class FelixPlatformBuilderF100T122
         final Collection<String> vmOptions = new ArrayList<String>();
         final File workingDirectory = context.getWorkingDirectory();
         vmOptions.add(
-            "-Dfelix.config.properties=" + workingDirectory.toURI()
-            + "/" + CONFIG_DIRECTORY
-            + "/" + CONFIG_INI
+            "-Dfelix.config.properties=" +
+            context.normalizeAsUrl( new File( new File( workingDirectory, CONFIG_DIRECTORY ), CONFIG_INI ) )
         );
         vmOptions.add(
-            "-Dfelix.cache.dir=" + workingDirectory.getAbsolutePath()
-            + File.separator + CONFIG_DIRECTORY
-            + File.separator + CACHE_DIRECTORY
+            "-Dfelix.cache.dir="
+            + context.normalizeAsPath( new File( new File( workingDirectory, CONFIG_DIRECTORY ), CACHE_DIRECTORY ) )
         );
         return vmOptions.toArray( new String[vmOptions.size()] );
     }

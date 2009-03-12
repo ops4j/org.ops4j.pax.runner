@@ -105,8 +105,7 @@ public class ConciergePlatformBuilder
     /**
      * Creates a config.ini file under the working directory/knopflerfish directory.
      *
-     * @see org.ops4j.pax.runner.platform.PlatformBuilder
-     *      #prepare(org.ops4j.pax.runner.platform.PlatformContext)
+     * @see PlatformBuilder#prepare(PlatformContext)
      */
     public void prepare( final PlatformContext context )
         throws PlatformException
@@ -138,7 +137,7 @@ public class ConciergePlatformBuilder
             writer.append( "#############################" );
             writer
                 .append( "-D" + Constants.FRAMEWORK_SYSTEMPACKAGES, context.getSystemPackages() )
-                .append( "-Dch.ethz.iks.concierge.basedir", configDirectory.getAbsolutePath() );
+                .append( "-Dch.ethz.iks.concierge.basedir", context.normalizeAsPath( configDirectory ) );
             // clean start ?
             final Boolean usePersistedState = configuration.usePersistedState();
             if( usePersistedState != null && !usePersistedState )
@@ -159,7 +158,7 @@ public class ConciergePlatformBuilder
                 writer.append( "#############################" );
                 writer.append( " Client bundles to install" );
                 writer.append( "#############################" );
-                appendBundles( writer, bundles, bundleStartLevel );
+                appendBundles( writer, bundles, context, bundleStartLevel );
             }
 
             writer.append();
@@ -215,13 +214,16 @@ public class ConciergePlatformBuilder
      *
      * @param writer            a property writer
      * @param bundles           bundles to write
+     * @param context           platform context
      * @param defaultStartlevel default start level for bundles. used if no start level is set on bundles.
      *
      * @throws java.net.MalformedURLException re-thrown from getting the file url
      * @throws org.ops4j.pax.runner.platform.PlatformException
      *                                        if one of the bundles does not have a file
      */
-    private void appendBundles( final PropertiesWriter writer, final List<LocalBundle> bundles,
+    private void appendBundles( final PropertiesWriter writer,
+                                final List<LocalBundle> bundles,
+                                final PlatformContext context,
                                 final Integer defaultStartlevel )
         throws MalformedURLException, PlatformException
     {
@@ -253,7 +255,7 @@ public class ConciergePlatformBuilder
                 bundlesAsStrings = new ArrayList<String>();
                 bundlesPerStartlevel.put( startLevel, bundlesAsStrings );
             }
-            bundlesAsStrings.add( propertyName + bundleFile.toURI().toASCIIString() );
+            bundlesAsStrings.add( propertyName + context.normalizeAsUrl( bundleFile ) );
         }
         for( Map.Entry<Integer, List<String>> entry : bundlesPerStartlevel.entrySet() )
         {
@@ -285,7 +287,7 @@ public class ConciergePlatformBuilder
     }
 
     /**
-     * @see org.ops4j.pax.runner.platform.PlatformBuilder#getMainClassName()
+     * @see PlatformBuilder#getMainClassName()
      */
     public String getMainClassName()
     {
@@ -293,7 +295,7 @@ public class ConciergePlatformBuilder
     }
 
     /**
-     * @see org.ops4j.pax.runner.platform.PlatformBuilder
+     * @see PlatformBuilder
      *      #getArguments(org.ops4j.pax.runner.platform.PlatformContext)
      */
     public String[] getArguments( final PlatformContext context )
@@ -302,7 +304,7 @@ public class ConciergePlatformBuilder
     }
 
     /**
-     * @see org.ops4j.pax.runner.platform.PlatformBuilder
+     * @see PlatformBuilder
      *      #getVMOptions(org.ops4j.pax.runner.platform.PlatformContext)
      */
     public String[] getVMOptions( final PlatformContext context )
@@ -311,7 +313,7 @@ public class ConciergePlatformBuilder
 
         final Collection<String> vmOptions = new ArrayList<String>();
         final File workingDirectory = context.getWorkingDirectory();
-        // TODO Check if the following is soled in newer version of conceirge
+        // TODO Check if the following is solved in newer version of concierge
         // the property osgi.maxLevel is a workarround on the fact that concierge will not start/install the bundles if
         // there is a gap between the start level of the bundles. So, we force him to iterate to all start level
         // Actually the value should be the highest bundle start level + 1 but we take the risk for the moment
@@ -320,7 +322,7 @@ public class ConciergePlatformBuilder
         );
         vmOptions.add(
             "-Dxargs="
-            + new File( workingDirectory, CONFIG_DIRECTORY + File.separator + CONFIG_INI ).getAbsolutePath()
+            + context.normalizeAsPath( new File( new File( workingDirectory, CONFIG_DIRECTORY ), CONFIG_INI ) )
         );
         final String bootDelegation = context.getConfiguration().getBootDelegation();
         if( bootDelegation != null )
@@ -333,7 +335,7 @@ public class ConciergePlatformBuilder
     }
 
     /**
-     * @see org.ops4j.pax.runner.platform.PlatformBuilder#getDefinition()
+     * @see PlatformBuilder#getDefinition()
      */
     public InputStream getDefinition()
         throws IOException
@@ -350,7 +352,7 @@ public class ConciergePlatformBuilder
     /**
      * If the console option is set then it will return the tui profile otherwise will return null.
      *
-     * @see org.ops4j.pax.runner.platform.PlatformBuilder
+     * @see PlatformBuilder
      *      #getRequiredProfile(org.ops4j.pax.runner.platform.PlatformContext)
      */
     public String getRequiredProfile( final PlatformContext context )

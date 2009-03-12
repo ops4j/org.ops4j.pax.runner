@@ -117,4 +117,19 @@ public interface PlatformContext
      */
     String getExecutionEnvironment();
 
+    /**
+     * Returns the file in relative form (compared to working directory)
+     *
+     * @return the file in relative form (compared to working directory)
+     */
+    String normalizeAsPath( File file );
+
+    /**
+     * Returns the file in relative form as url (compared to working directory)
+     *
+     * @return the file in relative form as url (compared to working directory)
+     */
+    String normalizeAsUrl( File file );
+
+
 }

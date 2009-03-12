@@ -40,6 +40,7 @@ import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
+import org.ops4j.pax.runner.platform.internal.PlatformContextImpl;
 
 public class EquinoxPlatformBuilderTest
 {
@@ -47,6 +48,7 @@ public class EquinoxPlatformBuilderTest
     private File m_workDir;
     private BundleContext m_bundleContext;
     private Configuration m_configuration;
+    private PlatformContext m_platformContext;
 
     @Before
     public void setUp()
@@ -59,6 +61,9 @@ public class EquinoxPlatformBuilderTest
         m_workDir = new File( m_workDir.getAbsolutePath() );
         m_workDir.mkdirs();
         m_workDir.deleteOnExit();
+        m_platformContext = new PlatformContextImpl();
+        m_platformContext.setConfiguration( m_configuration );
+        m_platformContext.setWorkingDirectory( m_workDir );
     }
 
     @After
@@ -151,87 +156,67 @@ public class EquinoxPlatformBuilderTest
     @Test
     public void getRequiredProfiles()
     {
-        PlatformContext platformContext = createMock( PlatformContext.class );
-
-        replay( m_bundleContext, platformContext );
+        replay( m_bundleContext );
         assertNull(
             "Required profiles is not null",
-            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getRequiredProfile( platformContext )
+            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getRequiredProfile( m_platformContext )
         );
-        verify( m_bundleContext, platformContext );
+        verify( m_bundleContext );
     }
 
     @Test
     public void getArgumentsWithConsole()
     {
-        PlatformContext platformContext = createMock( PlatformContext.class );
-
-        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration ).anyTimes();
         expect( m_configuration.startConsole() ).andReturn( true );
         expect( m_configuration.isDebugClassLoading() ).andReturn( false );
 
-        replay( m_bundleContext, m_configuration, platformContext );
+        replay( m_bundleContext, m_configuration );
         assertArrayEquals(
             "Arguments",
             new String[]{
                 "-console",
                 "-configuration",
-                m_workDir.getAbsolutePath() + File.separator + "equinox",
-                "-install",
-                m_workDir.getAbsolutePath()
+                m_platformContext.normalizeAsPath( new File( m_workDir, "equinox" ) )
             },
-            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getArguments( platformContext )
+            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getArguments( m_platformContext )
         );
-        verify( m_bundleContext, m_configuration, platformContext );
+        verify( m_bundleContext, m_configuration );
     }
 
     @Test
     public void getArgumentsWithoutConsole()
     {
-        PlatformContext platformContext = createMock( PlatformContext.class );
-
-        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration ).anyTimes();
         expect( m_configuration.startConsole() ).andReturn( false );
         expect( m_configuration.isDebugClassLoading() ).andReturn( false );
 
-        replay( m_bundleContext, m_configuration, platformContext );
+        replay( m_bundleContext, m_configuration );
         assertArrayEquals(
             "Arguments",
             new String[]{
                 "-configuration",
-                m_workDir.getAbsolutePath() + File.separator + "equinox",
-                "-install",
-                m_workDir.getAbsolutePath()
+                m_platformContext.normalizeAsPath( new File( m_workDir, "equinox" ) )
             },
-            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getArguments( platformContext )
+            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getArguments( m_platformContext )
         );
-        verify( m_bundleContext, m_configuration, platformContext );
+        verify( m_bundleContext, m_configuration );
     }
 
     @Test
     public void getArgumentsWithNullConsoleValue()
     {
-        PlatformContext platformContext = createMock( PlatformContext.class );
-
-        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration ).anyTimes();
         expect( m_configuration.startConsole() ).andReturn( null );
         expect( m_configuration.isDebugClassLoading() ).andReturn( false );
 
-        replay( m_bundleContext, m_configuration, platformContext );
+        replay( m_bundleContext, m_configuration );
         assertArrayEquals(
             "Arguments",
             new String[]{
                 "-configuration",
-                m_workDir.getAbsolutePath() + File.separator + "equinox",
-                "-install",
-                m_workDir.getAbsolutePath()
+                m_platformContext.normalizeAsPath( new File( m_workDir, "equinox" ) )
             },
-            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getArguments( platformContext )
+            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getArguments( m_platformContext )
         );
-        verify( m_bundleContext, m_configuration, platformContext );
+        verify( m_bundleContext, m_configuration );
     }
 
     @Test( expected = IllegalArgumentException.class )
@@ -245,13 +230,24 @@ public class EquinoxPlatformBuilderTest
     @Test
     public void getVMOptions()
     {
-        PlatformContext platformContext = createMock( PlatformContext.class );
-
-        replay( m_bundleContext, platformContext );
-        assertNull(
-            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getVMOptions( platformContext )
+        replay( m_bundleContext );
+        assertArrayEquals(
+            "System options",
+            new String[]{
+                "-Dosgi.install.area="
+                + m_platformContext.normalizeAsPath( new File( m_workDir, "equinox" ) )
+            },
+            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getVMOptions( m_platformContext )
         );
-        verify( m_bundleContext, platformContext );
+        verify( m_bundleContext );
+    }
+
+    @Test( expected = IllegalArgumentException.class )
+    public void getVMOptionsWithNullPlatformContext()
+    {
+        replay( m_bundleContext );
+        new EquinoxPlatformBuilder( m_bundleContext, "version" ).getVMOptions( null );
+        verify( m_bundleContext );
     }
 
     @Test( expected = IllegalArgumentException.class )
@@ -270,31 +266,30 @@ public class EquinoxPlatformBuilderTest
     public void prepareWithNullLocalBundles()
         throws PlatformException, IOException
     {
-        PlatformContext platformContext = createMock( PlatformContext.class );
 
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration ).anyTimes();
+        m_platformContext.setExecutionEnvironment( "EE-1,EE-2" );
+        m_platformContext.setSystemPackages( "sys.package.one,sys.package.two" );
+        Properties properties = new Properties();
+        properties.setProperty( "myProperty", "myValue" );
+        m_platformContext.setProperties( properties );
+
         expect( m_configuration.usePersistedState() ).andReturn( false );
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );
-        expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1,EE-2" );
         expect( m_configuration.getBootDelegation() ).andReturn( "javax.*" );
-        expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
-        expect( platformContext.getBundles() ).andReturn( null );
-        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir ).anyTimes();
         expect( m_configuration.isDebugClassLoading() ).andReturn( false );
-        Properties properties = new Properties();
-        properties.setProperty( "myProperty", "myValue" );
-        expect( platformContext.getProperties() ).andReturn( properties );
 
-        replay( m_bundleContext, m_configuration, platformContext );
-        new EquinoxPlatformBuilder( m_bundleContext, "version" ).prepare( platformContext );
-        verify( m_bundleContext, m_configuration, platformContext );
+        replay( m_bundleContext, m_configuration );
+        new EquinoxPlatformBuilder( m_bundleContext, "version" ).prepare( m_platformContext );
+        verify( m_bundleContext, m_configuration );
 
+        Map<String, String> replacements = new HashMap<String, String>();
+        replacements.put( "${sys.path}", m_platformContext.normalizeAsPath( m_workDir ) );
         compareFiles(
             FileUtils.getFileFromClasspath( "equinoxplatformbuilder/configWithNoBundles.ini" ),
             new File( m_workDir + "/equinox/config.ini" ),
             true,
-            null
+            replacements
         );
     }
 
@@ -305,23 +300,25 @@ public class EquinoxPlatformBuilderTest
     public void prepare()
         throws PlatformException, IOException, URISyntaxException
     {
-        PlatformContext platformContext = createMock( PlatformContext.class );
 
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration ).times( 3 );
+        List<LocalBundle> bundles = new ArrayList<LocalBundle>();
+        m_platformContext.setBundles( bundles );
+        m_platformContext.setExecutionEnvironment( "EE-1,EE-2" );
+        m_platformContext.setSystemPackages( "sys.package.one,sys.package.two" );
+        Properties properties = new Properties();
+        properties.setProperty( "myProperty", "myValue" );
+        m_platformContext.setProperties( properties );
+
         expect( m_configuration.usePersistedState() ).andReturn( false );
         expect( m_configuration.getStartLevel() ).andReturn( 10 );
         expect( m_configuration.getBundleStartLevel() ).andReturn( 20 );
-        expect( platformContext.getExecutionEnvironment() ).andReturn( "EE-1,EE-2" );
         expect( m_configuration.getBootDelegation() ).andReturn( null );
-        expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
-
-        List<LocalBundle> bundles = new ArrayList<LocalBundle>();
 
         // a bunlde with start level that should start
         LocalBundle bundle1 = createMock( LocalBundle.class );
         bundles.add( bundle1 );
         BundleReference reference1 = createMock( BundleReference.class );
-        expect( bundle1.getFile() ).andReturn( new File( "bundle1.jar" ) );
+        expect( bundle1.getFile() ).andReturn( new File( m_workDir, "bundles/bundle1.jar" ) );
         expect( bundle1.getBundleReference() ).andReturn( reference1 );
         expect( reference1.getStartLevel() ).andReturn( 10 );
         expect( reference1.shouldStart() ).andReturn( true );
@@ -330,7 +327,7 @@ public class EquinoxPlatformBuilderTest
         LocalBundle bundle2 = createMock( LocalBundle.class );
         bundles.add( bundle2 );
         BundleReference reference2 = createMock( BundleReference.class );
-        expect( bundle2.getFile() ).andReturn( new File( "bundle2.jar" ) );
+        expect( bundle2.getFile() ).andReturn( new File( m_workDir, "bundles/bundle2.jar" ) );
         expect( bundle2.getBundleReference() ).andReturn( reference2 );
         expect( reference2.getStartLevel() ).andReturn( 10 );
         expect( reference2.shouldStart() ).andReturn( null );
@@ -339,30 +336,37 @@ public class EquinoxPlatformBuilderTest
         LocalBundle bundle3 = createMock( LocalBundle.class );
         bundles.add( bundle3 );
         BundleReference reference3 = createMock( BundleReference.class );
-        expect( bundle3.getFile() ).andReturn( new File( "bundle3.jar" ) );
+        expect( bundle3.getFile() ).andReturn( new File( m_workDir, "bundles/bundle3.jar" ) );
         expect( bundle3.getBundleReference() ).andReturn( reference3 );
         expect( reference3.getStartLevel() ).andReturn( null );
         expect( reference3.shouldStart() ).andReturn( true );
 
-        expect( platformContext.getBundles() ).andReturn( bundles );
-        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir ).anyTimes();
         expect( m_configuration.isDebugClassLoading() ).andReturn( false );
-        Properties properties = new Properties();
-        properties.setProperty( "myProperty", "myValue" );
-        expect( platformContext.getProperties() ).andReturn( properties );
 
-        replay( m_bundleContext, m_configuration, platformContext, bundle1, bundle2, bundle3, reference1, reference2,
-                reference3
+        replay( m_bundleContext, m_configuration,
+                bundle1, bundle2, bundle3,
+                reference1, reference2, reference3
         );
-        new EquinoxPlatformBuilder( m_bundleContext, "version" ).prepare( platformContext );
-        verify( m_bundleContext, m_configuration, platformContext, bundle1, bundle2, bundle3, reference1, reference2,
-                reference3
+        new EquinoxPlatformBuilder( m_bundleContext, "version" ).prepare( m_platformContext );
+        verify( m_bundleContext, m_configuration,
+                bundle1, bundle2, bundle3,
+                reference1, reference2, reference3
         );
 
         Map<String, String> replacements = new HashMap<String, String>();
-        replacements.put( "${bundle1.path}", new File( "bundle1.jar" ).toURL().toExternalForm() );
-        replacements.put( "${bundle2.path}", new File( "bundle2.jar" ).toURL().toExternalForm() );
-        replacements.put( "${bundle3.path}", new File( "bundle3.jar" ).toURL().toExternalForm() );
+        replacements.put( "${sys.path}", m_platformContext.normalizeAsPath( m_workDir ) );
+        replacements.put(
+            "${bundle1.path}",
+            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle1.jar" ) )
+        );
+        replacements.put(
+            "${bundle2.path}",
+            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle2.jar" ) )
+        );
+        replacements.put(
+            "${bundle3.path}",
+            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle3.jar" ) )
+        );
 
         compareFiles(
             FileUtils.getFileFromClasspath( "equinoxplatformbuilder/config.ini" ),

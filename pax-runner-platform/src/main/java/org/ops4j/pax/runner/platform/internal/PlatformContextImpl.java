@@ -18,8 +18,11 @@
 package org.ops4j.pax.runner.platform.internal;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.PlatformContext;
@@ -27,6 +30,8 @@ import org.ops4j.pax.runner.platform.PlatformContext;
 public class PlatformContextImpl
     implements PlatformContext
 {
+
+    private static Log LOG = LogFactory.getLog( PlatformContextImpl.class );
 
     private List<LocalBundle> m_bundles;
     private File m_workingDirectory;
@@ -130,4 +135,53 @@ public class PlatformContextImpl
     {
         m_executionEnvironment = executionEnvironment;
     }
+
+    public String normalizeAsPath( File file )
+    {
+        return normalizePath( getWorkingDirectory(), file );
+    }
+
+    public String normalizeAsUrl( File file )
+    {
+        return "file:" + normalizePath( getWorkingDirectory(), file );
+    }
+
+    /**
+     * Here we finally decide on actual paths showing up in generated config files and commandline args.
+     *
+     * @param baseFolder folder to be used. This is what we will cut off.
+     * @param file       to be normalized.
+     *
+     * @return if file is a child of base then we will return the relative path. If not, the full path of file will be returned.
+     */
+    private String normalizePath( final File baseFolder, final File file )
+    {
+        String out = file.getAbsolutePath();
+        try
+        {
+            if( baseFolder.equals( file ) )
+            {
+                out = ".";
+            }
+            else
+            {
+                String s1 = baseFolder.getCanonicalPath();
+                String s2 = file.getCanonicalPath();
+                if( s2.startsWith( s1 ) )
+                {
+                    out = s2.substring( s1.length() + 1 );
+                }
+                else
+                {
+                    out = s2;
+                }
+            }
+        }
+        catch( IOException e )
+        {
+            LOG.warn( "problem during normalizing path.", e );
+        }
+        return out;
+    }
+
 }

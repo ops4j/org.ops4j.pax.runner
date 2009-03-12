@@ -81,6 +81,12 @@
         <module>pax-runner-platform-knopflerfish</module>
       </modules>
     </profile>
+    <profile>
+      <id>runner</id>
+      <modules>
+        <module>pax-runner</module>
+      </modules>
+    </profile>
   </profiles>
 
   <developers>

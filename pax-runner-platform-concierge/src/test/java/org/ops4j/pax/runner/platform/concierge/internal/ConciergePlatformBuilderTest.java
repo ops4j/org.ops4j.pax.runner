@@ -41,6 +41,7 @@ import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.LocalBundle;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
+import org.ops4j.pax.runner.platform.internal.PlatformContextImpl;
 
 public class ConciergePlatformBuilderTest
 {
@@ -48,6 +49,7 @@ public class ConciergePlatformBuilderTest
     private File m_workDir;
     private BundleContext m_bundleContext;
     private Configuration m_configuration;
+    private PlatformContext m_platformContext;
 
     @Before
     public void setUp()
@@ -60,6 +62,9 @@ public class ConciergePlatformBuilderTest
         m_workDir = new File( m_workDir.getAbsolutePath() );
         m_workDir.mkdirs();
         m_workDir.deleteOnExit();
+        m_platformContext = new PlatformContextImpl();
+        m_platformContext.setConfiguration( m_configuration );
+        m_platformContext.setWorkingDirectory( m_workDir );
     }
 
     @After
@@ -114,92 +119,79 @@ public class ConciergePlatformBuilderTest
     @Test
     public void getRequiredProfilesWithoutConsole()
     {
-        PlatformContext platformContext = createMock( PlatformContext.class );
-
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
         expect( m_configuration.startConsole() ).andReturn( null );
 
-        replay( m_bundleContext, m_configuration, platformContext );
+        replay( m_bundleContext, m_configuration );
         assertNull(
             "Required profiles is not null",
-            new ConciergePlatformBuilder( m_bundleContext, "version" ).getRequiredProfile( platformContext )
+            new ConciergePlatformBuilder( m_bundleContext, "version" ).getRequiredProfile( m_platformContext )
         );
-        verify( m_bundleContext, m_configuration, platformContext );
+        verify( m_bundleContext, m_configuration );
     }
 
     @Test
     public void getRequiredProfilesWithConsole()
     {
-        PlatformContext platformContext = createMock( PlatformContext.class );
-
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
         expect( m_configuration.startConsole() ).andReturn( true );
 
-        replay( m_bundleContext, m_configuration, platformContext );
+        replay( m_bundleContext, m_configuration );
         assertEquals(
             "Required profiles",
             "tui",
-            new ConciergePlatformBuilder( m_bundleContext, "version" ).getRequiredProfile( platformContext )
+            new ConciergePlatformBuilder( m_bundleContext, "version" ).getRequiredProfile( m_platformContext )
         );
-        verify( m_bundleContext, m_configuration, platformContext );
+        verify( m_bundleContext, m_configuration );
     }
 
     @Test
     public void getArguments()
         throws MalformedURLException
     {
-        PlatformContext platformContext = createMock( PlatformContext.class );
-
-        replay( m_bundleContext, platformContext );
+        replay( m_bundleContext );
         assertArrayEquals(
             "Arguments",
             null,
-            new ConciergePlatformBuilder( m_bundleContext, "version" ).getArguments( platformContext )
+            new ConciergePlatformBuilder( m_bundleContext, "version" ).getArguments( m_platformContext )
         );
-        verify( m_bundleContext, platformContext );
+        verify( m_bundleContext );
     }
 
     @Test
     public void getVMOptions()
     {
-        PlatformContext platformContext = createMock( PlatformContext.class );
-
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
         expect( m_configuration.getBootDelegation() ).andReturn( "javax.*" );
-        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
 
-        replay( m_configuration, m_bundleContext, platformContext );
+        replay( m_configuration, m_bundleContext );
         assertArrayEquals(
             "System options",
             new String[]{
                 "-Dosgi.maxLevel=100",
-                "-Dxargs=" + new File( new File( m_workDir, "concierge" ), "config.ini" ).getAbsolutePath(),
+                "-Dxargs=" +
+                m_platformContext.normalizeAsPath( new File( m_workDir, "concierge/config.ini" ) ),
                 "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=javax.*"
             },
-            new ConciergePlatformBuilder( m_bundleContext, "version" ).getVMOptions( platformContext )
+            new ConciergePlatformBuilder( m_bundleContext, "version" ).getVMOptions( m_platformContext )
         );
-        verify( m_configuration, m_bundleContext, platformContext );
+        verify( m_configuration, m_bundleContext );
     }
 
     @Test
     public void getVMOptionsWithoutBootDelegation()
     {
-        PlatformContext platformContext = createMock( PlatformContext.class );
-
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
         expect( m_configuration.getBootDelegation() ).andReturn( null );
-        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
 
-        replay( m_configuration, m_bundleContext, platformContext );
+        replay( m_configuration, m_bundleContext );
         assertArrayEquals(
             "System options",
             new String[]{
                 "-Dosgi.maxLevel=100",
-                "-Dxargs=" + new File( new File( m_workDir, "concierge" ), "config.ini" ).getAbsolutePath()
+                "-Dxargs=" +
+                m_platformContext.normalizeAsPath( new File( m_workDir, "concierge/config.ini" ) )
+
             },
-            new ConciergePlatformBuilder( m_bundleContext, "version" ).getVMOptions( platformContext )
+            new ConciergePlatformBuilder( m_bundleContext, "version" ).getVMOptions( m_platformContext )
         );
-        verify( m_configuration, m_bundleContext, platformContext );
+        verify( m_configuration, m_bundleContext );
     }
 
     @Test( expected = IllegalArgumentException.class )
@@ -226,26 +218,24 @@ public class ConciergePlatformBuilderTest
     public void prepareWithoutBundles()
         throws PlatformException, IOException
     {
-        PlatformContext platformContext = createMock( PlatformContext.class );
+        m_platformContext.setSystemPackages( "sys.package.one,sys.package.two" );
+        Properties properties = new Properties();
+        properties.setProperty( "myProperty", "myValue" );
+        m_platformContext.setProperties( properties );
 
-        expect( platformContext.getBundles() ).andReturn( null );
-        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
         expect( m_configuration.usePersistedState() ).andReturn( false );
-        expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );
 
-        Properties properties = new Properties();
-        properties.setProperty( "myProperty", "myValue" );
-        expect( platformContext.getProperties() ).andReturn( properties );
-
-        replay( m_bundleContext, m_configuration, platformContext );
-        new ConciergePlatformBuilder( m_bundleContext, "version" ).prepare( platformContext );
-        verify( m_bundleContext, m_configuration, platformContext );
+        replay( m_bundleContext, m_configuration );
+        new ConciergePlatformBuilder( m_bundleContext, "version" ).prepare( m_platformContext );
+        verify( m_bundleContext, m_configuration );
 
         Map<String, String> replacements = new HashMap<String, String>();
-        replacements.put( "${basedir.path}", new File( m_workDir, "concierge" ).getAbsolutePath() );
+        replacements.put(
+            "${basedir.path}",
+            m_platformContext.normalizeAsPath( new File( m_workDir, "concierge" ) )
+        );
 
         compareFiles(
             FileUtils.getFileFromClasspath( "conciergeplatformbuilder/configWithNoBundles.ini" ),
@@ -262,15 +252,13 @@ public class ConciergePlatformBuilderTest
     public void prepare()
         throws PlatformException, IOException
     {
-        PlatformContext platformContext = createMock( PlatformContext.class );
-
         List<LocalBundle> bundles = new ArrayList<LocalBundle>();
 
         // a bunlde with start level that should start
         LocalBundle bundle1 = createMock( LocalBundle.class );
         bundles.add( bundle1 );
         BundleReference reference1 = createMock( BundleReference.class );
-        expect( bundle1.getFile() ).andReturn( new File( "bundle1.jar" ) );
+        expect( bundle1.getFile() ).andReturn( new File( m_workDir, "bundles/bundle1.jar" ) );
         expect( bundle1.getBundleReference() ).andReturn( reference1 );
         expect( reference1.getStartLevel() ).andReturn( 10 );
         expect( reference1.shouldStart() ).andReturn( true );
@@ -279,7 +267,7 @@ public class ConciergePlatformBuilderTest
         LocalBundle bundle2 = createMock( LocalBundle.class );
         bundles.add( bundle2 );
         BundleReference reference2 = createMock( BundleReference.class );
-        expect( bundle2.getFile() ).andReturn( new File( "bundle2.jar" ) );
+        expect( bundle2.getFile() ).andReturn( new File( m_workDir, "bundles/bundle2.jar" ) );
         expect( bundle2.getBundleReference() ).andReturn( reference2 );
         expect( reference2.getStartLevel() ).andReturn( 10 );
         expect( reference2.shouldStart() ).andReturn( null );
@@ -288,7 +276,7 @@ public class ConciergePlatformBuilderTest
         LocalBundle bundle3 = createMock( LocalBundle.class );
         bundles.add( bundle3 );
         BundleReference reference3 = createMock( BundleReference.class );
-        expect( bundle3.getFile() ).andReturn( new File( "bundle3.jar" ) );
+        expect( bundle3.getFile() ).andReturn( new File( m_workDir, "bundles/bundle3.jar" ) );
         expect( bundle3.getBundleReference() ).andReturn( reference3 );
         expect( reference3.getStartLevel() ).andReturn( null );
         expect( reference3.shouldStart() ).andReturn( true );
@@ -297,37 +285,52 @@ public class ConciergePlatformBuilderTest
         LocalBundle bundle4 = createMock( LocalBundle.class );
         bundles.add( bundle4 );
         BundleReference reference4 = createMock( BundleReference.class );
-        expect( bundle4.getFile() ).andReturn( new File( "bundle4.jar" ) );
+        expect( bundle4.getFile() ).andReturn( new File( m_workDir, "bundles/bundle4.jar" ) );
         expect( bundle4.getBundleReference() ).andReturn( reference4 );
         expect( reference4.getStartLevel() ).andReturn( null );
         expect( reference4.shouldStart() ).andReturn( null );
 
-        expect( platformContext.getBundles() ).andReturn( bundles );
-        expect( platformContext.getWorkingDirectory() ).andReturn( m_workDir );
-        expect( platformContext.getConfiguration() ).andReturn( m_configuration );
         expect( m_configuration.usePersistedState() ).andReturn( true );
-        expect( platformContext.getSystemPackages() ).andReturn( "sys.package.one,sys.package.two" );
         expect( m_configuration.getStartLevel() ).andReturn( 10 );
         expect( m_configuration.getBundleStartLevel() ).andReturn( 20 );
 
+        m_platformContext.setBundles( bundles );
+        m_platformContext.setSystemPackages( "sys.package.one,sys.package.two" );
         Properties properties = new Properties();
         properties.setProperty( "myProperty", "myValue" );
-        expect( platformContext.getProperties() ).andReturn( properties );
+        m_platformContext.setProperties( properties );
 
-        replay( m_bundleContext, m_configuration, platformContext, bundle1, bundle2, bundle3, reference1, reference2,
-                reference3, bundle4, reference4
+        replay( m_bundleContext, m_configuration,
+                bundle1, bundle2, bundle3,
+                reference1, reference2, reference3, bundle4, reference4
         );
-        new ConciergePlatformBuilder( m_bundleContext, "version" ).prepare( platformContext );
-        verify( m_bundleContext, m_configuration, platformContext, bundle1, bundle2, bundle3, reference1, reference2,
-                reference3, bundle4, reference4
+        new ConciergePlatformBuilder( m_bundleContext, "version" ).prepare( m_platformContext );
+        verify( m_bundleContext, m_configuration,
+                bundle1, bundle2, bundle3,
+                reference1, reference2, reference3, bundle4, reference4
         );
 
         Map<String, String> replacements = new HashMap<String, String>();
-        replacements.put( "${basedir.path}", new File( m_workDir, "concierge" ).getAbsolutePath() );
-        replacements.put( "${bundle1.path}", new File( "bundle1.jar" ).toURI().toASCIIString() );
-        replacements.put( "${bundle2.path}", new File( "bundle2.jar" ).toURI().toASCIIString() );
-        replacements.put( "${bundle3.path}", new File( "bundle3.jar" ).toURI().toASCIIString() );
-        replacements.put( "${bundle4.path}", new File( "bundle4.jar" ).toURI().toASCIIString() );
+        replacements.put(
+            "${basedir.path}",
+            m_platformContext.normalizeAsPath( new File( m_workDir, "concierge" ) )
+        );
+        replacements.put(
+            "${bundle1.path}",
+            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle1.jar" ) )
+        );
+        replacements.put(
+            "${bundle2.path}",
+            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle2.jar" ) )
+        );
+        replacements.put(
+            "${bundle3.path}",
+            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle3.jar" ) )
+        );
+        replacements.put(
+            "${bundle4.path}",
+            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle4.jar" ) )
+        );
 
         compareFiles(
             FileUtils.getFileFromClasspath( "conciergeplatformbuilder/config.ini" ),
