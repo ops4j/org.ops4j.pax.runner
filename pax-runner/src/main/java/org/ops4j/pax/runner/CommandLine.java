@@ -76,6 +76,10 @@ public interface CommandLine
      * Profiles repository.
      */
     static final String OPTION_PROFILES_REPO = "profilesRepository";
+        /**
+     * Profiles group id.
+     */
+    static final String OPTION_PROFILES_GROUPID = "profilesGroupId";
 
     /**
      * Returns the value of an option by key. If option is not defined returns null.

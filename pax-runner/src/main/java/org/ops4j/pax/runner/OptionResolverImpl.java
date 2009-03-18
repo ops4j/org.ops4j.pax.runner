@@ -17,13 +17,14 @@
  */
 package org.ops4j.pax.runner;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Arrays;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.commons.Info;
+import org.ops4j.pax.url.mvn.ServiceConstants;
 
 /**
  * Resolvs options by:<br/>
@@ -83,6 +84,29 @@ public class OptionResolverImpl
      * {@inheritDoc}
      */
     public String get( final String name )
+    {
+        final String result = getInternal( name );
+        if( !name.equalsIgnoreCase( ServiceConstants.PROPERTY_REPOSITORIES )
+            || ( result != null && !( result.trim().startsWith( "+" ) ) ) )
+        {
+            return result;
+        }
+        final String profilesRepo = get( CommandLine.OPTION_PROFILES_REPO );
+        if( profilesRepo == null || profilesRepo.trim().length() == 0 )
+        {
+            return result;
+        }
+        if( result == null || result.trim().length() == 0 )
+        {
+            return "+" + profilesRepo;
+        }
+        return result + "," + profilesRepo;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    private String getInternal( final String name )
     {
         NullArgumentException.validateNotEmpty( name, "Option name" );
         LOGGER.trace( "Resolving option [" + name + "]" );
@@ -237,7 +261,7 @@ public class OptionResolverImpl
                         newValue.append( segment );
                     }
                 }
-                values[index] = newValue.toString();
+                values[ index ] = newValue.toString();
                 index++;
             }
         }

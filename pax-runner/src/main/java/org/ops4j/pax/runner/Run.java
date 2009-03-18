@@ -395,17 +395,21 @@ public class Run
             {
                 arguments = new ArrayList<String>();
             }
-            final String profilesRepo = context.getOptionResolver().get( OPTION_PROFILES_REPO );
+            final String profilesGroup = context.getOptionResolver().get( OPTION_PROFILES_GROUPID );
             final String[] profiles = profilesOption.split( "," );
             for( String profile : profiles )
             {
+                // TODO Maybe a nice/safe parsing of profile name into group/artifatc/version ?
+                final String[] parts = profile.split( "/" );
                 arguments.add(
                     org.ops4j.pax.runner.scanner.composite.ServiceConstants.SCHEMA
                     + org.ops4j.pax.runner.provision.ServiceConstants.SEPARATOR_SCHEME
-                    + profilesRepo
-                    + "/"
+                    + org.ops4j.pax.url.mvn.ServiceConstants.PROTOCOL
+                    + ":"
+                    + ( parts.length < 3 ? profilesGroup + "/" : "" )
                     + profile
-                    + ".profile"
+                    + ( parts.length < 2 ? "/" : "" )
+                    + "/composite"
                 );
             }
         }
