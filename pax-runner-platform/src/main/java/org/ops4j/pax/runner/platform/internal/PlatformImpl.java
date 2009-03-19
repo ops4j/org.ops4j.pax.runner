@@ -153,7 +153,7 @@ public class PlatformImpl
         final List<LocalSystemFile> localSystemFiles = downloadSystemFiles(
             workDir, systemFiles, overwriteBundles || overwriteSystemBundles, downloadFeeback
         );
-        if( configuration.useOriginalUrls() )
+        if( configuration.keepOriginalUrls() )
         {
             localSystemFiles.addAll(
                 downloadSystemFiles(
@@ -173,7 +173,7 @@ public class PlatformImpl
         bundlesToInstall.addAll(
             downloadBundles(
                 workDir, bundles, overwriteBundles || overwriteUserBundles, downloadFeeback,
-                configuration.isAutoWrap(), configuration.useOriginalUrls()
+                configuration.isAutoWrap(), configuration.keepOriginalUrls()
             )
         );
         context.setBundles( bundlesToInstall );
@@ -189,7 +189,7 @@ public class PlatformImpl
         final CommandLineBuilder vmOptions = new CommandLineBuilder();
         vmOptions.append( configuration.getVMOptions() );
         vmOptions.append( m_platformBuilder.getVMOptions( context ) );
-        if( configuration.useOriginalUrls() )
+        if( configuration.keepOriginalUrls() )
         {
             vmOptions.append( "-Djava.protocol.handler.pkgs=org.ops4j.pax.url" );
         }
@@ -326,12 +326,12 @@ public class PlatformImpl
     /**
      * Downloads the bundles that will be installed to the working directory.
      *
-     * @param bundles         url of bundles to be installed
-     * @param workDir         the directory where to download bundles
-     * @param overwrite       if the bundles should be overwritten
-     * @param downloadFeeback whether or not downloading process should display fne grained progres info
-     * @param autoWrap        wheather or not auto wrapping should take place
-     * @param useOriginalUrls if the provisioned bundles should be cached or not
+     * @param bundles          url of bundles to be installed
+     * @param workDir          the directory where to download bundles
+     * @param overwrite        if the bundles should be overwritten
+     * @param downloadFeeback  whether or not downloading process should display fne grained progres info
+     * @param autoWrap         wheather or not auto wrapping should take place
+     * @param keepOriginalUrls if the provisioned bundles should be cached or not
      *
      * @return a list of downloaded files
      *
@@ -342,7 +342,7 @@ public class PlatformImpl
                                                    final Boolean overwrite,
                                                    final boolean downloadFeeback,
                                                    final boolean autoWrap,
-                                                   final boolean useOriginalUrls )
+                                                   final boolean keepOriginalUrls )
         throws PlatformException
     {
         final List<BundleReference> localBundles = new ArrayList<BundleReference>();
@@ -366,7 +366,7 @@ public class PlatformImpl
                         LOGGER.warn( "Could not auto wrap url [" + url + "] due to: " + e.getMessage() );
                     }
                 }
-                if( useOriginalUrls )
+                if( keepOriginalUrls )
                 {
                     localBundles.add( reference );
                 }

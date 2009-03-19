@@ -212,6 +212,6 @@ public interface Configuration
      *
      * @return value of use original urls option
      */
-    Boolean useOriginalUrls();    
-    
+    Boolean keepOriginalUrls();
+
 }

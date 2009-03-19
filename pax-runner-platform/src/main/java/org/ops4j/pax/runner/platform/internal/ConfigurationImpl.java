@@ -508,7 +508,7 @@ public class ConfigurationImpl
     /**
      * {@inheritDoc}
      */
-    public Boolean useOriginalUrls()
+    public Boolean keepOriginalUrls()
     {
         if( !contains( ServiceConstants.CONFIG_USE_ORIGINAL_URLS ) )
         {
