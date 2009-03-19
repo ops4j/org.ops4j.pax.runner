@@ -60,7 +60,6 @@ public class CommandLineImpl implements CommandLine
      */
     private static final char LINE_COMMENT_PREFIX = '#';
 
-
     /**
      * Options as properties.
      */
@@ -72,7 +71,11 @@ public class CommandLineImpl implements CommandLine
     /**
      * URL of configuration file (if any);
      */
-    private final String m_argsURL;
+    private final String m_localArgsURL;
+    /**
+     * URL of global configuration file (if any);
+     */
+    private final String m_globalArgsURL;
 
     /**
      * Creates a new Command line by parsing every argument into an option or argument.
@@ -84,13 +87,24 @@ public class CommandLineImpl implements CommandLine
         m_options = new HashMap<String, List<String>>();
         m_arguments = new ArrayList<String>();
         parseArguments( args == null ? Collections.<String>emptyList() : Arrays.asList( args ) );
-        String argsURL = getOption( "args" );
+
+        final String argsURL = getOption( "args" );
         boolean useArgsFile = argsURL == null || !argsURL.equalsIgnoreCase( "false" );
-        if( !useArgsFile )
-        {
-            argsURL = null;
-        }
-        if( argsURL == null && useArgsFile )
+
+        m_localArgsURL = useArgsFile ? parseLocalArgs() : null;
+        m_globalArgsURL = useArgsFile ? parseGlobalArgs() : null;
+    }
+
+    /**
+     * Parse arguments form local arguments. This can be specified by using a property named "args" or if not specified
+     * a default ./runner.args will be searched.
+     *
+     * @return url of local args file or null if not set and no default found
+     */
+    private String parseLocalArgs()
+    {
+        String argsURL = getOption( "args" );
+        if( argsURL == null )
         {
             // use a default args file if available
             final File defaultArgsFile = new File( DEFAULT_ARGS_FILE_NAME );
@@ -117,7 +131,49 @@ public class CommandLineImpl implements CommandLine
                 throw new RuntimeException( "Arguments could not be read from [" + argsURL + "]", e );
             }
         }
-        m_argsURL = argsURL;
+        return argsURL;
+    }
+
+    /**
+     * Parse arguments from global user arguments. This can be specified by using a property named "globalArgs" or if
+     * not specified a default ${user.home}/.pax/runner/runner.args will be searched.
+     *
+     * @return url of global args file or null if not set and no default found
+     */
+    private String parseGlobalArgs()
+    {
+        String globalArgsURL = getOption( "globalArgs" );
+        String userHome = System.getProperty( "user.home" );
+        if( globalArgsURL == null && userHome != null )
+        {
+            // use a default
+            final File defaultGlobalArgsFile = new File(
+                userHome + File.separator + ".pax" + File.separator + "runner" + File.separator + DEFAULT_ARGS_FILE_NAME
+            );
+            if( defaultGlobalArgsFile.exists() )
+            {
+                try
+                {
+                    globalArgsURL = defaultGlobalArgsFile.toURL().toExternalForm();
+                }
+                catch( MalformedURLException ignore )
+                {
+                    // ignore as this should not happen
+                }
+            }
+        }
+        if( globalArgsURL != null )
+        {
+            try
+            {
+                parseArguments( readTextFile( new URL( globalArgsURL ), true ) );
+            }
+            catch( IOException e )
+            {
+                throw new RuntimeException( "Arguments could not be read from [" + globalArgsURL + "]", e );
+            }
+        }
+        return globalArgsURL;
     }
 
     /**
@@ -171,7 +227,7 @@ public class CommandLineImpl implements CommandLine
      */
     public String getArgumentsFileURL()
     {
-        return m_argsURL;
+        return m_localArgsURL;
     }
 
     /**
@@ -248,7 +304,7 @@ public class CommandLineImpl implements CommandLine
             String line;
             while( ( line = bufferedReader.readLine() ) != null )
             {
-                if( ( !skipEmptyLines || line.trim().length() > 0) && line.charAt(0) !=  LINE_COMMENT_PREFIX )
+                if( ( !skipEmptyLines || line.trim().length() > 0 ) && line.charAt( 0 ) != LINE_COMMENT_PREFIX )
                 {
                     content.add( line );
                 }
@@ -264,11 +320,30 @@ public class CommandLineImpl implements CommandLine
         return content;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString()
+    {
+        StringBuilder builder = new StringBuilder();
+        if( m_localArgsURL != null )
+        {
+            builder.append( " and " ).append( m_localArgsURL );
+        }
+        if( m_globalArgsURL != null )
+        {
+            builder.append( " and " ).append( m_globalArgsURL );
+        }
+        if( builder.length() > 0 )
+        {
+            builder.insert( 0, "Using arguments from command line" );
+        }
+        else
+        {
+            builder.append( "Using only arguments from command line" );
+        }
+        return builder.toString();
+    }
+
+    private String toStringAdvanced()
     {
         StringBuilder builder = new StringBuilder();
         builder.append( "Arguments: " );

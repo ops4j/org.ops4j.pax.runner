@@ -181,14 +181,7 @@ public class Run
                        final JavaRunner runner )
     {
         final Context context = createContext( commandLine, config, resolver );
-        if( commandLine.getArgumentsFileURL() != null )
-        {
-            LOGGER.info( "Using arguments from command line and " + commandLine.getArgumentsFileURL() );
-        }
-        else
-        {
-            LOGGER.info( "Using only arguments from command line" );
-        }
+        LOGGER.info( commandLine );
         // install aditional services
         installServices( context );
         // install aditional handlers

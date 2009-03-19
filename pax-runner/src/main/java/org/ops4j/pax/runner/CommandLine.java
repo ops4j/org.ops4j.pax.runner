@@ -106,11 +106,4 @@ public interface CommandLine
      */
     List<String> getArguments();
 
-    /**
-     * Returns the URL of used arguments file (if any) or null if no arguments file is used.
-     *
-     * @return URl of arguments file.
-     */
-    String getArgumentsFileURL();
-
 }
