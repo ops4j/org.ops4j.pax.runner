@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -45,6 +46,7 @@
         <module>pax-runner-scanner-bundle</module>
         <module>pax-runner-scanner-dir</module>
         <module>pax-runner-scanner-file</module>
+        <module>pax-runner-scanner-maven</module>
         <module>pax-runner-scanner-obr</module>
         <module>pax-runner-scanner-obr-script</module>
         <module>pax-runner-scanner-pom</module>
@@ -66,9 +68,11 @@
         <module>pax-runner-scanner-composite</module>
         <module>pax-runner-scanner-dir</module>
         <module>pax-runner-scanner-file</module>
+        <module>pax-runner-scanner-maven</module>
         <module>pax-runner-scanner-obr</module>
         <module>pax-runner-scanner-obr-script</module>
         <module>pax-runner-scanner-pom</module>
+        <module>pax-runner</module>
       </modules>
     </profile>
     <profile>
