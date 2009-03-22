@@ -75,7 +75,7 @@ public interface CommandLine
     /**
      * Profiles repository.
      */
-    static final String OPTION_PROFILES_REPO = "profilesRepository";
+    static final String OPTION_PROFILES_REPO = "profilesRepositories";
         /**
      * Profiles group id.
      */
