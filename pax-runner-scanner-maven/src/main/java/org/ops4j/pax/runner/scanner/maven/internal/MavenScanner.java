@@ -214,7 +214,7 @@ public class MavenScanner
     }
 
     /**
-     * TODO remove once a version > 1.0-alpha-5 of Mercury
+     * TODO remove once a version > 1.0-alpha-5 of Mercury and use QualityRange.create
      */
     private static QualityRange createQualityRange( boolean releases, boolean snapshots )
     {
