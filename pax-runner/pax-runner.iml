@@ -20,6 +20,7 @@
     <orderEntry type="library" name="Maven: org.apache.felix:org.apache.felix.bundlerepository:1.2.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.felix:org.osgi.service.obr:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-classpath:0.5.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-mercury:0.5.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-mvn:0.5.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-link:0.5.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-obr:0.5.0-SNAPSHOT" level="project" />

@@ -17,7 +17,6 @@
  */
 package org.ops4j.pax.runner.scanner.maven.internal;
 
-import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -137,6 +136,7 @@ public class MavenScanner
             final ArtifactBasicResults results = m_vrr.readVersions( query );
             if( results.hasExceptions() )
             {
+                //noinspection ThrowableResultOfMethodCallIgnored
                 throw new ScannerException( results.getError( queryMeta ).getMessage() );
             }
             if( results.hasResults( queryMeta ) )
@@ -147,6 +147,7 @@ public class MavenScanner
                     final ArtifactResults artifactResults = m_vrr.readArtifacts( toList( foundArtifact ) );
                     if( artifactResults.hasExceptions() )
                     {
+                        //noinspection ThrowableResultOfMethodCallIgnored
                         throw new ScannerException( artifactResults.getError( foundArtifact ).getMessage() );
                     }
                     if( artifactResults.hasResults( foundArtifact ) )
@@ -179,6 +180,8 @@ public class MavenScanner
 
     /**
      * Initialize configurations and virtual repository reader.
+     *
+     * @throws Exception - Re-thrown
      */
     private void initialize()
         throws Exception
@@ -188,34 +191,47 @@ public class MavenScanner
 
         final List<Repository> repositories = new ArrayList<Repository>();
         final MavenRepositoryURL localRepository = mavenConfiguration.getLocalRepository();
-        LOGGER.debug( "Using local repository " + localRepository );
         if( localRepository != null )
         {
-            repositories.add(
-                new LocalRepositoryM2(
-                    "localRepo",
-                    new File( localRepository.toURL().toURI() ),
-                    DependencyProcessor.NULL_PROCESSOR
-                )
-            );
+            LOGGER.debug( "Using local repository " + localRepository );
+            repositories.add( toRepository( localRepository ) );
         }
         for( MavenRepositoryURL repositoryURL : mavenConfiguration.getRepositories() )
         {
             LOGGER.debug( "Using remote repository " + repositoryURL );
-            final Server server = new Server( repositoryURL.toURL().toExternalForm(), repositoryURL.toURL() );
-            final RemoteRepositoryM2 remoteRepo =
-                new RemoteRepositoryM2( server.getId(), server, DependencyProcessor.NULL_PROCESSOR );
-            remoteRepo.setRepositoryQualityRange(
-                createQualityRange( repositoryURL.isReleasesEnabled(), repositoryURL.isSnapshotsEnabled() )
-            );
-            repositories.add( remoteRepo );
+            repositories.add( toRepository( repositoryURL ) );
         }
         m_vrr = new VirtualRepositoryReader( repositories );
     }
 
     /**
-     * TODO remove once a version > 1.0-alpha-5 of Mercury and use QualityRange.create
+     * Adapt a {@link MavenRepositoryURL} to a Mercury {@link Repository}.
+     *
+     * @param repositoryURL to adapt
+     *
+     * @return adapted
      */
+    private Repository toRepository( final MavenRepositoryURL repositoryURL )
+    {
+        final Repository repository;
+        if( repositoryURL.isFileRepository() )
+        {
+            repository = new LocalRepositoryM2(
+                repositoryURL.getId(), repositoryURL.getFile(), DependencyProcessor.NULL_PROCESSOR
+            );
+        }
+        else
+        {
+            final Server server = new Server( repositoryURL.getId(), repositoryURL.getURL() );
+            repository = new RemoteRepositoryM2( server.getId(), server, DependencyProcessor.NULL_PROCESSOR );
+        }
+        repository.setRepositoryQualityRange(
+            createQualityRange( repositoryURL.isReleasesEnabled(), repositoryURL.isSnapshotsEnabled() )
+        );
+        return repository;
+    }
+
+    // TODO remove once a version > 1.0-alpha-5 of Mercury and use QualityRange.create
     private static QualityRange createQualityRange( boolean releases, boolean snapshots )
     {
         if( releases && snapshots )
