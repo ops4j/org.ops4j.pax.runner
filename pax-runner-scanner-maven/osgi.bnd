@@ -9,20 +9,16 @@ Bundle-Activator:\
 
 Import-Package:\
   ${bundle.namespace}; version="${pom.version}",\
-  javax.net,\
   javax.net.ssl,\
-  javax.security.cert,\
   javax.xml.parsers,\
-  org.osgi.framework; version="[1.0.0,2.0.0)",\
-  org.osgi.util.tracker; version="[1.3.0,2.0.0)",\
   org.ops4j.pax.runner.provision; version="${pom.version}",\
   org.apache.commons.logging; version="[1.0.4,2.0.0)"; resolution:=optional,\
+  org.apache.maven.mercury.*; version="[1.0.0,2.0.0)",\
+  org.osgi.framework; version="[1.0.0,2.0.0)",\
   org.osgi.service.cm; version="[1.2.0,2.0.0)",\
+  org.osgi.util.tracker; version="[1.3.0,2.0.0)",\
   org.w3c.dom,\
-  org.xml.sax,\
-  !org.bouncycastle.*,\
-  !org.slf4j,\
-  !org.mortbay.*
+  org.xml.sax
 
 Export-Package:\
   ${bundle.namespace}; version="${pom.version}"

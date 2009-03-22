@@ -80,7 +80,7 @@
       <groupId>org.ops4j.pax.url</groupId>
       <artifactId>pax-url-mercury</artifactId>
       <version>${dependency.url.version}</version>
-      <optional>true</optional>
+      <scope>provided</scope>
     </dependency>
 
   </dependencies>
