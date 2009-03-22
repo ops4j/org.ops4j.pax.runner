@@ -80,9 +80,9 @@ public class BundleScanner
         {
             final FileBundleReference reference = new FileBundleReference(
                 provisionSpec.getPath(),
-                config.getStartLevel(),
-                config.shouldStart(),
-                config.shouldUpdate()
+                getDefaultStartLevel( provisionSpec, config ),
+                getDefaultStart( provisionSpec, config ),
+                getDefaultUpdate( provisionSpec, config )
             );
             references.add( reference );
             LOGGER.info( "Installing bundle [" + reference + "]" );
@@ -92,6 +92,60 @@ public class BundleScanner
             throw new MalformedSpecificationException( "Invalid url", e );
         }
         return references;
+    }
+
+    /**
+     * Returns the default start level by first looking at the parser and if not set fallback to configuration.
+     *
+     * @param provisionSpec provision spec
+     * @param config        a configuration
+     *
+     * @return default start level or null if nos set.
+     */
+    private Integer getDefaultStartLevel( ProvisionSpec provisionSpec, ScannerConfiguration config )
+    {
+        Integer startLevel = provisionSpec.getStartLevel();
+        if( startLevel == null )
+        {
+            startLevel = config.getStartLevel();
+        }
+        return startLevel;
+    }
+
+    /**
+     * Returns the default start by first looking at the parser and if not set fallback to configuration.
+     *
+     * @param provisionSpec provision spec
+     * @param config        a configuration
+     *
+     * @return default start level or null if nos set.
+     */
+    private Boolean getDefaultStart( final ProvisionSpec provisionSpec, final ScannerConfiguration config )
+    {
+        Boolean start = provisionSpec.shouldStart();
+        if( start == null )
+        {
+            start = config.shouldStart();
+        }
+        return start;
+    }
+
+    /**
+     * Returns the default update by first looking at the parser and if not set fallback to configuration.
+     *
+     * @param provisionSpec provision spec
+     * @param config        a configuration
+     *
+     * @return default update or null if nos set.
+     */
+    private Boolean getDefaultUpdate( final ProvisionSpec provisionSpec, final ScannerConfiguration config )
+    {
+        Boolean update = provisionSpec.shouldUpdate();
+        if( update == null )
+        {
+            update = config.shouldUpdate();
+        }
+        return update;
     }
 
     /**
