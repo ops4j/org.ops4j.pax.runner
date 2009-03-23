@@ -70,8 +70,9 @@ public interface PlatformBuilder
      * @return an input stream
      *
      * @throws java.io.IOException if the input stream could not be opened.
+     * @param configuration
      */
-    InputStream getDefinition()
+    InputStream getDefinition( Configuration configuration )
         throws IOException;
 
     /**

@@ -858,7 +858,7 @@ public class PlatformImpl
             if( inputStream == null )
             {
                 LOGGER.debug( "loading definition from builder." );
-                inputStream = m_platformBuilder.getDefinition();
+                inputStream = m_platformBuilder.getDefinition( configuration );
             }
             return new PlatformDefinitionImpl( inputStream, configuration.getProfileStartLevel() );
         }

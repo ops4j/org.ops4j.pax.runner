@@ -109,7 +109,7 @@ public class KnopflerfishPlatformBuilderTest
         replay( m_bundleContext, bundle );
         assertNotNull(
             "Definition input stream",
-            new KnopflerfishPlatformBuilder( m_bundleContext, "2.0.0" ).getDefinition()
+            new KnopflerfishPlatformBuilder( m_bundleContext, "2.0.0" ).getDefinition( null )
         );
         verify( m_bundleContext, bundle );
     }

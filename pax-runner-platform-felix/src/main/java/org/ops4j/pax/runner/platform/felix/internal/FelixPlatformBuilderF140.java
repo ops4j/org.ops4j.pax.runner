@@ -354,9 +354,9 @@ public class FelixPlatformBuilderF140
     }
 
     /**
-     * @see org.ops4j.pax.runner.platform.PlatformBuilder#getDefinition()
+     * {@inheritDoc}
      */
-    public InputStream getDefinition()
+    public InputStream getDefinition( final Configuration configuration )
         throws IOException
     {
         final String definitionFile = "META-INF/platform-felix/definition-" + m_version + ".xml";

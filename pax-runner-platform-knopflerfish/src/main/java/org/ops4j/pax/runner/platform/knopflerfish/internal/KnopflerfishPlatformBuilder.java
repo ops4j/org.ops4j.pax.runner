@@ -357,9 +357,9 @@ public class KnopflerfishPlatformBuilder
     }
 
     /**
-     * @see PlatformBuilder#getDefinition()
+     * {@inheritDoc}
      */
-    public InputStream getDefinition()
+    public InputStream getDefinition( final Configuration configuration )
         throws IOException
     {
         final String definitionFile = "META-INF/platform-knopflerfish/definition-" + m_version + ".xml";

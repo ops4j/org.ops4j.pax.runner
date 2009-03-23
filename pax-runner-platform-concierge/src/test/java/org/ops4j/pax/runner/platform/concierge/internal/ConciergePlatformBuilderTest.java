@@ -110,7 +110,7 @@ public class ConciergePlatformBuilderTest
         replay( m_bundleContext, bundle );
         assertNotNull(
             "Definition input stream",
-            new ConciergePlatformBuilder( m_bundleContext, "1.0.0" ).getDefinition()
+            new ConciergePlatformBuilder( m_bundleContext, "1.0.0" ).getDefinition( null )
         );
         verify( m_bundleContext, bundle );
     }

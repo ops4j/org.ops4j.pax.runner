@@ -519,4 +519,12 @@ public class ConfigurationImpl
         return get( ServiceConstants.CONFIG_USE_ORIGINAL_URLS );
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public String getProperty( final String name )
+    {
+        return m_propertyResolver.get( name  );
+    }
+
 }

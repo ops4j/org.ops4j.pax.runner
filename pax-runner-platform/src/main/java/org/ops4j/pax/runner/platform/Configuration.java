@@ -214,4 +214,13 @@ public interface Configuration
      */
     Boolean keepOriginalUrls();
 
+    /**
+     * Returns a raw configuration property by name.
+     *
+     * @param name property name
+     *
+     * @return property value, null if not defined
+     */
+    String getProperty( String name );
+
 }

@@ -109,7 +109,7 @@ public class EquinoxPlatformBuilderTest
         replay( m_bundleContext, bundle );
         assertNotNull(
             "Definition input stream",
-            new EquinoxPlatformBuilder( m_bundleContext, "3.2.1" ).getDefinition()
+            new EquinoxPlatformBuilder( m_bundleContext, "3.2.1" ).getDefinition( null )
         );
         verify( m_bundleContext, bundle );
     }
@@ -128,7 +128,7 @@ public class EquinoxPlatformBuilderTest
         replay( m_bundleContext, bundle );
         assertNotNull(
             "Definition input stream",
-            new EquinoxPlatformBuilder( m_bundleContext, "3.3.0" ).getDefinition()
+            new EquinoxPlatformBuilder( m_bundleContext, "3.3.0" ).getDefinition( null )
         );
         verify( m_bundleContext, bundle );
     }
@@ -147,7 +147,7 @@ public class EquinoxPlatformBuilderTest
         replay( m_bundleContext, bundle );
         assertNotNull(
             "Definition input stream",
-            new EquinoxPlatformBuilder( m_bundleContext, "3.3.1" ).getDefinition()
+            new EquinoxPlatformBuilder( m_bundleContext, "3.3.1" ).getDefinition( null )
         );
         verify( m_bundleContext, bundle );
     }

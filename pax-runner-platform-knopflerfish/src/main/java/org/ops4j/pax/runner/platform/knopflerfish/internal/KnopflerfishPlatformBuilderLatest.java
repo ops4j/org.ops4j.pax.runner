@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.net.URL;
 import org.osgi.framework.BundleContext;
 import org.ops4j.net.URLUtils;
+import org.ops4j.pax.runner.platform.Configuration;
 
 /**
  * Platform builder for knopflerfish platform that uses the latest and greatest Equinox..
@@ -43,17 +44,17 @@ public class KnopflerfishPlatformBuilderLatest
         super( bundleContext, "LATEST" );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public InputStream getDefinition()
+    public InputStream getDefinition( final Configuration configuration )
         throws IOException
     {
-        return
-            URLUtils.prepareInputStream(
-                new URL(
-                    "mvn:https://scm.ops4j.org/repos/ops4j/projects/pax/runner-repository!org.ops4j.pax.runner.platforms/knopflerfish//xml"
-                ),
-                true
-            );
+        return URLUtils.prepareInputStream(
+            new URL( configuration.getProperty( "knopflerfish.latest.definition.url" ) ),
+            true
+        );
     }
 
 }

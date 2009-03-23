@@ -108,7 +108,7 @@ public class FelixPlatformBuilderF100T122Test
         replay( m_bundleContext, bundle );
         assertNotNull(
             "Definition input stream",
-            new FelixPlatformBuilderF100T122( m_bundleContext, "1.0.0" ).getDefinition()
+            new FelixPlatformBuilderF100T122( m_bundleContext, "1.0.0" ).getDefinition( null )
         );
         verify( m_bundleContext, bundle );
     }
