@@ -50,8 +50,7 @@ public class KnopflerfishPlatformBuilderLatest
         return
             URLUtils.prepareInputStream(
                 new URL(
-                    "https://scm.ops4j.org/repos/ops4j/laboratory/users/adreghiciu/pax/runner/"
-                    + "platform-knopflerfish/definition-LATEST.xml"
+                    "mvn:https://scm.ops4j.org/repos/ops4j/projects/pax/runner-repository!org.ops4j.pax.runner.platforms/knopflerfish//xml"
                 ),
                 true
             );

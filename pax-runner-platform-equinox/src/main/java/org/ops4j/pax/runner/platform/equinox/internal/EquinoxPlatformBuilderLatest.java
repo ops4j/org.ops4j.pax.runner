@@ -50,8 +50,7 @@ public class EquinoxPlatformBuilderLatest
         return
             URLUtils.prepareInputStream(
                 new URL(
-                    "https://scm.ops4j.org/repos/ops4j/laboratory/users/adreghiciu/pax/runner/"
-                    + "platform-equinox/definition-LATEST.xml"
+                    "mvn:https://scm.ops4j.org/repos/ops4j/projects/pax/runner-repository!org.ops4j.pax.runner.platforms/equinox//xml"
                 ),
                 true
             );
