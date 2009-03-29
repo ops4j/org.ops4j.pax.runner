@@ -82,7 +82,7 @@ public class ProvisionServiceImpl
     public List<BundleReference> scan( final String spec )
         throws MalformedSpecificationException, ScannerException
     {
-        LOGGER.debug( "Provision from [" + spec + "]" );
+        LOGGER.info( "Provision from [" + spec + "]" );
         final ProvisionSpec provisionSpec = new ProvisionSpec( spec );
         Scanner scanner = m_scanners.get( provisionSpec.getScheme() );
         if( scanner == null )

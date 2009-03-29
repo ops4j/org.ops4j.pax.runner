@@ -63,9 +63,6 @@ public class CompositeScannerTest
         ProvisionService provisionService = createMock( ProvisionService.class );
         File file = FileUtils.getFileFromClasspath( "scanner/bundles.txt" );
 
-        expect( config.getStartLevel() ).andReturn( 10 );
-        expect( config.shouldStart() ).andReturn( true );
-        expect( config.shouldUpdate() ).andReturn( false );
         expect( config.getCertificateCheck() ).andReturn( false );
         List<BundleReference> refs = new ArrayList<BundleReference>();
         final BundleReference ref = createMock( BundleReference.class );
@@ -82,7 +79,7 @@ public class CompositeScannerTest
 
         replay( config, provisionService, ref );
         List<BundleReference> references = createScanner( config, provisionService ).scan(
-            new ProvisionSpec( "scan-composite:" + file.toURL().toExternalForm() )
+            new ProvisionSpec( "scan-composite:" + file.toURL().toExternalForm() + "@5@start@update" )
         );
         assertNotNull( "Returned bundle references list is null", references );
         assertEquals( "Nuber of bundles", 5, references.size() );
@@ -113,7 +110,6 @@ public class CompositeScannerTest
         ProvisionService provisionService = createMock( ProvisionService.class );
         File file = FileUtils.getFileFromClasspath( "scanner/empty.txt" );
 
-        expect( config.shouldStart() ).andReturn( true );
         expect( config.getCertificateCheck() ).andReturn( false );
 
         replay( config, provisionService );
@@ -134,9 +130,6 @@ public class CompositeScannerTest
         final Recorder recorder = createMock( Recorder.class );
         File file = FileUtils.getFileFromClasspath( "scanner/properties.txt" );
 
-        expect( config.getStartLevel() ).andReturn( null );
-        expect( config.shouldStart() ).andReturn( null );
-        expect( config.shouldUpdate() ).andReturn( null );
         expect( config.getCertificateCheck() ).andReturn( false );
 
         recorder.record( "prop.1=value.1" );
