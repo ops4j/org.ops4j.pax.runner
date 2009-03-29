@@ -91,6 +91,10 @@ public class ExtensionBasedProvisionSchemaResolver
                         {
                             schema = org.ops4j.pax.runner.scanner.obr.ServiceConstants.SCHEMA;
                         }
+                        else if( "COMPOSITE".equals( extension ) || "PROFILE".equals( extension ))
+                        {
+                            schema = org.ops4j.pax.runner.scanner.composite.ServiceConstants.SCHEMA;
+                        }
                     }
                 }
             }
