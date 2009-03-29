@@ -105,7 +105,15 @@ public class ProvisionSpec
                 parseSegment( optionsSegments[ i ].trim() );
             }
         }
-        final String[] pathSegments = optionsSegments[ 0 ].split( ServiceConstants.SEPARATOR_FILTER );
+        final String[] pathSegments;
+        if( optionsSegments[ 0 ].startsWith( "jar:" ) )
+        {
+            pathSegments = new String[]{ optionsSegments[ 0 ] };
+        }
+        else
+        {
+            pathSegments = optionsSegments[ 0 ].split( ServiceConstants.SEPARATOR_FILTER );
+        }
         String path = pathSegments[ 0 ];
         if( path.endsWith( "!" ) )
         {
