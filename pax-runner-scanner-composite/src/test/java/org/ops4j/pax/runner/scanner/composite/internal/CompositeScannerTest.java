@@ -63,12 +63,14 @@ public class CompositeScannerTest
         ProvisionService provisionService = createMock( ProvisionService.class );
         File file = FileUtils.getFileFromClasspath( "scanner/bundles.txt" );
 
-        expect( config.getStartLevel() ).andReturn( null );
-        expect( config.shouldStart() ).andReturn( null );
-        expect( config.shouldUpdate() ).andReturn( null );
+        expect( config.getStartLevel() ).andReturn( 10 );
+        expect( config.shouldStart() ).andReturn( true );
+        expect( config.shouldUpdate() ).andReturn( false );
         expect( config.getCertificateCheck() ).andReturn( false );
         List<BundleReference> refs = new ArrayList<BundleReference>();
-        refs.add( createMock( BundleReference.class ) );
+        final BundleReference ref = createMock( BundleReference.class );
+        expect( ref.getLocation() ).andReturn( null ).anyTimes();
+        refs.add( ref );
         expect( provisionService.scan( "scan-bundle:file:bundle1.txt" ) ).andReturn( refs );
         expect( provisionService.scan( "scan-file:file:foo.bundles@5" ) ).andReturn( refs );
         expect( provisionService.scan( "scan-dir:file:foo@5@nostart" ) ).andReturn( refs );
@@ -78,7 +80,7 @@ public class CompositeScannerTest
         )
         ).andReturn( refs );
 
-        replay( config, provisionService );
+        replay( config, provisionService, ref );
         List<BundleReference> references = createScanner( config, provisionService ).scan(
             new ProvisionSpec( "scan-composite:" + file.toURL().toExternalForm() )
         );

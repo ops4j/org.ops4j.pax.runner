@@ -32,6 +32,22 @@ public class BundleReferenceBean
     private Boolean m_shouldStart;
     private Boolean m_shouldUpdate;
 
+    public BundleReferenceBean()
+    {
+        // JavaBean constructor
+    }
+
+    public BundleReferenceBean( final String location,
+                                final Integer startLevel,
+                                final Boolean shouldStart,
+                                final Boolean shouldUpdate )
+    {
+        m_location = location;
+        m_startLevel = startLevel;
+        m_shouldStart = shouldStart;
+        m_shouldUpdate = shouldUpdate;
+    }
+
     public String getLocation()
     {
         return m_location;

@@ -32,6 +32,7 @@ import org.ops4j.lang.NullArgumentException;
 import org.ops4j.net.URLUtils;
 import org.ops4j.pax.runner.commons.properties.SystemPropertyUtils;
 import org.ops4j.pax.runner.provision.BundleReference;
+import org.ops4j.pax.runner.provision.BundleReferenceBean;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionService;
 import org.ops4j.pax.runner.provision.ProvisionSpec;
@@ -116,10 +117,9 @@ public class CompositeScanner
                     )
                 );
 
-                // TODO remove them?
-                Integer defaultStartLevel = getDefaultStartLevel( provisionSpec, config );
-                Boolean defaultStart = getDefaultStart( provisionSpec, config );
-                Boolean defaultUpdate = getDefaultUpdate( provisionSpec, config );
+                final Integer defaultStartLevel = provisionSpec.getStartLevel();
+                final Boolean defaultStart = provisionSpec.shouldStart();
+                final Boolean defaultUpdate = provisionSpec.shouldUpdate();
 
                 Properties localPlaceholders = new Properties();
                 String relativeUrlProp = new URL( provisionSpec.getPathAsUrl(), "." ).toExternalForm();
@@ -169,7 +169,17 @@ public class CompositeScanner
                             final List<BundleReference> scanned = m_provisionService.scan( line );
                             if( scanned != null && scanned.size() > 0 )
                             {
-                                references.addAll( scanned );
+                                for( BundleReference reference : scanned )
+                                {
+                                    references.add(
+                                        new BundleReferenceBean(
+                                            reference.getLocation(),
+                                            defaultStartLevel == null ? reference.getStartLevel() : defaultStartLevel,
+                                            defaultStart == null ? reference.shouldStart() : defaultStart,
+                                            defaultUpdate == null ? reference.shouldUpdate() : defaultUpdate
+                                        )
+                                    );
+                                }
                             }
                         }
                     }
@@ -188,60 +198,6 @@ public class CompositeScanner
             throw new ScannerException( "Could not parse the provision file", e );
         }
         return references;
-    }
-
-    /**
-     * Returns the default start level by first looking at the parser and if not set fallback to configuration.
-     *
-     * @param provisionSpec a parser
-     * @param config        a configuration
-     *
-     * @return default start level or null if nos set.
-     */
-    private Integer getDefaultStartLevel( ProvisionSpec provisionSpec, ScannerConfiguration config )
-    {
-        Integer startLevel = provisionSpec.getStartLevel();
-        if( startLevel == null )
-        {
-            startLevel = config.getStartLevel();
-        }
-        return startLevel;
-    }
-
-    /**
-     * Returns the default start by first looking at the parser and if not set fallback to configuration.
-     *
-     * @param provisionSpec a parser
-     * @param config        a configuration
-     *
-     * @return default start level or null if nos set.
-     */
-    private Boolean getDefaultStart( final ProvisionSpec provisionSpec, final ScannerConfiguration config )
-    {
-        Boolean start = provisionSpec.shouldStart();
-        if( start == null )
-        {
-            start = config.shouldStart();
-        }
-        return start;
-    }
-
-    /**
-     * Returns the default update by first looking at the parser and if not set fallback to configuration.
-     *
-     * @param provisionSpec a parser
-     * @param config        a configuration
-     *
-     * @return default update or null if nos set.
-     */
-    private Boolean getDefaultUpdate( final ProvisionSpec provisionSpec, final ScannerConfiguration config )
-    {
-        Boolean update = provisionSpec.shouldUpdate();
-        if( update == null )
-        {
-            update = config.shouldUpdate();
-        }
-        return update;
     }
 
     /**
