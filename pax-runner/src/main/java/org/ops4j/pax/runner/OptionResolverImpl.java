@@ -91,6 +91,11 @@ public class OptionResolverImpl
         {
             return result;
         }
+        final String profiles = get( CommandLine.OPTION_PROFILES );
+        if( profiles == null || profiles.trim().length() == 0 )
+        {
+            return result;
+        }
         final String profilesRepo = get( CommandLine.OPTION_PROFILES_REPO );
         if( profilesRepo == null || profilesRepo.trim().length() == 0 )
         {
