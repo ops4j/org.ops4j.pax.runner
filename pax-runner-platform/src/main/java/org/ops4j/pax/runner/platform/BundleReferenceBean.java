@@ -142,18 +142,28 @@ public class BundleReferenceBean
         m_shouldStart = shouldStart;
     }
 
-    /**
-     * @see Object#equals(Object)
-     */
     @Override
-    public boolean equals( final Object object )
+    public boolean equals( Object o )
     {
-        if( object == null || !( object instanceof BundleReference ) )
+        if( this == o )
+        {
+            return true;
+        }
+        if( o == null || getClass() != o.getClass() )
         {
             return false;
         }
-        final BundleReference another = (BundleReference) object;
-        return getName().equals( another.getName() ) && getURL().equals( another.getURL() );
+
+        BundleReferenceBean that = (BundleReferenceBean) o;
+
+        return !( m_url != null ? !m_url.equals( that.m_url ) : that.m_url != null );
+
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return m_url != null ? m_url.hashCode() : 0;
     }
 
     /**

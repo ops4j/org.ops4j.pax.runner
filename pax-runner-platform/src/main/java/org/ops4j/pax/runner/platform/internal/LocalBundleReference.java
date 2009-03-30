@@ -104,6 +104,30 @@ public class LocalBundleReference
         return m_bundleReference.shouldUpdate();
     }
 
+    @Override
+    public boolean equals( Object o )
+    {
+        if( this == o )
+        {
+            return true;
+        }
+        if( o == null || getClass() != o.getClass() )
+        {
+            return false;
+        }
+
+        LocalBundleReference that = (LocalBundleReference) o;
+
+        return m_file.equals( that.m_file );
+
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return m_file.hashCode();
+    }
+
     /**
      * @see Object#toString()
      */
