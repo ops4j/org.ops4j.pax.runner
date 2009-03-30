@@ -23,7 +23,7 @@ package org.ops4j.pax.runner.provision;
  * @author Alin Dreghiciu
  * @since August 16, 2007
  */
-public interface BundleReference
+public interface ScannedBundle
 {
 
     /**

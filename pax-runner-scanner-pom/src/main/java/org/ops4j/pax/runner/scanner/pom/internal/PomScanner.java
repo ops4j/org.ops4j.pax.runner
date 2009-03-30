@@ -30,12 +30,12 @@ import org.xml.sax.SAXException;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.net.URLUtils;
 import org.ops4j.pax.runner.commons.properties.SystemPropertyUtils;
-import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionSpec;
+import org.ops4j.pax.runner.provision.ScannedBundle;
 import org.ops4j.pax.runner.provision.Scanner;
 import org.ops4j.pax.runner.provision.ScannerException;
-import org.ops4j.pax.runner.provision.scanner.FileBundleReference;
+import org.ops4j.pax.runner.provision.scanner.ScannedFileBundle;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfigurationImpl;
 import org.ops4j.pax.runner.scanner.pom.ServiceConstants;
@@ -76,13 +76,13 @@ public class PomScanner
      * Reads the bundles from the pom file specified by the urlSpec.
      * {@inheritDoc}
      */
-    public List<BundleReference> scan( final ProvisionSpec provisionSpec )
+    public List<ScannedBundle> scan( final ProvisionSpec provisionSpec )
         throws MalformedSpecificationException, ScannerException
     {
         NullArgumentException.validateNotNull( provisionSpec, "Provision spec" );
-        
+
         LOGGER.debug( "Scanning [" + provisionSpec.getPath() + "]" );
-        List<BundleReference> references = new ArrayList<BundleReference>();
+        List<ScannedBundle> scannedBundles = new ArrayList<ScannedBundle>();
         ScannerConfiguration config = createConfiguration();
         InputStream inputStream = null;
         try
@@ -100,8 +100,8 @@ public class PomScanner
                 final String mainArtifactURL = composeURL( doc.getDocumentElement(), "packaging" );
                 if( mainArtifactURL != null )
                 {
-                    references.add(
-                        new FileBundleReference( mainArtifactURL, defaultStartLevel, defaultStart, defaultUpdate )
+                    scannedBundles.add(
+                        new ScannedFileBundle( mainArtifactURL, defaultStartLevel, defaultStart, defaultUpdate )
                     );
                 }
                 // check out properties before processing dependencies
@@ -125,11 +125,11 @@ public class PomScanner
                         final String dependencyURL = composeURL( dependency, "type" );
                         if( dependencyURL != null )
                         {
-                            final FileBundleReference reference = new FileBundleReference(
+                            final ScannedFileBundle scannedFileBundle = new ScannedFileBundle(
                                 dependencyURL, defaultStartLevel, defaultStart, defaultUpdate
                             );
-                            references.add( reference );
-                            LOGGER.info( "Installing bundle [" + reference + "]" );
+                            scannedBundles.add( scannedFileBundle );
+                            LOGGER.info( "Installing bundle [" + scannedFileBundle + "]" );
                         }
                     }
                 }
@@ -155,7 +155,7 @@ public class PomScanner
         {
             throw new ScannerException( "Could not parse the provision file", e );
         }
-        return references;
+        return scannedBundles;
     }
 
     /**

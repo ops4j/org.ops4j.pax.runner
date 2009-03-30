@@ -30,12 +30,12 @@ import java.util.zip.ZipFile;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.lang.NullArgumentException;
-import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionSpec;
+import org.ops4j.pax.runner.provision.ScannedBundle;
 import org.ops4j.pax.runner.provision.Scanner;
 import org.ops4j.pax.runner.provision.ScannerException;
-import org.ops4j.pax.runner.provision.scanner.FileBundleReference;
+import org.ops4j.pax.runner.provision.scanner.ScannedFileBundle;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfigurationImpl;
 import org.ops4j.pax.runner.scanner.dir.ServiceConstants;
@@ -75,11 +75,11 @@ public class DirScanner
      * Reads the bundles from the file specified by the urlSpec.
      * {@inheritDoc}
      */
-    public List<BundleReference> scan( final ProvisionSpec provisionSpec )
+    public List<ScannedBundle> scan( final ProvisionSpec provisionSpec )
         throws MalformedSpecificationException, ScannerException
     {
         NullArgumentException.validateNotNull( provisionSpec, "Provision spec" );
-        
+
         LOGGER.debug( "Scanning [" + provisionSpec.getPath() + "]" );
         final ScannerConfiguration config = createConfiguration();
         final Pattern filter = provisionSpec.getFilterPattern();
@@ -208,35 +208,35 @@ public class DirScanner
     }
 
     /**
-     * Create bundle references based on the provided lister.
+     * Create scanned bundles based on the provided lister.
      *
      * @param lister      source of bundles
-     * @param startLevel  default start level to use (see FileBundleReference)
-     * @param shouldStart if by default should start (see FileBundleReference)
-     * @param update      if by default should be updated (see FileBundleReference)
+     * @param startLevel  default start level to use
+     * @param shouldStart if by default should start
+     * @param update      if by default should be updated
      *
-     * @return a list of bundles references from the provided source
+     * @return a list of scanned bundles from the provided source
      *
-     * @throws java.net.MalformedURLException re-thrown from FileBundleReference
-     * @see FileBundleReference#FileBundleReference(String,Integer,Boolean,Boolean)
+     * @throws java.net.MalformedURLException re-thrown
      */
-    private List<BundleReference> list( final Lister lister, final Integer startLevel, final Boolean shouldStart,
-                                        final Boolean update )
+    private List<ScannedBundle> list( final Lister lister, final Integer startLevel, final Boolean shouldStart,
+                                      final Boolean update )
         throws MalformedURLException
     {
-        final List<BundleReference> references = new ArrayList<BundleReference>();
+        final List<ScannedBundle> scannedBundles = new ArrayList<ScannedBundle>();
         final List<URL> urls = lister.list();
         if( urls != null )
         {
             for( URL url : urls )
             {
-                final FileBundleReference reference =
-                    new FileBundleReference( url.toExternalForm(), startLevel, shouldStart, update );
-                references.add( reference );
-                LOGGER.info( "Installing bundle [" + reference + "]" );
+                final ScannedFileBundle scannedFileBundle = new ScannedFileBundle(
+                    url.toExternalForm(), startLevel, shouldStart, update
+                );
+                scannedBundles.add( scannedFileBundle );
+                LOGGER.info( "Installing bundle [" + scannedFileBundle + "]" );
             }
         }
-        return references;
+        return scannedBundles;
     }
 
     /**

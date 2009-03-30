@@ -18,8 +18,8 @@
 package org.ops4j.pax.runner.provision.scanner;
 
 import java.net.MalformedURLException;
-import org.ops4j.pax.runner.provision.BundleReferenceBean;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
+import org.ops4j.pax.runner.provision.ScannedBundleBean;
 import org.ops4j.pax.runner.provision.ServiceConstants;
 
 /**
@@ -28,8 +28,8 @@ import org.ops4j.pax.runner.provision.ServiceConstants;
  * @author Alin Dreghiciu
  * @since August 18, 2007
  */
-public class FileBundleReference
-    extends BundleReferenceBean
+public class ScannedFileBundle
+    extends ScannedBundleBean
 {
 
     /**
@@ -38,14 +38,14 @@ public class FileBundleReference
     private static final String SYNTAX = "bundle_url[@start_level][@nostart][@update]";
 
     /**
-     * Creates a new bundle reference based on a bundle reference.
+     * Constructor
      *
      * @param reference the bundle reference specification
      *
      * @throws MalformedSpecificationException
      *          if the reference is malformed
      */
-    public FileBundleReference( final String reference )
+    public ScannedFileBundle( final String reference )
         throws MalformedSpecificationException
     {
         if( reference == null || "".equals( reference.trim() ) )
@@ -56,7 +56,9 @@ public class FileBundleReference
         {
             throw new MalformedSpecificationException( "Path cannot be empty. Syntax " + SYNTAX );
         }
-        if( reference.startsWith( ServiceConstants.SEPARATOR_OPTION ) || reference.endsWith( ServiceConstants.SEPARATOR_OPTION ) )
+        if( reference.startsWith( ServiceConstants.SEPARATOR_OPTION ) || reference.endsWith(
+            ServiceConstants.SEPARATOR_OPTION
+        ) )
         {
             throw new MalformedSpecificationException(
                 "Path cannot start or end with " + ServiceConstants.SEPARATOR_OPTION + ". Syntax " + SYNTAX
@@ -98,10 +100,10 @@ public class FileBundleReference
      *
      * @throws MalformedURLException if the reference is malformed
      */
-    public FileBundleReference( final String reference,
-                                final Integer defaultStartLevel,
-                                final Boolean defaultShouldStart,
-                                final Boolean defaultShouldUpdate )
+    public ScannedFileBundle( final String reference,
+                              final Integer defaultStartLevel,
+                              final Boolean defaultShouldStart,
+                              final Boolean defaultShouldUpdate )
         throws MalformedURLException
     {
         this( reference );

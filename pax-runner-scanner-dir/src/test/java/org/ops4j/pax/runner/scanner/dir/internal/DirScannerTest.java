@@ -27,9 +27,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.ops4j.io.FileUtils;
 import org.ops4j.lang.NullArgumentException;
-import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionSpec;
+import org.ops4j.pax.runner.provision.ScannedBundle;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
 import org.ops4j.util.property.PropertyResolver;
@@ -56,11 +56,11 @@ public class DirScannerTest
         expect( config.shouldUpdate() ).andReturn( null );
 
         replay( config );
-        List<BundleReference> references = createScanner( config ).scan(
+        List<ScannedBundle> scannedBundles = createScanner( config ).scan(
             new ProvisionSpec( "scan-dir:" + file.getAbsolutePath() + "!/*.jar" )
         );
-        assertNotNull( "Returned bundle references list is null", references );
-        assertEquals( "Number of bundles", 2, references.size() );
+        assertNotNull( "Returned list is null", scannedBundles );
+        assertEquals( "Number of bundles", 2, scannedBundles.size() );
         verify( config );
     }
 
@@ -76,11 +76,11 @@ public class DirScannerTest
         expect( config.shouldUpdate() ).andReturn( null );
 
         replay( config );
-        List<BundleReference> references = createScanner( config ).scan(
+        List<ScannedBundle> scannedBundles = createScanner( config ).scan(
             new ProvisionSpec( "scan-dir:" + file.toURL().toExternalForm() + "!/*.jar" )
         );
-        assertNotNull( "Returned bundle references list is null", references );
-        assertEquals( "Number of bundles", 2, references.size() );
+        assertNotNull( "Returned list is null", scannedBundles );
+        assertEquals( "Number of bundles", 2, scannedBundles.size() );
         verify( config );
     }
 
@@ -113,11 +113,11 @@ public class DirScannerTest
         expect( config.shouldUpdate() ).andReturn( null );
 
         replay( config );
-        List<BundleReference> references = createScanner( config ).scan(
+        List<ScannedBundle> scannedBundles = createScanner( config ).scan(
             new ProvisionSpec( "scan-dir:" + file.getAbsolutePath() + "!/*.jar" )
         );
-        assertNotNull( "Returned bundle references list is null", references );
-        assertEquals( "Number of bundles", 2, references.size() );
+        assertNotNull( "Returned list is null", scannedBundles );
+        assertEquals( "Number of bundles", 2, scannedBundles.size() );
         verify( config );
     }
 
@@ -133,11 +133,11 @@ public class DirScannerTest
         expect( config.shouldUpdate() ).andReturn( null );
 
         replay( config );
-        List<BundleReference> references = createScanner( config ).scan(
+        List<ScannedBundle> scannedBundles = createScanner( config ).scan(
             new ProvisionSpec( "scan-dir:" + file.toURL().toExternalForm() + "!/*.jar" )
         );
-        assertNotNull( "Returned bundle references list is null", references );
-        assertEquals( "Number of bundles", 2, references.size() );
+        assertNotNull( "Returned list is null", scannedBundles );
+        assertEquals( "Number of bundles", 2, scannedBundles.size() );
         verify( config );
     }
 
@@ -153,11 +153,11 @@ public class DirScannerTest
         expect( config.shouldUpdate() ).andReturn( null );
 
         replay( config );
-        List<BundleReference> references = createScanner( config ).scan(
+        List<ScannedBundle> scannedBundles = createScanner( config ).scan(
             new ProvisionSpec( "scan-dir:http:myserver/my.zip!/*.jar" )
         );
-        assertNotNull( "Returned bundle references list is null", references );
-        assertEquals( "Number of bundles", 2, references.size() );
+        assertNotNull( "Returned list is null", scannedBundles );
+        assertEquals( "Number of bundles", 2, scannedBundles.size() );
         verify( config );
     }
 

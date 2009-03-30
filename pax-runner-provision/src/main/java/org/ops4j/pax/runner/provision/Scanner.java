@@ -34,7 +34,7 @@ public interface Scanner
     public final static String SCHEMA_PROPERTY = "provision.schema";
 
     /**
-     * Based on the path the scanner should return a list of bundles references for bundles that should be installed.
+     * Based on the path the scanner should return a list of scanned bundles for bundles that should be installed.
      *
      * @param provisionSpec provisioning specification
      *
@@ -44,7 +44,7 @@ public interface Scanner
      * @throws MalformedSpecificationException
      *                          - If the path is malformed
      */
-    List<BundleReference> scan( ProvisionSpec provisionSpec )
+    List<ScannedBundle> scan( ProvisionSpec provisionSpec )
         throws MalformedSpecificationException, ScannerException;
 
 }

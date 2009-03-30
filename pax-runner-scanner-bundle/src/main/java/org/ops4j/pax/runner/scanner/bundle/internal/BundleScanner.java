@@ -23,12 +23,12 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.lang.NullArgumentException;
-import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionSpec;
+import org.ops4j.pax.runner.provision.ScannedBundle;
 import org.ops4j.pax.runner.provision.Scanner;
 import org.ops4j.pax.runner.provision.ScannerException;
-import org.ops4j.pax.runner.provision.scanner.FileBundleReference;
+import org.ops4j.pax.runner.provision.scanner.ScannedFileBundle;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfigurationImpl;
 import org.ops4j.pax.runner.scanner.bundle.ServiceConstants;
@@ -68,30 +68,30 @@ public class BundleScanner
      * Reads the bundles from the file specified by the urlSpec.
      * {@inheritDoc}
      */
-    public List<BundleReference> scan( final ProvisionSpec provisionSpec )
+    public List<ScannedBundle> scan( final ProvisionSpec provisionSpec )
         throws MalformedSpecificationException, ScannerException
     {
         NullArgumentException.validateNotNull( provisionSpec, "Provision spec" );
 
         LOGGER.debug( "Scanning [" + provisionSpec.getPath() + "]" );
-        final List<BundleReference> references = new ArrayList<BundleReference>();
+        final List<ScannedBundle> scannedBundles = new ArrayList<ScannedBundle>();
         final ScannerConfiguration config = createConfiguration();
         try
         {
-            final FileBundleReference reference = new FileBundleReference(
+            final ScannedFileBundle scannedFileBundle = new ScannedFileBundle(
                 provisionSpec.getPath(),
                 getDefaultStartLevel( provisionSpec, config ),
                 getDefaultStart( provisionSpec, config ),
                 getDefaultUpdate( provisionSpec, config )
             );
-            references.add( reference );
-            LOGGER.info( "Installing bundle [" + reference + "]" );
+            scannedBundles.add( scannedFileBundle );
+            LOGGER.info( "Installing bundle [" + scannedFileBundle + "]" );
         }
         catch( MalformedURLException e )
         {
             throw new MalformedSpecificationException( "Invalid url", e );
         }
-        return references;
+        return scannedBundles;
     }
 
     /**

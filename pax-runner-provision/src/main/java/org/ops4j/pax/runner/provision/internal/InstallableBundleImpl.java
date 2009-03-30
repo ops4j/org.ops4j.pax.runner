@@ -22,17 +22,17 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.service.startlevel.StartLevel;
 import org.ops4j.lang.NullArgumentException;
-import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.InstallableBundle;
+import org.ops4j.pax.runner.provision.ScannedBundle;
 
 public class InstallableBundleImpl
     implements InstallableBundle
 {
 
     /**
-     * Holds the bundle reference for the bundle to be installed.
+     * Holds the scanned bundle to be installed.
      */
-    private final BundleReference m_reference;
+    private final ScannedBundle m_scannedBundle;
     /**
      * The installed bundle. Null before installation.
      */
@@ -54,33 +54,35 @@ public class InstallableBundleImpl
      * Creates a new Installable Bundle with no start level service.
      *
      * @param bundleContext a bundle context; mandatory
-     * @param reference     a bundle reference; mandatory
+     * @param scannedBundle scanned bundle; mandatory
      */
-    public InstallableBundleImpl( final BundleContext bundleContext, final BundleReference reference )
+    public InstallableBundleImpl( final BundleContext bundleContext,
+                                  final ScannedBundle scannedBundle )
     {
-        this( bundleContext, reference, null );
+        this( bundleContext, scannedBundle, null );
     }
 
     /**
      * Creates a new Installable Bundle with a start level service that can be null.
      *
      * @param bundleContext     a bundle context; mandatory
-     * @param reference         a bundle reference; mandatory
+     * @param scannedBundle     scanned bundle; mandatory
      * @param startLevelService a start level service; optional
      */
-    public InstallableBundleImpl( final BundleContext bundleContext, final BundleReference reference,
+    public InstallableBundleImpl( final BundleContext bundleContext,
+                                  final ScannedBundle scannedBundle,
                                   final StartLevel startLevelService )
     {
         NullArgumentException.validateNotNull( bundleContext, "Bundle context" );
-        NullArgumentException.validateNotNull( reference, "Bundle reference" );
+        NullArgumentException.validateNotNull( scannedBundle, "Scanned bundle" );
         m_bundleContext = bundleContext;
-        m_reference = reference;
+        m_scannedBundle = scannedBundle;
         m_startLevelService = startLevelService;
         m_state = new NotInstalledState();
     }
 
     /**
-     * @see org.ops4j.pax.runner.provision.InstallableBundle#getBundle()
+     * @see InstallableBundle#getBundle()
      */
     public Bundle getBundle()
     {
@@ -88,7 +90,7 @@ public class InstallableBundleImpl
     }
 
     /**
-     * @see org.ops4j.pax.runner.provision.InstallableBundle#install()
+     * @see InstallableBundle#install()
      */
     public InstallableBundle install()
         throws BundleException
@@ -98,12 +100,12 @@ public class InstallableBundleImpl
     }
 
     /**
-     * @see org.ops4j.pax.runner.provision.InstallableBundle#startIfNecessary()
+     * @see InstallableBundle#startIfNecessary()
      */
     public InstallableBundle startIfNecessary()
         throws BundleException
     {
-        if( m_reference.shouldStart() )
+        if( m_scannedBundle.shouldStart() )
         {
             start();
         }
@@ -111,7 +113,7 @@ public class InstallableBundleImpl
     }
 
     /**
-     * @see org.ops4j.pax.runner.provision.InstallableBundle#start()
+     * @see InstallableBundle#start()
      */
     public InstallableBundle start()
         throws BundleException
@@ -129,16 +131,16 @@ public class InstallableBundleImpl
     private void doInstall()
         throws BundleException
     {
-        final String location = m_reference.getLocation();
+        final String location = m_scannedBundle.getLocation();
         if( location == null )
         {
-            throw new BundleException( "The bundle reference has no location" );
+            throw new BundleException( "The scanned bundle has no location" );
         }
         // get current time to be ubale to verify if the bundle was already installed before the install below
         long currentTime = System.currentTimeMillis();
         m_bundle = m_bundleContext.installBundle( location );
         // if the bundle was modified (installed/updated) before then force an update
-        Boolean shouldUpdate = m_reference.shouldUpdate();
+        Boolean shouldUpdate = m_scannedBundle.shouldUpdate();
         if( shouldUpdate != null && shouldUpdate && m_bundle.getLastModified() < currentTime )
         {
             m_bundle.update();
@@ -150,7 +152,7 @@ public class InstallableBundleImpl
         m_state = new InstalledState();
         if( m_startLevelService != null )
         {
-            Integer startLevel = m_reference.getStartLevel();
+            Integer startLevel = m_scannedBundle.getStartLevel();
             if( startLevel != null )
             {
                 m_startLevelService.setBundleStartLevel( m_bundle, startLevel );

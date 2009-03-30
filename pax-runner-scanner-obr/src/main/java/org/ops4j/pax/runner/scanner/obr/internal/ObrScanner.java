@@ -33,19 +33,19 @@ import org.apache.commons.logging.LogFactory;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.net.URLUtils;
 import org.ops4j.pax.runner.commons.properties.SystemPropertyUtils;
-import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionSpec;
+import org.ops4j.pax.runner.provision.ScannedBundle;
 import org.ops4j.pax.runner.provision.Scanner;
 import org.ops4j.pax.runner.provision.ScannerException;
-import org.ops4j.pax.runner.provision.scanner.FileBundleReference;
+import org.ops4j.pax.runner.provision.scanner.ScannedFileBundle;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfigurationImpl;
 import org.ops4j.pax.runner.scanner.obr.ServiceConstants;
 import org.ops4j.util.property.PropertyResolver;
 
 /**
- * A scanner that scans plain text file containing bundle references and system properties.
+ * A scanner that scans obr specs.
  *
  * @author Alin Dreghiciu
  * @since 0.7.0, February 04, 2008
@@ -104,12 +104,12 @@ public class ObrScanner
      * Reads the bundles from the file specified by the urlSpec.
      * {@inheritDoc}
      */
-    public List<BundleReference> scan( final ProvisionSpec provisionSpec )
+    public List<ScannedBundle> scan( final ProvisionSpec provisionSpec )
         throws MalformedSpecificationException, ScannerException
     {
         NullArgumentException.validateNotNull( provisionSpec, "Provision spec" );
         LOG.debug( "Scanning [" + provisionSpec.getPath() + "]" );
-        final List<BundleReference> references = new ArrayList<BundleReference>();
+        final List<ScannedBundle> scannedBundles = new ArrayList<ScannedBundle>();
         final ScannerConfiguration config = createConfiguration();
         BufferedReader bufferedReader = null;
         BufferedWriter bufferedWriter = null;
@@ -129,16 +129,16 @@ public class ObrScanner
                 final Boolean defaultStart = getDefaultStart( provisionSpec, config );
                 final Boolean defaultUpdate = getDefaultUpdate( provisionSpec, config );
                 // we always install the obr and pax runner obr script
-                references.add(
-                    new FileBundleReference(
+                scannedBundles.add(
+                    new ScannedFileBundle(
                         "mvn:org.apache.felix/org.apache.felix.bundlerepository",
                         defaultStartLevel,
                         defaultStart,
                         defaultUpdate
                     )
                 );
-                references.add(
-                    new FileBundleReference(
+                scannedBundles.add(
+                    new ScannedFileBundle(
                         "mvn:org.ops4j.pax.runner/pax-runner-scanner-obr-script",
                         defaultStartLevel,
                         defaultStart,
@@ -196,7 +196,7 @@ public class ObrScanner
         {
             throw new ScannerException( "Could not parse the provision file", e );
         }
-        return references;
+        return scannedBundles;
     }
 
     /**
@@ -224,10 +224,10 @@ public class ObrScanner
     }
 
     /**
-     * Creates an obr filter from an obr bundle reference. So a reference as symbolic-name/version will be transformed
-     * to (&(symbolicname=symbolic-name)(version=version))
+     * Creates an obr filter from a symbolic-name/version by transforming it to
+     * (&(symbolicname=symbolic-name)(version=version))
      *
-     * @param path obr bundle reference
+     * @param path obr spec
      *
      * @return an obr filter
      *
@@ -238,12 +238,12 @@ public class ObrScanner
     {
         if( path == null || path.trim().length() == 0 )
         {
-            throw new MalformedURLException( "OBR bundle reference cannot be null or empty" );
+            throw new MalformedURLException( "OBR spec cannot be null or empty" );
         }
         final String[] segments = path.split( "/" );
         if( segments.length > 2 )
         {
-            throw new MalformedURLException( "OBR bundle reference canot contain more then one '/'" );
+            throw new MalformedURLException( "OBR spec cannot contain more then one '/'" );
         }
         final StringBuilder builder = new StringBuilder();
         // add bundle symbolic name filter

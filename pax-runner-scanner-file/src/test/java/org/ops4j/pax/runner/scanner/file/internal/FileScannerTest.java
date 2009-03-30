@@ -26,9 +26,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.ops4j.io.FileUtils;
 import org.ops4j.lang.NullArgumentException;
-import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionSpec;
+import org.ops4j.pax.runner.provision.ScannedBundle;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
 import org.ops4j.util.property.PropertyResolver;
@@ -56,11 +56,11 @@ public class FileScannerTest
         expect( config.getCertificateCheck() ).andReturn( false );
 
         replay( config );
-        List<BundleReference> references = createFileScanner( config ).scan(
+        List<ScannedBundle> scannedBundles = createFileScanner( config ).scan(
             new ProvisionSpec( "scan-file:" + file.toURL().toExternalForm() )
         );
-        assertNotNull( "Returned bundle references list is null", references );
-        assertEquals( "Number of bundles", 4, references.size() );
+        assertNotNull( "Returned list is null", scannedBundles );
+        assertEquals( "Number of bundles", 4, scannedBundles.size() );
         verify( config );
     }
 
@@ -76,13 +76,13 @@ public class FileScannerTest
         expect( config.getCertificateCheck() ).andReturn( false );
 
         replay( config );
-        List<BundleReference> references = createFileScanner( config ).scan(
+        List<ScannedBundle> scannedBundles = createFileScanner( config ).scan(
             new ProvisionSpec( "scan-file:" + file.toURL().toExternalForm() + "@nostart" )
         );
-        assertNotNull( "Returned bundle references list is null", references );
-        assertEquals( "Nuber of bundles", 4, references.size() );
-        assertEquals( "Should start", false, references.get( 0 ).shouldStart() );
-        assertEquals( "Should start", false, references.get( 1 ).shouldStart() );
+        assertNotNull( "Returned list is null", scannedBundles );
+        assertEquals( "Nuber of bundles", 4, scannedBundles.size() );
+        assertEquals( "Should start", false, scannedBundles.get( 0 ).shouldStart() );
+        assertEquals( "Should start", false, scannedBundles.get( 1 ).shouldStart() );
         verify( config );
     }
 
@@ -98,13 +98,13 @@ public class FileScannerTest
         expect( config.getCertificateCheck() ).andReturn( false );
 
         replay( config );
-        List<BundleReference> references = createFileScanner( config ).scan(
+        List<ScannedBundle> scannedBundles = createFileScanner( config ).scan(
             new ProvisionSpec( "scan-file:" + file.toURL().toExternalForm() + "@10" )
         );
-        assertNotNull( "Returned bundle references list is null", references );
-        assertEquals( "Nuber of bundles", 4, references.size() );
-        assertEquals( "Start level", Integer.valueOf( 10 ), references.get( 0 ).getStartLevel() );
-        assertEquals( "Start level", Integer.valueOf( 10 ), references.get( 3 ).getStartLevel() );
+        assertNotNull( "Returned list is null", scannedBundles );
+        assertEquals( "Nuber of bundles", 4, scannedBundles.size() );
+        assertEquals( "Start level", Integer.valueOf( 10 ), scannedBundles.get( 0 ).getStartLevel() );
+        assertEquals( "Start level", Integer.valueOf( 10 ), scannedBundles.get( 3 ).getStartLevel() );
         verify( config );
     }
 
@@ -134,11 +134,11 @@ public class FileScannerTest
         expect( config.getCertificateCheck() ).andReturn( false );
 
         replay( config );
-        List<BundleReference> references = createFileScanner( config ).scan(
+        List<ScannedBundle> scannedBundles = createFileScanner( config ).scan(
             new ProvisionSpec( "scan-file:" + file.toURL().toExternalForm() + "@10@update" )
         );
-        assertNotNull( "Returned bundle references list is null", references );
-        assertEquals( "Nuber of bundles", 0, references.size() );
+        assertNotNull( "Returned list is null", scannedBundles );
+        assertEquals( "Nuber of bundles", 0, scannedBundles.size() );
         verify( config );
     }
 
@@ -175,10 +175,10 @@ public class FileScannerTest
 
                 }
             );
-            List<BundleReference> references = createFileScanner( config ).scan(
+            List<ScannedBundle> scannedBundles = createFileScanner( config ).scan(
                 new ProvisionSpec( "scan-file:" + file.toURL().toExternalForm() )
             );
-            assertNotNull( "Returned bundle references list is null", references );
+            assertNotNull( "Returned list is null", scannedBundles );
             verify( config, recorder );
         }
         finally

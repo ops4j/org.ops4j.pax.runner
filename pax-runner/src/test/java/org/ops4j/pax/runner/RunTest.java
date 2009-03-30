@@ -31,10 +31,10 @@ import static org.ops4j.pax.runner.CommandLine.*;
 import org.ops4j.pax.runner.platform.JavaRunner;
 import org.ops4j.pax.runner.platform.Platform;
 import org.ops4j.pax.runner.platform.SystemFileReference;
-import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.InstallableBundles;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionService;
+import org.ops4j.pax.runner.provision.ScannedBundle;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.UnsupportedSchemaException;
 
@@ -368,18 +368,18 @@ public class RunTest
 
         ProvisionService provisionService = createMock( ProvisionService.class );
         InstallableBundles installables = createMock( InstallableBundles.class );
-        List<BundleReference> references = new ArrayList<BundleReference>();
+        List<ScannedBundle> scannedBundles = new ArrayList<ScannedBundle>();
 
         expect( m_resolver.get( OPTION_PROFILES ) ).andReturn( null );
         List<String> args = new ArrayList<String>();
         args.add( "scan-file:file:bundles1.txt" );
         args.add( "scan-file:file:bundles2.txt" );
         expect( m_commandLine.getArguments() ).andReturn( args );
-        expect( provisionService.scan( "scan-file:file:bundles1.txt" ) ).andReturn( references );
-        expect( provisionService.wrap( references ) ).andReturn( installables );
+        expect( provisionService.scan( "scan-file:file:bundles1.txt" ) ).andReturn( scannedBundles );
+        expect( provisionService.wrap( scannedBundles ) ).andReturn( installables );
         expect( installables.install() ).andReturn( installables );
-        expect( provisionService.scan( "scan-file:file:bundles2.txt" ) ).andReturn( references );
-        expect( provisionService.wrap( references ) ).andReturn( installables );
+        expect( provisionService.scan( "scan-file:file:bundles2.txt" ) ).andReturn( scannedBundles );
+        expect( provisionService.wrap( scannedBundles ) ).andReturn( installables );
         expect( installables.install() ).andReturn( installables );
 
         replay( m_commandLine, m_config, m_resolver, m_recorder, m_bundleContext, provisionService,
@@ -401,7 +401,7 @@ public class RunTest
 
         ProvisionService provisionService = createMock( ProvisionService.class );
         InstallableBundles installables = createMock( InstallableBundles.class );
-        List<BundleReference> references = new ArrayList<BundleReference>();
+        List<ScannedBundle> scannedBundles = new ArrayList<ScannedBundle>();
         ProvisionSchemaResolver schemaResolver = createMock( ProvisionSchemaResolver.class );
 
         expect( m_resolver.get( OPTION_PROFILES ) ).andReturn( null );
@@ -410,8 +410,8 @@ public class RunTest
         expect( m_commandLine.getArguments() ).andReturn( args );
         expect( provisionService.scan( "bundles.txt" ) ).andThrow( new UnsupportedSchemaException( "test" ) );
         expect( schemaResolver.resolve( "bundles.txt" ) ).andReturn( "scan-file:file:bundles.txt" );
-        expect( provisionService.scan( "scan-file:file:bundles.txt" ) ).andReturn( references );
-        expect( provisionService.wrap( references ) ).andReturn( installables );
+        expect( provisionService.scan( "scan-file:file:bundles.txt" ) ).andReturn( scannedBundles );
+        expect( provisionService.wrap( scannedBundles ) ).andReturn( installables );
         expect( installables.install() ).andReturn( installables );
 
         replay( m_commandLine, m_config, m_resolver, m_recorder, m_bundleContext, provisionService,

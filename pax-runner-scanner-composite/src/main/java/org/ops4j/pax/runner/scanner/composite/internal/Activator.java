@@ -20,10 +20,10 @@ package org.ops4j.pax.runner.scanner.composite.internal;
 import java.util.List;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
-import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.InstallableBundles;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionService;
+import org.ops4j.pax.runner.provision.ScannedBundle;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.scanner.AbstractScannerActivator;
 import org.ops4j.pax.runner.scanner.composite.ServiceConstants;
@@ -52,15 +52,15 @@ public final class Activator
             {
                 //TODO looking up th eservice each time is not good performance wise.
                 // The problem is that using a service tracker will fail due to our RunnerBundle with a ClassCastException
-                public List<BundleReference> scan( String spec )
+                public List<ScannedBundle> scan( String spec )
                     throws MalformedSpecificationException, ScannerException
                 {
                     return getProvisionService().scan( spec );
                 }
 
-                public InstallableBundles wrap( List<BundleReference> bundleReferences )
+                public InstallableBundles wrap( List<ScannedBundle> scannedBundles )
                 {
-                    return getProvisionService().wrap( bundleReferences );
+                    return getProvisionService().wrap( scannedBundles );
                 }
 
                 private ProvisionService getProvisionService()

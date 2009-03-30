@@ -29,12 +29,12 @@ import org.apache.commons.logging.LogFactory;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.net.URLUtils;
 import org.ops4j.pax.runner.commons.properties.SystemPropertyUtils;
-import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionSpec;
+import org.ops4j.pax.runner.provision.ScannedBundle;
 import org.ops4j.pax.runner.provision.Scanner;
 import org.ops4j.pax.runner.provision.ScannerException;
-import org.ops4j.pax.runner.provision.scanner.FileBundleReference;
+import org.ops4j.pax.runner.provision.scanner.ScannedFileBundle;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfigurationImpl;
 import org.ops4j.pax.runner.scanner.file.ServiceConstants;
@@ -87,13 +87,13 @@ public class FileScanner
      * Reads the bundles from the file specified by the urlSpec.
      * {@inheritDoc}
      */
-    public List<BundleReference> scan( final ProvisionSpec provisionSpec )
+    public List<ScannedBundle> scan( final ProvisionSpec provisionSpec )
         throws MalformedSpecificationException, ScannerException
     {
         NullArgumentException.validateNotNull( provisionSpec, "Provision spec" );
-        
+
         LOGGER.debug( "Scanning [" + provisionSpec.getPath() + "]" );
-        List<BundleReference> references = new ArrayList<BundleReference>();
+        List<ScannedBundle> scannedBundles = new ArrayList<ScannedBundle>();
         ScannerConfiguration config = createConfiguration();
         BufferedReader bufferedReader = null;
         try
@@ -130,10 +130,11 @@ public class FileScanner
                         else
                         {
                             line = SystemPropertyUtils.resolvePlaceholders( line );
-                            final FileBundleReference reference =
-                                new FileBundleReference( line, defaultStartLevel, defaultStart, defaultUpdate );
-                            references.add( reference );
-                            LOGGER.info( "Installing bundle [" + reference + "]" );
+                            final ScannedFileBundle scannedFileBundle = new ScannedFileBundle(
+                                line, defaultStartLevel, defaultStart, defaultUpdate
+                            );
+                            scannedBundles.add( scannedFileBundle );
+                            LOGGER.info( "Installing bundle [" + scannedFileBundle + "]" );
                         }
                     }
                 }
@@ -150,7 +151,7 @@ public class FileScanner
         {
             throw new ScannerException( "Could not parse the provision file", e );
         }
-        return references;
+        return scannedBundles;
     }
 
     /**

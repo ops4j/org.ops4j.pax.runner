@@ -18,13 +18,13 @@
 package org.ops4j.pax.runner.provision;
 
 /**
- * A Java bean like implementation of Bundle reference.
+ * A Java bean like implementation {@link ScannedBundle}.
  *
  * @author Alin Dreghiciu
  * @since August 17, 2007
  */
-public class BundleReferenceBean
-    implements BundleReference
+public class ScannedBundleBean
+    implements ScannedBundle
 {
 
     private String m_location;
@@ -32,15 +32,15 @@ public class BundleReferenceBean
     private Boolean m_shouldStart;
     private Boolean m_shouldUpdate;
 
-    public BundleReferenceBean()
+    public ScannedBundleBean()
     {
         // JavaBean constructor
     }
 
-    public BundleReferenceBean( final String location,
-                                final Integer startLevel,
-                                final Boolean shouldStart,
-                                final Boolean shouldUpdate )
+    public ScannedBundleBean( final String location,
+                              final Integer startLevel,
+                              final Boolean shouldStart,
+                              final Boolean shouldUpdate )
     {
         m_location = location;
         m_startLevel = startLevel;
@@ -100,37 +100,16 @@ public class BundleReferenceBean
             return false;
         }
 
-        BundleReferenceBean that = (BundleReferenceBean) o;
+        ScannedBundleBean that = (ScannedBundleBean) o;
 
-        if( !m_location.equals( that.m_location ) )
-        {
-            return false;
-        }
-        if( m_shouldStart != null ? !m_shouldStart.equals( that.m_shouldStart ) : that.m_shouldStart != null )
-        {
-            return false;
-        }
-        if( m_startLevel != null ? !m_startLevel.equals( that.m_startLevel ) : that.m_startLevel != null )
-        {
-            return false;
-        }
-        if( m_shouldUpdate != null ? !m_shouldUpdate.equals( that.m_shouldUpdate ) : that.m_shouldUpdate != null )
-        {
-            return false;
-        }
+        return m_location.equals( that.m_location );
 
-        return true;
     }
 
     @Override
     public int hashCode()
     {
-        int result;
-        result = m_location.hashCode();
-        result = 31 * result + ( m_startLevel != null ? m_startLevel.hashCode() : 0 );
-        result = 31 * result + ( m_shouldStart != null ? m_shouldStart.hashCode() : 0 );
-        result = 31 * result + ( m_shouldUpdate != null ? m_shouldUpdate.hashCode() : 0 );
-        return result;
+        return m_location.hashCode();
     }
 
     @Override

@@ -28,10 +28,10 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.ops4j.io.FileUtils;
 import org.ops4j.lang.NullArgumentException;
-import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionService;
 import org.ops4j.pax.runner.provision.ProvisionSpec;
+import org.ops4j.pax.runner.provision.ScannedBundle;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
 import org.ops4j.util.property.PropertyResolver;
@@ -64,8 +64,8 @@ public class CompositeScannerTest
         File file = FileUtils.getFileFromClasspath( "scanner/bundles.txt" );
 
         expect( config.getCertificateCheck() ).andReturn( false );
-        List<BundleReference> refs = new ArrayList<BundleReference>();
-        final BundleReference ref = createMock( BundleReference.class );
+        List<ScannedBundle> refs = new ArrayList<ScannedBundle>();
+        final ScannedBundle ref = createMock( ScannedBundle.class );
         expect( ref.getLocation() ).andReturn( null ).anyTimes();
         refs.add( ref );
         expect( provisionService.scan( "scan-bundle:file:bundle1.txt" ) ).andReturn( refs );
@@ -78,11 +78,11 @@ public class CompositeScannerTest
         ).andReturn( refs );
 
         replay( config, provisionService, ref );
-        List<BundleReference> references = createScanner( config, provisionService ).scan(
+        List<ScannedBundle> scannedBundles = createScanner( config, provisionService ).scan(
             new ProvisionSpec( "scan-composite:" + file.toURL().toExternalForm() + "@5@start@update" )
         );
-        assertNotNull( "Returned bundle references list is null", references );
-        assertEquals( "Nuber of bundles", 5, references.size() );
+        assertNotNull( "Returned list is null", scannedBundles );
+        assertEquals( "Nuber of bundles", 5, scannedBundles.size() );
         verify( config, provisionService );
     }
 
@@ -113,11 +113,11 @@ public class CompositeScannerTest
         expect( config.getCertificateCheck() ).andReturn( false );
 
         replay( config, provisionService );
-        List<BundleReference> references = createScanner( config, provisionService ).scan(
+        List<ScannedBundle> scannedBundles = createScanner( config, provisionService ).scan(
             new ProvisionSpec( "scan-composite:" + file.toURL().toExternalForm() + "@10@update" )
         );
-        assertNotNull( "Returned bundle references list is null", references );
-        assertEquals( "Nuber of bundles", 0, references.size() );
+        assertNotNull( "Returned list is null", scannedBundles );
+        assertEquals( "Nuber of bundles", 0, scannedBundles.size() );
         verify( config, provisionService );
     }
 
@@ -152,10 +152,10 @@ public class CompositeScannerTest
 
                 }
             );
-            List<BundleReference> references = createScanner( config, provisionService ).scan(
+            List<ScannedBundle> scannedBundles = createScanner( config, provisionService ).scan(
                 new ProvisionSpec( "scan-composite:" + file.toURL().toExternalForm() )
             );
-            assertNotNull( "Returned bundle references list is null", references );
+            assertNotNull( "Returned list is null", scannedBundles );
             verify( config, recorder, provisionService );
         }
         finally

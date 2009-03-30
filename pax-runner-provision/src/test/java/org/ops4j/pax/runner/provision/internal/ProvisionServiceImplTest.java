@@ -24,10 +24,10 @@ import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.osgi.framework.BundleContext;
-import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.InstallableBundles;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionSpec;
+import org.ops4j.pax.runner.provision.ScannedBundle;
 import org.ops4j.pax.runner.provision.Scanner;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.UnsupportedSchemaException;
@@ -68,11 +68,11 @@ public class ProvisionServiceImplTest
         throws MalformedSpecificationException, ScannerException
     {
         Scanner scanner = createMock( Scanner.class );
-        BundleReference reference = createMock( BundleReference.class );
-        List<BundleReference> references = new ArrayList<BundleReference>();
-        references.add( reference );
-        expect( scanner.scan( (ProvisionSpec) anyObject() ) ).andReturn( references );
-        replay( scanner, reference );
+        ScannedBundle scannedBundle = createMock( ScannedBundle.class );
+        List<ScannedBundle> scannedBundles = new ArrayList<ScannedBundle>();
+        scannedBundles.add( scannedBundle );
+        expect( scanner.scan( (ProvisionSpec) anyObject() ) ).andReturn( scannedBundles );
+        replay( scanner, scannedBundle );
         ProvisionServiceImpl service = new ProvisionServiceImpl( createMock( BundleContext.class ) );
         service.addScanner( scanner, "scheme" );
         InstallableBundles set = service.wrap( service.scan( "scheme:anURL" ) );
@@ -81,7 +81,7 @@ public class ProvisionServiceImplTest
         assertNotNull( "Returned iterator is null", it );
         assertTrue( "Iterator should have at least one installable bunlde", it.hasNext() );
         assertNotNull( "There should be a valid installable bundle", it.next() );
-        verify( scanner, reference );
+        verify( scanner, scannedBundle );
     }
 
     @Test

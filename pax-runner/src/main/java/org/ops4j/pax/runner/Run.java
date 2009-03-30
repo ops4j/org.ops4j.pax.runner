@@ -23,8 +23,11 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.LogLevel;
@@ -52,6 +55,7 @@ import org.ops4j.pax.runner.platform.SystemFileReference;
 import org.ops4j.pax.runner.platform.SystemFileReferenceBean;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionService;
+import org.ops4j.pax.runner.provision.ScannedBundle;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.UnsupportedSchemaException;
 
@@ -412,6 +416,7 @@ public class Run
             final Properties sysPropsBackup = System.getProperties();
             try
             {
+                Set<ScannedBundle> uniqueRefs = new HashSet<ScannedBundle>();
                 context.setSystemProperties( new AuditedProperties( sysPropsBackup ) );
                 System.setProperties( context.getSystemProperties() );
                 // then scan those url's
@@ -421,14 +426,18 @@ public class Run
                     {
                         try
                         {
-                            provisionService.wrap( provisionService.scan( provisionURL ) ).install();
+                            provisionService.wrap(
+                                filterUnique( uniqueRefs, provisionService.scan( provisionURL ) )
+                            ).install();
                         }
                         catch( UnsupportedSchemaException e )
                         {
                             final String resolvedProvisionURL = schemaResolver.resolve( provisionURL );
                             if( resolvedProvisionURL != null && !resolvedProvisionURL.equals( provisionURL ) )
                             {
-                                provisionService.wrap( provisionService.scan( resolvedProvisionURL ) ).install();
+                                provisionService.wrap(
+                                    filterUnique( uniqueRefs, provisionService.scan( resolvedProvisionURL ) )
+                                ).install();
                             }
                             else
                             {
@@ -456,6 +465,23 @@ public class Run
                 System.setProperties( sysPropsBackup );
             }
         }
+    }
+
+    /**
+     * Filter all scanned bundles that already exists in the provided set and add the unique ones to the set.
+     *
+     * @param alreadyScanned set of already scanned bundles
+     * @param scannedBundles to be filtered
+     *
+     * @return unique list of scanned bundles (that were not already present in the provided set)
+     */
+    private List<ScannedBundle> filterUnique( final Set<ScannedBundle> alreadyScanned,
+                                              final List<ScannedBundle> scannedBundles )
+    {
+        final Set<ScannedBundle> unique = new LinkedHashSet<ScannedBundle>( scannedBundles );
+        unique.removeAll( alreadyScanned );
+        alreadyScanned.addAll( unique );
+        return new ArrayList<ScannedBundle>( unique );
     }
 
     /**

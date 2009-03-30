@@ -25,8 +25,8 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.service.startlevel.StartLevel;
-import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.InstallableBundle;
+import org.ops4j.pax.runner.provision.ScannedBundle;
 
 public class InstallableBundleImplTest
 {
@@ -34,11 +34,11 @@ public class InstallableBundleImplTest
     @Test( expected = IllegalArgumentException.class )
     public void constructorWithNullBundleContext()
     {
-        new InstallableBundleImpl( null, createMock( BundleReference.class ) );
+        new InstallableBundleImpl( null, createMock( ScannedBundle.class ) );
     }
 
     @Test( expected = IllegalArgumentException.class )
-    public void constructorWithNullReference()
+    public void constructorWithNullScannedBundle()
     {
         new InstallableBundleImpl( createMock( BundleContext.class ), null );
     }
@@ -46,28 +46,28 @@ public class InstallableBundleImplTest
     @Test
     public void constructorWithNullStartLevel()
     {
-        new InstallableBundleImpl( createMock( BundleContext.class ), createMock( BundleReference.class ), null );
+        new InstallableBundleImpl( createMock( BundleContext.class ), createMock( ScannedBundle.class ), null );
     }
 
     @Test
     public void getBundleBeforeInstallation()
     {
         assertNull( "Bundle should be null before installing",
-                    new InstallableBundleImpl( createMock( BundleContext.class ), createMock( BundleReference.class )
+                    new InstallableBundleImpl( createMock( BundleContext.class ), createMock( ScannedBundle.class )
                     ).getBundle()
         );
     }
 
     @Test( expected = BundleException.class )
-    public void installWithInvalidBundleReference()
+    public void installWithInvalidScannedBundle()
         throws BundleException
     {
         BundleContext context = createMock( BundleContext.class );
-        BundleReference reference = createMock( BundleReference.class );
-        expect( reference.getLocation() ).andReturn( null );
-        replay( context, reference );
-        new InstallableBundleImpl( context, reference ).install();
-        verify( context, reference );
+        ScannedBundle scannedBundle = createMock( ScannedBundle.class );
+        expect( scannedBundle.getLocation() ).andReturn( null );
+        replay( context, scannedBundle );
+        new InstallableBundleImpl( context, scannedBundle ).install();
+        verify( context, scannedBundle );
     }
 
     @Test
@@ -75,16 +75,16 @@ public class InstallableBundleImplTest
         throws BundleException, MalformedURLException
     {
         BundleContext context = createMock( BundleContext.class );
-        BundleReference reference = createMock( BundleReference.class );
+        ScannedBundle scannedBundle = createMock( ScannedBundle.class );
         Bundle bundle = createMock( Bundle.class );
-        expect( reference.getLocation() ).andReturn( "file:bundle.jar" );
+        expect( scannedBundle.getLocation() ).andReturn( "file:bundle.jar" );
         expect( context.installBundle( "file:bundle.jar" ) ).andReturn( bundle );
-        expect( reference.shouldUpdate() ).andReturn( false );
-        expect( reference.shouldStart() ).andReturn( true );
+        expect( scannedBundle.shouldUpdate() ).andReturn( false );
+        expect( scannedBundle.shouldStart() ).andReturn( true );
         bundle.start();
-        replay( context, reference, bundle );
-        new InstallableBundleImpl( context, reference ).install();
-        verify( context, reference, bundle );
+        replay( context, scannedBundle, bundle );
+        new InstallableBundleImpl( context, scannedBundle ).install();
+        verify( context, scannedBundle, bundle );
     }
 
     @Test
@@ -92,15 +92,15 @@ public class InstallableBundleImplTest
         throws BundleException, MalformedURLException
     {
         BundleContext context = createMock( BundleContext.class );
-        BundleReference reference = createMock( BundleReference.class );
+        ScannedBundle scannedBundle = createMock( ScannedBundle.class );
         Bundle bundle = createMock( Bundle.class );
-        expect( reference.getLocation() ).andReturn( "file:bundle.jar" );
+        expect( scannedBundle.getLocation() ).andReturn( "file:bundle.jar" );
         expect( context.installBundle( "file:bundle.jar" ) ).andReturn( bundle );
-        expect( reference.shouldUpdate() ).andReturn( false );
-        expect( reference.shouldStart() ).andReturn( false );
-        replay( context, reference, bundle );
-        new InstallableBundleImpl( context, reference ).install();
-        verify( context, reference, bundle );
+        expect( scannedBundle.shouldUpdate() ).andReturn( false );
+        expect( scannedBundle.shouldStart() ).andReturn( false );
+        replay( context, scannedBundle, bundle );
+        new InstallableBundleImpl( context, scannedBundle ).install();
+        verify( context, scannedBundle, bundle );
     }
 
     @Test
@@ -108,18 +108,18 @@ public class InstallableBundleImplTest
         throws BundleException, MalformedURLException
     {
         BundleContext context = createMock( BundleContext.class );
-        BundleReference reference = createMock( BundleReference.class );
+        ScannedBundle scannedBundle = createMock( ScannedBundle.class );
         Bundle bundle = createMock( Bundle.class );
         StartLevel startLevel = createMock( StartLevel.class );
-        expect( reference.getLocation() ).andReturn( "file:bundle.jar" );
+        expect( scannedBundle.getLocation() ).andReturn( "file:bundle.jar" );
         expect( context.installBundle( "file:bundle.jar" ) ).andReturn( bundle );
-        expect( reference.shouldUpdate() ).andReturn( false );
-        expect( reference.getStartLevel() ).andReturn( 5 );
+        expect( scannedBundle.shouldUpdate() ).andReturn( false );
+        expect( scannedBundle.getStartLevel() ).andReturn( 5 );
         startLevel.setBundleStartLevel( bundle, 5 );
-        expect( reference.shouldStart() ).andReturn( false );
-        replay( context, reference, bundle, startLevel );
-        new InstallableBundleImpl( context, reference, startLevel ).install();
-        verify( context, reference, bundle, startLevel );
+        expect( scannedBundle.shouldStart() ).andReturn( false );
+        replay( context, scannedBundle, bundle, startLevel );
+        new InstallableBundleImpl( context, scannedBundle, startLevel ).install();
+        verify( context, scannedBundle, bundle, startLevel );
     }
 
     @Test
@@ -127,17 +127,17 @@ public class InstallableBundleImplTest
         throws BundleException, MalformedURLException
     {
         BundleContext context = createMock( BundleContext.class );
-        BundleReference reference = createMock( BundleReference.class );
+        ScannedBundle scannedBundle = createMock( ScannedBundle.class );
         Bundle bundle = createMock( Bundle.class );
         StartLevel startLevel = createMock( StartLevel.class );
-        expect( reference.getLocation() ).andReturn( "file:bundle.jar" );
+        expect( scannedBundle.getLocation() ).andReturn( "file:bundle.jar" );
         expect( context.installBundle( "file:bundle.jar" ) ).andReturn( bundle );
-        expect( reference.shouldUpdate() ).andReturn( false );
-        expect( reference.getStartLevel() ).andReturn( null );
-        expect( reference.shouldStart() ).andReturn( false );
-        replay( context, reference, bundle, startLevel );
-        new InstallableBundleImpl( context, reference, startLevel ).install();
-        verify( context, reference, bundle, startLevel );
+        expect( scannedBundle.shouldUpdate() ).andReturn( false );
+        expect( scannedBundle.getStartLevel() ).andReturn( null );
+        expect( scannedBundle.shouldStart() ).andReturn( false );
+        replay( context, scannedBundle, bundle, startLevel );
+        new InstallableBundleImpl( context, scannedBundle, startLevel ).install();
+        verify( context, scannedBundle, bundle, startLevel );
     }
 
     @Test
@@ -145,20 +145,20 @@ public class InstallableBundleImplTest
         throws BundleException, MalformedURLException
     {
         BundleContext context = createMock( BundleContext.class );
-        BundleReference reference = createMock( BundleReference.class );
+        ScannedBundle scannedBundle = createMock( ScannedBundle.class );
         Bundle bundle = createMock( Bundle.class );
-        expect( reference.getLocation() ).andReturn( "file:bundle.jar" );
+        expect( scannedBundle.getLocation() ).andReturn( "file:bundle.jar" );
         expect( context.installBundle( "file:bundle.jar" ) ).andReturn( bundle );
-        expect( reference.shouldUpdate() ).andReturn( false );
-        expect( reference.shouldStart() ).andReturn( false );
-        replay( context, reference, bundle );
-        InstallableBundle installable = new InstallableBundleImpl( context, reference ).install();
-        verify( context, reference, bundle );
-        reset( context, reference, bundle );
+        expect( scannedBundle.shouldUpdate() ).andReturn( false );
+        expect( scannedBundle.shouldStart() ).andReturn( false );
+        replay( context, scannedBundle, bundle );
+        InstallableBundle installable = new InstallableBundleImpl( context, scannedBundle ).install();
+        verify( context, scannedBundle, bundle );
+        reset( context, scannedBundle, bundle );
         bundle.start();
-        replay( context, reference, bundle );
+        replay( context, scannedBundle, bundle );
         installable.start();
-        verify( context, reference, bundle );
+        verify( context, scannedBundle, bundle );
     }
 
     @Test
@@ -166,16 +166,16 @@ public class InstallableBundleImplTest
         throws BundleException, MalformedURLException
     {
         BundleContext context = createMock( BundleContext.class );
-        BundleReference reference = createMock( BundleReference.class );
+        ScannedBundle scannedBundle = createMock( ScannedBundle.class );
         Bundle bundle = createMock( Bundle.class );
-        expect( reference.getLocation() ).andReturn( "file:bundle.jar" );
+        expect( scannedBundle.getLocation() ).andReturn( "file:bundle.jar" );
         expect( context.installBundle( "file:bundle.jar" ) ).andReturn( bundle );
-        expect( reference.shouldUpdate() ).andReturn( false );
-        expect( reference.shouldStart() ).andReturn( false );
+        expect( scannedBundle.shouldUpdate() ).andReturn( false );
+        expect( scannedBundle.shouldStart() ).andReturn( false );
         bundle.start();
-        replay( context, reference, bundle );
-        new InstallableBundleImpl( context, reference ).start();
-        verify( context, reference, bundle );
+        replay( context, scannedBundle, bundle );
+        new InstallableBundleImpl( context, scannedBundle ).start();
+        verify( context, scannedBundle, bundle );
     }
 
     @Test
@@ -183,15 +183,15 @@ public class InstallableBundleImplTest
         throws BundleException, MalformedURLException
     {
         BundleContext context = createMock( BundleContext.class );
-        BundleReference reference = createMock( BundleReference.class );
+        ScannedBundle scannedBundle = createMock( ScannedBundle.class );
         Bundle bundle = createMock( Bundle.class );
-        expect( reference.getLocation() ).andReturn( "file:bundle.jar" );
+        expect( scannedBundle.getLocation() ).andReturn( "file:bundle.jar" );
         expect( context.installBundle( "file:bundle.jar" ) ).andReturn( bundle );
-        expect( reference.shouldUpdate() ).andReturn( false );
-        expect( reference.shouldStart() ).andReturn( false );
-        replay( context, reference, bundle );
-        new InstallableBundleImpl( context, reference ).install().install();
-        verify( context, reference, bundle );
+        expect( scannedBundle.shouldUpdate() ).andReturn( false );
+        expect( scannedBundle.shouldStart() ).andReturn( false );
+        replay( context, scannedBundle, bundle );
+        new InstallableBundleImpl( context, scannedBundle ).install().install();
+        verify( context, scannedBundle, bundle );
     }
 
     @Test
@@ -199,16 +199,16 @@ public class InstallableBundleImplTest
         throws BundleException, MalformedURLException
     {
         BundleContext context = createMock( BundleContext.class );
-        BundleReference reference = createMock( BundleReference.class );
+        ScannedBundle scannedBundle = createMock( ScannedBundle.class );
         Bundle bundle = createMock( Bundle.class );
-        expect( reference.getLocation() ).andReturn( "file:bundle.jar" );
+        expect( scannedBundle.getLocation() ).andReturn( "file:bundle.jar" );
         expect( context.installBundle( "file:bundle.jar" ) ).andReturn( bundle );
-        expect( reference.shouldUpdate() ).andReturn( false );
-        expect( reference.shouldStart() ).andReturn( false );
+        expect( scannedBundle.shouldUpdate() ).andReturn( false );
+        expect( scannedBundle.shouldStart() ).andReturn( false );
         bundle.start();
-        replay( context, reference, bundle );
-        new InstallableBundleImpl( context, reference ).start().start();
-        verify( context, reference, bundle );
+        replay( context, scannedBundle, bundle );
+        new InstallableBundleImpl( context, scannedBundle ).start().start();
+        verify( context, scannedBundle, bundle );
     }
 
 }

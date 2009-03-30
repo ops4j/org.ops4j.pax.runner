@@ -31,11 +31,11 @@ import org.apache.commons.logging.LogFactory;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.net.URLUtils;
 import org.ops4j.pax.runner.commons.properties.SystemPropertyUtils;
-import org.ops4j.pax.runner.provision.BundleReference;
-import org.ops4j.pax.runner.provision.BundleReferenceBean;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionService;
 import org.ops4j.pax.runner.provision.ProvisionSpec;
+import org.ops4j.pax.runner.provision.ScannedBundle;
+import org.ops4j.pax.runner.provision.ScannedBundleBean;
 import org.ops4j.pax.runner.provision.Scanner;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
@@ -98,13 +98,13 @@ public class CompositeScanner
      * Reads the bundles from the file specified by the urlSpec.
      * {@inheritDoc}
      */
-    public List<BundleReference> scan( final ProvisionSpec provisionSpec )
+    public List<ScannedBundle> scan( final ProvisionSpec provisionSpec )
         throws MalformedSpecificationException, ScannerException
     {
         NullArgumentException.validateNotNull( provisionSpec, "Provision spec" );
 
         LOGGER.debug( "Scanning [" + provisionSpec.getPath() + "]" );
-        List<BundleReference> references = new ArrayList<BundleReference>();
+        List<ScannedBundle> scannedBundles = new ArrayList<ScannedBundle>();
         ScannerConfiguration config = createConfiguration();
         BufferedReader bufferedReader = null;
         try
@@ -166,17 +166,19 @@ public class CompositeScanner
                                     spec.shouldUpdate()
                                 ).toExternalForm();
                             }
-                            final List<BundleReference> scanned = m_provisionService.scan( line );
+                            final List<ScannedBundle> scanned = m_provisionService.scan( line );
                             if( scanned != null && scanned.size() > 0 )
                             {
-                                for( BundleReference reference : scanned )
+                                for( ScannedBundle scannedBundle : scanned )
                                 {
-                                    references.add(
-                                        new BundleReferenceBean(
-                                            reference.getLocation(),
-                                            defaultStartLevel == null ? reference.getStartLevel() : defaultStartLevel,
-                                            defaultStart == null ? reference.shouldStart() : defaultStart,
-                                            defaultUpdate == null ? reference.shouldUpdate() : defaultUpdate
+                                    scannedBundles.add(
+                                        new ScannedBundleBean(
+                                            scannedBundle.getLocation(),
+                                            defaultStartLevel == null
+                                            ? scannedBundle.getStartLevel()
+                                            : defaultStartLevel,
+                                            defaultStart == null ? scannedBundle.shouldStart() : defaultStart,
+                                            defaultUpdate == null ? scannedBundle.shouldUpdate() : defaultUpdate
                                         )
                                     );
                                 }
@@ -197,7 +199,7 @@ public class CompositeScanner
         {
             throw new ScannerException( "Could not parse the provision file", e );
         }
-        return references;
+        return scannedBundles;
     }
 
     /**

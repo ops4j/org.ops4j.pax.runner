@@ -38,12 +38,12 @@ import org.apache.maven.mercury.repository.remote.m2.RemoteRepositoryM2;
 import org.apache.maven.mercury.repository.virtual.VirtualRepositoryReader;
 import org.apache.maven.mercury.transport.api.Server;
 import org.ops4j.lang.NullArgumentException;
-import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionSpec;
+import org.ops4j.pax.runner.provision.ScannedBundle;
 import org.ops4j.pax.runner.provision.Scanner;
 import org.ops4j.pax.runner.provision.ScannerException;
-import org.ops4j.pax.runner.provision.scanner.FileBundleReference;
+import org.ops4j.pax.runner.provision.scanner.ScannedFileBundle;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfigurationImpl;
 import org.ops4j.pax.runner.scanner.maven.ServiceConstants;
@@ -109,7 +109,7 @@ public class MavenScanner
      * Reads the bundles from the file specified by the urlSpec.
      * {@inheritDoc}
      */
-    public List<BundleReference> scan( final ProvisionSpec provisionSpec )
+    public List<ScannedBundle> scan( final ProvisionSpec provisionSpec )
         throws MalformedSpecificationException, ScannerException
     {
         NullArgumentException.validateNotNull( provisionSpec, "Provision spec" );
@@ -121,7 +121,7 @@ public class MavenScanner
             throw new ScannerException( "Exception while configuration", m_exception );
         }
 
-        List<BundleReference> references = new ArrayList<BundleReference>();
+        List<ScannedBundle> scannedBundles = new ArrayList<ScannedBundle>();
 
         final Integer defaultStartLevel = getDefaultStartLevel( provisionSpec, m_scannerConfiguration );
         final Boolean defaultStart = getDefaultStart( provisionSpec, m_scannerConfiguration );
@@ -155,8 +155,8 @@ public class MavenScanner
                         final List<Artifact> artifacts = artifactResults.getResults( foundArtifact );
                         for( Artifact artifact : artifacts )
                         {
-                            references.add(
-                                new FileBundleReference(
+                            scannedBundles.add(
+                                new ScannedFileBundle(
                                     artifact.getFile().toURL().toExternalForm(),
                                     defaultStartLevel, defaultStart, defaultUpdate
                                 )
@@ -175,7 +175,7 @@ public class MavenScanner
             throw new ScannerException( e.getMessage() );
         }
 
-        return references;
+        return scannedBundles;
     }
 
     /**

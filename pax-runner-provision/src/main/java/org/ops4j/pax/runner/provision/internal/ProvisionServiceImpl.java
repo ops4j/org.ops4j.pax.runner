@@ -26,12 +26,12 @@ import org.apache.commons.logging.LogFactory;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.startlevel.StartLevel;
 import org.ops4j.lang.NullArgumentException;
-import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.InstallableBundle;
 import org.ops4j.pax.runner.provision.InstallableBundles;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionService;
 import org.ops4j.pax.runner.provision.ProvisionSpec;
+import org.ops4j.pax.runner.provision.ScannedBundle;
 import org.ops4j.pax.runner.provision.Scanner;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.UnsupportedSchemaException;
@@ -79,7 +79,7 @@ public class ProvisionServiceImpl
     /**
      * @see org.ops4j.pax.runner.provision.ProvisionService#scan(String)
      */
-    public List<BundleReference> scan( final String spec )
+    public List<ScannedBundle> scan( final String spec )
         throws MalformedSpecificationException, ScannerException
     {
         LOGGER.info( "Provision from [" + spec + "]" );
@@ -93,20 +93,20 @@ public class ProvisionServiceImpl
     }
 
     /**
-     * Wraps a list of bundle refrences as installables. The methods could be overrided by subclasses.
+     * Wraps a list of scanned bundles as installables. The methods could be overrided by subclasses.
      *
-     * @param bundleReferences a list of bundle references
+     * @param scannedBundles scanned bundles to be wrapped
      *
      * @return a set of installables
      */
-    public InstallableBundles wrap( final List<BundleReference> bundleReferences )
+    public InstallableBundles wrap( final List<ScannedBundle> scannedBundles )
     {
         List<InstallableBundle> installables = new ArrayList<InstallableBundle>();
-        if( bundleReferences != null )
+        if( scannedBundles != null )
         {
-            for( BundleReference reference : bundleReferences )
+            for( ScannedBundle scannedBundle : scannedBundles )
             {
-                installables.add( wrap( reference ) );
+                installables.add( wrap( scannedBundle ) );
             }
         }
         return createSet( installables );
@@ -125,15 +125,15 @@ public class ProvisionServiceImpl
     }
 
     /**
-     * Wrap a bundle reference as installable.
+     * Wrap a scanned bundle as installable.
      *
-     * @param reference the bundle reference to be wrapped
+     * @param scannedBundle the bscanned bundle to be wrapped
      *
      * @return an installable
      */
-    InstallableBundle wrap( final BundleReference reference )
+    InstallableBundle wrap( final ScannedBundle scannedBundle )
     {
-        return new InstallableBundleImpl( m_bundleContext, reference, m_startLevelService );
+        return new InstallableBundleImpl( m_bundleContext, scannedBundle, m_startLevelService );
     }
 
     /**
@@ -142,21 +142,21 @@ public class ProvisionServiceImpl
      * @param scanner the scanner to use
      * @param spec    the path part of the specification
      *
-     * @return A List of bundle references found by the scanner.
+     * @return a list of bundles found by the scanner.
      *
      * @throws ScannerException TODO
      * @throws MalformedSpecificationException
      *                          TODO
      */
-    private List<BundleReference> scan( final Scanner scanner, final ProvisionSpec spec )
+    private List<ScannedBundle> scan( final Scanner scanner, final ProvisionSpec spec )
         throws ScannerException, MalformedSpecificationException
     {
-        List<BundleReference> references = scanner.scan( spec );
-        if( LOGGER.isWarnEnabled() && references == null )
+        List<ScannedBundle> scannedBundles = scanner.scan( spec );
+        if( LOGGER.isWarnEnabled() && scannedBundles == null )
         {
             LOGGER.warn( "Scanner did not return any bundle to install for [" + spec + "]" );
         }
-        return references;
+        return scannedBundles;
     }
 
     /**

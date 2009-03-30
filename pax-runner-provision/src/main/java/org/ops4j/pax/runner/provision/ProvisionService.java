@@ -44,16 +44,16 @@ public interface ProvisionService
      *                          if the scheme is not available or the string could not be parsed
      * @throws ScannerException if a scanning process related exception occured
      */
-    List<BundleReference> scan( String spec )
+    List<ScannedBundle> scan( String spec )
         throws MalformedSpecificationException, ScannerException;
 
     /**
      * Wraps a list of bundle refrences as installables..
      *
-     * @param bundleReferences a list of bundle references
+     * @param scannedBundles scanned bundles to be wrapped
      *
      * @return a set of installables
      */
-    InstallableBundles wrap( final List<BundleReference> bundleReferences );
+    InstallableBundles wrap( final List<ScannedBundle> scannedBundles );
 
 }

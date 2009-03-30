@@ -22,9 +22,9 @@ import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.ops4j.lang.NullArgumentException;
-import org.ops4j.pax.runner.provision.BundleReference;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionSpec;
+import org.ops4j.pax.runner.provision.ScannedBundle;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
 import org.ops4j.util.property.PropertyResolver;
@@ -50,11 +50,11 @@ public class BundleScannerTest
         expect( config.shouldUpdate() ).andReturn( null );
 
         replay( config );
-        List<BundleReference> references = createBundleScanner( config ).scan(
+        List<ScannedBundle> scannedBundles = createBundleScanner( config ).scan(
             new ProvisionSpec( "scan-bundle:file:bundle.jar" )
         );
-        assertNotNull( "Returned bundle references list is null", references );
-        assertEquals( "Nuber of bundles", 1, references.size() );
+        assertNotNull( "Returned list is null", scannedBundles );
+        assertEquals( "Nuber of bundles", 1, scannedBundles.size() );
         verify( config );
     }
 
