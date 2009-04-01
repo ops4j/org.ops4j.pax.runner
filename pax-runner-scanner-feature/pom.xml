@@ -74,7 +74,7 @@
       <artifactId>org.apache.servicemix.kernel.gshell.features</artifactId>
       <version>1.1.0</version>
       <scope>provided</scope>
-      <exclusions>
+      <!--exclusions>
         <exclusion>
           <groupId>org.apache.servicemix.kernel.gshell</groupId>
           <artifactId>org.apache.servicemix.kernel.gshell.core</artifactId>
@@ -91,7 +91,7 @@
           <groupId>org.apache.servicemix.kernel</groupId>
           <artifactId>org.apache.servicemix.kernel.filemonitor</artifactId>
         </exclusion>
-      </exclusions>
+      </exclusions-->
     </dependency>
     <!-- Testing dependencies -->
     <dependency>
