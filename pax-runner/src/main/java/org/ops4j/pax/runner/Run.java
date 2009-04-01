@@ -247,12 +247,12 @@ public class Run
         final String executor = resolver.get( OPTION_EXECUTOR );
         if( executor == null || executor.trim().length() == 0 )
         {
-            LOGGER.info( "Using default executor" );
+            LOGGER.debug( "Using default executor" );
             return null;
         }
         if( "noop".equalsIgnoreCase( executor ) )
         {
-            LOGGER.info( "Using noop executor" );
+            LOGGER.debug( "Using noop executor" );
             return new NoopJavaRunner();
         }
         throw new ConfigurationException( "Executor [" + executor + "] is not supported" );
