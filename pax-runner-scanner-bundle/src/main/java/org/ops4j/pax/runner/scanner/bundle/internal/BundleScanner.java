@@ -85,7 +85,7 @@ public class BundleScanner
                 getDefaultUpdate( provisionSpec, config )
             );
             scannedBundles.add( scannedFileBundle );
-            LOGGER.info( "Installing bundle [" + scannedFileBundle + "]" );
+            LOGGER.debug( "Installing bundle [" + scannedFileBundle + "]" );
         }
         catch( MalformedURLException e )
         {

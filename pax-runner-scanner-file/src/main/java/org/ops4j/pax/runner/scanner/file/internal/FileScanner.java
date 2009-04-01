@@ -134,7 +134,7 @@ public class FileScanner
                                 line, defaultStartLevel, defaultStart, defaultUpdate
                             );
                             scannedBundles.add( scannedFileBundle );
-                            LOGGER.info( "Installing bundle [" + scannedFileBundle + "]" );
+                            LOGGER.debug( "Installing bundle [" + scannedFileBundle + "]" );
                         }
                     }
                 }

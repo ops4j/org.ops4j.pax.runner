@@ -167,4 +167,21 @@ public class RunnerBundle
         return getClass().getClassLoader().getResource( name );
     }
 
+    @Override
+    public String toString()
+    {
+        final StringBuilder sb = new StringBuilder();
+        sb.append( m_location );
+        if( m_startLevel != null )
+        {
+            sb.append( ", at start level " ).append( m_startLevel );
+        }
+        else
+        {
+            sb.append( ", at default start level" );
+        }
+        sb.append( m_shouldStart ? ", bundle will be started" : ", bundle will not be started" );
+        sb.append( m_shouldUpdate ? ", bundle will be re-downloaded" : ", bundle will be used from the cache" );
+        return sb.toString();
+    }
 }

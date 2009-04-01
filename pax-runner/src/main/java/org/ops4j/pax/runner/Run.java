@@ -379,7 +379,6 @@ public class Run
                          final ProvisionSchemaResolver schemaResolver,
                          final Context context )
     {
-        LOGGER.debug( "Installing bundles" );
         if( provisionService == null )
         {
             throw new RuntimeException( "Could not resolve a provision service" );
@@ -562,6 +561,7 @@ public class Run
         {
             for( RunnerBundle bundle : installedBundles )
             {
+                LOGGER.info( "Provision bundle [" + bundle +  "]");
                 references.add(
                     new BundleReferenceBean(
                         bundle.getLocationAsURL().toExternalForm(),

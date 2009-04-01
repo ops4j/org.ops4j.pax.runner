@@ -132,7 +132,11 @@ public class FeatureScanner
                 }
                 for( String bundleUrl : feature.getBundles() )
                 {
-                    scannedBundles.add( new ScannedBundleBean( bundleUrl, startLevel, shouldStart, shouldUpdate ) );
+                    final ScannedBundleBean scannedBundle = new ScannedBundleBean(
+                        bundleUrl, startLevel, shouldStart, shouldUpdate
+                    );
+                    scannedBundles.add( scannedBundle );
+                    LOGGER.debug( "Installing bundle [" + scannedBundles + "]" );
                 }
             }
         }

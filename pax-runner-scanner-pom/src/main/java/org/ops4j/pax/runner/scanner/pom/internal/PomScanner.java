@@ -129,7 +129,7 @@ public class PomScanner
                                 dependencyURL, defaultStartLevel, defaultStart, defaultUpdate
                             );
                             scannedBundles.add( scannedFileBundle );
-                            LOGGER.info( "Installing bundle [" + scannedFileBundle + "]" );
+                            LOGGER.debug( "Installing bundle [" + scannedFileBundle + "]" );
                         }
                     }
                 }

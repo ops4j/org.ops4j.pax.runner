@@ -233,7 +233,7 @@ public class DirScanner
                     url.toExternalForm(), startLevel, shouldStart, update
                 );
                 scannedBundles.add( scannedFileBundle );
-                LOGGER.info( "Installing bundle [" + scannedFileBundle + "]" );
+                LOGGER.debug( "Installing bundle [" + scannedFileBundle + "]" );
             }
         }
         return scannedBundles;
