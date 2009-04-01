@@ -45,6 +45,7 @@
         <module>pax-runner-scanner-composite</module>
         <module>pax-runner-scanner-bundle</module>
         <module>pax-runner-scanner-dir</module>
+        <module>pax-runner-scanner-feature</module>
         <module>pax-runner-scanner-file</module>
         <module>pax-runner-scanner-maven</module>
         <module>pax-runner-scanner-obr</module>
@@ -67,6 +68,7 @@
         <module>pax-runner-scanner-bundle</module>
         <module>pax-runner-scanner-composite</module>
         <module>pax-runner-scanner-dir</module>
+        <module>pax-runner-scanner-feature</module>
         <module>pax-runner-scanner-file</module>
         <module>pax-runner-scanner-maven</module>
         <module>pax-runner-scanner-obr</module>

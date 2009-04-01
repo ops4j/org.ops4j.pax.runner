@@ -418,6 +418,7 @@
       <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-common/pax-runner-scanner-common.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-common/pax-runner-scanner-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-composite/pax-runner-scanner-composite.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-composite/pax-runner-scanner-composite.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-dir/pax-runner-scanner-dir.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-dir/pax-runner-scanner-dir.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-feature/pax-runner-scanner-feature.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-feature/pax-runner-scanner-feature.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-file/pax-runner-scanner-file.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-file/pax-runner-scanner-file.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-maven/pax-runner-scanner-maven.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-maven/pax-runner-scanner-maven.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-obr/pax-runner-scanner-obr.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-obr/pax-runner-scanner-obr.iml" />
@@ -776,6 +777,226 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mercury/0.5.0-SNAPSHOT/pax-url-mercury-0.5.0-SNAPSHOT-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.maven.mercury:mercury-repo-local-m2:1.0-alpha-5">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-local-m2/1.0-alpha-5/mercury-repo-local-m2-1.0-alpha-5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-local-m2/1.0-alpha-5/mercury-repo-local-m2-1.0-alpha-5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-local-m2/1.0-alpha-5/mercury-repo-local-m2-1.0-alpha-5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.maven.mercury:mercury-logging:1.0-alpha-5">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-logging/1.0-alpha-5/mercury-logging-1.0-alpha-5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-logging/1.0-alpha-5/mercury-logging-1.0-alpha-5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-logging/1.0-alpha-5/mercury-logging-1.0-alpha-5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.maven.mercury:mercury-repo-api:1.0-alpha-5">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-api/1.0-alpha-5/mercury-repo-api-1.0-alpha-5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-api/1.0-alpha-5/mercury-repo-api-1.0-alpha-5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-api/1.0-alpha-5/mercury-repo-api-1.0-alpha-5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.maven.mercury:mercury-artifact:1.0-alpha-5">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-artifact/1.0-alpha-5/mercury-artifact-1.0-alpha-5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-artifact/1.0-alpha-5/mercury-artifact-1.0-alpha-5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-artifact/1.0-alpha-5/mercury-artifact-1.0-alpha-5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.maven.mercury:mercury-transport-api:1.0-alpha-5">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-transport-api/1.0-alpha-5/mercury-transport-api-1.0-alpha-5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-transport-api/1.0-alpha-5/mercury-transport-api-1.0-alpha-5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-transport-api/1.0-alpha-5/mercury-transport-api-1.0-alpha-5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.maven.mercury:mercury-crypto-api:1.0-alpha-5">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-crypto-api/1.0-alpha-5/mercury-crypto-api-1.0-alpha-5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-crypto-api/1.0-alpha-5/mercury-crypto-api-1.0-alpha-5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-crypto-api/1.0-alpha-5/mercury-crypto-api-1.0-alpha-5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.maven.mercury:mercury-external:1.0-alpha-5">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-external/1.0-alpha-5/mercury-external-1.0-alpha-5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-external/1.0-alpha-5/mercury-external-1.0-alpha-5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-external/1.0-alpha-5/mercury-external-1.0-alpha-5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.maven.mercury:mercury-event:1.0-alpha-5">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-event/1.0-alpha-5/mercury-event-1.0-alpha-5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-event/1.0-alpha-5/mercury-event-1.0-alpha-5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-event/1.0-alpha-5/mercury-event-1.0-alpha-5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.maven.mercury:mercury-md-shared:1.0-alpha-5">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-md-shared/1.0-alpha-5/mercury-md-shared-1.0-alpha-5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-md-shared/1.0-alpha-5/mercury-md-shared-1.0-alpha-5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-md-shared/1.0-alpha-5/mercury-md-shared-1.0-alpha-5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.maven.mercury:mercury-util:1.0-alpha-5">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-util/1.0-alpha-5/mercury-util-1.0-alpha-5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-util/1.0-alpha-5/mercury-util-1.0-alpha-5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-util/1.0-alpha-5/mercury-util-1.0-alpha-5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.maven.mercury:mercury-crypto-basic:1.0-alpha-5">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-crypto-basic/1.0-alpha-5/mercury-crypto-basic-1.0-alpha-5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-crypto-basic/1.0-alpha-5/mercury-crypto-basic-1.0-alpha-5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-crypto-basic/1.0-alpha-5/mercury-crypto-basic-1.0-alpha-5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: commons-cli:commons-cli:1.1">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/commons-cli/commons-cli/1.1/commons-cli-1.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/commons-cli/commons-cli/1.1/commons-cli-1.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/commons-cli/commons-cli/1.1/commons-cli-1.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.maven.mercury:mercury-repo-remote-m2:1.0-alpha-5">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-remote-m2/1.0-alpha-5/mercury-repo-remote-m2-1.0-alpha-5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-remote-m2/1.0-alpha-5/mercury-repo-remote-m2-1.0-alpha-5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-remote-m2/1.0-alpha-5/mercury-repo-remote-m2-1.0-alpha-5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.maven.mercury:mercury-transport-http:1.0-alpha-5">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-transport-http/1.0-alpha-5/mercury-transport-http-1.0-alpha-5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-transport-http/1.0-alpha-5/mercury-transport-http-1.0-alpha-5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-transport-http/1.0-alpha-5/mercury-transport-http-1.0-alpha-5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.mortbay.jetty:jetty-client:assembly:6.1.15.rc2">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/mortbay/jetty/jetty-client/6.1.15.rc2/jetty-client-6.1.15.rc2-assembly.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/mortbay/jetty/jetty-client/6.1.15.rc2/jetty-client-6.1.15.rc2-assembly-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/mortbay/jetty/jetty-client/6.1.15.rc2/jetty-client-6.1.15.rc2-assembly-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.mortbay.jetty:jetty-util5:6.1.15.rc2">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/mortbay/jetty/jetty-util5/6.1.15.rc2/jetty-util5-6.1.15.rc2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/mortbay/jetty/jetty-util5/6.1.15.rc2/jetty-util5-6.1.15.rc2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/mortbay/jetty/jetty-util5/6.1.15.rc2/jetty-util5-6.1.15.rc2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.mortbay.jetty:jetty-util:6.1.15.rc2">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/mortbay/jetty/jetty-util/6.1.15.rc2/jetty-util-6.1.15.rc2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/mortbay/jetty/jetty-util/6.1.15.rc2/jetty-util-6.1.15.rc2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/mortbay/jetty/jetty-util/6.1.15.rc2/jetty-util-6.1.15.rc2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.maven.mercury:mercury-repo-virtual:1.0-alpha-5">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-virtual/1.0-alpha-5/mercury-repo-virtual-1.0-alpha-5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-virtual/1.0-alpha-5/mercury-repo-virtual-1.0-alpha-5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-virtual/1.0-alpha-5/mercury-repo-virtual-1.0-alpha-5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.maven.mercury:mercury-repo-cache-fs:1.0-alpha-5">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-cache-fs/1.0-alpha-5/mercury-repo-cache-fs-1.0-alpha-5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-cache-fs/1.0-alpha-5/mercury-repo-cache-fs-1.0-alpha-5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-cache-fs/1.0-alpha-5/mercury-repo-cache-fs-1.0-alpha-5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.codehaus.plexus:plexus-utils:1.5.5">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/codehaus/plexus/plexus-utils/1.5.5/plexus-utils-1.5.5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/codehaus/plexus/plexus-utils/1.5.5/plexus-utils-1.5.5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/codehaus/plexus/plexus-utils/1.5.5/plexus-utils-1.5.5-sources.jar!/" />
       </SOURCES>
     </library>
   </component>
