@@ -715,7 +715,7 @@ public class Run
         {
             if( LOGGER != null )
             {
-                LOGGER.error( "Detailed exception during execution:", t );
+                LOGGER.error( "Exception catched during execution:", t );
             }
         }
 
