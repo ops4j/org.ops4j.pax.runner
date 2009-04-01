@@ -181,7 +181,7 @@ public class RunnerBundle
             sb.append( ", at default start level" );
         }
         sb.append( m_shouldStart ? ", bundle will be started" : ", bundle will not be started" );
-        sb.append( m_shouldUpdate ? ", bundle will be re-downloaded" : ", bundle will be used from the cache" );
+        sb.append( m_shouldUpdate ? ", bundle will be re-downloaded" : ", bundle will be loaded from the cache" );
         return sb.toString();
     }
 }
