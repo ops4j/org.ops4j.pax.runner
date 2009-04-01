@@ -91,10 +91,6 @@
           <groupId>org.apache.servicemix.kernel</groupId>
           <artifactId>org.apache.servicemix.kernel.filemonitor</artifactId>
         </exclusion>
-        <!--exclusion>
-          <groupId>org.springframework.osgi</groupId>
-          <artifactId>spring-osgi-core</artifactId>
-        </exclusion-->
       </exclusions>
     </dependency>
     <!-- Testing dependencies -->
