@@ -43,6 +43,7 @@ import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 import org.ops4j.lang.NullArgumentException;
 import static org.ops4j.pax.runner.CommandLine.*;
+import org.ops4j.pax.runner.commons.Info;
 import org.ops4j.pax.runner.osgi.RunnerBundle;
 import org.ops4j.pax.runner.osgi.RunnerBundleContext;
 import org.ops4j.pax.runner.osgi.RunnerStartLevel;
@@ -561,7 +562,7 @@ public class Run
         {
             for( RunnerBundle bundle : installedBundles )
             {
-                LOGGER.info( "Provision bundle [" + bundle +  "]");
+                LOGGER.info( "Provision bundle [" + bundle + "]" );
                 references.add(
                     new BundleReferenceBean(
                         bundle.getLocationAsURL().toExternalForm(),
@@ -693,12 +694,13 @@ public class Run
      */
     private static void showError( Throwable t )
     {
+        Info.println();
         String message = "";
         String debugInfo = "";
-        if( LOGGER != null && !LOGGER.isErrorEnabled() )
+        if( LOGGER != null && !LOGGER.isDebugEnabled() )
         {
             message = t.getMessage();
-            debugInfo = "Use --" + OPTION_LOG + "=ERROR to see details.";
+            debugInfo = "Use --" + OPTION_LOG + "=debug to see details.";
         }
         System.out.println( "         ___" );
         System.out.println( "        /  /" );
@@ -709,13 +711,12 @@ public class Run
         System.out.println( "   /__/     " + debugInfo );
         System.out.println();
 
-        if( LOGGER == null || LOGGER.isErrorEnabled() )
+        if( LOGGER == null || LOGGER.isDebugEnabled() )
         {
             if( LOGGER != null )
             {
-                LOGGER.error( t );
+                LOGGER.error( "Detailed exception during execution:", t );
             }
-            t.printStackTrace();
         }
 
     }
