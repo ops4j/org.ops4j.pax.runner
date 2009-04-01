@@ -17,14 +17,18 @@
  */
 package org.ops4j.pax.runner.scanner.feature.internal;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.servicemix.kernel.gshell.features.Feature;
+import org.apache.servicemix.kernel.gshell.features.internal.RepositoryImpl;
 import org.ops4j.lang.NullArgumentException;
-import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionSpec;
 import org.ops4j.pax.runner.provision.ScannedBundle;
+import org.ops4j.pax.runner.provision.ScannedBundleBean;
 import org.ops4j.pax.runner.provision.Scanner;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
@@ -67,19 +71,71 @@ public class FeatureScanner
      * {@inheritDoc}
      */
     public List<ScannedBundle> scan( final ProvisionSpec provisionSpec )
-        throws MalformedSpecificationException, ScannerException
+        throws ScannerException
     {
         NullArgumentException.validateNotNull( provisionSpec, "Provision spec" );
 
         LOGGER.debug( "Scanning [" + provisionSpec.getPath() + "]" );
 
-        final List<ScannedBundle> scannedBundles = new ArrayList<ScannedBundle>();
         final ScannerConfiguration config = createConfiguration();
 
         final Integer defaultStartLevel = getDefaultStartLevel( provisionSpec, config );
         final Boolean defaultStart = getDefaultStart( provisionSpec, config );
         final Boolean defaultUpdate = getDefaultUpdate( provisionSpec, config );
 
+        try
+        {
+            final RepositoryImpl repository = new RepositoryImpl( provisionSpec.getPathAsUrl().toURI() );
+            return features( repository.getFeatures(),
+                             provisionSpec.getFilterPattern(),
+                             defaultStartLevel, defaultStart, defaultUpdate
+            );
+        }
+        catch( URISyntaxException e )
+        {
+            throw new ScannerException( "URL cannot be used", e );
+        }
+        catch( Exception e )
+        {
+            throw new ScannerException( "Repository cannot be used", e );
+        }
+    }
+
+    private List<ScannedBundle> features( final Feature[] features,
+                                          final Pattern filter,
+                                          final Integer startLevel,
+                                          final Boolean shouldStart,
+                                          final Boolean shouldUpdate )
+    {
+        final List<ScannedBundle> scannedBundles = new ArrayList<ScannedBundle>();
+        if( features != null && features.length > 0 )
+        {
+            for( Feature feature : features )
+            {
+                if( filter != null && !filter.matcher( feature.getId() ).matches() )
+                {
+                    continue;
+                }
+                final List<Feature> dependencies = feature.getDependencies();
+                if( dependencies != null && dependencies.size() > 0 )
+                {
+                    for( Feature dependency : dependencies )
+                    {
+                        scannedBundles.addAll(
+                            features(
+                                features,
+                                Pattern.compile( dependency.getId() ),
+                                startLevel, shouldStart, shouldUpdate
+                            )
+                        );
+                    }
+                }
+                for( String bundleUrl : feature.getBundles() )
+                {
+                    scannedBundles.add( new ScannedBundleBean( bundleUrl, startLevel, shouldStart, shouldUpdate ) );
+                }
+            }
+        }
         return scannedBundles;
     }
 

@@ -24,6 +24,7 @@
     <orderEntry type="module" module-name="pax-runner-scanner-common" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-property:0.2.0" level="project" />
     <orderEntry type="module" module-name="pax-runner-provision" />
+    <orderEntry type="library" name="Maven: org.apache.servicemix.kernel.gshell:org.apache.servicemix.kernel.gshell.features:1.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.base:ops4j-base-io:0.5.3" level="project" />
   </component>
 </module>

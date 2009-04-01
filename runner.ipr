@@ -999,6 +999,17 @@
         <root url="jar://$M2_REPO$/org/codehaus/plexus/plexus-utils/1.5.5/plexus-utils-1.5.5-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Maven: org.apache.servicemix.kernel.gshell:org.apache.servicemix.kernel.gshell.features:1.1.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/kernel/gshell/org.apache.servicemix.kernel.gshell.features/1.1.0/org.apache.servicemix.kernel.gshell.features-1.1.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/kernel/gshell/org.apache.servicemix.kernel.gshell.features/1.1.0/org.apache.servicemix.kernel.gshell.features-1.1.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/kernel/gshell/org.apache.servicemix.kernel.gshell.features/1.1.0/org.apache.servicemix.kernel.gshell.features-1.1.0-sources.jar!/" />
+      </SOURCES>
+    </library>
   </component>
   <UsedPathMacros>
     <macro name="M2_REPO" />

@@ -18,6 +18,7 @@
 package org.ops4j.pax.runner.provision;
 
 import java.util.List;
+import java.net.MalformedURLException;
 
 /**
  * A scanner handles a certain scheme.
@@ -45,6 +46,6 @@ public interface Scanner
      *                          - If the path is malformed
      */
     List<ScannedBundle> scan( ProvisionSpec provisionSpec )
-        throws MalformedSpecificationException, ScannerException;
+        throws MalformedURLException, ScannerException;
 
 }
