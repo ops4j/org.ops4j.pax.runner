@@ -76,7 +76,7 @@ public interface CommandLine
      * Profiles repository.
      */
     static final String OPTION_PROFILES_REPO = "profilesRepositories";
-        /**
+    /**
      * Profiles group id.
      */
     static final String OPTION_PROFILES_GROUPID = "profilesGroupId";
@@ -102,7 +102,7 @@ public interface CommandLine
     /**
      * Returns the list of all arguments.
      *
-     * @return list of arguments
+     * @return list of arguments; if there are no arrguments returns an empty list
      */
     List<String> getArguments();
 

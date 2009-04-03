@@ -384,21 +384,87 @@ public class Run
         {
             throw new RuntimeException( "Could not resolve a provision service" );
         }
-        List<String> arguments = context.getCommandLine().getArguments();
+        // build list of provisioning specs out of command line arguments and profiles
+        final List<String> provisionSpecs = new ArrayList<String>();
+        provisionSpecs.addAll( context.getCommandLine().getArguments() );
+        provisionSpecs.addAll( transformProfilesToProvisionSpecs( context ) );
+
+        // backup properties and replace them with audited properties
+        final Properties sysPropsBackup = System.getProperties();
+        try
+        {
+            context.setSystemProperties( new AuditedProperties( sysPropsBackup ) );
+            System.setProperties( context.getSystemProperties() );
+
+            final Set<ScannedBundle> scannedBundles = new HashSet<ScannedBundle>();
+            // then scan those url's
+            for( String provisionSpec : provisionSpecs )
+            {
+                try
+                {
+                    try
+                    {
+                        provisionService.wrap(
+                            filterUnique( scannedBundles, provisionService.scan( provisionSpec ) )
+                        ).install();
+                    }
+                    catch( UnsupportedSchemaException e )
+                    {
+                        final String resolvedProvisionURL = schemaResolver.resolve( provisionSpec );
+                        if( resolvedProvisionURL != null && !resolvedProvisionURL.equals( provisionSpec ) )
+                        {
+                            provisionService.wrap(
+                                filterUnique( scannedBundles, provisionService.scan( resolvedProvisionURL ) )
+                            ).install();
+                        }
+                        else
+                        {
+                            throw e;
+                        }
+                    }
+                }
+                catch( MalformedSpecificationException e )
+                {
+                    throw new RuntimeException( e );
+                }
+                catch( ScannerException e )
+                {
+                    throw new RuntimeException( e );
+                }
+                catch( BundleException e )
+                {
+                    throw new RuntimeException( e );
+                }
+            }
+        }
+        finally
+        {
+            // restore the backup-ed properties
+            System.setProperties( sysPropsBackup );
+        }
+    }
+
+    /**
+     * Transforms requested profiles (--profiles option) to provisioning specs (scan-composite).
+     *
+     * @param context runner context
+     *
+     * @return list of transformed provisioning specs or an empty list if there are no profiles.
+     */
+    private List<String> transformProfilesToProvisionSpecs( final Context context )
+    {
+        final List<String> provisionSpecs = new ArrayList<String>();
+
         final String profilesOption = context.getOptionResolver().get( OPTION_PROFILES );
         if( profilesOption != null && profilesOption.trim().length() > 0 )
         {
-            if( arguments == null )
-            {
-                arguments = new ArrayList<String>();
-            }
             final String profilesGroup = context.getOptionResolver().get( OPTION_PROFILES_GROUPID );
             final String[] profiles = profilesOption.split( "," );
             for( String profile : profiles )
             {
-                // TODO Maybe a nice/safe parsing of profile name into group/artifatc/version ?
+                // TODO Maybe a nice/safe parsing of profile name into group/artifact/version ?
                 final String[] parts = profile.split( "/" );
-                arguments.add(
+                provisionSpecs.add(
                     org.ops4j.pax.runner.scanner.composite.ServiceConstants.SCHEMA
                     + org.ops4j.pax.runner.provision.ServiceConstants.SEPARATOR_SCHEME
                     + org.ops4j.pax.url.mvn.ServiceConstants.PROTOCOL
@@ -410,61 +476,7 @@ public class Run
                 );
             }
         }
-        if( arguments != null )
-        {
-            // backup properties and replace them with audited properties
-            final Properties sysPropsBackup = System.getProperties();
-            try
-            {
-                Set<ScannedBundle> uniqueRefs = new HashSet<ScannedBundle>();
-                context.setSystemProperties( new AuditedProperties( sysPropsBackup ) );
-                System.setProperties( context.getSystemProperties() );
-                // then scan those url's
-                for( String provisionURL : arguments )
-                {
-                    try
-                    {
-                        try
-                        {
-                            provisionService.wrap(
-                                filterUnique( uniqueRefs, provisionService.scan( provisionURL ) )
-                            ).install();
-                        }
-                        catch( UnsupportedSchemaException e )
-                        {
-                            final String resolvedProvisionURL = schemaResolver.resolve( provisionURL );
-                            if( resolvedProvisionURL != null && !resolvedProvisionURL.equals( provisionURL ) )
-                            {
-                                provisionService.wrap(
-                                    filterUnique( uniqueRefs, provisionService.scan( resolvedProvisionURL ) )
-                                ).install();
-                            }
-                            else
-                            {
-                                throw e;
-                            }
-                        }
-                    }
-                    catch( MalformedSpecificationException e )
-                    {
-                        throw new RuntimeException( e );
-                    }
-                    catch( ScannerException e )
-                    {
-                        throw new RuntimeException( e );
-                    }
-                    catch( BundleException e )
-                    {
-                        throw new RuntimeException( e );
-                    }
-                }
-            }
-            finally
-            {
-                // restore the backup-ed properties
-                System.setProperties( sysPropsBackup );
-            }
-        }
+        return provisionSpecs;
     }
 
     /**
