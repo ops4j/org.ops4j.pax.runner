@@ -25,19 +25,17 @@ import org.ops4j.net.URLUtils;
 import org.ops4j.pax.runner.platform.Configuration;
 
 /**
- * Platform builder for felix platform after 1.4.0 that uses the latest and greatest Felix.
+ * Platform builder for felix platform after 1.6.0 that uses the latest and greatest Felix.
  *
  * @author Alin Dreghiciu (adreghiciu@gmail.com)
  * @since 0.18.0, March 05, 2009
  */
 public class FelixPlatformBuilderLatest
-    extends FelixPlatformBuilderF140
+    extends FelixPlatformBuilderF160
 {
 
     /**
-     * Create a new felix platform builder.
-     *
-     * @param bundleContext a bundle context
+     * {@inheritDoc}
      */
     public FelixPlatformBuilderLatest( final BundleContext bundleContext )
     {

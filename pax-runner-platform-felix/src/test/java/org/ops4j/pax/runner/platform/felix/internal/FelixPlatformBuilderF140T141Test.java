@@ -40,7 +40,7 @@ import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
 import org.ops4j.pax.runner.platform.internal.PlatformContextImpl;
 
-public class FelixPlatformBuilderF140Test
+public class FelixPlatformBuilderF140T141Test
 {
 
     private File m_workDir;
@@ -73,13 +73,13 @@ public class FelixPlatformBuilderF140Test
     @Test( expected = IllegalArgumentException.class )
     public void constructorWithNullBundleContext()
     {
-        new FelixPlatformBuilderF140( null, "version" );
+        new FelixPlatformBuilderF140T141( null, "version" );
     }
 
     @Test( expected = IllegalArgumentException.class )
     public void constructorWithNullVersion()
     {
-        new FelixPlatformBuilderF140( m_bundleContext, null );
+        new FelixPlatformBuilderF140T141( m_bundleContext, null );
     }
 
     @Test
@@ -89,7 +89,7 @@ public class FelixPlatformBuilderF140Test
         assertEquals(
             "Main class name",
             "org.apache.felix.main.Main",
-            new FelixPlatformBuilderF140( m_bundleContext, "version" ).getMainClassName()
+            new FelixPlatformBuilderF140T141( m_bundleContext, "version" ).getMainClassName()
         );
         verify( m_bundleContext );
     }
@@ -108,7 +108,7 @@ public class FelixPlatformBuilderF140Test
         replay( m_bundleContext, bundle );
         assertNotNull(
             "Definition input stream",
-            new FelixPlatformBuilderF140( m_bundleContext, "1.0.0" ).getDefinition( null )
+            new FelixPlatformBuilderF140T141( m_bundleContext, "1.0.0" ).getDefinition( null )
         );
         verify( m_bundleContext, bundle );
     }
@@ -121,7 +121,7 @@ public class FelixPlatformBuilderF140Test
         replay( m_bundleContext, m_configuration );
         assertNull(
             "Required profiles is not null",
-            new FelixPlatformBuilderF140( m_bundleContext, "version" ).getRequiredProfile( m_platformContext )
+            new FelixPlatformBuilderF140T141( m_bundleContext, "version" ).getRequiredProfile( m_platformContext )
         );
         verify( m_bundleContext, m_configuration );
     }
@@ -135,7 +135,7 @@ public class FelixPlatformBuilderF140Test
         assertEquals(
             "Required profiles",
             "tui",
-            new FelixPlatformBuilderF140( m_bundleContext, "version" ).getRequiredProfile( m_platformContext )
+            new FelixPlatformBuilderF140T141( m_bundleContext, "version" ).getRequiredProfile( m_platformContext )
         );
         verify( m_bundleContext, m_configuration );
     }
@@ -144,7 +144,7 @@ public class FelixPlatformBuilderF140Test
     public void getArguments()
     {
         assertNull( "Arguments is not not null",
-                    new FelixPlatformBuilderF140( m_bundleContext, "version" ).getArguments( m_platformContext )
+                    new FelixPlatformBuilderF140T141( m_bundleContext, "version" ).getArguments( m_platformContext )
         );
     }
 
@@ -158,7 +158,7 @@ public class FelixPlatformBuilderF140Test
                 "-Dfelix.config.properties="
                 + m_platformContext.normalizeAsUrl( new File( m_workDir, "/felix/config.ini" ) )
             },
-            new FelixPlatformBuilderF140( m_bundleContext, "version" ).getVMOptions( m_platformContext )
+            new FelixPlatformBuilderF140T141( m_bundleContext, "version" ).getVMOptions( m_platformContext )
         );
         verify( m_bundleContext );
     }
@@ -167,7 +167,7 @@ public class FelixPlatformBuilderF140Test
     public void getVMOptionsWithNullPlatformContext()
     {
         replay( m_bundleContext );
-        new FelixPlatformBuilderF140( m_bundleContext, "version" ).getVMOptions( null );
+        new FelixPlatformBuilderF140T141( m_bundleContext, "version" ).getVMOptions( null );
         verify( m_bundleContext );
     }
 
@@ -176,7 +176,7 @@ public class FelixPlatformBuilderF140Test
         throws PlatformException
     {
         replay( m_bundleContext );
-        new FelixPlatformBuilderF140( m_bundleContext, "version" ).prepare( null );
+        new FelixPlatformBuilderF140T141( m_bundleContext, "version" ).prepare( null );
         verify( m_bundleContext );
     }
 
@@ -200,7 +200,7 @@ public class FelixPlatformBuilderF140Test
         expect( m_configuration.usePersistedState() ).andReturn( null );
 
         replay( m_bundleContext, m_configuration );
-        new FelixPlatformBuilderF140( m_bundleContext, "version" ).prepare( m_platformContext );
+        new FelixPlatformBuilderF140T141( m_bundleContext, "version" ).prepare( m_platformContext );
         verify( m_bundleContext, m_configuration );
 
         Map<String, String> replacements = new HashMap<String, String>();
@@ -272,7 +272,7 @@ public class FelixPlatformBuilderF140Test
         replay( m_bundleContext, m_configuration,
                 bundle1, bundle2, bundle3, bundle4
         );
-        new FelixPlatformBuilderF140( m_bundleContext, "version" ).prepare( m_platformContext );
+        new FelixPlatformBuilderF140T141( m_bundleContext, "version" ).prepare( m_platformContext );
         verify( m_bundleContext, m_configuration,
                 bundle1, bundle2, bundle3, bundle4
         );
@@ -373,7 +373,7 @@ public class FelixPlatformBuilderF140Test
         expect( m_configuration.usePersistedState() ).andReturn( usePersistedState );
 
         replay( m_bundleContext, m_configuration );
-        new FelixPlatformBuilderF140( m_bundleContext, "version" ).prepare( m_platformContext );
+        new FelixPlatformBuilderF140T141( m_bundleContext, "version" ).prepare( m_platformContext );
         verify( m_bundleContext, m_configuration );
     }
 

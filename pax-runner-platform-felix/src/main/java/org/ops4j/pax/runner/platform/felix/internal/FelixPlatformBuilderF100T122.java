@@ -56,7 +56,7 @@ public class FelixPlatformBuilderF100T122
     /**
      * Logger.
      */
-    private static final Log LOGGER = LogFactory.getLog( FelixPlatformBuilderF140.class );
+    private static final Log LOGGER = LogFactory.getLog( FelixPlatformBuilderF140T141.class );
     /**
      * Provider name to be used in registration.
      */

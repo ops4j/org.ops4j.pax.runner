@@ -1,5 +1,5 @@
 /*
- * Copyright 2007 Alin Dreghiciu.
+ * Copyright 2008 Alin Dreghiciu.
  *
  * Licensed  under the  Apache License,  Version 2.0  (the "License");
  * you may not use  this file  except in  compliance with the License.
@@ -43,19 +43,19 @@ import org.ops4j.pax.runner.platform.PlatformException;
 import org.ops4j.util.collections.PropertiesWriter;
 
 /**
- * Platform builder for felix platform after 1.4.0.
+ * Platform builder for felix platform versions 1.4.0 and 1.4.1.
  *
  * @author Alin Dreghiciu
  * @since 0.16.0, November 05, 2008
  */
-public class FelixPlatformBuilderF140
+public class FelixPlatformBuilderF140T141
     implements PlatformBuilder
 {
 
     /**
      * Logger.
      */
-    private static final Log LOGGER = LogFactory.getLog( FelixPlatformBuilderF140.class );
+    private static final Log LOGGER = LogFactory.getLog( FelixPlatformBuilderF140T141.class );
     /**
      * Provider name to be used in registration.
      */
@@ -99,7 +99,7 @@ public class FelixPlatformBuilderF140
      * @param bundleContext a bundle context
      * @param version       supported version
      */
-    public FelixPlatformBuilderF140( final BundleContext bundleContext, final String version )
+    public FelixPlatformBuilderF140T141( final BundleContext bundleContext, final String version )
     {
         NullArgumentException.validateNotNull( bundleContext, "Bundle context" );
         NullArgumentException.validateNotNull( version, "Version" );
@@ -153,7 +153,7 @@ public class FelixPlatformBuilderF140
                 final Integer startLevel = configuration.getStartLevel();
                 if( startLevel != null )
                 {
-                    writer.append( "org.osgi.framework.startlevel", startLevel.toString() );
+                    writer.append( getFrameworkStratLevelPropertyName(), startLevel.toString() );
                 }
             }
             // bundle start level
@@ -409,6 +409,16 @@ public class FelixPlatformBuilderF140
     public String getProviderVersion()
     {
         return m_version;
+    }
+
+    /**
+     * Return the name of property specifying the framework start level.
+     *
+     * @return property name
+     */
+    String getFrameworkStratLevelPropertyName()
+    {
+        return "org.osgi.framework.startlevel";
     }
 
 }
