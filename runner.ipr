@@ -259,6 +259,7 @@
     <option name="activeProfiles">
       <list>
         <option value="default" />
+        <option value="non-releaseable" />
       </list>
     </option>
   </component>
