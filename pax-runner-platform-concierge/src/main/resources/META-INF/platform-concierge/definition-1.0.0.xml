@@ -17,13 +17,4 @@
     </bundle>
   </profile>
 
-  <profile name="gui" extends="minimal">
-    <bundle>
-      <name>ch.ethz.iks.concierge.gui</name>
-      <url>mvn:http://flowsgi.inf.ethz.ch/repository/maven2!ch.ethz.iks.concierge/concierge_gui/1.0.0.RC2</url>
-    </bundle>
-  </profile>
-
-  <profileRef href="classpath:META-INF/platform/profiles/common-profiles.xml"/>
-
 </platform>
