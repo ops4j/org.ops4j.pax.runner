@@ -19,33 +19,12 @@
     <orderEntry type="library" name="Maven: org.apache.felix:org.apache.felix.framework:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.felix:org.apache.felix.bundlerepository:1.2.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.felix:org.osgi.service.obr:1.0.0" level="project" />
-    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-classpath:0.5.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-mercury:0.5.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.apache.maven.mercury:mercury-repo-local-m2:1.0-alpha-5" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.apache.maven.mercury:mercury-logging:1.0-alpha-5" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.apache.maven.mercury:mercury-repo-api:1.0-alpha-5" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.apache.maven.mercury:mercury-artifact:1.0-alpha-5" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.apache.maven.mercury:mercury-transport-api:1.0-alpha-5" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.apache.maven.mercury:mercury-crypto-api:1.0-alpha-5" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.apache.maven.mercury:mercury-external:1.0-alpha-5" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.apache.maven.mercury:mercury-event:1.0-alpha-5" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.apache.maven.mercury:mercury-md-shared:1.0-alpha-5" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.apache.maven.mercury:mercury-util:1.0-alpha-5" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.apache.maven.mercury:mercury-crypto-basic:1.0-alpha-5" level="project" />
-    <orderEntry type="library" exported="" name="Maven: commons-cli:commons-cli:1.1" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.apache.maven.mercury:mercury-repo-remote-m2:1.0-alpha-5" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.apache.maven.mercury:mercury-transport-http:1.0-alpha-5" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.mortbay.jetty:jetty-client:assembly:6.1.15.rc2" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.mortbay.jetty:jetty-util5:6.1.15.rc2" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.mortbay.jetty:jetty-util:6.1.15.rc2" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.apache.maven.mercury:mercury-repo-virtual:1.0-alpha-5" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.apache.maven.mercury:mercury-repo-cache-fs:1.0-alpha-5" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.codehaus.plexus:plexus-utils:1.5.5" level="project" />
-    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-mvn:0.5.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-link:0.5.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-obr:0.5.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-war:0.5.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-wrap:0.5.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-classpath:0.5.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-mvn:0.5.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-link:0.5.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-obr:0.5.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-war:0.5.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-wrap:0.5.0" level="project" />
     <orderEntry type="module" module-name="pax-runner-commons" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-optional-jcl:0.2.0" level="project" />
     <orderEntry type="module" module-name="pax-runner-handler" />
@@ -60,7 +39,6 @@
     <orderEntry type="module" module-name="pax-runner-scanner-dir" />
     <orderEntry type="module" module-name="pax-runner-scanner-features" />
     <orderEntry type="module" module-name="pax-runner-scanner-file" />
-    <orderEntry type="module" module-name="pax-runner-scanner-maven" />
     <orderEntry type="module" module-name="pax-runner-scanner-obr" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-tracker:0.2.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-lifecycle:0.2.0" level="project" />
