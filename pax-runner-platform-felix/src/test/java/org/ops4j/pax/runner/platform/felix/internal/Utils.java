@@ -30,7 +30,7 @@ import static org.junit.Assert.*;
  * @author Alin Dreghiciu
  * @since 0.18.0, April 07, 2009
  */
-public class TestUtils
+public class Utils
 {
 
     public static void compareFiles( File expected, File actual, boolean reverse, Map<String, String> replacements )

@@ -184,7 +184,7 @@ public class FelixPlatformBuilderF100T122Test
         new FelixPlatformBuilderF100T122( m_bundleContext, "version" ).prepare( m_platformContext );
         verify( m_bundleContext, m_configuration );
 
-        TestUtils.compareFiles(
+        Utils.compareFiles(
             FileUtils.getFileFromClasspath( "felixplatformbuilder/configWithNoBundles.ini" ),
             new File( m_workDir + "/felix/config.ini" ),
             true,
@@ -269,7 +269,7 @@ public class FelixPlatformBuilderF100T122Test
             m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle4.jar" ) )
         );
 
-        TestUtils.compareFiles(
+        Utils.compareFiles(
             FileUtils.getFileFromClasspath( "felixplatformbuilder/config.ini" ),
             new File( m_workDir + "/felix/config.ini" ),
             true,
