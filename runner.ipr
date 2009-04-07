@@ -692,314 +692,6 @@
         <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-net/0.5.3/ops4j-base-net-0.5.3-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-classpath:0.5.0-SNAPSHOT">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.5.0-SNAPSHOT/pax-url-classpath-0.5.0-SNAPSHOT.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.5.0-SNAPSHOT/pax-url-classpath-0.5.0-SNAPSHOT-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.5.0-SNAPSHOT/pax-url-classpath-0.5.0-SNAPSHOT-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-mvn:0.5.0-SNAPSHOT">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.5.0-SNAPSHOT/pax-url-mvn-0.5.0-SNAPSHOT.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.5.0-SNAPSHOT/pax-url-mvn-0.5.0-SNAPSHOT-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.5.0-SNAPSHOT/pax-url-mvn-0.5.0-SNAPSHOT-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-obr:0.5.0-SNAPSHOT">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.5.0-SNAPSHOT/pax-url-obr-0.5.0-SNAPSHOT.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.5.0-SNAPSHOT/pax-url-obr-0.5.0-SNAPSHOT-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.5.0-SNAPSHOT/pax-url-obr-0.5.0-SNAPSHOT-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-war:0.5.0-SNAPSHOT">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.5.0-SNAPSHOT/pax-url-war-0.5.0-SNAPSHOT.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.5.0-SNAPSHOT/pax-url-war-0.5.0-SNAPSHOT-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.5.0-SNAPSHOT/pax-url-war-0.5.0-SNAPSHOT-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-wrap:0.5.0-SNAPSHOT">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.5.0-SNAPSHOT/pax-url-wrap-0.5.0-SNAPSHOT.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.5.0-SNAPSHOT/pax-url-wrap-0.5.0-SNAPSHOT-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.5.0-SNAPSHOT/pax-url-wrap-0.5.0-SNAPSHOT-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-link:0.5.0-SNAPSHOT">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-link/0.5.0-SNAPSHOT/pax-url-link-0.5.0-SNAPSHOT.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-link/0.5.0-SNAPSHOT/pax-url-link-0.5.0-SNAPSHOT-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-link/0.5.0-SNAPSHOT/pax-url-link-0.5.0-SNAPSHOT-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-maven-commons:0.5.0-SNAPSHOT">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-maven-commons/0.5.0-SNAPSHOT/pax-url-maven-commons-0.5.0-SNAPSHOT.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-maven-commons/0.5.0-SNAPSHOT/pax-url-maven-commons-0.5.0-SNAPSHOT-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-maven-commons/0.5.0-SNAPSHOT/pax-url-maven-commons-0.5.0-SNAPSHOT-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-mercury:0.5.0-SNAPSHOT">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mercury/0.5.0-SNAPSHOT/pax-url-mercury-0.5.0-SNAPSHOT.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mercury/0.5.0-SNAPSHOT/pax-url-mercury-0.5.0-SNAPSHOT-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mercury/0.5.0-SNAPSHOT/pax-url-mercury-0.5.0-SNAPSHOT-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.apache.maven.mercury:mercury-repo-local-m2:1.0-alpha-5">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-local-m2/1.0-alpha-5/mercury-repo-local-m2-1.0-alpha-5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-local-m2/1.0-alpha-5/mercury-repo-local-m2-1.0-alpha-5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-local-m2/1.0-alpha-5/mercury-repo-local-m2-1.0-alpha-5-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.apache.maven.mercury:mercury-logging:1.0-alpha-5">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-logging/1.0-alpha-5/mercury-logging-1.0-alpha-5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-logging/1.0-alpha-5/mercury-logging-1.0-alpha-5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-logging/1.0-alpha-5/mercury-logging-1.0-alpha-5-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.apache.maven.mercury:mercury-repo-api:1.0-alpha-5">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-api/1.0-alpha-5/mercury-repo-api-1.0-alpha-5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-api/1.0-alpha-5/mercury-repo-api-1.0-alpha-5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-api/1.0-alpha-5/mercury-repo-api-1.0-alpha-5-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.apache.maven.mercury:mercury-artifact:1.0-alpha-5">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-artifact/1.0-alpha-5/mercury-artifact-1.0-alpha-5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-artifact/1.0-alpha-5/mercury-artifact-1.0-alpha-5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-artifact/1.0-alpha-5/mercury-artifact-1.0-alpha-5-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.apache.maven.mercury:mercury-transport-api:1.0-alpha-5">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-transport-api/1.0-alpha-5/mercury-transport-api-1.0-alpha-5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-transport-api/1.0-alpha-5/mercury-transport-api-1.0-alpha-5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-transport-api/1.0-alpha-5/mercury-transport-api-1.0-alpha-5-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.apache.maven.mercury:mercury-crypto-api:1.0-alpha-5">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-crypto-api/1.0-alpha-5/mercury-crypto-api-1.0-alpha-5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-crypto-api/1.0-alpha-5/mercury-crypto-api-1.0-alpha-5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-crypto-api/1.0-alpha-5/mercury-crypto-api-1.0-alpha-5-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.apache.maven.mercury:mercury-external:1.0-alpha-5">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-external/1.0-alpha-5/mercury-external-1.0-alpha-5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-external/1.0-alpha-5/mercury-external-1.0-alpha-5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-external/1.0-alpha-5/mercury-external-1.0-alpha-5-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.apache.maven.mercury:mercury-event:1.0-alpha-5">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-event/1.0-alpha-5/mercury-event-1.0-alpha-5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-event/1.0-alpha-5/mercury-event-1.0-alpha-5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-event/1.0-alpha-5/mercury-event-1.0-alpha-5-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.apache.maven.mercury:mercury-md-shared:1.0-alpha-5">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-md-shared/1.0-alpha-5/mercury-md-shared-1.0-alpha-5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-md-shared/1.0-alpha-5/mercury-md-shared-1.0-alpha-5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-md-shared/1.0-alpha-5/mercury-md-shared-1.0-alpha-5-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.apache.maven.mercury:mercury-util:1.0-alpha-5">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-util/1.0-alpha-5/mercury-util-1.0-alpha-5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-util/1.0-alpha-5/mercury-util-1.0-alpha-5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-util/1.0-alpha-5/mercury-util-1.0-alpha-5-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.apache.maven.mercury:mercury-crypto-basic:1.0-alpha-5">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-crypto-basic/1.0-alpha-5/mercury-crypto-basic-1.0-alpha-5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-crypto-basic/1.0-alpha-5/mercury-crypto-basic-1.0-alpha-5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-crypto-basic/1.0-alpha-5/mercury-crypto-basic-1.0-alpha-5-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: commons-cli:commons-cli:1.1">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/commons-cli/commons-cli/1.1/commons-cli-1.1.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/commons-cli/commons-cli/1.1/commons-cli-1.1-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/commons-cli/commons-cli/1.1/commons-cli-1.1-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.apache.maven.mercury:mercury-repo-remote-m2:1.0-alpha-5">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-remote-m2/1.0-alpha-5/mercury-repo-remote-m2-1.0-alpha-5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-remote-m2/1.0-alpha-5/mercury-repo-remote-m2-1.0-alpha-5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-remote-m2/1.0-alpha-5/mercury-repo-remote-m2-1.0-alpha-5-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.apache.maven.mercury:mercury-transport-http:1.0-alpha-5">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-transport-http/1.0-alpha-5/mercury-transport-http-1.0-alpha-5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-transport-http/1.0-alpha-5/mercury-transport-http-1.0-alpha-5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-transport-http/1.0-alpha-5/mercury-transport-http-1.0-alpha-5-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.mortbay.jetty:jetty-client:assembly:6.1.15.rc2">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/mortbay/jetty/jetty-client/6.1.15.rc2/jetty-client-6.1.15.rc2-assembly.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/mortbay/jetty/jetty-client/6.1.15.rc2/jetty-client-6.1.15.rc2-assembly-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/mortbay/jetty/jetty-client/6.1.15.rc2/jetty-client-6.1.15.rc2-assembly-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.mortbay.jetty:jetty-util5:6.1.15.rc2">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/mortbay/jetty/jetty-util5/6.1.15.rc2/jetty-util5-6.1.15.rc2.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/mortbay/jetty/jetty-util5/6.1.15.rc2/jetty-util5-6.1.15.rc2-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/mortbay/jetty/jetty-util5/6.1.15.rc2/jetty-util5-6.1.15.rc2-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.mortbay.jetty:jetty-util:6.1.15.rc2">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/mortbay/jetty/jetty-util/6.1.15.rc2/jetty-util-6.1.15.rc2.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/mortbay/jetty/jetty-util/6.1.15.rc2/jetty-util-6.1.15.rc2-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/mortbay/jetty/jetty-util/6.1.15.rc2/jetty-util-6.1.15.rc2-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.apache.maven.mercury:mercury-repo-virtual:1.0-alpha-5">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-virtual/1.0-alpha-5/mercury-repo-virtual-1.0-alpha-5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-virtual/1.0-alpha-5/mercury-repo-virtual-1.0-alpha-5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-virtual/1.0-alpha-5/mercury-repo-virtual-1.0-alpha-5-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.apache.maven.mercury:mercury-repo-cache-fs:1.0-alpha-5">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-cache-fs/1.0-alpha-5/mercury-repo-cache-fs-1.0-alpha-5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-cache-fs/1.0-alpha-5/mercury-repo-cache-fs-1.0-alpha-5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/apache/maven/mercury/mercury-repo-cache-fs/1.0-alpha-5/mercury-repo-cache-fs-1.0-alpha-5-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.codehaus.plexus:plexus-utils:1.5.5">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/codehaus/plexus/plexus-utils/1.5.5/plexus-utils-1.5.5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/codehaus/plexus/plexus-utils/1.5.5/plexus-utils-1.5.5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/codehaus/plexus/plexus-utils/1.5.5/plexus-utils-1.5.5-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Maven: org.apache.servicemix.kernel.gshell:org.apache.servicemix.kernel.gshell.features:1.1.0">
       <CLASSES>
         <root url="jar://$M2_REPO$/org/apache/servicemix/kernel/gshell/org.apache.servicemix.kernel.gshell.features/1.1.0/org.apache.servicemix.kernel.gshell.features-1.1.0.jar!/" />
@@ -1295,6 +987,94 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.core/1.2.0/org.osgi.core-1.2.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-maven-commons:0.5.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-maven-commons/0.5.0/pax-url-maven-commons-0.5.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-maven-commons/0.5.0/pax-url-maven-commons-0.5.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-maven-commons/0.5.0/pax-url-maven-commons-0.5.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-mercury:0.5.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mercury/0.5.0/pax-url-mercury-0.5.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mercury/0.5.0/pax-url-mercury-0.5.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mercury/0.5.0/pax-url-mercury-0.5.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-classpath:0.5.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.5.0/pax-url-classpath-0.5.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.5.0/pax-url-classpath-0.5.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.5.0/pax-url-classpath-0.5.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-mvn:0.5.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.5.0/pax-url-mvn-0.5.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.5.0/pax-url-mvn-0.5.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.5.0/pax-url-mvn-0.5.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-link:0.5.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-link/0.5.0/pax-url-link-0.5.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-link/0.5.0/pax-url-link-0.5.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-link/0.5.0/pax-url-link-0.5.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-obr:0.5.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.5.0/pax-url-obr-0.5.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.5.0/pax-url-obr-0.5.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.5.0/pax-url-obr-0.5.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-war:0.5.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.5.0/pax-url-war-0.5.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.5.0/pax-url-war-0.5.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.5.0/pax-url-war-0.5.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-wrap:0.5.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.5.0/pax-url-wrap-0.5.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.5.0/pax-url-wrap-0.5.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.5.0/pax-url-wrap-0.5.0-sources.jar!/" />
       </SOURCES>
     </library>
   </component>
