@@ -418,7 +418,7 @@
       <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-common/pax-runner-scanner-common.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-common/pax-runner-scanner-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-composite/pax-runner-scanner-composite.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-composite/pax-runner-scanner-composite.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-dir/pax-runner-scanner-dir.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-dir/pax-runner-scanner-dir.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-feature/pax-runner-scanner-feature.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-feature/pax-runner-scanner-feature.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-features/pax-runner-scanner-features.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-features/pax-runner-scanner-features.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-file/pax-runner-scanner-file.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-file/pax-runner-scanner-file.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-maven/pax-runner-scanner-maven.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-maven/pax-runner-scanner-maven.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-obr/pax-runner-scanner-obr.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-obr/pax-runner-scanner-obr.iml" />
@@ -1074,6 +1074,226 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$M2_REPO$/org/springframework/spring-context/2.5.6/spring-context-2.5.6-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.servicemix.kernel.gshell:org.apache.servicemix.kernel.gshell.core:1.1.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/kernel/gshell/org.apache.servicemix.kernel.gshell.core/1.1.0/org.apache.servicemix.kernel.gshell.core-1.1.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/kernel/gshell/org.apache.servicemix.kernel.gshell.core/1.1.0/org.apache.servicemix.kernel.gshell.core-1.1.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/kernel/gshell/org.apache.servicemix.kernel.gshell.core/1.1.0/org.apache.servicemix.kernel.gshell.core-1.1.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.servicemix.kernel:org.apache.servicemix.kernel.main:1.1.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/kernel/org.apache.servicemix.kernel.main/1.1.0/org.apache.servicemix.kernel.main-1.1.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/kernel/org.apache.servicemix.kernel.main/1.1.0/org.apache.servicemix.kernel.main-1.1.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/kernel/org.apache.servicemix.kernel.main/1.1.0/org.apache.servicemix.kernel.main-1.1.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.servicemix.kernel.jaas:org.apache.servicemix.kernel.jaas.config:1.1.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/kernel/jaas/org.apache.servicemix.kernel.jaas.config/1.1.0/org.apache.servicemix.kernel.jaas.config-1.1.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/kernel/jaas/org.apache.servicemix.kernel.jaas.config/1.1.0/org.apache.servicemix.kernel.jaas.config-1.1.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/kernel/jaas/org.apache.servicemix.kernel.jaas.config/1.1.0/org.apache.servicemix.kernel.jaas.config-1.1.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: commons-logging:commons-logging:1.1.1">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: aopalliance:aopalliance:1.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/aopalliance/aopalliance/1.0/aopalliance-1.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/aopalliance/aopalliance/1.0/aopalliance-1.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/aopalliance/aopalliance/1.0/aopalliance-1.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.servicemix.bundles:org.apache.servicemix.bundles.cglib:2.1_3_1">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.cglib/2.1_3_1/org.apache.servicemix.bundles.cglib-2.1_3_1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.cglib/2.1_3_1/org.apache.servicemix.bundles.cglib-2.1_3_1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.cglib/2.1_3_1/org.apache.servicemix.bundles.cglib-2.1_3_1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.slf4j:slf4j-api:1.4.3">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/slf4j/slf4j-api/1.4.3/slf4j-api-1.4.3.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/slf4j/slf4j-api/1.4.3/slf4j-api-1.4.3-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/slf4j/slf4j-api/1.4.3/slf4j-api-1.4.3-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.google.code.sshd:sshd:0.1">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/com/google/code/sshd/sshd/0.1/sshd-0.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/com/google/code/sshd/sshd/0.1/sshd-0.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/com/google/code/sshd/sshd/0.1/sshd-0.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.slf4j:slf4j-jdk14:1.4.3">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/slf4j/slf4j-jdk14/1.4.3/slf4j-jdk14-1.4.3.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/slf4j/slf4j-jdk14/1.4.3/slf4j-jdk14-1.4.3-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/slf4j/slf4j-jdk14/1.4.3/slf4j-jdk14-1.4.3-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.servicemix.bundles:org.apache.servicemix.bundles.mina:1.1.7_1">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.mina/1.1.7_1/org.apache.servicemix.bundles.mina-1.1.7_1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.mina/1.1.7_1/org.apache.servicemix.bundles.mina-1.1.7_1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.mina/1.1.7_1/org.apache.servicemix.bundles.mina-1.1.7_1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.servicemix.bundles:org.apache.servicemix.bundles.commons-httpclient:3.1_1">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.commons-httpclient/3.1_1/org.apache.servicemix.bundles.commons-httpclient-3.1_1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.commons-httpclient/3.1_1/org.apache.servicemix.bundles.commons-httpclient-3.1_1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.commons-httpclient/3.1_1/org.apache.servicemix.bundles.commons-httpclient-3.1_1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.servicemix.bundles:org.apache.servicemix.bundles.commons-codec:1.2_1">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.commons-codec/1.2_1/org.apache.servicemix.bundles.commons-codec-1.2_1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.commons-codec/1.2_1/org.apache.servicemix.bundles.commons-codec-1.2_1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.commons-codec/1.2_1/org.apache.servicemix.bundles.commons-codec-1.2_1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.servicemix.bundles:org.apache.servicemix.bundles.commons-jexl:1.1_1">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.commons-jexl/1.1_1/org.apache.servicemix.bundles.commons-jexl-1.1_1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.commons-jexl/1.1_1/org.apache.servicemix.bundles.commons-jexl-1.1_1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.commons-jexl/1.1_1/org.apache.servicemix.bundles.commons-jexl-1.1_1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.servicemix.bundles:org.apache.servicemix.bundles.commons-vfs:1.0_1">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.commons-vfs/1.0_1/org.apache.servicemix.bundles.commons-vfs-1.0_1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.commons-vfs/1.0_1/org.apache.servicemix.bundles.commons-vfs-1.0_1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.commons-vfs/1.0_1/org.apache.servicemix.bundles.commons-vfs-1.0_1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.servicemix.bundles:org.apache.servicemix.bundles.oro:2.0.8_1">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.oro/2.0.8_1/org.apache.servicemix.bundles.oro-2.0.8_1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.oro/2.0.8_1/org.apache.servicemix.bundles.oro-2.0.8_1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.oro/2.0.8_1/org.apache.servicemix.bundles.oro-2.0.8_1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.servicemix.bundles:org.apache.servicemix.bundles.jline:0.9.94_1">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.jline/0.9.94_1/org.apache.servicemix.bundles.jline-0.9.94_1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.jline/0.9.94_1/org.apache.servicemix.bundles.jline-0.9.94_1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/bundles/org.apache.servicemix.bundles.jline/0.9.94_1/org.apache.servicemix.bundles.jline-0.9.94_1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.servicemix.kernel.gshell:org.apache.servicemix.kernel.gshell.obr:1.1.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/kernel/gshell/org.apache.servicemix.kernel.gshell.obr/1.1.0/org.apache.servicemix.kernel.gshell.obr-1.1.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/kernel/gshell/org.apache.servicemix.kernel.gshell.obr/1.1.0/org.apache.servicemix.kernel.gshell.obr-1.1.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/kernel/gshell/org.apache.servicemix.kernel.gshell.obr/1.1.0/org.apache.servicemix.kernel.gshell.obr-1.1.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.servicemix.kernel:org.apache.servicemix.kernel.filemonitor:1.1.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/kernel/org.apache.servicemix.kernel.filemonitor/1.1.0/org.apache.servicemix.kernel.filemonitor-1.1.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/kernel/org.apache.servicemix.kernel.filemonitor/1.1.0/org.apache.servicemix.kernel.filemonitor-1.1.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/servicemix/kernel/org.apache.servicemix.kernel.filemonitor/1.1.0/org.apache.servicemix.kernel.filemonitor-1.1.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.felix:org.osgi.compendium:1.2.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.compendium/1.2.0/org.osgi.compendium-1.2.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.compendium/1.2.0/org.osgi.compendium-1.2.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.compendium/1.2.0/org.osgi.compendium-1.2.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.felix:org.osgi.core:1.2.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.core/1.2.0/org.osgi.core-1.2.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.core/1.2.0/org.osgi.core-1.2.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.core/1.2.0/org.osgi.core-1.2.0-sources.jar!/" />
       </SOURCES>
     </library>
   </component>

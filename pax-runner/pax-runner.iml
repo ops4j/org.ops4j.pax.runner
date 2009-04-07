@@ -58,7 +58,7 @@
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-net:0.5.3" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-monitors:0.5.3" level="project" />
     <orderEntry type="module" module-name="pax-runner-scanner-dir" />
-    <orderEntry type="module" module-name="pax-runner-scanner-feature" />
+    <orderEntry type="module" module-name="pax-runner-scanner-features" />
     <orderEntry type="module" module-name="pax-runner-scanner-file" />
     <orderEntry type="module" module-name="pax-runner-scanner-maven" />
     <orderEntry type="module" module-name="pax-runner-scanner-obr" />
