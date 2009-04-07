@@ -30,16 +30,16 @@ import org.ops4j.util.property.PropertyResolver;
  * @since 0.18.0, April 01, 2009
  */
 public final class Activator
-    extends AbstractScannerActivator<FeatureScanner>
+    extends AbstractScannerActivator<FeaturesScanner>
 {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected FeatureScanner createScanner( final BundleContext bundleContext )
+    protected FeaturesScanner createScanner( final BundleContext bundleContext )
     {
-        return new FeatureScanner( new BundleContextPropertyResolver( bundleContext ) );
+        return new FeaturesScanner( new BundleContextPropertyResolver( bundleContext ) );
     }
 
     /**

@@ -30,18 +30,18 @@ import org.ops4j.pax.runner.scanner.feature.ServiceConstants;
  * @author Alin Dreghiciu (adreghiciu@gmail.com)
  * @since 0.18.0, March 07, 2009
  */
-class FeatureFilter
+class FeaturesFilter
 {
 
     private final String m_name;
     private final String m_version;
 
-    FeatureFilter( final String name )
+    FeaturesFilter( final String name )
     {
         this( name, null );
     }
 
-    FeatureFilter( final String name,
+    FeaturesFilter( final String name,
                    final String version )
     {
         m_name = name;
@@ -65,7 +65,7 @@ class FeatureFilter
         return m_version;
     }
 
-    static Collection<FeatureFilter> fromProvisionSpec( final ProvisionSpec provisionSpec )
+    static Collection<FeaturesFilter> fromProvisionSpec( final ProvisionSpec provisionSpec )
         throws ScannerException
     {
         final String rawFeatures = provisionSpec.getFilter();
@@ -73,18 +73,18 @@ class FeatureFilter
         {
             throw new ScannerException( "Feature name is mandatory" );
         }
-        final Collection<FeatureFilter> filters = new ArrayList<FeatureFilter>();
+        final Collection<FeaturesFilter> filters = new ArrayList<FeaturesFilter>();
         final String[] features = rawFeatures.split( ServiceConstants.FEATURE_SEPARATOR );
         for( String feature : features )
         {
             final String[] segments = feature.split( "/" );
             if( segments.length > 1 )
             {
-                filters.add( new FeatureFilter( segments[ 0 ], segments[ 1 ] ) );
+                filters.add( new FeaturesFilter( segments[ 0 ], segments[ 1 ] ) );
             }
             else
             {
-                filters.add( new FeatureFilter( segments[ 0 ] ) );
+                filters.add( new FeaturesFilter( segments[ 0 ] ) );
             }
         }
         return filters;

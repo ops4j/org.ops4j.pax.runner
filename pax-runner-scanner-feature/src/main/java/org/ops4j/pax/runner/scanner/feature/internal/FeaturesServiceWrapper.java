@@ -28,7 +28,7 @@ import org.apache.servicemix.kernel.gshell.features.internal.FeaturesServiceImpl
  * @author Alin Dreghiciu (adreghiciu@gmail.com)
  * @since 0.18.0, April 07, 2009
  */
-class FeatureServiceWrapper
+class FeaturesServiceWrapper
     extends FeaturesServiceImpl
 {
 
@@ -36,7 +36,7 @@ class FeatureServiceWrapper
      * Constructor.
      * Initilaize features registry with a fake impl that does nothing. Usualy that is done by Spring vis DI.
      */
-    FeatureServiceWrapper()
+    FeaturesServiceWrapper()
     {
         setFeaturesServiceRegistry( new FakeFeaturesRegistry() );
     }

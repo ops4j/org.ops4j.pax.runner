@@ -17,8 +17,6 @@
  */
 package org.ops4j.pax.runner.scanner.feature.internal;
 
-import java.net.URISyntaxException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.logging.Log;
@@ -41,14 +39,14 @@ import org.ops4j.util.property.PropertyResolver;
  * @author Alin Dreghiciu
  * @since 0.18.0, April 01, 2007
  */
-public class FeatureScanner
+public class FeaturesScanner
     implements Scanner
 {
 
     /**
      * Logger.
      */
-    private static final Log LOGGER = LogFactory.getLog( FeatureScanner.class );
+    private static final Log LOGGER = LogFactory.getLog( FeaturesScanner.class );
     /**
      * PropertyResolver used to resolve properties.
      */
@@ -59,7 +57,7 @@ public class FeatureScanner
      *
      * @param propertyResolver a propertyResolver; mandatory
      */
-    public FeatureScanner( final PropertyResolver propertyResolver )
+    public FeaturesScanner( final PropertyResolver propertyResolver )
     {
         NullArgumentException.validateNotNull( propertyResolver, "PropertyResolver" );
         m_propertyResolver = propertyResolver;
@@ -82,22 +80,22 @@ public class FeatureScanner
         final Boolean defaultStart = getDefaultStart( provisionSpec, config );
         final Boolean defaultUpdate = getDefaultUpdate( provisionSpec, config );
 
-        final FeatureServiceWrapper featureService = new FeatureServiceWrapper();
+        final FeaturesServiceWrapper featuresService = new FeaturesServiceWrapper();
         try
         {
-            featureService.addRepository( provisionSpec.getPathAsUrl().toURI() );
+            featuresService.addRepository( provisionSpec.getPathAsUrl().toURI() );
         }
         catch( Exception e )
         {
             throw new ScannerException( "Repository URL cannot be used", e );
         }
         final List<ScannedBundle> scannedBundles = new ArrayList<ScannedBundle>();
-            for( FeatureFilter featureFilter : FeatureFilter.fromProvisionSpec( provisionSpec ) )
+            for( FeaturesFilter featuresFilter : FeaturesFilter.fromProvisionSpec( provisionSpec ) )
             {
                 scannedBundles.addAll(
                     features(
-                        featureService,
-                        featureFilter.getName(), featureFilter.getVersion(),
+                        featuresService,
+                        featuresFilter.getName(), featuresFilter.getVersion(),
                         defaultStartLevel, defaultStart, defaultUpdate
                     )
                 );
@@ -105,7 +103,7 @@ public class FeatureScanner
             return scannedBundles;
     }
 
-    private List<ScannedBundle> features( final FeatureServiceWrapper featureService,
+    private List<ScannedBundle> features( final FeaturesServiceWrapper featuresService,
                                           final String featureName,
                                           final String featureVersion,
                                           final Integer startLevel,
@@ -117,7 +115,7 @@ public class FeatureScanner
         final Feature feature;
         try
         {
-            feature = featureService.getFeature( featureName, featureVersion );
+            feature = featuresService.getFeature( featureName, featureVersion );
             if( feature == null )
             {
                 throw new ScannerException(
@@ -128,7 +126,7 @@ public class FeatureScanner
             {
                 scannedBundles.addAll(
                     features(
-                        featureService,
+                        featuresService,
                         dependency.getName(), dependency.getVersion(),
                         startLevel, shouldStart, shouldUpdate
                     )

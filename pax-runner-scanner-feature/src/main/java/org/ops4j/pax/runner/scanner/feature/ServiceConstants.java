@@ -29,11 +29,11 @@ public interface ServiceConstants
     /**
      * Service PID used for configuration.
      */
-    static final String PID = "org.ops4j.pax.runner.scanner.feature";
+    static final String PID = "org.ops4j.pax.runner.scanner.features";
     /**
      * Scanner scheme.
      */
-    static final String SCHEMA = "scan-feature";
+    static final String SCHEMA = "scan-features";
     /**
      * Features separator.
      */
