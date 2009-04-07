@@ -189,7 +189,7 @@ public class FelixPlatformBuilderF140T141Test
             ).replace( File.separatorChar, '/' )
         );
 
-        TestUtils.compareFiles(
+        Utils.compareFiles(
             FileUtils.getFileFromClasspath( "felixplatformbuilder/configWithNoBundles140.ini" ),
             new File( m_workDir + "/felix/config.ini" ),
             true,
@@ -279,7 +279,7 @@ public class FelixPlatformBuilderF140T141Test
             m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle4.jar" ) )
         );
 
-        TestUtils.compareFiles(
+        Utils.compareFiles(
             FileUtils.getFileFromClasspath( "felixplatformbuilder/config140.ini" ),
             new File( m_workDir + "/felix/config.ini" ),
             true,
