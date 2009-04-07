@@ -16,6 +16,4 @@
     </bundle>
   </profile>
 
-  <profileRef href="classpath:META-INF/platform-equinox/profiles-3.2.1-3.4.2.xml"/>
-
 </platform>
