@@ -34,5 +34,12 @@ public interface ServiceConstants
      * Scanner scheme.
      */
     static final String SCHEMA = "scan-feature";
-
+    /**
+     * Features separator.
+     */
+    static final String FEATURE_SEPARATOR = ",";
+    /**
+     * Feature name / version separator.
+     */
+    static final String VERSION_SEPARATOR = "/";
 }

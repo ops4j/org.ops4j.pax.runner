@@ -24,6 +24,7 @@ Include-Resource:\
   @target/dependency/org.osgi.core.jar!/org/osgi/service/startlevel/*,\
   @target/dependency/org.osgi.core.jar!/org/osgi/service/url/*,\
   @target/dependency/org.osgi.compendium.jar!/org/osgi/service/cm/*,\
+  @target/dependency/org.osgi.compendium.jar!/org/osgi/service/prefs/*,\
   @target/dependency/org.osgi.compendium.jar!/org/osgi/util/tracker/*,\
   @target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/FilterImpl*.class,\
   @target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/Logger.class,\

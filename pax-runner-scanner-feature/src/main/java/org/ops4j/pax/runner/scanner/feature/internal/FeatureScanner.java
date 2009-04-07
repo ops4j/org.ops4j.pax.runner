@@ -18,13 +18,12 @@
 package org.ops4j.pax.runner.scanner.feature.internal;
 
 import java.net.URISyntaxException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.servicemix.kernel.gshell.features.Feature;
-import org.apache.servicemix.kernel.gshell.features.internal.RepositoryImpl;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.provision.ProvisionSpec;
 import org.ops4j.pax.runner.provision.ScannedBundle;
@@ -83,64 +82,74 @@ public class FeatureScanner
         final Boolean defaultStart = getDefaultStart( provisionSpec, config );
         final Boolean defaultUpdate = getDefaultUpdate( provisionSpec, config );
 
+        final FeatureServiceWrapper featureService = new FeatureServiceWrapper();
         try
         {
-            final RepositoryImpl repository = new RepositoryImpl( provisionSpec.getPathAsUrl().toURI() );
-            return features( repository.getFeatures(),
-                             provisionSpec.getFilterPattern(),
-                             defaultStartLevel, defaultStart, defaultUpdate
-            );
-        }
-        catch( URISyntaxException e )
-        {
-            throw new ScannerException( "URL cannot be used", e );
+            featureService.addRepository( provisionSpec.getPathAsUrl().toURI() );
         }
         catch( Exception e )
         {
-            throw new ScannerException( "Repository cannot be used", e );
+            throw new ScannerException( "Repository URL cannot be used", e );
         }
+        final List<ScannedBundle> scannedBundles = new ArrayList<ScannedBundle>();
+            for( FeatureFilter featureFilter : FeatureFilter.fromProvisionSpec( provisionSpec ) )
+            {
+                scannedBundles.addAll(
+                    features(
+                        featureService,
+                        featureFilter.getName(), featureFilter.getVersion(),
+                        defaultStartLevel, defaultStart, defaultUpdate
+                    )
+                );
+            }
+            return scannedBundles;
     }
 
-    private List<ScannedBundle> features( final Feature[] features,
-                                          final Pattern filter,
+    private List<ScannedBundle> features( final FeatureServiceWrapper featureService,
+                                          final String featureName,
+                                          final String featureVersion,
                                           final Integer startLevel,
                                           final Boolean shouldStart,
                                           final Boolean shouldUpdate )
+        throws ScannerException
     {
         final List<ScannedBundle> scannedBundles = new ArrayList<ScannedBundle>();
-        if( features != null && features.length > 0 )
+        final Feature feature;
+        try
         {
-            for( Feature feature : features )
+            feature = featureService.getFeature( featureName, featureVersion );
+            if( feature == null )
             {
-                if( filter != null && !filter.matcher( feature.getId() ).matches() )
-                {
-                    continue;
-                }
-                final List<Feature> dependencies = feature.getDependencies();
-                if( dependencies != null && dependencies.size() > 0 )
-                {
-                    for( Feature dependency : dependencies )
-                    {
-                        scannedBundles.addAll(
-                            features(
-                                features,
-                                Pattern.compile( dependency.getId() ),
-                                startLevel, shouldStart, shouldUpdate
-                            )
-                        );
-                    }
-                }
-                for( String bundleUrl : feature.getBundles() )
-                {
-                    final ScannedBundleBean scannedBundle = new ScannedBundleBean(
-                        bundleUrl, startLevel, shouldStart, shouldUpdate
-                    );
-                    scannedBundles.add( scannedBundle );
-                    LOGGER.debug( "Installing bundle [" + scannedBundles + "]" );
-                }
+                throw new ScannerException(
+                    "No feature named '" + featureName + "' with version '" + featureVersion + "' available"
+                );
             }
+            for( Feature dependency : feature.getDependencies() )
+            {
+                scannedBundles.addAll(
+                    features(
+                        featureService,
+                        dependency.getName(), dependency.getVersion(),
+                        startLevel, shouldStart, shouldUpdate
+                    )
+                );
+            }
+            for( String bundleUrl : feature.getBundles() )
+            {
+                final ScannedBundleBean scannedBundle = new ScannedBundleBean(
+                    bundleUrl, startLevel, shouldStart, shouldUpdate
+                );
+                scannedBundles.add( scannedBundle );
+                LOGGER.debug( "Installing bundle [" + scannedBundles + "]" );
+            }
+            return scannedBundles;
         }
-        return scannedBundles;
+        catch( Exception e )
+        {
+            throw new ScannerException(
+                "Cannot find a feature named '" + featureName + "' with version '" + featureVersion + "'", e
+            );
+        }
     }
 
     /**
@@ -151,6 +160,7 @@ public class FeatureScanner
      *
      * @return default start level or null if nos set.
      */
+
     private Integer getDefaultStartLevel( ProvisionSpec provisionSpec, ScannerConfiguration config )
     {
         Integer startLevel = provisionSpec.getStartLevel();
