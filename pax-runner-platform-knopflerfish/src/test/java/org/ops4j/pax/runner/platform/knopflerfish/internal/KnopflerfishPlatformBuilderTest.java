@@ -32,7 +32,6 @@ import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.ops4j.io.FileUtils;
 import org.ops4j.pax.runner.platform.BundleReference;
@@ -93,25 +92,6 @@ public class KnopflerfishPlatformBuilderTest
             new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).getMainClassName()
         );
         verify( m_bundleContext );
-    }
-
-    @Test
-    public void getDefinition_2_0_0()
-        throws IOException
-    {
-        Bundle bundle = createMock( Bundle.class );
-
-        expect( m_bundleContext.getBundle() ).andReturn( bundle );
-        expect( bundle.getResource( "META-INF/platform-knopflerfish/definition-2.0.0.xml" ) ).andReturn(
-            FileUtils.getFileFromClasspath( "META-INF/platform-knopflerfish/definition-2.0.0.xml" ).toURL()
-        );
-
-        replay( m_bundleContext, bundle );
-        assertNotNull(
-            "Definition input stream",
-            new KnopflerfishPlatformBuilder( m_bundleContext, "2.0.0" ).getDefinition( null )
-        );
-        verify( m_bundleContext, bundle );
     }
 
     @Test

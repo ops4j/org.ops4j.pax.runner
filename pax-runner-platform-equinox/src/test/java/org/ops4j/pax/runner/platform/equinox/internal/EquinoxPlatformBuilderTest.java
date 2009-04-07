@@ -32,7 +32,6 @@ import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.ops4j.io.FileUtils;
 import org.ops4j.pax.runner.platform.BundleReference;
@@ -93,63 +92,6 @@ public class EquinoxPlatformBuilderTest
             new EquinoxPlatformBuilder( m_bundleContext, "version" ).getMainClassName()
         );
         verify( m_bundleContext );
-    }
-
-    @Test
-    public void getDefinition_3_2_1()
-        throws IOException
-    {
-        Bundle bundle = createMock( Bundle.class );
-
-        expect( m_bundleContext.getBundle() ).andReturn( bundle );
-        expect( bundle.getResource( "META-INF/platform-equinox/definition-3.2.1.xml" ) ).andReturn(
-            FileUtils.getFileFromClasspath( "META-INF/platform-equinox/definition-3.2.1.xml" ).toURL()
-        );
-
-        replay( m_bundleContext, bundle );
-        assertNotNull(
-            "Definition input stream",
-            new EquinoxPlatformBuilder( m_bundleContext, "3.2.1" ).getDefinition( null )
-        );
-        verify( m_bundleContext, bundle );
-    }
-
-    @Test
-    public void getDefinition_3_3_0()
-        throws IOException
-    {
-        Bundle bundle = createMock( Bundle.class );
-
-        expect( m_bundleContext.getBundle() ).andReturn( bundle );
-        expect( bundle.getResource( "META-INF/platform-equinox/definition-3.3.0.xml" ) ).andReturn(
-            FileUtils.getFileFromClasspath( "META-INF/platform-equinox/definition-3.3.0.xml" ).toURL()
-        );
-
-        replay( m_bundleContext, bundle );
-        assertNotNull(
-            "Definition input stream",
-            new EquinoxPlatformBuilder( m_bundleContext, "3.3.0" ).getDefinition( null )
-        );
-        verify( m_bundleContext, bundle );
-    }
-
-    @Test
-    public void getDefinition_3_3_1()
-        throws IOException
-    {
-        Bundle bundle = createMock( Bundle.class );
-
-        expect( m_bundleContext.getBundle() ).andReturn( bundle );
-        expect( bundle.getResource( "META-INF/platform-equinox/definition-3.3.1.xml" ) ).andReturn(
-            FileUtils.getFileFromClasspath( "META-INF/platform-equinox/definition-3.3.1.xml" ).toURL()
-        );
-
-        replay( m_bundleContext, bundle );
-        assertNotNull(
-            "Definition input stream",
-            new EquinoxPlatformBuilder( m_bundleContext, "3.3.1" ).getDefinition( null )
-        );
-        verify( m_bundleContext, bundle );
     }
 
     @Test
