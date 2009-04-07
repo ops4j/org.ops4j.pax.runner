@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ops4j.pax.runner.scanner.feature;
+package org.ops4j.pax.runner.scanner.features;
 
 /**
  * An enumeration of constants related to features scanner.

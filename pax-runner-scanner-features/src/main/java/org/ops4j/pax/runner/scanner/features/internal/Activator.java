@@ -15,11 +15,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ops4j.pax.runner.scanner.feature.internal;
+package org.ops4j.pax.runner.scanner.features.internal;
 
 import org.osgi.framework.BundleContext;
 import org.ops4j.pax.runner.provision.scanner.AbstractScannerActivator;
-import org.ops4j.pax.runner.scanner.feature.ServiceConstants;
+import org.ops4j.pax.runner.scanner.features.ServiceConstants;
 import org.ops4j.pax.swissbox.property.BundleContextPropertyResolver;
 import org.ops4j.util.property.PropertyResolver;
 

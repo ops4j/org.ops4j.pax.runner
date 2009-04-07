@@ -15,14 +15,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ops4j.pax.runner.scanner.feature.internal;
+package org.ops4j.pax.runner.scanner.features.internal;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import org.apache.servicemix.kernel.gshell.features.internal.FeatureImpl;
 import org.ops4j.pax.runner.provision.ProvisionSpec;
 import org.ops4j.pax.runner.provision.ScannerException;
-import org.ops4j.pax.runner.scanner.feature.ServiceConstants;
+import org.ops4j.pax.runner.scanner.features.ServiceConstants;
 
 /**
  * Feature filter.
@@ -42,7 +42,7 @@ class FeaturesFilter
     }
 
     FeaturesFilter( final String name,
-                   final String version )
+                    final String version )
     {
         m_name = name;
         if( version == null )

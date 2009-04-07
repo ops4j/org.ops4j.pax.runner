@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ops4j.pax.runner.scanner.feature.internal;
+package org.ops4j.pax.runner.scanner.features.internal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ import org.ops4j.pax.runner.provision.Scanner;
 import org.ops4j.pax.runner.provision.ScannerException;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfiguration;
 import org.ops4j.pax.runner.provision.scanner.ScannerConfigurationImpl;
-import org.ops4j.pax.runner.scanner.feature.ServiceConstants;
+import org.ops4j.pax.runner.scanner.features.ServiceConstants;
 import org.ops4j.util.property.PropertyResolver;
 
 /**
@@ -90,17 +90,17 @@ public class FeaturesScanner
             throw new ScannerException( "Repository URL cannot be used", e );
         }
         final List<ScannedBundle> scannedBundles = new ArrayList<ScannedBundle>();
-            for( FeaturesFilter featuresFilter : FeaturesFilter.fromProvisionSpec( provisionSpec ) )
-            {
-                scannedBundles.addAll(
-                    features(
-                        featuresService,
-                        featuresFilter.getName(), featuresFilter.getVersion(),
-                        defaultStartLevel, defaultStart, defaultUpdate
-                    )
-                );
-            }
-            return scannedBundles;
+        for( FeaturesFilter featuresFilter : FeaturesFilter.fromProvisionSpec( provisionSpec ) )
+        {
+            scannedBundles.addAll(
+                features(
+                    featuresService,
+                    featuresFilter.getName(), featuresFilter.getVersion(),
+                    defaultStartLevel, defaultStart, defaultUpdate
+                )
+            );
+        }
+        return scannedBundles;
     }
 
     private List<ScannedBundle> features( final FeaturesServiceWrapper featuresService,
