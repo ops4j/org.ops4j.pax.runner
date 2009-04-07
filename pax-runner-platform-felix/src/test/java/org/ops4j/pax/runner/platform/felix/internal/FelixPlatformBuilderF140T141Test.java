@@ -17,9 +17,7 @@
  */
 package org.ops4j.pax.runner.platform.felix.internal;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -191,7 +189,7 @@ public class FelixPlatformBuilderF140T141Test
             ).replace( File.separatorChar, '/' )
         );
 
-        compareFiles(
+        TestUtils.compareFiles(
             FileUtils.getFileFromClasspath( "felixplatformbuilder/configWithNoBundles140.ini" ),
             new File( m_workDir + "/felix/config.ini" ),
             true,
@@ -281,67 +279,12 @@ public class FelixPlatformBuilderF140T141Test
             m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle4.jar" ) )
         );
 
-        compareFiles(
+        TestUtils.compareFiles(
             FileUtils.getFileFromClasspath( "felixplatformbuilder/config140.ini" ),
             new File( m_workDir + "/felix/config.ini" ),
             true,
             replacements
         );
-    }
-
-    private static void compareFiles( File expected, File actual, boolean reverse, Map<String, String> replacements )
-        throws IOException
-    {
-        BufferedReader expectedReader = null;
-        BufferedReader actualReader = null;
-        try
-        {
-            expectedReader = new BufferedReader( new FileReader( expected ) );
-            actualReader = new BufferedReader( new FileReader( actual ) );
-            String actualLine, expectedLine;
-            int lineNumber = 1;
-            while( ( actualLine = actualReader.readLine() ) != null )
-            {
-                expectedLine = expectedReader.readLine();
-                if( reverse )
-                {
-                    if( replacements != null )
-                    {
-                        for( Map.Entry<String, String> entry : replacements.entrySet() )
-                        {
-                            expectedLine = expectedLine.replace( entry.getKey(), entry.getValue() );
-                        }
-                    }
-                    assertEquals( "Config ini line " + lineNumber++, expectedLine, actualLine );
-                }
-                else
-                {
-                    if( replacements != null )
-                    {
-                        for( Map.Entry<String, String> entry : replacements.entrySet() )
-                        {
-                            actualLine = actualLine.replace( entry.getKey(), entry.getValue() );
-                        }
-                    }
-                    assertEquals( "Config ini line " + lineNumber++, actualLine, expectedLine );
-                }
-            }
-        }
-        finally
-        {
-            if( expectedReader != null )
-            {
-                expectedReader.close();
-            }
-            if( actualReader != null )
-            {
-                actualReader.close();
-            }
-        }
-        if( reverse )
-        {
-            compareFiles( actual, expected, false, replacements );
-        }
     }
 
     public void clean( boolean usePersistedState )
