@@ -127,7 +127,7 @@ public class FelixPlatformBuilderF140T141Test
     }
 
     @Test
-    public void getVMOptions()
+    public void getVMOptionsWithoutFrameworkProperties()
     {
         replay( m_bundleContext );
         assertArrayEquals(
@@ -135,6 +135,28 @@ public class FelixPlatformBuilderF140T141Test
             new String[]{
                 "-Dfelix.config.properties="
                 + m_platformContext.normalizeAsUrl( new File( m_workDir, "/felix/config.ini" ) )
+            },
+            new FelixPlatformBuilderF140T141( m_bundleContext, "version" ).getVMOptions( m_platformContext )
+        );
+        verify( m_bundleContext );
+    }
+
+    @Test
+    public void getVMOptionsWithFrameworkProperties()
+    {
+        final Properties props = new Properties();
+        props.setProperty( "p1", "v1" );
+        props.setProperty( "p2", "v2" );
+        m_platformContext.setProperties( props );
+
+        replay( m_bundleContext );
+        assertArrayEquals(
+            "System options",
+            new String[]{
+                "-Dfelix.config.properties="
+                + m_platformContext.normalizeAsUrl( new File( m_workDir, "/felix/config.ini" ) ),
+                "-Dp2=v2",
+                "-Dp1=v1"
             },
             new FelixPlatformBuilderF140T141( m_bundleContext, "version" ).getVMOptions( m_platformContext )
         );

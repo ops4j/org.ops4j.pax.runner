@@ -357,6 +357,18 @@ public class FelixPlatformBuilderF100T122
             "-Dfelix.cache.dir="
             + context.normalizeAsPath( new File( new File( workingDirectory, CONFIG_DIRECTORY ), CACHE_DIRECTORY ) )
         );
+        final Properties frameworkProperties = context.getProperties();
+        if( frameworkProperties != null )
+        {
+            final Enumeration enumeration = frameworkProperties.propertyNames();
+            while( enumeration.hasMoreElements() )
+            {
+                final String key = (String) enumeration.nextElement();
+                vmOptions.add(
+                    "-D" + key + "=" + frameworkProperties.getProperty( key )
+                );
+            }
+        }
         return vmOptions.toArray( new String[vmOptions.size()] );
     }
 

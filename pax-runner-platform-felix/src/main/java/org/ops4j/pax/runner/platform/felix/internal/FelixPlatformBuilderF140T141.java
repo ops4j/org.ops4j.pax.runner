@@ -350,6 +350,18 @@ public class FelixPlatformBuilderF140T141
             "-Dfelix.config.properties=" +
             context.normalizeAsUrl( new File( new File( workingDirectory, CONFIG_DIRECTORY ), CONFIG_INI ) )
         );
+        final Properties frameworkProperties = context.getProperties();
+        if( frameworkProperties != null )
+        {
+            final Enumeration enumeration = frameworkProperties.propertyNames();
+            while( enumeration.hasMoreElements() )
+            {
+                final String key = (String) enumeration.nextElement();
+                vmOptions.add(
+                    "-D" + key + "=" + frameworkProperties.getProperty( key )
+                );
+            }
+        }
         return vmOptions.toArray( new String[vmOptions.size()] );
     }
 
