@@ -103,6 +103,16 @@ public class FeaturesScanner
         return scannedBundles;
     }
 
+    /**
+     * Determine the scanned bundle sbased on feature name and version
+     *
+     * @param featuresService feature service (wrapper)
+     * @param featureName     feature name
+     * @param featureVersion  feature version
+     * @param startLevel      start level to be used
+     * @param shouldStart     if the scanned bundle shold be started
+     * @param shouldUpdate    if the scanned bundle should be updated
+     */
     private List<ScannedBundle> features( final FeaturesServiceWrapper featuresService,
                                           final String featureName,
                                           final String featureVersion,
