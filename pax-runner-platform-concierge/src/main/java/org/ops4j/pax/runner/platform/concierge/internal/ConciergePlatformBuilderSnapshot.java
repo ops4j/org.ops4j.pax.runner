@@ -52,7 +52,7 @@ public class ConciergePlatformBuilderSnapshot
         throws IOException
     {
         return URLUtils.prepareInputStream(
-            new URL( configuration.getProperty( "equinox.snapshot.definition.url" ) ),
+            new URL( configuration.getProperty( "concierge.snapshot.definition.url" ) ),
             true
         );
     }
