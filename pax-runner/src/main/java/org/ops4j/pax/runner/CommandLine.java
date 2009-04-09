@@ -61,6 +61,14 @@ public interface CommandLine
      */
     static final String OPTION_PLATFORM_VERSION = "version";
     /**
+     * Platform snapshot version option.
+     */
+    static final String OPTION_PLATFORM_VERSION_SNAPSHOT = "snapshot";
+    /**
+     * Platform snapshot version.
+     */
+    static final String PLATFORM_VERSION_SNAPSHOT = "SNAPSHOT";    
+    /**
      * Boot classpath prepended option.
      */
     static final String OPTION_BOOT_CP_PREPEND = "bcp/p";

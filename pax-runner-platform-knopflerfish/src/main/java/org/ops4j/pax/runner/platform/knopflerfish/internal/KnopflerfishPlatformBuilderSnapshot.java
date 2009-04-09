@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ops4j.pax.runner.platform.equinox.internal;
+package org.ops4j.pax.runner.platform.knopflerfish.internal;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,13 +25,13 @@ import org.ops4j.net.URLUtils;
 import org.ops4j.pax.runner.platform.Configuration;
 
 /**
- * Platform builder for equinox platform that uses the latest and greatest Equinox.
+ * Platform builder for snapshot (nightly build) Knopflerfish.
  *
  * @author Alin Dreghiciu (adreghiciu@gmail.com)
  * @since 0.18.0, March 05, 2009
  */
-public class EquinoxPlatformBuilderLatest
-    extends EquinoxPlatformBuilder
+public class KnopflerfishPlatformBuilderSnapshot
+    extends KnopflerfishPlatformBuilder
 {
 
     /**
@@ -39,9 +39,9 @@ public class EquinoxPlatformBuilderLatest
      *
      * @param bundleContext a bundle context
      */
-    public EquinoxPlatformBuilderLatest( final BundleContext bundleContext )
+    public KnopflerfishPlatformBuilderSnapshot( final BundleContext bundleContext )
     {
-        super( bundleContext, "LATEST" );
+        super( bundleContext, "SNAPSHOT" );
     }
 
     /**
@@ -52,7 +52,7 @@ public class EquinoxPlatformBuilderLatest
         throws IOException
     {
         return URLUtils.prepareInputStream(
-            new URL( configuration.getProperty( "equinox.latest.definition.url" ) ),
+            new URL( configuration.getProperty( "knopflerfish.snapshot.definition.url" ) ),
             true
         );
     }

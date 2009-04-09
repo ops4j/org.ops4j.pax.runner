@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ops4j.pax.runner.platform.felix.internal;
+package org.ops4j.pax.runner.platform.equinox.internal;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,21 +25,23 @@ import org.ops4j.net.URLUtils;
 import org.ops4j.pax.runner.platform.Configuration;
 
 /**
- * Platform builder for felix platform after 1.6.0 that uses the latest and greatest Felix.
+ * Platform builder for the snapshot (nightly build) Equinox.
  *
  * @author Alin Dreghiciu (adreghiciu@gmail.com)
  * @since 0.18.0, March 05, 2009
  */
-public class FelixPlatformBuilderLatest
-    extends FelixPlatformBuilderF160
+public class EquinoxPlatformBuilderSnapshot
+    extends EquinoxPlatformBuilder
 {
 
     /**
-     * {@inheritDoc}
+     * Create a new equinux platform builder.
+     *
+     * @param bundleContext a bundle context
      */
-    public FelixPlatformBuilderLatest( final BundleContext bundleContext )
+    public EquinoxPlatformBuilderSnapshot( final BundleContext bundleContext )
     {
-        super( bundleContext, "LATEST" );
+        super( bundleContext, "SNAPSHOT" );
     }
 
     /**
@@ -50,7 +52,7 @@ public class FelixPlatformBuilderLatest
         throws IOException
     {
         return URLUtils.prepareInputStream(
-            new URL( configuration.getProperty( "felix.latest.definition.url" ) ),
+            new URL( configuration.getProperty( "equinox.snapshot.definition.url" ) ),
             true
         );
     }

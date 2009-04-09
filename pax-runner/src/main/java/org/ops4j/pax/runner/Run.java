@@ -508,7 +508,15 @@ public class Run
         LOGGER.debug( "Installing platform" );
         // first install platform
         final String platform = context.getOptionResolver().getMandatory( OPTION_PLATFORM );
-        String version = context.getOptionResolver().get( OPTION_PLATFORM_VERSION );
+        String version;
+        if( Boolean.parseBoolean( context.getOptionResolver().get( OPTION_PLATFORM_VERSION_SNAPSHOT ) ) )
+        {
+            version = PLATFORM_VERSION_SNAPSHOT;
+        }
+        else
+        {
+            version = context.getOptionResolver().get( OPTION_PLATFORM_VERSION );
+        }
         if( version == null )
         {
             version = context.getOptionResolver().get( platform + "." + OPTION_PLATFORM_VERSION );
