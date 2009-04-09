@@ -39,7 +39,8 @@ public final class Activator
     protected PlatformBuilder[] createPlatformBuilders( final BundleContext bundleContext )
     {
         return new PlatformBuilder[]{
-            new ConciergePlatformBuilder( bundleContext, "1.0.0" )
+            new ConciergePlatformBuilder( bundleContext, "1.0.0" ),
+            new ConciergePlatformBuilderSnapshot( bundleContext ),
         };
     }
 
