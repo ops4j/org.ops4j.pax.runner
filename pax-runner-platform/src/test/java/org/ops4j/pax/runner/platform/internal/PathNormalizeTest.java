@@ -13,7 +13,6 @@ import org.ops4j.pax.runner.platform.PlatformContext;
  */
 public class PathNormalizeTest
 {
-
     public String normalize( String workDir, String f )
     {
         PlatformContext context = new PlatformContextImpl();
@@ -39,6 +38,8 @@ public class PathNormalizeTest
      @Test
     public void testNotParent()
     {
-        assertEquals( "/other/runner/config/myconf.ini", normalize( "/work/runner", "/other/runner/config/myconf.ini" ) );
+        String root = normalize( ".", "/" );
+
+        assertEquals( root + "other/runner/config/myconf.ini", normalize( "/work/runner", "/other/runner/config/myconf.ini" ) );
     }
 }

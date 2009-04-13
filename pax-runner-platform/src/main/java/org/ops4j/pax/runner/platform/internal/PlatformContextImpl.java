@@ -200,7 +200,7 @@ public class PlatformContextImpl
         {
             LOG.warn( "problem during normalizing path.", e );
         }
-        return out;
+        return out.replace( File.separatorChar, '/' );
     }
 
 }
