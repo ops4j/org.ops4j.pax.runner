@@ -48,6 +48,7 @@ public final class Activator
             new KnopflerfishPlatformBuilder( bundleContext, "2.1.0" ),
             new KnopflerfishPlatformBuilder( bundleContext, "2.1.1" ),
             new KnopflerfishPlatformBuilder( bundleContext, "2.2.0" ),
+            new KnopflerfishPlatformBuilder( bundleContext, "2.3.0" ),
             new KnopflerfishPlatformBuilderSnapshot( bundleContext )
         };
     }
