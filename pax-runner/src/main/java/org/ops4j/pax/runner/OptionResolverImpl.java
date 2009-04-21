@@ -123,7 +123,7 @@ public class OptionResolverImpl
             return value;
         }
         // then look in the command line
-        String value = m_commandLine.getOption( name );
+        String value = getOption( name );
         // maybe there is an alias for it
         if( value == null || value.trim().length() == 0 )
         {
@@ -134,11 +134,11 @@ public class OptionResolverImpl
                 String[] aliases = alias.split( "," );
                 for( String entry : aliases )
                 {
-                    value = m_commandLine.getOption( entry );
+                    value = getOption( entry );
                     // let's also try out a case insensitive version
                     if( value == null )
                     {
-                        value = m_commandLine.getOption( entry.toLowerCase() );
+                        value = getOption( entry.toLowerCase() );
                     }
                     // we get out on first found
                     if( value != null )
@@ -185,6 +185,23 @@ public class OptionResolverImpl
         }
         m_cacheOptions.put( name, value );
         LOGGER.trace( "Option [" + name + "] resolved to [" + value + "]" );
+        return value;
+    }
+
+    /**
+     * Gets an option value by first looking into {@link CommandLine} and if not found by loking into system properties.
+     *
+     * @param key option name
+     *
+     * @return found value, or null if not found
+     */
+    private String getOption( final String key )
+    {
+        String value = m_commandLine.getOption( key );
+        if( value == null )
+        {
+            value = System.getProperty( key );
+        }
         return value;
     }
 
