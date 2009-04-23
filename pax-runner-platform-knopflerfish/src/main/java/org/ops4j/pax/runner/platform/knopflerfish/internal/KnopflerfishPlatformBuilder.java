@@ -166,22 +166,6 @@ public class KnopflerfishPlatformBuilder
                     .append( "-Dorg.knopflerfish.framework.debug.ldap", "false" )
                     .append( "-Dorg.knopflerfish.startlevel.use", "true" );
             }
-            // framework start level
-            {
-                final Integer startLevel = configuration.getStartLevel();
-                if( startLevel != null )
-                {
-                    writer.appendRaw( "-startlevel " + startLevel.toString() );
-                }
-            }
-            // bundle start level
-            {
-                final Integer bundleStartLevel = configuration.getBundleStartLevel();
-                if( bundleStartLevel != null )
-                {
-                    writer.appendRaw( "-initlevel " + bundleStartLevel.toString() );
-                }
-            }
             // execution environments
             {
                 writer.append( "-D" + Constants.FRAMEWORK_EXECUTIONENVIRONMENT, context.getExecutionEnvironment() );
@@ -213,6 +197,27 @@ public class KnopflerfishPlatformBuilder
             writer.append( " System properties" );
             writer.append( "#############################" );
             appendProperties( writer, context.getProperties() );
+
+            writer.append();
+            writer.append( "#############################" );
+            writer.append( " Start levels" );
+            writer.append( "#############################" );
+            // framework start level
+            {
+                final Integer startLevel = configuration.getStartLevel();
+                if( startLevel != null )
+                {
+                    writer.appendRaw( "-startlevel " + startLevel.toString() );
+                }
+            }
+            // bundle start level
+            {
+                final Integer bundleStartLevel = configuration.getBundleStartLevel();
+                if( bundleStartLevel != null )
+                {
+                    writer.appendRaw( "-initlevel " + bundleStartLevel.toString() );
+                }
+            }
 
             writer.write();
         }
