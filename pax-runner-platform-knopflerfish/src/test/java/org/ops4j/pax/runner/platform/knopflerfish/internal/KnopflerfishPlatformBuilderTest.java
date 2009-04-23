@@ -212,28 +212,28 @@ public class KnopflerfishPlatformBuilderTest
         BundleReference bundle1 = createMock( BundleReference.class );
         bundles.add( bundle1 );
         expect( bundle1.getURL() ).andReturn( new File( m_workDir, "bundles/bundle1.jar" ).toURL() );
-        //expect( reference1.getStartLevel() ).andReturn( 10 );
+        expect( bundle1.getStartLevel() ).andReturn( 10 );
         expect( bundle1.shouldStart() ).andReturn( true );
 
         // a bundle with only start level that should not start
         BundleReference bundle2 = createMock( BundleReference.class );
         bundles.add( bundle2 );
         expect( bundle2.getURL() ).andReturn( new File( m_workDir, "bundles/bundle2.jar" ).toURL() );
-        //expect( reference2.getStartLevel() ).andReturn( 10 );
+        expect( bundle2.getStartLevel() ).andReturn( 15 );
         expect( bundle2.shouldStart() ).andReturn( null );
 
         // a bunlde without start level that should start
         BundleReference bundle3 = createMock( BundleReference.class );
         bundles.add( bundle3 );
         expect( bundle3.getURL() ).andReturn( new File( m_workDir, "bundles/bundle3.jar" ).toURL() );
-        //expect( reference3.getStartLevel() ).andReturn( null );
+        expect( bundle3.getStartLevel() ).andReturn( null );
         expect( bundle3.shouldStart() ).andReturn( true );
 
         // a bundle without start level that should not start
         BundleReference bundle4 = createMock( BundleReference.class );
         bundles.add( bundle4 );
         expect( bundle4.getURL() ).andReturn( new File( m_workDir, "bundles/bundle4.jar" ).toURL() );
-        //expect( reference4.getStartLevel() ).andReturn( null );
+        expect( bundle4.getStartLevel() ).andReturn( 10 );
         expect( bundle4.shouldStart() ).andReturn( null );
 
         expect( m_configuration.usePersistedState() ).andReturn( false );

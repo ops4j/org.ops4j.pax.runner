@@ -29,7 +29,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.TreeMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.framework.BundleContext;
@@ -182,39 +184,42 @@ public class KnopflerfishPlatformBuilder
             {
                 writer.append( "-D" + Constants.FRAMEWORK_SYSTEMPACKAGES, context.getSystemPackages() );
             }
-
-            if( bundles != null && bundles.size() > 0 )
-            {
-                writer.append();
-                writer.append( "#############################" );
-                writer.append( " Client bundles to install" );
-                writer.append( "#############################" );
-                appendBundles( writer, bundles, context, configuration.getBundleStartLevel() );
-            }
-
-            writer.append();
-            writer.append( "#############################" );
-            writer.append( " System properties" );
-            writer.append( "#############################" );
-            appendProperties( writer, context.getProperties() );
-
-            writer.append();
-            writer.append( "#############################" );
-            writer.append( " Start levels" );
-            writer.append( "#############################" );
             // framework start level
             {
                 final Integer startLevel = configuration.getStartLevel();
                 if( startLevel != null )
                 {
+                    writer.append();
+                    writer.append( " Framework start level" );
                     writer.appendRaw( "-startlevel " + startLevel.toString() );
                 }
+            }
+            // provisioned bundles
+            {
+                if( bundles != null && bundles.size() > 0 )
+                {
+                    writer.append();
+                    writer.append( "#############################" );
+                    writer.append( " Client bundles to install" );
+                    writer.append( "#############################" );
+                    appendBundles( writer, bundles, context, configuration.getBundleStartLevel() );
+                }
+            }
+            // user system properties
+            {
+                writer.append();
+                writer.append( "#############################" );
+                writer.append( " System properties" );
+                writer.append( "#############################" );
+                appendProperties( writer, context.getProperties() );
             }
             // bundle start level
             {
                 final Integer bundleStartLevel = configuration.getBundleStartLevel();
                 if( bundleStartLevel != null )
                 {
+                    writer.append();
+                    writer.append( " Initial bundles start level" );
                     writer.appendRaw( "-initlevel " + bundleStartLevel.toString() );
                 }
             }
@@ -279,6 +284,7 @@ public class KnopflerfishPlatformBuilder
                                 final Integer defaultStartlevel )
         throws MalformedURLException, PlatformException
     {
+        final Map<Integer, List<String>> bundlesMap = new TreeMap<Integer, List<String>>();
         for( BundleReference reference : bundles )
         {
             URL url = reference.getURL();
@@ -298,8 +304,27 @@ public class KnopflerfishPlatformBuilder
             {
                 propertyName = "-install ";
             }
-            // TODO knopflerfish does not support start level per reference. Workaround ?
-            writer.appendRaw( propertyName + context.normalizeAsUrl( url ) );
+
+            Integer startLevel = reference.getStartLevel();
+            if( startLevel == null )
+            {
+                startLevel = defaultStartlevel;
+            }
+            List<String> bundlesList = bundlesMap.get( startLevel );
+            if( bundlesList == null )
+            {
+                bundlesList = new ArrayList<String>();
+                bundlesMap.put( startLevel, bundlesList );
+            }
+            bundlesList.add( propertyName + context.normalizeAsUrl( url ) );
+        }
+        for( Map.Entry<Integer, List<String>> entry : bundlesMap.entrySet() )
+        {
+            writer.appendRaw( "-initlevel " + entry.getKey() );
+            for( String reference : entry.getValue() )
+            {
+                writer.appendRaw( reference );
+            }
         }
     }
 
