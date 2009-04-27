@@ -262,6 +262,12 @@ public class Run
             LOGGER.debug( "Using script executor" );
             return new ScriptJavaRunner();
         }
+
+        if( "zip".equalsIgnoreCase( executor ) )
+        {
+            LOGGER.debug( "Using zip executor" );
+            return new ZipJavaRunner();
+        }
         throw new ConfigurationException( "Executor [" + executor + "] is not supported" );
     }
 
