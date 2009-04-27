@@ -50,6 +50,7 @@ import org.ops4j.pax.runner.osgi.RunnerStartLevel;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.BundleReferenceBean;
 import org.ops4j.pax.runner.platform.JavaRunner;
+import org.ops4j.pax.runner.platform.ScriptJavaRunner;
 import org.ops4j.pax.runner.platform.Platform;
 import org.ops4j.pax.runner.platform.PlatformException;
 import org.ops4j.pax.runner.platform.SystemFileReference;
@@ -255,6 +256,11 @@ public class Run
         {
             LOGGER.debug( "Using noop executor" );
             return new NoopJavaRunner();
+        }
+        if( "script".equalsIgnoreCase( executor ) )
+        {
+            LOGGER.debug( "Using script executor" );
+            return new ScriptJavaRunner();
         }
         throw new ConfigurationException( "Executor [" + executor + "] is not supported" );
     }
