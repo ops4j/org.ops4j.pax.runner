@@ -138,14 +138,19 @@ public class DefaultJavaRunner
     /**
      * {@inheritDoc}
      */
-    public synchronized void shutdown()
+    public void shutdown() // removed synchronized
     {
         try
         {
-            Runtime.getRuntime().removeShutdownHook( m_shutdownHook );
-            m_frameworkProcess = null;
-            m_shutdownHook.run();
-            m_shutdownHook = null;
+            if (m_shutdownHook != null) {
+                LOG.debug("Shutdown in progress...");
+                Runtime.getRuntime().removeShutdownHook( m_shutdownHook );
+                m_frameworkProcess = null;
+                m_shutdownHook.run();
+                m_shutdownHook = null;
+            } else {
+                LOG.debug("m_shutdownHook is null" + m_shutdownHook);
+            }
         }
         catch( IllegalStateException e )
         {

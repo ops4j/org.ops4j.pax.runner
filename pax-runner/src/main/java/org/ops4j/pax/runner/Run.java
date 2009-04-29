@@ -140,6 +140,12 @@ public class Run
         );
     }
 
+    
+    public static Log getLogger() {
+        createLogger();
+        return LOGGER;
+    }
+
     /**
      * Starts runner.
      *
@@ -814,5 +820,4 @@ public class Run
             LOGGER = LogFactory.getLog( Run.class );
         }
     }
-
 }
