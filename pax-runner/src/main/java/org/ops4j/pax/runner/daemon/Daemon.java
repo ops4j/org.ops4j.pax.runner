@@ -29,18 +29,21 @@ public class Daemon {
 
     // Constants -----------------------------------------------------
     public static final String PASSWORD_FILE = "password.file";
+    private static final String PID_FILE = "runner.pid"; 
 
     // Attributes ----------------------------------------------------
     private CommandLine commandLine = null;
     private String[] cmdArgs = null;
     private StoppableJavaRunner runner = null;
-    private int shutdownPort = 8008;
     private Thread shutdownHook = null;
     private int networkTimeout = 0;
     private long shutdownTimeout = 0;
     private ServerSocket serverSocket = null;
     private boolean continueAwait = true;
+
     private static Daemon instance = null;
+    private static String shutdown = "shutdown";
+    private static int shutdownPort = 8008;
 
     // Static --------------------------------------------------------
     /** logger. */
@@ -59,6 +62,14 @@ public class Daemon {
         if (instance == null)
             instance = new Daemon();
         return instance;
+    }
+
+    public static boolean isDaemonStarted() {
+        File pid = new File(PID_FILE);
+        if (pid.exists() && pid.isFile()) {
+            return true;
+        }
+        return false;
     }
 
     // Constructors --------------------------------------------------
@@ -86,6 +97,7 @@ public class Daemon {
         LOG.info("Pax Runner stopped");
         runner = null;
     }
+
     // Z implementation ----------------------------------------------
 
     // Y overrides ---------------------------------------------------
@@ -126,9 +138,9 @@ public class Daemon {
 
     // Private -------------------------------------------------------
     private void await() {
+        createPIDFile();
         shutdownHook = createShutdownHook();
         Runtime.getRuntime().addShutdownHook(shutdownHook);
-        LOG.info("Created Shutdown Hook.");
 
         // Set up a server socket to wait on
         try {
@@ -194,6 +206,21 @@ public class Daemon {
                 }
             }, "Pax Runner Daemon Shutdown Hook"
         );
+    }
+
+    private void createPIDFile() {
+        File currentDir =  new File(System.getProperty("user.dir"));
+        File pid = new File(currentDir, PID_FILE);
+        if (pid.exists()) {
+            throw new RuntimeException(PID_FILE + " exists. Please make sure" +
+            		" that the Pax Runner is not already running.");
+        }
+        try {
+            pid.createNewFile();
+            pid.deleteOnExit();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Inner classes -------------------------------------------------
@@ -396,12 +423,12 @@ public class Daemon {
         this.runner = runner;
     }
 
-    private int getShutdownPort() {
+    static int getShutdownPort() {
         return shutdownPort;
     }
 
     private void setShutdownPort(int shutdownPort) {
-        this.shutdownPort = shutdownPort;
+        Daemon.shutdownPort = shutdownPort;
     }
 
     private long getShutdownTimeout() {
@@ -418,6 +445,14 @@ public class Daemon {
 
     private void setNetworkTimeout(int networkTimeout) {
         this.networkTimeout = networkTimeout;
+    }
+
+    static String getShutdown() {
+        return shutdown;
+    }
+
+    private static void setShutdown(String shutdown) {
+        Daemon.shutdown = shutdown;
     }
 }
 

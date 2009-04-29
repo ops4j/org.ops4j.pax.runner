@@ -3,6 +3,9 @@ package org.ops4j.pax.runner.daemon;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 import org.apache.commons.logging.Log;
 
@@ -134,7 +137,35 @@ public class DaemonLauncher {
     }
 
     private void stop() {
-        
+        if (Daemon.isDaemonStarted()) {
+            Socket socket = null;
+            PrintWriter out = null;
+            try {
+                socket = new Socket("localhost", Daemon.getShutdownPort());
+                out = new PrintWriter(socket.getOutputStream(), true);
+            } catch (UnknownHostException e) {
+                LOG.error("Unknown address: localhost.");
+                return;
+            } catch (IOException e) {
+                LOG.error("Couldn't connect to: localhost.");
+                return;
+            }
+    
+            out.write(Daemon.getShutdown()+"\n");
+            out.flush();
+            LOG.debug("Pax Runner Daemon: Shutdown command issued:"+ Daemon.getShutdown());
+            while (Daemon.isDaemonStarted()) {
+                LOG.trace("Pax Runner Daemon: Shutdown in progress...");
+                try {
+                    Thread.sleep(1000 * 2);
+                } catch (InterruptedException e) {
+                    ;
+                }
+            }
+            LOG.info("Pax Runner Daemon Stopped.");
+        } else {
+            LOG.warn("No Daemons yet launched");
+        }
     }
 
     // Z implementation ----------------------------------------------
