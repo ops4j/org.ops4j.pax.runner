@@ -1,6 +1,9 @@
 package org.ops4j.pax.runner.daemon;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -205,9 +208,7 @@ public class Daemon {
                 runner = createJavaRunner();
                 System.out.println("Created runner " + runner);
             }
-            System.err.println("Printed1...");
             Run.main(runner, cmdArgs);
-            System.err.println("Printed2...");
             instance.stop();
         }
     }
@@ -355,7 +356,19 @@ public class Daemon {
     }
 
     private String readEncryptedPassword() {
-        return null;
+        return readFile(getPasswordFile(commandLine.getOption(Daemon.PASSWORD_FILE)));
+    }
+
+    private String readFile(File file) {
+        try {
+            LOG.debug("Read file:" + file.getAbsolutePath());
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            return br.readLine();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // Getters and Setters -----------------------------------------------------

@@ -1,24 +1,19 @@
 package org.ops4j.pax.runner.daemon;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 
 import org.apache.commons.logging.Log;
 
 import org.ops4j.io.Pipe;
-import org.ops4j.net.Base64Encoder;
 import org.ops4j.pax.runner.CommandLine;
 import org.ops4j.pax.runner.CommandLineImpl;
 import org.ops4j.pax.runner.Run;
 import org.ops4j.pax.runner.User;
 
 /**
- * An entry point to start and stop the DaemonImpl.
+ * An entry point to start and stop the Daemon.
  * 
  * @author <a href="mailto:open4thomas@gmail.com">Thomas Joseph</a>
  *
@@ -37,7 +32,6 @@ public class DaemonLauncher {
     // Attributes ----------------------------------------------------
     private CommandLine commandLine = null;
     private String[] cmdArgs = null;
-    //private String passwordEncrypted = "";
     private static DaemonLauncher instance = null; 
 
     // Static --------------------------------------------------------
@@ -85,6 +79,7 @@ public class DaemonLauncher {
     }
 
     private void start() {
+        checkPasswordFile();
         Daemon.main(cmdArgs);
     }
 
@@ -95,7 +90,6 @@ public class DaemonLauncher {
                 try {
                     String cp = System.getProperty("java.class.path") == null? ""
                             : "-cp "+System.getProperty("java.class.path");
-                    System.out.println(">>>> " + Daemon.class.toString());
                     String strCmd = "java" + SPACE
                         + cp + SPACE
                         + "org.ops4j.pax.runner.daemon.Daemon";
@@ -124,7 +118,7 @@ public class DaemonLauncher {
                             outPipe.stop();
                             inPipe.stop();
                         }
-                    }, "Pax-Runner DaemonImpl Shutdown Hook"
+                    }, "Pax-Runner Daemon Shutdown Hook"
                 );
             }
         }, "Pax-Runner DaemonLauncher");
@@ -176,7 +170,7 @@ public class DaemonLauncher {
     private void checkPasswordFile() {
         File passwordFile = Daemon.getPasswordFile(commandLine.getOption(Daemon.PASSWORD_FILE));
 
-        if(! passwordFile.exists()) {
+        if(!passwordFile.exists()) {
             try {
                 LOG.warn("Password for this configuration is not set.");
                 boolean done = false;
@@ -206,17 +200,8 @@ public class DaemonLauncher {
             }
         } else {
             LOG.info("Password exists for this configuration.");
-            try {
-                BufferedReader br = new BufferedReader(new FileReader(passwordFile));
-                // passwordEncrypted = br.readLine();
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
-
 
     // Getters and Setters -------------------------------------------
 
