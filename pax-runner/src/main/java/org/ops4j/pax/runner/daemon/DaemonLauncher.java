@@ -1,7 +1,6 @@
 package org.ops4j.pax.runner.daemon;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -28,7 +27,6 @@ public class DaemonLauncher {
     public static final String OPTION_START = "--start";
     public static final String OPTION_STARTD = "--startd";
     public static final String OPTION_STOP = "--stop";
-    public static final String OPTION_PASSWORD_ENC = "--password.encrypted";
 
     public static final String SPACE = " ";
 
@@ -70,7 +68,7 @@ public class DaemonLauncher {
             launcher.stop();
         } else {
             throw new RuntimeException("No valid option specified for Pax Runner" +
-                    " DaemonImpl. The specified option should be first argument.\n" +
+                    " Daemon. The specified option should be first argument.\n" +
                     "Valid options: "+ OPTION_START +" | " + OPTION_STARTD
                     +" | " + OPTION_STOP);
         }
@@ -150,12 +148,13 @@ public class DaemonLauncher {
                 LOG.error("Couldn't connect to: localhost.");
                 return;
             }
-    
-            out.write(Daemon.getShutdown()+"\n");
+
+            final String shutdownCmd = Daemon.getShutdown();
+            out.write(shutdownCmd +"\n");
             out.flush();
-            LOG.debug("Pax Runner Daemon: Shutdown command issued:"+ Daemon.getShutdown());
+            LOG.debug("Pax Runner Daemon: Shutdown command issued:"+ shutdownCmd);
             while (Daemon.isDaemonStarted()) {
-                LOG.trace("Pax Runner Daemon: Shutdown in progress...");
+                LOG.info("Pax Runner Daemon: Shutdown in progress...");
                 try {
                     Thread.sleep(1000 * 2);
                 } catch (InterruptedException e) {
@@ -173,24 +172,7 @@ public class DaemonLauncher {
     // Y overrides ---------------------------------------------------
 
     // Package protected ---------------------------------------------
-    /**
-     * Creates a file on the file system with the given content for the file.
-     * 
-     * @param file The file that should be written to the filesystem.
-     * @param content The content for the file.
-     */
-    static void createFile(File file, String content) {
-        FileWriter fw = null;
-        try {
-            fw = new FileWriter(file);
-            fw.write(content);
-        } catch (IOException e) {
-            throw new RuntimeException ("Error crearing password file.",e);
-        } finally {
-            try { if(fw !=  null) fw.close(); }
-            catch (IOException e) {/* ignore */}
-        }
-    }
+
     // Protected -----------------------------------------------------
 
     // Private -------------------------------------------------------
@@ -210,15 +192,15 @@ public class DaemonLauncher {
                     // Console c = System.console(); Works for Java 6 only
                     String response = User.ask();
                     if (response.trim().length() == 0) {
-                        createFile(passwordFile, "");
+                        passwordFile.createNewFile();
                         done = true;
                     } else {
                         LOG.warn("Please re-enter the new password: ");
                         String confirm = User.ask();
                         if (confirm.equals(response)) {
                             response = Daemon.encrypt(response);
-                            // passwordEncrypted = response;
-                            createFile(passwordFile, response);
+                            passwordFile.createNewFile();
+                            Daemon.writeToFile(passwordFile, response);
                             done = true;
                         } else {
                             LOG.warn("Passwords did not match.");
