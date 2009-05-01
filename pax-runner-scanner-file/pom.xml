@@ -6,12 +6,12 @@
     <relativePath>../</relativePath>
     <groupId>org.ops4j.pax</groupId>
     <artifactId>runner</artifactId>
-    <version>0.19.1-SNAPSHOT</version>
+    <version>0.20.0-SNAPSHOT</version>
   </parent>
 
   <groupId>org.ops4j.pax.runner</groupId>
   <artifactId>pax-runner-scanner-file</artifactId>
-  <version>0.19.1-SNAPSHOT</version>
+  <version>0.20.0-SNAPSHOT</version>
   <packaging>bundle</packaging>
 
   <name>OPS4J Pax Runner - Bundle scanner</name>
@@ -55,18 +55,18 @@
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-commons</artifactId>
-      <version>0.19.1-SNAPSHOT</version>
+      <version>0.20.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-scanner-common</artifactId>
-      <version>0.19.1-SNAPSHOT</version>
+      <version>0.20.0-SNAPSHOT</version>
       <optional>true</optional>
     </dependency>    
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-provision</artifactId>
-      <version>0.19.1-SNAPSHOT</version>
+      <version>0.20.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <!-- Testing dependencies -->
