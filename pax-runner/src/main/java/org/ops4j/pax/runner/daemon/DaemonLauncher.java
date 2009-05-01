@@ -153,17 +153,17 @@ public class DaemonLauncher {
             out.write(shutdownCmd +"\n");
             out.flush();
             LOG.debug("Pax Runner Daemon: Shutdown command issued:"+ shutdownCmd);
-            while (Daemon.isDaemonStarted()) {
+            do {
                 LOG.info("Pax Runner Daemon: Shutdown in progress...");
                 try {
                     Thread.sleep(1000 * 2);
                 } catch (InterruptedException e) {
                     ;
                 }
-            }
+            } while (Daemon.isDaemonStarted());
             LOG.info("Pax Runner Daemon Stopped.");
         } else {
-            LOG.warn("No Daemons yet launched");
+            LOG.warn("No Daemons yet launched!");
         }
     }
 

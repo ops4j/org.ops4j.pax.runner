@@ -60,7 +60,6 @@ public class Daemon {
     private long shutdownTimeout = 0;
     private ServerSocket serverSocket = null;
     private boolean continueAwait = true;
-    private File lockFile = null;
 
     private static Daemon instance = null;
     private static String shutdown = "shutdown";
@@ -94,7 +93,7 @@ public class Daemon {
      * @return True if any instance of this class is already started, false otherwise.
      */
     public static boolean isDaemonStarted() {
-        File lock = new File(LOCK_FILE);
+        File lock = new File(getRunnerHomeDir(false), LOCK_FILE);
         if (lock.exists() && lock.isFile()) {
             return true;
         }
@@ -138,13 +137,9 @@ public class Daemon {
             LOG.trace("Removed Shutdown Hook.");
             shutdownHook.run();
             shutdownHook = null;
+        } else {
+            shutdown();
         }
-        if (runner != null) {
-            LOG.debug("Bringing down Runner...");
-            runner.shutdown();
-            runner = null;
-        }
-        LOG.info("Pax Runner daemon stopped");
     }
 
     // Package protected ---------------------------------------------
@@ -156,7 +151,7 @@ public class Daemon {
      */
     static File getPasswordFile(String passwordFilePath) {
         if (passwordFilePath == null || passwordFilePath.length() == 0) {
-            passwordFilePath = PASSWORD_FILE;
+            return new File(getRunnerHomeDir(true),PASSWORD_FILE);
         }
         return new File(passwordFilePath);
     }
@@ -237,7 +232,7 @@ public class Daemon {
 
     // Private -------------------------------------------------------
     private void await() {
-        lockFile = createLockFile();
+        createLockFile();
         shutdownHook = createShutdownHook();
         Runtime.getRuntime().addShutdownHook(shutdownHook);
 
@@ -302,33 +297,27 @@ public class Daemon {
             new Runnable() {
                 public void run() {
                     LOG.trace("Executing shutdown hook...");
-                    stopAwait();
-                    if (lockFile != null && lockFile.exists() ) {
-                        // file.deleteOnExit() do not seem to consistently work on Windows
-                        lockFile.delete();
-                        lockFile = null;
-                    }
+                    shutdown();
                 }
             }, "Pax Runner Daemon Shutdown Hook"
         );
     }
 
-    private File createLockFile() {
-        File currentDir =  new File(System.getProperty("user.dir"));
-        File lock = new File(currentDir, LOCK_FILE);
+    private void createLockFile() {
+        File lock = new File(getRunnerHomeDir(true), LOCK_FILE);
         if (lock.exists()) {
             throw new RuntimeException(LOCK_FILE + " exists. Please make sure" +
             		" that the Pax Runner daemon is not already running.");
         }
         try {
             lock.createNewFile();
+            lock.deleteOnExit();
             String content = OPT_SHUTDOWN_CMD + "=" + shutdown +
                 NEWLINE + OPT_SHUTDOWN_PORT + "=" + shutdownPort;
             Daemon.writeToFile(lock, content);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return lock;
     }
 
     private String readEncryptedPassword() {
@@ -344,6 +333,16 @@ public class Daemon {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void shutdown() {
+        stopAwait();
+        if (runner != null) {
+            LOG.debug("Bringing down Runner...");
+            runner.shutdown();
+            runner = null;
+            LOG.info("Pax Runner daemon stopped.");
         }
     }
 
@@ -365,6 +364,24 @@ public class Daemon {
         }
     }
 
+    /**
+     * Returns the file reference of the Runner's home directory. Creates one if
+     * it doesn't exist and if the create flag is set to <code>true</code>.
+     * 
+     * @return
+     */
+    private static File getRunnerHomeDir(boolean create) {
+        String homeDirPath = System.getProperty("user.home")
+                + File.separator + ".pax"+ File.separator + "runner";
+        final File homeDir = new File(homeDirPath);
+        if ( !homeDir.exists() && create ) {
+            if( homeDir.mkdirs() ) {
+                LOG.debug("Created Pax Runner Home.");
+            }
+        }
+        return homeDir;
+    }
+
     private static int parseSafeInt(String arg) {
         if (arg != null && arg.length() > 0) {
             try {
@@ -375,8 +392,7 @@ public class Daemon {
     }
 
     private static String readDaemonProperty(String key) {
-        File currentDir =  new File(System.getProperty("user.dir"));
-        File lock = new File(currentDir, LOCK_FILE);
+        File lock = new File(getRunnerHomeDir(false), LOCK_FILE);
         if (lock.exists()) {
             Properties props = new Properties();
             try {
@@ -404,8 +420,7 @@ public class Daemon {
                 LOG.trace("Created Runner.");
             }
             Run.main(runner, cmdArgs);
-            instance.stopAwait();
-            LOG.info("Pax Runner daemon stopped");
+            instance.shutdown();
         }
     }
 

@@ -138,43 +138,46 @@ public class DefaultJavaRunner
     /**
      * {@inheritDoc}
      */
-    public void shutdown() // removed synchronized
+    public void shutdown()
     {
-        try
-        {
+        try {
             if (m_shutdownHook != null) {
-                LOG.debug("Shutdown in progress...");
-                Runtime.getRuntime().removeShutdownHook( m_shutdownHook );
-                m_frameworkProcess = null;
-                m_shutdownHook.run();
-                m_shutdownHook = null;
-            } else {
-                LOG.debug("m_shutdownHook is null" + m_shutdownHook);
+                synchronized (m_shutdownHook) {
+                    if (m_shutdownHook != null) {
+                        LOG.debug("Shutdown in progress...");
+                        Runtime.getRuntime().removeShutdownHook( m_shutdownHook );
+                        m_frameworkProcess = null;
+                        m_shutdownHook.run();
+                        m_shutdownHook = null;
+                        LOG.info( "Platform has been shutdown." );
+                    }
+                }
             }
         }
         catch( IllegalStateException e )
         {
-            LOG.debug( "Shutdown already in progress." );
+            LOG.debug( "Shutdown already in progress.", e );
         }
-        LOG.info( "Platform has been shutdown." );
     }
 
     /**
      * Wait till the framework process exits.
      */
-    public synchronized void waitForExit()
+    public void waitForExit()
     {
-        try
-        {
-            LOG.debug( "Waiting for framework exit." );
-            Info.println(); // print an empty line
-            m_frameworkProcess.waitFor();
-            shutdown();
-        }
-        catch( Throwable e )
-        {
-            LOG.debug( "Early shutdown.", e );
-            shutdown();
+        synchronized (m_frameworkProcess) {
+            try
+            {
+                LOG.debug( "Waiting for framework exit." );
+                Info.println(); // print an empty line
+                m_frameworkProcess.waitFor();
+                shutdown();
+            }
+            catch( Throwable e )
+            {
+                LOG.debug( "Early shutdown.", e );
+                shutdown();
+            }
         }
     }
 
