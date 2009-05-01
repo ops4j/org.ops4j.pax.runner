@@ -171,6 +171,14 @@ public class EquinoxPlatformBuilder
             {
                 writer.append( PROP_SYSPATH, context.normalizeAsPath( context.getWorkingDirectory() ) );
             }
+            // avoid automatic exit of framework in case that there is no console and not non daemon thrad is active
+            {
+                final Boolean startConsole = context.getConfiguration().startConsole();
+                if( startConsole == null || !startConsole )
+                {
+                    writer.append( "osgi.framework.activeThreadType", "normal" );
+                }
+            }
             // use persisted state
             {
                 final Boolean usePersistedState = configuration.usePersistedState();

@@ -214,6 +214,7 @@ public class EquinoxPlatformBuilderTest
         properties.setProperty( "myProperty", "myValue" );
         m_platformContext.setProperties( properties );
 
+        expect( m_configuration.startConsole() ).andReturn( true );
         expect( m_configuration.usePersistedState() ).andReturn( false );
         expect( m_configuration.getStartLevel() ).andReturn( null );
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );
@@ -250,6 +251,7 @@ public class EquinoxPlatformBuilderTest
         properties.setProperty( "myProperty", "myValue" );
         m_platformContext.setProperties( properties );
 
+        expect( m_configuration.startConsole() ).andReturn( false );
         expect( m_configuration.usePersistedState() ).andReturn( false );
         expect( m_configuration.getStartLevel() ).andReturn( 10 );
         expect( m_configuration.getBundleStartLevel() ).andReturn( 20 );
