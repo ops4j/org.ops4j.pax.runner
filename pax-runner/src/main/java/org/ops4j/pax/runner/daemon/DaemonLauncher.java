@@ -15,9 +15,16 @@ import org.ops4j.pax.runner.Run;
 import org.ops4j.pax.runner.User;
 
 /**
- * An entry point to start and stop the Daemon.
+ * An entry point to start and stop the Daemon from the CLI. Based on the
+ * parameters supplied, the Pax Runner can:
+ * <ul>
+ *      <li>Start attached to the console.</li>
+ *      <li>Start detached from the console.</li>
+ *      <li>Stop the Pax Runner Daemon launched, if any.</li>
+ * </ul>
  * 
  * @author <a href="mailto:open4thomas@gmail.com">Thomas Joseph</a>
+ * @since 0.20.0 (29 April 2009)
  *
  */
 public class DaemonLauncher {
@@ -166,10 +173,6 @@ public class DaemonLauncher {
             LOG.warn("No Daemons yet launched!");
         }
     }
-
-    // Z implementation ----------------------------------------------
-
-    // Y overrides ---------------------------------------------------
 
     // Package protected ---------------------------------------------
 

@@ -34,6 +34,7 @@ import org.ops4j.pax.runner.platform.StoppableJavaRunner;
  * or when a shutdown command is issued via shutdown port.
  * 
  * @author <a href="mailto:open4thomas@gmail.com">Thomas Joseph</a>
+ * @since 0.20.0 (29 April 2009)
  *
  */
 public class Daemon {
@@ -44,6 +45,7 @@ public class Daemon {
      * of the default password file.
      */
     public static final String PASSWORD_FILE = "org.ops4j.pax.runner.daemon.password.file";
+    private static final String INFO_FILE = "org.ops4j.pax.runner.daemon.info"; 
     private static final String LOCK_FILE = "org.ops4j.pax.runner.daemon.lock"; 
     private static final String NEWLINE= "\r\n";
     private static final String OPT_NETWORK_TIMEOUT="org.ops4j.pax.runner.daemon.network.timeout";
@@ -185,6 +187,7 @@ public class Daemon {
         try {
             fw = new FileWriter(file);
             fw.write(content);
+            fw.flush();
         } catch (IOException e) {
             throw new RuntimeException ("Error creating file.",e);
         } finally {
@@ -232,6 +235,7 @@ public class Daemon {
 
     // Private -------------------------------------------------------
     private void await() {
+        createInfoFile();
         createLockFile();
         shutdownHook = createShutdownHook();
         Runtime.getRuntime().addShutdownHook(shutdownHook);
@@ -303,6 +307,11 @@ public class Daemon {
         );
     }
 
+    /**
+     * Creates a "lock" file. An empty file that is created as the Daemon is
+     * started (attached/detached) and removed when the it stops. The file
+     * will be used to determine if the Daemon is already running.
+     */
     private void createLockFile() {
         File lock = new File(getRunnerHomeDir(true), LOCK_FILE);
         if (lock.exists()) {
@@ -312,9 +321,27 @@ public class Daemon {
         try {
             lock.createNewFile();
             lock.deleteOnExit();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Creates a file that stores information about the running instance of the
+     * Daemon.
+     */
+    private void createInfoFile() {
+        File info = new File(getRunnerHomeDir(true), INFO_FILE);
+        int count = 10;
+        while ( info.exists() && count > 0 ) {
+            info.delete();
+            count --;
+        }
+        try {
+            info.createNewFile();
             String content = OPT_SHUTDOWN_CMD + "=" + shutdown +
                 NEWLINE + OPT_SHUTDOWN_PORT + "=" + shutdownPort;
-            Daemon.writeToFile(lock, content);
+            Daemon.writeToFile(info, content);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -392,11 +419,11 @@ public class Daemon {
     }
 
     private static String readDaemonProperty(String key) {
-        File lock = new File(getRunnerHomeDir(false), LOCK_FILE);
-        if (lock.exists()) {
+        File info = new File(getRunnerHomeDir(false), INFO_FILE);
+        if (info.exists()) {
             Properties props = new Properties();
             try {
-                props.load(new FileInputStream(lock));
+                props.load(new FileInputStream(info));
                 return props.getProperty(key);
             } catch (FileNotFoundException e) {;}
               catch (IOException e) {;}
@@ -419,8 +446,11 @@ public class Daemon {
                 runner = createJavaRunner();
                 LOG.trace("Created Runner.");
             }
-            Run.main(runner, cmdArgs);
-            instance.shutdown();
+            try {
+                Run.main(runner, cmdArgs);
+            } finally {
+                instance.shutdown();
+            }
         }
     }
 
