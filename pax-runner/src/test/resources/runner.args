@@ -1,0 +1,29 @@
+--option1=value1
+--option2=-Dhttp.port=80
+#comment=ignore
+--noOption3
+--option4
+
+--vmo=-Doscar.embedded.execution=false\
+ -Djava.library.path=native\
+ -Djava.util.logging.config.file=../conf/logging.properties
+
+--option5=\
+value5
+
+--option6=
+
+--sp=org.osgi.framework;\
+\
+\
+ javax.swing; javax.swing.event;\
+ javax.swing.table; javax.swing.text; javax.swing.text.html;
+
+--option7=value7\
+#this comment should not break off option7's continuity
+continued
+
+--option8=value8\
+
+#however this will break the continuity because of blank space above
+continuity

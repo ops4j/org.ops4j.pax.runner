@@ -61,6 +61,11 @@ public class CommandLineImpl implements CommandLine
     private static final char LINE_COMMENT_PREFIX = '#';
 
     /**
+     * Default character, the presence of this at the end of line indicates continuity 
+     */
+    private static final String LINE_CONTINUE_CHAR = "\\";
+
+    /**
      * Options as properties.
      */
     private final Map<String, List<String>> m_options;
@@ -302,12 +307,29 @@ public class CommandLineImpl implements CommandLine
         {
             bufferedReader = new BufferedReader( new InputStreamReader( fileURL.openStream() ) );
             String line;
+            StringBuffer entry = new StringBuffer();
+            boolean readMore = false;
             while( ( line = bufferedReader.readLine() ) != null )
             {
                 if( ( !skipEmptyLines || line.trim().length() > 0 ) && line.charAt( 0 ) != LINE_COMMENT_PREFIX )
                 {
-                    content.add( line );
+                    if (line.endsWith(LINE_CONTINUE_CHAR)) {
+                        entry.append(line.substring(0, line.length() - 1));
+                        continue;
+                    } else {
+                        entry.append(line);
+                        content.add( entry.toString().trim() );
+                        entry.delete(0, entry.length());
+                        continue;
+                    }
                 }
+                if (line.trim().length() == 0 && entry.length() > 0) {
+                    content.add( entry.toString().trim() );
+                    entry.delete(0, entry.length());
+                }
+            }
+            if (entry != null && entry.length()>0) {
+                content.add( entry.toString().trim() );
             }
         }
         finally

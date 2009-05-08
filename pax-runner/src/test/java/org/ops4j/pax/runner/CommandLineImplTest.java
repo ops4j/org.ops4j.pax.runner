@@ -88,4 +88,24 @@ public class CommandLineImplTest
         assertArrayEquals( "Option value", new String[0], commandLine.getMultipleOption( "array" ) );
     }
 
+    @Test
+    public void readArgsFile() {
+        CommandLine commandLine = new CommandLineImpl( "--args=file:src/test/resources/runner.args" );
+        assertEquals( "option1 value", "value1", commandLine.getOption( "option1" ) );
+        assertEquals( "option2 value", "-Dhttp.port=80", commandLine.getOption( "option2" ) );
+        assertEquals( "option3 value", "false", commandLine.getOption( "option3" ) );
+        assertEquals( "option4 value", "true", commandLine.getOption( "option4" ) );
+        assertEquals( "vmo value", "-Doscar.embedded.execution=false " +
+        		"-Djava.library.path=native " +
+        		"-Djava.util.logging.config.file=../conf/logging.properties", 
+        		commandLine.getOption( "vmo" ) );
+        assertEquals( "option5 value", "value5", commandLine.getOption( "option5" ) );
+        assertEquals( "option6 value", "", commandLine.getOption( "option6" ) );
+        assertEquals( "sp value", "org.osgi.framework; javax.swing; " +
+        		"javax.swing.event; javax.swing.table; javax.swing.text; " +
+        		"javax.swing.text.html;", commandLine.getOption( "sp" ) );
+        assertEquals( "option7 value", "value7continued", commandLine.getOption( "option7" ) );
+        assertEquals( "option8 value", "value8", commandLine.getOption( "option8" ) );
+    }
+
 }
