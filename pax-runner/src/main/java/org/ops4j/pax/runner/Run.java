@@ -733,13 +733,14 @@ public class Run
     private static void showError( Throwable t )
     {
         Info.println();
-        String message = "";
+        String message = t.getMessage();
         String debugInfo = "";
+
         if( LOGGER != null && !LOGGER.isDebugEnabled() )
         {
-            message = t.getMessage();
             debugInfo = "Use --" + OPTION_LOG + "=debug to see details.";
         }
+
         System.out.println( "         ___" );
         System.out.println( "        /  /" );
         System.out.println( "       /  / Oops, there has been a problem!" );
@@ -749,12 +750,13 @@ public class Run
         System.out.println( "   /__/     " + debugInfo );
         System.out.println();
 
-        if( LOGGER == null || LOGGER.isDebugEnabled() )
-        {
-            if( LOGGER != null )
-            {
+        if ( LOGGER == null ) {
+            // show error even when LOGGER was not initialised
+            System.out.println("Exception catched during execution:");
+            t.printStackTrace();
+        } else {
+            if (LOGGER.isDebugEnabled())
                 LOGGER.error( "Exception catched during execution:", t );
-            }
         }
 
     }
