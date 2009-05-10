@@ -103,6 +103,13 @@ public class ScriptJavaRunner
         }
     }
 
+    /**
+     * Create a *nix script.
+     *
+     * @param commandLine command line builder
+     *
+     * @return shell script
+     */
     private String getShellScript( final CommandLineBuilder commandLine )
     {
         final String newline = "\n";
@@ -119,6 +126,13 @@ public class ScriptJavaRunner
         return script.toString();
     }
 
+    /**
+     * Create a windows script.
+     *
+     * @param commandLine command line builder
+     *
+     * @return batch script
+     */
     private String getBatchScript( final CommandLineBuilder commandLine )
     {
         final String newline = "\r\n";
@@ -133,4 +147,5 @@ public class ScriptJavaRunner
         script.append( newline );
         return script.toString();
     }
+
 }
