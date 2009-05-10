@@ -35,7 +35,7 @@ import org.ops4j.pax.runner.platform.internal.CommandLineBuilder;
  * @author Mike Smoot (msmoot@ucsd.edu)
  */
 public class ScriptJavaRunner
-    implements StoppableJavaRunner
+    implements JavaRunner
 {
 
     /**
@@ -101,10 +101,6 @@ public class ScriptJavaRunner
         {
             throw new PlatformException( "Could not write run scripts", e );
         }
-    }
-
-    public void shutdown()
-    {
     }
 
     private String getShellScript( final CommandLineBuilder commandLine )
