@@ -215,6 +215,14 @@ public interface Configuration
     Boolean keepOriginalUrls();
 
     /**
+     * Returns true if the file paths used in frameworks configuration files and properties should be absolute.
+     * Default value is "false".
+     *
+     * @return value of use absolute paths options
+     */
+    Boolean useAbsoluteFilePaths();
+
+    /**
      * Returns a raw configuration property by name.
      *
      * @param name property name

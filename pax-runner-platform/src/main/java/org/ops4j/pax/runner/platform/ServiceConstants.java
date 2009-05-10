@@ -113,5 +113,9 @@ public interface ServiceConstants
      * Use original URls property name.
      */
     static final String CONFIG_KEEP_ORIGINAL_URLS = PID + ".keepOriginalUrls";
+    /**
+     * Use absolute file paths property name.
+     */
+    static final String CONFIG_USE_ABSOLUTE_FILE_PATHS = PID + ".useAbsoluteFilePaths";    
 
 }

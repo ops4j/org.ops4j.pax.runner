@@ -138,13 +138,20 @@ public class PlatformImpl
         LOGGER.debug( "Using working directory [" + workDir + "]" );
         context.setWorkingDirectory( workDir );
         // set file path strategy
-        context.setFilePathStrategy( new RelativeFilePathStrategy( workDir ) );
+        if( configuration.useAbsoluteFilePaths() )
+        {
+            context.setFilePathStrategy( new AbsoluteFilePathStrategy() );
+        }
+        else
+        {
+            context.setFilePathStrategy( new RelativeFilePathStrategy( workDir ) );
+        }
 
         final Boolean overwriteBundles = configuration.isOverwrite();
         final Boolean overwriteUserBundles = configuration.isOverwriteUserBundles();
         final Boolean overwriteSystemBundles = configuration.isOverwriteSystemBundles();
         final Boolean downloadFeeback = configuration.isDownloadFeedback();
-        
+
         LOGGER.info( "Downloading bundles..." );
 
         // download system package

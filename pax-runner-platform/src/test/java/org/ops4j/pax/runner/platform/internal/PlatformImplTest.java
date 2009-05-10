@@ -150,6 +150,7 @@ public class PlatformImplTest
         expect( m_config.isCleanStart() ).andReturn( false );
         expect( m_config.getWorkingDirectory() ).andReturn( m_workDir );
         m_context.setWorkingDirectory( new File( m_workDir ) );
+        expect( m_config.useAbsoluteFilePaths() ).andReturn( false );
         m_context.setFilePathStrategy( (FilePathStrategy) notNull() );
         expect( m_config.isOverwrite() ).andReturn( true );
         expect( m_config.isOverwriteUserBundles() ).andReturn( false );

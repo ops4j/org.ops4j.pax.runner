@@ -522,6 +522,20 @@ public class ConfigurationImpl
     /**
      * {@inheritDoc}
      */
+    public Boolean useAbsoluteFilePaths()
+    {
+        if( !contains( ServiceConstants.CONFIG_USE_ABSOLUTE_FILE_PATHS ) )
+        {
+            return set( ServiceConstants.CONFIG_USE_ABSOLUTE_FILE_PATHS,
+                        Boolean.valueOf( m_propertyResolver.get( ServiceConstants.CONFIG_USE_ABSOLUTE_FILE_PATHS ) )
+            );
+        }
+        return get( ServiceConstants.CONFIG_USE_ABSOLUTE_FILE_PATHS );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public String getProperty( final String name )
     {
         return m_propertyResolver.get( name );
