@@ -510,13 +510,13 @@ public class ConfigurationImpl
      */
     public Boolean keepOriginalUrls()
     {
-        if( !contains( ServiceConstants.CONFIG_USE_ORIGINAL_URLS ) )
+        if( !contains( ServiceConstants.CONFIG_KEEP_ORIGINAL_URLS ) )
         {
-            return set( ServiceConstants.CONFIG_USE_ORIGINAL_URLS,
-                        Boolean.valueOf( m_propertyResolver.get( ServiceConstants.CONFIG_USE_ORIGINAL_URLS ) )
+            return set( ServiceConstants.CONFIG_KEEP_ORIGINAL_URLS,
+                        Boolean.valueOf( m_propertyResolver.get( ServiceConstants.CONFIG_KEEP_ORIGINAL_URLS ) )
             );
         }
-        return get( ServiceConstants.CONFIG_USE_ORIGINAL_URLS );
+        return get( ServiceConstants.CONFIG_KEEP_ORIGINAL_URLS );
     }
 
     /**
@@ -524,7 +524,7 @@ public class ConfigurationImpl
      */
     public String getProperty( final String name )
     {
-        return m_propertyResolver.get( name  );
+        return m_propertyResolver.get( name );
     }
 
 }
