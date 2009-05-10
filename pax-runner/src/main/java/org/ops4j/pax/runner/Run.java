@@ -49,10 +49,11 @@ import org.ops4j.pax.runner.osgi.RunnerBundleContext;
 import org.ops4j.pax.runner.osgi.RunnerStartLevel;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.BundleReferenceBean;
+import org.ops4j.pax.runner.platform.InProcessJavaRunner;
 import org.ops4j.pax.runner.platform.JavaRunner;
-import org.ops4j.pax.runner.platform.ScriptJavaRunner;
 import org.ops4j.pax.runner.platform.Platform;
 import org.ops4j.pax.runner.platform.PlatformException;
+import org.ops4j.pax.runner.platform.ScriptJavaRunner;
 import org.ops4j.pax.runner.platform.SystemFileReference;
 import org.ops4j.pax.runner.platform.SystemFileReferenceBean;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
@@ -140,8 +141,8 @@ public class Run
         );
     }
 
-    
-    public static Log getLogger() {
+    public static Log getLogger()
+    {
         createLogger();
         return LOGGER;
     }
@@ -268,11 +269,15 @@ public class Run
             LOGGER.debug( "Using script executor" );
             return new ScriptJavaRunner();
         }
-
         if( "zip".equalsIgnoreCase( executor ) )
         {
             LOGGER.debug( "Using zip executor" );
             return new ZipJavaRunner();
+        }
+        if( "inProcess".equalsIgnoreCase( executor ) )
+        {
+            LOGGER.debug( "Using in process executor" );
+            return new InProcessJavaRunner();
         }
         throw new ConfigurationException( "Executor [" + executor + "] is not supported" );
     }
@@ -750,13 +755,18 @@ public class Run
         System.out.println( "   /__/     " + debugInfo );
         System.out.println();
 
-        if ( LOGGER == null ) {
+        if( LOGGER == null )
+        {
             // show error even when LOGGER was not initialised
-            System.out.println("Exception catched during execution:");
+            System.out.println( "Exception catched during execution:" );
             t.printStackTrace();
-        } else {
-            if (LOGGER.isDebugEnabled())
+        }
+        else
+        {
+            if( LOGGER.isDebugEnabled() )
+            {
                 LOGGER.error( "Exception catched during execution:", t );
+            }
         }
 
     }
