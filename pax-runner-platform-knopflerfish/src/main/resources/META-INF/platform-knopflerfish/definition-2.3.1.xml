@@ -1,0 +1,28 @@
+<platform>
+
+  <name>Knopflerfish 2.3.1</name>
+  <system>http://www.knopflerfish.org/releases/2.3.1/osgi/framework.jar</system>
+
+  <profile name="minimal" default="true">
+    <bundle>
+      <name>org.osgi.compendium</name>
+      <url>mvn:org.osgi/org.osgi.compendium/4.0.1</url>
+    </bundle>
+  </profile>
+
+  <profile name="tui" extends="minimal">
+    <bundle>
+      <name>org.knopflerfish.bundle.console</name>
+      <url>http://www.knopflerfish.org/releases/2.3.1/osgi/jars/console/console_all-2.0.1.jar</url>
+    </bundle>
+    <bundle>
+      <name>org.knopflerfish.bundle.consoletty</name>
+      <url>http://www.knopflerfish.org/releases/2.3.1/osgi/jars/consoletty/consoletty-2.0.0.jar</url>
+    </bundle>
+    <bundle>
+      <name>org.knopflerfish.bundle.frameworkcommands</name>
+      <url>http://www.knopflerfish.org/releases/2.3.1/osgi/jars/frameworkcommands/frameworkcommands-2.0.5.jar</url>
+    </bundle>
+  </profile>
+
+</platform>
