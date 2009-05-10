@@ -23,12 +23,14 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.net.URLStreamHandlerFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.pax.runner.commons.Info;
+import org.ops4j.pax.runner.handler.internal.URLUtils;
 
 /**
  * In process Java Runner. No external process will be started.
@@ -80,6 +82,7 @@ public class InProcessJavaRunner
 
         final ClassLoader tcclBackup = Thread.currentThread().getContextClassLoader();
         final Properties systemPropsBackup = System.getProperties();
+        final URLStreamHandlerFactory handlerFactoryBackup = URLUtils.resetURLStreamHandlerFactory();
         try
         {
             Thread.currentThread().setContextClassLoader( classLoader );
@@ -111,6 +114,7 @@ public class InProcessJavaRunner
         }
         finally
         {
+            URLUtils.setURLStreamHandlerFactory( handlerFactoryBackup );
             System.setProperties( systemPropsBackup );
             Thread.currentThread().setContextClassLoader( tcclBackup );
         }
