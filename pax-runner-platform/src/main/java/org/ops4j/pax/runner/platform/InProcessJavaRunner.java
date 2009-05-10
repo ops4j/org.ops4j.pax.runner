@@ -75,38 +75,9 @@ public class InProcessJavaRunner
         }
         m_frameworkActive = true;
 
-        final List<URL> classpathUrls = new ArrayList<URL>();
-        for( String path : classpath )
-        {
-            try
-            {
-                classpathUrls.add( new File( path ).toURL() );
-            }
-            catch( MalformedURLException e )
-            {
-                throw new PlatformException( "Cannot setup target framework classpath", e );
-            }
-        }
+        final URLClassLoader classLoader = createClassLoader( classpath );
+        final Properties systemProps = extractSystemProperties( vmOptions );
 
-        final Properties systemProps = new Properties();
-        systemProps.putAll( System.getProperties() );
-        for( String vmOption : vmOptions )
-        {
-            if( vmOption.startsWith( "-D" ) && vmOption.length() > 3 && vmOption.contains( "=" ) )
-            {
-                String[] segments = vmOption.substring( 2 ).split( "=" );
-                systemProps.setProperty( segments[ 0 ], segments[ 1 ] );
-            }
-            else
-            {
-                LOG.warn( "VM option [" + vmOption + "] cannot be used" );
-            }
-        }
-
-        final URLClassLoader classLoader = new URLClassLoader(
-            classpathUrls.toArray( new URL[classpathUrls.size()] ),
-            this.getClass().getClassLoader().getParent()
-        );
         final ClassLoader tcclBackup = Thread.currentThread().getContextClassLoader();
         final Properties systemPropsBackup = System.getProperties();
         try
@@ -143,6 +114,65 @@ public class InProcessJavaRunner
             System.setProperties( systemPropsBackup );
             Thread.currentThread().setContextClassLoader( tcclBackup );
         }
+    }
+
+    /**
+     * Creates the clasloader to usefor loading the framework main class.
+     *
+     * @param classpath classpath entries
+     *
+     * @return classloader
+     *
+     * @throws PlatformException if classpath entries cannot be converted to urls
+     */
+    private static URLClassLoader createClassLoader( final String[] classpath )
+        throws PlatformException
+    {
+        final List<URL> classpathUrls = new ArrayList<URL>();
+        if( classpath != null )
+        {
+            for( String path : classpath )
+            {
+                try
+                {
+                    classpathUrls.add( new File( path ).toURL() );
+                }
+                catch( MalformedURLException e )
+                {
+                    throw new PlatformException( "Cannot setup target framework classpath", e );
+                }
+            }
+        }
+        return new URLClassLoader(
+            classpathUrls.toArray( new URL[classpathUrls.size()] ),
+            InProcessJavaRunner.class.getClassLoader().getParent()
+        );
+    }
+
+    /**
+     * Extract from provided virtual machine options the system properties = vm option sthat start with -D.
+     *
+     * @param vmOptions virtual machine options
+     *
+     * @return current system properties + configured system properties
+     */
+    private static Properties extractSystemProperties( final String[] vmOptions )
+    {
+        final Properties systemProps = new Properties();
+        systemProps.putAll( System.getProperties() );
+        for( String vmOption : vmOptions )
+        {
+            if( vmOption.startsWith( "-D" ) && vmOption.length() > 3 && vmOption.contains( "=" ) )
+            {
+                String[] segments = vmOption.substring( 2 ).split( "=" );
+                systemProps.setProperty( segments[ 0 ], segments[ 1 ] );
+            }
+            else
+            {
+                LOG.warn( "VM option [" + vmOption + "] cannot be used" );
+            }
+        }
+        return systemProps;
     }
 
 }
