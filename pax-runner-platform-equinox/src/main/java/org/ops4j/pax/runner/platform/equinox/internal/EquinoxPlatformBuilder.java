@@ -169,7 +169,10 @@ public class EquinoxPlatformBuilder
             // It is not supposed to be set by user (pax runner) but if this is not set relative urls used for bundles
             // to be installed are calculated relative to "runner/bundles" instead of user dir = "runner"
             {
-                writer.append( PROP_SYSPATH, context.normalizeAsPath( context.getWorkingDirectory() ) );
+                writer.append(
+                    PROP_SYSPATH,
+                    context.getFilePathStrategy().normalizeAsPath( context.getWorkingDirectory() )
+                );
             }
             // avoid automatic exit of framework in case that there is no console and not non daemon thrad is active
             {
@@ -402,7 +405,7 @@ public class EquinoxPlatformBuilder
             {
                 builder.append( "reference:" );
             }
-            builder.append( context.normalizeAsUrl( url ) );
+            builder.append( context.getFilePathStrategy().normalizeAsUrl( url ) );
 
             final Integer startLevel = reference.getStartLevel();
             if( startLevel != null )
@@ -469,12 +472,16 @@ public class EquinoxPlatformBuilder
             arguments.add( ARG_CONSOLE );
         }
         arguments.add( ARG_CONFIGURATION );
-        arguments.add( context.normalizeAsPath( new File( workingDirectory, CONFIG_DIRECTORY ) ) );
+        arguments.add(
+            context.getFilePathStrategy().normalizeAsPath( new File( workingDirectory, CONFIG_DIRECTORY ) )
+        );
         if( isOptionsFileNeeded( context.getConfiguration() ) )
         {
             arguments.add( ARG_DEBUG );
             arguments.add(
-                context.normalizeAsPath( new File( new File( workingDirectory, CONFIG_DIRECTORY ), OPTIONS ) )
+                context.getFilePathStrategy().normalizeAsPath(
+                    new File( new File( workingDirectory, CONFIG_DIRECTORY ), OPTIONS )
+                )
             );
         }
         return arguments.toArray( new String[arguments.size()] );
@@ -492,7 +499,9 @@ public class EquinoxPlatformBuilder
         final Collection<String> vmOptions = new ArrayList<String>();
         vmOptions.add(
             "-D" + PROP_INSTALL_AREA + "="
-            + context.normalizeAsPath( new File( context.getWorkingDirectory(), CONFIG_DIRECTORY ) )
+            + context.getFilePathStrategy().normalizeAsPath(
+                new File( context.getWorkingDirectory(), CONFIG_DIRECTORY )
+            )
         );
         return vmOptions.toArray( new String[vmOptions.size()] );
     }

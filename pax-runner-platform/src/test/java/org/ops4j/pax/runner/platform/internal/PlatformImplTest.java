@@ -34,6 +34,7 @@ import org.ops4j.io.FileUtils;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.BundleReferenceBean;
 import org.ops4j.pax.runner.platform.Configuration;
+import org.ops4j.pax.runner.platform.FilePathStrategy;
 import org.ops4j.pax.runner.platform.JavaRunner;
 import org.ops4j.pax.runner.platform.PlatformBuilder;
 import org.ops4j.pax.runner.platform.PlatformContext;
@@ -141,6 +142,7 @@ public class PlatformImplTest
         javaRunner.exec( (String[]) notNull(), (String[]) notNull(), (String) notNull(), (String[]) notNull(),
                          (String) notNull(), (File) notNull()
         );
+        final FilePathStrategy filePathStrategy = createMock( FilePathStrategy.class );
 
         expect( m_builder.getMainClassName() ).andReturn( "Main" );
         m_context.setProperties( null );
@@ -148,6 +150,7 @@ public class PlatformImplTest
         expect( m_config.isCleanStart() ).andReturn( false );
         expect( m_config.getWorkingDirectory() ).andReturn( m_workDir );
         m_context.setWorkingDirectory( new File( m_workDir ) );
+        m_context.setFilePathStrategy( (FilePathStrategy) notNull() );
         expect( m_config.isOverwrite() ).andReturn( true );
         expect( m_config.isOverwriteUserBundles() ).andReturn( false );
         expect( m_config.isOverwriteSystemBundles() ).andReturn( false );
@@ -172,7 +175,8 @@ public class PlatformImplTest
         expect( m_config.getExecutionEnvironment() ).andReturn( "NONE" );
         expect( m_config.getSystemPackages() ).andReturn( null );
         expect( m_config.getVMOptions() ).andReturn( new String[]{ "-Xmx512m", "-Xms128m" } );
-        expect( m_context.normalizeAsPath( (File) notNull() ) ).andReturn( null );
+        expect( m_context.getFilePathStrategy() ).andReturn( filePathStrategy );
+        expect( filePathStrategy.normalizeAsPath( (File) notNull() ) ).andReturn( null );
         expect( ( m_definition.getPackages() ) ).andReturn( null );
         m_context.setSystemPackages( "" );
         m_context.setExecutionEnvironment( "" );
@@ -180,9 +184,9 @@ public class PlatformImplTest
         expect( m_config.getClasspath() ).andReturn( "" );
         expect( m_builder.getArguments( m_context ) ).andReturn( new String[]{ "arg1" } );
 
-        replay( m_builder, m_definition, m_config, m_context, m_bundleContext, m_bundle, javaRunner );
+        replay( m_builder, m_definition, m_config, m_context, m_bundleContext, m_bundle, javaRunner, filePathStrategy );
         new TestPlatform().start( null, bundles, null, null, javaRunner );
-        verify( m_builder, m_definition, m_config, m_context, m_bundleContext, m_bundle, javaRunner );
+        verify( m_builder, m_definition, m_config, m_context, m_bundleContext, m_bundle, javaRunner, filePathStrategy );
     }
 
     @Test( expected = PlatformException.class )

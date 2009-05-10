@@ -39,6 +39,7 @@ import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
 import org.ops4j.pax.runner.platform.internal.PlatformContextImpl;
+import org.ops4j.pax.runner.platform.internal.RelativeFilePathStrategy;
 
 public class KnopflerfishPlatformBuilderTest
 {
@@ -62,6 +63,7 @@ public class KnopflerfishPlatformBuilderTest
         m_platformContext = new PlatformContextImpl();
         m_platformContext.setConfiguration( m_configuration );
         m_platformContext.setWorkingDirectory( m_workDir );
+        m_platformContext.setFilePathStrategy( new RelativeFilePathStrategy( m_workDir ) );
     }
 
     @After
@@ -130,7 +132,7 @@ public class KnopflerfishPlatformBuilderTest
             "Arguments",
             new String[]{
                 "-xargs",
-                m_platformContext.normalizeAsUrl( new File( m_workDir, "knopflerfish/config.ini" ) ),
+                m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "knopflerfish/config.ini" ) ),
             },
             new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).getArguments( m_platformContext )
         );
@@ -145,7 +147,7 @@ public class KnopflerfishPlatformBuilderTest
             "System properties",
             new String[]{
                 "-Dorg.osgi.framework.dir="
-                + m_platformContext.normalizeAsPath( new File( m_workDir, "knopflerfish/fwdir" ) )
+                + m_platformContext.getFilePathStrategy().normalizeAsPath( new File( m_workDir, "knopflerfish/fwdir" ) )
             },
             new KnopflerfishPlatformBuilder( m_bundleContext, "version" ).getVMOptions( m_platformContext )
         );
@@ -259,19 +261,19 @@ public class KnopflerfishPlatformBuilderTest
         Map<String, String> replacements = new HashMap<String, String>();
         replacements.put(
             "${bundle1.path}",
-            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle1.jar" ) )
+            m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "bundles/bundle1.jar" ) )
         );
         replacements.put(
             "${bundle2.path}",
-            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle2.jar" ) )
+            m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "bundles/bundle2.jar" ) )
         );
         replacements.put(
             "${bundle3.path}",
-            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle3.jar" ) )
+            m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "bundles/bundle3.jar" ) )
         );
         replacements.put(
             "${bundle4.path}",
-            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle4.jar" ) )
+            m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "bundles/bundle4.jar" ) )
         );
 
         compareFiles(

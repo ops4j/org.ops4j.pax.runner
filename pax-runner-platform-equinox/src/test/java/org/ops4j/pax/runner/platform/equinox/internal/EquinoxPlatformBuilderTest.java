@@ -39,6 +39,7 @@ import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
 import org.ops4j.pax.runner.platform.internal.PlatformContextImpl;
+import org.ops4j.pax.runner.platform.internal.RelativeFilePathStrategy;
 
 public class EquinoxPlatformBuilderTest
 {
@@ -62,6 +63,7 @@ public class EquinoxPlatformBuilderTest
         m_platformContext = new PlatformContextImpl();
         m_platformContext.setConfiguration( m_configuration );
         m_platformContext.setWorkingDirectory( m_workDir );
+        m_platformContext.setFilePathStrategy( new RelativeFilePathStrategy( m_workDir ) );
     }
 
     @After
@@ -117,7 +119,7 @@ public class EquinoxPlatformBuilderTest
             new String[]{
                 "-console",
                 "-configuration",
-                m_platformContext.normalizeAsPath( new File( m_workDir, "equinox" ) )
+                m_platformContext.getFilePathStrategy().normalizeAsPath( new File( m_workDir, "equinox" ) )
             },
             new EquinoxPlatformBuilder( m_bundleContext, "version" ).getArguments( m_platformContext )
         );
@@ -135,7 +137,7 @@ public class EquinoxPlatformBuilderTest
             "Arguments",
             new String[]{
                 "-configuration",
-                m_platformContext.normalizeAsPath( new File( m_workDir, "equinox" ) )
+                m_platformContext.getFilePathStrategy().normalizeAsPath( new File( m_workDir, "equinox" ) )
             },
             new EquinoxPlatformBuilder( m_bundleContext, "version" ).getArguments( m_platformContext )
         );
@@ -153,7 +155,7 @@ public class EquinoxPlatformBuilderTest
             "Arguments",
             new String[]{
                 "-configuration",
-                m_platformContext.normalizeAsPath( new File( m_workDir, "equinox" ) )
+                m_platformContext.getFilePathStrategy().normalizeAsPath( new File( m_workDir, "equinox" ) )
             },
             new EquinoxPlatformBuilder( m_bundleContext, "version" ).getArguments( m_platformContext )
         );
@@ -176,7 +178,7 @@ public class EquinoxPlatformBuilderTest
             "System options",
             new String[]{
                 "-Dosgi.install.area="
-                + m_platformContext.normalizeAsPath( new File( m_workDir, "equinox" ) )
+                + m_platformContext.getFilePathStrategy().normalizeAsPath( new File( m_workDir, "equinox" ) )
             },
             new EquinoxPlatformBuilder( m_bundleContext, "version" ).getVMOptions( m_platformContext )
         );
@@ -226,7 +228,7 @@ public class EquinoxPlatformBuilderTest
         verify( m_bundleContext, m_configuration );
 
         Map<String, String> replacements = new HashMap<String, String>();
-        replacements.put( "${sys.path}", m_platformContext.normalizeAsPath( m_workDir ) );
+        replacements.put( "${sys.path}", m_platformContext.getFilePathStrategy().normalizeAsPath( m_workDir ) );
         compareFiles(
             FileUtils.getFileFromClasspath( "equinoxplatformbuilder/configWithNoBundles.ini" ),
             new File( m_workDir + "/equinox/config.ini" ),
@@ -289,18 +291,18 @@ public class EquinoxPlatformBuilderTest
         );
 
         Map<String, String> replacements = new HashMap<String, String>();
-        replacements.put( "${sys.path}", m_platformContext.normalizeAsPath( m_workDir ) );
+        replacements.put( "${sys.path}", m_platformContext.getFilePathStrategy().normalizeAsPath( m_workDir ) );
         replacements.put(
             "${bundle1.path}",
-            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle1.jar" ) )
+            m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "bundles/bundle1.jar" ) )
         );
         replacements.put(
             "${bundle2.path}",
-            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle2.jar" ) )
+            m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "bundles/bundle2.jar" ) )
         );
         replacements.put(
             "${bundle3.path}",
-            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle3.jar" ) )
+            m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "bundles/bundle3.jar" ) )
         );
 
         compareFiles(

@@ -136,7 +136,10 @@ public class ConciergePlatformBuilder
             writer.append( "#############################" );
             writer
                 .append( "-D" + Constants.FRAMEWORK_SYSTEMPACKAGES, context.getSystemPackages() )
-                .append( "-Dch.ethz.iks.concierge.basedir", context.normalizeAsPath( configDirectory ) );
+                .append(
+                    "-Dch.ethz.iks.concierge.basedir",
+                    context.getFilePathStrategy().normalizeAsPath( configDirectory )
+                );
             // clean start ?
             final Boolean usePersistedState = configuration.usePersistedState();
             if( usePersistedState != null && !usePersistedState )
@@ -252,7 +255,7 @@ public class ConciergePlatformBuilder
                 bundlesAsStrings = new ArrayList<String>();
                 bundlesPerStartlevel.put( startLevel, bundlesAsStrings );
             }
-            bundlesAsStrings.add( propertyName + context.normalizeAsUrl( bundleFile ) );
+            bundlesAsStrings.add( propertyName + context.getFilePathStrategy().normalizeAsUrl( bundleFile ) );
         }
         for( Map.Entry<Integer, List<String>> entry : bundlesPerStartlevel.entrySet() )
         {
@@ -319,7 +322,9 @@ public class ConciergePlatformBuilder
         );
         vmOptions.add(
             "-Dxargs="
-            + context.normalizeAsPath( new File( new File( workingDirectory, CONFIG_DIRECTORY ), CONFIG_INI ) )
+            + context.getFilePathStrategy().normalizeAsPath(
+                new File( new File( workingDirectory, CONFIG_DIRECTORY ), CONFIG_INI )
+            )
         );
         final String bootDelegation = context.getConfiguration().getBootDelegation();
         if( bootDelegation != null )

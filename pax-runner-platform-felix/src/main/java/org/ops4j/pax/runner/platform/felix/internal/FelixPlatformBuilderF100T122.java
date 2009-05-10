@@ -298,7 +298,7 @@ public class FelixPlatformBuilderF100T122
             }
             // PAXRUNNER-41
             // url of the file must be quoted otherwise will be considered as two separated files by Felix
-            writer.append( propertyName.toString(), "\"" + context.normalizeAsUrl( url ) + "\"" );
+            writer.append( propertyName.toString(), "\"" + context.getFilePathStrategy().normalizeAsUrl( url ) + "\"" );
         }
     }
 
@@ -351,11 +351,15 @@ public class FelixPlatformBuilderF100T122
         final File workingDirectory = context.getWorkingDirectory();
         vmOptions.add(
             "-Dfelix.config.properties=" +
-            context.normalizeAsUrl( new File( new File( workingDirectory, CONFIG_DIRECTORY ), CONFIG_INI ) )
+            context.getFilePathStrategy().normalizeAsUrl(
+                new File( new File( workingDirectory, CONFIG_DIRECTORY ), CONFIG_INI )
+            )
         );
         vmOptions.add(
             "-Dfelix.cache.dir="
-            + context.normalizeAsPath( new File( new File( workingDirectory, CONFIG_DIRECTORY ), CACHE_DIRECTORY ) )
+            + context.getFilePathStrategy().normalizeAsPath(
+                new File( new File( workingDirectory, CONFIG_DIRECTORY ), CACHE_DIRECTORY )
+            )
         );
         final Properties frameworkProperties = context.getProperties();
         if( frameworkProperties != null )

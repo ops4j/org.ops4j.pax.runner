@@ -316,7 +316,7 @@ public class KnopflerfishPlatformBuilder
                 bundlesList = new ArrayList<String>();
                 bundlesMap.put( startLevel, bundlesList );
             }
-            bundlesList.add( propertyName + context.normalizeAsUrl( url ) );
+            bundlesList.add( propertyName + context.getFilePathStrategy().normalizeAsUrl( url ) );
         }
         for( Map.Entry<Integer, List<String>> entry : bundlesMap.entrySet() )
         {
@@ -364,7 +364,7 @@ public class KnopflerfishPlatformBuilder
         NullArgumentException.validateNotNull( context, "Platform context" );
         return new String[]{
             "-xargs",
-            context.normalizeAsUrl(
+            context.getFilePathStrategy().normalizeAsUrl(
                 new File( new File( context.getWorkingDirectory(), CONFIG_DIRECTORY ), CONFIG_INI )
             )
         };
@@ -381,7 +381,9 @@ public class KnopflerfishPlatformBuilder
         final File workingDirectory = context.getWorkingDirectory();
         vmOptions.add(
             "-Dorg.osgi.framework.dir="
-            + context.normalizeAsPath( new File( new File( workingDirectory, CONFIG_DIRECTORY ), CACHE_DIRECTORY ) )
+            + context.getFilePathStrategy().normalizeAsPath(
+                new File( new File( workingDirectory, CONFIG_DIRECTORY ), CACHE_DIRECTORY )
+            )
         );
         return vmOptions.toArray( new String[vmOptions.size()] );
     }

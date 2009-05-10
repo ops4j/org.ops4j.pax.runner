@@ -137,10 +137,14 @@ public class PlatformImpl
         final File workDir = mandatory( "Working dir", createWorkingDir( configuration.getWorkingDirectory() ) );
         LOGGER.debug( "Using working directory [" + workDir + "]" );
         context.setWorkingDirectory( workDir );
+        // set file path strategy
+        context.setFilePathStrategy( new RelativeFilePathStrategy( workDir ) );
+
         final Boolean overwriteBundles = configuration.isOverwrite();
         final Boolean overwriteUserBundles = configuration.isOverwriteUserBundles();
         final Boolean overwriteSystemBundles = configuration.isOverwriteSystemBundles();
         final Boolean downloadFeeback = configuration.isDownloadFeedback();
+        
         LOGGER.info( "Downloading bundles..." );
 
         // download system package
@@ -277,7 +281,7 @@ public class PlatformImpl
                 {
                     prepend.append( File.pathSeparator );
                 }
-                prepend.append( context.normalizeAsPath( ref.getFile() ) );
+                prepend.append( context.getFilePathStrategy().normalizeAsPath( ref.getFile() ) );
             }
             else
             {
@@ -285,7 +289,7 @@ public class PlatformImpl
                 {
                     append.append( File.pathSeparator );
                 }
-                append.append( context.normalizeAsPath( ref.getFile() ) );
+                append.append( context.getFilePathStrategy().normalizeAsPath( ref.getFile() ) );
             }
         }
         if( prepend.length() != 0 )
@@ -298,7 +302,7 @@ public class PlatformImpl
         }
         final StringBuilder classPath = new StringBuilder();
         classPath.append( prepend );
-        classPath.append( context.normalizeAsPath( systemFile ) );
+        classPath.append( context.getFilePathStrategy().normalizeAsPath( systemFile ) );
         classPath.append( append );
         classPath.append( configuration.getClasspath() );
 

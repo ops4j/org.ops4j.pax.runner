@@ -40,6 +40,7 @@ import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
 import org.ops4j.pax.runner.platform.internal.PlatformContextImpl;
+import org.ops4j.pax.runner.platform.internal.RelativeFilePathStrategy;
 
 public class ConciergePlatformBuilderTest
 {
@@ -63,6 +64,7 @@ public class ConciergePlatformBuilderTest
         m_platformContext = new PlatformContextImpl();
         m_platformContext.setConfiguration( m_configuration );
         m_platformContext.setWorkingDirectory( m_workDir );
+        m_platformContext.setFilePathStrategy( new RelativeFilePathStrategy( m_workDir ) );
     }
 
     @After
@@ -146,7 +148,9 @@ public class ConciergePlatformBuilderTest
             new String[]{
                 "-Dosgi.maxLevel=100",
                 "-Dxargs=" +
-                m_platformContext.normalizeAsPath( new File( m_workDir, "concierge/config.ini" ) ),
+                m_platformContext.getFilePathStrategy().normalizeAsPath(
+                    new File( m_workDir, "concierge/config.ini" )
+                ),
                 "-D" + Constants.FRAMEWORK_BOOTDELEGATION + "=javax.*"
             },
             new ConciergePlatformBuilder( m_bundleContext, "version" ).getVMOptions( m_platformContext )
@@ -165,7 +169,7 @@ public class ConciergePlatformBuilderTest
             new String[]{
                 "-Dosgi.maxLevel=100",
                 "-Dxargs=" +
-                m_platformContext.normalizeAsPath( new File( m_workDir, "concierge/config.ini" ) )
+                m_platformContext.getFilePathStrategy().normalizeAsPath( new File( m_workDir, "concierge/config.ini" ) )
 
             },
             new ConciergePlatformBuilder( m_bundleContext, "version" ).getVMOptions( m_platformContext )
@@ -213,7 +217,7 @@ public class ConciergePlatformBuilderTest
         Map<String, String> replacements = new HashMap<String, String>();
         replacements.put(
             "${basedir.path}",
-            m_platformContext.normalizeAsPath( new File( m_workDir, "concierge" ) )
+            m_platformContext.getFilePathStrategy().normalizeAsPath( new File( m_workDir, "concierge" ) )
         );
 
         compareFiles(
@@ -282,23 +286,23 @@ public class ConciergePlatformBuilderTest
         Map<String, String> replacements = new HashMap<String, String>();
         replacements.put(
             "${basedir.path}",
-            m_platformContext.normalizeAsPath( new File( m_workDir, "concierge" ) )
+            m_platformContext.getFilePathStrategy().normalizeAsPath( new File( m_workDir, "concierge" ) )
         );
         replacements.put(
             "${bundle1.path}",
-            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle1.jar" ) )
+            m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "bundles/bundle1.jar" ) )
         );
         replacements.put(
             "${bundle2.path}",
-            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle2.jar" ) )
+            m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "bundles/bundle2.jar" ) )
         );
         replacements.put(
             "${bundle3.path}",
-            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle3.jar" ) )
+            m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "bundles/bundle3.jar" ) )
         );
         replacements.put(
             "${bundle4.path}",
-            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle4.jar" ) )
+            m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "bundles/bundle4.jar" ) )
         );
 
         compareFiles(

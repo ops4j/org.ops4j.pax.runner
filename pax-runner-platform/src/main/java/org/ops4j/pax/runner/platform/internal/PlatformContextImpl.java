@@ -18,21 +18,16 @@
 package org.ops4j.pax.runner.platform.internal;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 import java.util.Properties;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
+import org.ops4j.pax.runner.platform.FilePathStrategy;
 import org.ops4j.pax.runner.platform.PlatformContext;
 
 public class PlatformContextImpl
     implements PlatformContext
 {
-
-    private static Log LOG = LogFactory.getLog( PlatformContextImpl.class );
 
     private List<BundleReference> m_bundles;
     private File m_workingDirectory;
@@ -40,6 +35,7 @@ public class PlatformContextImpl
     private String m_systemPackages;
     private Configuration m_configuration;
     private String m_executionEnvironment;
+    private FilePathStrategy m_filePathStrategy;
 
     /**
      * {@inheritDoc}
@@ -140,67 +136,17 @@ public class PlatformContextImpl
     /**
      * {@inheritDoc}
      */
-    public String normalizeAsPath( final File file )
+    public FilePathStrategy getFilePathStrategy()
     {
-        return normalizePath( getWorkingDirectory(), file );
+        return m_filePathStrategy;
     }
 
     /**
      * {@inheritDoc}
      */
-    public String normalizeAsUrl( final File file )
+    public void setFilePathStrategy( final FilePathStrategy filePathStrategy )
     {
-        return "file:" + normalizePath( getWorkingDirectory(), file );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public String normalizeAsUrl( final URL url )
-    {
-        if( "file".equals( url.getProtocol() ) )
-        {
-            return "file:" + normalizePath( getWorkingDirectory(), new File( url.getFile() ) );
-        }
-        return url.toExternalForm();
-    }
-
-    /**
-     * Here we finally decide on actual paths showing up in generated config files and commandline args.
-     *
-     * @param baseFolder folder to be used. This is what we will cut off.
-     * @param file       to be normalized.
-     *
-     * @return if file is a child of base then we will return the relative path. If not, the full path of file will be returned.
-     */
-    private String normalizePath( final File baseFolder, final File file )
-    {
-        String out = file.getAbsolutePath();
-        try
-        {
-            if( baseFolder.equals( file ) )
-            {
-                out = ".";
-            }
-            else
-            {
-                String s1 = baseFolder.getCanonicalPath();
-                String s2 = file.getCanonicalPath();
-                if( s2.startsWith( s1 ) )
-                {
-                    out = s2.substring( s1.length() + 1 );
-                }
-                else
-                {
-                    out = s2;
-                }
-            }
-        }
-        catch( IOException e )
-        {
-            LOG.warn( "problem during normalizing path.", e );
-        }
-        return out.replace( File.separatorChar, '/' );
+        m_filePathStrategy = filePathStrategy;
     }
 
 }

@@ -20,7 +20,6 @@ package org.ops4j.pax.runner.platform;
 import java.io.File;
 import java.util.List;
 import java.util.Properties;
-import java.net.URL;
 
 /**
  * PlatformImpl start context.
@@ -119,32 +118,17 @@ public interface PlatformContext
     String getExecutionEnvironment();
 
     /**
-     * Returns the file in relative form (compared to working directory)
+     * Sets the file path strategy in use.
      *
-     * @param file file to normalize
-     *
-     * @return the file in relative form (compared to working directory)
+     * @param filePathStrategy file path strategy
      */
-    String normalizeAsPath( File file );
+    void setFilePathStrategy( FilePathStrategy filePathStrategy );
 
     /**
-     * Returns the file in relative form as url (compared to working directory)
+     * Returns the file path strategy in use.
      *
-     * @param file file to normalize
-     *
-     * @return the file in relative form as url (compared to working directory)
+     * @return file path strategy
      */
-    String normalizeAsUrl( File file );
-
-    /**
-     * Returns the url in relative form as url (compared to working directory).
-     * The normalization is done only in case that the url is a file url.
-     *
-     * @param url url to normalize
-     *
-     * @return the url in relative form as url (compared to working directory)
-     */
-    String normalizeAsUrl( URL url );    
-
+    FilePathStrategy getFilePathStrategy();
 
 }

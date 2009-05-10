@@ -144,8 +144,9 @@ public class FelixPlatformBuilderF140T141
             // storage directory
             {
                 final File cacheDirectory = new File( configDirectory, CACHE_DIRECTORY );
-                writer.append( "org.osgi.framework.storage",
-                               context.normalizeAsPath( cacheDirectory ).replace( File.separatorChar, '/' )
+                writer.append(
+                    "org.osgi.framework.storage",
+                    context.getFilePathStrategy().normalizeAsPath( cacheDirectory ).replace( File.separatorChar, '/' )
                 );
             }
             // framework start level
@@ -295,7 +296,7 @@ public class FelixPlatformBuilderF140T141
             }
             // PAXRUNNER-41
             // url of the file must be quoted otherwise will be considered as two separated files by Felix
-            writer.append( propertyName.toString(), "\"" + context.normalizeAsUrl( url ) + "\"" );
+            writer.append( propertyName.toString(), "\"" + context.getFilePathStrategy().normalizeAsUrl( url ) + "\"" );
         }
     }
 
@@ -348,7 +349,9 @@ public class FelixPlatformBuilderF140T141
         final File workingDirectory = context.getWorkingDirectory();
         vmOptions.add(
             "-Dfelix.config.properties=" +
-            context.normalizeAsUrl( new File( new File( workingDirectory, CONFIG_DIRECTORY ), CONFIG_INI ) )
+            context.getFilePathStrategy().normalizeAsUrl(
+                new File( new File( workingDirectory, CONFIG_DIRECTORY ), CONFIG_INI )
+            )
         );
         final Properties frameworkProperties = context.getProperties();
         if( frameworkProperties != null )

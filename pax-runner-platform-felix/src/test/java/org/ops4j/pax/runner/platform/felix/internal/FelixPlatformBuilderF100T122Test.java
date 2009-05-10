@@ -36,6 +36,7 @@ import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.PlatformContext;
 import org.ops4j.pax.runner.platform.PlatformException;
 import org.ops4j.pax.runner.platform.internal.PlatformContextImpl;
+import org.ops4j.pax.runner.platform.internal.RelativeFilePathStrategy;
 
 public class FelixPlatformBuilderF100T122Test
 {
@@ -59,6 +60,7 @@ public class FelixPlatformBuilderF100T122Test
         m_platformContext = new PlatformContextImpl();
         m_platformContext.setConfiguration( m_configuration );
         m_platformContext.setWorkingDirectory( m_workDir );
+        m_platformContext.setFilePathStrategy( new RelativeFilePathStrategy( m_workDir ) );
     }
 
     @After
@@ -134,9 +136,9 @@ public class FelixPlatformBuilderF100T122Test
             "System options",
             new String[]{
                 "-Dfelix.config.properties="
-                + m_platformContext.normalizeAsUrl( new File( m_workDir, "/felix/config.ini" ) ),
+                + m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "/felix/config.ini" ) ),
                 "-Dfelix.cache.dir="
-                + m_platformContext.normalizeAsPath( new File( m_workDir, "felix/cache" ) )
+                + m_platformContext.getFilePathStrategy().normalizeAsPath( new File( m_workDir, "felix/cache" ) )
             },
             new FelixPlatformBuilderF100T122( m_bundleContext, "version" ).getVMOptions( m_platformContext )
         );
@@ -146,7 +148,7 @@ public class FelixPlatformBuilderF100T122Test
     @Test
     public void getVMOptionsWithFrameworkProperties()
     {
-        final Properties props = new Properties( );
+        final Properties props = new Properties();
         props.setProperty( "p1", "v1" );
         props.setProperty( "p2", "v2" );
         m_platformContext.setProperties( props );
@@ -156,9 +158,9 @@ public class FelixPlatformBuilderF100T122Test
             "System options",
             new String[]{
                 "-Dfelix.config.properties="
-                + m_platformContext.normalizeAsUrl( new File( m_workDir, "/felix/config.ini" ) ),
+                + m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "/felix/config.ini" ) ),
                 "-Dfelix.cache.dir="
-                + m_platformContext.normalizeAsPath( new File( m_workDir, "felix/cache" ) ),
+                + m_platformContext.getFilePathStrategy().normalizeAsPath( new File( m_workDir, "felix/cache" ) ),
                 "-Dp2=v2",
                 "-Dp1=v1"
             },
@@ -278,19 +280,19 @@ public class FelixPlatformBuilderF100T122Test
         Map<String, String> replacements = new HashMap<String, String>();
         replacements.put(
             "${bundle1.path}",
-            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle1.jar" ) )
+            m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "bundles/bundle1.jar" ) )
         );
         replacements.put(
             "${bundle2.path}",
-            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle2.jar" ) )
+            m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "bundles/bundle2.jar" ) )
         );
         replacements.put(
             "${bundle3.path}",
-            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle3.jar" ) )
+            m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "bundles/bundle3.jar" ) )
         );
         replacements.put(
             "${bundle4.path}",
-            m_platformContext.normalizeAsUrl( new File( m_workDir, "bundles/bundle4.jar" ) )
+            m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "bundles/bundle4.jar" ) )
         );
 
         Utils.compareFiles(
