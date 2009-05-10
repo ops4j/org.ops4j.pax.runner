@@ -56,6 +56,7 @@ import org.ops4j.pax.runner.platform.PlatformException;
 import org.ops4j.pax.runner.platform.ScriptJavaRunner;
 import org.ops4j.pax.runner.platform.SystemFileReference;
 import org.ops4j.pax.runner.platform.SystemFileReferenceBean;
+import org.ops4j.pax.runner.platform.ZipJavaRunner;
 import org.ops4j.pax.runner.provision.MalformedSpecificationException;
 import org.ops4j.pax.runner.provision.ProvisionService;
 import org.ops4j.pax.runner.provision.ScannedBundle;
