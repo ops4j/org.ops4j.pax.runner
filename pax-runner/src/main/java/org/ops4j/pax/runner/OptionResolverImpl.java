@@ -23,6 +23,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.lang.NullArgumentException;
+import static org.ops4j.pax.runner.CommandLine.*;
 import org.ops4j.pax.runner.commons.Info;
 import org.ops4j.pax.url.mvn.ServiceConstants;
 
@@ -86,26 +87,41 @@ public class OptionResolverImpl
     public String get( final String name )
     {
         final String result = getInternal( name );
-        if( !name.equalsIgnoreCase( ServiceConstants.PROPERTY_REPOSITORIES )
-            || ( result != null && !( result.trim().startsWith( "+" ) ) ) )
+        // resolve some omplicit options
+
+        // if using profiles pax runner repository is automatically added
+        if( name.equalsIgnoreCase( ServiceConstants.PROPERTY_REPOSITORIES )
+            && ( result == null || result.trim().startsWith( "+" ) ) )
         {
-            return result;
+            final String profiles = get( OPTION_PROFILES );
+            if( profiles == null || profiles.trim().length() == 0 )
+            {
+                return result;
+            }
+            final String profilesRepo = get( OPTION_PROFILES_REPO );
+            if( profilesRepo == null || profilesRepo.trim().length() == 0 )
+            {
+                return result;
+            }
+            if( result == null || result.trim().length() == 0 )
+            {
+                return "+" + profilesRepo;
+            }
+            return result + "," + profilesRepo;
         }
-        final String profiles = get( CommandLine.OPTION_PROFILES );
-        if( profiles == null || profiles.trim().length() == 0 )
+
+        // using executor=inProcess needs --absoluteFilePaths
+        if( name.equalsIgnoreCase( org.ops4j.pax.runner.platform.ServiceConstants.CONFIG_USE_ABSOLUTE_FILE_PATHS )
+            && result == null )
         {
-            return result;
+            final String executor = get( OPTION_EXECUTOR );
+            if( "inProcess".equalsIgnoreCase( executor ) )
+            {
+                return "TRUE";
+            }
         }
-        final String profilesRepo = get( CommandLine.OPTION_PROFILES_REPO );
-        if( profilesRepo == null || profilesRepo.trim().length() == 0 )
-        {
-            return result;
-        }
-        if( result == null || result.trim().length() == 0 )
-        {
-            return "+" + profilesRepo;
-        }
-        return result + "," + profilesRepo;
+
+        return result;
     }
 
     /**
