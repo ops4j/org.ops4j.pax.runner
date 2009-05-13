@@ -370,7 +370,11 @@ public class PlatformImpl
                 {
                     try
                     {
-                        url = new URL( "wrap:" + url.toExternalForm() );
+                        final String urlToWrap = url.toExternalForm();
+                        if( !urlToWrap.startsWith( "wrap:" ) )
+                        {
+                            url = new URL( "wrap:" + urlToWrap );
+                        }
                     }
                     catch( MalformedURLException e )
                     {
