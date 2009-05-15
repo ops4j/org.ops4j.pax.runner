@@ -1011,72 +1011,6 @@
         <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mercury/0.5.0/pax-url-mercury-0.5.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-classpath:0.5.0">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.5.0/pax-url-classpath-0.5.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.5.0/pax-url-classpath-0.5.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.5.0/pax-url-classpath-0.5.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-mvn:0.5.0">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.5.0/pax-url-mvn-0.5.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.5.0/pax-url-mvn-0.5.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.5.0/pax-url-mvn-0.5.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-link:0.5.0">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-link/0.5.0/pax-url-link-0.5.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-link/0.5.0/pax-url-link-0.5.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-link/0.5.0/pax-url-link-0.5.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-obr:0.5.0">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.5.0/pax-url-obr-0.5.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.5.0/pax-url-obr-0.5.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.5.0/pax-url-obr-0.5.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-war:0.5.0">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.5.0/pax-url-war-0.5.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.5.0/pax-url-war-0.5.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.5.0/pax-url-war-0.5.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-wrap:0.5.0">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.5.0/pax-url-wrap-0.5.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.5.0/pax-url-wrap-0.5.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.5.0/pax-url-wrap-0.5.0-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Maven: org.ops4j.pax.runner:pax-runner-commons:0.19.0-SNAPSHOT">
       <CLASSES>
         <root url="jar://$M2_REPO$/org/ops4j/pax/runner/pax-runner-commons/0.19.0-SNAPSHOT/pax-runner-commons-0.19.0-SNAPSHOT.jar!/" />
@@ -1108,6 +1042,72 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$M2_REPO$/org/ops4j/pax/runner/pax-runner-provision/0.19.0-SNAPSHOT/pax-runner-provision-0.19.0-SNAPSHOT-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-classpath:0.5.2">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.5.2/pax-url-classpath-0.5.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.5.2/pax-url-classpath-0.5.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-classpath/0.5.2/pax-url-classpath-0.5.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-mvn:0.5.2">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.5.2/pax-url-mvn-0.5.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.5.2/pax-url-mvn-0.5.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mvn/0.5.2/pax-url-mvn-0.5.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-link:0.5.2">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-link/0.5.2/pax-url-link-0.5.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-link/0.5.2/pax-url-link-0.5.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-link/0.5.2/pax-url-link-0.5.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-obr:0.5.2">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.5.2/pax-url-obr-0.5.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.5.2/pax-url-obr-0.5.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-obr/0.5.2/pax-url-obr-0.5.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-war:0.5.2">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.5.2/pax-url-war-0.5.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.5.2/pax-url-war-0.5.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-war/0.5.2/pax-url-war-0.5.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-wrap:0.5.2">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.5.2/pax-url-wrap-0.5.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.5.2/pax-url-wrap-0.5.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/0.5.2/pax-url-wrap-0.5.2-sources.jar!/" />
       </SOURCES>
     </library>
   </component>
