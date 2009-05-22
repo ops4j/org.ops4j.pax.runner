@@ -13,7 +13,8 @@ Private-Package:\
   aQute.*; -split-package:=merge-first,\
   META-INF.*; -split-package:=merge-first,\
   org.*; -split-package:=merge-first,\
-  javax.servlet.*; -split-package:=merge-first
+  javax.servlet.*; -split-package:=merge-first,\
+  links.*; -split-package:=merge-first
 
 #  ${bundle.namespace},\
 #  ${bundle.namespace}.osgi,\
