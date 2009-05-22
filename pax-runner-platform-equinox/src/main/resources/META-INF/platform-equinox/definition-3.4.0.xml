@@ -1,16 +1,16 @@
 <platform>
 
-  <name>Equinox 3.4.0 (v20080205)</name>
-  <system>mvn:org.eclipse/osgi/3.4.0.v20080605-1900</system>
+  <name>Equinox 3.4.0</name>
+  <system>link:classpath:links/org.eclipse.osgi-3.4.0.link</system>
 
   <profile name="minimal" default="true">
     <bundle>
       <name>Eclipse utilities</name>
-      <url>mvn:org.eclipse.osgi/util/3.1.300.v20080303</url>
+      <url>link:classpath:links/org.eclipse.osgi.util-3.1.300.link</url>
     </bundle>
     <bundle>
       <name>Eclipse compendium services</name>
-      <url>mvn:org.eclipse.osgi/services/3.1.200.v20070605</url>
+      <url>link:classpath:links/org.eclipse.osgi.services-3.1.200.link</url>
     </bundle>
   </profile>
 
