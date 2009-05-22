@@ -1,19 +1,19 @@
 <platform>
 
   <name>Concierge 1.0 (RC2)</name>
-  <system>mvn:http://flowsgi.inf.ethz.ch/repository/maven2!ch.ethz.iks.concierge/concierge/1.0.0.RC2</system>
+  <system>link:classpath:links/ch.ethz.iks.concierge-1.0.0.RC2.link</system>
 
   <profile name="minimal" default="true">
     <bundle>
-      <name>ch.ethz.iks.concierge.service.tracker</name>
-      <url>mvn:http://flowsgi.inf.ethz.ch/repository/maven2!ch.ethz.iks.concierge/service-tracker/1.0.0.RC2</url>
+      <name>Concierge Service Tracker</name>
+      <url>link:classpath:links/ch.ethz.iks.concierge.service-tracker-1.0.0.RC2.link</url>
     </bundle>
   </profile>
 
   <profile name="tui" extends="minimal">
     <bundle>
-      <name>ch.ethz.iks.concierge.shell</name>
-      <url>mvn:http://flowsgi.inf.ethz.ch/repository/maven2!ch.ethz.iks.concierge/shell/1.0.0.RC2</url>
+      <name>Concierge Shell</name>
+      <url>link:classpath:links/ch.ethz.iks.concierge.shell-1.0.0.RC2.link</url>
     </bundle>
   </profile>
 
