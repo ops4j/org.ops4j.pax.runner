@@ -1,27 +1,27 @@
 <platform>
 
   <name>Knopflerfish 2.3.1</name>
-  <system>http://www.knopflerfish.org/releases/2.3.1/osgi/framework.jar</system>
+  <system>link:classpath:runner-links/org.knopflerfish.framework-2.3.1.link</system>
 
   <profile name="minimal" default="true">
     <bundle>
       <name>org.osgi.compendium</name>
-      <url>mvn:org.osgi/org.osgi.compendium/4.0.1</url>
+      <url>link:classpath:runner-links/org.osgi.compendium-4.0.1.link</url>
     </bundle>
   </profile>
 
   <profile name="tui" extends="minimal">
     <bundle>
-      <name>org.knopflerfish.bundle.console</name>
-      <url>http://www.knopflerfish.org/releases/2.3.1/osgi/jars/console/console_all-2.0.1.jar</url>
+      <name>Knopflerfish Console</name>
+      <url>link:classpath:runner-links/org.knopflerfish.console-all-2.0.1.link</url>
     </bundle>
     <bundle>
-      <name>org.knopflerfish.bundle.consoletty</name>
-      <url>http://www.knopflerfish.org/releases/2.3.1/osgi/jars/consoletty/consoletty-2.0.0.jar</url>
+      <name>Knopflerfish Console TTY</name>
+      <url>link:classpath:runner-links/org.knopflerfish.consoletty-2.0.0.link</url>
     </bundle>
     <bundle>
-      <name>org.knopflerfish.bundle.frameworkcommands</name>
-      <url>http://www.knopflerfish.org/releases/2.3.1/osgi/jars/frameworkcommands/frameworkcommands-2.0.5.jar</url>
+      <name>Knopflerfish Framework Commands</name>
+      <url>link:classpath:runner-links/org.knopflerfish.frameworkcommands-2.0.5.link</url>
     </bundle>
   </profile>
 
