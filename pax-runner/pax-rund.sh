@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Script to run Pax Runner, which starts OSGi frameworks with applications.
+# Script to run Pax Runner as a daemon, which starts OSGi frameworks with applications.
 #
 #
 
@@ -12,4 +12,4 @@ else
   SCRIPTS=`dirname $0`
 fi
 
-exec java $JAVA_OPTS -cp $SCRIPTS/target/pax-runner-0.20.1-SNAPSHOT.jar:. org.ops4j.pax.runner.daemon.DaemonLauncher "$@"
+exec java $JAVA_OPTS -cp .:$SCRIPTS:$SCRIPTS/target/pax-runner-0.20.1-SNAPSHOT.jar org.ops4j.pax.runner.daemon.DaemonLauncher "$@"
