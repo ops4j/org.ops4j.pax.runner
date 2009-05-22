@@ -1,19 +1,19 @@
 <platform>
 
   <name>Concierge 1.0 (RC2)</name>
-  <system>link:classpath:links/ch.ethz.iks.concierge-1.0.0.RC2.link</system>
+  <system>link:classpath:runner-links/ch.ethz.iks.concierge-1.0.0.RC2.link</system>
 
   <profile name="minimal" default="true">
     <bundle>
       <name>Concierge Service Tracker</name>
-      <url>link:classpath:links/ch.ethz.iks.concierge.service-tracker-1.0.0.RC2.link</url>
+      <url>link:classpath:runner-links/ch.ethz.iks.concierge.service-tracker-1.0.0.RC2.link</url>
     </bundle>
   </profile>
 
   <profile name="tui" extends="minimal">
     <bundle>
       <name>Concierge Shell</name>
-      <url>link:classpath:links/ch.ethz.iks.concierge.shell-1.0.0.RC2.link</url>
+      <url>link:classpath:runner-links/ch.ethz.iks.concierge.shell-1.0.0.RC2.link</url>
     </bundle>
   </profile>
 

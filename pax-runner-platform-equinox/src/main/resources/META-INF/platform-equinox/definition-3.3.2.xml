@@ -1,18 +1,18 @@
 <platform>
 
   <name>Equinox 3.3.2</name>
-  <system>link:classpath:links/org.eclipse.osgi-3.3.2.link</system>
+  <system>link:classpath:runner-links/org.eclipse.osgi-3.3.2.link</system>
 
   <profile name="minimal" default="true">
     <!-- see: http://repo1.maven.org/maven2/org/eclipse/osgi/util/ -->
     <bundle>
       <name>Eclipse utilities</name>
-      <url>link:classpath:links/org.eclipse.osgi.util-3.1.200.link</url>
+      <url>link:classpath:runner-links/org.eclipse.osgi.util-3.1.200.link</url>
     </bundle>
     <!-- see: http://repo1.maven.org/maven2/org/eclipse/osgi/services/ -->
     <bundle>
       <name>Eclipse compendium services</name>
-      <url>link:classpath:links/org.eclipse.osgi.services-3.1.200.link</url>
+      <url>link:classpath:runner-links/org.eclipse.osgi.services-3.1.200.link</url>
     </bundle>
   </profile>
 
