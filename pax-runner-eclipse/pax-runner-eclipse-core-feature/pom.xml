@@ -1,0 +1,33 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <relativePath>../</relativePath>
+        <groupId>org.ops4j.pax.eclipse</groupId>
+        <artifactId>update-site</artifactId>
+        <version>0.9.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>org.ops4j.pax.eclipse.update-site</groupId>
+    <artifactId>org.ops4j.pax.eclipse.cursor.feature</artifactId>
+    <version>0.9.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>OPS4J Pax Eclipse Update Site - Pax Cursor Feature</name>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>.</directory>
+                <includes>
+                    <include>
+                        feature.xml
+                    </include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+
+</project>
