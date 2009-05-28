@@ -1,0 +1,58 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <relativePath>../pom.xml</relativePath>
+    <groupId>org.ops4j.pax</groupId>
+    <artifactId>runner</artifactId>
+    <version>0.20.1-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.ops4j.pax.runner</groupId>
+  <artifactId>pax-runner-eclipse</artifactId>
+  <version>0.20.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>OPS4J Pax Runner - Eclipse Plugin (Build POM)</name>
+  <description>
+    OPS4J Pax Runner - Eclipse plugin that adds launch configurations for all the platforms / versions supported by Pax
+    Runner. See details at http://wiki.ops4j.org/confluence/x/0QBN
+  </description>
+
+  <modules>
+    <module>pax-runner-eclipse-core</module>
+    <module>pax-runner-eclipse-core-feature</module>
+    <module>pax-runner-eclipse-ui</module>
+    <module>pax-runner-eclipse-ui-feature</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.eclipse.pde</groupId>
+        <artifactId>ui</artifactId>
+        <version>3.3.0-v20070608-1300</version>
+        <scope>provided</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>org.apache</groupId>
+            <artifactId>ant</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <repositories>
+    <repository>
+      <id>eclipse.releases</id>
+      <url>http://repo1.maven.org/eclipse</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+</project>

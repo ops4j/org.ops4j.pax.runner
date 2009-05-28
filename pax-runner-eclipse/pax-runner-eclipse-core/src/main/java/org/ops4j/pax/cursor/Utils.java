@@ -57,7 +57,7 @@ class Utils
     /**
      * Plugin id.
      */
-    static final String PLUGIN_ID = "org.ops4j.pax.eclipse.cursor.oflc";
+    static final String PLUGIN_ID = "org.ops4j.pax.runner.eclipse.core";
 
     /**
      * Utility class.

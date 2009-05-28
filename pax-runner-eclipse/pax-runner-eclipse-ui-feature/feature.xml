@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.ops4j.pax.eclipse.cursor.ui.feature"
-      label="Pax Cursor Launch Tab"
-      version="0.9.0"
+      id="org.ops4j.pax.runner.eclipse.ui.feature"
+      label="Pax Runner Plugin for Eclipse UI"
+      version="0.21.0"
       provider-name="OPS4j.org">
 
    <copyright url="http://www.ops4j.org">
@@ -253,10 +253,10 @@ limitations under the License.
    </requires>
 
    <plugin
-         id="org.ops4j.pax.eclipse.cursor.oflc.ui"
+         id="org.ops4j.pax.runner.eclipse.ui"
          download-size="0"
          install-size="0"
-         version="0.9.0"
+         version="0.21.0"
          fragment="true"
          unpack="false"/>
 

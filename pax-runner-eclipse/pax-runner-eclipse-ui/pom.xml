@@ -1,22 +1,23 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <relativePath>../</relativePath>
-    <groupId>org.ops4j.pax.eclipse</groupId>
-    <artifactId>cursor</artifactId>
-    <version>0.9.1-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+    <groupId>org.ops4j.pax.runner</groupId>
+    <artifactId>pax-runner-eclipse</artifactId>
+    <version>0.20.1-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.ops4j.pax.eclipse.cursor</groupId>
-  <artifactId>org.ops4j.pax.eclipse.cursor.oflc.ui</artifactId>
-  <version>0.9.1-SNAPSHOT</version>
+  <groupId>org.ops4j.pax.runner</groupId>
+  <artifactId>pax-runner-eclipse-ui</artifactId>
+  <version>0.20.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>OPS4J Pax Cursor - Launch Configuration Tab Fragment</name>
+  <name>OPS4J Pax Runner - Eclipse Plugin UI</name>
   <description>
-    OPS4J Pax Cursor - Eclipse OSGi Frameworks Launch Configuration Tab
+    OPS4J Pax Runner - Eclipse Plugin OSGi Frameworks Launch Configuration Tab
   </description>
 
   <build>
@@ -30,6 +31,24 @@
         </includes>
       </resource>
     </resources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.4</source>
+          <target>1.4</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifestFile>META-INF/MANIFEST.MF</manifestFile>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 
   <dependencies>
