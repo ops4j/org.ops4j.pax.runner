@@ -1,0 +1,48 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <relativePath>../</relativePath>
+    <groupId>org.ops4j.pax.eclipse</groupId>
+    <artifactId>cursor</artifactId>
+    <version>0.9.1-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.ops4j.pax.eclipse.cursor</groupId>
+  <artifactId>org.ops4j.pax.eclipse.cursor.oflc.ui</artifactId>
+  <version>0.9.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>OPS4J Pax Cursor - Launch Configuration Tab Fragment</name>
+  <description>
+    OPS4J Pax Cursor - Eclipse OSGi Frameworks Launch Configuration Tab
+  </description>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>.</directory>
+        <includes>
+          <include>
+            fragment.xml
+          </include>
+        </includes>
+      </resource>
+    </resources>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.eclipse.pde</groupId>
+      <artifactId>ui</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.swt.win32.win32</groupId>
+      <artifactId>x86</artifactId>
+      <version>3.3.0-v3346</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+</project>

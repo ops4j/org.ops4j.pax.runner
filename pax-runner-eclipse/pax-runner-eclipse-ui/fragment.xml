@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<fragment>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabs">
+      <tab
+            class="org.ops4j.pax.cursor.ui.CursorTab"
+            group="org.eclipse.pde.ui.launcher.EquinoxLauncherTabGroup"
+            id="org.ops4j.pax.cursor.ui.CursorTab"
+            name="Pax Cursor Tab">
+      </tab>
+   </extension>
+</fragment>
