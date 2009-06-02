@@ -200,7 +200,16 @@ public class ProvisionSpec
     public URL getPathAsCachedUrl()
         throws MalformedURLException
     {
-        return new URL( "cache:" + getPath() );
+        // first check if "cache:" is supported
+        try
+        {
+            new URL( "cache:file:foo.bar" );
+            return new URL( "cache:" + getPath() );
+        }
+        catch( MalformedURLException e )
+        {
+            return getPathAsUrl();
+        }
     }
 
     /**
