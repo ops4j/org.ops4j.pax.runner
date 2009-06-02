@@ -19,6 +19,7 @@
  */
 package org.ops4j.pax.runner;
 
+import java.io.File;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -41,6 +42,7 @@ import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
+import org.ops4j.io.FileUtils;
 import org.ops4j.lang.NullArgumentException;
 import static org.ops4j.pax.runner.CommandLine.*;
 import org.ops4j.pax.runner.commons.Info;
@@ -77,17 +79,25 @@ public class Run
      */
     private static Log LOGGER;
     /**
-     * Handler service onfiguration property name.
+     * Handler service configuration property name.
      */
     private static final String HANDLER_SERVICE = "handler.service";
     /**
-     * Provision service onfiguration property name.
+     * Provision service configuration property name.
      */
     private static final String PROVISION_SERVICE = "provision.service";
     /**
      * Platform extender configuration property name.
      */
     private static final String PLATFORM_SERVICE = "platform.service";
+    /**
+     * Clean start configuration property name.
+     */
+    private static final String CLEAN_START = "clean";
+    /**
+     * Working directory configuration property name.
+     */
+    private static final String WORKING_DIRECTORY = "workingDirectory";
 
     /**
      * Creates a new runner.
@@ -196,6 +206,8 @@ public class Run
     {
         final Context context = createContext( commandLine, config, resolver );
         LOGGER.info( commandLine );
+        // cleanup if requested
+        cleanup( resolver );
         // install aditional services
         installServices( context );
         // install aditional handlers
@@ -206,6 +218,22 @@ public class Run
         EventDispatcher.shutdown();
         // install platform and start it up
         startPlatform( installPlatform( context ), context, runner == null ? createJavaRunner( resolver ) : runner );
+    }
+
+    /**
+     * Removes the working directory if option specified.
+     *
+     * @param resolver option resolver
+     */
+    private void cleanup( final OptionResolver resolver )
+    {
+        final boolean cleanStart = Boolean.valueOf( resolver.get( CLEAN_START ) );
+        if( cleanStart )
+        {
+            final File workingDir = new File( resolver.getMandatory( WORKING_DIRECTORY ) );
+            LOGGER.debug( "Removing working directory [" + workingDir.getAbsolutePath() + "]" );
+            FileUtils.delete( workingDir );
+        }
     }
 
     /**

@@ -124,18 +124,15 @@ public class PlatformImpl
         // create a configuration to look up the rest of the properties
         final Configuration configuration = mandatory( "Configuration", createConfiguration( config ) );
         context.setConfiguration( configuration );
+
         // create the platform definition from the configured url or from the platform builder
         final PlatformDefinition definition = mandatory( "Definition", createPlatformDefinition( configuration ) );
         LOGGER.debug( "Using platform definition [" + definition + "]" );
-        // check out if the wrking folder must be removed first (clean start)
-        final Boolean clean = configuration.isCleanStart();
-        if( clean != null && clean )
-        {
-            FileUtils.delete( new File( configuration.getWorkingDirectory() ) );
-        }
+
         // create a working directory on the file system
         final File workDir = mandatory( "Working dir", createWorkingDir( configuration.getWorkingDirectory() ) );
         LOGGER.debug( "Using working directory [" + workDir + "]" );
+
         context.setWorkingDirectory( workDir );
         // set file path strategy
         if( configuration.useAbsoluteFilePaths() )
