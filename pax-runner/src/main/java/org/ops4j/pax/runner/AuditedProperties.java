@@ -89,7 +89,7 @@ public class AuditedProperties
     public synchronized Object setProperty( String key, String value )
     {
         final String replaced = replacePlaceholders( value );
-        LOGGER.info( "Using property [" + key + "=" + replaced + "]" );
+        LOGGER.trace( "Setting system property [" + key + "=" + replaced + "]" );
         return super.setProperty( key, replaced );
     }
 
@@ -124,7 +124,7 @@ public class AuditedProperties
                 rest = null;
             }
         }
-        if( replaced != value )
+        if( replaced != null && !replaced.equals( value ) )
         {
             replaced = replacePlaceholders( replaced );
         }
