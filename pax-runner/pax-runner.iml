@@ -19,12 +19,13 @@
     <orderEntry type="library" name="Maven: org.apache.felix:org.apache.felix.framework:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.felix:org.apache.felix.bundlerepository:1.2.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.felix:org.osgi.service.obr:1.0.0" level="project" />
-    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-classpath:0.5.2" level="project" />
-    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-mvn:0.5.2" level="project" />
-    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-link:0.5.2" level="project" />
-    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-obr:0.5.2" level="project" />
-    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-war:0.5.2" level="project" />
-    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-wrap:0.5.2" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-cache:0.6.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-classpath:0.6.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-mvn:0.6.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-link:0.6.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-obr:0.6.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-war:0.6.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-wrap:0.6.0-SNAPSHOT" level="project" />
     <orderEntry type="module" module-name="pax-runner-commons" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-optional-jcl:0.2.0" level="project" />
     <orderEntry type="module" module-name="pax-runner-handler" />

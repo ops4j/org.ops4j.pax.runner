@@ -20,11 +20,14 @@ package org.ops4j.pax.runner;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.lang.NullArgumentException;
 import static org.ops4j.pax.runner.CommandLine.*;
 import org.ops4j.pax.runner.commons.Info;
+import org.ops4j.pax.runner.commons.properties.SystemPropertyUtils;
 import org.ops4j.pax.url.mvn.ServiceConstants;
 
 /**
@@ -48,6 +51,11 @@ public class OptionResolverImpl
      * Logger.
      */
     private static final Log LOGGER = LogFactory.getLog( OptionResolverImpl.class );
+    /**
+     * Pattern used for replacing placeholders.
+     */
+    private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile( "(.*?\\$\\{)([.[^\\$]]+?)(\\}.*)" );
+
     /**
      * Command line to use.
      */
@@ -86,7 +94,8 @@ public class OptionResolverImpl
      */
     public String get( final String name )
     {
-        final String result = getInternal( name );
+        final String result = SystemPropertyUtils.resolvePlaceholders( replacePlaceholders( getInternal( name ) ) );
+
         // resolve some omplicit options
 
         // if using profiles pax runner repository is automatically added
@@ -205,7 +214,8 @@ public class OptionResolverImpl
     }
 
     /**
-     * Gets an option value by first looking into {@link CommandLine} and if not found by loking into system properties.
+     * Gets an option value by first looking into {@link CommandLine} and if not found by looking into
+     * system properties.
      *
      * @param key option name
      *
@@ -306,6 +316,48 @@ public class OptionResolverImpl
         m_cacheMultipleOptions.put( name, values );
         LOGGER.trace( "Option [" + name + "] resolved to [" + Arrays.toString( values ) + "]" );
         return values;
+    }
+
+    /**
+     * Replaces placeholders = ${*}.
+     *
+     * @param value the string where the place holders should be replaced
+     *
+     * @return replaced place holders or the original if there are no place holders or a value for place holder could
+     *         not be found
+     */
+    private String replacePlaceholders( final String value )
+    {
+        if( value == null )
+        {
+            return null;
+        }
+        String replaced = value;
+        String rest = value;
+        while( rest != null && rest.length() != 0 )
+        {
+            final Matcher matcher = PLACEHOLDER_PATTERN.matcher( rest );
+            if( matcher.matches() && matcher.groupCount() == 3 )
+            {
+                // groups 2 contains the placeholder name
+                final String placeholderName = matcher.group( 2 );
+                final String placeholderValue = get( placeholderName );
+                if( placeholderValue != null )
+                {
+                    replaced = replaced.replace( "${" + placeholderName + "}", placeholderValue );
+                }
+                rest = matcher.group( 3 );
+            }
+            else
+            {
+                rest = null;
+            }
+        }
+        if( replaced != null && !replaced.equals( value ) )
+        {
+            replaced = replacePlaceholders( replaced );
+        }
+        return replaced;
     }
 
 }

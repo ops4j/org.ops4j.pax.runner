@@ -191,6 +191,19 @@ public class ProvisionSpec
     }
 
     /**
+     * Getter.
+     *
+     * @return path as URL
+     *
+     * @throws java.net.MalformedURLException - If occured while creating the URL
+     */
+    public URL getPathAsCachedUrl()
+        throws MalformedURLException
+    {
+        return new URL( "cache:" + getPath() );
+    }
+
+    /**
      * Verify if the path is an valid url.
      *
      * @return true if path is a valid url, false otherwise

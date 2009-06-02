@@ -113,7 +113,7 @@ public class CompositeScanner
             {
                 bufferedReader = new BufferedReader(
                     new InputStreamReader(
-                        URLUtils.prepareInputStream( provisionSpec.getPathAsUrl(), !config.getCertificateCheck() )
+                        URLUtils.prepareInputStream( provisionSpec.getPathAsCachedUrl(), !config.getCertificateCheck() )
                     )
                 );
 

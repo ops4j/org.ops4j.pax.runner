@@ -82,6 +82,12 @@
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.url</groupId>
+      <artifactId>pax-url-cache</artifactId>
+      <version>${dependency.url.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.url</groupId>
       <artifactId>pax-url-classpath</artifactId>
       <version>${dependency.url.version}</version>
       <optional>true</optional>
