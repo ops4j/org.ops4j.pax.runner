@@ -200,16 +200,11 @@ public class ProvisionSpec
     public URL getPathAsCachedUrl()
         throws MalformedURLException
     {
-        // first check if "cache:" is supported
-        try
+        if( isPathValidCacheUrl() )
         {
-            new URL( "cache:file:foo.bar" );
             return new URL( "cache:" + getPath() );
         }
-        catch( MalformedURLException e )
-        {
-            return getPathAsUrl();
-        }
+        return getPathAsUrl();
     }
 
     /**
@@ -221,7 +216,25 @@ public class ProvisionSpec
     {
         try
         {
-            new URL( m_path );
+            new URL( getPath() );
+            return true;
+        }
+        catch( MalformedURLException e )
+        {
+            return false;
+        }
+    }
+
+    /**
+     * Verify if the path is an valid cache url.
+     *
+     * @return true if path is a valid url, false otherwise
+     */
+    public boolean isPathValidCacheUrl()
+    {
+        try
+        {
+            new URL( "cache:" + getPath() );
             return true;
         }
         catch( MalformedURLException e )
