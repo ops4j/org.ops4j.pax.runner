@@ -338,20 +338,6 @@ public class ConfigurationImpl
     }
 
     /**
-     * @see Configuration#isCleanStart()
-     */
-    public Boolean isCleanStart()
-    {
-        if( !contains( ServiceConstants.CONFIG_CLEAN ) )
-        {
-            return set( ServiceConstants.CONFIG_CLEAN,
-                        Boolean.valueOf( m_propertyResolver.get( ServiceConstants.CONFIG_CLEAN ) )
-            );
-        }
-        return get( ServiceConstants.CONFIG_CLEAN );
-    }
-
-    /**
      * @see Configuration#getProfileStartLevel()
      */
     public Integer getProfileStartLevel()

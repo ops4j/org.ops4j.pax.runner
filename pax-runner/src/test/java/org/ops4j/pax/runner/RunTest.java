@@ -83,6 +83,7 @@ public class RunTest
     @Test
     public void startFlow()
     {
+        m_recorder.record( "cleanup()" );
         m_recorder.record( "installServices()" );
         m_recorder.record( "installHandlers()" );
         m_recorder.record( "installScanners()" );
@@ -93,6 +94,12 @@ public class RunTest
         replay( m_commandLine, m_config, m_recorder, m_resolver, m_bundleContext );
         new Run()
         {
+            @Override
+            void cleanup( final OptionResolver resolver )
+            {
+                m_recorder.record( "cleanup()" );
+            }
+
             @Override
             void installHandlers( final Context context )
             {
@@ -127,7 +134,7 @@ public class RunTest
             }
 
             @Override
-            JavaRunner createJavaRunner( OptionResolver resolver )
+            JavaRunner createJavaRunner( final OptionResolver resolver )
             {
                 m_recorder.record( "createJavaRunner()" );
                 return null;
@@ -198,6 +205,7 @@ public class RunTest
     @Test( expected = ConfigurationException.class )
     public void startWithInvalidHandlers()
     {
+        expect( m_resolver.get( "clean" ) ).andReturn( null );
         expect( m_resolver.get( "executor" ) ).andReturn( null );
         expect( m_resolver.get( "services" ) ).andReturn( null );
         expect( m_resolver.get( "handlers" ) ).andReturn( "handler.1" );

@@ -463,51 +463,6 @@ public class ConfigurationImplTest
     }
 
     /**
-     * Tests the happy path.
-     */
-    @Test
-    public void clean()
-    {
-        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
-        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.clean" ) ).andReturn( "true" );
-
-        replay( propertyResolver );
-        Configuration config = new ConfigurationImpl( propertyResolver );
-        assertEquals( "Clean", true, config.isCleanStart() );
-        verify( propertyResolver );
-    }
-
-    /**
-     * Tests that default value is false.
-     */
-    @Test
-    public void cleanDefault()
-    {
-        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
-        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.clean" ) ).andReturn( null );
-
-        replay( propertyResolver );
-        Configuration config = new ConfigurationImpl( propertyResolver );
-        assertEquals( "Clean", false, config.isCleanStart() );
-        verify( propertyResolver );
-    }
-
-    /**
-     * Test that an invalid value will not cause problems and will return false.
-     */
-    @Test
-    public void cleanWithInvalidValue()
-    {
-        PropertyResolver propertyResolver = createMock( PropertyResolver.class );
-        expect( propertyResolver.get( "org.ops4j.pax.runner.platform.clean" ) ).andReturn( "of course" );
-
-        replay( propertyResolver );
-        Configuration config = new ConfigurationImpl( propertyResolver );
-        assertEquals( "Clean", false, config.isCleanStart() );
-        verify( propertyResolver );
-    }
-
-    /**
      * Tests that if vm options is set and contains only one option the correct array is returned.
      */
     @Test

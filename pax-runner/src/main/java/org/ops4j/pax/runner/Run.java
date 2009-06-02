@@ -225,7 +225,7 @@ public class Run
      *
      * @param resolver option resolver
      */
-    private void cleanup( final OptionResolver resolver )
+    void cleanup( final OptionResolver resolver )
     {
         final boolean cleanStart = Boolean.valueOf( resolver.get( CLEAN_START ) );
         if( cleanStart )

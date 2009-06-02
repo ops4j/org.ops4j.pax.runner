@@ -147,7 +147,6 @@ public class PlatformImplTest
         expect( m_builder.getMainClassName() ).andReturn( "Main" );
         m_context.setProperties( null );
         m_context.setConfiguration( m_config );
-        expect( m_config.isCleanStart() ).andReturn( false );
         expect( m_config.getWorkingDirectory() ).andReturn( m_workDir );
         m_context.setWorkingDirectory( new File( m_workDir ) );
         expect( m_config.useAbsoluteFilePaths() ).andReturn( false );

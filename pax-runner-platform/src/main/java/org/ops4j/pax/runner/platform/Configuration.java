@@ -151,13 +151,6 @@ public interface Configuration
     String getFrameworkProfile();
 
     /**
-     * Returns true if the cached bundles and target platforms configuration folder shall be removed.
-     *
-     * @return true if there should be a clean start
-     */
-    Boolean isCleanStart();
-
-    /**
      * Returns true if the already downloaded user bundles from a previous run must be overwritten.
      * Default value is "false".
      *

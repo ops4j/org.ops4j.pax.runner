@@ -70,10 +70,6 @@ public interface ServiceConstants
      */
     static final String CONFIG_AUTO_WRAP = PID + ".autoWrap";
     /**
-     * Clean platform start property name.
-     */
-    static final String CONFIG_CLEAN = PID + ".clean";
-    /**
      * Console configuration property name.
      */
     static final String CONFIG_CONSOLE = PID + ".console";
