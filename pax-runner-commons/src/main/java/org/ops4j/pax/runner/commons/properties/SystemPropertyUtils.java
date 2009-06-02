@@ -77,6 +77,10 @@ public abstract class SystemPropertyUtils
     public static String resolvePlaceholders( final String text,
                                               final Properties properties )
     {
+        if( text == null )
+        {
+            return null;
+        }
         StringBuffer buf = new StringBuffer( text );
 
         int startIndex = buf.indexOf( PLACEHOLDER_PREFIX );
