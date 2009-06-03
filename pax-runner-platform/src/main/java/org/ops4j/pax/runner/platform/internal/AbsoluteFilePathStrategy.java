@@ -19,6 +19,7 @@ package org.ops4j.pax.runner.platform.internal;
 
 import java.io.File;
 import java.net.URL;
+import java.net.MalformedURLException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.pax.runner.platform.FilePathStrategy;
@@ -27,7 +28,7 @@ import org.ops4j.pax.runner.platform.FilePathStrategy;
  * A {@link org.ops4j.pax.runner.platform.FilePathStrategy} that normalizes the paths to absolute file paths.
  *
  * @author Alin Dreghiciu (adreghiciu@gmail.com)
- * @since 0.20.0, may 10, 2009
+ * @since 0.20.0, May 10, 2009
  */
 public class AbsoluteFilePathStrategy
     implements FilePathStrategy
@@ -43,7 +44,7 @@ public class AbsoluteFilePathStrategy
      */
     public String normalizeAsPath( final File file )
     {
-        return normalizePath( file );
+        return file.getAbsolutePath();
     }
 
     /**
@@ -51,7 +52,15 @@ public class AbsoluteFilePathStrategy
      */
     public String normalizeAsUrl( final File file )
     {
-        return "file:" + normalizePath( file );
+        try
+        {
+            return file.toURL().toExternalForm();
+        }
+        catch( MalformedURLException e )
+        {
+            // actually this should never occur
+            return "file:/" + file.getAbsolutePath().replace( '\\', '/' );
+        }
     }
 
     /**
@@ -59,23 +68,7 @@ public class AbsoluteFilePathStrategy
      */
     public String normalizeAsUrl( final URL url )
     {
-        if( "file".equals( url.getProtocol() ) )
-        {
-            return "file:" + normalizePath( new File( url.getFile() ) );
-        }
         return url.toExternalForm();
-    }
-
-    /**
-     * Normalizes the path by returning the absolute paths of teh file.
-     *
-     * @param file to be normalized.
-     *
-     * @return absolute path to the file
-     */
-    private String normalizePath( final File file )
-    {
-        return file.getAbsolutePath();
     }
 
 }
