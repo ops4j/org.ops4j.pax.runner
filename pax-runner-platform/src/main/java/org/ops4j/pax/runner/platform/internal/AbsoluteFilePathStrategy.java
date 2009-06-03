@@ -59,7 +59,7 @@ public class AbsoluteFilePathStrategy
         catch( MalformedURLException e )
         {
             // actually this should never occur
-            return "file:/" + file.getAbsolutePath().replace( '\\', '/' );
+            return "file:/" + file.getAbsolutePath().replace( File.separatorChar, '/' );
         }
     }
 
