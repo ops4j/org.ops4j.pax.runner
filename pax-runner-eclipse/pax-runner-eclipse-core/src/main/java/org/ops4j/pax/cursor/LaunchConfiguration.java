@@ -19,13 +19,18 @@ package org.ops4j.pax.cursor;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.jdt.launching.IVMInstall;
@@ -38,10 +43,10 @@ import org.eclipse.pde.internal.ui.launcher.BundleLauncherHelper;
 import org.eclipse.pde.internal.ui.launcher.LauncherUtils;
 import org.eclipse.pde.internal.ui.launcher.VMHelper;
 import org.eclipse.pde.ui.launcher.AbstractPDELaunchConfiguration;
-import org.osgi.framework.Bundle;
 import org.ops4j.pax.runner.Run;
 import org.ops4j.pax.runner.platform.JavaRunner;
 import org.ops4j.pax.runner.platform.PlatformException;
+import org.osgi.framework.Bundle;
 
 /**
  * Pax Cursor Launch Configuraton ( Eclipse org.eclipse.pde.ui.osgiFrameworks extension point).
@@ -155,13 +160,45 @@ public class LaunchConfiguration extends AbstractPDELaunchConfiguration
         );
         options.addAll(
             Utils.getProvisioningFile( getConfigDir( configuration ).toString(),
-                                       BundleLauncherHelper.getMergedMap( configuration )
+                                       /*BundleLauncherHelper.*/getMergedMap( configuration )
             )
         );
         options.addAll( Utils.getPaxCursorTabOptions( configuration ) );
 
         return (String[]) options.toArray( new String[options.size()] );
     }
+    
+    /**
+     * Helper method to call a static method that signature has changed between eclipse-3.4 and eclipse-3.5
+     * @param configuration
+     * @return
+     * @throws CoreException
+     */
+	private static Map getMergedMap(ILaunchConfiguration configuration) throws CoreException {
+//		//before 3.5:
+//		return BundleLauncherHelper.getMergedMap(configuration);
+//		//3.5 and after:
+//		return BundleLauncherHelper.getMergedBundleMap(configuration, true);//for pax it is always osgi.
+		Throwable except = null;
+		try {
+			try {
+				Method getMergedMapMethod = BundleLauncherHelper.class.getMethod("getMergedMap", new Class[] {ILaunchConfiguration.class});
+				if (getMergedMapMethod != null) {
+					return (Map) getMergedMapMethod.invoke(null, new Object[] {configuration});
+				}
+			} catch (NoSuchMethodException nsme) {
+				Method getMergedBundleMapMethod = BundleLauncherHelper.class.getMethod("getMergedBundleMap", new Class[] {ILaunchConfiguration.class, boolean.class});
+				if (getMergedBundleMapMethod != null) {
+					return (Map) getMergedBundleMapMethod.invoke(null, new Object[] {configuration, Boolean.TRUE});
+				}
+			}
+		} catch (Throwable t) {
+			except = t;
+		}
+		throw new CoreException(new Status(IStatus.ERROR, "org.ops4j.pax.runner.eclipse.core",
+				"Unable to locate the appropriate BundleLauncherHelper.getMergedMap method.", except));
+	}
+
 
     /**
      * Do not pass any VM argument as we pass them to Pax Runner as start option.
