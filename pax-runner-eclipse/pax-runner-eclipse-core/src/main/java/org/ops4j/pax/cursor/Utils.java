@@ -31,7 +31,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
@@ -427,11 +426,10 @@ class Utils
 
     /**
      * Get the current install location for the plugin.
-     * 
+     *
      * @param model model of the plugin to be exported
+     *
      * @return current install location of the plugin
-     * 
-     * @throws IOException
      */
     private static File getInstallLocation( final IPluginModelBase model )
         throws IOException
@@ -458,7 +456,9 @@ class Utils
                         bundle = installedJar;
                     }
                 }
-                catch( Exception e ) {}
+                catch( Exception e )
+                {
+                }
             }
         }
 
@@ -487,7 +487,7 @@ class Utils
         info.destinationDirectory = configDirLocation;
         info.items = models.toArray( new Object[models.size()] );
         // then schedule the export as a job
-        final Job job = createExportPluginJob(info);
+        final Job job = createExportPluginJob( info );
         job.setUser( true );
         job.schedule();
         job.setProperty( IProgressConstants.ICON_PROPERTY, PDEPluginImages.DESC_PLUGIN_OBJ );
@@ -515,25 +515,31 @@ class Utils
             // and here org.eclipse.pde.internal.build.site.QualifierReplacer#replaceQualifierInVersion
             // for now we just look at the lastModified date on the located jars and use the most recent one.
             // TODO is there another way to find the generated bundle?
-            File parentFolder = new Path( configDirLocation ).addTrailingSeparator().append("plugins").toFile();
+            File parentFolder = new Path( configDirLocation ).addTrailingSeparator().append( "plugins" ).toFile();
             String bundleFileName = model.getPluginBase().getId() + "_";
-            if ("1.0.0.qualifier".equals(model.getPluginBase().getVersion())) {
-            	File[] files = parentFolder.listFiles();
-            	File bestOne = null;
-            	for (int i = 0; i <  files.length; i++) {
-            		File f = files[i];
-            		if (f.isFile() && f.getName().startsWith(bundleFileName) && f.getName().endsWith(".jar")) {
-            			//look at the timestamp:
-            			if (bestOne == null || bestOne.lastModified() <= f.lastModified()) {
-            				bestOne = f;//f is more recent
-            			}
-            		}
-            	}
-            	bundleFileName = bestOne.getAbsolutePath();
-            } else {//forced version. or 3.4 and older behavior:
-            	bundleFileName = bundleFileName + model.getPluginBase().getVersion() + ".jar";
+            if( "1.0.0.qualifier".equals( model.getPluginBase().getVersion() ) )
+            {
+                File[] files = parentFolder.listFiles();
+                File bestOne = null;
+                for( int i = 0; i < files.length; i++ )
+                {
+                    File f = files[ i ];
+                    if( f.isFile() && f.getName().startsWith( bundleFileName ) && f.getName().endsWith( ".jar" ) )
+                    {
+                        //look at the timestamp:
+                        if( bestOne == null || bestOne.lastModified() <= f.lastModified() )
+                        {
+                            bestOne = f;//f is more recent
+                        }
+                    }
+                }
+                bundleFileName = bestOne.getAbsolutePath();
             }
-            final File bundle = new File(bundleFileName);/*new Path( configDirLocation ).addTrailingSeparator()
+            else
+            {//forced version. or 3.4 and older behavior:
+                bundleFileName = bundleFileName + model.getPluginBase().getVersion() + ".jar";
+            }
+            final File bundle = new File( bundleFileName );/*new Path( configDirLocation ).addTrailingSeparator()
                 .append( "plugins" )
                 .addTrailingSeparator()
                 .append( model.getPluginBase().getId() + "_" + model.getPluginBase().getVersion() )
@@ -552,38 +558,51 @@ class Utils
         }
         return bundles;
     }
-    
+
     /**
      * Helper method to return the appropriate Job object that exports the plugin.
      * It is different in eclipse-3.4 and eclipse-3.5
-     * 
+     *
      * @param info
-     * @return
      */
-    private static Job createExportPluginJob(FeatureExportInfo info) throws CoreException {
+    private static Job createExportPluginJob( FeatureExportInfo info )
+        throws CoreException
+    {
 //    	//3.5 and after:
 //        return new org.eclipse.pde.internal.core.exports.PluginExportOperation(info, "export for exec");
 //        //before 3.5:
 //        return new org.eclipse.pde.internal.ui.build.PluginExportJob(info);
-    	//also available in 3.4: return new org.eclipse.pde.internal.core.exports.PluginExportOperation(info);
-    	Throwable except = null;
-    	try {//look for the class specific to 3.4 first.
-			Class PluginExportJobClass = Class.forName("org.eclipse.pde.internal.ui.build.PluginExportJob");
-			Constructor cons = PluginExportJobClass.getConstructor(new Class[] {FeatureExportInfo.class});
-    		return (Job) cons.newInstance(new Object[] {info});
-    	} catch (ClassNotFoundException cnfe) {
-    		try {
-        		Class pluginExportOperationClass = Class.forName("org.eclipse.pde.internal.core.exports.PluginExportOperation");
-        		Constructor cons = pluginExportOperationClass.getConstructor(new Class[] {FeatureExportInfo.class, String.class});
-        		return (Job) cons.newInstance(new Object[] {info, "Export OSGI Bundles for execution"});
-    		} catch (Throwable t) {
-    			except = t;
-    		}
-    	} catch (Throwable t) {
-    		except = t;
-    	}
-    	throw new CoreException(new Status(IStatus.ERROR, "org.ops4j.pax.runner.eclipse.core",
-				"Unable to locate the appropriate ExportPluginJob instance.", except));
+        //also available in 3.4: return new org.eclipse.pde.internal.core.exports.PluginExportOperation(info);
+        Throwable except = null;
+        try
+        {//look for the class specific to 3.4 first.
+            Class PluginExportJobClass = Class.forName( "org.eclipse.pde.internal.ui.build.PluginExportJob" );
+            Constructor cons = PluginExportJobClass.getConstructor( new Class[]{ FeatureExportInfo.class } );
+            return (Job) cons.newInstance( new Object[]{ info } );
+        }
+        catch( ClassNotFoundException cnfe )
+        {
+            try
+            {
+                Class pluginExportOperationClass =
+                    Class.forName( "org.eclipse.pde.internal.core.exports.PluginExportOperation" );
+                Constructor cons =
+                    pluginExportOperationClass.getConstructor( new Class[]{ FeatureExportInfo.class, String.class } );
+                return (Job) cons.newInstance( new Object[]{ info, "Export OSGI Bundles for execution" } );
+            }
+            catch( Throwable t )
+            {
+                except = t;
+            }
+        }
+        catch( Throwable t )
+        {
+            except = t;
+        }
+        throw new CoreException( new Status( IStatus.ERROR, "org.ops4j.pax.runner.eclipse.core",
+                                             "Unable to locate the appropriate ExportPluginJob instance.", except
+        )
+        );
     }
 
     /**
@@ -652,6 +671,6 @@ class Utils
         }
 
         return options;
-    }    
+    }
 
 }
