@@ -508,6 +508,7 @@ class Utils
             final IPluginModelBase model = (IPluginModelBase) iter.next();
             // find the generated bundle. This is done by using the id of the plugin
             // and version. And pray god it works :)
+
             // sometimes the version declared in the manifest is not correct.
             // for example 1.0.0.qualifier
             // in that case it seems that some type of timestamp is used: testosgi_1.0.0.200906041801.jar
@@ -515,11 +516,17 @@ class Utils
             // and here org.eclipse.pde.internal.build.site.QualifierReplacer#replaceQualifierInVersion
             // for now we just look at the lastModified date on the located jars and use the most recent one.
             // TODO is there another way to find the generated bundle?
-            File parentFolder = new Path( configDirLocation ).addTrailingSeparator().append( "plugins" ).toFile();
-            String bundleFileName = model.getPluginBase().getId() + "_";
-            if( "1.0.0.qualifier".equals( model.getPluginBase().getVersion() ) )
+            String bundleFileName = null;
+
+            if( model.getPluginBase().getVersion() != null
+                && model.getPluginBase().getVersion().contains( "qualifier" ) )
             {
-                File[] files = parentFolder.listFiles();
+                final File[] files = new Path( configDirLocation )
+                    .addTrailingSeparator()
+                    .append( "plugins" )
+                    .toFile()
+                    .listFiles();
+
                 File bestOne = null;
                 for( int i = 0; i < files.length; i++ )
                 {
@@ -533,19 +540,28 @@ class Utils
                         }
                     }
                 }
-                bundleFileName = bestOne.getAbsolutePath();
+                if( bestOne != null )
+                {
+                    bundleFileName = bestOne.getAbsolutePath();
+                }
             }
-            else
-            {//forced version. or 3.4 and older behavior:
-                bundleFileName = bundleFileName + model.getPluginBase().getVersion() + ".jar";
+
+            // as last resort (and in versions <= 3.4.2)
+            if( bundleFileName == null )
+            {
+                //forced version. or 3.4 and older behavior:
+                bundleFileName = new Path( configDirLocation )
+                    .addTrailingSeparator()
+                    .append( "plugins" )
+                    .addTrailingSeparator()
+                    .append( model.getPluginBase().getId() + "_" + model.getPluginBase().getVersion() )
+                    .addFileExtension( "jar" )
+                    .toFile()
+                    .getAbsolutePath();
             }
-            final File bundle = new File( bundleFileName );/*new Path( configDirLocation ).addTrailingSeparator()
-                .append( "plugins" )
-                .addTrailingSeparator()
-                .append( model.getPluginBase().getId() + "_" + model.getPluginBase().getVersion() )
-                .addFileExtension( "jar" )
-                .toFile();*/
-            if( bundle == null || !bundle.exists() || !bundle.isFile() )
+
+            final File bundle = new File( bundleFileName );
+            if( !bundle.exists() || !bundle.isFile() )
             {
                 throw new CoreException(
                     LauncherUtils.createErrorStatus(
