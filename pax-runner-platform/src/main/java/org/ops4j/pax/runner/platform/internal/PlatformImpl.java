@@ -361,7 +361,7 @@ public class PlatformImpl
                 URL url = reference.getURL();
                 if( url == null )
                 {
-                    throw new PlatformException( "Invalid url in bundle refrence [" + reference + "]" );
+                    throw new PlatformException( "Invalid url in bundle reference [" + reference + "]" );
                 }
                 if( autoWrap )
                 {
