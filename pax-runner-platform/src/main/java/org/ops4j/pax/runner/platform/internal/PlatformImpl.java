@@ -250,6 +250,9 @@ public class PlatformImpl
             urlHandlers.add(
                 new SystemFileReferenceBean( "Pax URL wrap: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-wrap" ) )
             );
+            urlHandlers.add(
+                new SystemFileReferenceBean( "Pax URL cache: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-cache" ) )
+            );
         }
         catch( MalformedURLException e )
         {
