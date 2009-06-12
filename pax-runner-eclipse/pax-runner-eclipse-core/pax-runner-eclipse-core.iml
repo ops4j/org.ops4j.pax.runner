@@ -15,6 +15,16 @@
     <orderEntry type="library" name="Maven: junit:junit:4.4" level="project" />
     <orderEntry type="library" name="Maven: org.easymock:easymock:2.3" level="project" />
     <orderEntry type="module" module-name="pax-runner" exported="" />
+    <orderEntry type="module" module-name="pax-runner-platform" />
+    <orderEntry type="library" name="Maven: org.ops4j.base:ops4j-base-io:0.5.3" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.base:ops4j-base-lang:0.5.3" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.base:ops4j-base-monitors:0.5.3" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.base:ops4j-base-util-xml:0.5.3" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.base:ops4j-base-util-collections:0.5.3" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-optional-jcl:0.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-property:0.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.base:ops4j-base-util-property:0.5.3" level="project" />
+    <orderEntry type="module" module-name="pax-runner-commons" />
     <orderEntry type="library" name="Maven: org.eclipse.pde:ui:3.3.0-v20070608-1300" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.pde:core:3.3.0-v20070608-1300" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.core:runtime:3.3.100-v20070530" level="project" />

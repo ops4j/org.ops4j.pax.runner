@@ -77,6 +77,12 @@
       <classifier>jdk14</classifier>
     </dependency>
     <dependency>
+      <groupId>org.ops4j.pax.runner</groupId>
+      <artifactId>pax-runner-platform</artifactId>
+      <version>0.21.0-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>org.eclipse.pde</groupId>
       <artifactId>ui</artifactId>
     </dependency>
