@@ -543,28 +543,6 @@
         <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-optional-jcl/0.2.0/pax-swissbox-optional-jcl-0.2.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.ops4j.base:ops4j-base-lang:0.5.3">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-lang/0.5.3/ops4j-base-lang-0.5.3.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-lang/0.5.3/ops4j-base-lang-0.5.3-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-lang/0.5.3/ops4j-base-lang-0.5.3-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.base:ops4j-base-util-property:0.5.3">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.3/ops4j-base-util-property-0.5.3.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.3/ops4j-base-util-property-0.5.3-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/0.5.3/ops4j-base-util-property-0.5.3-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Maven: org.ops4j.pax.swissbox:pax-swissbox-property:0.2.0">
       <CLASSES>
         <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-property/0.2.0/pax-swissbox-property-0.2.0.jar!/" />
@@ -574,50 +552,6 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-property/0.2.0/pax-swissbox-property-0.2.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.base:ops4j-base-io:0.5.3">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.3/ops4j-base-io-0.5.3.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.3/ops4j-base-io-0.5.3-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/0.5.3/ops4j-base-io-0.5.3-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.base:ops4j-base-monitors:0.5.3">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.3/ops4j-base-monitors-0.5.3.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.3/ops4j-base-monitors-0.5.3-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/0.5.3/ops4j-base-monitors-0.5.3-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.base:ops4j-base-util-xml:0.5.3">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-xml/0.5.3/ops4j-base-util-xml-0.5.3.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-xml/0.5.3/ops4j-base-util-xml-0.5.3-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-xml/0.5.3/ops4j-base-util-xml-0.5.3-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.base:ops4j-base-util-collections:0.5.3">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-collections/0.5.3/ops4j-base-util-collections-0.5.3.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-collections/0.5.3/ops4j-base-util-collections-0.5.3-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-collections/0.5.3/ops4j-base-util-collections-0.5.3-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.ops4j.pax.swissbox:pax-swissbox-tracker:0.2.0">
@@ -673,17 +607,6 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$M2_REPO$/org/apache/felix/org.apache.felix.bundlerepository/1.2.1/org.apache.felix.bundlerepository-1.2.1-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.base:ops4j-base-net:0.5.3">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-net/0.5.3/ops4j-base-net-0.5.3.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-net/0.5.3/ops4j-base-net-0.5.3-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-net/0.5.3/ops4j-base-net-0.5.3-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.apache.servicemix.kernel.gshell:org.apache.servicemix.kernel.gshell.features:1.1.0">
@@ -1784,6 +1707,83 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-lifecycle/0.2.0/pax-swissbox-lifecycle-0.2.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.base:ops4j-base-lang:1.0.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-lang/1.0.0/ops4j-base-lang-1.0.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-lang/1.0.0/ops4j-base-lang-1.0.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-lang/1.0.0/ops4j-base-lang-1.0.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.base:ops4j-base-net:1.0.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-net/1.0.0/ops4j-base-net-1.0.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-net/1.0.0/ops4j-base-net-1.0.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-net/1.0.0/ops4j-base-net-1.0.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.base:ops4j-base-monitors:1.0.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/1.0.0/ops4j-base-monitors-1.0.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/1.0.0/ops4j-base-monitors-1.0.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-monitors/1.0.0/ops4j-base-monitors-1.0.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.base:ops4j-base-util-collections:1.0.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-collections/1.0.0/ops4j-base-util-collections-1.0.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-collections/1.0.0/ops4j-base-util-collections-1.0.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-collections/1.0.0/ops4j-base-util-collections-1.0.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.base:ops4j-base-io:1.0.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/1.0.0/ops4j-base-io-1.0.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/1.0.0/ops4j-base-io-1.0.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-io/1.0.0/ops4j-base-io-1.0.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.base:ops4j-base-util-xml:1.0.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-xml/1.0.0/ops4j-base-util-xml-1.0.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-xml/1.0.0/ops4j-base-util-xml-1.0.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-xml/1.0.0/ops4j-base-util-xml-1.0.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.base:ops4j-base-util-property:1.0.0">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/1.0.0/ops4j-base-util-property-1.0.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/1.0.0/ops4j-base-util-property-1.0.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/1.0.0/ops4j-base-util-property-1.0.0-sources.jar!/" />
       </SOURCES>
     </library>
   </component>
