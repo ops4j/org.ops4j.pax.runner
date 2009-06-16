@@ -57,6 +57,8 @@ public class ExtensionBasedProvisionSchemaResolver
                      || resolve.startsWith( org.ops4j.pax.url.wrap.ServiceConstants.PROTOCOL )
                      || resolve.startsWith( org.ops4j.pax.url.war.ServiceConstants.PROTOCOL_WAR )
                      || resolve.startsWith( org.ops4j.pax.url.war.ServiceConstants.PROTOCOL_WAR_INSTRUCTIONS )
+                     || resolve.startsWith( org.ops4j.pax.url.war.ServiceConstants.PROTOCOL_WAR_REFERENCE )
+                     || resolve.startsWith( org.ops4j.pax.url.war.ServiceConstants.PROTOCOL_WEB_BUNDLE )
                      || resolve.startsWith( org.ops4j.pax.url.obr.ServiceConstants.PROTOCOL ) )
             {
                 schema = org.ops4j.pax.runner.scanner.bundle.ServiceConstants.SCHEMA;
