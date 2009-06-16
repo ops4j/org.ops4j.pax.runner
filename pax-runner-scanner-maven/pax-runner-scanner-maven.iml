@@ -22,10 +22,8 @@
     <orderEntry type="module" module-name="pax-runner-scanner-common" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-property:0.2.0" level="project" />
     <orderEntry type="module" module-name="pax-runner-provision" />
-    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-maven-commons:0.6.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-xml:0.5.3" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-collections:0.5.3" level="project" />
-    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-mercury:0.6.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-maven-commons:1.0.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-mercury:1.0.0-SNAPSHOT" level="project" />
   </component>
 </module>
 
