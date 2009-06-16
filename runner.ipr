@@ -532,39 +532,6 @@
         <root url="jar://$M2_REPO$/org/easymock/easymock/2.3/easymock-2.3-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.ops4j.pax.swissbox:pax-swissbox-optional-jcl:0.2.0">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-optional-jcl/0.2.0/pax-swissbox-optional-jcl-0.2.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-optional-jcl/0.2.0/pax-swissbox-optional-jcl-0.2.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-optional-jcl/0.2.0/pax-swissbox-optional-jcl-0.2.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.swissbox:pax-swissbox-property:0.2.0">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-property/0.2.0/pax-swissbox-property-0.2.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-property/0.2.0/pax-swissbox-property-0.2.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-property/0.2.0/pax-swissbox-property-0.2.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.swissbox:pax-swissbox-tracker:0.2.0">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-tracker/0.2.0/pax-swissbox-tracker-0.2.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-tracker/0.2.0/pax-swissbox-tracker-0.2.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-tracker/0.2.0/pax-swissbox-tracker-0.2.0-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Maven: org.apache.felix:org.osgi.service.obr:1.0.0">
       <CLASSES>
         <root url="jar://$M2_REPO$/org/apache/felix/org.osgi.service.obr/1.0.0/org.osgi.service.obr-1.0.0.jar!/" />
@@ -1698,17 +1665,6 @@
         <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mercury/1.0.0-SNAPSHOT/pax-url-mercury-1.0.0-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.ops4j.pax.swissbox:pax-swissbox-lifecycle:0.2.0">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-lifecycle/0.2.0/pax-swissbox-lifecycle-0.2.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-lifecycle/0.2.0/pax-swissbox-lifecycle-0.2.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-lifecycle/0.2.0/pax-swissbox-lifecycle-0.2.0-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Maven: org.ops4j.base:ops4j-base-lang:1.0.0">
       <CLASSES>
         <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-lang/1.0.0/ops4j-base-lang-1.0.0.jar!/" />
@@ -1784,6 +1740,50 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$M2_REPO$/org/ops4j/base/ops4j-base-util-property/1.0.0/ops4j-base-util-property-1.0.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.swissbox:pax-swissbox-optional-jcl:1.0.0-SNAPSHOT">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-optional-jcl/1.0.0-SNAPSHOT/pax-swissbox-optional-jcl-1.0.0-SNAPSHOT.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-optional-jcl/1.0.0-SNAPSHOT/pax-swissbox-optional-jcl-1.0.0-SNAPSHOT-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-optional-jcl/1.0.0-SNAPSHOT/pax-swissbox-optional-jcl-1.0.0-SNAPSHOT-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.swissbox:pax-swissbox-property:1.0.0-SNAPSHOT">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-property/1.0.0-SNAPSHOT/pax-swissbox-property-1.0.0-SNAPSHOT.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-property/1.0.0-SNAPSHOT/pax-swissbox-property-1.0.0-SNAPSHOT-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-property/1.0.0-SNAPSHOT/pax-swissbox-property-1.0.0-SNAPSHOT-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.swissbox:pax-swissbox-tracker:1.0.0-SNAPSHOT">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-tracker/1.0.0-SNAPSHOT/pax-swissbox-tracker-1.0.0-SNAPSHOT.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-tracker/1.0.0-SNAPSHOT/pax-swissbox-tracker-1.0.0-SNAPSHOT-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-tracker/1.0.0-SNAPSHOT/pax-swissbox-tracker-1.0.0-SNAPSHOT-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.swissbox:pax-swissbox-lifecycle:1.0.0-SNAPSHOT">
+      <CLASSES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-lifecycle/1.0.0-SNAPSHOT/pax-swissbox-lifecycle-1.0.0-SNAPSHOT.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-lifecycle/1.0.0-SNAPSHOT/pax-swissbox-lifecycle-1.0.0-SNAPSHOT-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$M2_REPO$/org/ops4j/pax/swissbox/pax-swissbox-lifecycle/1.0.0-SNAPSHOT/pax-swissbox-lifecycle-1.0.0-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
   </component>

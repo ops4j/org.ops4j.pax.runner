@@ -20,12 +20,12 @@
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-net:1.0.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-monitors:1.0.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-collections:1.0.0" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-optional-jcl:0.2.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-optional-jcl:1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="module" module-name="pax-runner-commons" exported="" />
     <orderEntry type="module" module-name="pax-runner-platform" />
     <orderEntry type="library" name="Maven: org.ops4j.base:ops4j-base-io:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.base:ops4j-base-util-xml:1.0.0" level="project" />
-    <orderEntry type="library" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-property:0.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-property:1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.base:ops4j-base-util-property:1.0.0" level="project" />
   </component>
 </module>
