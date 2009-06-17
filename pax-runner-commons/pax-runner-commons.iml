@@ -13,7 +13,7 @@
     <orderEntry type="library" name="Maven: org.osgi:org.osgi.compendium:4.0.1" level="project" />
     <orderEntry type="library" name="Maven: junit:junit:4.4" level="project" />
     <orderEntry type="library" name="Maven: org.easymock:easymock:2.3" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-optional-jcl:1.0.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-optional-jcl:1.0.0" level="project" />
   </component>
 </module>
 
