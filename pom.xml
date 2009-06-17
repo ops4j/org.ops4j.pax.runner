@@ -305,26 +305,12 @@
 
   <repositories>
     <repository>
-      <id>ops4j.releases</id>
-      <url>http://repository.ops4j.org/mvn-releases</url>
+      <id>ops4j.3rdparty</id>
+      <url>http://repository.ops4j.org/mvn-3rdparty</url>
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
     </repository>
   </repositories>
-
-  <pluginRepositories>
-    <pluginRepository>
-      <id>ops4j.snapshots</id>
-      <name>The OPS4J Snapshot Repository</name>
-      <url>http://repository.ops4j.org/mvn-snapshots</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </pluginRepository>
-  </pluginRepositories>
 
 </project>
