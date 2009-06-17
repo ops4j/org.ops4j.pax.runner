@@ -154,9 +154,9 @@ public class DefaultJavaRunner
                 }
             }
         }
-        catch( IllegalStateException e )
+        catch( IllegalStateException ignore )
         {
-            LOG.debug( "Shutdown already in progress.", e );
+            // just ignore
         }
     }
 
