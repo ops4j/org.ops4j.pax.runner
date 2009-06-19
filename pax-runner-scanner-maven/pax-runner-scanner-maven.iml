@@ -22,30 +22,10 @@
     <orderEntry type="module" module-name="pax-runner-scanner-common" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-property:1.0.0" level="project" />
     <orderEntry type="module" module-name="pax-runner-provision" />
-    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-maven-commons:1.0.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-maven-commons:1.0.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-xml:1.0.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-collections:1.0.0" level="project" />
-    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-mercury:1.0.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.maven.mercury:mercury-repo-local-m2:1.0-alpha-5" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.maven.mercury:mercury-logging:1.0-alpha-5" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.maven.mercury:mercury-repo-api:1.0-alpha-5" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.maven.mercury:mercury-artifact:1.0-alpha-5" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.maven.mercury:mercury-transport-api:1.0-alpha-5" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.maven.mercury:mercury-crypto-api:1.0-alpha-5" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.maven.mercury:mercury-external:1.0-alpha-5" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.maven.mercury:mercury-event:1.0-alpha-5" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.maven.mercury:mercury-md-shared:1.0-alpha-5" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.maven.mercury:mercury-util:1.0-alpha-5" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.maven.mercury:mercury-crypto-basic:1.0-alpha-5" level="project" />
-    <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.maven.mercury:mercury-repo-remote-m2:1.0-alpha-5" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.maven.mercury:mercury-transport-http:1.0-alpha-5" level="project" />
-    <orderEntry type="library" name="Maven: org.mortbay.jetty:jetty-client:assembly:6.1.15.rc2" level="project" />
-    <orderEntry type="library" name="Maven: org.mortbay.jetty:jetty-util5:6.1.15.rc2" level="project" />
-    <orderEntry type="library" name="Maven: org.mortbay.jetty:jetty-util:6.1.15.rc2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.maven.mercury:mercury-repo-virtual:1.0-alpha-5" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.maven.mercury:mercury-repo-cache-fs:1.0-alpha-5" level="project" />
-    <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-utils:1.5.5" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-mercury:1.0.0" level="project" />
   </component>
 </module>
 
