@@ -260,6 +260,7 @@
       <list>
         <option value="default" />
         <option value="non-releaseable" />
+        <option value="release" />
       </list>
     </option>
   </component>
