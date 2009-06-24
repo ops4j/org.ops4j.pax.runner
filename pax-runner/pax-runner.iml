@@ -29,25 +29,15 @@
     <orderEntry type="module" module-name="pax-runner-commons" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-optional-jcl:1.0.0" level="project" />
     <orderEntry type="module" module-name="pax-runner-handler" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-lang:1.0.0" level="project" />
     <orderEntry type="module" module-name="pax-runner-provision" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-property:1.0.0" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-property:1.0.0" level="project" />
     <orderEntry type="module" module-name="pax-runner-scanner-bundle" />
     <orderEntry type="module" module-name="pax-runner-scanner-composite" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-net:1.0.0" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-monitors:1.0.0" level="project" />
     <orderEntry type="module" module-name="pax-runner-scanner-dir" />
     <orderEntry type="module" module-name="pax-runner-scanner-features" />
     <orderEntry type="module" module-name="pax-runner-scanner-file" />
     <orderEntry type="module" module-name="pax-runner-scanner-obr" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-tracker:1.0.0" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-lifecycle:1.0.0" level="project" />
     <orderEntry type="module" module-name="pax-runner-scanner-pom" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-xml:1.0.0" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-collections:1.0.0" level="project" />
     <orderEntry type="module" module-name="pax-runner-platform" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-io:1.0.0" level="project" />
     <orderEntry type="module" module-name="pax-runner-platform-concierge" />
     <orderEntry type="module" module-name="pax-runner-platform-equinox" />
     <orderEntry type="module" module-name="pax-runner-platform-felix" />
