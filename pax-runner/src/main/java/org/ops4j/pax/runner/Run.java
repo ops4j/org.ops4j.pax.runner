@@ -308,6 +308,16 @@ public class Run
             LOGGER.debug( "Using in process executor" );
             return new InProcessJavaRunner();
         }
+        try
+        {
+            final JavaRunner javaRunner = (JavaRunner) getClass().getClassLoader().loadClass( executor ).newInstance();
+            LOGGER.debug( "Using " + executor + " executor" );
+            return javaRunner;
+        }
+        catch( Exception ignore )
+        {
+            LOGGER.debug( "Connot load executor: " + executor + " reason: " + ignore.getMessage() );
+        }
         throw new ConfigurationException( "Executor [" + executor + "] is not supported" );
     }
 
