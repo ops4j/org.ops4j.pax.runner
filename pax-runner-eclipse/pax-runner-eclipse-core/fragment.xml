@@ -164,6 +164,14 @@
   <extension
       point="org.eclipse.pde.ui.osgiFrameworks">
     <framework
+        id="--platform=felix --version=1.8.1"
+        launcherDelegate="org.ops4j.pax.cursor.LaunchConfiguration"
+        name="Felix 1.8.1 via Pax Runner">
+    </framework>
+  </extension>
+  <extension
+      point="org.eclipse.pde.ui.osgiFrameworks">
+    <framework
         id="--platform=felix --snapshot"
         launcherDelegate="org.ops4j.pax.cursor.LaunchConfiguration"
         name="Felix Snapshot via Pax Runner">
