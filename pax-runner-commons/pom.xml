@@ -30,15 +30,6 @@
     <bundle.namespace>org.ops4j.pax.runner.commons</bundle.namespace>
   </properties>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
-
   <dependencies>
     <dependency>
       <groupId>org.ops4j.pax.swissbox</groupId>
