@@ -12,4 +12,4 @@ else
   SCRIPTS=`dirname $0`
 fi
 
-java $JAVA_OPTS -cp .:$SCRIPTS:$SCRIPTS/target/pax-runner-1.0.1-SNAPSHOT-jdk14.jar org.ops4j.pax.runner.Run "$@"
+java $JAVA_OPTS -cp .:$SCRIPTS:$SCRIPTS/target/pax-runner-1.1.0-SNAPSHOT-jdk14.jar org.ops4j.pax.runner.Run "$@"
