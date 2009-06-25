@@ -23,6 +23,8 @@
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-property:1.0.0" level="project" />
     <orderEntry type="module" module-name="pax-runner-provision" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-maven-commons:1.0.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-xml:1.0.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-collections:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-mercury:1.0.0" level="project" />
   </component>
 </module>
