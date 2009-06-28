@@ -19,9 +19,6 @@
       <includes>
         <include>org.ops4j.pax.runner:pax-runner:jar</include>
       </includes>
-      <excludes>
-        <exclude>org.ops4j.pax.runner:pax-runner:jar:jdk14</exclude>
-      </excludes>
     </dependencySet>
   </dependencySets>
 </assembly>
