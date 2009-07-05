@@ -50,12 +50,6 @@
         <module>pax-runner-eclipse</module>
       </modules>
     </profile>
-    <profile>
-      <id>non-releaseable</id>
-      <modules>
-        <module>pax-runner-scanner-maven</module>
-      </modules>
-    </profile>
   </profiles>
 
   <developers>

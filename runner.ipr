@@ -420,7 +420,6 @@
       <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-equinox/pax-runner-platform-equinox.iml" filepath="$PROJECT_DIR$/pax-runner-platform-equinox/pax-runner-platform-equinox.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-felix/pax-runner-platform-felix.iml" filepath="$PROJECT_DIR$/pax-runner-platform-felix/pax-runner-platform-felix.iml" />
       <module fileurl="file://$PROJECT_DIR$/pax-runner-platform-knopflerfish/pax-runner-platform-knopflerfish.iml" filepath="$PROJECT_DIR$/pax-runner-platform-knopflerfish/pax-runner-platform-knopflerfish.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pax-runner-scanner-maven/pax-runner-scanner-maven.iml" filepath="$PROJECT_DIR$/pax-runner-scanner-maven/pax-runner-scanner-maven.iml" />
       <module fileurl="file://$PROJECT_DIR$/runner.iml" filepath="$PROJECT_DIR$/runner.iml" />
     </modules>
   </component>
@@ -1423,39 +1422,6 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-wrap/1.0.0/pax-url-wrap-1.0.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-maven-commons:1.0.0">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-maven-commons/1.0.0/pax-url-maven-commons-1.0.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-maven-commons/1.0.0/pax-url-maven-commons-1.0.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-maven-commons/1.0.0/pax-url-maven-commons-1.0.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-mercury:1.0.0">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mercury/1.0.0/pax-url-mercury-1.0.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mercury/1.0.0/pax-url-mercury-1.0.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/url/pax-url-mercury/1.0.0/pax-url-mercury-1.0.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.runner:pax-runner-scanner-common:1.1.2-SNAPSHOT">
-      <CLASSES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/runner/pax-runner-scanner-common/1.1.2-SNAPSHOT/pax-runner-scanner-common-1.1.2-SNAPSHOT.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/runner/pax-runner-scanner-common/1.1.2-SNAPSHOT/pax-runner-scanner-common-1.1.2-SNAPSHOT-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$M2_REPO$/org/ops4j/pax/runner/pax-runner-scanner-common/1.1.2-SNAPSHOT/pax-runner-scanner-common-1.1.2-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.ops4j.pax.scanner:pax-scanner-bundle:1.0.0-SNAPSHOT">
