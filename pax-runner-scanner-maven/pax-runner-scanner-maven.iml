@@ -9,6 +9,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="pax-runner-scanner-common" />
+    <orderEntry type="module" module-name="pax-runner-provision" />
     <orderEntry type="library" name="Maven: org.osgi:org.osgi.core:4.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.osgi:org.osgi.compendium:4.0.1" level="project" />
     <orderEntry type="library" name="Maven: junit:junit:4.4" level="project" />
@@ -19,9 +21,7 @@
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-property:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-optional-jcl:1.0.0" level="project" />
     <orderEntry type="module" module-name="pax-runner-commons" exported="" />
-    <orderEntry type="module" module-name="pax-runner-scanner-common" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-property:1.0.0" level="project" />
-    <orderEntry type="module" module-name="pax-runner-provision" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.runner:pax-runner-scanner-common:1.1.2-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-maven-commons:1.0.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-xml:1.0.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-collections:1.0.0" level="project" />

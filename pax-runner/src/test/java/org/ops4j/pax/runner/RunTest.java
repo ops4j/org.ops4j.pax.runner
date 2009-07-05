@@ -31,12 +31,12 @@ import static org.ops4j.pax.runner.CommandLine.*;
 import org.ops4j.pax.runner.platform.JavaRunner;
 import org.ops4j.pax.runner.platform.Platform;
 import org.ops4j.pax.runner.platform.SystemFileReference;
-import org.ops4j.pax.runner.provision.InstallableBundles;
-import org.ops4j.pax.runner.provision.MalformedSpecificationException;
-import org.ops4j.pax.runner.provision.ProvisionService;
-import org.ops4j.pax.runner.provision.ScannedBundle;
-import org.ops4j.pax.runner.provision.ScannerException;
-import org.ops4j.pax.runner.provision.UnsupportedSchemaException;
+import org.ops4j.pax.scanner.InstallableBundles;
+import org.ops4j.pax.scanner.MalformedSpecificationException;
+import org.ops4j.pax.scanner.ProvisionService;
+import org.ops4j.pax.scanner.ScannedBundle;
+import org.ops4j.pax.scanner.ScannerException;
+import org.ops4j.pax.scanner.UnsupportedSchemaException;
 
 public class RunTest
 {

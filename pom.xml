@@ -39,16 +39,6 @@
       <modules>
         <module>pax-runner-commons</module>
         <module>pax-runner-handler</module>
-        <module>pax-runner-provision</module>
-        <module>pax-runner-scanner-common</module>
-        <module>pax-runner-scanner-composite</module>
-        <module>pax-runner-scanner-bundle</module>
-        <module>pax-runner-scanner-dir</module>
-        <module>pax-runner-scanner-features</module>
-        <module>pax-runner-scanner-file</module>
-        <module>pax-runner-scanner-obr</module>
-        <module>pax-runner-scanner-obr-script</module>
-        <module>pax-runner-scanner-pom</module>
         <module>pax-runner-platform</module>
         <module>pax-runner-platform-concierge</module>
         <module>pax-runner-platform-equinox</module>
@@ -58,31 +48,6 @@
         <module>pax-runner-no-jcl</module>
         <module>pax-runner-assembly</module>
         <module>pax-runner-eclipse</module>
-      </modules>
-    </profile>
-    <profile>
-      <id>scanner</id>
-      <modules>
-        <module>pax-runner-scanner-common</module>
-        <module>pax-runner-scanner-bundle</module>
-        <module>pax-runner-scanner-composite</module>
-        <module>pax-runner-scanner-dir</module>
-        <module>pax-runner-scanner-features</module>
-        <module>pax-runner-scanner-file</module>
-        <module>pax-runner-scanner-obr</module>
-        <module>pax-runner-scanner-obr-script</module>
-        <module>pax-runner-scanner-pom</module>
-        <module>pax-runner</module>
-      </modules>
-    </profile>
-    <profile>
-      <id>platform</id>
-      <modules>
-        <module>pax-runner-platform</module>
-        <module>pax-runner-platform-concierge</module>
-        <module>pax-runner-platform-equinox</module>
-        <module>pax-runner-platform-felix</module>
-        <module>pax-runner-platform-knopflerfish</module>
       </modules>
     </profile>
     <profile>
@@ -117,6 +82,7 @@
 
   <properties>
     <dependency.base.version>1.0.0</dependency.base.version>
+    <dependency.scanner.version>1.0.0-SNAPSHOT</dependency.scanner.version>
     <dependency.swissbox.version>1.0.0</dependency.swissbox.version>
     <dependency.url.version>1.0.0</dependency.url.version>
   </properties>

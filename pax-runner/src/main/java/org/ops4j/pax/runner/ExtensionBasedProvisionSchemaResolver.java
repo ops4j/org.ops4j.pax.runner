@@ -43,14 +43,14 @@ public class ExtensionBasedProvisionSchemaResolver
             resolve = toResolve.substring( 0, startOfOption );
         }
         // first resolve schema
-        String schema = org.ops4j.pax.runner.scanner.dir.ServiceConstants.SCHEMA;
+        String schema = org.ops4j.pax.scanner.dir.ServiceConstants.SCHEMA;
         if( !resolve.endsWith( "/" ) && !resolve.endsWith( "\\" ) && !resolve.contains( "!/" ) )
         {
             // check if is a pom using mvn protocol
             if( resolve.startsWith( org.ops4j.pax.url.mvn.ServiceConstants.PROTOCOL )
                 && resolve.endsWith( "pom" ) )
             {
-                schema = org.ops4j.pax.runner.scanner.pom.ServiceConstants.SCHEMA;
+                schema = org.ops4j.pax.scanner.pom.ServiceConstants.SCHEMA;
             }
             // check if starts with mvn / wrap / war / obr, because most common it will be a bundle
             else if( resolve.startsWith( org.ops4j.pax.url.mvn.ServiceConstants.PROTOCOL )
@@ -61,7 +61,7 @@ public class ExtensionBasedProvisionSchemaResolver
                      || resolve.startsWith( org.ops4j.pax.url.war.ServiceConstants.PROTOCOL_WEB_BUNDLE )
                      || resolve.startsWith( org.ops4j.pax.url.obr.ServiceConstants.PROTOCOL ) )
             {
-                schema = org.ops4j.pax.runner.scanner.bundle.ServiceConstants.SCHEMA;
+                schema = org.ops4j.pax.scanner.bundle.ServiceConstants.SCHEMA;
             }
             else
             {
@@ -73,29 +73,29 @@ public class ExtensionBasedProvisionSchemaResolver
                 final int indexOfDot = resolve.lastIndexOf( "." );
                 if( indexOfDot > indexOfSlash )
                 {
-                    schema = org.ops4j.pax.runner.scanner.file.ServiceConstants.SCHEMA;
+                    schema = org.ops4j.pax.scanner.file.ServiceConstants.SCHEMA;
                     if( indexOfDot < resolve.length() - 1 )
                     {
                         final String extension = resolve.substring( indexOfDot + 1 ).toUpperCase();
                         if( "XML".equals( extension ) )
                         {
-                            schema = org.ops4j.pax.runner.scanner.pom.ServiceConstants.SCHEMA;
+                            schema = org.ops4j.pax.scanner.pom.ServiceConstants.SCHEMA;
                         }
                         else if( "ZIP".equals( extension ) )
                         {
-                            schema = org.ops4j.pax.runner.scanner.dir.ServiceConstants.SCHEMA;
+                            schema = org.ops4j.pax.scanner.dir.ServiceConstants.SCHEMA;
                         }
                         else if( "JAR".equals( extension ) || "BUNDLE".equals( extension ) )
                         {
-                            schema = org.ops4j.pax.runner.scanner.bundle.ServiceConstants.SCHEMA;
+                            schema = org.ops4j.pax.scanner.bundle.ServiceConstants.SCHEMA;
                         }
                         else if( "OBR".equals( extension ) )
                         {
-                            schema = org.ops4j.pax.runner.scanner.obr.ServiceConstants.SCHEMA;
+                            schema = org.ops4j.pax.scanner.obr.ServiceConstants.SCHEMA;
                         }
                         else if( "COMPOSITE".equals( extension ) || "PROFILE".equals( extension ))
                         {
-                            schema = org.ops4j.pax.runner.scanner.composite.ServiceConstants.SCHEMA;
+                            schema = org.ops4j.pax.scanner.composite.ServiceConstants.SCHEMA;
                         }
                     }
                 }
@@ -115,7 +115,7 @@ public class ExtensionBasedProvisionSchemaResolver
                 // ignore as this should not happen if the file exists
             }
         }
-        return schema + org.ops4j.pax.runner.provision.ServiceConstants.SEPARATOR_SCHEME + resolved + options;
+        return schema + org.ops4j.pax.scanner.ServiceConstants.SEPARATOR_SCHEME + resolved + options;
     }
 
 }

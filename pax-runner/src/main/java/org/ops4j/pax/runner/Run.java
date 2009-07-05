@@ -59,11 +59,11 @@ import org.ops4j.pax.runner.platform.ScriptJavaRunner;
 import org.ops4j.pax.runner.platform.SystemFileReference;
 import org.ops4j.pax.runner.platform.SystemFileReferenceBean;
 import org.ops4j.pax.runner.platform.ZipJavaRunner;
-import org.ops4j.pax.runner.provision.MalformedSpecificationException;
-import org.ops4j.pax.runner.provision.ProvisionService;
-import org.ops4j.pax.runner.provision.ScannedBundle;
-import org.ops4j.pax.runner.provision.ScannerException;
-import org.ops4j.pax.runner.provision.UnsupportedSchemaException;
+import org.ops4j.pax.scanner.MalformedSpecificationException;
+import org.ops4j.pax.scanner.ProvisionService;
+import org.ops4j.pax.scanner.ScannedBundle;
+import org.ops4j.pax.scanner.ScannerException;
+import org.ops4j.pax.scanner.UnsupportedSchemaException;
 
 /**
  * Main runner class. Does all the work.
@@ -527,8 +527,8 @@ public class Run
                 // TODO Maybe a nice/safe parsing of profile name into group/artifact/version ?
                 final String[] parts = profile.split( "/" );
                 provisionSpecs.add(
-                    org.ops4j.pax.runner.scanner.composite.ServiceConstants.SCHEMA
-                    + org.ops4j.pax.runner.provision.ServiceConstants.SEPARATOR_SCHEME
+                    org.ops4j.pax.scanner.composite.ServiceConstants.SCHEMA
+                    + org.ops4j.pax.scanner.ServiceConstants.SEPARATOR_SCHEME
                     + org.ops4j.pax.url.mvn.ServiceConstants.PROTOCOL
                     + ":"
                     + ( parts.length < 3 ? profilesGroup + "/" : "" )
