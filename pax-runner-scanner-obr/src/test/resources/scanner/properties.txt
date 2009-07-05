@@ -1,5 +1,0 @@
-# first property
--Dprop.1=value.1
-
-#second property
--Dprop.2=value.2
