@@ -227,7 +227,7 @@ public class PlatformImplTest
     }
 
     @Test
-    public void determineChaheNameWithValidManifestWithoutVersion()
+    public void determineCacheNameWithValidManifestWithoutVersion()
         throws Exception
     {
         replay( m_builder, m_bundleContext, m_config );
@@ -241,7 +241,7 @@ public class PlatformImplTest
     }
 
     @Test
-    public void determineChaheNameWithValidManifestWithVersion()
+    public void determineCacheNameWithValidManifestWithVersion()
         throws Exception
     {
         replay( m_builder, m_bundleContext, m_config );
