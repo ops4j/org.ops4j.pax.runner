@@ -276,6 +276,14 @@
   <extension
       point="org.eclipse.pde.ui.osgiFrameworks">
     <framework
+        id="--platform=knopflerfish --version=2.3.2"
+        launcherDelegate="org.ops4j.pax.cursor.LaunchConfiguration"
+        name="Knopflerfish 2.3.2 via Pax Runner">
+    </framework>
+  </extension>
+  <extension
+      point="org.eclipse.pde.ui.osgiFrameworks">
+    <framework
         id="--platform=knopflerfish --snapshot"
         launcherDelegate="org.ops4j.pax.cursor.LaunchConfiguration"
         name="Knopflerfish Snapshot via Pax Runner">
