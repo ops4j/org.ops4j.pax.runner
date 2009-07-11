@@ -178,7 +178,8 @@ public class PlatformImpl
                 context,
                 overwriteBundles || overwriteSystemBundles,
                 downloadFeeback,
-                configuration.validateBundles()
+                configuration.validateBundles(),
+                configuration.skipInvalidBundles()
             )
         );
         LOGGER.debug( "Download bundles" );
@@ -190,7 +191,8 @@ public class PlatformImpl
                 downloadFeeback,
                 configuration.isAutoWrap(),
                 configuration.keepOriginalUrls(),
-                configuration.validateBundles()
+                configuration.validateBundles(),
+                configuration.skipInvalidBundles()
             )
         );
         context.setBundles( bundlesToInstall );
@@ -348,13 +350,14 @@ public class PlatformImpl
     /**
      * Downloads the bundles that will be installed to the working directory.
      *
-     * @param bundles          url of bundles to be installed
-     * @param workDir          the directory where to download bundles
-     * @param overwrite        if the bundles should be overwritten
-     * @param downloadFeeback  whether or not downloading process should display fne grained progres info
-     * @param autoWrap         wheather or not auto wrapping should take place
-     * @param keepOriginalUrls if the provisioned bundles should be cached or not
-     * @param validateBundles  if downloaded bundles osgi headers should be checked
+     * @param bundles            url of bundles to be installed
+     * @param workDir            the directory where to download bundles
+     * @param overwrite          if the bundles should be overwritten
+     * @param downloadFeeback    whether or not downloading process should display fne grained progres info
+     * @param autoWrap           wheather or not auto wrapping should take place
+     * @param keepOriginalUrls   if the provisioned bundles should be cached or not
+     * @param validateBundles    if downloaded bundles osgi headers should be checked
+     * @param skipInvalidBundles if invalid bundles (failing validation) should be skipped
      *
      * @return a list of downloaded files
      *
@@ -366,7 +369,8 @@ public class PlatformImpl
                                                    final boolean downloadFeeback,
                                                    final boolean autoWrap,
                                                    final boolean keepOriginalUrls,
-                                                   final boolean validateBundles )
+                                                   final boolean validateBundles,
+                                                   final boolean skipInvalidBundles )
         throws PlatformException
     {
         final List<BundleReference> localBundles = new ArrayList<BundleReference>();
@@ -400,19 +404,23 @@ public class PlatformImpl
                 }
                 else
                 {
-                    localBundles.add(
-                        new LocalBundleReference(
-                            reference,
-                            download(
-                                workDir,
-                                url,
-                                reference.getName(),
-                                overwrite || reference.shouldUpdate(),
-                                validateBundles,
-                                downloadFeeback
-                            )
-                        )
+                    final File bundleFile = download(
+                        workDir,
+                        url,
+                        reference.getName(),
+                        overwrite || reference.shouldUpdate(),
+                        validateBundles,
+                        !skipInvalidBundles,
+                        downloadFeeback
                     );
+                    if( bundleFile != null )
+                    {
+                        localBundles.add( new LocalBundleReference( reference, bundleFile ) );
+                    }
+                    else
+                    {
+                        LOGGER.info( "Bundle [" + url + "] skipped from provisioning as it is invalid" );
+                    }
                 }
             }
         }
@@ -422,12 +430,13 @@ public class PlatformImpl
     /**
      * Downsloads platform bundles to working dir.
      *
-     * @param workDir         the directory where to download bundles
-     * @param definition      to take the system package
-     * @param platformContext current platform context
-     * @param overwrite       if the bundles should be overwritten
-     * @param downloadFeeback whether or not downloading process should display fine grained progres info
-     * @param validateBundles if downloaded bundles osgi headers should be checked
+     * @param workDir            the directory where to download bundles
+     * @param definition         to take the system package
+     * @param platformContext    current platform context
+     * @param overwrite          if the bundles should be overwritten
+     * @param downloadFeeback    whether or not downloading process should display fine grained progres info
+     * @param validateBundles    if downloaded bundles osgi headers should be checked
+     * @param skipInvalidBundles if invalid bundles (failing validation) should be skipped
      *
      * @return a list of downloaded files
      *
@@ -438,7 +447,8 @@ public class PlatformImpl
                                                            final PlatformContext platformContext,
                                                            final Boolean overwrite,
                                                            final boolean downloadFeeback,
-                                                           final boolean validateBundles )
+                                                           final boolean validateBundles,
+                                                           final boolean skipInvalidBundles )
         throws PlatformException
     {
         final StringBuilder profiles = new StringBuilder();
@@ -463,7 +473,8 @@ public class PlatformImpl
             downloadFeeback,
             false, // do not autowrap, as framework related bundles are mostly alreay bundles,
             false, // framework bundles are always downloaded
-            validateBundles
+            validateBundles,
+            skipInvalidBundles
         );
     }
 
@@ -490,7 +501,8 @@ public class PlatformImpl
             definition.getSystemPackage(),
             definition.getSystemPackageName(),
             overwrite,
-            false,
+            false, // do not validate as osgi bundle
+            true,  // fail on validation
             downloadFeeback
         );
     }
@@ -526,7 +538,8 @@ public class PlatformImpl
                             reference.getURL(),
                             reference.getName(),
                             overwrite,
-                            false,
+                            false, // do not validate as osgi bundle
+                            true,  // fail on validation
                             downloadFeeback
                         )
                     )
@@ -539,14 +552,15 @@ public class PlatformImpl
     /**
      * Downloads files from urls.
      *
-     * @param workDir         the directory where to download bundles
-     * @param url             of the file to be downloaded
-     * @param displayName     to be shown during download
-     * @param overwrite       if the bundles should be overwritten
-     * @param checkAttributes whether or not to check attributes in the manifest
-     * @param downloadFeeback whether or not downloading process should display fine grained progres info
+     * @param workDir          the directory where to download bundles
+     * @param url              of the file to be downloaded
+     * @param displayName      to be shown during download
+     * @param overwrite        if the bundles should be overwritten
+     * @param checkAttributes  whether or not to check attributes in the manifest
+     * @param failOnValidation if validation fails should or not fail with an exception (or just return null)
+     * @param downloadFeeback  whether or not downloading process should display fine grained progres info
      *
-     * @return the File corresponding to the downloaded file.
+     * @return the File corresponding to the downloaded file, or null if the bundle is invalid (not an osgi bundle)
      *
      * @throws PlatformException if the url could not be downloaded
      */
@@ -555,6 +569,7 @@ public class PlatformImpl
                            final String displayName,
                            final Boolean overwrite,
                            final boolean checkAttributes,
+                           final boolean failOnValidation,
                            final boolean downloadFeeback )
         throws PlatformException
     {
@@ -631,7 +646,18 @@ public class PlatformImpl
         }
         if( checkAttributes )
         {
-            validateBundle( url, destination );
+            try
+            {
+                validateBundle( url, destination );
+            }
+            catch( PlatformException e )
+            {
+                if( failOnValidation )
+                {
+                    throw e;
+                }
+                return null;
+            }
         }
         String cachingName = determineCachingName( destination, hashFileName );
         File newDestination = new File( destination.getParentFile(), cachingName );

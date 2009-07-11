@@ -525,6 +525,20 @@ public class ConfigurationImpl
     /**
      * {@inheritDoc}
      */
+    public Boolean skipInvalidBundles()
+    {
+        if( !contains( ServiceConstants.CONFIG_SKIP_INVALID_BUNDLES ) )
+        {
+            return set( ServiceConstants.CONFIG_SKIP_INVALID_BUNDLES,
+                        Boolean.valueOf( m_propertyResolver.get( ServiceConstants.CONFIG_SKIP_INVALID_BUNDLES ) )
+            );
+        }
+        return get( ServiceConstants.CONFIG_SKIP_INVALID_BUNDLES );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public Boolean useAbsoluteFilePaths()
     {
         if( !contains( ServiceConstants.CONFIG_USE_ABSOLUTE_FILE_PATHS ) )

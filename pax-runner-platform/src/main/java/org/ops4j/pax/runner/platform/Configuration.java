@@ -216,6 +216,14 @@ public interface Configuration
     Boolean validateBundles();
 
     /**
+     * Returns true if the invalid bundles should be skipped from provisioning.
+     * Default value is "false".
+     *
+     * @return value of skip invalid bundles option
+     */
+    Boolean skipInvalidBundles();    
+
+    /**
      * Returns true if the file paths used in frameworks configuration files and properties should be absolute.
      * Default value is "false".
      *

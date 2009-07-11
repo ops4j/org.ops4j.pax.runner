@@ -176,6 +176,7 @@ public class PlatformImplTest
         expect( m_config.getSystemPackages() ).andReturn( null );
         expect( m_config.getVMOptions() ).andReturn( new String[]{ "-Xmx512m", "-Xms128m" } );
         expect( m_config.validateBundles() ).andReturn( true ).anyTimes();
+        expect( m_config.skipInvalidBundles() ).andReturn( false ).anyTimes();
         expect( m_context.getFilePathStrategy() ).andReturn( filePathStrategy );
         expect( filePathStrategy.normalizeAsPath( (File) notNull() ) ).andReturn( null );
         expect( ( m_definition.getPackages() ) ).andReturn( null );

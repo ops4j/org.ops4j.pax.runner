@@ -112,7 +112,11 @@ public interface ServiceConstants
     /**
      * Validate bundles property name.
      */
-    static final String CONFIG_VALIDATE_BUNDLES = PID + ".bundleValidation";    
+    static final String CONFIG_VALIDATE_BUNDLES = PID + ".bundleValidation";
+    /**
+     * Skip invalid bundles  property name.
+     */
+    static final String CONFIG_SKIP_INVALID_BUNDLES = PID + ".skipInvalidBundles";    
     /**
      * Use absolute file paths property name.
      */
