@@ -191,173 +191,79 @@ public class PlatformImplTest
     }
 
     @Test( expected = PlatformException.class )
-    public void validateBundleAndGetFilenameWithNoManifestNoCheckAttributes()
+    public void validateBundleWithNoManifestAndCheckAttributes()
         throws Exception
     {
         replay( m_builder, m_bundleContext, m_config );
         PlatformImpl platform = new PlatformImpl( m_builder );
-        boolean checkAttributes = false;
         File file = FileUtils.getFileFromClasspath( "platform/withoutManifest.jar" );
         URL url = file.toURL();
-        platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes );
-    }
-
-    @Test( expected = PlatformException.class )
-    public void validateBundleAndGetFilenameWIthNoManifestAndCheckAttributes()
-        throws Exception
-    {
-        replay( m_builder, m_bundleContext, m_config );
-        PlatformImpl platform = new PlatformImpl( m_builder );
-        boolean checkAttributes = true;
-        File file = FileUtils.getFileFromClasspath( "platform/withoutManifest.jar" );
-        URL url = file.toURL();
-        platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes );
+        platform.validateBundle( url, file );
     }
 
     @Test
-    public void validateBundleAndGetFilenameWithNoManifestAttrNoCheckAttributes()
+    public void determineCachingNameWithNoManifestAttributes()
         throws Exception
     {
         replay( m_builder, m_bundleContext, m_config );
         PlatformImpl platform = new PlatformImpl( m_builder );
-        boolean checkAttributes = false;
         File file = FileUtils.getFileFromClasspath( "platform/noManifestAttr.jar" );
-        URL url = file.toURL();
         assertEquals(
             "defaultBSN_0.0.0.jar",
-            platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes )
+            platform.determineCachingName( file, "defaultBSN" )
         );
         verify( m_builder, m_bundleContext, m_config );
     }
 
     @Test( expected = PlatformException.class )
-    public void validateBundleAndGetFilenameWithNoManifestAttrAndCheckAttributes()
+    public void validateBundleWithInvalidFile()
         throws Exception
     {
         replay( m_builder, m_bundleContext, m_config );
         PlatformImpl platform = new PlatformImpl( m_builder );
-        boolean checkAttributes = true;
-        File file = FileUtils.getFileFromClasspath( "platform/noManifestAttr.jar" );
-        URL url = file.toURL();
-        platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes );
-    }
-
-    @Test
-    public void validateBundleAndGetFilenameInvalidNoCheckAttributes()
-        throws Exception
-    {
-        replay( m_builder, m_bundleContext, m_config );
-        PlatformImpl platform = new PlatformImpl( m_builder );
-        boolean checkAttributes = false;
         File file = FileUtils.getFileFromClasspath( "platform/invalid.jar" );
         URL url = file.toURL();
-        platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes );
-    }
-
-    @Test( expected = PlatformException.class )
-    public void validateBundleAndGetFilenameInvalidCheckAttributes()
-        throws Exception
-    {
-        replay( m_builder, m_bundleContext, m_config );
-        PlatformImpl platform = new PlatformImpl( m_builder );
-        boolean checkAttributes = true;
-        File file = FileUtils.getFileFromClasspath( "platform/invalid.jar" );
-        URL url = file.toURL();
-        platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes );
+        platform.validateBundle( url, file );
     }
 
     @Test
-    public void validateBundleAndGetFilename1NoCheckAttributes()
+    public void determineChaheNameWithValidManifestWithoutVersion()
         throws Exception
     {
         replay( m_builder, m_bundleContext, m_config );
         PlatformImpl platform = new PlatformImpl( m_builder );
-        boolean checkAttributes = false;
         File file = FileUtils.getFileFromClasspath( "platform/bundle1.jar" );
-        URL url = file.toURL();
         assertEquals(
             "bundle2_0.0.0.jar",
-            platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes )
+            platform.determineCachingName( file, "defaultBSN" )
         );
         verify( m_builder, m_bundleContext, m_config );
     }
 
     @Test
-    public void validateBundleAndGetFilename1CheckAttributes()
+    public void determineChaheNameWithValidManifestWithVersion()
         throws Exception
     {
         replay( m_builder, m_bundleContext, m_config );
         PlatformImpl platform = new PlatformImpl( m_builder );
-        boolean checkAttributes = true;
-        File file = FileUtils.getFileFromClasspath( "platform/bundle1.jar" );
-        URL url = file.toURL();
-        assertEquals(
-            "bundle2_0.0.0.jar",
-            platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes )
-        );
-        verify( m_builder, m_bundleContext, m_config );
-    }
-
-    @Test
-    public void validateBundleAndGetFilenameWithVersionNoCheckAttributes()
-        throws Exception
-    {
-        replay( m_builder, m_bundleContext, m_config );
-        PlatformImpl platform = new PlatformImpl( m_builder );
-        boolean checkAttributes = false;
         File file = FileUtils.getFileFromClasspath( "platform/bundleWithVersion.jar" );
-        URL url = file.toURL();
         assertEquals(
             "bundle2_1.2.3.jar",
-            platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes )
+            platform.determineCachingName( file, "defaultBSN" )
         );
         verify( m_builder, m_bundleContext, m_config );
     }
 
     @Test
-    public void validateBundleAndGetFilenameWithVersionCheckAttributes()
+    public void determineCacheNameWithBDNWithSemicolon()
         throws Exception
     {
         replay( m_builder, m_bundleContext, m_config );
         PlatformImpl platform = new PlatformImpl( m_builder );
-        boolean checkAttributes = true;
-        File file = FileUtils.getFileFromClasspath( "platform/bundleWithVersion.jar" );
-        URL url = file.toURL();
-        assertEquals(
-            "bundle2_1.2.3.jar",
-            platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes )
-        );
-        verify( m_builder, m_bundleContext, m_config );
-    }
-
-    @Test
-    public void validateBundleAndGetFilenameWithSemicolonNoCheckAttributes()
-        throws Exception
-    {
-        replay( m_builder, m_bundleContext, m_config );
-        PlatformImpl platform = new PlatformImpl( m_builder );
-        boolean checkAttributes = false;
         File file = FileUtils.getFileFromClasspath( "platform/bundleWithSemicolon.jar" );
-        URL url = file.toURL();
         assertEquals(
             "bundleWithSemicolon_0.0.0.jar",
-            platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes )
-        );
-        verify( m_builder, m_bundleContext, m_config );
-    }
-
-    @Test
-    public void validateBundleAndGetFilenameWithSemicolonCheckAttributes()
-        throws Exception
-    {
-        replay( m_builder, m_bundleContext, m_config );
-        PlatformImpl platform = new PlatformImpl( m_builder );
-        boolean checkAttributes = true;
-        File file = FileUtils.getFileFromClasspath( "platform/bundleWithSemicolon.jar" );
-        URL url = file.toURL();
-        assertEquals(
-            "bundleWithSemicolon_0.0.0.jar",
-            platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes )
+            platform.determineCachingName( file, "defaultBSN" )
         );
         verify( m_builder, m_bundleContext, m_config );
     }

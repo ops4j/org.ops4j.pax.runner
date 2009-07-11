@@ -579,10 +579,10 @@ public class PlatformImpl
         {
             try
             {
-                String newFileName = validateBundleAndGetFilename( url, destination, hashFileName, checkAttributes );
-                if( !destination.getName().equals( newFileName ) )
+                String cachingName = determineCachingName( destination, hashFileName );
+                if( !destination.getName().equals( cachingName ) )
                 {
-                    throw new PlatformException( "File " + destination + " should have name " + newFileName );
+                    throw new PlatformException( "File " + destination + " should have name " + cachingName );
                 }
             }
             catch( PlatformException ignore )
@@ -629,10 +629,13 @@ public class PlatformImpl
                 throw new PlatformException( "[" + url + "] could not be downloaded", e );
             }
         }
-
-        String newFileName = validateBundleAndGetFilename( url, destination, hashFileName, checkAttributes );
-        File newDestination = new File( destination.getParentFile(), newFileName );
-        if( !newFileName.equals( destination.getName() ) )
+        if( checkAttributes )
+        {
+            validateBundle( url, destination );
+        }
+        String cachingName = determineCachingName( destination, hashFileName );
+        File newDestination = new File( destination.getParentFile(), cachingName );
+        if( !cachingName.equals( destination.getName() ) )
         {
             if( newDestination.exists() )
             {
@@ -645,7 +648,7 @@ public class PlatformImpl
             {
                 throw new PlatformException( "Cannot rename " + destination + " to " + newDestination );
             }
-            fileNamesForUrls.setProperty( url.toExternalForm(), newFileName );
+            fileNamesForUrls.setProperty( url.toExternalForm(), cachingName );
             saveProperties( fileNamesForUrls, downloadedBundlesFile );
         }
 
@@ -713,28 +716,21 @@ public class PlatformImpl
     }
 
     /**
-     * Validate that the file is an valid bundle. A valid bundle will be a loadable jar file that has manifest and the
-     * manifest contains at least an entry for Bundle-SymboliName.
+     * Validate that the file is an valid bundle.
+     * A valid bundle will be a loadable jar file that has manifest and the manifest contains at least an entry for
+     * Bundle-SymboliName or Bundle-Name (R3).
      *
-     * @param url                       original url from where the bundle was created.
-     * @param file                      file to be validated
-     * @param defaultBundleSymbolicName default bundle symbolic name to be used if manifest does not have a bundle
-     *                                  symbolic name
-     * @param checkAttributes           whether or not to check attributes in the manifest
-     *
-     * @return file name based on bundle symbolic name and version
+     * @param url  original url from where the bundle was created.
+     * @param file file to be validated
      *
      * @throws PlatformException if the jar is not a valid bundle
      */
-    String validateBundleAndGetFilename( final URL url,
-                                         final File file,
-                                         final String defaultBundleSymbolicName,
-                                         final boolean checkAttributes )
+    void validateBundle( final URL url,
+                         final File file )
         throws PlatformException
     {
         String bundleSymbolicName = null;
         String bundleName = null;
-        String bundleVersion = null;
         JarFile jar = null;
         try
         {
@@ -747,14 +743,10 @@ public class PlatformImpl
             }
             bundleSymbolicName = manifest.getMainAttributes().getValue( Constants.BUNDLE_SYMBOLICNAME );
             bundleName = manifest.getMainAttributes().getValue( Constants.BUNDLE_NAME );
-            bundleVersion = manifest.getMainAttributes().getValue( Constants.BUNDLE_VERSION );
         }
         catch( IOException e )
         {
-            if( checkAttributes )
-            {
-                throw new PlatformException( "[" + url + "] is not a valid bundle", e );
-            }
+            throw new PlatformException( "[" + url + "] is not a valid bundle", e );
         }
         finally
         {
@@ -770,11 +762,54 @@ public class PlatformImpl
                 }
             }
         }
-        if( checkAttributes
-            && ( bundleSymbolicName == null && bundleName == null ) )
+        if( bundleSymbolicName == null && bundleName == null )
         {
+            throw new PlatformException( "[" + url + "] is not a valid bundle" );
+        }
+    }
+
+    /**
+     * Determine name to be used for caching on local file system.
+     *
+     * @param file                      file to be validated
+     * @param defaultBundleSymbolicName default bundle symbolic name to be used if manifest does not have a bundle
+     *                                  symbolic name
+     *
+     * @return file name based on bundle symbolic name and version
+     */
+    String determineCachingName( final File file,
+                                 final String defaultBundleSymbolicName )
+    {
+        String bundleSymbolicName = null;
+        String bundleVersion = null;
+        JarFile jar = null;
+        try
+        {
+            // verify that is a valid jar. Do not verify that is signed (the false param).
+            jar = new JarFile( file, false );
+            final Manifest manifest = jar.getManifest();
+            if( manifest != null )
             {
-                throw new PlatformException( "[" + url + "] is not a valid bundle" );
+                bundleSymbolicName = manifest.getMainAttributes().getValue( Constants.BUNDLE_SYMBOLICNAME );
+                bundleVersion = manifest.getMainAttributes().getValue( Constants.BUNDLE_VERSION );
+            }
+        }
+        catch( IOException ignore )
+        {
+            // just ignore
+        }
+        finally
+        {
+            if( jar != null )
+            {
+                try
+                {
+                    jar.close();
+                }
+                catch( IOException ignore )
+                {
+                    // just ignore as this is less probably to happen.
+                }
             }
         }
         if( bundleSymbolicName == null )
