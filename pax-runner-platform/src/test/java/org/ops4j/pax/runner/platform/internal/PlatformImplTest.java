@@ -241,7 +241,7 @@ public class PlatformImplTest
         platform.validateBundleAndGetFilename( url, file, "defaultBSN", checkAttributes );
     }
 
-    @Test( expected = PlatformException.class )
+    @Test
     public void validateBundleAndGetFilenameInvalidNoCheckAttributes()
         throws Exception
     {
