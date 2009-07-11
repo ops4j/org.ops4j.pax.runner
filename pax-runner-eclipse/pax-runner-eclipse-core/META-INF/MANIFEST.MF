@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Bundle-Version: OPS4J Pax Runner - Eclipse Plugin Core
+Bundle-Name: OPS4J Pax Runner - Eclipse Plugin Core
 Bundle-SymbolicName: org.ops4j.pax.runner.eclipse.core;singleton:=true
 Bundle-Version: 1.2.0
 Bundle-Vendor: OPS4J.org
