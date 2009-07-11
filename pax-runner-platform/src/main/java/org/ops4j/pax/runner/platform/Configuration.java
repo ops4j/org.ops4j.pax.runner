@@ -208,6 +208,14 @@ public interface Configuration
     Boolean keepOriginalUrls();
 
     /**
+     * Returns true if the bundles should be validated, meaning that they have the required OSGi headers.
+     * Default value is "true".
+     *
+     * @return value of validate bundles option
+     */
+    Boolean validateBundles();
+
+    /**
      * Returns true if the file paths used in frameworks configuration files and properties should be absolute.
      * Default value is "false".
      *

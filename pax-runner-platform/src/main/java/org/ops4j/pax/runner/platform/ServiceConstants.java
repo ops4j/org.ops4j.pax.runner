@@ -110,6 +110,10 @@ public interface ServiceConstants
      */
     static final String CONFIG_KEEP_ORIGINAL_URLS = PID + ".keepOriginalUrls";
     /**
+     * Validate bundles property name.
+     */
+    static final String CONFIG_VALIDATE_BUNDLES = PID + ".bundleValidation";    
+    /**
      * Use absolute file paths property name.
      */
     static final String CONFIG_USE_ABSOLUTE_FILE_PATHS = PID + ".useAbsoluteFilePaths";    

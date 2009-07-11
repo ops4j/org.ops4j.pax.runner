@@ -508,6 +508,23 @@ public class ConfigurationImpl
     /**
      * {@inheritDoc}
      */
+    public Boolean validateBundles()
+    {
+        if( !contains( ServiceConstants.CONFIG_VALIDATE_BUNDLES ) )
+        {
+            final String validateBundles = m_propertyResolver.get( ServiceConstants.CONFIG_VALIDATE_BUNDLES );
+            if( validateBundles == null )
+            {
+                return set( ServiceConstants.CONFIG_VALIDATE_BUNDLES, Boolean.TRUE );
+            }
+            return set( ServiceConstants.CONFIG_VALIDATE_BUNDLES, Boolean.valueOf( validateBundles ) );
+        }
+        return get( ServiceConstants.CONFIG_VALIDATE_BUNDLES );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public Boolean useAbsoluteFilePaths()
     {
         if( !contains( ServiceConstants.CONFIG_USE_ABSOLUTE_FILE_PATHS ) )

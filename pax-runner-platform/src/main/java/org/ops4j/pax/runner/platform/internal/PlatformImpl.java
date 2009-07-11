@@ -173,14 +173,24 @@ public class PlatformImpl
         LOGGER.debug( "Download platform bundles" );
         bundlesToInstall.addAll(
             downloadPlatformBundles(
-                workDir, definition, context, overwriteBundles || overwriteSystemBundles, downloadFeeback
+                workDir,
+                definition,
+                context,
+                overwriteBundles || overwriteSystemBundles,
+                downloadFeeback,
+                configuration.validateBundles()
             )
         );
         LOGGER.debug( "Download bundles" );
         bundlesToInstall.addAll(
             downloadBundles(
-                workDir, bundles, overwriteBundles || overwriteUserBundles, downloadFeeback,
-                configuration.isAutoWrap(), configuration.keepOriginalUrls()
+                workDir,
+                bundles,
+                overwriteBundles || overwriteUserBundles,
+                downloadFeeback,
+                configuration.isAutoWrap(),
+                configuration.keepOriginalUrls(),
+                configuration.validateBundles()
             )
         );
         context.setBundles( bundlesToInstall );
@@ -344,6 +354,7 @@ public class PlatformImpl
      * @param downloadFeeback  whether or not downloading process should display fne grained progres info
      * @param autoWrap         wheather or not auto wrapping should take place
      * @param keepOriginalUrls if the provisioned bundles should be cached or not
+     * @param validateBundles  if downloaded bundles osgi headers should be checked
      *
      * @return a list of downloaded files
      *
@@ -354,7 +365,8 @@ public class PlatformImpl
                                                    final Boolean overwrite,
                                                    final boolean downloadFeeback,
                                                    final boolean autoWrap,
-                                                   final boolean keepOriginalUrls )
+                                                   final boolean keepOriginalUrls,
+                                                   final boolean validateBundles )
         throws PlatformException
     {
         final List<BundleReference> localBundles = new ArrayList<BundleReference>();
@@ -396,7 +408,7 @@ public class PlatformImpl
                                 url,
                                 reference.getName(),
                                 overwrite || reference.shouldUpdate(),
-                                true,
+                                validateBundles,
                                 downloadFeeback
                             )
                         )
@@ -415,6 +427,7 @@ public class PlatformImpl
      * @param platformContext current platform context
      * @param overwrite       if the bundles should be overwritten
      * @param downloadFeeback whether or not downloading process should display fine grained progres info
+     * @param validateBundles if downloaded bundles osgi headers should be checked
      *
      * @return a list of downloaded files
      *
@@ -424,7 +437,8 @@ public class PlatformImpl
                                                            final PlatformDefinition definition,
                                                            final PlatformContext platformContext,
                                                            final Boolean overwrite,
-                                                           final boolean downloadFeeback )
+                                                           final boolean downloadFeeback,
+                                                           final boolean validateBundles )
         throws PlatformException
     {
         final StringBuilder profiles = new StringBuilder();
@@ -448,7 +462,8 @@ public class PlatformImpl
             overwrite,
             downloadFeeback,
             false, // do not autowrap, as framework related bundles are mostly alreay bundles,
-            false // framework bundles are always downloaded
+            false, // framework bundles are always downloaded
+            validateBundles
         );
     }
 
