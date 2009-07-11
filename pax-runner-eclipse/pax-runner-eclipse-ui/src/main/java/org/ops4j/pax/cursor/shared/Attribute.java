@@ -18,7 +18,7 @@
 package org.ops4j.pax.cursor.shared;
 
 /**
- * Pax Cursor configuration attributes names.
+ * Pax Runner Eclipse Plugin configuration attributes names.
  *
  * @author Alin Dreghiciu
  * @since 0.2.0, December 16, 2007
@@ -27,7 +27,7 @@ public class Attribute
 {
 
     /**
-     * The name space of Pax Cursor configuration attributes.
+     * The name space of Pax Runner Eclipse Plugin configuration attributes.
      */
     private static final String NAME_SPACE = "org.ops4j.pax.cursor";
 
@@ -58,7 +58,8 @@ public class Attribute
     public static final String PROFILES = NAME_SPACE + ".profiles";
 
     /**
-     * Pax Runner Arguments attribute. Value is a list of Pax Runner arguments that Pax Cursor sends them unchanged.
+     * Pax Runner Arguments attribute. Value is a list of Pax Runner arguments that Pax Runner Eclipse Plugin sends them
+     * unchanged.
      */
     public static final String RUN_ARGUMENTS = NAME_SPACE + ".runArguments";
 }

@@ -60,7 +60,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.ops4j.pax.cursor.shared.Attribute;
 
 /**
- * Provisioning Composite of Pax Cursor (bottom group).
+ * Provisioning Composite of Pax Runner Eclipse Plugin (bottom group).
  *
  * @author Alin Dreghiciu
  * @since 0.2.0, December 16, 2007

@@ -37,7 +37,7 @@ import org.eclipse.swt.widgets.Label;
 import org.ops4j.pax.cursor.shared.Attribute;
 
 /**
- * Options Composite of Pax Cursor (upper group).
+ * Options Composite of Pax Runner Eclipse Plugin (upper group).
  *
  * @author Alin Dreghiciu
  * @since 0.2.0, December 16, 2007

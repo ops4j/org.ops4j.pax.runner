@@ -20,8 +20,8 @@ package org.ops4j.pax.cursor.ui;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * Base class for Pax Cursor blocks that adds easy to use notification for the Tab that something was changed so the
- * Launch Dialog get's notified that it should apply (call) for changes.
+ * Base class for Pax Runner Eclipse Plugin blocks that adds easy to use notification for the Tab that something was
+ * changed so the Launch Dialog get's notified that it should apply (call) for changes.
  *
  * @author Alin Dreghiciu
  * @since 0.2.0, December 16, 2007
@@ -31,7 +31,7 @@ public class CursorTabBlock
 {
 
     /**
-     * Pax Cursor Tab.
+     * Pax Runner Eclipse Plugin Tab.
      */
     private CursorTab m_cursorTab;
 
@@ -54,7 +54,7 @@ public class CursorTabBlock
     }
 
     /**
-     * Notify that a change occured in this block. Delegates to Pax Cursor Tab.
+     * Notify that a change occured in this block. Delegates to Pax Runner Eclipse Plugin Tab.
      */
     protected void notifyUpdate()
     {

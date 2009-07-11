@@ -49,7 +49,7 @@ import org.ops4j.pax.runner.platform.PlatformException;
 import org.osgi.framework.Bundle;
 
 /**
- * Pax Cursor Launch Configuraton ( Eclipse org.eclipse.pde.ui.osgiFrameworks extension point).
+ * Pax Runner Eclipse Plugin Launch Configuraton ( Eclipse org.eclipse.pde.ui.osgiFrameworks extension point).
  *
  * @author Alin Dreghiciu
  * @since 0.1.0, Novermber 25, 2007
@@ -85,11 +85,11 @@ public class LaunchConfiguration extends AbstractPDELaunchConfiguration
     }
 
     /**
-     * Returns the classpath for Pax Cursor. First it looks for pax cursor plugin into the target platform. If not found
-     * will fallback to finding the plugin into the platform itself. If still not found a core exception is thrown to
-     * indicate to user that pax cursor is not available.
+     * Returns the classpath for Pax Runner Eclipse Plugin. First it looks for Pax Runner Eclipse plugin into the target
+     * platform. If not found will fallback to finding the plugin into the platform itself. If still not found a core
+     * exception is thrown to indicate to user that Pax Runner Eclipse Plugin is not available.
      *
-     * @return classpath for pax cursor
+     * @return classpath for Pax Runner Eclipse Plugin
      *
      * @throws org.eclipse.core.runtime.CoreException
      *          - If claspath cannopt be determined

@@ -662,8 +662,9 @@ class Utils
     }
 
     /**
-     * Looks for the pax cursor run arguments configuration attribute. If Pax Cursor Tab is installed this configuration
-     * argument is a list with Pax Runner ready to use options. So, if the list is present just use the list.
+     * Looks for the Pax Runner Eclipse Plugin run arguments configuration attribute. If Pax Runner Eclipse Plugin Tab
+     * is installed this configuration argument is a list with Pax Runner ready to use options. So, if the list is
+     * present just use the list.
      *
      * @param configuration launch configuration
      *

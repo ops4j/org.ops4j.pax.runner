@@ -34,11 +34,12 @@ import org.eclipse.ui.PlatformUI;
 import org.ops4j.pax.cursor.shared.Attribute;
 
 /**
- * Cursor Tab is an extension on org.eclipse.debug.ui.launchConfigurationTabs that adds extra options for Pax Cursor.
- * The extra options are lose coupled with Pax Cursor, as if this Cursor does not exist or is not installed it will have
- * no influence of Pax Cursor. The only connection between the two is through a configuration attribute that is created
- * by this tab on succesfull save (apply), atribute that contains a list of options that Pax Cursor will read and if
- * present will send them unchanged to Pax Runner.
+ * Pax Runner Eclipse Plugin Tab is an extension on org.eclipse.debug.ui.launchConfigurationTabs that adds extra options
+ * for Pax Runner Eclipse Plugin.
+ * The extra options are lose coupled with Pax Runner Eclipse Plugin, as if this Cursor does not exist or is not
+ * installed it will have no influence on Pax Runner Eclipse Plugin. The only connection between the two is through a
+ * configuration attribute that is created by this tab on succesfull save (apply), atribute that contains a list of
+ * options that Pax Runner Eclipse Plugin will read and if present will send them unchanged to Pax Runner.
  *
  * @author Alin Dreghiciu
  * @since 0.2.0, December 16, 2007
@@ -87,7 +88,7 @@ public class CursorTab
      */
     public String getName()
     {
-        return "Pax Cursor";
+        return "Pax Runner";
     }
 
     /**
@@ -110,8 +111,8 @@ public class CursorTab
     }
 
     /**
-     * Saves the configuration attributes by delegating to component blocks. First it will save a "null" Pax Cursor
-     * options so every block will have the chance to add it's own options.
+     * Saves the configuration attributes by delegating to component blocks. First it will save a "null" Pax Runner
+     * Eclipse Plugin options so every block will have the chance to add it's own options.
      *
      * @see ILaunchConfigurationTab#performApply(ILaunchConfigurationWorkingCopy)
      */
