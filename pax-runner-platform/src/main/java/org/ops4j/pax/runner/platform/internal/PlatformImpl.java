@@ -37,7 +37,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.framework.Constants;
 import org.xml.sax.SAXException;
-import org.ops4j.io.FileUtils;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
@@ -251,7 +250,9 @@ public class PlatformImpl
                 new SystemFileReferenceBean( "Pax URL wrap: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-wrap" ) )
             );
             urlHandlers.add(
-                new SystemFileReferenceBean( "Pax URL cache: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-cache" ) )
+                new SystemFileReferenceBean( "Pax URL cache: protocol",
+                                             new URL( "mvn:org.ops4j.pax.url/pax-url-cache" )
+                )
             );
         }
         catch( MalformedURLException e )
@@ -716,6 +717,9 @@ public class PlatformImpl
                                          final boolean checkAttributes )
         throws PlatformException
     {
+        String bundleSymbolicName = null;
+        String bundleName = null;
+        String bundleVersion = null;
         JarFile jar = null;
         try
         {
@@ -726,38 +730,16 @@ public class PlatformImpl
             {
                 throw new PlatformException( "[" + url + "] is not a valid bundle" );
             }
-            String bundleSymbolicName = manifest.getMainAttributes().getValue( Constants.BUNDLE_SYMBOLICNAME );
-            String bundleName = manifest.getMainAttributes().getValue( Constants.BUNDLE_NAME );
-            String bundleVersion = manifest.getMainAttributes().getValue( Constants.BUNDLE_VERSION );
-            if( checkAttributes )
-            {
-                if( bundleSymbolicName == null && bundleName == null )
-                {
-                    throw new PlatformException( "[" + url + "] is not a valid bundle" );
-                }
-            }
-            if( bundleSymbolicName == null )
-            {
-                bundleSymbolicName = defaultBundleSymbolicName;
-            }
-            else
-            {
-                // remove directives like "; singleton:=true"  
-                int semicolonPos = bundleSymbolicName.indexOf( ";" );
-                if( semicolonPos > 0 )
-                {
-                    bundleSymbolicName = bundleSymbolicName.substring( 0, semicolonPos );
-                }
-            }
-            if( bundleVersion == null )
-            {
-                bundleVersion = "0.0.0";
-            }
-            return bundleSymbolicName + "_" + bundleVersion + ".jar";
+            bundleSymbolicName = manifest.getMainAttributes().getValue( Constants.BUNDLE_SYMBOLICNAME );
+            bundleName = manifest.getMainAttributes().getValue( Constants.BUNDLE_NAME );
+            bundleVersion = manifest.getMainAttributes().getValue( Constants.BUNDLE_VERSION );
         }
         catch( IOException e )
         {
-            throw new PlatformException( "[" + url + "] is not a valid bundle", e );
+            if( checkAttributes )
+            {
+                throw new PlatformException( "[" + url + "] is not a valid bundle", e );
+            }
         }
         finally
         {
@@ -773,6 +755,31 @@ public class PlatformImpl
                 }
             }
         }
+        if( checkAttributes
+            && ( bundleSymbolicName == null && bundleName == null ) )
+        {
+            {
+                throw new PlatformException( "[" + url + "] is not a valid bundle" );
+            }
+        }
+        if( bundleSymbolicName == null )
+        {
+            bundleSymbolicName = defaultBundleSymbolicName;
+        }
+        else
+        {
+            // remove directives like "; singleton:=true"
+            int semicolonPos = bundleSymbolicName.indexOf( ";" );
+            if( semicolonPos > 0 )
+            {
+                bundleSymbolicName = bundleSymbolicName.substring( 0, semicolonPos );
+            }
+        }
+        if( bundleVersion == null )
+        {
+            bundleVersion = "0.0.0";
+        }
+        return bundleSymbolicName + "_" + bundleVersion + ".jar";
     }
 
     /**
