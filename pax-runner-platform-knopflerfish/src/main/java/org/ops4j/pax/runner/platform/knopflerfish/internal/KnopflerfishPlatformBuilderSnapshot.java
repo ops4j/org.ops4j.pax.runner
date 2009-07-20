@@ -31,7 +31,7 @@ import org.ops4j.pax.runner.platform.Configuration;
  * @since 0.18.0, March 05, 2009
  */
 public class KnopflerfishPlatformBuilderSnapshot
-    extends KnopflerfishPlatformBuilder
+    extends KnopflerfishPlatformBuilderF200T232
 {
 
     /**

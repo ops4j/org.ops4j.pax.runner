@@ -39,18 +39,18 @@ public final class Activator
     protected PlatformBuilder[] createPlatformBuilders( final BundleContext bundleContext )
     {
         return new PlatformBuilder[]{
-            new KnopflerfishPlatformBuilder( bundleContext, "2.0.0" ),
-            new KnopflerfishPlatformBuilder( bundleContext, "2.0.1" ),
-            new KnopflerfishPlatformBuilder( bundleContext, "2.0.2" ),
-            new KnopflerfishPlatformBuilder( bundleContext, "2.0.3" ),
-            new KnopflerfishPlatformBuilder( bundleContext, "2.0.4" ),
-            new KnopflerfishPlatformBuilder( bundleContext, "2.0.5" ),
-            new KnopflerfishPlatformBuilder( bundleContext, "2.1.0" ),
-            new KnopflerfishPlatformBuilder( bundleContext, "2.1.1" ),
-            new KnopflerfishPlatformBuilder( bundleContext, "2.2.0" ),
-            new KnopflerfishPlatformBuilder( bundleContext, "2.3.0" ),
-            new KnopflerfishPlatformBuilder( bundleContext, "2.3.1" ),
-            new KnopflerfishPlatformBuilder( bundleContext, "2.3.2" ),
+            new KnopflerfishPlatformBuilderF200T232( bundleContext, "2.0.0" ),
+            new KnopflerfishPlatformBuilderF200T232( bundleContext, "2.0.1" ),
+            new KnopflerfishPlatformBuilderF200T232( bundleContext, "2.0.2" ),
+            new KnopflerfishPlatformBuilderF200T232( bundleContext, "2.0.3" ),
+            new KnopflerfishPlatformBuilderF200T232( bundleContext, "2.0.4" ),
+            new KnopflerfishPlatformBuilderF200T232( bundleContext, "2.0.5" ),
+            new KnopflerfishPlatformBuilderF200T232( bundleContext, "2.1.0" ),
+            new KnopflerfishPlatformBuilderF200T232( bundleContext, "2.1.1" ),
+            new KnopflerfishPlatformBuilderF200T232( bundleContext, "2.2.0" ),
+            new KnopflerfishPlatformBuilderF200T232( bundleContext, "2.3.0" ),
+            new KnopflerfishPlatformBuilderF200T232( bundleContext, "2.3.1" ),
+            new KnopflerfishPlatformBuilderF200T232( bundleContext, "2.3.2" ),
             new KnopflerfishPlatformBuilderSnapshot( bundleContext )
         };
     }
