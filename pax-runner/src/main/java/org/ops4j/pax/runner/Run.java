@@ -725,11 +725,12 @@ public class Run
      */
     private static void showLogo()
     {
-        System.out.println( "    ______  ________  __  __" );
-        System.out.println( "   / __  / /  __   / / / / /" );
-        System.out.println( "  /  ___/ /  __   / _\\ \\ _/" );
-        System.out.println( " /  /    /  / /  / / _\\ \\" );
-        System.out.println( "/__/    /__/ /__/ /_/ /_/" );
+        System.out.println( "__________                 __________                                 " );
+        System.out.println( "\\______   \\_____  ___  ___ \\______   \\__ __  ____   ____   ___________" );
+        System.out.println( "|     ___/\\__  \\ \\  \\/  /  |       _/  |  \\/    \\ /    \\_/ __ \\_  __ \\" );
+        System.out.println( "|    |     / __ \\_>    <   |    |   \\  |  /   |  \\   |  \\  ___/|  | \\/" );
+        System.out.println( "|____|    (____  /__/\\_ \\  |____|_  /____/|___|  /___|  /\\___  >__|   " );
+        System.out.println( "               \\/      \\/         \\/           \\/     \\/     \\/       " );
         System.out.println();
         final String logo = "Pax Runner " + getVersion() + "from OPS4J - http://www.ops4j.org";
         System.out.println( logo );
