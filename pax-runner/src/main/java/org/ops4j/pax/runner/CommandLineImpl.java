@@ -61,7 +61,7 @@ public class CommandLineImpl implements CommandLine
     private static final char LINE_COMMENT_PREFIX = '#';
 
     /**
-     * Default character, the presence of this at the end of line indicates continuity 
+     * Default character, the presence of this at the end of line indicates continuity
      */
     private static final String LINE_CONTINUE_CHAR = "\\";
 
@@ -199,6 +199,7 @@ public class CommandLineImpl implements CommandLine
                 parseArgument( arg );
             }
         }
+        initializeProxy();
     }
 
     /**
@@ -313,22 +314,27 @@ public class CommandLineImpl implements CommandLine
             {
                 if( ( !skipEmptyLines || line.trim().length() > 0 ) && line.charAt( 0 ) != LINE_COMMENT_PREFIX )
                 {
-                    if (line.endsWith(LINE_CONTINUE_CHAR)) {
-                        entry.append(line.substring(0, line.length() - 1));
+                    if( line.endsWith( LINE_CONTINUE_CHAR ) )
+                    {
+                        entry.append( line.substring( 0, line.length() - 1 ) );
                         continue;
-                    } else {
-                        entry.append(line);
+                    }
+                    else
+                    {
+                        entry.append( line );
                         content.add( entry.toString().trim() );
-                        entry.delete(0, entry.length());
+                        entry.delete( 0, entry.length() );
                         continue;
                     }
                 }
-                if (line.trim().length() == 0 && entry.length() > 0) {
+                if( line.trim().length() == 0 && entry.length() > 0 )
+                {
                     content.add( entry.toString().trim() );
-                    entry.delete(0, entry.length());
+                    entry.delete( 0, entry.length() );
                 }
             }
-            if (entry != null && entry.length()>0) {
+            if( entry != null && entry.length() > 0 )
+            {
                 content.add( entry.toString().trim() );
             }
         }
@@ -387,6 +393,58 @@ public class CommandLineImpl implements CommandLine
                 .append( "]" );
         }
         return builder.toString();
+    }
+
+    /**
+     * Set system properties for proxies based on provided command line arguments.
+     */
+    private void initializeProxy()
+    {
+        initializeProxy( "http" );
+        initializeProxy( "https" );
+        initializeProxy( "ftp" );
+        initializeSocksProxy();
+    }
+
+    /**
+     * Set system properties for proxies based on provided command line arguments.
+     *
+     * @param protocol protocol
+     */
+    private void initializeProxy( final String protocol )
+    {
+        final String proxy = getOption( protocol + ".proxyHost" );
+        if( proxy != null )
+        {
+            System.setProperty( protocol + ".proxyHost", proxy );
+        }
+        final String port = getOption( protocol + ".proxyPort" );
+        if( port != null )
+        {
+            System.setProperty( protocol + ".proxyPort", port );
+        }
+        final String nonHosts = getOption( protocol + ".nonProxyHosts" );
+        if( nonHosts != null )
+        {
+            System.setProperty( protocol + ".nonProxyHosts", nonHosts );
+        }
+    }
+
+    /**
+     * Set system properties for proxies based on provided command line arguments.
+     */
+    private void initializeSocksProxy()
+    {
+        final String proxy = getOption( "socksProxyHost" );
+        if( proxy != null )
+        {
+            System.setProperty( "socksProxyHost", proxy );
+        }
+        final String port = getOption( "socksProxyPort" );
+        if( port != null )
+        {
+            System.setProperty( "socksProxyPort", port );
+        }
     }
 
 }
