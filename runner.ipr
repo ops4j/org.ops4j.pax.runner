@@ -75,15 +75,6 @@
         <option name="VARIABLE_ANNOTATION_WRAP" value="5" />
         <option name="SPACE_WITHIN_ANNOTATION_PARENTHESES" value="true" />
         <option name="ENUM_CONSTANTS_WRAP" value="5" />
-        <ADDITIONAL_INDENT_OPTIONS fileType="">
-          <option name="INDENT_SIZE" value="4" />
-          <option name="CONTINUATION_INDENT_SIZE" value="8" />
-          <option name="TAB_SIZE" value="4" />
-          <option name="USE_TAB_CHARACTER" value="false" />
-          <option name="SMART_TABS" value="false" />
-          <option name="LABEL_INDENT_SIZE" value="0" />
-          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
-        </ADDITIONAL_INDENT_OPTIONS>
         <ADDITIONAL_INDENT_OPTIONS fileType="java">
           <option name="INDENT_SIZE" value="4" />
           <option name="CONTINUATION_INDENT_SIZE" value="4" />
@@ -188,16 +179,32 @@
     <option name="MAXIMUM_HEAP_SIZE" value="128" />
   </component>
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
+  <component name="FacetAutodetectingManager">
+    <autodetection-disabled>
+      <facet-type id="Osmorc">
+        <modules>
+          <module name="pax-runner-platform" />
+          <module name="pax-runner-no-jcl" />
+          <module name="pax-runner" />
+          <module name="pax-runner-platform-equinox" />
+          <module name="pax-runner-platform-concierge" />
+          <module name="pax-runner-platform-knopflerfish" />
+          <module name="pax-runner-handler" />
+          <module name="pax-runner-platform-felix" />
+        </modules>
+      </facet-type>
+    </autodetection-disabled>
+  </component>
   <component name="IdProvider" IDEtalkID="93B249E5D4B9BB128F1E094F9FA4138A" />
   <component name="InspectionProjectProfileManager">
     <option name="PROJECT_PROFILE" value="Project Default" />
-    <option name="USE_PROJECT_LEVEL_SETTINGS" value="false" />
-    <scopes />
+    <option name="USE_PROJECT_PROFILE" value="true" />
+    <version value="1.0" />
     <profiles>
       <profile version="1.0" is_locked="false">
         <option name="myName" value="Project Default" />
         <option name="myLocal" value="false" />
-        <inspection_tool class="UNUSED_SYMBOL" level="WARNING" enabled="true">
+        <inspection_tool class="UNUSED_SYMBOL" enabled="true" level="WARNING" enabled_by_default="true">
           <option name="LOCAL_VARIABLE" value="true" />
           <option name="FIELD" value="true" />
           <option name="METHOD" value="true" />
@@ -258,8 +265,6 @@
     </option>
     <option name="activeProfiles">
       <list>
-        <option value="default" />
-        <option value="non-releaseable" />
         <option value="release" />
       </list>
     </option>
@@ -391,6 +396,9 @@
   </component>
   <component name="ProjectDetails">
     <option name="projectName" value="runner" />
+  </component>
+  <component name="ProjectDictionaryState">
+    <dictionary name="adreghiciu" />
   </component>
   <component name="ProjectFileVersion" converted="true" />
   <component name="ProjectKey">
@@ -525,15 +533,92 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/easymock/easymock/2.3/easymock-2.3-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.apache.felix:org.osgi.service.obr:1.0.0">
+    <library name="Maven: org.ops4j.pax.swissbox:pax-swissbox-optional-jcl:1.0.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/apache/felix/org.osgi.service.obr/1.0.0/org.osgi.service.obr-1.0.0.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/swissbox/pax-swissbox-optional-jcl/1.0.0/pax-swissbox-optional-jcl-1.0.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/apache/felix/org.osgi.service.obr/1.0.0/org.osgi.service.obr-1.0.0-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/swissbox/pax-swissbox-optional-jcl/1.0.0/pax-swissbox-optional-jcl-1.0.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/apache/felix/org.osgi.service.obr/1.0.0/org.osgi.service.obr-1.0.0-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/swissbox/pax-swissbox-optional-jcl/1.0.0/pax-swissbox-optional-jcl-1.0.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.base:ops4j-base-io:1.0.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-io/1.0.0/ops4j-base-io-1.0.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-io/1.0.0/ops4j-base-io-1.0.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-io/1.0.0/ops4j-base-io-1.0.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.base:ops4j-base-lang:1.0.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-lang/1.0.0/ops4j-base-lang-1.0.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-lang/1.0.0/ops4j-base-lang-1.0.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-lang/1.0.0/ops4j-base-lang-1.0.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.base:ops4j-base-monitors:1.0.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-monitors/1.0.0/ops4j-base-monitors-1.0.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-monitors/1.0.0/ops4j-base-monitors-1.0.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-monitors/1.0.0/ops4j-base-monitors-1.0.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.base:ops4j-base-util-xml:1.0.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-util-xml/1.0.0/ops4j-base-util-xml-1.0.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-util-xml/1.0.0/ops4j-base-util-xml-1.0.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-util-xml/1.0.0/ops4j-base-util-xml-1.0.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.base:ops4j-base-util-collections:1.0.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-util-collections/1.0.0/ops4j-base-util-collections-1.0.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-util-collections/1.0.0/ops4j-base-util-collections-1.0.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-util-collections/1.0.0/ops4j-base-util-collections-1.0.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.swissbox:pax-swissbox-property:1.0.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/swissbox/pax-swissbox-property/1.0.0/pax-swissbox-property-1.0.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/swissbox/pax-swissbox-property/1.0.0/pax-swissbox-property-1.0.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/swissbox/pax-swissbox-property/1.0.0/pax-swissbox-property-1.0.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.base:ops4j-base-util-property:1.0.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-util-property/1.0.0/ops4j-base-util-property-1.0.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-util-property/1.0.0/ops4j-base-util-property-1.0.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-util-property/1.0.0/ops4j-base-util-property-1.0.0-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.apache.felix:org.apache.felix.framework:1.0.0">
@@ -558,136 +643,15 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/apache/felix/org.apache.felix.bundlerepository/1.2.1/org.apache.felix.bundlerepository-1.2.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.eclipse.pde:ui:3.3.0-v20070608-1300">
+    <library name="Maven: org.apache.felix:org.osgi.service.obr:1.0.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/pde/ui/3.3.0-v20070608-1300/ui-3.3.0-v20070608-1300.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/felix/org.osgi.service.obr/1.0.0/org.osgi.service.obr-1.0.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/pde/ui/3.3.0-v20070608-1300/ui-3.3.0-v20070608-1300-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/felix/org.osgi.service.obr/1.0.0/org.osgi.service.obr-1.0.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/pde/ui/3.3.0-v20070608-1300/ui-3.3.0-v20070608-1300-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.eclipse.swt.win32.win32:x86:3.3.0-v3346">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/swt/win32/win32/x86/3.3.0-v3346/x86-3.3.0-v3346.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/swt/win32/win32/x86/3.3.0-v3346/x86-3.3.0-v3346-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/swt/win32/win32/x86/3.3.0-v3346/x86-3.3.0-v3346-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.base:ops4j-base-lang:1.0.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-lang/1.0.0/ops4j-base-lang-1.0.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-lang/1.0.0/ops4j-base-lang-1.0.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-lang/1.0.0/ops4j-base-lang-1.0.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.base:ops4j-base-net:1.0.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-net/1.0.0/ops4j-base-net-1.0.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-net/1.0.0/ops4j-base-net-1.0.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-net/1.0.0/ops4j-base-net-1.0.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.base:ops4j-base-util-collections:1.0.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-util-collections/1.0.0/ops4j-base-util-collections-1.0.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-util-collections/1.0.0/ops4j-base-util-collections-1.0.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-util-collections/1.0.0/ops4j-base-util-collections-1.0.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.base:ops4j-base-io:1.0.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-io/1.0.0/ops4j-base-io-1.0.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-io/1.0.0/ops4j-base-io-1.0.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-io/1.0.0/ops4j-base-io-1.0.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.base:ops4j-base-util-xml:1.0.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-util-xml/1.0.0/ops4j-base-util-xml-1.0.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-util-xml/1.0.0/ops4j-base-util-xml-1.0.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-util-xml/1.0.0/ops4j-base-util-xml-1.0.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.swissbox:pax-swissbox-optional-jcl:1.0.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/swissbox/pax-swissbox-optional-jcl/1.0.0/pax-swissbox-optional-jcl-1.0.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/swissbox/pax-swissbox-optional-jcl/1.0.0/pax-swissbox-optional-jcl-1.0.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/swissbox/pax-swissbox-optional-jcl/1.0.0/pax-swissbox-optional-jcl-1.0.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.swissbox:pax-swissbox-property:1.0.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/swissbox/pax-swissbox-property/1.0.0/pax-swissbox-property-1.0.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/swissbox/pax-swissbox-property/1.0.0/pax-swissbox-property-1.0.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/swissbox/pax-swissbox-property/1.0.0/pax-swissbox-property-1.0.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.scanner:pax-scanner-service:1.0.0-SNAPSHOT">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/scanner/pax-scanner-service/1.0.0-SNAPSHOT/pax-scanner-service-1.0.0-SNAPSHOT.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/scanner/pax-scanner-service/1.0.0-SNAPSHOT/pax-scanner-service-1.0.0-SNAPSHOT-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/scanner/pax-scanner-service/1.0.0-SNAPSHOT/pax-scanner-service-1.0.0-SNAPSHOT-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.base:ops4j-base-monitors:1.0.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-monitors/1.0.0/ops4j-base-monitors-1.0.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-monitors/1.0.0/ops4j-base-monitors-1.0.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-monitors/1.0.0/ops4j-base-monitors-1.0.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.base:ops4j-base-util-property:1.0.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-util-property/1.0.0/ops4j-base-util-property-1.0.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-util-property/1.0.0/ops4j-base-util-property-1.0.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-util-property/1.0.0/ops4j-base-util-property-1.0.0-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/felix/org.osgi.service.obr/1.0.0/org.osgi.service.obr-1.0.0-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.ops4j.pax.url:pax-url-cache:1.1.0-SNAPSHOT">
@@ -767,6 +731,17 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-wrap/1.1.0-SNAPSHOT/pax-url-wrap-1.1.0-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Maven: org.ops4j.pax.scanner:pax-scanner-service:1.0.0-SNAPSHOT">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/scanner/pax-scanner-service/1.0.0-SNAPSHOT/pax-scanner-service-1.0.0-SNAPSHOT.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/scanner/pax-scanner-service/1.0.0-SNAPSHOT/pax-scanner-service-1.0.0-SNAPSHOT-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/scanner/pax-scanner-service/1.0.0-SNAPSHOT/pax-scanner-service-1.0.0-SNAPSHOT-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="Maven: org.ops4j.pax.scanner:pax-scanner-bundle:1.0.0-SNAPSHOT">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/scanner/pax-scanner-bundle/1.0.0-SNAPSHOT/pax-scanner-bundle-1.0.0-SNAPSHOT.jar!/" />
@@ -787,6 +762,17 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/scanner/pax-scanner-composite/1.0.0-SNAPSHOT/pax-scanner-composite-1.0.0-SNAPSHOT-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.base:ops4j-base-net:1.0.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-net/1.0.0/ops4j-base-net-1.0.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-net/1.0.0/ops4j-base-net-1.0.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/base/ops4j-base-net/1.0.0/ops4j-base-net-1.0.0-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.ops4j.pax.scanner:pax-scanner-dir:1.0.0-SNAPSHOT">
@@ -864,6 +850,710 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/scanner/pax-scanner-pom/1.0.0-SNAPSHOT/pax-scanner-pom-1.0.0-SNAPSHOT-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.pde:ui:3.3.0-v20070608-1300">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/pde/ui/3.3.0-v20070608-1300/ui-3.3.0-v20070608-1300.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/pde/ui/3.3.0-v20070608-1300/ui-3.3.0-v20070608-1300-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/pde/ui/3.3.0-v20070608-1300/ui-3.3.0-v20070608-1300-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.pde:core:3.3.0-v20070608-1300">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/pde/core/3.3.0-v20070608-1300/core-3.3.0-v20070608-1300.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/pde/core/3.3.0-v20070608-1300/core-3.3.0-v20070608-1300-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/pde/core/3.3.0-v20070608-1300/core-3.3.0-v20070608-1300-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.core:runtime:3.3.100-v20070530">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/runtime/3.3.100-v20070530/runtime-3.3.100-v20070530.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/runtime/3.3.100-v20070530/runtime-3.3.100-v20070530-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/runtime/3.3.100-v20070530/runtime-3.3.100-v20070530-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse:osgi:3.3.0-v20070530">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/3.3.0-v20070530/osgi-3.3.0-v20070530.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/3.3.0-v20070530/osgi-3.3.0-v20070530-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/3.3.0-v20070530/osgi-3.3.0-v20070530-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.equinox:common:3.3.0-v20070426">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/equinox/common/3.3.0-v20070426/common-3.3.0-v20070426.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/equinox/common/3.3.0-v20070426/common-3.3.0-v20070426-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/equinox/common/3.3.0-v20070426/common-3.3.0-v20070426-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.core:jobs:3.3.0-v20070423">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/jobs/3.3.0-v20070423/jobs-3.3.0-v20070423.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/jobs/3.3.0-v20070423/jobs-3.3.0-v20070423-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/jobs/3.3.0-v20070423/jobs-3.3.0-v20070423-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.equinox:registry:3.3.0-v20070522">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/equinox/registry/3.3.0-v20070522/registry-3.3.0-v20070522.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/equinox/registry/3.3.0-v20070522/registry-3.3.0-v20070522-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/equinox/registry/3.3.0-v20070522/registry-3.3.0-v20070522-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.equinox:preferences:3.2.100-v20070522">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/equinox/preferences/3.2.100-v20070522/preferences-3.2.100-v20070522.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/equinox/preferences/3.2.100-v20070522/preferences-3.2.100-v20070522-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/equinox/preferences/3.2.100-v20070522/preferences-3.2.100-v20070522-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.core:contenttype:3.2.100-v20070319">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/contenttype/3.2.100-v20070319/contenttype-3.2.100-v20070319.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/contenttype/3.2.100-v20070319/contenttype-3.2.100-v20070319-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/contenttype/3.2.100-v20070319/contenttype-3.2.100-v20070319-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.equinox:app:1.0.0-v20070423">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/equinox/app/1.0.0-v20070423/app-1.0.0-v20070423.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/equinox/app/1.0.0-v20070423/app-1.0.0-v20070423-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/equinox/app/1.0.0-v20070423/app-1.0.0-v20070423-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.core:resources:3.3.0-v20070604">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/resources/3.3.0-v20070604/resources-3.3.0-v20070604.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/resources/3.3.0-v20070604/resources-3.3.0-v20070604-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/resources/3.3.0-v20070604/resources-3.3.0-v20070604-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.core:expressions:3.3.0-v20070606-0010">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/expressions/3.3.0-v20070606-0010/expressions-3.3.0-v20070606-0010.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/expressions/3.3.0-v20070606-0010/expressions-3.3.0-v20070606-0010-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/expressions/3.3.0-v20070606-0010/expressions-3.3.0-v20070606-0010-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.core:filesystem:1.1.0-v20070606">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/filesystem/1.1.0-v20070606/filesystem-1.1.0-v20070606.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/filesystem/1.1.0-v20070606/filesystem-1.1.0-v20070606-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/filesystem/1.1.0-v20070606/filesystem-1.1.0-v20070606-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.jdt:core:3.3.0-v_771">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/core/3.3.0-v_771/core-3.3.0-v_771.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/core/3.3.0-v_771/core-3.3.0-v_771-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/core/3.3.0-v_771/core-3.3.0-v_771-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse:text:3.3.0-v20070606-0010">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/text/3.3.0-v20070606-0010/text-3.3.0-v20070606-0010.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/text/3.3.0-v20070606-0010/text-3.3.0-v20070606-0010-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/text/3.3.0-v20070606-0010/text-3.3.0-v20070606-0010-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.core:commands:3.3.0-I20070605-0010">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/commands/3.3.0-I20070605-0010/commands-3.3.0-I20070605-0010.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/commands/3.3.0-I20070605-0010/commands-3.3.0-I20070605-0010-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/commands/3.3.0-I20070605-0010/commands-3.3.0-I20070605-0010-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.team:core:3.3.0-I20070607">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/team/core/3.3.0-I20070607/core-3.3.0-I20070607.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/team/core/3.3.0-I20070607/core-3.3.0-I20070607-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/team/core/3.3.0-I20070607/core-3.3.0-I20070607-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.update:configurator:3.2.100-v20070615">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/update/configurator/3.2.100-v20070615/configurator-3.2.100-v20070615.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/update/configurator/3.2.100-v20070615/configurator-3.2.100-v20070615-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/update/configurator/3.2.100-v20070615/configurator-3.2.100-v20070615-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.jdt:launching:3.3.0-v20070510">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/launching/3.3.0-v20070510/launching-3.3.0-v20070510.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/launching/3.3.0-v20070510/launching-3.3.0-v20070510-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/launching/3.3.0-v20070510/launching-3.3.0-v20070510-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.debug:core:3.3.0-v20070607-1800">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/debug/core/3.3.0-v20070607-1800/core-3.3.0-v20070607-1800.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/debug/core/3.3.0-v20070607-1800/core-3.3.0-v20070607-1800-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/debug/core/3.3.0-v20070607-1800/core-3.3.0-v20070607-1800-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.core:variables:3.2.0-v20070426">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/variables/3.2.0-v20070426/variables-3.2.0-v20070426.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/variables/3.2.0-v20070426/variables-3.2.0-v20070426-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/variables/3.2.0-v20070426/variables-3.2.0-v20070426-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.jdt:debug:3.3.0-v20070530a">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/debug/3.3.0-v20070530a/debug-3.3.0-v20070530a.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/debug/3.3.0-v20070530a/debug-3.3.0-v20070530a-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/debug/3.3.0-v20070530a/debug-3.3.0-v20070530a-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.core:filebuffers:3.3.0-v20070606-0010">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/filebuffers/3.3.0-v20070606-0010/filebuffers-3.3.0-v20070606-0010.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/filebuffers/3.3.0-v20070606-0010/filebuffers-3.3.0-v20070606-0010-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/filebuffers/3.3.0-v20070606-0010/filebuffers-3.3.0-v20070606-0010-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.pde:build:3.3.0-v20070612">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/pde/build/3.3.0-v20070612/build-3.3.0-v20070612.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/pde/build/3.3.0-v20070612/build-3.3.0-v20070612-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/pde/build/3.3.0-v20070612/build-3.3.0-v20070612-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.ant:core:3.1.200-v20070522">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ant/core/3.1.200-v20070522/core-3.1.200-v20070522.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ant/core/3.1.200-v20070522/core-3.1.200-v20070522-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ant/core/3.1.200-v20070522/core-3.1.200-v20070522-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.update:core:3.2.100-v20070615">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/update/core/3.2.100-v20070615/core-3.2.100-v20070615.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/update/core/3.2.100-v20070615/core-3.2.100-v20070615-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/update/core/3.2.100-v20070615/core-3.2.100-v20070615-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.core:net:1.0.0-I20070531">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/net/1.0.0-I20070531/net-1.0.0-I20070531.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/net/1.0.0-I20070531/net-1.0.0-I20070531-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/net/1.0.0-I20070531/net-1.0.0-I20070531-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.ui:ide:3.3.0-I20070620">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/ide/3.3.0-I20070620/ide-3.3.0-I20070620.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/ide/3.3.0-I20070620/ide-3.3.0-I20070620-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/ide/3.3.0-I20070620/ide-3.3.0-I20070620-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse:help:3.3.0-v20070524">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/help/3.3.0-v20070524/help-3.3.0-v20070524.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/help/3.3.0-v20070524/help-3.3.0-v20070524-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/help/3.3.0-v20070524/help-3.3.0-v20070524-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse:ui:3.3.0-I20070614-0800">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/3.3.0-I20070614-0800/ui-3.3.0-I20070614-0800.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/3.3.0-I20070614-0800/ui-3.3.0-I20070614-0800-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/3.3.0-I20070614-0800/ui-3.3.0-I20070614-0800-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse:swt:3.3.0-v3346">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/swt/3.3.0-v3346/swt-3.3.0-v3346.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/swt/3.3.0-v3346/swt-3.3.0-v3346-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/swt/3.3.0-v3346/swt-3.3.0-v3346-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse:jface:3.3.0-I20070606-0010">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jface/3.3.0-I20070606-0010/jface-3.3.0-I20070606-0010.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jface/3.3.0-I20070606-0010/jface-3.3.0-I20070606-0010-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jface/3.3.0-I20070606-0010/jface-3.3.0-I20070606-0010-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.ui:workbench:3.3.0-I20070608-1100">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/workbench/3.3.0-I20070608-1100/workbench-3.3.0-I20070608-1100.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/workbench/3.3.0-I20070608-1100/workbench-3.3.0-I20070608-1100-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/workbench/3.3.0-I20070608-1100/workbench-3.3.0-I20070608-1100-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.jface:databinding:1.1.0-I20070606-0010">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jface/databinding/1.1.0-I20070606-0010/databinding-1.1.0-I20070606-0010.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jface/databinding/1.1.0-I20070606-0010/databinding-1.1.0-I20070606-0010-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jface/databinding/1.1.0-I20070606-0010/databinding-1.1.0-I20070606-0010-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.core:databinding:1.0.0-I20070606-0010">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/databinding/1.0.0-I20070606-0010/databinding-1.0.0-I20070606-0010.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/databinding/1.0.0-I20070606-0010/databinding-1.0.0-I20070606-0010-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/core/databinding/1.0.0-I20070606-0010/databinding-1.0.0-I20070606-0010-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.ui:views:3.2.100-I20070319-0010">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/views/3.2.100-I20070319-0010/views-3.2.100-I20070319-0010.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/views/3.2.100-I20070319-0010/views-3.2.100-I20070319-0010-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/views/3.2.100-I20070319-0010/views-3.2.100-I20070319-0010-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.update:ui:3.2.100-v20070615">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/update/ui/3.2.100-v20070615/ui-3.2.100-v20070615.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/update/ui/3.2.100-v20070615/ui-3.2.100-v20070615-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/update/ui/3.2.100-v20070615/ui-3.2.100-v20070615-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.ui:forms:3.3.0-v20070511">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/forms/3.3.0-v20070511/forms-3.3.0-v20070511.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/forms/3.3.0-v20070511/forms-3.3.0-v20070511-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/forms/3.3.0-v20070511/forms-3.3.0-v20070511-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.jface:text:3.3.0-v20070606-0010">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jface/text/3.3.0-v20070606-0010/text-3.3.0-v20070606-0010.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jface/text/3.3.0-v20070606-0010/text-3.3.0-v20070606-0010-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jface/text/3.3.0-v20070606-0010/text-3.3.0-v20070606-0010-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.ui.workbench:texteditor:3.3.0-v20070606-0010">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/workbench/texteditor/3.3.0-v20070606-0010/texteditor-3.3.0-v20070606-0010.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/workbench/texteditor/3.3.0-v20070606-0010/texteditor-3.3.0-v20070606-0010-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/workbench/texteditor/3.3.0-v20070606-0010/texteditor-3.3.0-v20070606-0010-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.ui:editors:3.3.0-v20070606-0010">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/editors/3.3.0-v20070606-0010/editors-3.3.0-v20070606-0010.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/editors/3.3.0-v20070606-0010/editors-3.3.0-v20070606-0010-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/editors/3.3.0-v20070606-0010/editors-3.3.0-v20070606-0010-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.debug:ui:3.3.0-v20070607-1800">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/debug/ui/3.3.0-v20070607-1800/ui-3.3.0-v20070607-1800.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/debug/ui/3.3.0-v20070607-1800/ui-3.3.0-v20070607-1800-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/debug/ui/3.3.0-v20070607-1800/ui-3.3.0-v20070607-1800-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.ui:console:3.2.0-v20070530">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/console/3.2.0-v20070530/console-3.2.0-v20070530.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/console/3.2.0-v20070530/console-3.2.0-v20070530-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/console/3.2.0-v20070530/console-3.2.0-v20070530-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.jdt.debug:ui:3.2.100-v20070531-1800">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/debug/ui/3.2.100-v20070531-1800/ui-3.2.100-v20070531-1800.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/debug/ui/3.2.100-v20070531-1800/ui-3.2.100-v20070531-1800-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/debug/ui/3.2.100-v20070531-1800/ui-3.2.100-v20070531-1800-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.jdt:ui:3.3.0-v20070607-0010">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/ui/3.3.0-v20070607-0010/ui-3.3.0-v20070607-0010.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/ui/3.3.0-v20070607-0010/ui-3.3.0-v20070607-0010-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/ui/3.3.0-v20070607-0010/ui-3.3.0-v20070607-0010-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse:search:3.3.0-v20070606-0010">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/search/3.3.0-v20070606-0010/search-3.3.0-v20070606-0010.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/search/3.3.0-v20070606-0010/search-3.3.0-v20070606-0010-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/search/3.3.0-v20070606-0010/search-3.3.0-v20070606-0010-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse:compare:3.3.0-I20070606">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/compare/3.3.0-I20070606/compare-3.3.0-I20070606.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/compare/3.3.0-I20070606/compare-3.3.0-I20070606-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/compare/3.3.0-I20070606/compare-3.3.0-I20070606-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.team:ui:3.3.0-I20070607">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/team/ui/3.3.0-I20070607/ui-3.3.0-I20070607.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/team/ui/3.3.0-I20070607/ui-3.3.0-I20070607-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/team/ui/3.3.0-I20070607/ui-3.3.0-I20070607-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.ui:navigator:3.3.0-I20070605-0010">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/navigator/3.3.0-I20070605-0010/navigator-3.3.0-I20070605-0010.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/navigator/3.3.0-I20070605-0010/navigator-3.3.0-I20070605-0010-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/navigator/3.3.0-I20070605-0010/navigator-3.3.0-I20070605-0010-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.ui.navigator:resources:3.3.0-I20070605-0010">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/navigator/resources/3.3.0-I20070605-0010/resources-3.3.0-I20070605-0010.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/navigator/resources/3.3.0-I20070605-0010/resources-3.3.0-I20070605-0010-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/navigator/resources/3.3.0-I20070605-0010/resources-3.3.0-I20070605-0010-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.ui.views.properties:tabbed:3.3.0-I20070605-0010">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/views/properties/tabbed/3.3.0-I20070605-0010/tabbed-3.3.0-I20070605-0010.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/views/properties/tabbed/3.3.0-I20070605-0010/tabbed-3.3.0-I20070605-0010-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/views/properties/tabbed/3.3.0-I20070605-0010/tabbed-3.3.0-I20070605-0010-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.ltk.core:refactoring:3.3.0-v20070606-0010">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ltk/core/refactoring/3.3.0-v20070606-0010/refactoring-3.3.0-v20070606-0010.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ltk/core/refactoring/3.3.0-v20070606-0010/refactoring-3.3.0-v20070606-0010-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ltk/core/refactoring/3.3.0-v20070606-0010/refactoring-3.3.0-v20070606-0010-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.ltk.ui:refactoring:3.3.0-v20070606-0010">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ltk/ui/refactoring/3.3.0-v20070606-0010/refactoring-3.3.0-v20070606-0010.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ltk/ui/refactoring/3.3.0-v20070606-0010/refactoring-3.3.0-v20070606-0010-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ltk/ui/refactoring/3.3.0-v20070606-0010/refactoring-3.3.0-v20070606-0010-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.jdt.core:manipulation:1.1.0-v20070606-0010">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/core/manipulation/1.1.0-v20070606-0010/manipulation-1.1.0-v20070606-0010.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/core/manipulation/1.1.0-v20070606-0010/manipulation-1.1.0-v20070606-0010-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/core/manipulation/1.1.0-v20070606-0010/manipulation-1.1.0-v20070606-0010-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.ant:ui:3.2.100-v20070511">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ant/ui/3.2.100-v20070511/ui-3.2.100-v20070511.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ant/ui/3.2.100-v20070511/ui-3.2.100-v20070511-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ant/ui/3.2.100-v20070511/ui-3.2.100-v20070511-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.ui:externaltools:3.1.200-v20070416">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/externaltools/3.1.200-v20070416/externaltools-3.1.200-v20070416.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/externaltools/3.1.200-v20070416/externaltools-3.1.200-v20070416-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/externaltools/3.1.200-v20070416/externaltools-3.1.200-v20070416-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.jdt:junit:3.3.0-v20070606-0010">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/junit/3.3.0-v20070606-0010/junit-3.3.0-v20070606-0010.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/junit/3.3.0-v20070606-0010/junit-3.3.0-v20070606-0010-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/junit/3.3.0-v20070606-0010/junit-3.3.0-v20070606-0010-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.jdt.junit:runtime:3.3.0-v20070606-0010">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/junit/runtime/3.3.0-v20070606-0010/runtime-3.3.0-v20070606-0010.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/junit/runtime/3.3.0-v20070606-0010/runtime-3.3.0-v20070606-0010-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/jdt/junit/runtime/3.3.0-v20070606-0010/runtime-3.3.0-v20070606-0010-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org:junit:3.8.2-v200706111738">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/junit/3.8.2-v200706111738/junit-3.8.2-v200706111738.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/junit/3.8.2-v200706111738/junit-3.8.2-v200706111738-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/junit/3.8.2-v200706111738/junit-3.8.2-v200706111738-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.ui:intro:3.2.100-v20070530">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/intro/3.2.100-v20070530/intro-3.2.100-v20070530.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/intro/3.2.100-v20070530/intro-3.2.100-v20070530-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/intro/3.2.100-v20070530/intro-3.2.100-v20070530-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.ui:cheatsheets:3.3.0-v20070507">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/cheatsheets/3.3.0-v20070507/cheatsheets-3.3.0-v20070507.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/cheatsheets/3.3.0-v20070507/cheatsheets-3.3.0-v20070507-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/ui/cheatsheets/3.3.0-v20070507/cheatsheets-3.3.0-v20070507-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.pde:runtime:3.3.0-v20070608-1300">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/pde/runtime/3.3.0-v20070608-1300/runtime-3.3.0-v20070608-1300.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/pde/runtime/3.3.0-v20070608-1300/runtime-3.3.0-v20070608-1300-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/pde/runtime/3.3.0-v20070608-1300/runtime-3.3.0-v20070608-1300-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.eclipse.swt.win32.win32:x86:3.3.0-v3346">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/swt/win32/win32/x86/3.3.0-v3346/x86-3.3.0-v3346.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/swt/win32/win32/x86/3.3.0-v3346/x86-3.3.0-v3346-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/swt/win32/win32/x86/3.3.0-v3346/x86-3.3.0-v3346-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-assembly:1.1.0-SNAPSHOT">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-assembly/1.1.0-SNAPSHOT/pax-url-assembly-1.1.0-SNAPSHOT.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-assembly/1.1.0-SNAPSHOT/pax-url-assembly-1.1.0-SNAPSHOT-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-assembly/1.1.0-SNAPSHOT/pax-url-assembly-1.1.0-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
   </component>

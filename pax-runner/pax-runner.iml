@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module relativePaths="true" MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="Osmorc" name="OSGi">
+      <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="$MODULE_DIR$/target/pax-runner.jar" useBndFile="false" bndFileLocation="" bundleActivator="" bundleSymbolicName="org.ops4j.pax.runner.pax-runner" bundleVersion="1.2.0-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
+        <additionalProperties>
+          <property key="_include" value="-osgi.bnd" />
+        </additionalProperties>
+        <additionalJARContents />
+      </configuration>
+    </facet>
+  </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
@@ -19,6 +29,7 @@
     <orderEntry type="library" name="Maven: org.apache.felix:org.apache.felix.framework:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.felix:org.apache.felix.bundlerepository:1.2.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.felix:org.osgi.service.obr:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-assembly:1.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-cache:1.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-classpath:1.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-mvn:1.1.0-SNAPSHOT" level="project" />
@@ -38,6 +49,7 @@
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-net:1.0.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-monitors:1.0.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.scanner:pax-scanner-dir:1.0.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-io:1.0.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.scanner:pax-scanner-features:1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.scanner:pax-scanner-file:1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.scanner:pax-scanner-obr:1.0.0-SNAPSHOT" level="project" />
