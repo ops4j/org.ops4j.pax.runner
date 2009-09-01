@@ -26,17 +26,17 @@ public class ExtensionBasedProvisionSchemaResolver
      */
     public String resolve( final String toResolve )
     {
-        if( toResolve == null || toResolve.trim().length() == 0 )
+        if ( toResolve == null || toResolve.trim().length() == 0 )
         {
             return null;
         }
-        if( toResolve.matches( "scan-.*:.*" ) )
+        if ( toResolve.matches( "scan-.*:.*" ) )
         {
             return toResolve;
         }
         String options = "";
         String resolve = toResolve;
-        if( toResolve.contains( "@" ) )
+        if ( toResolve.contains( "@" ) )
         {
             final int startOfOption = toResolve.indexOf( "@" );
             options = toResolve.substring( startOfOption );
@@ -44,56 +44,58 @@ public class ExtensionBasedProvisionSchemaResolver
         }
         // first resolve schema
         String schema = org.ops4j.pax.scanner.dir.ServiceConstants.SCHEMA;
-        if( !resolve.endsWith( "/" ) && !resolve.endsWith( "\\" ) && !resolve.contains( "!/" ) )
+        if ( !resolve.endsWith( "/" ) && !resolve.endsWith( "\\" ) && !resolve.contains( "!/" ) )
         {
             // check if is a pom using mvn protocol
-            if( resolve.startsWith( org.ops4j.pax.url.mvn.ServiceConstants.PROTOCOL )
-                && resolve.endsWith( "pom" ) )
+            if ( resolve.startsWith( org.ops4j.pax.url.mvn.ServiceConstants.PROTOCOL )
+                 && resolve.endsWith( "pom" ) )
             {
                 schema = org.ops4j.pax.scanner.pom.ServiceConstants.SCHEMA;
             }
             // check if starts with mvn / wrap / war / obr, because most common it will be a bundle
-            else if( resolve.startsWith( org.ops4j.pax.url.mvn.ServiceConstants.PROTOCOL )
-                     || resolve.startsWith( org.ops4j.pax.url.wrap.ServiceConstants.PROTOCOL )
-                     || resolve.startsWith( org.ops4j.pax.url.war.ServiceConstants.PROTOCOL_WAR )
-                     || resolve.startsWith( org.ops4j.pax.url.war.ServiceConstants.PROTOCOL_WAR_INSTRUCTIONS )
-                     || resolve.startsWith( org.ops4j.pax.url.war.ServiceConstants.PROTOCOL_WAR_REFERENCE )
-                     || resolve.startsWith( org.ops4j.pax.url.war.ServiceConstants.PROTOCOL_WEB_BUNDLE )
-                     || resolve.startsWith( org.ops4j.pax.url.obr.ServiceConstants.PROTOCOL ) )
+            else if ( resolve.startsWith( org.ops4j.pax.url.mvn.ServiceConstants.PROTOCOL )
+                      || resolve.startsWith( org.ops4j.pax.url.wrap.ServiceConstants.PROTOCOL )
+                      || resolve.startsWith( org.ops4j.pax.url.war.ServiceConstants.PROTOCOL_WAR )
+                      || resolve.startsWith( org.ops4j.pax.url.war.ServiceConstants.PROTOCOL_WAR_INSTRUCTIONS )
+                      || resolve.startsWith( org.ops4j.pax.url.war.ServiceConstants.PROTOCOL_WAR_REFERENCE )
+                      || resolve.startsWith( org.ops4j.pax.url.war.ServiceConstants.PROTOCOL_WEB_BUNDLE )
+                      || resolve.startsWith( org.ops4j.pax.url.obr.ServiceConstants.PROTOCOL )
+                      || resolve.startsWith( org.ops4j.pax.url.assembly.ServiceConstants.PROTOCOL )
+                      || resolve.startsWith( org.ops4j.pax.url.assembly.ServiceConstants.PROTOCOL_REFERENCE ) )
             {
                 schema = org.ops4j.pax.scanner.bundle.ServiceConstants.SCHEMA;
             }
             else
             {
                 int indexOfSlash = resolve.lastIndexOf( "/" );
-                if( indexOfSlash == -1 )
+                if ( indexOfSlash == -1 )
                 {
                     indexOfSlash = resolve.lastIndexOf( "\\" );
                 }
                 final int indexOfDot = resolve.lastIndexOf( "." );
-                if( indexOfDot > indexOfSlash )
+                if ( indexOfDot > indexOfSlash )
                 {
                     schema = org.ops4j.pax.scanner.file.ServiceConstants.SCHEMA;
-                    if( indexOfDot < resolve.length() - 1 )
+                    if ( indexOfDot < resolve.length() - 1 )
                     {
                         final String extension = resolve.substring( indexOfDot + 1 ).toUpperCase();
-                        if( "XML".equals( extension ) )
+                        if ( "XML".equals( extension ) )
                         {
                             schema = org.ops4j.pax.scanner.pom.ServiceConstants.SCHEMA;
                         }
-                        else if( "ZIP".equals( extension ) )
+                        else if ( "ZIP".equals( extension ) )
                         {
                             schema = org.ops4j.pax.scanner.dir.ServiceConstants.SCHEMA;
                         }
-                        else if( "JAR".equals( extension ) || "BUNDLE".equals( extension ) )
+                        else if ( "JAR".equals( extension ) || "BUNDLE".equals( extension ) )
                         {
                             schema = org.ops4j.pax.scanner.bundle.ServiceConstants.SCHEMA;
                         }
-                        else if( "OBR".equals( extension ) )
+                        else if ( "OBR".equals( extension ) )
                         {
                             schema = org.ops4j.pax.scanner.obr.ServiceConstants.SCHEMA;
                         }
-                        else if( "COMPOSITE".equals( extension ) || "PROFILE".equals( extension ))
+                        else if ( "COMPOSITE".equals( extension ) || "PROFILE".equals( extension ) )
                         {
                             schema = org.ops4j.pax.scanner.composite.ServiceConstants.SCHEMA;
                         }
@@ -104,13 +106,13 @@ public class ExtensionBasedProvisionSchemaResolver
         // then check out if is a local file
         final File file = new File( resolve );
         String resolved = resolve;
-        if( file.exists() )
+        if ( file.exists() )
         {
             try
             {
                 resolved = file.toURL().toExternalForm();
             }
-            catch( MalformedURLException ignore )
+            catch ( MalformedURLException ignore )
             {
                 // ignore as this should not happen if the file exists
             }
