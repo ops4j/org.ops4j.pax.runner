@@ -108,4 +108,11 @@ public class CommandLineImplTest
         assertEquals( "option8 value", "value8", commandLine.getOption( "option8" ) );
     }
 
+    @Test
+    public void profilesAsArgs()
+    {
+        CommandLine commandLine = new CommandLineImpl( "log", "web" );
+        assertEquals( "Profiles option", "log,web", commandLine.getOption( "profiles" ) );
+    }
+
 }

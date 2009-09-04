@@ -41,9 +41,9 @@
     <orderEntry type="module" module-name="pax-runner-commons" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-optional-jcl:1.0.1-SNAPSHOT" level="project" />
     <orderEntry type="module" module-name="pax-runner-handler" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-lang:1.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.scanner:pax-scanner-service:1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-property:1.0.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-lang:1.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-property:1.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.scanner:pax-scanner-bundle:1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.scanner:pax-scanner-composite:1.0.0-SNAPSHOT" level="project" />
@@ -59,7 +59,6 @@
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-xml:1.1.0-SNAPSHOT" level="project" />
     <orderEntry type="module" module-name="pax-runner-platform" />
     <orderEntry type="module" module-name="pax-runner-platform-concierge" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-collections:1.1.0-SNAPSHOT" level="project" />
     <orderEntry type="module" module-name="pax-runner-platform-equinox" />
     <orderEntry type="module" module-name="pax-runner-platform-felix" />
     <orderEntry type="module" module-name="pax-runner-platform-knopflerfish" />

@@ -283,7 +283,29 @@ public class CommandLineImpl implements CommandLine
      */
     private void parseArgument( final String arg )
     {
-        if( !m_arguments.contains( arg ) )
+        // first check if it is a profile
+        // do our best to not confuse a spec with a profile
+        if( !arg.startsWith( "scan" )
+            && !arg.startsWith( "/" )
+            && !arg.contains( ":" )
+            && arg.split( "/" ).length <= 3
+            && !new File( arg ).exists() )
+        {
+            List<String> profileOption = m_options.get( OPTION_PROFILES );
+            if( profileOption == null )
+            {
+                profileOption = new ArrayList<String>();
+                profileOption.add( arg );
+                m_options.put( OPTION_PROFILES, profileOption );
+            }
+            else
+            {
+                String value = profileOption.get( 0 );
+                value = value + "," + arg;
+                profileOption.set( 0, value );
+            }
+        }
+        else if( !m_arguments.contains( arg ) )
         {
             m_arguments.add( arg );
         }
