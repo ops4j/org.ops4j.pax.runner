@@ -527,11 +527,12 @@ class Utils
                     .toFile()
                     .listFiles();
 
+                final String pluginId = model.getPluginBase().getId();
                 File bestOne = null;
                 for( int i = 0; i < files.length; i++ )
                 {
                     File f = files[ i ];
-                    if( f.isFile() && f.getName().startsWith( bundleFileName ) && f.getName().endsWith( ".jar" ) )
+                    if( f.isFile() && f.getName().startsWith( pluginId ) && f.getName().endsWith( ".jar" ) )
                     {
                         //look at the timestamp:
                         if( bestOne == null || bestOne.lastModified() <= f.lastModified() )
