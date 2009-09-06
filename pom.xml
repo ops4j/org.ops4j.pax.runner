@@ -271,6 +271,14 @@
 
   <repositories>
     <repository>
+      <id>ops4j.snapshots</id>
+      <name>OPS4J Snapshot Repository</name>
+      <url>http://repository.ops4j.org/mvn-snapshots</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <repository>
       <id>ops4j.3rdparty</id>
       <name>OPS4J 3rd Party Repository</name>
       <url>http://repository.ops4j.org/mvn-3rdparty</url>
