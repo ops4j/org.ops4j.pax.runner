@@ -1,0 +1,28 @@
+<platform>
+
+  <name>Knopflerfish 3.0.0 (beta-1)</name>
+  <system>link:classpath:runner-links/org.knopflerfish.framework-3.0.0.link</system>
+
+  <profile name="minimal" default="true">
+    <bundle>
+      <name>org.osgi.compendium</name>
+      <url>link:classpath:runner-links/org.osgi.compendium-4.0.1.link</url>
+    </bundle>
+  </profile>
+
+  <profile name="tui" extends="minimal">
+    <bundle>
+      <name>Knopflerfish Console</name>
+      <url>link:classpath:runner-links/org.knopflerfish.console-all-2.1.0.link</url>
+    </bundle>
+    <bundle>
+      <name>Knopflerfish Console TTY</name>
+      <url>link:classpath:runner-links/org.knopflerfish.consoletty-2.0.1.link</url>
+    </bundle>
+    <bundle>
+      <name>Knopflerfish Framework Commands</name>
+      <url>link:classpath:runner-links/org.knopflerfish.frameworkcommands-2.0.5.link</url>
+    </bundle>
+  </profile>
+
+</platform>
