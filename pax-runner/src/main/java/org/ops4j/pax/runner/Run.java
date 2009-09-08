@@ -521,7 +521,7 @@ public class Run
         if( profilesOption != null && profilesOption.trim().length() > 0 )
         {
             final String profilesGroup = context.getOptionResolver().get( OPTION_PROFILES_GROUPID );
-            final String[] profiles = profilesOption.split( "," );
+            final String[] profiles = profilesOption.split( ":" );
             for( String profile : profiles )
             {
                 // TODO Maybe a nice/safe parsing of profile name into group/artifact/version ?

@@ -111,8 +111,8 @@ public class CommandLineImplTest
     @Test
     public void profilesAsArgs()
     {
-        CommandLine commandLine = new CommandLineImpl( "log", "web" );
-        assertEquals( "Profiles option", "log,web", commandLine.getOption( "profiles" ) );
+        CommandLine commandLine = new CommandLineImpl( "log", "web/[1.0,2.0)" );
+        assertEquals( "Profiles option", "log:web/[1.0,2.0)", commandLine.getOption( "profiles" ) );
     }
 
 }

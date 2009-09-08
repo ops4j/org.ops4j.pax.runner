@@ -252,6 +252,10 @@ public class CommandLineImpl implements CommandLine
             {
                 key = matcher.group( 1 );
                 value = matcher.group( 2 );
+                if( OPTION_PROFILES.equals( key ) )
+                {
+                    value = value.replace( ',', ':' );
+                }
             }
             if( value == null )
             {
@@ -301,7 +305,7 @@ public class CommandLineImpl implements CommandLine
             else
             {
                 String value = profileOption.get( 0 );
-                value = value + "," + arg;
+                value = value + ":" + arg;
                 profileOption.set( 0, value );
             }
         }
