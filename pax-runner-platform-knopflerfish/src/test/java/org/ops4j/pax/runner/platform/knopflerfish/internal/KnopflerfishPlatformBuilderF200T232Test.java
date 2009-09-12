@@ -75,13 +75,13 @@ public class KnopflerfishPlatformBuilderF200T232Test
     @Test( expected = IllegalArgumentException.class )
     public void constructorWithNullBundleContext()
     {
-        new KnopflerfishPlatformBuilderF200T232( null, "version" );
+        new KnopflerfishPlatformBuilderF200T233( null, "version" );
     }
 
     @Test( expected = IllegalArgumentException.class )
     public void constructorWithNullVersion()
     {
-        new KnopflerfishPlatformBuilderF200T232( m_bundleContext, null );
+        new KnopflerfishPlatformBuilderF200T233( m_bundleContext, null );
     }
 
     @Test
@@ -91,7 +91,7 @@ public class KnopflerfishPlatformBuilderF200T232Test
         assertEquals(
             "Main class name",
             "org.knopflerfish.framework.Main",
-            new KnopflerfishPlatformBuilderF200T232( m_bundleContext, "version" ).getMainClassName()
+            new KnopflerfishPlatformBuilderF200T233( m_bundleContext, "version" ).getMainClassName()
         );
         verify( m_bundleContext );
     }
@@ -104,7 +104,7 @@ public class KnopflerfishPlatformBuilderF200T232Test
         replay( m_bundleContext, m_configuration );
         assertNull(
             "Required profiles is not null",
-            new KnopflerfishPlatformBuilderF200T232( m_bundleContext, "version" ).getRequiredProfile( m_platformContext )
+            new KnopflerfishPlatformBuilderF200T233( m_bundleContext, "version" ).getRequiredProfile( m_platformContext )
         );
         verify( m_bundleContext, m_configuration );
     }
@@ -118,7 +118,7 @@ public class KnopflerfishPlatformBuilderF200T232Test
         assertEquals(
             "Required profiles",
             "tui",
-            new KnopflerfishPlatformBuilderF200T232( m_bundleContext, "version" ).getRequiredProfile( m_platformContext )
+            new KnopflerfishPlatformBuilderF200T233( m_bundleContext, "version" ).getRequiredProfile( m_platformContext )
         );
         verify( m_bundleContext, m_configuration );
     }
@@ -134,7 +134,7 @@ public class KnopflerfishPlatformBuilderF200T232Test
                 "-xargs",
                 m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "knopflerfish/config.ini" ) ),
             },
-            new KnopflerfishPlatformBuilderF200T232( m_bundleContext, "version" ).getArguments( m_platformContext )
+            new KnopflerfishPlatformBuilderF200T233( m_bundleContext, "version" ).getArguments( m_platformContext )
         );
         verify( m_bundleContext );
     }
@@ -149,7 +149,7 @@ public class KnopflerfishPlatformBuilderF200T232Test
                 "-Dorg.osgi.framework.dir="
                 + m_platformContext.getFilePathStrategy().normalizeAsPath( new File( m_workDir, "knopflerfish/fwdir" ) )
             },
-            new KnopflerfishPlatformBuilderF200T232( m_bundleContext, "version" ).getVMOptions( m_platformContext )
+            new KnopflerfishPlatformBuilderF200T233( m_bundleContext, "version" ).getVMOptions( m_platformContext )
         );
         verify( m_bundleContext );
     }
@@ -158,7 +158,7 @@ public class KnopflerfishPlatformBuilderF200T232Test
     public void getSystemPropertiesWithNullPlatformContext()
     {
         replay( m_bundleContext );
-        new KnopflerfishPlatformBuilderF200T232( m_bundleContext, "version" ).getVMOptions( null );
+        new KnopflerfishPlatformBuilderF200T233( m_bundleContext, "version" ).getVMOptions( null );
         verify( m_bundleContext );
     }
 
@@ -167,7 +167,7 @@ public class KnopflerfishPlatformBuilderF200T232Test
         throws PlatformException
     {
         replay( m_bundleContext );
-        new KnopflerfishPlatformBuilderF200T232( m_bundleContext, "version" ).prepare( null );
+        new KnopflerfishPlatformBuilderF200T233( m_bundleContext, "version" ).prepare( null );
         verify( m_bundleContext );
     }
 
@@ -190,7 +190,7 @@ public class KnopflerfishPlatformBuilderF200T232Test
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );
 
         replay( m_bundleContext, m_configuration );
-        new KnopflerfishPlatformBuilderF200T232( m_bundleContext, "version" ).prepare( m_platformContext );
+        new KnopflerfishPlatformBuilderF200T233( m_bundleContext, "version" ).prepare( m_platformContext );
         verify( m_bundleContext, m_configuration );
 
         compareFiles(
@@ -253,7 +253,7 @@ public class KnopflerfishPlatformBuilderF200T232Test
         replay( m_bundleContext, m_configuration,
                 bundle1, bundle2, bundle3, bundle4
         );
-        new KnopflerfishPlatformBuilderF200T232( m_bundleContext, "version" ).prepare( m_platformContext );
+        new KnopflerfishPlatformBuilderF200T233( m_bundleContext, "version" ).prepare( m_platformContext );
         verify( m_bundleContext, m_configuration,
                 bundle1, bundle2, bundle3, bundle4
         );
@@ -348,7 +348,7 @@ public class KnopflerfishPlatformBuilderF200T232Test
         expect( m_configuration.usePersistedState() ).andReturn( usePersistedState );
 
         replay( m_bundleContext, m_configuration );
-        new KnopflerfishPlatformBuilderF200T232( m_bundleContext, "version" ).prepare( m_platformContext );
+        new KnopflerfishPlatformBuilderF200T233( m_bundleContext, "version" ).prepare( m_platformContext );
         verify( m_bundleContext, m_configuration );
     }
 

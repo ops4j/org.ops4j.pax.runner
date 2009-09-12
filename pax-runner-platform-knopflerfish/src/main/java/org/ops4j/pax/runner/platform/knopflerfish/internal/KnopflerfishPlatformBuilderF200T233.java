@@ -51,14 +51,14 @@ import org.ops4j.util.collections.PropertiesWriter;
  * @author Alin Dreghiciu
  * @since September 09, 2007
  */
-public class KnopflerfishPlatformBuilderF200T232
+public class KnopflerfishPlatformBuilderF200T233
     implements PlatformBuilder
 {
 
     /**
      * Logger.
      */
-    private static final Log LOGGER = LogFactory.getLog( KnopflerfishPlatformBuilderF200T232.class );
+    private static final Log LOGGER = LogFactory.getLog( KnopflerfishPlatformBuilderF200T233.class );
     /**
      * Provider name to be used in registration.
      */
@@ -102,7 +102,7 @@ public class KnopflerfishPlatformBuilderF200T232
      * @param bundleContext a bundle context
      * @param version       supported version
      */
-    public KnopflerfishPlatformBuilderF200T232( final BundleContext bundleContext, final String version )
+    public KnopflerfishPlatformBuilderF200T233( final BundleContext bundleContext, final String version )
     {
         NullArgumentException.validateNotNull( bundleContext, "Bundle context" );
         NullArgumentException.validateNotNull( version, "Version" );
