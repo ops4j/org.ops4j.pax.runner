@@ -3,15 +3,4 @@
   <name>Equinox 3.2.1</name>
   <system>link:classpath:runner-links/org.eclipse.osgi-3.2.1.link</system>
 
-  <profile name="minimal" default="true">
-    <bundle>
-      <name>Eclipse utilities</name>
-      <url>link:classpath:runner-links/org.eclipse.osgi.util-3.1.100.link</url>
-    </bundle>
-    <bundle>
-      <name>Eclipse compendium services</name>
-      <url>link:classpath:runner-links/org.eclipse.osgi.services-3.1.100.link</url>
-    </bundle>
-  </profile>
-
 </platform>
