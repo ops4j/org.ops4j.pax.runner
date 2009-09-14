@@ -3,14 +3,15 @@
   <name>Knopflerfish 2.3.0</name>
   <system>link:classpath:runner-links/org.knopflerfish.framework-2.3.0.link</system>
 
-  <profile name="minimal" default="true">
+  <profile name="tui" default="true">
     <bundle>
-      <name>org.osgi.compendium</name>
-      <url>link:classpath:runner-links/org.osgi.compendium-4.0.1.link</url>
+      <name>Knopflerfish Log API</name>
+      <url>link:classpath:runner-links/org.knopflerfish.log-api-2.0.1.link</url>
     </bundle>
-  </profile>
-
-  <profile name="tui" extends="minimal">
+    <bundle>
+      <name>Knopflerfish Config Admin API</name>
+      <url>link:classpath:runner-links/org.knopflerfish.cm-api-2.0.1.link</url>
+    </bundle>
     <bundle>
       <name>Knopflerfish Console</name>
       <url>link:classpath:runner-links/org.knopflerfish.console-all-2.0.1.link</url>
