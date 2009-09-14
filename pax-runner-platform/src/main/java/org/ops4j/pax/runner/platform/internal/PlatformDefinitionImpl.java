@@ -106,10 +106,6 @@ public class PlatformDefinitionImpl
         }
         m_packages = XmlUtils.getTextContentOfElement( doc, "packages" );
         extractProfiles( doc, startLevel );
-        if( m_profiles.size() == 0 )
-        {
-            throw new IOException( "Invalid syntax: there should be at least one profile" );
-        }
     }
 
     /**
@@ -235,7 +231,8 @@ public class PlatformDefinitionImpl
     public List<BundleReference> getPlatformBundles( final String profiles )
     {
         List<BundleReference> bundles = null;
-        if( profiles == null || profiles.trim().length() == 0 )
+        if( ( profiles == null || profiles.trim().length() == 0 )
+            && m_defaultProfile != null )
         {
             return getPlatformBundles( m_defaultProfile );
         }
@@ -284,7 +281,7 @@ public class PlatformDefinitionImpl
             }
         }
         // if no success with profiles and this was not a call for default profile then look at default profile
-        if( bundles == null && !m_defaultProfile.equals( profiles ) )
+        if( bundles == null && m_defaultProfile != null && !m_defaultProfile.equals( profiles ) )
         {
             bundles = getPlatformBundles( m_defaultProfile );
         }
