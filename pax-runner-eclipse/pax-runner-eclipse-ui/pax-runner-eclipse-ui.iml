@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module relativePaths="true" MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+<module relativePaths="true" MavenProjectsManager.isMavenModule="true" org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_4" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
@@ -10,73 +10,73 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.osgi:org.osgi.core:4.0.1" level="project" />
-    <orderEntry type="library" name="Maven: org.osgi:org.osgi.compendium:4.0.1" level="project" />
-    <orderEntry type="library" name="Maven: junit:junit:4.4" level="project" />
-    <orderEntry type="library" name="Maven: org.easymock:easymock:2.3" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.pde:ui:3.3.0-v20070608-1300" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.pde:core:3.3.0-v20070608-1300" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.core:runtime:3.3.100-v20070530" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse:osgi:3.3.0-v20070530" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.equinox:common:3.3.0-v20070426" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.core:jobs:3.3.0-v20070423" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.equinox:registry:3.3.0-v20070522" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.equinox:preferences:3.2.100-v20070522" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.core:contenttype:3.2.100-v20070319" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.equinox:app:1.0.0-v20070423" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.core:resources:3.3.0-v20070604" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.core:expressions:3.3.0-v20070606-0010" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.core:filesystem:1.1.0-v20070606" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jdt:core:3.3.0-v_771" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse:text:3.3.0-v20070606-0010" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.core:commands:3.3.0-I20070605-0010" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.team:core:3.3.0-I20070607" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.update:configurator:3.2.100-v20070615" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jdt:launching:3.3.0-v20070510" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.debug:core:3.3.0-v20070607-1800" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.core:variables:3.2.0-v20070426" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jdt:debug:3.3.0-v20070530a" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.core:filebuffers:3.3.0-v20070606-0010" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.pde:build:3.3.0-v20070612" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.ant:core:3.1.200-v20070522" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.update:core:3.2.100-v20070615" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.core:net:1.0.0-I20070531" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.ui:ide:3.3.0-I20070620" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse:help:3.3.0-v20070524" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse:ui:3.3.0-I20070614-0800" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse:swt:3.3.0-v3346" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse:jface:3.3.0-I20070606-0010" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.ui:workbench:3.3.0-I20070608-1100" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jface:databinding:1.1.0-I20070606-0010" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.core:databinding:1.0.0-I20070606-0010" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.ui:views:3.2.100-I20070319-0010" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.update:ui:3.2.100-v20070615" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.ui:forms:3.3.0-v20070511" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jface:text:3.3.0-v20070606-0010" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.ui.workbench:texteditor:3.3.0-v20070606-0010" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.ui:editors:3.3.0-v20070606-0010" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.debug:ui:3.3.0-v20070607-1800" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.ui:console:3.2.0-v20070530" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jdt.debug:ui:3.2.100-v20070531-1800" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jdt:ui:3.3.0-v20070607-0010" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse:search:3.3.0-v20070606-0010" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse:compare:3.3.0-I20070606" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.team:ui:3.3.0-I20070607" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.ui:navigator:3.3.0-I20070605-0010" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.ui.navigator:resources:3.3.0-I20070605-0010" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.ui.views.properties:tabbed:3.3.0-I20070605-0010" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.ltk.core:refactoring:3.3.0-v20070606-0010" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.ltk.ui:refactoring:3.3.0-v20070606-0010" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jdt.core:manipulation:1.1.0-v20070606-0010" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.ant:ui:3.2.100-v20070511" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.ui:externaltools:3.1.200-v20070416" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jdt:junit:3.3.0-v20070606-0010" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.jdt.junit:runtime:3.3.0-v20070606-0010" level="project" />
-    <orderEntry type="library" name="Maven: org:junit:3.8.2-v200706111738" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.ui:intro:3.2.100-v20070530" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.ui:cheatsheets:3.3.0-v20070507" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.pde:runtime:3.3.0-v20070608-1300" level="project" />
-    <orderEntry type="library" name="Maven: org.eclipse.swt.win32.win32:x86:3.3.0-v3346" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.pde:ui:3.3.0-v20070608-1300" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.pde:core:3.3.0-v20070608-1300" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.core:runtime:3.3.100-v20070530" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse:osgi:3.3.0-v20070530" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.equinox:common:3.3.0-v20070426" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.core:jobs:3.3.0-v20070423" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.equinox:registry:3.3.0-v20070522" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.equinox:preferences:3.2.100-v20070522" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.core:contenttype:3.2.100-v20070319" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.equinox:app:1.0.0-v20070423" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.core:resources:3.3.0-v20070604" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.core:expressions:3.3.0-v20070606-0010" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.core:filesystem:1.1.0-v20070606" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jdt:core:3.3.0-v_771" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse:text:3.3.0-v20070606-0010" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.core:commands:3.3.0-I20070605-0010" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.team:core:3.3.0-I20070607" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.update:configurator:3.2.100-v20070615" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jdt:launching:3.3.0-v20070510" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.debug:core:3.3.0-v20070607-1800" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.core:variables:3.2.0-v20070426" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jdt:debug:3.3.0-v20070530a" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.core:filebuffers:3.3.0-v20070606-0010" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.pde:build:3.3.0-v20070612" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.ant:core:3.1.200-v20070522" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.update:core:3.2.100-v20070615" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.core:net:1.0.0-I20070531" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.ui:ide:3.3.0-I20070620" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse:help:3.3.0-v20070524" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse:ui:3.3.0-I20070614-0800" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse:swt:3.3.0-v3346" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse:jface:3.3.0-I20070606-0010" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.ui:workbench:3.3.0-I20070608-1100" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jface:databinding:1.1.0-I20070606-0010" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.core:databinding:1.0.0-I20070606-0010" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.ui:views:3.2.100-I20070319-0010" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.update:ui:3.2.100-v20070615" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.ui:forms:3.3.0-v20070511" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jface:text:3.3.0-v20070606-0010" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.ui.workbench:texteditor:3.3.0-v20070606-0010" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.ui:editors:3.3.0-v20070606-0010" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.debug:ui:3.3.0-v20070607-1800" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.ui:console:3.2.0-v20070530" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jdt.debug:ui:3.2.100-v20070531-1800" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jdt:ui:3.3.0-v20070607-0010" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse:search:3.3.0-v20070606-0010" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse:compare:3.3.0-I20070606" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.team:ui:3.3.0-I20070607" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.ui:navigator:3.3.0-I20070605-0010" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.ui.navigator:resources:3.3.0-I20070605-0010" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.ui.views.properties:tabbed:3.3.0-I20070605-0010" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.ltk.core:refactoring:3.3.0-v20070606-0010" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.ltk.ui:refactoring:3.3.0-v20070606-0010" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jdt.core:manipulation:1.1.0-v20070606-0010" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.ant:ui:3.2.100-v20070511" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.ui:externaltools:3.1.200-v20070416" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jdt:junit:3.3.0-v20070606-0010" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jdt.junit:runtime:3.3.0-v20070606-0010" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org:junit:3.8.2-v200706111738" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.ui:intro:3.2.100-v20070530" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.ui:cheatsheets:3.3.0-v20070507" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.pde:runtime:3.3.0-v20070608-1300" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.swt.win32.win32:x86:3.3.0-v3346" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.osgi:org.osgi.core:4.0.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.osgi:org.osgi.compendium:4.0.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.easymock:easymock:2.3" level="project" />
   </component>
 </module>
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module relativePaths="true" MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+<module relativePaths="true" MavenProjectsManager.isMavenModule="true" org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Osmorc" name="OSGi">
       <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="$MODULE_DIR$/target/pax-runner.jar" useBndFile="false" bndFileLocation="" bundleActivator="" bundleSymbolicName="org.ops4j.pax.runner.pax-runner" bundleVersion="1.2.0-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
@@ -22,17 +22,14 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.osgi:org.osgi.core:4.0.1" level="project" />
-    <orderEntry type="library" name="Maven: org.osgi:org.osgi.compendium:4.0.1" level="project" />
-    <orderEntry type="library" name="Maven: junit:junit:4.4" level="project" />
-    <orderEntry type="library" name="Maven: org.easymock:easymock:2.3" level="project" />
     <orderEntry type="library" name="Maven: org.apache.felix:org.apache.felix.framework:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.felix:org.apache.felix.bundlerepository:1.2.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.felix:org.osgi.service.obr:1.0.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.felix:org.osgi.service.obr:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-assembly:1.1.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.codehaus.jackson:jackson-core-asl:1.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-cache:1.1.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-classpath:1.1.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-dir:1.1.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-mvn:1.1.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-link:1.1.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-obr:1.1.1-SNAPSHOT" level="project" />
@@ -62,6 +59,10 @@
     <orderEntry type="module" module-name="pax-runner-platform-equinox" />
     <orderEntry type="module" module-name="pax-runner-platform-felix" />
     <orderEntry type="module" module-name="pax-runner-platform-knopflerfish" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.osgi:org.osgi.core:4.0.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.osgi:org.osgi.compendium:4.0.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.easymock:easymock:2.3" level="project" />
   </component>
 </module>
 
