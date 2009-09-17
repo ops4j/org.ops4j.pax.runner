@@ -3,7 +3,9 @@
   <name>Knopflerfish 3.0.0 (beta-1)</name>
   <system>link:classpath:runner-links/org.knopflerfish.framework-3.0.0.link</system>
 
-  <profile name="tui" default="true">
+  <profile name="minimal" default="true"/>
+
+  <profile name="tui" extends="minimal">
     <bundle>
       <name>Knopflerfish Log API</name>
       <url>link:classpath:runner-links/org.knopflerfish.log-api-2.0.1.link</url>
@@ -11,7 +13,7 @@
     <bundle>
       <name>Knopflerfish Config Admin API</name>
       <url>link:classpath:runner-links/org.knopflerfish.cm-api-2.0.1.link</url>
-    </bundle>    
+    </bundle>
     <bundle>
       <name>Knopflerfish Console</name>
       <url>link:classpath:runner-links/org.knopflerfish.console-all-2.1.0.link</url>

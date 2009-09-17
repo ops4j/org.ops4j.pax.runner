@@ -3,7 +3,9 @@
   <name>Knopflerfish 2.3.3</name>
   <system>link:classpath:runner-links/org.knopflerfish.framework-2.3.3.link</system>
 
-  <profile name="tui" default="true">
+  <profile name="minimal" default="true"/>
+
+  <profile name="tui" extends="minimal">
     <bundle>
       <name>Knopflerfish Log API</name>
       <url>link:classpath:runner-links/org.knopflerfish.log-api-2.0.1.link</url>

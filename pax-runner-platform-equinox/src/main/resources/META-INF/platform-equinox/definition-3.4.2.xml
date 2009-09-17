@@ -3,4 +3,6 @@
   <name>Equinox 3.4.2</name>
   <system>link:classpath:runner-links/org.eclipse.osgi-3.4.2.link</system>
 
+  <profile name="minimal" default="true"/>
+  
 </platform>
