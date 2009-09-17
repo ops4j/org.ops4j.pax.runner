@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module relativePaths="true" MavenProjectsManager.isMavenModule="true" org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
-  <component name="FacetManager">
-    <facet type="Osmorc" name="OSGi">
-      <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="$MODULE_DIR$/target/pax-runner.jar" useBndFile="false" bndFileLocation="" bundleActivator="" bundleSymbolicName="org.ops4j.pax.runner.pax-runner" bundleVersion="1.2.0-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
-        <additionalProperties>
-          <property key="_include" value="-osgi.bnd" />
-        </additionalProperties>
-        <additionalJARContents />
-      </configuration>
-    </facet>
-  </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
@@ -36,10 +26,10 @@
     <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-war:1.1.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.url:pax-url-wrap:1.1.1-SNAPSHOT" level="project" />
     <orderEntry type="module" module-name="pax-runner-commons" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-optional-jcl:1.1.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-optional-jcl:1.1.1-SNAPSHOT" level="project" />
     <orderEntry type="module" module-name="pax-runner-handler" />
     <orderEntry type="library" name="Maven: org.ops4j.pax.scanner:pax-scanner-service:1.0.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-property:1.1.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-property:1.1.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-lang:1.1.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-property:1.1.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.scanner:pax-scanner-bundle:1.0.0-SNAPSHOT" level="project" />
@@ -50,8 +40,8 @@
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.scanner:pax-scanner-features:1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.scanner:pax-scanner-file:1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.scanner:pax-scanner-obr:1.0.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-tracker:1.1.0" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-lifecycle:1.1.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-tracker:1.1.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-lifecycle:1.1.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.scanner:pax-scanner-pom:1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.ops4j.base:ops4j-base-util-xml:1.1.0" level="project" />
     <orderEntry type="module" module-name="pax-runner-platform" />
