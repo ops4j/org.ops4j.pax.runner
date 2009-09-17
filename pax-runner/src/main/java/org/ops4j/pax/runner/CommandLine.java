@@ -81,6 +81,14 @@ public interface CommandLine
      */
     static final String OPTION_PROFILES = "profiles";
     /**
+     * Console option.
+     */
+    static final String OPTION_CONSOLE = "console";
+    /**
+     * Shell option.
+     */
+    static final String OPTION_SHELL = "shell";
+    /**
      * Profiles repository.
      */
     static final String OPTION_PROFILES_REPO = "profilesRepositories";

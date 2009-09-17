@@ -277,6 +277,12 @@ public class CommandLineImpl implements CommandLine
                 m_options.put( key, values );
             }
             values.add( value );
+
+            if( OPTION_SHELL.equals( key ) )
+            {
+                m_options.put( OPTION_CONSOLE, Arrays.asList( "false" ) );
+                addProfile( value );
+            }
         }
     }
 
@@ -295,23 +301,38 @@ public class CommandLineImpl implements CommandLine
             && arg.split( "/" ).length <= 3
             && !new File( arg ).exists() )
         {
-            List<String> profileOption = m_options.get( OPTION_PROFILES );
-            if( profileOption == null )
-            {
-                profileOption = new ArrayList<String>();
-                profileOption.add( arg );
-                m_options.put( OPTION_PROFILES, profileOption );
-            }
-            else
-            {
-                String value = profileOption.get( 0 );
-                value = value + ":" + arg;
-                profileOption.set( 0, value );
-            }
+            addProfile( arg );
         }
         else if( !m_arguments.contains( arg ) )
         {
             m_arguments.add( arg );
+        }
+    }
+
+    /**
+     * Adds a profile to profile list.
+     *
+     * @param profile profile to add
+     */
+    private void addProfile( final String profile )
+    {
+        if( profile == null || profile.trim().length() == 0 )
+        {
+            return;
+        }
+
+        List<String> profileOption = m_options.get( OPTION_PROFILES );
+        if( profileOption == null )
+        {
+            profileOption = new ArrayList<String>();
+            profileOption.add( profile );
+            m_options.put( OPTION_PROFILES, profileOption );
+        }
+        else
+        {
+            String value = profileOption.get( 0 );
+            value = value + ":" + profile;
+            profileOption.set( 0, value );
         }
     }
 
