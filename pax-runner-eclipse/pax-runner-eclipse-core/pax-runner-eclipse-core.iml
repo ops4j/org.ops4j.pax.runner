@@ -12,6 +12,15 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="pax-runner" exported="" />
     <orderEntry type="module" module-name="pax-runner-platform" scope="PROVIDED" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.ops4j.base:ops4j-base-io:1.2.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.ops4j.base:ops4j-base-lang:1.2.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.ops4j.base:ops4j-base-monitors:1.2.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.ops4j.base:ops4j-base-util-xml:1.2.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.ops4j.base:ops4j-base-util-collections:1.2.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-optional-jcl:1.2.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.ops4j.pax.swissbox:pax-swissbox-property:1.2.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.ops4j.base:ops4j-base-util-property:1.2.1" level="project" />
+    <orderEntry type="module" module-name="pax-runner-commons" scope="PROVIDED" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.pde:ui:3.3.0-v20070608-1300" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.pde:core:3.3.0-v20070608-1300" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.core:runtime:3.3.100-v20070530" level="project" />
