@@ -5,15 +5,14 @@ Bundle-SymbolicName:\
   ${bundle.symbolicName}
 
 Bundle-Version>:\
-  ${pom.version}  
-
-Export-Package:
+  ${pom.version}
 
 Private-Package:\
   !org.apache.commons.logging,\
   *
 
 -removeheaders:\
+  Export-Package,\
   Include-Resource,\
   Private-Package,\
   Embed-Dependency,\

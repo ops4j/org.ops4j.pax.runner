@@ -7,18 +7,11 @@ Bundle-SymbolicName:\
 Bundle-Version>:\
   ${pom.version}  
 
-Export-Package:
-
 Private-Package:\
   aQute.*; -split-package:=merge-first,\
   META-INF.*; -split-package:=merge-first,\
-  org.*; -split-package:=merge-first,\
-  javax.servlet.*; -split-package:=merge-first,\
-  runner-links.*; -split-package:=merge-first
-
-#  ${bundle.namespace},\
-#  ${bundle.namespace}.osgi,\
-#  org.apache.commons.logging; -split-package:=merge-first
+  runner-links.*; -split-package:=merge-first,\
+  org.*; -split-package:=merge-first
 
 Include-Resource:\
   @target/dependency/org.osgi.core.jar!/org/osgi/framework/*,\
@@ -36,12 +29,8 @@ Include-Resource:\
   @target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/util/EventDispatcher*.class,\
   @target/dependency/org.apache.felix.framework.jar!/org/apache/felix/framework/util/StringMap*.class
 
-#Embed-Dependency:\
-#  *; scope=compile; type=!pom; inline=true
-
-#Embed-Transitive: true
-
 -removeheaders:\
+  Export-Package,\
   Include-Resource,\
   Private-Package,\
   Embed-Dependency,\
