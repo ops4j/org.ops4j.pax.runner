@@ -32,7 +32,7 @@
   </scm>
 
   <properties>
-    <dependency.base.version>1.1.0</dependency.base.version>
+    <dependency.base.version>1.2.1</dependency.base.version>
     <dependency.scanner.version>1.0.0-SNAPSHOT</dependency.scanner.version>
     <dependency.swissbox.version>1.1.1-SNAPSHOT</dependency.swissbox.version>
     <dependency.url.version>1.1.1-SNAPSHOT</dependency.url.version>
