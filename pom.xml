@@ -27,31 +27,17 @@
   </issueManagement>
 
   <scm>
-    <connection>scm:svn:https://scm.ops4j.org/repos/ops4j/projects/pax/runner</connection>
+    <connection>scm:svn:https://scMAVENm.ops4j.org/repos/ops4j/projects/pax/runner</connection>
     <developerConnection>scm:svn:https://scm.ops4j.org/repos/ops4j/projects/pax/runner</developerConnection>
   </scm>
-  <profiles>
-    <profile>
-      <id>release</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <modules>
-        <module>pax-runner-commons</module>
-        <module>pax-runner-handler</module>
-        <module>pax-runner-platform</module>
-        <module>pax-runner-platform-concierge</module>
-        <module>pax-runner-platform-equinox</module>
-        <module>pax-runner-platform-felix</module>
-        <module>pax-runner-platform-knopflerfish</module>
-        <module>pax-runner</module>
-        <module>pax-runner-no-jcl</module>
-        <module>pax-runner-assembly</module>
-        <module>pax-runner-eclipse</module>
-      </modules>
-    </profile>
-  </profiles>
 
+  <properties>
+    <dependency.base.version>1.1.0</dependency.base.version>
+    <dependency.scanner.version>1.0.0-SNAPSHOT</dependency.scanner.version>
+    <dependency.swissbox.version>1.1.1-SNAPSHOT</dependency.swissbox.version>
+    <dependency.url.version>1.1.1-SNAPSHOT</dependency.url.version>
+  </properties>  
+  
   <developers>
     <developer>
       <id>niclas</id>
@@ -73,13 +59,6 @@
       <timezone>UTC+2</timezone>
     </developer>
   </developers>
-
-  <properties>
-    <dependency.base.version>1.1.0</dependency.base.version>
-    <dependency.scanner.version>1.0.0-SNAPSHOT</dependency.scanner.version>
-    <dependency.swissbox.version>1.1.1-SNAPSHOT</dependency.swissbox.version>
-    <dependency.url.version>1.1.1-SNAPSHOT</dependency.url.version>
-  </properties>
 
   <build>
     <plugins>
@@ -269,15 +248,29 @@
     </dependency>
   </dependencies>
 
+  <profiles>
+    <profile>
+      <id>release</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>pax-runner-commons</module>
+        <module>pax-runner-handler</module>
+        <module>pax-runner-platform</module>
+        <module>pax-runner-platform-concierge</module>
+        <module>pax-runner-platform-equinox</module>
+        <module>pax-runner-platform-felix</module>
+        <module>pax-runner-platform-knopflerfish</module>
+        <module>pax-runner</module>
+        <module>pax-runner-no-jcl</module>
+        <module>pax-runner-assembly</module>
+        <module>pax-runner-eclipse</module>
+      </modules>
+    </profile>
+  </profiles>  
+
   <repositories>
-    <repository>
-      <id>ops4j.snapshots</id>
-      <name>OPS4J Snapshot Repository</name>
-      <url>http://repository.ops4j.org/mvn-snapshots</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
     <repository>
       <id>ops4j.3rdparty</id>
       <name>OPS4J 3rd Party Repository</name>
