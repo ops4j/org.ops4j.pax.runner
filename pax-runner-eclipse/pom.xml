@@ -5,13 +5,13 @@
   <parent>
     <groupId>org.ops4j.pax</groupId>
     <artifactId>runner</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.1-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <groupId>org.ops4j.pax.runner</groupId>
   <artifactId>pax-runner-eclipse</artifactId>
-  <version>1.2.1</version>
+  <version>1.2.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>OPS4J Pax Runner - Eclipse Plugin (Build POM)</name>
