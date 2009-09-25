@@ -1,0 +1,8 @@
+<platform>
+
+  <name>Equinox 3.6.0 (M2)</name>
+  <system>link:classpath:runner-links/org.eclipse.osgi-3.6.0.link</system>
+
+  <profile name="minimal" default="true"/>
+  
+</platform>
