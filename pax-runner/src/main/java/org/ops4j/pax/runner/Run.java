@@ -525,16 +525,26 @@ public class Run
             for( String profile : profiles )
             {
                 // TODO Maybe a nice/safe parsing of profile name into group/artifact/version ?
+                final int startOfOptions = profile.indexOf( org.ops4j.pax.scanner.ServiceConstants.SEPARATOR_OPTION );
+                String options = null;
+                if( startOfOptions > 0 )
+                {
+                    options = profile.substring( startOfOptions );
+                    profile = profile.substring( 0, startOfOptions );
+                }
                 final String[] parts = profile.split( "/" );
                 provisionSpecs.add(
-                    org.ops4j.pax.scanner.composite.ServiceConstants.SCHEMA
-                    + org.ops4j.pax.scanner.ServiceConstants.SEPARATOR_SCHEME
-                    + org.ops4j.pax.url.mvn.ServiceConstants.PROTOCOL
-                    + ":"
-                    + ( parts.length < 3 ? profilesGroup + "/" : "" )
-                    + profile
-                    + ( parts.length < 2 ? "/" : "" )
-                    + "/composite"
+                    new StringBuilder()
+                        .append( org.ops4j.pax.scanner.composite.ServiceConstants.SCHEMA )
+                        .append( org.ops4j.pax.scanner.ServiceConstants.SEPARATOR_SCHEME )
+                        .append( org.ops4j.pax.url.mvn.ServiceConstants.PROTOCOL )
+                        .append( ":" )
+                        .append( parts.length < 3 ? profilesGroup + "/" : "" )
+                        .append( profile )
+                        .append( parts.length < 2 ? "/" : "" )
+                        .append( "/composite" )
+                        .append( options != null ? options : "" )
+                        .toString()
                 );
             }
         }
