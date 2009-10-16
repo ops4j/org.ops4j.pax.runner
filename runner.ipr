@@ -1677,17 +1677,6 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/apache/felix/org.osgi.service.obr/1.0.0/org.osgi.service.obr-1.0.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-assembly:1.1.1">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-assembly/1.1.1/pax-url-assembly-1.1.1.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-assembly/1.1.1/pax-url-assembly-1.1.1-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-assembly/1.1.1/pax-url-assembly-1.1.1-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Maven: org.codehaus.jackson:jackson-core-asl:1.2.0">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/jackson/jackson-core-asl/1.2.0/jackson-core-asl-1.2.0.jar!/" />
@@ -1697,94 +1686,6 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/org/codehaus/jackson/jackson-core-asl/1.2.0/jackson-core-asl-1.2.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-cache:1.1.1">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-cache/1.1.1/pax-url-cache-1.1.1.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-cache/1.1.1/pax-url-cache-1.1.1-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-cache/1.1.1/pax-url-cache-1.1.1-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-classpath:1.1.1">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-classpath/1.1.1/pax-url-classpath-1.1.1.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-classpath/1.1.1/pax-url-classpath-1.1.1-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-classpath/1.1.1/pax-url-classpath-1.1.1-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-dir:1.1.1">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-dir/1.1.1/pax-url-dir-1.1.1.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-dir/1.1.1/pax-url-dir-1.1.1-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-dir/1.1.1/pax-url-dir-1.1.1-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-mvn:1.1.1">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-mvn/1.1.1/pax-url-mvn-1.1.1.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-mvn/1.1.1/pax-url-mvn-1.1.1-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-mvn/1.1.1/pax-url-mvn-1.1.1-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-link:1.1.1">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-link/1.1.1/pax-url-link-1.1.1.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-link/1.1.1/pax-url-link-1.1.1-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-link/1.1.1/pax-url-link-1.1.1-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-obr:1.1.1">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-obr/1.1.1/pax-url-obr-1.1.1.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-obr/1.1.1/pax-url-obr-1.1.1-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-obr/1.1.1/pax-url-obr-1.1.1-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-war:1.1.1">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-war/1.1.1/pax-url-war-1.1.1.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-war/1.1.1/pax-url-war-1.1.1-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-war/1.1.1/pax-url-war-1.1.1-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.url:pax-url-wrap:1.1.1">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-wrap/1.1.1/pax-url-wrap-1.1.1.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-wrap/1.1.1/pax-url-wrap-1.1.1-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-wrap/1.1.1/pax-url-wrap-1.1.1-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.ops4j.pax.scanner:pax-scanner-service:1.0.0">
@@ -1895,6 +1796,105 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/scanner/pax-scanner-pom/1.0.0/pax-scanner-pom-1.0.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-assembly:1.1.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-assembly/1.1.2/pax-url-assembly-1.1.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-assembly/1.1.2/pax-url-assembly-1.1.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-assembly/1.1.2/pax-url-assembly-1.1.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-cache:1.1.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-cache/1.1.2/pax-url-cache-1.1.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-cache/1.1.2/pax-url-cache-1.1.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-cache/1.1.2/pax-url-cache-1.1.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-classpath:1.1.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-classpath/1.1.2/pax-url-classpath-1.1.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-classpath/1.1.2/pax-url-classpath-1.1.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-classpath/1.1.2/pax-url-classpath-1.1.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-dir:1.1.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-dir/1.1.2/pax-url-dir-1.1.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-dir/1.1.2/pax-url-dir-1.1.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-dir/1.1.2/pax-url-dir-1.1.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-mvn:1.1.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-mvn/1.1.2/pax-url-mvn-1.1.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-mvn/1.1.2/pax-url-mvn-1.1.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-mvn/1.1.2/pax-url-mvn-1.1.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-link:1.1.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-link/1.1.2/pax-url-link-1.1.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-link/1.1.2/pax-url-link-1.1.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-link/1.1.2/pax-url-link-1.1.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-obr:1.1.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-obr/1.1.2/pax-url-obr-1.1.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-obr/1.1.2/pax-url-obr-1.1.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-obr/1.1.2/pax-url-obr-1.1.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-war:1.1.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-war/1.1.2/pax-url-war-1.1.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-war/1.1.2/pax-url-war-1.1.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-war/1.1.2/pax-url-war-1.1.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.ops4j.pax.url:pax-url-wrap:1.1.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-wrap/1.1.2/pax-url-wrap-1.1.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-wrap/1.1.2/pax-url-wrap-1.1.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/url/pax-url-wrap/1.1.2/pax-url-wrap-1.1.2-sources.jar!/" />
       </SOURCES>
     </library>
   </component>
