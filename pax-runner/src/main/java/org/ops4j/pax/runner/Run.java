@@ -808,14 +808,14 @@ public class Run
         if( LOGGER == null )
         {
             // show error even when LOGGER was not initialised
-            System.out.println( "Exception catched during execution:" );
+            System.out.println( "Exception caught during execution:" );
             t.printStackTrace();
         }
         else
         {
             if( LOGGER.isDebugEnabled() )
             {
-                LOGGER.error( "Exception catched during execution:", t );
+                LOGGER.error( "Exception caught during execution:", t );
             }
         }
 
