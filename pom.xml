@@ -34,7 +34,7 @@
   <properties>
     <dependency.base.version>1.2.1</dependency.base.version>
     <dependency.swissbox.version>1.2.0</dependency.swissbox.version>
-    <dependency.url.version>1.1.1</dependency.url.version>
+    <dependency.url.version>1.1.2</dependency.url.version>
     <dependency.scanner.version>1.0.0</dependency.scanner.version>    
   </properties>
 
