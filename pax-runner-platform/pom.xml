@@ -5,13 +5,13 @@
   <parent>
     <groupId>org.ops4j.pax</groupId>
     <artifactId>runner</artifactId>
-    <version>1.3.0-SNAPSHOT</version>
+    <version>1.3.0</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <groupId>org.ops4j.pax.runner</groupId>
   <artifactId>pax-runner-platform</artifactId>
-  <version>1.3.0-SNAPSHOT</version>
+  <version>1.3.0</version>
   <packaging>bundle</packaging>
 
   <name>OPS4J Pax Runner - Platform Extender</name>
@@ -54,12 +54,12 @@
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-commons</artifactId>
-      <version>1.3.0-SNAPSHOT</version>
+      <version>1.3.0</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-handler</artifactId>
-      <version>1.3.0-SNAPSHOT</version>
+      <version>1.3.0</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
