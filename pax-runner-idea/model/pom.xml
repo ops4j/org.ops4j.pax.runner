@@ -8,13 +8,13 @@
   <parent>
     <groupId>org.ops4j.pax.runner</groupId>
     <artifactId>pax-runner-idea</artifactId>
-    <version>1.3.0-SNAPSHOT</version>
+    <version>1.4.0-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <groupId>org.ops4j.pax.runner</groupId>
   <artifactId>pax-runner-idea-model</artifactId>
-  <version>1.3.0-SNAPSHOT</version>
+  <version>1.4.0-SNAPSHOT</version>
 
   <name>Pax Runner - IntelliJ IDEA plugin - Model</name>
 
