@@ -5,13 +5,13 @@
   <parent>
     <groupId>org.ops4j.pax</groupId>
     <artifactId>runner</artifactId>
-    <version>1.4.1-SNAPSHOT</version>
+    <version>1.5.0-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <groupId>org.ops4j.pax.runner</groupId>
   <artifactId>pax-runner-platform-felix</artifactId>
-  <version>1.4.1-SNAPSHOT</version>
+  <version>1.5.0-SNAPSHOT</version>
   <packaging>bundle</packaging>
 
   <name>OPS4J Pax Runner - Felix Platform Builder</name>
@@ -59,12 +59,12 @@
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-commons</artifactId>
-      <version>1.4.1-SNAPSHOT</version>
+      <version>1.5.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-platform</artifactId>
-      <version>1.4.1-SNAPSHOT</version>
+      <version>1.5.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
