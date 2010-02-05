@@ -112,7 +112,7 @@ public class PlatformImpl
 
         // we should fail fast so let's do first what is easy
         final String mainClassName = m_platformBuilder.getMainClassName();
-        if( mainClassName == null || mainClassName.trim().length() == 0 )
+        if ( mainClassName == null || mainClassName.trim().length() == 0 )
         {
             throw new PlatformException( "Main class of the platform cannot be null or empty" );
         }
@@ -134,7 +134,7 @@ public class PlatformImpl
 
         context.setWorkingDirectory( workDir );
         // set file path strategy
-        if( configuration.useAbsoluteFilePaths() )
+        if ( configuration.useAbsoluteFilePaths() )
         {
             context.setFilePathStrategy( new AbsoluteFilePathStrategy() );
         }
@@ -160,7 +160,7 @@ public class PlatformImpl
         final List<LocalSystemFile> localSystemFiles = downloadSystemFiles(
             workDir, systemFiles, overwriteBundles || overwriteSystemBundles, downloadFeeback
         );
-        if( configuration.keepOriginalUrls() )
+        if ( configuration.keepOriginalUrls() )
         {
             localSystemFiles.addAll(
                 downloadSystemFiles(
@@ -208,7 +208,7 @@ public class PlatformImpl
         final CommandLineBuilder vmOptions = new CommandLineBuilder();
         vmOptions.append( configuration.getVMOptions() );
         vmOptions.append( m_platformBuilder.getVMOptions( context ) );
-        if( configuration.keepOriginalUrls() )
+        if ( configuration.keepOriginalUrls() )
         {
             vmOptions.append( "-Djava.protocol.handler.pkgs=org.ops4j.pax.url" );
         }
@@ -220,7 +220,7 @@ public class PlatformImpl
         programOptions.append( getFrameworkOptions() );
 
         JavaRunner runner = javaRunner;
-        if( runner == null )
+        if ( runner == null )
         {
             runner = new DefaultJavaRunner();
         }
@@ -250,24 +250,33 @@ public class PlatformImpl
         try
         {
             urlHandlers.add(
-                new SystemFileReferenceBean( "Pax URL mvn: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-mvn" ) )
-            );
-            urlHandlers.add(
-                new SystemFileReferenceBean( "Pax URL link: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-link" ) )
-            );
-            urlHandlers.add(
-                new SystemFileReferenceBean( "Pax URL war: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-war" ) )
-            );
-            urlHandlers.add(
-                new SystemFileReferenceBean( "Pax URL wrap: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-wrap" ) )
-            );
-            urlHandlers.add(
-                new SystemFileReferenceBean( "Pax URL cache: protocol",
-                                             new URL( "mvn:org.ops4j.pax.url/pax-url-cache" )
+                new SystemFileReferenceBean(
+                    "Pax URL assembly: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-assembly" )
                 )
             );
+            urlHandlers.add(
+                new SystemFileReferenceBean(
+                    "Pax URL cache: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-cache" )
+                )
+            );
+            urlHandlers.add(
+                new SystemFileReferenceBean(
+                    "Pax URL mvn: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-mvn" ) )
+            );
+            urlHandlers.add(
+                new SystemFileReferenceBean(
+                    "Pax URL link: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-link" ) )
+            );
+            urlHandlers.add(
+                new SystemFileReferenceBean(
+                    "Pax URL war: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-war" ) )
+            );
+            urlHandlers.add(
+                new SystemFileReferenceBean(
+                    "Pax URL wrap: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-wrap" ) )
+            );
         }
-        catch( MalformedURLException e )
+        catch ( MalformedURLException e )
         {
             throw new PlatformException( "Cannot download url handlers", e );
         }
@@ -293,11 +302,11 @@ public class PlatformImpl
         final StringBuilder prepend = new StringBuilder();
         final StringBuilder append = new StringBuilder();
 
-        for( LocalSystemFile ref : systemFiles )
+        for ( LocalSystemFile ref : systemFiles )
         {
-            if( ref.getSystemFileReference().shouldPrepend() )
+            if ( ref.getSystemFileReference().shouldPrepend() )
             {
-                if( prepend.length() != 0 )
+                if ( prepend.length() != 0 )
                 {
                     prepend.append( File.pathSeparator );
                 }
@@ -305,18 +314,18 @@ public class PlatformImpl
             }
             else
             {
-                if( append.length() != 0 )
+                if ( append.length() != 0 )
                 {
                     append.append( File.pathSeparator );
                 }
                 append.append( context.getFilePathStrategy().normalizeAsPath( ref.getFile() ) );
             }
         }
-        if( prepend.length() != 0 )
+        if ( prepend.length() != 0 )
         {
             prepend.append( File.pathSeparator );
         }
-        if( append.length() != 0 )
+        if ( append.length() != 0 )
         {
             append.insert( 0, File.pathSeparator );
         }
@@ -340,7 +349,7 @@ public class PlatformImpl
         // TODO what the hack are framework options?
         String[] options = new String[0];
         final String property = System.getProperty( "FRAMEWORK_OPTS" );
-        if( property != null )
+        if ( property != null )
         {
             options = property.split( " " );
         }
@@ -374,31 +383,31 @@ public class PlatformImpl
         throws PlatformException
     {
         final List<BundleReference> localBundles = new ArrayList<BundleReference>();
-        if( bundles != null )
+        if ( bundles != null )
         {
-            for( BundleReference reference : bundles )
+            for ( BundleReference reference : bundles )
             {
                 URL url = reference.getURL();
-                if( url == null )
+                if ( url == null )
                 {
                     throw new PlatformException( "Invalid url in bundle reference [" + reference + "]" );
                 }
-                if( autoWrap )
+                if ( autoWrap )
                 {
                     try
                     {
                         final String urlToWrap = url.toExternalForm();
-                        if( !urlToWrap.startsWith( "wrap:" ) )
+                        if ( !urlToWrap.startsWith( "wrap:" ) )
                         {
                             url = new URL( "wrap:" + urlToWrap );
                         }
                     }
-                    catch( MalformedURLException e )
+                    catch ( MalformedURLException e )
                     {
                         LOGGER.warn( "Could not auto wrap url [" + url + "] due to: " + e.getMessage() );
                     }
                 }
-                if( keepOriginalUrls )
+                if ( keepOriginalUrls )
                 {
                     localBundles.add( reference );
                 }
@@ -413,7 +422,7 @@ public class PlatformImpl
                         !skipInvalidBundles,
                         downloadFeeback
                     );
-                    if( bundleFile != null )
+                    if ( bundleFile != null )
                     {
                         localBundles.add( new LocalBundleReference( reference, bundleFile ) );
                     }
@@ -453,14 +462,14 @@ public class PlatformImpl
     {
         final StringBuilder profiles = new StringBuilder();
         final String userProfiles = platformContext.getConfiguration().getProfiles();
-        if( userProfiles != null && userProfiles.trim().length() > 0 )
+        if ( userProfiles != null && userProfiles.trim().length() > 0 )
         {
             profiles.append( userProfiles );
         }
         final String builderProfile = m_platformBuilder.getRequiredProfile( platformContext );
-        if( builderProfile != null && builderProfile.trim().length() > 0 )
+        if ( builderProfile != null && builderProfile.trim().length() > 0 )
         {
-            if( profiles.length() > 0 )
+            if ( profiles.length() > 0 )
             {
                 profiles.append( "," );
             }
@@ -526,9 +535,9 @@ public class PlatformImpl
         throws PlatformException
     {
         final List<LocalSystemFile> downloaded = new ArrayList<LocalSystemFile>();
-        if( systemFiles != null )
+        if ( systemFiles != null )
         {
-            for( SystemFileReference reference : systemFiles )
+            for ( SystemFileReference reference : systemFiles )
             {
                 downloaded.add(
                     new LocalSystemFileImpl(
@@ -579,7 +588,7 @@ public class PlatformImpl
 
         String downloadedFileName = fileNamesForUrls.getProperty( url.toExternalForm() );
         String hashFileName = "" + url.toExternalForm().hashCode();
-        if( downloadedFileName == null )
+        if ( downloadedFileName == null )
         {
             // destination will be made based on the hashcode of the url to be downloaded
             downloadedFileName = hashFileName + ".jar";
@@ -590,22 +599,22 @@ public class PlatformImpl
         // download the bundle only if is a forced overwrite or the file does not exist or the file is there but is
         // invalid
         boolean forceOverwrite = overwrite || !destination.exists();
-        if( !forceOverwrite )
+        if ( !forceOverwrite )
         {
             try
             {
                 String cachingName = determineCachingName( destination, hashFileName );
-                if( !destination.getName().equals( cachingName ) )
+                if ( !destination.getName().equals( cachingName ) )
                 {
                     throw new PlatformException( "File " + destination + " should have name " + cachingName );
                 }
             }
-            catch( PlatformException ignore )
+            catch ( PlatformException ignore )
             {
                 forceOverwrite = true;
             }
         }
-        if( forceOverwrite )
+        if ( forceOverwrite )
         {
             try
             {
@@ -617,9 +626,9 @@ public class PlatformImpl
                 {
                     os = new BufferedOutputStream( new FileOutputStream( destination ) );
                     StreamUtils.ProgressBar progressBar = null;
-                    if( LOGGER.isInfoEnabled() )
+                    if ( LOGGER.isInfoEnabled() )
                     {
-                        if( downloadFeeback )
+                        if ( downloadFeeback )
                         {
                             progressBar = new StreamUtils.FineGrainedProgressBar( displayName );
                         }
@@ -633,26 +642,26 @@ public class PlatformImpl
                 }
                 finally
                 {
-                    if( os != null )
+                    if ( os != null )
                     {
                         os.close();
                     }
                 }
             }
-            catch( IOException e )
+            catch ( IOException e )
             {
                 throw new PlatformException( "[" + url + "] could not be downloaded", e );
             }
         }
-        if( checkAttributes )
+        if ( checkAttributes )
         {
             try
             {
                 validateBundle( url, destination );
             }
-            catch( PlatformException e )
+            catch ( PlatformException e )
             {
-                if( failOnValidation )
+                if ( failOnValidation )
                 {
                     throw e;
                 }
@@ -661,16 +670,16 @@ public class PlatformImpl
         }
         String cachingName = determineCachingName( destination, hashFileName );
         File newDestination = new File( destination.getParentFile(), cachingName );
-        if( !cachingName.equals( destination.getName() ) )
+        if ( !cachingName.equals( destination.getName() ) )
         {
-            if( newDestination.exists() )
+            if ( newDestination.exists() )
             {
-                if( !newDestination.delete() )
+                if ( !newDestination.delete() )
                 {
                     throw new PlatformException( "Cannot delete " + newDestination );
                 }
             }
-            if( !destination.renameTo( newDestination ) )
+            if ( !destination.renameTo( newDestination ) )
             {
                 throw new PlatformException( "Cannot rename " + destination + " to " + newDestination );
             }
@@ -691,19 +700,19 @@ public class PlatformImpl
             properties.load( in );
             return properties;
         }
-        catch( IOException e )
+        catch ( IOException e )
         {
             return properties;
         }
         finally
         {
-            if( in != null )
+            if ( in != null )
             {
                 try
                 {
                     in.close();
                 }
-                catch( IOException e )
+                catch ( IOException e )
                 {
                     // ignore
                 }
@@ -720,19 +729,19 @@ public class PlatformImpl
             os = new FileOutputStream( file );
             properties.store( os, "" );
         }
-        catch( IOException e )
+        catch ( IOException e )
         {
             throw new PlatformException( "Cannot store properties " + file, e );
         }
         finally
         {
-            if( os != null )
+            if ( os != null )
             {
                 try
                 {
                     os.close();
                 }
-                catch( IOException e )
+                catch ( IOException e )
                 {
                     // ignore
                 }
@@ -763,32 +772,32 @@ public class PlatformImpl
             // verify that is a valid jar. Do not verify that is signed (the false param).
             jar = new JarFile( file, false );
             final Manifest manifest = jar.getManifest();
-            if( manifest == null )
+            if ( manifest == null )
             {
                 throw new PlatformException( "[" + url + "] is not a valid bundle" );
             }
             bundleSymbolicName = manifest.getMainAttributes().getValue( Constants.BUNDLE_SYMBOLICNAME );
             bundleName = manifest.getMainAttributes().getValue( Constants.BUNDLE_NAME );
         }
-        catch( IOException e )
+        catch ( IOException e )
         {
             throw new PlatformException( "[" + url + "] is not a valid bundle", e );
         }
         finally
         {
-            if( jar != null )
+            if ( jar != null )
             {
                 try
                 {
                     jar.close();
                 }
-                catch( IOException ignore )
+                catch ( IOException ignore )
                 {
                     // just ignore as this is less probably to happen.
                 }
             }
         }
-        if( bundleSymbolicName == null && bundleName == null )
+        if ( bundleSymbolicName == null && bundleName == null )
         {
             throw new PlatformException( "[" + url + "] is not a valid bundle" );
         }
@@ -814,31 +823,31 @@ public class PlatformImpl
             // verify that is a valid jar. Do not verify that is signed (the false param).
             jar = new JarFile( file, false );
             final Manifest manifest = jar.getManifest();
-            if( manifest != null )
+            if ( manifest != null )
             {
                 bundleSymbolicName = manifest.getMainAttributes().getValue( Constants.BUNDLE_SYMBOLICNAME );
                 bundleVersion = manifest.getMainAttributes().getValue( Constants.BUNDLE_VERSION );
             }
         }
-        catch( IOException ignore )
+        catch ( IOException ignore )
         {
             // just ignore
         }
         finally
         {
-            if( jar != null )
+            if ( jar != null )
             {
                 try
                 {
                     jar.close();
                 }
-                catch( IOException ignore )
+                catch ( IOException ignore )
                 {
                     // just ignore as this is less probably to happen.
                 }
             }
         }
-        if( bundleSymbolicName == null )
+        if ( bundleSymbolicName == null )
         {
             bundleSymbolicName = defaultBundleSymbolicName;
         }
@@ -846,12 +855,12 @@ public class PlatformImpl
         {
             // remove directives like "; singleton:=true"
             int semicolonPos = bundleSymbolicName.indexOf( ";" );
-            if( semicolonPos > 0 )
+            if ( semicolonPos > 0 )
             {
                 bundleSymbolicName = bundleSymbolicName.substring( 0, semicolonPos );
             }
         }
-        if( bundleVersion == null )
+        if ( bundleVersion == null )
         {
             bundleVersion = "0.0.0";
         }
@@ -892,18 +901,18 @@ public class PlatformImpl
         packages.append( eePackages );
 
         // append used defined packages
-        if( userPackages != null && userPackages.trim().length() > 0 )
+        if ( userPackages != null && userPackages.trim().length() > 0 )
         {
-            if( packages.length() > 0 )
+            if ( packages.length() > 0 )
             {
                 packages.append( "," );
             }
             packages.append( userPackages );
         }
         // append platform specific packages
-        if( platformPackages != null && platformPackages.trim().length() > 0 )
+        if ( platformPackages != null && platformPackages.trim().length() > 0 )
         {
-            if( packages.length() > 0 )
+            if ( packages.length() > 0 )
             {
                 packages.append( "," );
             }
@@ -922,7 +931,7 @@ public class PlatformImpl
     Configuration createConfiguration( final Dictionary config )
     {
         PropertyResolver propertyResolver = m_propertyResolver;
-        if( config != null )
+        if ( config != null )
         {
             propertyResolver = new DictionaryPropertyResolver( config, m_propertyResolver );
         }
@@ -948,27 +957,27 @@ public class PlatformImpl
         {
             final URL definitionURL = configuration.getDefinitionURL();
             InputStream inputStream = null;
-            if( definitionURL != null )
+            if ( definitionURL != null )
             {
                 LOGGER.debug( "loading definition from url " + definitionURL.toExternalForm() );
                 inputStream = definitionURL.openStream();
             }
-            if( inputStream == null )
+            if ( inputStream == null )
             {
                 LOGGER.debug( "loading definition from builder." );
                 inputStream = m_platformBuilder.getDefinition( configuration );
             }
             return new PlatformDefinitionImpl( inputStream, configuration.getProfileStartLevel() );
         }
-        catch( IOException e )
+        catch ( IOException e )
         {
             throw new PlatformException( "Invalid platform definition", e );
         }
-        catch( ParserConfigurationException e )
+        catch ( ParserConfigurationException e )
         {
             throw new PlatformException( "Invalid platform definition", e );
         }
-        catch( SAXException e )
+        catch ( SAXException e )
         {
             throw new PlatformException( "Invalid platform definition", e );
         }
@@ -994,7 +1003,7 @@ public class PlatformImpl
      */
     private <T> T mandatory( final String name, final T object )
     {
-        if( object == null )
+        if ( object == null )
         {
             throw new IllegalStateException( name + " cannot be null" );
         }
