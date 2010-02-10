@@ -52,6 +52,7 @@ import org.ops4j.pax.runner.osgi.RunnerStartLevel;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.BundleReferenceBean;
 import org.ops4j.pax.runner.platform.InProcessJavaRunner;
+import org.ops4j.pax.runner.platform.InitDScriptRunner;
 import org.ops4j.pax.runner.platform.JavaRunner;
 import org.ops4j.pax.runner.platform.Platform;
 import org.ops4j.pax.runner.platform.PlatformException;
@@ -307,6 +308,12 @@ public class Run
         {
             LOGGER.debug( "Using in process executor" );
             return new InProcessJavaRunner();
+        }
+        if( executor.startsWith("init.d" ))
+        {
+            String[] data    = executor.split(",");
+            String   appName = (data.length > 1 && data[1].length() > 0) ? data[1] : null;
+            return new InitDScriptRunner(appName);
         }
         try
         {

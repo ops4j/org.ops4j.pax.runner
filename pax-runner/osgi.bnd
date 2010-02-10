@@ -11,6 +11,7 @@ Private-Package:\
   aQute.*; -split-package:=merge-first,\
   META-INF.*; -split-package:=merge-first,\
   runner-links.*; -split-package:=merge-first,\
+  templates.*; -split-package:=merge-first,\
   org.*; -split-package:=merge-first
 
 Include-Resource:\
