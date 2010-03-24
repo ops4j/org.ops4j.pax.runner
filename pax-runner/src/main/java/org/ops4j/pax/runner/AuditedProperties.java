@@ -17,7 +17,7 @@
  */
 package org.ops4j.pax.runner;
 
-import java.util.Properties;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.logging.Log;
@@ -91,6 +91,32 @@ public class AuditedProperties
         final String replaced = replacePlaceholders( value );
         LOGGER.trace( "Setting system property [" + key + "=" + replaced + "]" );
         return super.setProperty( key, replaced );
+    }
+
+
+    @Override
+    public Enumeration<?> propertyNames()
+    {
+        Set<String> combinedNames = new HashSet<String>();
+
+        Enumeration<?> selfNames = super.propertyNames();
+        while ( selfNames.hasMoreElements() )
+        {
+            combinedNames.add((String) selfNames.nextElement());
+        }
+
+        Enumeration<?> defaultNames = m_defaults.propertyNames();
+        while ( defaultNames.hasMoreElements())
+        {
+            combinedNames.add((String) defaultNames.nextElement());
+        }
+        return Collections.enumeration(combinedNames);
+    }
+
+    @Override
+    public boolean containsKey(Object key)
+    {
+        return super.containsKey(key) || m_defaults.containsKey(key);
     }
 
     /**

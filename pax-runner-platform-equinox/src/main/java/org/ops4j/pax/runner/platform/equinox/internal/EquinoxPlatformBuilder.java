@@ -108,6 +108,18 @@ public class EquinoxPlatformBuilder
      * Supported version.
      */
     private final String m_version;
+    /**
+     * System property specifying the eclipse product.
+     */
+    private static final String ECLIPSE_PRODUCT = "eclipse.product";
+    /**
+     * System property specifying the eclipse application.
+     */
+    private static final String ECLIPSE_APPLICATION = "eclipse.application";
+    /**
+     * System property specifying whether equinox should ignore the specified product or application.
+     */
+    private static final String ECLIPSE_IGNORE_APP = "eclipse.ignoreApp";
 
     /**
      * Create a new equinux platform builder.
@@ -161,9 +173,12 @@ public class EquinoxPlatformBuilder
             writer.append( "#############################" );
             writer.append( " Equinox settings" );
             writer.append( "#############################" );
-            // there is no aclipse application
+            if ( !context.getProperties().containsKey(ECLIPSE_PRODUCT) &&
+                    !context.getProperties().containsKey(ECLIPSE_APPLICATION) &&
+                    !context.getProperties().containsKey(ECLIPSE_IGNORE_APP) )
             {
-                writer.append( "eclipse.ignoreApp", "true" );
+                // there is no aclipse application
+                writer.append(ECLIPSE_IGNORE_APP, "true" );
             }
             // Set "osgi.syspath" property = System property specifying the parent directory of equinox jar
             // It is not supposed to be set by user (pax runner) but if this is not set relative urls used for bundles
