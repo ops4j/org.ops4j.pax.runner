@@ -94,30 +94,6 @@ public class AuditedProperties
     }
 
 
-    @Override
-    public Enumeration<?> propertyNames()
-    {
-        Set<String> combinedNames = new HashSet<String>();
-
-        Enumeration<?> selfNames = super.propertyNames();
-        while ( selfNames.hasMoreElements() )
-        {
-            combinedNames.add((String) selfNames.nextElement());
-        }
-
-        Enumeration<?> defaultNames = m_defaults.propertyNames();
-        while ( defaultNames.hasMoreElements())
-        {
-            combinedNames.add((String) defaultNames.nextElement());
-        }
-        return Collections.enumeration(combinedNames);
-    }
-
-    @Override
-    public boolean containsKey(Object key)
-    {
-        return super.containsKey(key) || m_defaults.containsKey(key);
-    }
 
     /**
      * Replaces placeholders = ${*}.

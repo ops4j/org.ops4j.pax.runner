@@ -222,6 +222,7 @@ public class EquinoxPlatformBuilderTest
         expect( m_configuration.getBundleStartLevel() ).andReturn( null );
         expect( m_configuration.getBootDelegation() ).andReturn( "javax.*" );
         expect( m_configuration.isDebugClassLoading() ).andReturn( false );
+        expect( m_configuration.getVMOptions() ).andReturn( new String[]{} );
 
         replay( m_bundleContext, m_configuration );
         new EquinoxPlatformBuilder( m_bundleContext, "version" ).prepare( m_platformContext );
@@ -258,6 +259,7 @@ public class EquinoxPlatformBuilderTest
         expect( m_configuration.getStartLevel() ).andReturn( 10 );
         expect( m_configuration.getBundleStartLevel() ).andReturn( 20 );
         expect( m_configuration.getBootDelegation() ).andReturn( null );
+        expect( m_configuration.getVMOptions() ).andReturn( new String[]{} );
 
         // a bunlde with start level that should start
         BundleReference bundle1 = createMock( BundleReference.class );

@@ -173,11 +173,14 @@ public class EquinoxPlatformBuilder
             writer.append( "#############################" );
             writer.append( " Equinox settings" );
             writer.append( "#############################" );
-            if ( !context.getProperties().containsKey(ECLIPSE_PRODUCT) &&
-                    !context.getProperties().containsKey(ECLIPSE_APPLICATION) &&
-                    !context.getProperties().containsKey(ECLIPSE_IGNORE_APP) )
+            final String[] vmOptions = context.getConfiguration().getVMOptions();
+
+
+            if ( !contains(vmOptions, ECLIPSE_PRODUCT) &&
+                    !contains(vmOptions, ECLIPSE_APPLICATION) &&
+                    !contains(vmOptions, ECLIPSE_IGNORE_APP) )
             {
-                // there is no aclipse application
+            //     there is no aclipse application
                 writer.append(ECLIPSE_IGNORE_APP, "true" );
             }
             // Set "osgi.syspath" property = System property specifying the parent directory of equinox jar
@@ -571,4 +574,19 @@ public class EquinoxPlatformBuilder
         return m_version;
     }
 
+
+    /**
+     * Checks if the needle is contained in any of the strings in haystack.
+     * @param haystack the strings to be searched in
+     * @param needle the string to be found.
+     * @return true if the string could be found.
+     */
+    private boolean contains(String[] haystack, String needle) {
+        for (String s : haystack) {
+            if ( s.contains(needle) ) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
