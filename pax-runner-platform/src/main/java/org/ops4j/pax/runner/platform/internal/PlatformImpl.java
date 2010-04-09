@@ -251,29 +251,29 @@ public class PlatformImpl
         {
             urlHandlers.add(
                 new SystemFileReferenceBean(
-                    "Pax URL assembly: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-assembly" )
+                    "Pax URL assembly: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-assembly/1.1.2" )
                 )
             );
             urlHandlers.add(
                 new SystemFileReferenceBean(
-                    "Pax URL cache: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-cache" )
+                    "Pax URL cache: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-cache/1.1.2" )
                 )
             );
             urlHandlers.add(
                 new SystemFileReferenceBean(
-                    "Pax URL mvn: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-mvn" ) )
+                    "Pax URL mvn: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-mvn/1.1.2" ) )
             );
             urlHandlers.add(
                 new SystemFileReferenceBean(
-                    "Pax URL link: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-link" ) )
+                    "Pax URL link: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-link/1.1.2" ) )
             );
             urlHandlers.add(
                 new SystemFileReferenceBean(
-                    "Pax URL war: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-war" ) )
+                    "Pax URL war: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-war/1.1.2" ) )
             );
             urlHandlers.add(
                 new SystemFileReferenceBean(
-                    "Pax URL wrap: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-wrap" ) )
+                    "Pax URL wrap: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-wrap/1.1.2" ) )
             );
         }
         catch ( MalformedURLException e )
