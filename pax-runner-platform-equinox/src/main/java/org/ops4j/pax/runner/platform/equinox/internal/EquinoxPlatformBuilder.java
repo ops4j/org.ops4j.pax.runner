@@ -582,9 +582,14 @@ public class EquinoxPlatformBuilder
      * @return true if the string could be found.
      */
     private boolean contains(String[] haystack, String needle) {
-        for (String s : haystack) {
-            if ( s.contains(needle) ) {
-                return true;
+        if( haystack != null )
+        {
+            for (String s : haystack)
+            {
+                if ( s.contains(needle) )
+                {
+                    return true;
+                }
             }
         }
         return false;
