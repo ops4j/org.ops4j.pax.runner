@@ -214,7 +214,31 @@
     <framework
         id="--platform=felix --version=2.0.2"
         launcherDelegate="org.ops4j.pax.cursor.LaunchConfiguration"
-        name="Felix 2.0.1 via Pax Runner">
+        name="Felix 2.0.2 via Pax Runner">
+    </framework>
+  </extension>
+  <extension
+      point="org.eclipse.pde.ui.osgiFrameworks">
+    <framework
+        id="--platform=felix --version=2.0.3"
+        launcherDelegate="org.ops4j.pax.cursor.LaunchConfiguration"
+        name="Felix 2.0.3 via Pax Runner">
+    </framework>
+  </extension>
+  <extension
+      point="org.eclipse.pde.ui.osgiFrameworks">
+    <framework
+        id="--platform=felix --version=2.0.4"
+        launcherDelegate="org.ops4j.pax.cursor.LaunchConfiguration"
+        name="Felix 2.0.4 via Pax Runner">
+    </framework>
+  </extension>
+  <extension
+      point="org.eclipse.pde.ui.osgiFrameworks">
+    <framework
+        id="--platform=felix --version=2.0.5"
+        launcherDelegate="org.ops4j.pax.cursor.LaunchConfiguration"
+        name="Felix 2.0.5 via Pax Runner">
     </framework>
   </extension>
   <extension
