@@ -1,0 +1,29 @@
+<platform>
+
+  <name>Felix 2.0.5</name>
+  <system>link:classpath:runner-links/org.apache.felix.main-2.0.5.link</system>
+
+  <packages>
+    org.osgi.framework; version=1.5.0,
+    org.osgi.framework.launch; version=1.0.0,
+    org.osgi.framework.hooks.service; version=1.0.0,
+    org.osgi.service.packageadmin; version=1.2.0,
+    org.osgi.service.startlevel; version=1.1.0,
+    org.osgi.service.url; version=1.0.0,
+    org.osgi.util.tracker;version=1.4.0
+  </packages>
+
+  <profile name="minimal" default="true"/>
+
+  <profile name="tui" extends="minimal">
+    <bundle>
+      <name>Felix Shell (1.4.2)</name>
+      <url>link:classpath:runner-links/org.apache.felix.shell-1.4.2.link</url>
+    </bundle>
+    <bundle>
+      <name>Felix TUI Shell (1.4.1)</name>
+      <url>link:classpath:runner-links/org.apache.felix.shell.tui-1.4.1.link</url>
+    </bundle>
+  </profile>
+
+</platform>
