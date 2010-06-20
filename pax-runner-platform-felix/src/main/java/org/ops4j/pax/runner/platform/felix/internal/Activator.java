@@ -58,6 +58,8 @@ public final class Activator
             new FelixPlatformBuilderF160( bundleContext, "2.0.3" ),
             new FelixPlatformBuilderF160( bundleContext, "2.0.4" ),
             new FelixPlatformBuilderF160( bundleContext, "2.0.5" ),
+            new FelixPlatformBuilderF160( bundleContext, "3.0.0" ),
+            new FelixPlatformBuilderF160( bundleContext, "3.0.1" ),
             new FelixPlatformBuilderSnapshot( bundleContext )
         };
     }
