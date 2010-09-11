@@ -1,6 +1,6 @@
 <platform>
 
-  <name>Knopflerfish 3.0.0 (beta-3)</name>
+  <name>Knopflerfish 3.0.0</name>
   <system>link:classpath:runner-links/org.knopflerfish.framework-3.0.0.link</system>
 
   <profile name="minimal" default="true"/>
