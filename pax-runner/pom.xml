@@ -112,6 +112,12 @@
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.url</groupId>
+      <artifactId>pax-url-aether</artifactId>
+      <version>${dependency.url.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.url</groupId>
       <artifactId>pax-url-link</artifactId>
       <version>${dependency.url.version}</version>
       <optional>true</optional>
