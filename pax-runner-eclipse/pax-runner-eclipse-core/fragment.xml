@@ -78,7 +78,7 @@
     <framework
         id="--platform=equinox --version=3.6.0"
         launcherDelegate="org.ops4j.pax.cursor.LaunchConfiguration"
-        name="Equinox 3.6.0 (M2) via Pax Runner">
+        name="Equinox 3.6.0 via Pax Runner">
     </framework>
   </extension>
   <extension
@@ -241,6 +241,30 @@
         name="Felix 2.0.5 via Pax Runner">
     </framework>
   </extension>
+  <extension
+      point="org.eclipse.pde.ui.osgiFrameworks">
+    <framework
+        id="--platform=felix --version=3.0.0"
+        launcherDelegate="org.ops4j.pax.cursor.LaunchConfiguration"
+        name="Felix 3.0.0 via Pax Runner">
+    </framework>
+  </extension>
+  <extension
+      point="org.eclipse.pde.ui.osgiFrameworks">
+    <framework
+        id="--platform=felix --version=3.0.1"
+        launcherDelegate="org.ops4j.pax.cursor.LaunchConfiguration"
+        name="Felix 3.0.1 via Pax Runner">
+    </framework>
+  </extension> 
+  <extension
+      point="org.eclipse.pde.ui.osgiFrameworks">
+    <framework
+        id="--platform=felix --version=3.0.2"
+        launcherDelegate="org.ops4j.pax.cursor.LaunchConfiguration"
+        name="Felix 3.0.2 via Pax Runner">
+    </framework>
+  </extension>  
   <extension
       point="org.eclipse.pde.ui.osgiFrameworks">
     <framework
