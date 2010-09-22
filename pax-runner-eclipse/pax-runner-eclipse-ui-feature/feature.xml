@@ -2,7 +2,7 @@
 <feature
       id="org.ops4j.pax.runner.eclipse.ui.feature"
       label="Pax Runner Plugin for Eclipse UI"
-      version="1.5.0"
+      version="1.6.0"
       provider-name="OPS4j.org">
 
    <copyright url="http://www.ops4j.org">
@@ -256,7 +256,7 @@ limitations under the License.
          id="org.ops4j.pax.runner.eclipse.ui"
          download-size="0"
          install-size="0"
-         version="1.5.0"
+         version="1.6.0"
          fragment="true"
          unpack="false"/>
 
