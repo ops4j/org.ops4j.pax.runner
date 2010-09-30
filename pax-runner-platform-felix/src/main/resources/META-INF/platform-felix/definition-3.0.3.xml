@@ -1,7 +1,7 @@
 <platform>
 
-  <name>Felix 3.0.2</name>
-  <system>link:classpath:runner-links/org.apache.felix.main-3.0.2.link</system>
+  <name>Felix 3.0.3</name>
+  <system>link:classpath:runner-links/org.apache.felix.main-3.0.3.link</system>
 
   <packages>
     org.osgi.framework; version=1.5.0,
@@ -12,21 +12,21 @@
     org.osgi.service.url; version=1.0.0,
     org.osgi.util.tracker;version=1.4.0
   </packages>
-    
+
   <profile name="minimal" default="true"/>
 
   <profile name="tui" extends="minimal">
       <bundle>
-        <name>Apache Felix Gogo Command (0.6.0)</name>
-        <url>link:classpath:runner-links/org.apache.felix.gogo.command-0.6.0.link</url>
+        <name>Apache Felix Gogo Command (0.6.1)</name>
+        <url>link:classpath:runner-links/org.apache.felix.gogo.command-0.6.1.link</url>
       </bundle>
       <bundle>
-        <name>Apache Felix Gogo Runtime (0.6.0)</name>
-        <url>link:classpath:runner-links/org.apache.felix.gogo.runtime-0.6.0.link</url>
+        <name>Apache Felix Gogo Runtime (0.6.1)</name>
+        <url>link:classpath:runner-links/org.apache.felix.gogo.runtime-0.6.1.link</url>
       </bundle>
       <bundle>
-        <name>Apache Felix Gogo Shell (0.6.0)</name>
-        <url>link:classpath:runner-links/org.apache.felix.gogo.shell-0.6.0.link</url>
+        <name>Apache Felix Gogo Shell (0.6.1)</name>
+        <url>link:classpath:runner-links/org.apache.felix.gogo.shell-0.6.1.link</url>
       </bundle>
   </profile>
 
