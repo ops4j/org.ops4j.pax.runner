@@ -12,7 +12,7 @@
     org.osgi.service.url; version=1.0.0,
     org.osgi.util.tracker;version=1.4.0
   </packages>
-
+    
   <profile name="minimal" default="true"/>
 
   <profile name="tui" extends="minimal">
