@@ -17,14 +17,17 @@
  */
 package org.ops4j.pax.runner.platform.internal;
 
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.commons.Info;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
 
 /**
  * Stream related utilities.
@@ -58,15 +61,13 @@ public class StreamUtils
      *
      * @throws IOException re-thrown
      */
-    public static void streamCopy( final InputStream in, final BufferedOutputStream out, final ProgressBar progressBar )
+    public static void streamCopy( final InputStream in, final FileChannel out, final ProgressBar progressBar )
         throws IOException
     {
         NullArgumentException.validateNotNull( in, "Input stream" );
         NullArgumentException.validateNotNull( out, "Output stream" );
         final long start = System.currentTimeMillis();
-        int b = in.read();
-        int counter = 0;
-        int bytes = 0;
+        long bytes = 0;
         ProgressBar feedbackBar = progressBar;
         if( feedbackBar == null )
         {
@@ -74,17 +75,9 @@ public class StreamUtils
         }
         try
         {
-            while( b != -1 )
-            {
-                out.write( b );
-                b = in.read();
-                counter = ( counter + 1 ) % 102400;
-                if( counter == 0 )
-                {
-                    feedbackBar.increment( bytes, bytes / Math.max( System.currentTimeMillis() - start, 1 ) );
-                }
-                bytes++;
-            }
+            ReadableByteChannel inChannel = Channels.newChannel(in);
+            bytes = out.transferFrom(inChannel, 0, Integer.MAX_VALUE);
+            inChannel.close();
         }
         finally
         {
@@ -102,7 +95,7 @@ public class StreamUtils
      *
      * @throws IOException re-thrown
      */
-    public static void streamCopy( final URL url, final BufferedOutputStream out, final ProgressBar progressBar )
+    public static void streamCopy( final URL url, final FileChannel out, final ProgressBar progressBar )
         throws IOException
     {
         NullArgumentException.validateNotNull( url, "URL" );

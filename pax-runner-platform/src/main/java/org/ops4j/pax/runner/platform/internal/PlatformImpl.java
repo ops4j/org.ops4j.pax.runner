@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Dictionary;
@@ -621,10 +622,11 @@ public class PlatformImpl
                 LOGGER.debug( "Creating new file at destination: " + destination.getAbsolutePath() );
                 destination.getParentFile().mkdirs();
                 destination.createNewFile();
-                BufferedOutputStream os = null;
+                FileOutputStream os = null;
                 try
                 {
-                    os = new BufferedOutputStream( new FileOutputStream( destination ) );
+                    os = new FileOutputStream(destination);
+                    FileChannel fileChannel = os.getChannel();
                     StreamUtils.ProgressBar progressBar = null;
                     if ( LOGGER.isInfoEnabled() )
                     {
@@ -637,7 +639,8 @@ public class PlatformImpl
                             progressBar = new StreamUtils.CoarseGrainedProgressBar( displayName );
                         }
                     }
-                    StreamUtils.streamCopy( url, os, progressBar );
+                    StreamUtils.streamCopy( url, fileChannel, progressBar );
+                    fileChannel.close();
                     LOGGER.debug( "Succesfully downloaded to [" + destination + "]" );
                 }
                 finally

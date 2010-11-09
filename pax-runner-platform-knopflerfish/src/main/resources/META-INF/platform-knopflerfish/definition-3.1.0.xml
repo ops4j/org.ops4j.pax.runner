@@ -1,14 +1,14 @@
 <platform>
 
-  <name>Knopflerfish 3.0.0</name>
-  <system>link:classpath:runner-links/org.knopflerfish.framework-3.0.0.link</system>
+  <name>Knopflerfish 3.1.0</name>
+  <system>link:classpath:runner-links/org.knopflerfish.framework-3.1.0.link</system>
 
   <profile name="minimal" default="true"/>
 
   <profile name="tui" extends="minimal">
     <bundle>
       <name>Knopflerfish Log API</name>
-      <url>link:classpath:runner-links/org.knopflerfish.log-api-3.0.1.link</url>
+      <url>link:classpath:runner-links/org.knopflerfish.log-api-3.0.5.link</url>
     </bundle>
     <bundle>
       <name>Knopflerfish Config Admin API</name>
