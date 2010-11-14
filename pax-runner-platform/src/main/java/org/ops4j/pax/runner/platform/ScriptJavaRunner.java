@@ -61,29 +61,46 @@ public class ScriptJavaRunner
                                    final File workingDirectory )
         throws PlatformException
     {
-        final StringBuilder cp = new StringBuilder();
+        final StringBuilder batchCp = new StringBuilder();
+        final StringBuilder shellCp = new StringBuilder();
 
         for( String path : classpath )
         {
-            if( cp.length() != 0 )
+            // create Windows-specific cp
+            if( batchCp.length() != 0 )
             {
-                cp.append( File.pathSeparator );
+                batchCp.append( ';' );
             }
-            cp.append( path );
+            batchCp.append( path );
+
+            // create UNIX-specific cp
+            if( shellCp.length() != 0 )
+            {
+                shellCp.append( ':' );
+            }
+            shellCp.append( path );
         }
 
-        final CommandLineBuilder commandLine = new CommandLineBuilder()
+        final CommandLineBuilder batchCommandLine = new CommandLineBuilder()
             .append( "java" )
             .append( vmOptions )
             .append( "-cp" )
-            .append( cp.toString() )
+            .append( batchCp.toString() )
+            .append( mainClass )
+            .append( programOptions );
+        final CommandLineBuilder shellCommandLine = new CommandLineBuilder()
+            .append( "java" )
+            .append( vmOptions )
+            .append( "-cp" )
+            .append( shellCp.toString() )
             .append( mainClass )
             .append( programOptions );
 
-        LOG.debug( "Start command line [" + Arrays.toString( commandLine.toArray() ) + "]" );
+        LOG.debug( "Start UNIX command line [" + Arrays.toString( shellCommandLine.toArray() ) + "]" );
+        LOG.debug( "Start WIN command line [" + Arrays.toString( batchCommandLine.toArray() ) + "]" );
 
-        final String shell = getShellScript( commandLine );
-        final String batch = getBatchScript( commandLine );
+        final String shell = getShellScript( shellCommandLine );
+        final String batch = getBatchScript( batchCommandLine );
 
         try
         {
