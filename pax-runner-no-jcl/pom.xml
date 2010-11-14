@@ -40,7 +40,7 @@
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner</artifactId>
-      <version>1.6.0-SNAPSHOT</version>
+      <version>${project.version}</version>
       <optional>true</optional>
     </dependency>
   </dependencies>

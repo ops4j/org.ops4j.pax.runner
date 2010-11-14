@@ -96,6 +96,10 @@ public interface CommandLine
      * Profiles group id.
      */
     static final String OPTION_PROFILES_GROUPID = "profilesGroupId";
+    /**
+     * Disable Logos option.
+     */
+    static final String OPTION_NOLOGO = "nologo";
 
     /**
      * Returns the value of an option by key. If option is not defined returns null.

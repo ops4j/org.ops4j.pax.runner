@@ -72,13 +72,13 @@
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner</artifactId>
-      <version>1.6.0-SNAPSHOT</version>
+      <version>${project.version}</version>
       <classifier>jdk14</classifier>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner-platform</artifactId>
-      <version>1.6.0-SNAPSHOT</version>
+      <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

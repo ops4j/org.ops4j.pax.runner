@@ -135,9 +135,14 @@ public class Run
      */
     public static void main( final JavaRunner runner, final String... args )
     {
-        showLogo();
-
         final CommandLine commandLine = new CommandLineImpl( args );
+
+        boolean disableLogo = Boolean.valueOf( commandLine.getOption( OPTION_NOLOGO ) );
+        if ( !disableLogo )
+        {
+            showLogo();
+        }
+
         initializeLogger( commandLine );
         String configURL = commandLine.getOption( OPTION_CONFIG );
         if( configURL == null )
