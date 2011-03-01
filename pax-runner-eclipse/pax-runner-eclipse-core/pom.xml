@@ -52,8 +52,8 @@
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>1.4</source>
-          <target>1.4</target>
+          <source>1.5</source>
+          <target>1.5</target>
         </configuration>
       </plugin>
       <plugin>
@@ -73,7 +73,6 @@
       <groupId>org.ops4j.pax.runner</groupId>
       <artifactId>pax-runner</artifactId>
       <version>${project.version}</version>
-      <classifier>jdk14</classifier>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
