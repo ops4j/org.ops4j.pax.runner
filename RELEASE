@@ -1,0 +1,41 @@
+h1. Prerequisites
+
+The release works either with the latest maven2 release (2.2.1) or the latest maven3 release (3.0.3). Lower version numbers can (and will) cause troubles!
+
+h1. Release paxrunner
+
+If you have all required rights to release pax-runner follow these steps:
+
+1) add this into your ~/.m2/settings.xml
+
+{code}
+<profile>
+  <id>release</id>
+  <properties>
+    <gpg.passphrase>gpgpassphrase</gpg.passphrase>
+    <release-paxrunner-altGitURL>scm:git:file:///path/to/local/repo/org.ops4j.pax.runner</release-paxrunner-altGitURL>
+  </properties>
+</profile>
+{code}
+
+2) prepare the release:
+
+{code}
+mvn -Prelease,repos.sonatype.staging -Darguments="-Prelease,repos.sonatype.staging" release:prepare -DautoVersionSubmodules=true
+{code}
+
+3) perform the release (this fails):
+
+{code}
+mvn -Prelease,repos.sonatype.staging -Darguments="-Prelease,repos.sonatype.staging" release:perform
+{code}
+
+4) push to github:
+
+{code}
+git push
+git push --tags
+{code}
+
+5) go to oss.sonatype.org and push pax-runner to central
+
