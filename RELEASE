@@ -28,14 +28,26 @@ mvn -Prelease,repos.sonatype.staging -Darguments="-Prelease,repos.sonatype.stagi
 
 {code}
 mvn -Prelease,repos.sonatype.staging -Darguments="-Prelease,repos.sonatype.staging" release:perform
+.... auth failure in site:deploy ...
 {code}
 
-4) push to github:
+4) go into the checkout directory:
+
+{code}
+cd target/checkout
+{code}
+
+5) push to oss.sonatype.org:
+
+{code}
+mvn -Prelease,repos.sonatype.staging  source:jar javadoc:jar deploy
+{code}
+
+6) push to github:
 
 {code}
 git push
-git push --tags
 {code}
 
-5) go to oss.sonatype.org and push pax-runner to central
+8) go to oss.sonatype.org and push pax-runner to central
 
