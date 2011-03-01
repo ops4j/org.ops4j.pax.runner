@@ -26,10 +26,6 @@
         <directory>src/bin</directory>
         <filtering>true</filtering>
       </resource>
-      <resource>
-        <directory>src/bin-jdk14</directory>
-        <filtering>true</filtering>
-      </resource>
     </resources>
     <plugins>
       <plugin>
@@ -61,19 +57,6 @@
               </descriptors>
             </configuration>
           </execution>
-          <execution>
-            <id>make-assembly-jdk14</id>
-            <phase>package</phase>
-            <goals>
-              <goal>attached</goal>
-            </goals>
-            <configuration>
-              <appendAssemblyId>true</appendAssemblyId>
-              <descriptors>
-                <descriptor>src/assembly/zip-jdk14.xml</descriptor>
-              </descriptors>
-            </configuration>
-          </execution>
         </executions>
       </plugin>
     </plugins>
@@ -85,13 +68,6 @@
       <artifactId>pax-runner</artifactId>
       <version>${project.version}</version>
       <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>pax-runner</artifactId>
-      <version>${project.version}</version>
-      <type>jar</type>
-      <classifier>jdk14</classifier>
     </dependency>
   </dependencies>
 
