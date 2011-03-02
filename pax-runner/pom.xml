@@ -81,6 +81,12 @@
       <optional>true</optional>
     </dependency>
     <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>1.6.1</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
       <groupId>org.ops4j.pax.url</groupId>
       <artifactId>pax-url-assembly</artifactId>
       <version>${dependency.url.version}</version>
