@@ -28,7 +28,7 @@ import org.ops4j.lang.NullArgumentException;
 import static org.ops4j.pax.runner.CommandLine.*;
 import org.ops4j.pax.runner.commons.Info;
 import org.ops4j.pax.runner.commons.properties.SystemPropertyUtils;
-import org.ops4j.pax.url.aether.ServiceConstants;
+import org.ops4j.pax.url.mvn.ServiceConstants;
 import org.ops4j.pax.url.maven.commons.MavenConstants;
 
 /**
