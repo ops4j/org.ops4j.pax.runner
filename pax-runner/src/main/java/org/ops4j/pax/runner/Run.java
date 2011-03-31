@@ -549,7 +549,7 @@ public class Run
                     new StringBuilder()
                         .append( org.ops4j.pax.scanner.composite.ServiceConstants.SCHEMA )
                         .append( org.ops4j.pax.scanner.ServiceConstants.SEPARATOR_SCHEME )
-                        .append( org.ops4j.pax.url.mvn.ServiceConstants.PROTOCOL )
+                        .append( org.ops4j.pax.url.aether.ServiceConstants.PROTOCOL )
                         .append( ":" )
                         .append( parts.length < 3 ? profilesGroup + "/" : "" )
                         .append( profile )

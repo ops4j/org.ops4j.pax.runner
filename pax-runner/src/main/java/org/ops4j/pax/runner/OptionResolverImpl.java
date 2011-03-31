@@ -28,7 +28,8 @@ import org.ops4j.lang.NullArgumentException;
 import static org.ops4j.pax.runner.CommandLine.*;
 import org.ops4j.pax.runner.commons.Info;
 import org.ops4j.pax.runner.commons.properties.SystemPropertyUtils;
-import org.ops4j.pax.url.mvn.ServiceConstants;
+import org.ops4j.pax.url.aether.ServiceConstants;
+import org.ops4j.pax.url.maven.commons.MavenConstants;
 
 /**
  * Resolvs options by:<br/>
@@ -99,7 +100,7 @@ public class OptionResolverImpl
         // resolve some omplicit options
 
         // if using profiles pax runner repository is automatically added
-        if( name.equalsIgnoreCase( ServiceConstants.PROPERTY_REPOSITORIES )
+        if( name.equalsIgnoreCase( ServiceConstants.PID + MavenConstants.PROPERTY_REPOSITORIES  )
             && ( result == null || result.trim().startsWith( "+" ) ) )
         {
             final String profiles = get( OPTION_PROFILES );

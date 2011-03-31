@@ -47,13 +47,13 @@ public class ExtensionBasedProvisionSchemaResolver
         if( !resolve.endsWith( "/" ) && !resolve.endsWith( "\\" ) && !resolve.contains( "!/" ) )
         {
             // check if is a pom using mvn protocol
-            if( resolve.startsWith( org.ops4j.pax.url.mvn.ServiceConstants.PROTOCOL )
+            if( resolve.startsWith( org.ops4j.pax.url.aether.ServiceConstants.PROTOCOL )
                 && resolve.endsWith( "pom" ) )
             {
                 schema = org.ops4j.pax.scanner.pom.ServiceConstants.SCHEMA;
             }
             // check if starts with mvn / wrap / war / obr, because most common it will be a bundle
-            else if( resolve.startsWith( org.ops4j.pax.url.mvn.ServiceConstants.PROTOCOL )
+            else if( resolve.startsWith( org.ops4j.pax.url.aether.ServiceConstants.PROTOCOL )
                      || resolve.startsWith( org.ops4j.pax.url.wrap.ServiceConstants.PROTOCOL )
                      || resolve.startsWith( org.ops4j.pax.url.war.ServiceConstants.PROTOCOL_WAR )
                      || resolve.startsWith( org.ops4j.pax.url.war.ServiceConstants.PROTOCOL_WAR_INSTRUCTIONS )
