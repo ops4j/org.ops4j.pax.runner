@@ -17,6 +17,19 @@
  */
 package org.ops4j.pax.runner.platform.internal;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.ops4j.lang.NullArgumentException;
+import org.ops4j.pax.runner.platform.BundleReference;
+import org.ops4j.pax.runner.platform.BundleReferenceBean;
+import org.ops4j.pax.scanner.ProvisionSpec;
+import org.ops4j.pax.scanner.ServiceConstants;
+import org.ops4j.util.xml.XmlUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -24,16 +37,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.xml.parsers.ParserConfigurationException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
-import org.ops4j.lang.NullArgumentException;
-import org.ops4j.pax.runner.platform.BundleReference;
-import org.ops4j.pax.runner.platform.BundleReferenceBean;
-import org.ops4j.util.xml.XmlUtils;
 
 /**
  * Implementation of platform definition that that reads definition form an xml.
@@ -119,7 +122,7 @@ public class PlatformDefinitionImpl
     /**
      * Extracts profiles out of a parsed xml document.
      *
-     * @param startLevel default start level for bundles
+     * @param profileStartLevel default start level for bundles
      * @param doc        parsed xml document
      *
      * @throws java.io.IOException      re-thrown while parsing the input stream as xml or invalid syntax
@@ -127,7 +130,7 @@ public class PlatformDefinitionImpl
      *                                  re-thrown while parsing the input stream as xml
      * @throws org.xml.sax.SAXException re-thrown while parsing the input stream as xml
      */
-    private void extractProfiles( final Document doc, Integer startLevel )
+    private void extractProfiles( final Document doc, Integer profileStartLevel)
         throws IOException, ParserConfigurationException, SAXException
     {
         final List<Element> profiles = XmlUtils.getElements( doc, "profile" );
@@ -169,13 +172,31 @@ public class PlatformDefinitionImpl
                                     "Invalid syntax: bundle url not defined in profile " + profileName
                                 );
                             }
-                            final URL bundleURL = new URL( urlSpec );
+                            ProvisionSpec provisionSpec = new ProvisionSpec(urlSpec);
+                            // TODO: optimize it somehow
+                            final URL bundleURL = new URL(provisionSpec.getScheme()
+                                    + ServiceConstants.SEPARATOR_SCHEME
+                                    + provisionSpec.getPath());
                             if( name == null )
                             {
-                                name = urlSpec;
+                                name = bundleURL.toExternalForm();
+                            }
+                            Integer startLevel = provisionSpec.getStartLevel();
+                            if (startLevel == null)
+                            {
+                                startLevel = profileStartLevel;
+                            }
+                            Boolean shouldStart = provisionSpec.shouldStart();
+                            if (shouldStart == null)
+                            {
+                                shouldStart = Boolean.TRUE;
+                            }
+                            Boolean shouldUpdate = provisionSpec.shouldUpdate();
+                            if (shouldUpdate == null) {
+                                shouldUpdate = Boolean.FALSE;
                             }
                             m_bundles.get( profileName )
-                                .add( new BundleReferenceBean( name, bundleURL, startLevel, true, false ) );
+                                .add( new BundleReferenceBean( name, bundleURL, startLevel, shouldStart, shouldUpdate ) );
                         }
                     }
                 }
@@ -196,7 +217,7 @@ public class PlatformDefinitionImpl
                 try
                 {
                     is = new URL( href ).openStream();
-                    extractProfiles( XmlUtils.parseDoc( new URL( href ).openStream() ), startLevel );
+                    extractProfiles( XmlUtils.parseDoc( new URL( href ).openStream() ), profileStartLevel);
                 }
                 finally
                 {

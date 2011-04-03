@@ -17,41 +17,23 @@
  */
 package org.ops4j.pax.runner.platform.internal;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.ops4j.lang.NullArgumentException;
+import org.ops4j.pax.runner.platform.*;
+import org.ops4j.util.property.DictionaryPropertyResolver;
+import org.ops4j.util.property.PropertyResolver;
+import org.osgi.framework.Constants;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Dictionary;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
-import javax.xml.parsers.ParserConfigurationException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.osgi.framework.Constants;
-import org.xml.sax.SAXException;
-import org.ops4j.lang.NullArgumentException;
-import org.ops4j.pax.runner.platform.BundleReference;
-import org.ops4j.pax.runner.platform.Configuration;
-import org.ops4j.pax.runner.platform.DefaultJavaRunner;
-import org.ops4j.pax.runner.platform.JavaRunner;
-import org.ops4j.pax.runner.platform.LocalSystemFile;
-import org.ops4j.pax.runner.platform.Platform;
-import org.ops4j.pax.runner.platform.PlatformBuilder;
-import org.ops4j.pax.runner.platform.PlatformContext;
-import org.ops4j.pax.runner.platform.PlatformException;
-import org.ops4j.pax.runner.platform.SystemFileReference;
-import org.ops4j.pax.runner.platform.SystemFileReferenceBean;
-import org.ops4j.util.property.DictionaryPropertyResolver;
-import org.ops4j.util.property.PropertyResolver;
 
 /**
  * Handles the workflow of creating the platform. Concrete platforms should implement only the PlatformBuilder
@@ -252,29 +234,29 @@ public class PlatformImpl
         {
             urlHandlers.add(
                 new SystemFileReferenceBean(
-                    "Pax URL assembly: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-assembly/1.1.2" )
+                    "Pax URL assembly: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-assembly/1.3.2-RC1" )
                 )
             );
             urlHandlers.add(
                 new SystemFileReferenceBean(
-                    "Pax URL cache: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-cache/1.1.2" )
+                    "Pax URL cache: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-cache/1.3.2-RC1" )
                 )
             );
             urlHandlers.add(
                 new SystemFileReferenceBean(
-                    "Pax URL mvn: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-mvn/1.1.2" ) )
+                    "Pax URL mvn: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-mvn/1.3.2-RC1" ) )
             );
             urlHandlers.add(
                 new SystemFileReferenceBean(
-                    "Pax URL link: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-link/1.1.2" ) )
+                    "Pax URL link: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-link/1.3.2-RC1" ) )
             );
             urlHandlers.add(
                 new SystemFileReferenceBean(
-                    "Pax URL war: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-war/1.1.2" ) )
+                    "Pax URL war: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-war/1.3.2-RC1" ) )
             );
             urlHandlers.add(
                 new SystemFileReferenceBean(
-                    "Pax URL wrap: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-wrap/1.1.2" ) )
+                    "Pax URL wrap: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-wrap/1.3.2-RC1" ) )
             );
         }
         catch ( MalformedURLException e )
