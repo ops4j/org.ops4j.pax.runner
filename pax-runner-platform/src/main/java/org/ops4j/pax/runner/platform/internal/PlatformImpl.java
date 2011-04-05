@@ -143,14 +143,6 @@ public class PlatformImpl
         final List<LocalSystemFile> localSystemFiles = downloadSystemFiles(
             workDir, systemFiles, overwriteBundles || overwriteSystemBundles, downloadFeeback
         );
-        if ( configuration.keepOriginalUrls() )
-        {
-            localSystemFiles.addAll(
-                downloadSystemFiles(
-                    workDir, getUrlHandlers(), overwriteBundles || overwriteSystemBundles, downloadFeeback
-                )
-            );
-        }
         // download the rest of the bundles
         final List<BundleReference> bundlesToInstall = new ArrayList<BundleReference>();
         LOGGER.debug( "Download platform bundles" );
@@ -224,46 +216,6 @@ public class PlatformImpl
             javaHome,
             workDir
         );
-    }
-
-    private List<SystemFileReference> getUrlHandlers()
-        throws PlatformException
-    {
-        final List<SystemFileReference> urlHandlers = new ArrayList<SystemFileReference>();
-        try
-        {
-            urlHandlers.add(
-                new SystemFileReferenceBean(
-                    "Pax URL assembly: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-assembly/1.3.2-RC1" )
-                )
-            );
-            urlHandlers.add(
-                new SystemFileReferenceBean(
-                    "Pax URL cache: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-cache/1.3.2-RC1" )
-                )
-            );
-            urlHandlers.add(
-                new SystemFileReferenceBean(
-                    "Pax URL mvn: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-mvn/1.3.2-RC1" ) )
-            );
-            urlHandlers.add(
-                new SystemFileReferenceBean(
-                    "Pax URL link: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-link/1.3.2-RC1" ) )
-            );
-            urlHandlers.add(
-                new SystemFileReferenceBean(
-                    "Pax URL war: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-war/1.3.2-RC1" ) )
-            );
-            urlHandlers.add(
-                new SystemFileReferenceBean(
-                    "Pax URL wrap: protocol", new URL( "mvn:org.ops4j.pax.url/pax-url-wrap/1.3.2-RC1" ) )
-            );
-        }
-        catch ( MalformedURLException e )
-        {
-            throw new PlatformException( "Cannot download url handlers", e );
-        }
-        return urlHandlers;
     }
 
     /**

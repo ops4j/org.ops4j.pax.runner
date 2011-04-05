@@ -97,6 +97,10 @@ public interface CommandLine
      */
     static final String OPTION_PROFILES_GROUPID = "profilesGroupId";
     /**
+     * Keep Original URLs option.
+     */
+    static final String OPTION_KEEP_ORIGINAL_URLS = "keepOriginalUrls";
+    /**
      * Disable Logos option.
      */
     static final String OPTION_NOLOGO = "nologo";
