@@ -1,0 +1,155 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.ops4j.pax</groupId>
+    <artifactId>runner</artifactId>
+    <version>1.7.1-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <groupId>org.ops4j.pax.runner</groupId>
+  <artifactId>pax-runner-osgi</artifactId>
+  <packaging>bundle</packaging>
+
+  <name>OPS4J Pax Runner - OSGi</name>
+  <description>
+    OPS4J Pax Runner - OSGi engine.
+    See details at http://wiki.ops4j.org/confluence/x/A4A6.
+  </description>
+
+  <properties>
+    <bundle.symbolicName>org.ops4j.pax.runner-osgi</bundle.symbolicName>
+    <bundle.namespace>org.ops4j.pax.runner-osgi</bundle.namespace>
+  </properties>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+    <plugins>
+      
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <configuration>
+          <excludeDependencies>*;scope=provided|runtime</excludeDependencies>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.framework</artifactId>
+      <version>3.2.0</version>
+      <optional>true</optional>
+      <exclusions>
+        <!--
+          remove bad dependency from the released felix 1.0.0 pom
+          (it shouldn't use ${pom.groupId} in dependency section)
+        -->
+        <exclusion>
+          <groupId>org.apache.felix</groupId>
+          <artifactId>org.osgi.core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.bundlerepository</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>1.6.1</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.url</groupId>
+      <artifactId>pax-url-assembly</artifactId>
+      <version>${dependency.url.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.url</groupId>
+      <artifactId>pax-url-cache</artifactId>
+      <version>${dependency.url.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.url</groupId>
+      <artifactId>pax-url-classpath</artifactId>
+      <version>${dependency.url.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.url</groupId>
+      <artifactId>pax-url-dir</artifactId>
+      <version>${dependency.url.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.url</groupId>
+      <artifactId>pax-url-aether</artifactId>
+      <version>${dependency.url.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.url</groupId>
+      <artifactId>pax-url-link</artifactId>
+      <version>${dependency.url.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.url</groupId>
+      <artifactId>pax-url-obr</artifactId>
+      <version>${dependency.url.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.url</groupId>
+      <artifactId>pax-url-war</artifactId>
+      <version>${dependency.url.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.url</groupId>
+      <artifactId>pax-url-wrap</artifactId>
+      <version>${dependency.url.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.runner</groupId>
+      <artifactId>pax-runner-commons</artifactId>
+      <version>${project.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.scanner</groupId>
+      <artifactId>pax-scanner-service</artifactId>
+      <version>${dependency.scanner.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.scanner</groupId>
+      <artifactId>pax-scanner-all-scanners</artifactId>
+      <version>${dependency.scanner.version}</version>
+      <type>pom</type>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+    	<groupId>org.ops4j.pax.runner</groupId>
+    	<artifactId>pax-runner-handler</artifactId>
+    	<version>1.7.0-RC1</version>
+    	<scope>test</scope>
+    </dependency>
+  </dependencies>
+
+</project>

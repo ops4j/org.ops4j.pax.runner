@@ -182,13 +182,13 @@
       <dependency>
         <groupId>org.osgi</groupId>
         <artifactId>org.osgi.core</artifactId>
-        <version>4.0.1</version>
+        <version>4.2.0</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.osgi</groupId>
         <artifactId>org.osgi.compendium</artifactId>
-        <version>4.0.1</version>
+        <version>4.2.0</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -242,6 +242,7 @@
       <modules>
         <module>pax-runner-commons</module>
         <module>pax-runner-handler</module>
+        <module>pax-runner-osgi</module>
         <module>pax-runner-platform</module>
         <module>pax-runner-platform-concierge</module>
         <module>pax-runner-platform-equinox</module>
