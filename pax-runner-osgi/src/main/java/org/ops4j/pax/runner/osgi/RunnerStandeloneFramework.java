@@ -77,14 +77,36 @@ public class RunnerStandeloneFramework
      */
     private static final String WORKING_DIRECTORY = "workingDirectory";
 
+	private CommandLineImpl commandLine;
+
+	private ConfigurationImpl configuration;
+
+	private OptionResolverImpl optionResolver;
+
      /**
      * Creates a new runner.
      */
-    public RunnerStandeloneFramework()
+    public RunnerStandeloneFramework(Properties config)
     {
     	super();
+    	commandLine = new CommandLineImpl();
+        
+        configuration = new ConfigurationImpl(config, 
+        		"classpath:META-INF/runner.properties");
+       
+        optionResolver = new OptionResolverImpl( commandLine, configuration );
+        
     }
 
+    public CommandLineImpl getCommandLine() {
+		return commandLine;
+	}
+    public ConfigurationImpl getConfiguration() {
+		return configuration;
+	}
+    public OptionResolverImpl getOptionResolver() {
+		return optionResolver;
+	}
    
 
     public static Log getLogger()
@@ -102,20 +124,13 @@ public class RunnerStandeloneFramework
      */
     public void start(CreateActivator ca, Properties config) throws BundleException
     {
-    	final CommandLine commandLine = new CommandLineImpl();
-        
-        final Configuration configuration = new ConfigurationImpl(config, 
-        		"classpath:META-INF/runner.properties");
-       
-        OptionResolverImpl resolver = new OptionResolverImpl( commandLine, configuration );
-        
-        LOGGER.info( commandLine );
+    	LOGGER.info( commandLine );
         // cleanup if requested
-        cleanup( resolver );
+        cleanup( optionResolver );
         // install aditional services
-        installServices( configuration,resolver, ca);
+        installServices( configuration, optionResolver, ca);
         // install aditional handlers
-        installHandlers(configuration,resolver, ca );
+        installHandlers(configuration, optionResolver, ca );
     }
 
     /**

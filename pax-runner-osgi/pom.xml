@@ -32,7 +32,22 @@
       </resource>
     </resources>
     <plugins>
-      
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>embed-jar</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <includeScope>compile</includeScope>
+              <stripVersion>true</stripVersion>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
@@ -147,7 +162,7 @@
     <dependency>
     	<groupId>org.ops4j.pax.runner</groupId>
     	<artifactId>pax-runner-handler</artifactId>
-    	<version>1.7.0-RC1</version>
+    	<version>${project.version}</version>
     	<scope>test</scope>
     </dependency>
   </dependencies>
