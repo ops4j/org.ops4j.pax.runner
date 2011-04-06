@@ -17,7 +17,7 @@
  */
 package org.ops4j.pax.runner;
 
- class MissingOptionException
+public class MissingOptionException
     extends RuntimeException
 {
 

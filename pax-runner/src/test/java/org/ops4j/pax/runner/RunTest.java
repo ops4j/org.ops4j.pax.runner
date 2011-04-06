@@ -20,14 +20,26 @@ package org.ops4j.pax.runner;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
+
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
+
+import org.apache.felix.framework.ServiceRegistry;
+import org.apache.felix.framework.util.EventDispatcher;
 import org.junit.Before;
 import org.junit.Test;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.ServiceReference;
 import static org.ops4j.pax.runner.CommandLine.*;
+
+import org.ops4j.pax.runner.osgi.CreateActivator;
+import org.ops4j.pax.runner.osgi.RunnerStandeloneFramework;
+import org.ops4j.pax.runner.osgi.felix.Context;
+import org.ops4j.pax.runner.osgi.felix.ContextImpl;
+import org.ops4j.pax.runner.osgi.felix.RunnerBundle;
+import org.ops4j.pax.runner.osgi.felix.StandeloneFramework;
 import org.ops4j.pax.runner.platform.JavaRunner;
 import org.ops4j.pax.runner.platform.Platform;
 import org.ops4j.pax.runner.platform.SystemFileReference;
@@ -62,27 +74,29 @@ public class RunTest
     }
 
     @Test( expected = IllegalArgumentException.class )
-    public void startWithNullCommandLine()
+    public void startWithNullCommandLine() throws BundleException
     {
         new Run().start( null, createMock( Configuration.class ), createMock( OptionResolver.class ) );
     }
 
     @Test( expected = IllegalArgumentException.class )
-    public void startWithNullConfiguration()
+    public void startWithNullConfiguration() throws BundleException
     {
         new Run().start( createMock( CommandLine.class ), null, createMock( OptionResolver.class ) );
     }
 
     @Test( expected = IllegalArgumentException.class )
-    public void startWithNullResolver()
+    public void startWithNullResolver() throws BundleException
     {
         new Run().start( createMock( CommandLine.class ), createMock( Configuration.class ), null );
     }
 
     // test runner flow
     @Test
-    public void startFlow()
+    public void startFlow() throws BundleException
     {
+    	m_recorder.record( "startOsgiFrammework()" );
+    	m_recorder.record( "initOsgiFramework()" );
         m_recorder.record( "cleanup()" );
         m_recorder.record( "installServices()" );
         m_recorder.record( "installHandlers()" );
@@ -92,26 +106,42 @@ public class RunTest
         m_recorder.record( "installPlatform()" );
         m_recorder.record( "determineSystemFiles()" );
         replay( m_commandLine, m_config, m_recorder, m_resolver, m_bundleContext );
+        final Context context = new ContextImpl();
+		
+		final RunnerStandeloneFramework r = new RunnerStandeloneFramework(m_commandLine, m_config, m_resolver) {
+			@Override
+			public void installHandlers(Configuration config,
+					OptionResolver optionResolver, CreateActivator ca) {
+				 m_recorder.record( "installHandlers()" );
+			}
+			@Override
+			public ProvisionService installScanners(Configuration config,
+					OptionResolver optionResolver, CreateActivator ca) {
+				m_recorder.record( "installScanners()" );
+				return null;
+			}
+			@Override
+			public void installServices(Configuration config,
+					OptionResolver optionResolver, CreateActivator ca) {
+				 m_recorder.record( "installServices()" );
+			}
+			@Override
+			public void cleanup(OptionResolver resolver) {
+				 m_recorder.record( "cleanup()" );
+			}
+		};
         new Run()
         {
-            @Override
-            void cleanup( final OptionResolver resolver )
-            {
-                m_recorder.record( "cleanup()" );
-            }
-
-            @Override
-            void installHandlers( final Context context )
-            {
-                m_recorder.record( "installHandlers()" );
-            }
-
-            @Override
-            ProvisionService installScanners( final Context context )
-            {
-                m_recorder.record( "installScanners()" );
-                return m_provisionService;
-            }
+        	Context startOsgiFrammework(CommandLine commandLine, Configuration config, OptionResolver resolver) throws BundleException {
+        		m_recorder.record( "startOsgiFrammework()" );
+        		return context;
+        	};
+        	
+        	org.ops4j.pax.runner.osgi.RunnerStandeloneFramework initOsgiFramework(CommandLine commandLine, Configuration config, OptionResolver resolver) {
+        		m_recorder.record( "initOsgiFramework()" );
+        		return r;
+        	}
+            
 
             @Override
             Platform installPlatform( final Context context )
@@ -127,12 +157,7 @@ public class RunTest
                 m_recorder.record( "installBundles()" );
             }
 
-            @Override
-            void installServices( final Context context )
-            {
-                m_recorder.record( "installServices()" );
-            }
-
+          
             @Override
             JavaRunner createJavaRunner( final OptionResolver resolver )
             {
@@ -150,216 +175,14 @@ public class RunTest
         verify( m_commandLine, m_config, m_recorder, m_resolver, m_bundleContext );
     }
 
-    // if there are no handlers just go one as one may choose to use only the default ones from JVM
-    @Test
-    public void startWithNoHandlers()
-    {
-        Run run = new Run()
-        {
-            // override this method just to be sure that is not called
-            @Override
-            BundleContext createActivator( final String handlerName, final String activatorName, final Context context )
-            {
-                fail( "Not expected to be called" );
-                return null;
-            }
-        };
-        Context context = run.createContext( m_commandLine, m_config, m_resolver );
-
-        expect( m_resolver.get( "handlers" ) ).andReturn( null );
-
-        replay( m_commandLine, m_config, m_resolver, m_bundleContext );
-        run.installHandlers( context );
-        verify( m_commandLine, m_config, m_resolver, m_bundleContext );
-    }
-
-    // test that if we have valid handlers then the handler service + handlers are started
-    @Test
-    public void startWithValidHandlers()
-    {
-        Run run = new Run()
-        {
-            @Override
-            BundleContext createActivator( final String handlerName, final String activatorName, final Context context )
-            {
-                m_recorder.record( activatorName );
-                return m_bundleContext;
-            }
-        };
-        Context context = run.createContext( m_commandLine, m_config, m_resolver );
-
-        expect( m_resolver.get( "handlers" ) ).andReturn( "handler.1,handler.2" );
-        expect( m_config.getProperty( "handler.service" ) ).andReturn( "handler.service.Activator" );
-        expect( m_config.getProperty( "handler.1" ) ).andReturn( "handler.1.Activator" );
-        expect( m_config.getProperty( "handler.2" ) ).andReturn( "handler.2.Activator" );
-
-        m_recorder.record( "handler.service.Activator" );
-        m_recorder.record( "handler.1.Activator" );
-        m_recorder.record( "handler.2.Activator" );
-
-        replay( m_commandLine, m_config, m_resolver, m_recorder, m_bundleContext );
-        run.installHandlers( context );
-        verify( m_commandLine, m_config, m_resolver, m_recorder, m_bundleContext );
-    }
-
-    @Test( expected = ConfigurationException.class )
-    public void startWithInvalidHandlers()
-    {
-        expect( m_resolver.get( "clean" ) ).andReturn( null );
-        expect( m_resolver.get( "executor" ) ).andReturn( null );
-        expect( m_resolver.get( "services" ) ).andReturn( null );
-        expect( m_resolver.get( "handlers" ) ).andReturn( "handler.1" );
-        expect( m_config.getProperty( "handler.service" ) ).andReturn( "handler.service.Activator" );
-        expect( m_config.getProperty( "handler.1" ) ).andReturn( null );
-
-        m_recorder.record( "handler.service.Activator" );
-
-        replay( m_commandLine, m_config, m_resolver, m_recorder, m_bundleContext );
-        new Run()
-        {
-            @Override
-            BundleContext createActivator( final String handlerName, final String activatorName, final Context context )
-            {
-                m_recorder.record( activatorName );
-                return m_bundleContext;
-            }
-        }.start( m_commandLine, m_config, m_resolver );
-        verify( m_commandLine, m_config, m_resolver, m_recorder, m_bundleContext );
-    }
-
-    @Test( expected = ConfigurationException.class )
-    public void startWithNotConfiguredHandlerService()
-    {
-        Run run = new Run()
-        {
-            @Override
-            BundleContext createActivator( final String handlerName, final String activatorName, final Context context )
-            {
-                m_recorder.record( activatorName );
-                return m_bundleContext;
-            }
-        };
-        Context context = run.createContext( m_commandLine, m_config, m_resolver );
-
-        expect( m_resolver.get( "handlers" ) ).andReturn( "handler.1" );
-        expect( m_config.getProperty( "handler.1" ) ).andReturn( "handler.1.Activator" );
-        expect( m_config.getProperty( "handler.service" ) ).andReturn( null );
-
-        m_recorder.record( "handler.1.Activator" );
-
-        replay( m_commandLine, m_config, m_resolver, m_bundleContext );
-        run.installHandlers( context );
-        verify( m_commandLine, m_config, m_resolver, m_bundleContext );
-    }
-
-    // verify that if there are no scanners we should just crash with an MissingOptionException
-    @Test( expected = MissingOptionException.class )
-    public void startWithNoScanners()
-    {
-        Run run = new Run()
-        {
-            @Override
-            BundleContext createActivator( final String handlerName, final String activatorName, final Context context )
-            {
-                m_recorder.record( activatorName );
-                return m_bundleContext;
-            }
-        };
-        Context context = run.createContext( m_commandLine, m_config, m_resolver );
-
-        expect( m_resolver.getMandatory( "scanners" ) ).andThrow( new MissingOptionException( "scanners" ) );
-
-        replay( m_commandLine, m_config, m_resolver, m_recorder, m_bundleContext );
-        run.installScanners( context );
-        verify( m_commandLine, m_config, m_resolver, m_recorder, m_bundleContext );
-    }
-
-    @Test( expected = ConfigurationException.class )
-    public void startWithNotConfiguredProvisionService()
-    {
-        Run run = new Run()
-        {
-            @Override
-            BundleContext createActivator( final String handlerName, final String activatorName, final Context context )
-            {
-                m_recorder.record( activatorName );
-                return m_bundleContext;
-            }
-        };
-        Context context = run.createContext( m_commandLine, m_config, m_resolver );
-
-        expect( m_resolver.getMandatory( "scanners" ) ).andReturn( "scanner.1" );
-        expect( m_config.getProperty( "scanner.1" ) ).andReturn( "scanner.1.Activator" );
-        expect( m_config.getProperty( "provision.service" ) ).andReturn( null );
-
-        m_recorder.record( "scanner.1.Activator" );
-
-        replay( m_commandLine, m_config, m_resolver, m_bundleContext );
-        run.installScanners( context );
-        verify( m_commandLine, m_config, m_resolver, m_bundleContext );
-    }
-
-    @Test( expected = ConfigurationException.class )
-    public void startWithInvalidScanners()
-    {
-        Run run = new Run()
-        {
-            @Override
-            BundleContext createActivator( final String handlerName, final String activatorName, final Context context )
-            {
-                fail( "Not expected to be called" );
-                return null;
-            }
-        };
-        Context context = run.createContext( m_commandLine, m_config, m_resolver );
-
-        expect( m_resolver.getMandatory( "scanners" ) ).andReturn( "scanner.1" );
-        expect( m_config.getProperty( "scanner.1" ) ).andReturn( null );
-
-        replay( m_commandLine, m_config, m_resolver, m_bundleContext );
-        run.installScanners( context );
-        verify( m_commandLine, m_config, m_resolver, m_bundleContext );
-    }
-
-    // test that if we have valid scanners then the provision service + handlers are started
-    @Test
-    public void startWithValidScanners()
-    {
-        Run run = new Run()
-        {
-            @Override
-            BundleContext createActivator( final String handlerName, final String activatorName, final Context context )
-            {
-                m_recorder.record( activatorName );
-                return m_bundleContext;
-            }
-        };
-        Context context = run.createContext( m_commandLine, m_config, m_resolver );
-
-        expect( m_resolver.getMandatory( "scanners" ) ).andReturn( "scanner.1,scanner.2" );
-        expect( m_config.getProperty( "provision.service" ) ).andReturn( "provision.service.Activator" );
-        expect( m_config.getProperty( "scanner.1" ) ).andReturn( "scanner.1.Activator" );
-        expect( m_config.getProperty( "scanner.2" ) ).andReturn( "scanner.2.Activator" );
-        expect( m_bundleContext.getServiceReference( ProvisionService.class.getName() ) ).andReturn(
-            createMock( ServiceReference.class )
-        );
-        expect( m_bundleContext.getService( (ServiceReference) notNull() ) ).andReturn( m_provisionService );
-
-        m_recorder.record( "scanner.1.Activator" );
-        m_recorder.record( "scanner.2.Activator" );
-        m_recorder.record( "provision.service.Activator" );
-
-        replay( m_commandLine, m_config, m_resolver, m_recorder, m_bundleContext );
-        run.installScanners( context );
-        verify( m_commandLine, m_config, m_resolver, m_recorder, m_bundleContext );
-    }
+    
 
     // test that we getOption a runtime exception not a NullPointerException
     @Test( expected = RuntimeException.class )
-    public void installBundlesWithNullProvisionService()
+    public void installBundlesWithNullProvisionService() throws BundleException
     {
         Run run = new Run();
-        Context context = run.createContext( m_commandLine, m_config, m_resolver );
+        Context context = createContext( m_commandLine, m_config, m_resolver );
 
         replay( m_commandLine, m_config, m_resolver, m_recorder, m_bundleContext );
         run.installBundles( null, null, context );
@@ -372,7 +195,7 @@ public class RunTest
         throws ScannerException, MalformedSpecificationException, BundleException
     {
         Run run = new Run();
-        Context context = run.createContext( m_commandLine, m_config, m_resolver );
+        Context context = createContext( m_commandLine, m_config, m_resolver );
 
         ProvisionService provisionService = createMock( ProvisionService.class );
         InstallableBundles installables = createMock( InstallableBundles.class );
@@ -405,7 +228,7 @@ public class RunTest
         throws ScannerException, MalformedSpecificationException, BundleException
     {
         Run run = new Run();
-        Context context = run.createContext( m_commandLine, m_config, m_resolver );
+        Context context = createContext( m_commandLine, m_config, m_resolver );
 
         ProvisionService provisionService = createMock( ProvisionService.class );
         InstallableBundles installables = createMock( InstallableBundles.class );
@@ -433,10 +256,10 @@ public class RunTest
 
     // test bundles installation with no arguments and no default configuration
     // expected to just pass and do nothing
-    public void installBundlesWithNoArgumentsAndNoDefault()
+    public void installBundlesWithNoArgumentsAndNoDefault() throws BundleException
     {
         Run run = new Run();
-        Context context = run.createContext( m_commandLine, m_config, m_resolver );
+        Context context = createContext( m_commandLine, m_config, m_resolver );
 
         ProvisionService provisionService = createMock( ProvisionService.class );
 
@@ -447,5 +270,12 @@ public class RunTest
         run.installBundles( provisionService, null, context );
         verify( m_commandLine, m_config, m_resolver, m_recorder, m_bundleContext, provisionService );
     }
+
+	private Context createContext(CommandLine m_commandLine2,
+			Configuration m_config2, OptionResolver optionResolver) throws BundleException {
+		StandeloneFramework s = new StandeloneFramework(optionResolver);
+		s.start();
+		return s.getContext().setCommandLine(m_commandLine2).setConfiguration(m_config2);
+	}
 
 }

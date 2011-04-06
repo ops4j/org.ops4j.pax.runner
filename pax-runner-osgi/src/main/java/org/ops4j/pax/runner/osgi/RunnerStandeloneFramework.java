@@ -77,11 +77,11 @@ public class RunnerStandeloneFramework
      */
     private static final String WORKING_DIRECTORY = "workingDirectory";
 
-	private CommandLineImpl commandLine;
+	private CommandLine commandLine;
 
-	private ConfigurationImpl configuration;
+	private Configuration configuration;
 
-	private OptionResolverImpl optionResolver;
+	private OptionResolver optionResolver;
 
      /**
      * Creates a new runner.
@@ -98,13 +98,26 @@ public class RunnerStandeloneFramework
         
     }
 
-    public CommandLineImpl getCommandLine() {
+    public RunnerStandeloneFramework(CommandLine commandLine,
+			Configuration config, OptionResolver resolver) {
+    	NullArgumentException.validateNotNull( commandLine, "Command line" );
+        NullArgumentException.validateNotNull( config, "Configuration" );
+        NullArgumentException.validateNotNull( resolver, "PropertyResolver" );
+
+    	this.commandLine = commandLine;
+        
+        configuration = config;
+       
+        optionResolver = resolver;
+	}
+
+	public CommandLine getCommandLine() {
 		return commandLine;
 	}
-    public ConfigurationImpl getConfiguration() {
+    public Configuration getConfiguration() {
 		return configuration;
 	}
-    public OptionResolverImpl getOptionResolver() {
+    public OptionResolver getOptionResolver() {
 		return optionResolver;
 	}
    
@@ -122,7 +135,7 @@ public class RunnerStandeloneFramework
      * @param resolver    an option resolver
      * @param runner      java runner service
      */
-    public void start(CreateActivator ca, Properties config) throws BundleException
+    public void start(CreateActivator ca) throws BundleException
     {
     	LOGGER.info( commandLine );
         // cleanup if requested

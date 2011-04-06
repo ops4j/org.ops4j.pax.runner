@@ -21,7 +21,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
- final class User
+public final class User
 {
 
     private User()

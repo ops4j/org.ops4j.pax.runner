@@ -30,8 +30,13 @@ public class StandeloneFelix extends Felix implements CreateActivator {
 		super(configMap);
 	}
 
-	public Bundle startBundle(String url) throws BundleException {
+	public Bundle installBundle(String url) throws BundleException {
 		Bundle b = getBundleContext().installBundle(url, getInptutStream(url));
+		return b;
+	}
+	
+	public Bundle startBundle(String url) throws BundleException {
+		Bundle b = installBundle(url);
 		b.start();
 		return b;
 	}

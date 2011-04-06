@@ -26,7 +26,7 @@ public class CreateActivatorTest {
 	public void createOneActivatorFelix2() throws BundleException {
 		RunnerStandeloneFramework r = new RunnerStandeloneFramework(new Properties());
 		
-        StandeloneFramework framework = new StandeloneFramework(r.getOptionResolver(), new Properties());
+        StandeloneFramework framework = new StandeloneFramework(r.getOptionResolver());
 		framework.start();
 		
 		r.installHandlers(r.getConfiguration(), r.getOptionResolver(), framework);

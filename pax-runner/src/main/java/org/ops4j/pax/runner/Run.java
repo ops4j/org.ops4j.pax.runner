@@ -29,6 +29,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.LogLevel;
@@ -46,9 +48,11 @@ import org.ops4j.io.FileUtils;
 import org.ops4j.lang.NullArgumentException;
 import static org.ops4j.pax.runner.CommandLine.*;
 import org.ops4j.pax.runner.commons.Info;
-import org.ops4j.pax.runner.osgi.RunnerBundle;
-import org.ops4j.pax.runner.osgi.RunnerBundleContext;
-import org.ops4j.pax.runner.osgi.RunnerStartLevel;
+import org.ops4j.pax.runner.osgi.CreateActivator;
+import org.ops4j.pax.runner.osgi.RunnerStandeloneFramework;
+import org.ops4j.pax.runner.osgi.felix.Context;
+import org.ops4j.pax.runner.osgi.felix.RunnerBundle;
+import org.ops4j.pax.runner.osgi.felix.StandeloneFramework;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.BundleReferenceBean;
 import org.ops4j.pax.runner.platform.InProcessJavaRunner;
@@ -79,14 +83,7 @@ public class Run
      * Logger.
      */
     private static Log LOGGER;
-    /**
-     * Handler service configuration property name.
-     */
-    private static final String HANDLER_SERVICE = "handler.service";
-    /**
-     * Provision service configuration property name.
-     */
-    private static final String PROVISION_SERVICE = "provision.service";
+   
     /**
      * Platform extender configuration property name.
      */
@@ -99,6 +96,7 @@ public class Run
      * Working directory configuration property name.
      */
     private static final String WORKING_DIRECTORY = "workingDirectory";
+	private StandeloneFramework standeloneFramework;
 
     /**
      * Creates a new runner.
@@ -132,6 +130,7 @@ public class Run
      *
      * @param runner java runner service
      * @param args   command-line arguments
+     * @throws BundleException 
      */
     public static void main( final JavaRunner runner, final String... args )
     {
@@ -150,12 +149,16 @@ public class Run
             configURL = "classpath:META-INF/runner.properties";
         }
         final Configuration config = new ConfigurationImpl( configURL );
-        new Run().start(
-            commandLine,
-            config,
-            new OptionResolverImpl( commandLine, config ),
-            runner
-        );
+        try {
+			new Run().start(
+			    commandLine,
+			    config,
+			    new OptionResolverImplExtended( commandLine, config ),
+			    runner
+			);
+		} catch (BundleException e) {
+			LOGGER.error(e.getMessage(), e);
+		}
     }
 
     public static Log getLogger()
@@ -169,8 +172,9 @@ public class Run
      *
      * @param runner java runner service
      * @param args   command-line arguments
+     * @throws BundleException 
      */
-    public static void start( final JavaRunner runner, final String... args )
+    public static void start( final JavaRunner runner, final String... args ) throws BundleException
     {
         final CommandLine commandLine = new CommandLineImpl( args );
         String configURL = commandLine.getOption( OPTION_CONFIG );
@@ -182,7 +186,7 @@ public class Run
         new Run().start(
             commandLine,
             config,
-            new OptionResolverImpl( commandLine, config ),
+            new OptionResolverImplExtended( commandLine, config ),
             runner
         );
     }
@@ -193,8 +197,9 @@ public class Run
      * @param commandLine comand line to use
      * @param config      configuration to use
      * @param resolver    an option resolver
+     * @throws BundleException 
      */
-    public void start( final CommandLine commandLine, final Configuration config, final OptionResolver resolver )
+    public void start( final CommandLine commandLine, final Configuration config, final OptionResolver resolver ) throws BundleException
     {
         start( commandLine, config, resolver, null );
     }
@@ -206,25 +211,45 @@ public class Run
      * @param config      configuration to use
      * @param resolver    an option resolver
      * @param runner      java runner service
+     * @throws BundleException 
      */
     public void start( final CommandLine commandLine, final Configuration config, final OptionResolver resolver,
-                       final JavaRunner runner )
+                       final JavaRunner runner ) throws BundleException
     {
-        final Context context = createContext( commandLine, config, resolver );
-        LOGGER.info( commandLine );
-        // cleanup if requested
-        cleanup( resolver );
-        // install aditional services
-        installServices( context );
-        // install aditional handlers
-        installHandlers( context );
+    	// start minimal osgi framework
+    	Context context = startOsgiFrammework(commandLine, config, resolver);
+        
+        // install handler and service
+    	RunnerStandeloneFramework runnerInit = initOsgiFramework(commandLine,
+				config, resolver);
+        runnerInit.start(standeloneFramework);
         // install provisioning and bundles
-        installBundles( installScanners( context ), new ExtensionBasedProvisionSchemaResolver(), context );
+        installBundles( 
+        		runnerInit.installScanners( runnerInit.getConfiguration(), runnerInit.getOptionResolver(), standeloneFramework ), 
+        		new ExtensionBasedProvisionSchemaResolver(), context );
         // stop the dispatcher as there are no longer events around
         EventDispatcher.shutdown();
         // install platform and start it up
         startPlatform( installPlatform( context ), context, runner == null ? createJavaRunner( resolver ) : runner );
     }
+
+	RunnerStandeloneFramework initOsgiFramework(final CommandLine commandLine,
+			final Configuration config, final OptionResolver resolver) {
+		RunnerStandeloneFramework runnerInit = 
+        	new RunnerStandeloneFramework( commandLine, config, resolver);
+		return runnerInit;
+	}
+
+	Context startOsgiFrammework(final CommandLine commandLine,
+			final Configuration config, final OptionResolver resolver)
+			throws BundleException {
+		standeloneFramework = new StandeloneFramework(resolver);
+    	standeloneFramework.start();
+    	Context context = standeloneFramework.getContext();
+        context.setCommandLine(commandLine);
+        context.setConfiguration(config);
+		return context;
+	}
 
     /**
      * Removes the working directory if option specified.
@@ -242,39 +267,7 @@ public class Run
         }
     }
 
-    /**
-     * Creates and initialize the context.
-     *
-     * @param commandLine comand line to use
-     * @param config      configuration to use
-     * @param resolver    an option resolver
-     *
-     * @return the created context
-     */
-    Context createContext( final CommandLine commandLine, final Configuration config, final OptionResolver resolver )
-    {
-        NullArgumentException.validateNotNull( commandLine, "Command line" );
-        NullArgumentException.validateNotNull( config, "Configuration" );
-        NullArgumentException.validateNotNull( resolver, "PropertyResolver" );
-
-        final ServiceRegistry serviceRegistry = new ServiceRegistry( null );
-        final EventDispatcher dispatcher = EventDispatcher.start( new Logger( Logger.LOG_DEBUG ) );
-        serviceRegistry.addServiceListener( new ServiceListener()
-        {
-            public void serviceChanged( ServiceEvent event )
-            {
-                dispatcher.fireServiceEvent( event );
-            }
-        }
-        );
-
-        return new ContextImpl()
-            .setCommandLine( commandLine )
-            .setConfiguration( config )
-            .setOptionResolver( resolver )
-            .setServiceRegistry( serviceRegistry )
-            .setEventDispatcher( dispatcher );
-    }
+    
 
     /**
      * Creates a Java runner based on "runner" option.
@@ -333,115 +326,6 @@ public class Run
         throw new ConfigurationException( "Executor [" + executor + "] is not supported" );
     }
 
-    /**
-     * Installs url handler service configured handlers.
-     *
-     * @param context the running context
-     */
-    void installHandlers( final Context context )
-    {
-        LOGGER.debug( "Installing handlers" );
-        final String option = context.getOptionResolver().get( OPTION_HANDLERS );
-        if( option != null )
-        {
-            // first install each handler
-            final Configuration config = context.getConfiguration();
-            final String[] segments = option.split( "," );
-            for( String segment : segments )
-            {
-                NullArgumentException.validateNotEmpty( segment, "Handler entry" );
-                LOGGER.debug( "Handler [" + segment + "]" );
-                final String activatorName = config.getProperty( segment );
-                if( activatorName == null || activatorName.trim().length() == 0 )
-                {
-                    throw new ConfigurationException( "Handler [" + segment + "] is not supported" );
-                }
-                createActivator( segment, activatorName, context );
-            }
-            // then install the handler service
-            // maintain this order as in this way the bundle context will be easier to respond to getServiceListeners
-            final String serviceActivatorName = config.getProperty( HANDLER_SERVICE );
-            if( serviceActivatorName == null || serviceActivatorName.trim().length() == 0 )
-            {
-                throw new ConfigurationException( "Handler Service must be configured [" + HANDLER_SERVICE + "]" );
-            }
-            createActivator( HANDLER_SERVICE, serviceActivatorName, context );
-        }
-    }
-
-    /**
-     * Installs provisioning service and configured scanners.
-     *
-     * @param context the running context
-     *
-     * @return installed provision service
-     */
-    ProvisionService installScanners( final Context context )
-    {
-        LOGGER.debug( "Installing provisioning" );
-        final String option = context.getOptionResolver().getMandatory( OPTION_SCANNERS );
-        // first install a dummy start level service that will record the start level set by scanners
-        RunnerStartLevel.install( context.getServiceRegistry() );
-        // then install each scanner
-        final String[] segments = option.split( "," );
-        for( String segment : segments )
-        {
-            NullArgumentException.validateNotEmpty( segment, "Scanner entry" );
-            LOGGER.debug( "Scanner [" + segment + "]" );
-            final String activatorName = context.getConfiguration().getProperty( segment );
-            if( activatorName == null || activatorName.trim().length() == 0 )
-            {
-                throw new ConfigurationException( "Scanner [" + segment + "] is not supported" );
-            }
-            createActivator( segment, activatorName, context );
-        }
-        // then install the provisioning service
-        // maintain this order as in this way the bundle context will be easier to respond to getServiceListeners
-        final String serviceActivatorName = context.getConfiguration().getProperty( PROVISION_SERVICE );
-        if( serviceActivatorName == null || serviceActivatorName.trim().length() == 0 )
-        {
-            throw new ConfigurationException( "Provision Service must be configured [" + PROVISION_SERVICE + "]" );
-        }
-        final BundleContext bundleContext = createActivator( PROVISION_SERVICE, serviceActivatorName, context );
-        // sanity check
-        if( bundleContext == null )
-        {
-            throw new RuntimeException( "Could not create bundle context for provision service" );
-        }
-        final ServiceReference reference = bundleContext.getServiceReference( ProvisionService.class.getName() );
-        if( reference == null )
-        {
-            throw new RuntimeException( "Could not resolve a provision service" );
-        }
-        return (ProvisionService) bundleContext.getService( reference );
-    }
-
-    /**
-     * Installs additional services.
-     *
-     * @param context the running context
-     */
-    void installServices( final Context context )
-    {
-        LOGGER.debug( "Installing additional services" );
-        final String option = context.getOptionResolver().get( OPTION_SERVICES );
-        if( option != null )
-        {
-            final Configuration config = context.getConfiguration();
-            final String[] segments = option.split( "," );
-            for( String segment : segments )
-            {
-                NullArgumentException.validateNotEmpty( segment, "Service entry" );
-                LOGGER.debug( "Installing service [" + segment + "]" );
-                final String activatorName = config.getProperty( segment );
-                if( activatorName == null || activatorName.trim().length() == 0 )
-                {
-                    throw new ConfigurationException( "Service [" + segment + "] is not supported" );
-                }
-                createActivator( segment, activatorName, context );
-            }
-        }
-    }
 
     /**
      * By using provision service it installs provisioned bundles.
@@ -615,14 +499,14 @@ public class Run
         {
             throw new ConfigurationException( "Platform [" + platform + " " + version + "] is not supported" );
         }
-        createActivator( platform, activatorName, context );
+        standeloneFramework.createActivator( platform, activatorName );
         // then install platform service
         final String serviceActivatorName = context.getConfiguration().getProperty( PLATFORM_SERVICE );
         if( serviceActivatorName == null || serviceActivatorName.trim().length() == 0 )
         {
             throw new ConfigurationException( "Platform Service must be configured [" + PLATFORM_SERVICE + "]" );
         }
-        final BundleContext bundleContext = createActivator( PLATFORM_SERVICE, serviceActivatorName, context );
+        final BundleContext bundleContext = standeloneFramework.createActivator( PLATFORM_SERVICE, serviceActivatorName );
         // sanity check
         if( bundleContext == null )
         {
@@ -718,29 +602,7 @@ public class Run
         return systemFiles;
     }
 
-    /**
-     * Activator factory method.
-     *
-     * @param bundleName     name of the bundle to be created
-     * @param activatorClazz class name of the activator
-     * @param context        the running context
-     *
-     * @return activator related bundle context
-     */
-    BundleContext createActivator( final String bundleName, final String activatorClazz, final Context context )
-    {
-        try
-        {
-            final BundleActivator activator = (BundleActivator) Class.forName( activatorClazz ).newInstance();
-            final BundleContext bundleContext = new RunnerBundleContext( context );
-            activator.start( bundleContext );
-            return bundleContext;
-        }
-        catch( Exception e )
-        {
-            throw new RuntimeException( "Could not create [" + bundleName + "]", e );
-        }
-    }
+    
 
     /**
      * Display ops4j logo to console.

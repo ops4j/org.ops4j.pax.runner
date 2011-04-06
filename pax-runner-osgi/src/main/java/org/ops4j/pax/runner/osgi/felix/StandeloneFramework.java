@@ -60,8 +60,6 @@ public class StandeloneFramework implements Framework, CreateActivator
      */
     private static Log LOGGER;
 
-    protected Properties config;
-	
     protected Context _context;
 
 	private RunnerBundleContext _context0;
@@ -70,9 +68,8 @@ public class StandeloneFramework implements Framework, CreateActivator
     /**
      * Creates a new runner.
      */
-    public StandeloneFramework(OptionResolver optionResolver, Properties config)
+    public StandeloneFramework(OptionResolver optionResolver)
     {
-    	this.config = config;
     	this.optionResolver = optionResolver;
         if( LOGGER == null )
         {
@@ -105,7 +102,9 @@ public class StandeloneFramework implements Framework, CreateActivator
         RunnerStartLevel.install( _context.getServiceRegistry() );
     }
 
-   
+   public Context getContext() {
+	   return _context;
+   }
 
     /**
      * Creates and initialize the context.

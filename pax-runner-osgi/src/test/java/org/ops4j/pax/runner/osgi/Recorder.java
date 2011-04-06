@@ -15,19 +15,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ops4j.pax.runner;
+package org.ops4j.pax.runner.osgi;
 
-public class ConfigurationException
-    extends RuntimeException
+public interface Recorder
 {
 
-    public ConfigurationException( String message )
-    {
-        super( message );
-    }
+    void record( String string );
 
-    public ConfigurationException( String message, Throwable cause )
-    {
-        super( message, cause );
-    }
 }

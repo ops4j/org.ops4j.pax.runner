@@ -19,6 +19,7 @@ package org.ops4j.pax.runner;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+import org.ops4j.pax.runner.ConfigurationImpl;
 
 public class ConfigurationImplTest
 {

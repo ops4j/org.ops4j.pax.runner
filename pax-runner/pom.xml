@@ -62,7 +62,7 @@
     <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.framework</artifactId>
-      <version>1.0.0</version>
+      <version>3.2.0</version>
       <optional>true</optional>
       <exclusions>
         <!--
@@ -85,6 +85,12 @@
       <artifactId>slf4j-simple</artifactId>
       <version>1.6.1</version>
       <optional>true</optional>
+    </dependency>
+    <dependency>
+    	<groupId>org.ops4j.pax.runner</groupId>
+    	<artifactId>pax-runner-osgi</artifactId>
+    	<version>${project.version}</version>
+    	<optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.url</groupId>
@@ -195,6 +201,7 @@
       <version>${project.version}</version>
       <optional>true</optional>
     </dependency>
+    
   </dependencies>
 
 </project>
