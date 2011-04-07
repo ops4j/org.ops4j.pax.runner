@@ -17,41 +17,23 @@
  */
 package org.ops4j.pax.runner.platform.internal;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.ops4j.lang.NullArgumentException;
+import org.ops4j.pax.runner.platform.*;
+import org.ops4j.util.property.DictionaryPropertyResolver;
+import org.ops4j.util.property.PropertyResolver;
+import org.osgi.framework.Constants;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Dictionary;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
-import javax.xml.parsers.ParserConfigurationException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.osgi.framework.Constants;
-import org.xml.sax.SAXException;
-import org.ops4j.lang.NullArgumentException;
-import org.ops4j.pax.runner.platform.BundleReference;
-import org.ops4j.pax.runner.platform.Configuration;
-import org.ops4j.pax.runner.platform.DefaultJavaRunner;
-import org.ops4j.pax.runner.platform.JavaRunner;
-import org.ops4j.pax.runner.platform.LocalSystemFile;
-import org.ops4j.pax.runner.platform.Platform;
-import org.ops4j.pax.runner.platform.PlatformBuilder;
-import org.ops4j.pax.runner.platform.PlatformContext;
-import org.ops4j.pax.runner.platform.PlatformException;
-import org.ops4j.pax.runner.platform.SystemFileReference;
-import org.ops4j.pax.runner.platform.SystemFileReferenceBean;
-import org.ops4j.util.property.DictionaryPropertyResolver;
-import org.ops4j.util.property.PropertyResolver;
 
 /**
  * Handles the workflow of creating the platform. Concrete platforms should implement only the PlatformBuilder
@@ -161,14 +143,6 @@ public class PlatformImpl
         final List<LocalSystemFile> localSystemFiles = downloadSystemFiles(
             workDir, systemFiles, overwriteBundles || overwriteSystemBundles, downloadFeeback
         );
-        if ( configuration.keepOriginalUrls() )
-        {
-            localSystemFiles.addAll(
-                downloadSystemFiles(
-                    workDir, getUrlHandlers(), overwriteBundles || overwriteSystemBundles, downloadFeeback
-                )
-            );
-        }
         // download the rest of the bundles
         final List<BundleReference> bundlesToInstall = new ArrayList<BundleReference>();
         LOGGER.debug( "Download platform bundles" );

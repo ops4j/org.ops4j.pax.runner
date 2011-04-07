@@ -19,6 +19,17 @@
  */
 package org.ops4j.pax.runner;
 
+import static org.ops4j.pax.runner.CommandLine.OPTION_CONFIG;
+import static org.ops4j.pax.runner.CommandLine.OPTION_EXECUTOR;
+import static org.ops4j.pax.runner.CommandLine.OPTION_LOG;
+import static org.ops4j.pax.runner.CommandLine.OPTION_NOLOGO;
+import static org.ops4j.pax.runner.CommandLine.OPTION_PLATFORM;
+import static org.ops4j.pax.runner.CommandLine.OPTION_PLATFORM_VERSION;
+import static org.ops4j.pax.runner.CommandLine.OPTION_PLATFORM_VERSION_SNAPSHOT;
+import static org.ops4j.pax.runner.CommandLine.OPTION_PROFILES;
+import static org.ops4j.pax.runner.CommandLine.OPTION_PROFILES_GROUPID;
+import static org.ops4j.pax.runner.CommandLine.PLATFORM_VERSION_SNAPSHOT;
+
 import java.io.File;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -30,25 +41,13 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.LogLevel;
-import org.apache.felix.framework.Logger;
-import org.apache.felix.framework.ServiceRegistry;
 import org.apache.felix.framework.util.EventDispatcher;
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleException;
-import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.framework.ServiceEvent;
-import org.osgi.framework.ServiceListener;
-import org.osgi.framework.ServiceReference;
 import org.ops4j.io.FileUtils;
 import org.ops4j.lang.NullArgumentException;
-import static org.ops4j.pax.runner.CommandLine.*;
 import org.ops4j.pax.runner.commons.Info;
-import org.ops4j.pax.runner.osgi.CreateActivator;
 import org.ops4j.pax.runner.osgi.RunnerStandeloneFramework;
 import org.ops4j.pax.runner.osgi.felix.Context;
 import org.ops4j.pax.runner.osgi.felix.RunnerBundle;
@@ -69,6 +68,10 @@ import org.ops4j.pax.scanner.ProvisionService;
 import org.ops4j.pax.scanner.ScannedBundle;
 import org.ops4j.pax.scanner.ScannerException;
 import org.ops4j.pax.scanner.UnsupportedSchemaException;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleException;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 
 /**
  * Main runner class. Does all the work.
@@ -96,7 +99,14 @@ public class Run
      * Working directory configuration property name.
      */
     private static final String WORKING_DIRECTORY = "workingDirectory";
-	private StandeloneFramework standeloneFramework;
+    /**
+     * The osgi framework to run handlers and other service. It's a mininal standelone OSGi framework.
+     */
+    private StandeloneFramework standeloneFramework;
+    /**
+     * Handler URLs to support keepOriginalUrls option configuration property name.
+     */
+    private static final String KEEP_ORIGINAL_HANDLER_URLS = "keep.original.handler.urls";
 
     /**
      * Creates a new runner.
@@ -591,6 +601,30 @@ public class Run
                 for( String url : bcpaUrls )
                 {
                     systemFiles.add( new SystemFileReferenceBean( url, new URL( url ), false ) );
+                }
+            }
+            String keepOriginalUrls = context.getOptionResolver().get(CommandLine.OPTION_KEEP_ORIGINAL_URLS);
+            if ( Boolean.valueOf(keepOriginalUrls) )
+            {
+                Configuration configuration = context.getConfiguration();
+                String handlerUrls = configuration.getProperty(KEEP_ORIGINAL_HANDLER_URLS);
+                if ( handlerUrls != null )
+                {
+                    String[] urlKeys = handlerUrls.split(",");
+                    if ( urlKeys != null )
+                    {
+                        for ( String key : urlKeys)
+                        {
+                            NullArgumentException.validateNotEmpty(key, "Handler URL entry");
+                            String handlerUrl = configuration.getProperty(key);
+                            LOGGER.debug( "Handler URL [" + handlerUrl + "]" );
+                            if( handlerUrl == null || handlerUrl.trim().length() == 0 )
+                            {
+                                throw new ConfigurationException( "Handler URL [" + key + "] is not supported" );
+                            }
+                            systemFiles.add( new SystemFileReferenceBean(key, new URL( handlerUrl ) ) );
+                        }
+                    }
                 }
             }
 
