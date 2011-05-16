@@ -39,11 +39,34 @@ public interface JavaRunner
      * @param programOptions program specific options
      * @param javaHome       java home directory
      * @param workingDir     working directory
+     * @param environmentVariables optional environment variables
      *
      * @throws org.ops4j.pax.runner.platform.PlatformException
      *          if something goes wrong
      */
     void exec( String[] vmOptions,
+               String[] classpath,
+               String mainClass,
+               String[] programOptions,
+               String javaHome,
+               File workingDir,
+               String[] environmentVariables )
+        throws PlatformException;
+
+    /**
+     * Starts the selected Java program, up to service implementation whether it waits for it to exit.
+     *
+     * @param vmOptions      selected JVM options
+     * @param classpath      application class path
+     * @param mainClass      main program entry point
+     * @param programOptions program specific options
+     * @param javaHome       java home directory
+     * @param workingDir     working directory
+     *
+     * @throws org.ops4j.pax.runner.platform.PlatformException
+     *          if something goes wrong
+     */
+     void exec( String[] vmOptions,
                String[] classpath,
                String mainClass,
                String[] programOptions,

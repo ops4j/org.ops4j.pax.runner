@@ -50,32 +50,21 @@ public class ScriptJavaRunner
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public synchronized void exec( final String[] vmOptions,
-                                   final String[] classpath,
-                                   final String mainClass,
-                                   final String[] programOptions,
-                                   final String javaHome,
-                                   final File workingDirectory )
+    public void exec( String[] vmOptions, String[] classpath, String mainClass, String[] programOptions, String javaHome, File workingDirectory, String[] environmentVariables )
         throws PlatformException
     {
         final StringBuilder batchCp = new StringBuilder();
         final StringBuilder shellCp = new StringBuilder();
 
-        for( String path : classpath )
-        {
+        for( String path : classpath ) {
             // create Windows-specific cp
-            if( batchCp.length() != 0 )
-            {
+            if( batchCp.length() != 0 ) {
                 batchCp.append( ';' );
             }
             batchCp.append( path );
 
             // create UNIX-specific cp
-            if( shellCp.length() != 0 )
-            {
+            if( shellCp.length() != 0 ) {
                 shellCp.append( ':' );
             }
             shellCp.append( path );
@@ -99,11 +88,10 @@ public class ScriptJavaRunner
         LOG.debug( "Start UNIX command line [" + Arrays.toString( shellCommandLine.toArray() ) + "]" );
         LOG.debug( "Start WIN command line [" + Arrays.toString( batchCommandLine.toArray() ) + "]" );
 
-        final String shell = getShellScript( shellCommandLine );
-        final String batch = getBatchScript( batchCommandLine );
+        final String shell = getShellScript( shellCommandLine, environmentVariables );
+        final String batch = getBatchScript( batchCommandLine, environmentVariables );
 
-        try
-        {
+        try {
             LOG.debug( "Writing run scripts." );
 
             FileWriter sh = new FileWriter( new File( workingDirectory, "run.sh" ) );
@@ -113,28 +101,46 @@ public class ScriptJavaRunner
             FileWriter bat = new FileWriter( new File( workingDirectory, "run.bat" ) );
             bat.write( batch );
             bat.close();
-        }
-        catch( IOException e )
-        {
+        } catch( IOException e ) {
             throw new PlatformException( "Could not write run scripts", e );
         }
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public synchronized void exec( final String[] vmOptions,
+                                   final String[] classpath,
+                                   final String mainClass,
+                                   final String[] programOptions,
+                                   final String javaHome,
+                                   final File workingDirectory )
+        throws PlatformException
+    {
+        exec( vmOptions, classpath, mainClass, programOptions, javaHome, workingDirectory, new String[ 0 ] );
+    }
+
+    /**
      * Create a *nix script.
      *
-     * @param commandLine command line builder
+     * @param commandLine          command line builder
+     * @param environmentVariables
      *
      * @return shell script
      */
-    private String getShellScript( final CommandLineBuilder commandLine )
+    private String getShellScript( final CommandLineBuilder commandLine, String[] environmentVariables )
     {
         final String newline = "\n";
         final StringBuilder script = new StringBuilder();
         script.append( "#!/bin/sh" );
         script.append( newline );
-        for( String s : commandLine.toArray() )
-        {
+
+        for( String env : environmentVariables ) {
+            script.append( env );
+            script.append( newline );
+        }
+
+        for( String s : commandLine.toArray() ) {
             script.append( s );
             script.append( " " );
         }
@@ -146,17 +152,22 @@ public class ScriptJavaRunner
     /**
      * Create a windows script.
      *
-     * @param commandLine command line builder
+     * @param commandLine          command line builder
+     * @param environmentVariables
      *
      * @return batch script
      */
-    private String getBatchScript( final CommandLineBuilder commandLine )
+    private String getBatchScript( final CommandLineBuilder commandLine, String[] environmentVariables )
     {
         final String newline = "\r\n";
         final StringBuilder script = new StringBuilder();
         script.append( newline );
-        for( String s : commandLine.toArray() )
-        {
+        for( String env : environmentVariables ) {
+            script.append( "SET " );
+            script.append( env );
+            script.append( newline );
+        }
+        for( String s : commandLine.toArray() ) {
             script.append( s );
             script.append( " " );
         }

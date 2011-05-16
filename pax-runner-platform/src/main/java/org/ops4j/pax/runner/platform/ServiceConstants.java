@@ -120,6 +120,10 @@ public interface ServiceConstants
     /**
      * Use absolute file paths property name.
      */
-    static final String CONFIG_USE_ABSOLUTE_FILE_PATHS = PID + ".useAbsoluteFilePaths";    
+    static final String CONFIG_USE_ABSOLUTE_FILE_PATHS = PID + ".useAbsoluteFilePaths";
 
+    /**
+     * Environment Options property name.
+     */
+    static final String CONFIG_ENVOPTIONS =  PID + ".envOptions";
 }

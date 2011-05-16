@@ -60,6 +60,16 @@ public class InProcessJavaRunner
         m_frameworkActive = false;
     }
 
+    public void exec( String[] vmOptions, String[] classpath, String mainClass, String[] programOptions, String javaHome, File workingDir, String[] environmentVariables )
+        throws PlatformException
+    {
+        if (environmentVariables.length == 0) {
+            exec( vmOptions,classpath,mainClass,programOptions,javaHome,workingDir );
+        }else {
+            throw new PlatformException( "Rethink what you are doing: trying to change process environment (setting env variables) and use Pax Runner with inProcess?" );
+        }
+    }
+
     /**
      * {@inheritDoc}
      */

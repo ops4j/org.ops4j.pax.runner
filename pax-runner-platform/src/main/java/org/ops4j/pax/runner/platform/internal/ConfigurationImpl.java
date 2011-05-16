@@ -172,6 +172,31 @@ public class ConfigurationImpl
     }
 
     /**
+     * @see org.ops4j.pax.runner.platform.Configuration#getEnvOptions() ()
+     */
+    public String[] getEnvOptions()
+    {
+        if( !contains( ServiceConstants.CONFIG_ENVOPTIONS ) ) {
+            final String envOptions = m_propertyResolver.get( ServiceConstants.CONFIG_ENVOPTIONS );
+            if( envOptions != null ) {
+                final Collection<String> options = new ArrayList<String>();
+                for( String option : envOptions.split( "," ) ) {
+                    if( option.trim().length() > 0 ) {
+                        options.add( option );
+                    }
+                }
+                if( options.size() > 0 ) {
+                    return set( ServiceConstants.CONFIG_ENVOPTIONS, options.toArray( new String[ options.size() ] ) );
+                }
+                else {
+                    return set( ServiceConstants.CONFIG_ENVOPTIONS, new String[0] );
+                }
+            }
+        }
+        return get( ServiceConstants.CONFIG_ENVOPTIONS );
+    }
+
+    /**
      * TODO add unit tests
      *
      * @see Configuration#getClasspath()

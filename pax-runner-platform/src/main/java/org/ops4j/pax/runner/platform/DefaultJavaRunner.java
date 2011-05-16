@@ -19,7 +19,11 @@ package org.ops4j.pax.runner.platform;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.io.Pipe;
@@ -72,6 +76,16 @@ public class DefaultJavaRunner
         m_wait = wait;
     }
 
+    public synchronized void exec( final String[] vmOptions,
+                                   final String[] classpath,
+                                   final String mainClass,
+                                   final String[] programOptions,
+                                   final String javaHome,
+                                   final File workingDirectory )
+        throws PlatformException
+    {
+        exec( vmOptions,classpath,mainClass,programOptions,javaHome,workingDirectory,new String [0] );
+    }
     /**
      * {@inheritDoc}
      */
@@ -80,7 +94,8 @@ public class DefaultJavaRunner
                                    final String mainClass,
                                    final String[] programOptions,
                                    final String javaHome,
-                                   final File workingDirectory )
+                                   final File workingDirectory,
+                                   final String[] envOptions )
         throws PlatformException
     {
         if( m_frameworkProcess != null )
@@ -112,7 +127,7 @@ public class DefaultJavaRunner
         try
         {
             LOG.debug( "Starting platform process." );
-            m_frameworkProcess = Runtime.getRuntime().exec( commandLine.toArray(), null, workingDirectory );
+            m_frameworkProcess = Runtime.getRuntime().exec( commandLine.toArray(), createEnvironmentVars( envOptions ), workingDirectory );
         }
         catch( IOException e )
         {
@@ -133,6 +148,17 @@ public class DefaultJavaRunner
         {
             Info.println(); // print an empty line
         }
+    }
+
+    private String[] createEnvironmentVars( String[] envOptions )
+    {
+        List<String> env = new ArrayList<String>(  );
+        Map<String, String> getenv = System.getenv();
+        for (String key : getenv.keySet() ) {
+            env.add( key + "=" + getenv.get( key ) );
+        }
+        if (envOptions != null) Collections.addAll( env, envOptions );
+        return env.toArray( new String[env.size()] );
     }
 
     /**

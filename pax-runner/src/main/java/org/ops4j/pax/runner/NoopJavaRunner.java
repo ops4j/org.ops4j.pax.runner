@@ -21,6 +21,12 @@ public class NoopJavaRunner
      */
     private static final Log LOGGER = LogFactory.getLog( NoopJavaRunner.class );
 
+    public void exec( String[] vmOptions, String[] classpath, String mainClass, String[] programOptions, String javaHome, File workingDir, String[] environmentVariables )
+        throws PlatformException
+    {
+        LOGGER.info( "Skipping platform start and exit immediately" );
+    }
+
     /**
      * {@inheritDoc}
      */

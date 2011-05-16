@@ -45,7 +45,13 @@ public class InitDScriptRunner implements JavaRunner {
 		}
 	}
 
-	/**
+    public void exec( String[] vmOptions, String[] classpath, String mainClass, String[] programOptions, String javaHome, File workingDir )
+        throws PlatformException
+    {
+        exec( vmOptions, classpath, mainClass, programOptions,javaHome,workingDir,new String[0] );
+    }
+
+    /**
 	 * retrieve template, replace some values and write to m_applicationName
 	 */
 	public void exec(String[] vmOptions,
@@ -53,7 +59,8 @@ public class InitDScriptRunner implements JavaRunner {
 			         String   mainClass,
 			         String[] programOptions,
 			         String   javaHome,
-			         File     workingDir)
+			         File     workingDir,
+                     String[] environmentVariables )
 			throws PlatformException {
 	    File scriptFile = new File(workingDir, m_applicationName);
 		try {
@@ -103,6 +110,8 @@ public class InitDScriptRunner implements JavaRunner {
 		            }
 				    line = "    " + startCommand + " >${log_file} 2>&1 &";
 				}
+                // TODO add env vars properly.
+                
 				writer.write(line + "\n");
 			}
 		} catch (Exception e) {

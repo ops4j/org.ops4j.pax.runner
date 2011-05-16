@@ -140,7 +140,7 @@ public class PlatformImplTest
     {
         final JavaRunner javaRunner = createMock( JavaRunner.class );
         javaRunner.exec( (String[]) notNull(), (String[]) notNull(), (String) notNull(), (String[]) notNull(),
-                         (String) notNull(), (File) notNull()
+                         (String) notNull(), (File) notNull(),(String[]) notNull()
         );
         final FilePathStrategy filePathStrategy = createMock( FilePathStrategy.class );
 
@@ -183,6 +183,7 @@ public class PlatformImplTest
         m_context.setSystemPackages( "" );
         m_context.setExecutionEnvironment( "" );
         expect( m_builder.getVMOptions( m_context ) ).andReturn( new String[]{ "-Dproperty=value" } );
+        expect( m_config.getEnvOptions( ) ).andReturn( new String[]{ } ).times( 2 );
         expect( m_config.getClasspath() ).andReturn( "" );
         expect( m_builder.getArguments( m_context ) ).andReturn( new String[]{ "arg1" } );
 

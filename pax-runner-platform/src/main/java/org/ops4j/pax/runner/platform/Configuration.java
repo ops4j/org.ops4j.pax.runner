@@ -57,6 +57,14 @@ public interface Configuration
     String[] getVMOptions();
 
     /**
+     * Returns the environment options option - optional; env options to be used for the Process that will
+     * be used for the platform.
+     *
+     * @return value of env options option
+     */
+    String[] getEnvOptions();
+
+    /**
      * Returns the classpatch option - optional; a File.pathSeparator separated list of classpath entries to be
      * appended to the framework classpath which consists out of the framework system jar.
      *
