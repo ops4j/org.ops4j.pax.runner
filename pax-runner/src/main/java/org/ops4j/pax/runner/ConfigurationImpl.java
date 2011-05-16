@@ -76,7 +76,7 @@ public class ConfigurationImpl
             NullArgumentException.validateNotNull( inputStream, "Canot find url [" + url + "]" );
             m_properties = new Properties();
             m_properties.load( inputStream );
-            LOGGER.info( "Using config [" + url + "]" );
+            LOGGER.debug( "Using config [" + url + "]" );
         }
         catch( IOException e )
         {
