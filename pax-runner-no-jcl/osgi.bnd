@@ -8,6 +8,7 @@ Bundle-Version>:\
   ${pom.version}
 
 Private-Package:\
+  !org.slf4j.impl,\
   !org.apache.commons.logging,\
   *
 
