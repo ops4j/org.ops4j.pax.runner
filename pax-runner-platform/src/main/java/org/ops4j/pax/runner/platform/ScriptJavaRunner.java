@@ -92,7 +92,7 @@ public class ScriptJavaRunner
         final String batch = getBatchScript( batchCommandLine, environmentVariables );
 
         try {
-            LOG.debug( "Writing run scripts." );
+            LOG.debug( "Writing run scripts.." );
 
             FileWriter sh = new FileWriter( new File( workingDirectory, "run.sh" ) );
             sh.write( shell );
@@ -101,6 +101,7 @@ public class ScriptJavaRunner
             FileWriter bat = new FileWriter( new File( workingDirectory, "run.bat" ) );
             bat.write( batch );
             bat.close();
+            LOG.debug( "Success writing run scripts." );
         } catch( IOException e ) {
             throw new PlatformException( "Could not write run scripts", e );
         }
@@ -135,9 +136,11 @@ public class ScriptJavaRunner
         script.append( "#!/bin/sh" );
         script.append( newline );
 
-        for( String env : environmentVariables ) {
-            script.append( env );
-            script.append( newline );
+        if (environmentVariables != null ) {
+	        for( String env : environmentVariables ) {
+	            script.append( env );
+	            script.append( newline );
+	        }
         }
 
         for( String s : commandLine.toArray() ) {
@@ -162,10 +165,12 @@ public class ScriptJavaRunner
         final String newline = "\r\n";
         final StringBuilder script = new StringBuilder();
         script.append( newline );
-        for( String env : environmentVariables ) {
-            script.append( "SET " );
-            script.append( env );
-            script.append( newline );
+        if (environmentVariables != null ) {
+	        for( String env : environmentVariables ) {
+	            script.append( "SET " );
+	            script.append( env );
+	            script.append( newline );
+	        }
         }
         for( String s : commandLine.toArray() ) {
             script.append( s );

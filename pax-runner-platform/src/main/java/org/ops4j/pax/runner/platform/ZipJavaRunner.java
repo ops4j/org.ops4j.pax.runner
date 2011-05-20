@@ -53,11 +53,13 @@ public class ZipJavaRunner
                       final String mainClass,
                       final String[] programOptions,
                       final String javaHome,
-                      final File workingDir )
+                      final File workingDir,
+                      String[] environmentVariables
+                      )
         throws PlatformException
     {
-        super.exec( vmOptions, classpath, mainClass, programOptions, javaHome, workingDir );
-        // zip it up:
+    	super.exec( vmOptions, classpath, mainClass, programOptions, javaHome, workingDir, environmentVariables );
+        LOG.info( "Now writing distribution zip.." );
         ZipOutputStream dest = null;
         try
         {
