@@ -60,6 +60,24 @@
       </roles>
       <timezone>UTC+2</timezone>
     </developer>
+	<developer>
+      <id>tonit</id>
+      <name>Toni Menzel</name>
+      <email>toni@okidokiteam.com</email>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>UTC+1</timezone>
+    </developer>
+	<developer>
+      <id>dpishchukhin</id>
+      <name>Dmytro Pishchukhin</name>
+      <email>dmytro.pishchukhin@gmail.com</email>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>UTC+1</timezone>
+    </developer>
   </developers>
 
   <build>
