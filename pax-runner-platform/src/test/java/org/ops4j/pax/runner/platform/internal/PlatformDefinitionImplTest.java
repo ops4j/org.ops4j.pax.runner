@@ -17,16 +17,19 @@
  */
 package org.ops4j.pax.runner.platform.internal;
 
+import org.junit.Test;
+import org.ops4j.io.FileUtils;
+import org.ops4j.pax.runner.platform.BundleReference;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
-import javax.xml.parsers.ParserConfigurationException;
-import static org.junit.Assert.*;
-import org.junit.Test;
-import org.xml.sax.SAXException;
-import org.ops4j.io.FileUtils;
-import org.ops4j.pax.runner.platform.BundleReference;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class PlatformDefinitionImplTest
 {
@@ -234,4 +237,40 @@ public class PlatformDefinitionImplTest
         assertEquals( "Bundle 6 url", new URL( "file:bundle6.jar" ), references.get( 4 ).getURL() );
     }
 
+    @Test
+    public void getPlatformBundlesForDefaultProfileWithOptions()
+        throws IOException, ParserConfigurationException, SAXException
+    {
+        PlatformDefinition definition = new PlatformDefinitionImpl(
+            FileUtils.getFileFromClasspath( "platformdefinition/definition_ex.xml" ).toURL().openStream(),
+            10
+        );
+        assertEquals( "System package name", "System package name", definition.getSystemPackageName() );
+        assertEquals( "System package", new URL( "file:system.jar" ), definition.getSystemPackage() );
+        assertEquals( "System packages", "package.1,package.2", definition.getPackages() );
+        // verify default profile
+        List<BundleReference> references = definition.getPlatformBundles( null );
+        assertNotNull( "Bundle references from default profile cannot be null", references );
+        assertEquals( "Number of bundle references from default profile", 4, references.size() );
+        assertEquals( "Bundle 1 name from default profile", "Bundle 1", references.get( 0 ).getName() );
+        assertEquals( "Bundle 1 url from default profile", new URL( "file:bundle1.jar" ), references.get( 0 ).getURL()
+        );
+        assertEquals( "Bundle 1 @nostart from default profile", false, references.get( 0 ).shouldStart()
+        );
+        assertEquals( "Bundle 2 name from default profile", "file:bundle2.jar", references.get( 1 ).getName() );
+        assertEquals( "Bundle 2 url from default profile", new URL( "file:bundle2.jar" ), references.get( 1 ).getURL()
+        );
+        assertEquals( "Bundle 2 @3 level from default profile", new Integer(3), references.get( 1 ).getStartLevel());
+        assertEquals( "Bundle 3 name from default profile", "file:bundle3.jar", references.get( 2 ).getName() );
+        assertEquals( "Bundle 3 url from default profile", new URL( "file:bundle3.jar" ), references.get( 2 ).getURL()
+        );
+        assertEquals( "Bundle 3 @3 level from default profile", new Integer(3), references.get( 2 ).getStartLevel());
+        assertEquals( "Bundle 3 @update from default profile", true, references.get( 2 ).shouldUpdate());
+        assertEquals( "Bundle 4 name from default profile", "file:bundle4.jar", references.get( 3 ).getName() );
+        assertEquals( "Bundle 4 url from default profile", new URL( "file:bundle4.jar" ), references.get( 3 ).getURL()
+        );
+        assertEquals( "Bundle 4 default level from default profile", new Integer(10), references.get( 3 ).getStartLevel());
+        assertEquals( "Bundle 4 @start TRUE from default profile", true, references.get( 3 ).shouldStart());
+        assertEquals( "Bundle 4 @update FALSE from default profile", false, references.get( 3 ).shouldUpdate());
+    }
 }

@@ -1,0 +1,20 @@
+<platform>
+  <name>System package name</name>
+  <system>file:system.jar</system>
+  <packages>package.1,package.2</packages>
+  <profile name="default" default="true">
+    <bundle>
+      <name>Bundle 1</name>
+      <url>file:bundle1.jar@nostart</url>
+    </bundle>
+    <bundle>
+      <url>file:bundle2.jar@3</url>
+    </bundle>
+    <bundle>
+      <url>file:bundle3.jar@3@update</url>
+    </bundle>
+    <bundle>
+      <url>file:bundle4.jar</url>
+    </bundle>
+  </profile>
+</platform>
