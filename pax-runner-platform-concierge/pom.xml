@@ -5,13 +5,13 @@
   <parent>
     <groupId>org.ops4j.pax</groupId>
     <artifactId>runner</artifactId>
-    <version>1.7.4-SNAPSHOT</version>
+    <version>1.7.4</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <groupId>org.ops4j.pax.runner</groupId>
   <artifactId>pax-runner-platform-concierge</artifactId>
-  <version>1.7.4-SNAPSHOT</version>
+  <version>1.7.4</version>
   <packaging>bundle</packaging>
 
   <name>OPS4J Pax Runner - Concierge Platform Builder</name>
