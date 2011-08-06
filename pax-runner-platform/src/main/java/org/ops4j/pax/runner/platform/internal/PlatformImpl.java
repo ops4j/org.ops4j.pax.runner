@@ -87,7 +87,8 @@ public class PlatformImpl
     public void start( final List<SystemFileReference> systemFiles,
                        final List<BundleReference> bundles,
                        final Properties properties,
-                       final Dictionary config,
+                       @SuppressWarnings("rawtypes") 
+    				   final Dictionary config,
                        final JavaRunner javaRunner )
         throws PlatformException
     {
@@ -319,6 +320,8 @@ public class PlatformImpl
                                                    final boolean skipInvalidBundles )
         throws PlatformException
     {
+        // TODO Is there an intelligent but easy way to avoid hardcoding "wrap:"
+        // and "reference:" for special case handling?
         final List<BundleReference> localBundles = new ArrayList<BundleReference>();
         if ( bundles != null )
         {
@@ -344,7 +347,8 @@ public class PlatformImpl
                         LOGGER.warn( "Could not auto wrap url [" + url + "] due to: " + e.getMessage() );
                     }
                 }
-                if ( keepOriginalUrls )
+                // "reference:" bundles shall not be downloaded, they are provisioned in place.
+                if ( keepOriginalUrls || url.getProtocol().equals( "reference" ) )
                 {
                     localBundles.add( reference );
                 }
