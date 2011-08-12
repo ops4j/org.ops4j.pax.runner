@@ -84,6 +84,14 @@
   <extension
       point="org.eclipse.pde.ui.osgiFrameworks">
     <framework
+        id="--platform=equinox --version=3.7.0"
+        launcherDelegate="org.ops4j.pax.cursor.LaunchConfiguration"
+        name="Equinox 3.7.0 via Pax Runner">
+    </framework>
+  </extension>
+  <extension
+      point="org.eclipse.pde.ui.osgiFrameworks">
+    <framework
         id="--platform=equinox --snapshot"
         launcherDelegate="org.ops4j.pax.cursor.LaunchConfiguration"
         name="Equinox Snapshot via Pax Runner">
@@ -268,6 +276,14 @@
   <extension
       point="org.eclipse.pde.ui.osgiFrameworks">
     <framework
+        id="--platform=felix --version=3.2.2"
+        launcherDelegate="org.ops4j.pax.cursor.LaunchConfiguration"
+        name="Felix 3.2.2 via Pax Runner">
+    </framework>
+  </extension>  
+  <extension
+      point="org.eclipse.pde.ui.osgiFrameworks">
+    <framework
         id="--platform=felix --snapshot"
         launcherDelegate="org.ops4j.pax.cursor.LaunchConfiguration"
         name="Felix Snapshot via Pax Runner">
@@ -383,6 +399,14 @@
         id="--platform=knopflerfish --version=3.0.0"
         launcherDelegate="org.ops4j.pax.cursor.LaunchConfiguration"
         name="Knopflerfish 3.0.0 via Pax Runner">
+    </framework>
+  </extension>
+  <extension
+      point="org.eclipse.pde.ui.osgiFrameworks">
+    <framework
+        id="--platform=knopflerfish --version=3.2.0"
+        launcherDelegate="org.ops4j.pax.cursor.LaunchConfiguration"
+        name="Knopflerfish 3.2.0 via Pax Runner">
     </framework>
   </extension>
   <extension
