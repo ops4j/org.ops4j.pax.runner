@@ -11,7 +11,6 @@
 
   <groupId>org.ops4j.pax.runner</groupId>
   <artifactId>pax-runner-handler</artifactId>
-  <version>1.7.5-SNAPSHOT</version>
   <packaging>bundle</packaging>
 
   <name>OPS4J Pax Runner - Handler</name>
