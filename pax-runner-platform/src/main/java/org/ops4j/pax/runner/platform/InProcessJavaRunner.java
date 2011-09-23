@@ -17,6 +17,11 @@
  */
 package org.ops4j.pax.runner.platform;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.ops4j.pax.runner.commons.Info;
+import org.ops4j.pax.runner.handler.internal.URLUtils;
+
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -27,10 +32,6 @@ import java.net.URLStreamHandlerFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.ops4j.pax.runner.commons.Info;
-import org.ops4j.pax.runner.handler.internal.URLUtils;
 
 /**
  * In process Java Runner. No external process will be started.
@@ -63,7 +64,7 @@ public class InProcessJavaRunner
     public void exec( String[] vmOptions, String[] classpath, String mainClass, String[] programOptions, String javaHome, File workingDir, String[] environmentVariables )
         throws PlatformException
     {
-        if (environmentVariables.length == 0) {
+        if (environmentVariables == null || environmentVariables.length == 0) {
             exec( vmOptions,classpath,mainClass,programOptions,javaHome,workingDir );
         }else {
             throw new PlatformException( "Rethink what you are doing: trying to change process environment (setting env variables) and use Pax Runner with inProcess?" );
