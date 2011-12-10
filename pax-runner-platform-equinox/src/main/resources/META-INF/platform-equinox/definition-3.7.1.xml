@@ -1,0 +1,8 @@
+<platform>
+
+  <name>Equinox 3.7.1</name>
+  <system>link:classpath:runner-links/org.eclipse.osgi-3.7.1.link</system>
+
+  <profile name="minimal" default="true"/>
+  
+</platform>

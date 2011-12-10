@@ -92,6 +92,14 @@
   <extension
       point="org.eclipse.pde.ui.osgiFrameworks">
     <framework
+        id="--platform=equinox --version=3.7.1"
+        launcherDelegate="org.ops4j.pax.cursor.LaunchConfiguration"
+        name="Equinox 3.7.1 via Pax Runner">
+    </framework>
+  </extension>
+  <extension
+      point="org.eclipse.pde.ui.osgiFrameworks">
+    <framework
         id="--platform=equinox --snapshot"
         launcherDelegate="org.ops4j.pax.cursor.LaunchConfiguration"
         name="Equinox Snapshot via Pax Runner">
