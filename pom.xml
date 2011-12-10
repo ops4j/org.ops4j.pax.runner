@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -16,10 +17,10 @@
   <name>OPS4J Pax Runner - Root</name>
   <description>
     OPS4J Pax Runner - Easiest way to run your bundles.
-    See details at http://wiki.ops4j.org/confluence/x/A4A6.
+    See details at http://team.ops4j.org/wiki/display/paxrunner/.
   </description>
 
-  <url>http://www.ops4j.org/projects/runner/</url>
+  <url>http://team.ops4j.org/wiki/display/paxrunner/</url>
 
   <issueManagement>
     <system>jira</system>
@@ -60,7 +61,7 @@
       </roles>
       <timezone>UTC+2</timezone>
     </developer>
-	<developer>
+    <developer>
       <id>tonit</id>
       <name>Toni Menzel</name>
       <email>toni@okidokiteam.com</email>
@@ -69,7 +70,7 @@
       </roles>
       <timezone>UTC+1</timezone>
     </developer>
-	<developer>
+    <developer>
       <id>dpishchukhin</id>
       <name>Dmytro Pishchukhin</name>
       <email>dmytro.pishchukhin@gmail.com</email>
@@ -164,7 +165,8 @@
         <artifactId>org.apache.felix.bundlerepository</artifactId>
         <version>1.2.1</version>
         <optional>true</optional>
-        <!-- the following exclusions can be taken out once they are not anymore exported by felix obr -->
+        <!-- the following exclusions can be taken out once they are not anymore 
+          exported by felix obr -->
         <exclusions>
           <exclusion>
             <groupId>net.sf.kxml</groupId>
@@ -214,7 +216,7 @@
         <artifactId>commons-logging-api</artifactId>
         <version>1.1</version>
       </dependency>
-      <!-- Test dependencies-->
+      <!-- Test dependencies -->
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
@@ -268,9 +270,7 @@
         <module>pax-runner</module>
         <module>pax-runner-no-jcl</module>
         <module>pax-runner-assembly</module>
-<!--
-        <module>pax-runner-eclipse</module>
--->
+        <!-- <module>pax-runner-eclipse</module> -->
       </modules>
     </profile>
   </profiles>
