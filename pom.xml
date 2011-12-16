@@ -28,7 +28,7 @@
   </issueManagement>
 
   <properties>
-    <release-paxrunner-altGitURL>scm:git:ssh://git@github.com/ops4j/org.ops4j.pax.runner.git</release-paxrunner-altGitURL>
+    <release-paxrunner-altGitURL>scm:git:git@github.com:ops4j/org.ops4j.pax.runner.git</release-paxrunner-altGitURL>
     <dependency.base.version>1.2.3</dependency.base.version>
     <dependency.swissbox.version>1.3.1</dependency.swissbox.version>
     <dependency.url.version>1.3.5</dependency.url.version>
@@ -36,7 +36,7 @@
   </properties>
 
   <scm>
-    <connection>scm:git:git://github.com/ops4j/org.ops4j.pax.runner.git</connection>
+    <connection>scm:git:git@github.com:ops4j/org.ops4j.pax.runner.git</connection>
     <developerConnection>${release-paxrunner-altGitURL}</developerConnection>
     <url>http://github.com/ops4j/org.ops4j.pax.runner/tree/master</url>
   </scm>
