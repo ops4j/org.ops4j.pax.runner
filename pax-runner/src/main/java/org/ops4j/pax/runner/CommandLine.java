@@ -104,6 +104,10 @@ public interface CommandLine
      * Disable Logos option.
      */
     static final String OPTION_NOLOGO = "nologo";
+    /**
+     * Daemon Timeout option.
+     */
+    static final String OPTION_DAEMON_TIMEOUT = "daemonTimeout";
 
     /**
      * Returns the value of an option by key. If option is not defined returns null.

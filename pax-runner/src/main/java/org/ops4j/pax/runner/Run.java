@@ -275,41 +275,54 @@ public class Run
             LOGGER.debug( "Using default executor" );
             return null;
         }
-        if( "noop".equalsIgnoreCase( executor ) )
+        else if( "noop".equalsIgnoreCase( executor ) )
         {
             LOGGER.debug( "Using noop executor" );
             return new NoopJavaRunner();
         }
-        if( "script".equalsIgnoreCase( executor ) )
+        else if( "script".equalsIgnoreCase( executor ) )
         {
             LOGGER.debug( "Using script executor" );
             return new ScriptJavaRunner();
         }
-        if( "zip".equalsIgnoreCase( executor ) )
+        else if( "zip".equalsIgnoreCase( executor ) )
         {
             LOGGER.debug( "Using zip executor" );
             return new ZipJavaRunner();
         }
-        if( "inProcess".equalsIgnoreCase( executor ) )
+        else if( "inProcess".equalsIgnoreCase( executor ) )
         {
             LOGGER.debug( "Using in process executor" );
             return new InProcessJavaRunner();
         }
-        if( executor.startsWith("init.d" ))
+        else if( executor.startsWith("init.d" ))
         {
             String[] data    = executor.split(",");
             String   appName = (data.length > 1 && data[1].length() > 0) ? data[1] : null;
             return new InitDScriptRunner(appName);
         }
-        try
+        else if( executor.startsWith("daemon-start" ))
         {
-            final JavaRunner javaRunner = (JavaRunner) getClass().getClassLoader().loadClass( executor ).newInstance();
-            LOGGER.debug( "Using " + executor + " executor" );
-            return javaRunner;
+            LOGGER.debug( "Using daemon-start executor" );
+            return new DaemonStartRunner(resolver.get(OPTION_DAEMON_TIMEOUT));
         }
-        catch( Exception ignore )
+        else if( executor.startsWith("daemon-stop" ))
         {
-            LOGGER.debug( "Connot load executor: " + executor + " reason: " + ignore.getMessage() );
+            LOGGER.debug( "Using daemon-stop executor" );
+            return new DaemonStopRunner();
+        }
+        else
+        {
+            try
+            {
+                final JavaRunner javaRunner = (JavaRunner) getClass().getClassLoader().loadClass( executor ).newInstance();
+                LOGGER.debug( "Using " + executor + " executor" );
+                return javaRunner;
+            }
+            catch( Exception ignore )
+            {
+                LOGGER.debug( "Connot load executor: " + executor + " reason: " + ignore.getMessage() );
+            }
         }
         throw new ConfigurationException( "Executor [" + executor + "] is not supported" );
     }
