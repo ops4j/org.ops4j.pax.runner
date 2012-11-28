@@ -102,10 +102,10 @@ class DaemonCommons {
      * @param workingDir
      * @return The shutdown port that was configured (if any) to launch the
      *         Daemon (if it was launched), the default port otherwise
-     * @see DaemonConstants#OPT_SHUTDOWN_PORT
+     * @see DaemonCommons#OPT_SHUTDOWN_PORT
      */
     static int getShutdownPort(File workingDir) {
-        int port = shutdownPort;
+        int port;
         String sPort = readDaemonProperty(workingDir, OPT_SHUTDOWN_PORT);
         if ((port = parseSafeInt(sPort)) != -1)
             return port;

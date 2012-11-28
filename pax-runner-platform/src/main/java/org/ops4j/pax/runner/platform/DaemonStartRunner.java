@@ -56,7 +56,7 @@ public class DaemonStartRunner implements StoppableJavaRunner {
         };
     }
 
-    public synchronized void exec(final String[] vmOptions, final String[] classpath, final String mainClass,
+    public void exec(final String[] vmOptions, final String[] classpath, final String mainClass,
                                   final String[] programOptions, final String javaHome, final File workingDir,
                                   final String[] environmentVariables) throws PlatformException {
         new Thread("DaemonStartRunner") {
@@ -83,7 +83,7 @@ public class DaemonStartRunner implements StoppableJavaRunner {
         exec(vmOptions, classpath, mainClass, programOptions, javaHome, workingDir, new String[0]);
     }
 
-    public synchronized void shutdown() {
+    public void shutdown() {
         m_delegate.shutdown();
     }
 
@@ -110,7 +110,7 @@ public class DaemonStartRunner implements StoppableJavaRunner {
                     // Wait for the next connection
                     try {
                         // handle each new connection in a separate thread
-                        new ClientHandler().handle(serverSocket.accept());
+                        new ClientHandler(workingDir).handle(serverSocket.accept());
                     } catch (IOException e) {
                         LOG.debug("Stopped accepting connections." + e.getMessage());
                     }
@@ -190,10 +190,33 @@ public class DaemonStartRunner implements StoppableJavaRunner {
         }
     }
 
+    private void removeLockFile(File workingDir) {
+        File lock = new File(DaemonCommons.getRunnerHomeDir(workingDir, true), DaemonCommons.LOCK_FILE);
+        if (lock.exists()) {
+            lock.delete();
+        }
+    }
+
+    private void stopAwait() {
+        continueAwait = false;
+        try {
+            if (serverSocket != null) {
+                serverSocket.close();
+                serverSocket = null;
+                LOG.info("Stopped shutdown port.");
+            }
+        } catch (IOException e) {
+            ;
+        }
+    }
+
     /**
      * Stops the running instance of the Daemon and Pax Runner if any.
+     * @param workingDir
      */
-    public void stop() {
+    public void stop(File workingDir) {
+        stopAwait();
+        removeLockFile(workingDir);
         if (shutdownHook != null) {
             Runtime.getRuntime().removeShutdownHook(shutdownHook);
             LOG.trace("Removed Shutdown Hook.");
@@ -213,15 +236,19 @@ public class DaemonStartRunner implements StoppableJavaRunner {
      * @author Thomas Joseph.
      */
     class ClientHandler {
+        private File workingDir;
+
+        public ClientHandler(File workingDir) {
+            this.workingDir = workingDir;
+        }
+
         public void handle(final Socket socket) {
             new Thread(
                     new Runnable() {
                         public void run() {
-                            boolean isLocalConnect = false;
-                            InputStream stream = null;
-                            PrintWriter out = null;
+                            InputStream stream;
+                            PrintWriter out;
                             try {
-                                isLocalConnect = socket.getInetAddress().isLoopbackAddress();
                                 socket.setSoTimeout(networkTimeout);
                                 LOG.trace("Connected.");
                                 stream = socket.getInputStream();
@@ -253,7 +280,7 @@ public class DaemonStartRunner implements StoppableJavaRunner {
                             boolean match = command.toString().equals(DaemonCommons.shutdown);
                             if (match) {
                                 LOG.trace("Shutdown command recieved via Telnet.");
-                                stop();
+                                stop(workingDir);
                                 return;
                             } else {
                                 LOG.warn("Pax Runner: Invalid command.");
