@@ -5,11 +5,6 @@ import org.apache.commons.logging.LogFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.security.AccessControlException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -26,8 +21,6 @@ public class DaemonStartRunner implements StoppableJavaRunner {
 
     private Thread shutdownHook = null;
 
-    private int networkTimeout = 1000 * 60;
-    private ServerSocket serverSocket = null;
     private boolean continueAwait = true;
 
     private final StoppableJavaRunner m_delegate;
@@ -57,8 +50,8 @@ public class DaemonStartRunner implements StoppableJavaRunner {
     }
 
     public void exec(final String[] vmOptions, final String[] classpath, final String mainClass,
-                                  final String[] programOptions, final String javaHome, final File workingDir,
-                                  final String[] environmentVariables) throws PlatformException {
+                     final String[] programOptions, final String javaHome, final File workingDir,
+                     final String[] environmentVariables) throws PlatformException {
         new Thread("DaemonStartRunner") {
             @Override
             public void run() {
@@ -76,7 +69,7 @@ public class DaemonStartRunner implements StoppableJavaRunner {
         } catch (InterruptedException e) {
             LOG.warn(e.getMessage(), e);
         }
-        startServerSocket(workingDir);
+        startShutdownFileMonitor(workingDir);
     }
 
     public void exec(String[] vmOptions, String[] classpath, String mainClass, String[] programOptions, String javaHome, File workingDir) throws PlatformException {
@@ -87,71 +80,32 @@ public class DaemonStartRunner implements StoppableJavaRunner {
         m_delegate.shutdown();
     }
 
-    private void startServerSocket(final File workingDir) {
-        new Thread("ServerSocketThread") {
+    private void startShutdownFileMonitor(final File workingDir) {
+        new Thread("ShutdownFileMonitor") {
             public void run() {
-                createInfoFile(workingDir);
                 createLockFile(workingDir);
                 shutdownHook = createShutdownHook();
                 Runtime.getRuntime().addShutdownHook(shutdownHook);
 
-                // Set up a server socket to wait on
-                try {
-                    LOG.debug("Setting up shutdown port on " + DaemonCommons.getShutdownPort(workingDir));
-                    serverSocket = new ServerSocket(DaemonCommons.getShutdownPort(workingDir));
-                } catch (IOException e) {
-                    throw new RuntimeException("Unable to set up shutdown port ["
-                            + DaemonCommons.getShutdownPort(workingDir)
-                            + "].", e);
-                }
-
-                // Loop waiting for a connection and a valid command
+                // Loop waiting for a shutdown file
                 while (continueAwait) {
                     // Wait for the next connection
+                    // handle each new connection in a separate thread
+                    File file = new File(workingDir, DaemonCommons.SHUTDOWN_FILE);
+                    if (file.exists()) {
+                        file.delete();
+                        stopAwait();
+                    }
                     try {
-                        // handle each new connection in a separate thread
-                        new ClientHandler(workingDir).handle(serverSocket.accept());
-                    } catch (IOException e) {
-                        LOG.debug("Stopped accepting connections." + e.getMessage());
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        stopAwait();
                     }
-                }
-
-                // Close the server socket and return
-                try {
-                    if (serverSocket != null) {
-                        serverSocket.close();
-                    }
-                } catch (IOException e) {
-                    ;
                 }
                 LOG.trace("Finished awaiting...");
             }
         }.start();
     }
-
-    /**
-     * Creates a file that stores information about the running instance of the
-     * Daemon.
-     *
-     * @param workingDir
-     */
-    private void createInfoFile(File workingDir) {
-        File info = new File(DaemonCommons.getRunnerHomeDir(workingDir, true), DaemonCommons.INFO_FILE);
-        int count = 10;
-        while (info.exists() && count > 0) {
-            info.delete();
-            count--;
-        }
-        try {
-            info.createNewFile();
-            String content = DaemonCommons.OPT_SHUTDOWN_CMD + "=" + DaemonCommons.shutdown +
-                    DaemonCommons.NEWLINE + DaemonCommons.OPT_SHUTDOWN_PORT + "=" + DaemonCommons.shutdownPort;
-            DaemonCommons.writeToFile(info, content);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     /**
      * Creates a simple shutdown hook.
@@ -199,19 +153,11 @@ public class DaemonStartRunner implements StoppableJavaRunner {
 
     private void stopAwait() {
         continueAwait = false;
-        try {
-            if (serverSocket != null) {
-                serverSocket.close();
-                serverSocket = null;
-                LOG.info("Stopped shutdown port.");
-            }
-        } catch (IOException e) {
-            ;
-        }
     }
 
     /**
      * Stops the running instance of the Daemon and Pax Runner if any.
+     *
      * @param workingDir
      */
     public void stop(File workingDir) {
@@ -224,105 +170,6 @@ public class DaemonStartRunner implements StoppableJavaRunner {
             shutdownHook = null;
         } else {
             shutdown();
-        }
-    }
-
-    /**
-     * Handles a individual client on the given socket as a separate thread. If
-     * the client is connecting from a loopback adapter (localhost), no password is required.
-     * If the client connects via telnet, password is required to issue commands.
-     * The shutdown sequence begins if the client enters the correct shutdown command.
-     *
-     * @author Thomas Joseph.
-     */
-    class ClientHandler {
-        private File workingDir;
-
-        public ClientHandler(File workingDir) {
-            this.workingDir = workingDir;
-        }
-
-        public void handle(final Socket socket) {
-            new Thread(
-                    new Runnable() {
-                        public void run() {
-                            InputStream stream;
-                            PrintWriter out;
-                            try {
-                                socket.setSoTimeout(networkTimeout);
-                                LOG.trace("Connected.");
-                                stream = socket.getInputStream();
-                                out = new PrintWriter(socket.getOutputStream(), true);
-                            } catch (AccessControlException ace) {
-                                LOG.warn("StandardServer.accept security exception: "
-                                        + ace.getMessage(), ace);
-                                return;
-                            } catch (IOException e) {
-                                //LOG.error("StandardServer.await: accept: ", e);
-                                return;
-                            }
-
-                            // Read a set of characters from the socket
-                            String command = readStream(stream);
-                            LOG.trace("Recieved Command [ " + command + "] from ["
-                                    + socket.getRemoteSocketAddress() + "].");
-
-                            try {
-                                String[] commands = command.split("\\\\s+");
-                                if (commands.length > 1) {
-                                    command = commands[0];
-                                }
-                            } catch (Exception e) {
-                                // ignore
-                            }
-
-                            // Match against our command string
-                            boolean match = command.toString().equals(DaemonCommons.shutdown);
-                            if (match) {
-                                LOG.trace("Shutdown command recieved via Telnet.");
-                                stop(workingDir);
-                                return;
-                            } else {
-                                LOG.warn("Pax Runner: Invalid command.");
-                                out.write("Invalid Command!" + DaemonCommons.NEWLINE);
-                                out.flush();
-                            }
-
-                            // Close the socket now that we are done with it
-                            try {
-                                LOG.trace("Closing the socket now that we are done with it...");
-                                socket.close();
-                            } catch (IOException e) {
-                                LOG.warn("Exception in closing socket..", e);
-                            }
-                        }
-                    }, "ClientHandler-" + socket.getRemoteSocketAddress()
-            ).start();
-        }
-
-        /**
-         * Reads the given stream for string commands.
-         *
-         * @param stream
-         * @return the command that was issued in the input stream.
-         */
-        private String readStream(final InputStream stream) {
-            StringBuffer command = new StringBuffer();
-            int expected = 1024; // Cut off to avoid DoS attack
-            while (stream != null && expected > 0) {
-                int ch = -1;
-                try {
-                    ch = stream.read();
-                } catch (IOException e) {
-                    ch = -1;
-                }
-                if (ch < 32) { // Control character or EOF terminates loop
-                    break;
-                }
-                command.append((char) ch);
-                expected--;
-            }
-            return command.toString();
         }
     }
 }

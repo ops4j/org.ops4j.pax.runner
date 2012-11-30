@@ -2,14 +2,9 @@ package org.ops4j.pax.runner.platform;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.ops4j.pax.runner.platform.JavaRunner;
-import org.ops4j.pax.runner.platform.PlatformException;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.net.UnknownHostException;
 
 /**
  * @author dpishchukhin
@@ -31,23 +26,15 @@ public class DaemonStopRunner implements JavaRunner {
 
     private void stop(File workingDir) {
         if (DaemonCommons.isDaemonStarted(workingDir)) {
-            Socket socket;
-            PrintWriter out;
             try {
-                socket = new Socket("localhost", DaemonCommons.getShutdownPort(workingDir));
-                out = new PrintWriter(socket.getOutputStream(), true);
-            } catch (UnknownHostException e) {
-                LOG.error("Unknown address: localhost.");
-                return;
+                File shutdownFile = new File(workingDir, DaemonCommons.SHUTDOWN_FILE);
+                shutdownFile.deleteOnExit();
+                shutdownFile.createNewFile();
             } catch (IOException e) {
                 LOG.error("Couldn't connect to: localhost.");
                 return;
             }
 
-            final String shutdownCmd = DaemonCommons.getShutdown(workingDir);
-            out.write(shutdownCmd + "\n");
-            out.flush();
-            LOG.debug("Pax Runner Daemon: Shutdown command issued:" + shutdownCmd);
             do {
                 LOG.info("Pax Runner Daemon: Shutdown in progress...");
                 try {
