@@ -39,20 +39,23 @@ public final class Activator
     protected PlatformBuilder[] createPlatformBuilders( final BundleContext bundleContext )
     {
         return new PlatformBuilder[]{
-            new EquinoxPlatformBuilder( bundleContext, "3.2.1" ),
-            new EquinoxPlatformBuilder( bundleContext, "3.3.0" ),
-            new EquinoxPlatformBuilder( bundleContext, "3.3.1" ),
-            new EquinoxPlatformBuilder( bundleContext, "3.3.2" ),
-            new EquinoxPlatformBuilder( bundleContext, "3.4.0" ),
-            new EquinoxPlatformBuilder( bundleContext, "3.4.1" ),
-            new EquinoxPlatformBuilder( bundleContext, "3.4.2" ),
-            new EquinoxPlatformBuilder( bundleContext, "3.5.0" ),
-            new EquinoxPlatformBuilder( bundleContext, "3.5.1" ),
-            new EquinoxPlatformBuilder( bundleContext, "3.6.0" ),
-            new EquinoxPlatformBuilder( bundleContext, "3.6.1" ),
-            new EquinoxPlatformBuilder( bundleContext, "3.6.2" ),
-            new EquinoxPlatformBuilder( bundleContext, "3.7.0" ),
-            new EquinoxPlatformBuilder( bundleContext, "3.7.1" ),
+            new EquinoxPlatformBuilderF321T372( bundleContext, "3.2.1" ),
+            new EquinoxPlatformBuilderF321T372( bundleContext, "3.3.0" ),
+            new EquinoxPlatformBuilderF321T372( bundleContext, "3.3.1" ),
+            new EquinoxPlatformBuilderF321T372( bundleContext, "3.3.2" ),
+            new EquinoxPlatformBuilderF321T372( bundleContext, "3.4.0" ),
+            new EquinoxPlatformBuilderF321T372( bundleContext, "3.4.1" ),
+            new EquinoxPlatformBuilderF321T372( bundleContext, "3.4.2" ),
+            new EquinoxPlatformBuilderF321T372( bundleContext, "3.5.0" ),
+            new EquinoxPlatformBuilderF321T372( bundleContext, "3.5.1" ),
+            new EquinoxPlatformBuilderF321T372( bundleContext, "3.6.0" ),
+            new EquinoxPlatformBuilderF321T372( bundleContext, "3.6.1" ),
+            new EquinoxPlatformBuilderF321T372( bundleContext, "3.6.2" ),
+            new EquinoxPlatformBuilderF321T372( bundleContext, "3.7.0" ),
+            new EquinoxPlatformBuilderF321T372( bundleContext, "3.7.1" ),
+            new EquinoxPlatformBuilderF321T372( bundleContext, "3.7.2" ),
+            new EquinoxPlatformBuilderF380( bundleContext, "3.8.0" ),
+            new EquinoxPlatformBuilderF380( bundleContext, "3.8.1" ),
             new EquinoxPlatformBuilderSnapshot( bundleContext )
         };
     }

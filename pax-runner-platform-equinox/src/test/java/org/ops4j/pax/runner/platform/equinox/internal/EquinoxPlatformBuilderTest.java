@@ -75,13 +75,13 @@ public class EquinoxPlatformBuilderTest
     @Test( expected = IllegalArgumentException.class )
     public void constructorWithNullBundleContext()
     {
-        new EquinoxPlatformBuilder( null, "version" );
+        new EquinoxPlatformBuilderF321T372( null, "version" );
     }
 
     @Test( expected = IllegalArgumentException.class )
     public void constructorWithNullVersion()
     {
-        new EquinoxPlatformBuilder( m_bundleContext, null );
+        new EquinoxPlatformBuilderF321T372( m_bundleContext, null );
     }
 
     @Test
@@ -91,7 +91,7 @@ public class EquinoxPlatformBuilderTest
         assertEquals(
             "Main class name",
             "org.eclipse.core.runtime.adaptor.EclipseStarter",
-            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getMainClassName()
+            new EquinoxPlatformBuilderF321T372( m_bundleContext, "version" ).getMainClassName()
         );
         verify( m_bundleContext );
     }
@@ -102,7 +102,7 @@ public class EquinoxPlatformBuilderTest
         replay( m_bundleContext );
         assertNull(
             "Required profiles is not null",
-            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getRequiredProfile( m_platformContext )
+            new EquinoxPlatformBuilderF321T372( m_bundleContext, "version" ).getRequiredProfile( m_platformContext )
         );
         verify( m_bundleContext );
     }
@@ -121,7 +121,7 @@ public class EquinoxPlatformBuilderTest
                 "-configuration",
                 m_platformContext.getFilePathStrategy().normalizeAsPath( new File( m_workDir, "equinox" ) )
             },
-            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getArguments( m_platformContext )
+            new EquinoxPlatformBuilderF321T372( m_bundleContext, "version" ).getArguments( m_platformContext )
         );
         verify( m_bundleContext, m_configuration );
     }
@@ -139,7 +139,7 @@ public class EquinoxPlatformBuilderTest
                 "-configuration",
                 m_platformContext.getFilePathStrategy().normalizeAsPath( new File( m_workDir, "equinox" ) )
             },
-            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getArguments( m_platformContext )
+            new EquinoxPlatformBuilderF321T372( m_bundleContext, "version" ).getArguments( m_platformContext )
         );
         verify( m_bundleContext, m_configuration );
     }
@@ -157,7 +157,7 @@ public class EquinoxPlatformBuilderTest
                 "-configuration",
                 m_platformContext.getFilePathStrategy().normalizeAsPath( new File( m_workDir, "equinox" ) )
             },
-            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getArguments( m_platformContext )
+            new EquinoxPlatformBuilderF321T372( m_bundleContext, "version" ).getArguments( m_platformContext )
         );
         verify( m_bundleContext, m_configuration );
     }
@@ -166,7 +166,7 @@ public class EquinoxPlatformBuilderTest
     public void getArgumentsWithNullPlatformContext()
     {
         replay( m_bundleContext );
-        new EquinoxPlatformBuilder( m_bundleContext, "version" ).getArguments( null );
+        new EquinoxPlatformBuilderF321T372( m_bundleContext, "version" ).getArguments( null );
         verify( m_bundleContext );
     }
 
@@ -180,7 +180,7 @@ public class EquinoxPlatformBuilderTest
                 "-Dosgi.install.area="
                 + m_platformContext.getFilePathStrategy().normalizeAsPath( new File( m_workDir, "equinox" ) )
             },
-            new EquinoxPlatformBuilder( m_bundleContext, "version" ).getVMOptions( m_platformContext )
+            new EquinoxPlatformBuilderF321T372( m_bundleContext, "version" ).getVMOptions( m_platformContext )
         );
         verify( m_bundleContext );
     }
@@ -189,7 +189,7 @@ public class EquinoxPlatformBuilderTest
     public void getVMOptionsWithNullPlatformContext()
     {
         replay( m_bundleContext );
-        new EquinoxPlatformBuilder( m_bundleContext, "version" ).getVMOptions( null );
+        new EquinoxPlatformBuilderF321T372( m_bundleContext, "version" ).getVMOptions( null );
         verify( m_bundleContext );
     }
 
@@ -198,7 +198,7 @@ public class EquinoxPlatformBuilderTest
         throws PlatformException
     {
         replay( m_bundleContext );
-        new EquinoxPlatformBuilder( m_bundleContext, "version" ).prepare( null );
+        new EquinoxPlatformBuilderF321T372( m_bundleContext, "version" ).prepare( null );
         verify( m_bundleContext );
     }
 
@@ -225,7 +225,7 @@ public class EquinoxPlatformBuilderTest
         expect( m_configuration.getVMOptions() ).andReturn( new String[]{} );
 
         replay( m_bundleContext, m_configuration );
-        new EquinoxPlatformBuilder( m_bundleContext, "version" ).prepare( m_platformContext );
+        new EquinoxPlatformBuilderF321T372( m_bundleContext, "version" ).prepare( m_platformContext );
         verify( m_bundleContext, m_configuration );
 
         Map<String, String> replacements = new HashMap<String, String>();
@@ -287,7 +287,7 @@ public class EquinoxPlatformBuilderTest
         replay( m_bundleContext, m_configuration,
                 bundle1, bundle2, bundle3
         );
-        new EquinoxPlatformBuilder( m_bundleContext, "version" ).prepare( m_platformContext );
+        new EquinoxPlatformBuilderF321T372( m_bundleContext, "version" ).prepare( m_platformContext );
         verify( m_bundleContext, m_configuration,
                 bundle1, bundle2, bundle3
         );

@@ -17,30 +17,18 @@
  */
 package org.ops4j.pax.runner.platform.equinox.internal;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.ops4j.lang.NullArgumentException;
+import org.ops4j.pax.runner.platform.*;
+import org.ops4j.util.collections.PropertiesWriter;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
-import org.ops4j.lang.NullArgumentException;
-import org.ops4j.pax.runner.platform.BundleReference;
-import org.ops4j.pax.runner.platform.Configuration;
-import org.ops4j.pax.runner.platform.PlatformBuilder;
-import org.ops4j.pax.runner.platform.PlatformContext;
-import org.ops4j.pax.runner.platform.PlatformException;
-import org.ops4j.util.collections.PropertiesWriter;
+
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.*;
 
 /**
  * Platform builder for equinox platform.
@@ -48,14 +36,14 @@ import org.ops4j.util.collections.PropertiesWriter;
  * @author Alin Dreghiciu
  * @since August 20, 2007
  */
-public class EquinoxPlatformBuilder
+public class EquinoxPlatformBuilderF380
     implements PlatformBuilder
 {
 
     /**
      * Logger.
      */
-    private static final Log LOGGER = LogFactory.getLog( EquinoxPlatformBuilder.class );
+    private static final Log LOGGER = LogFactory.getLog( EquinoxPlatformBuilderF380.class );
     /**
      * Provider name to be used in registration.
      */
@@ -68,6 +56,10 @@ public class EquinoxPlatformBuilder
      * Console argument name.
      */
     private static final String ARG_CONSOLE = "-console";
+    /**
+     * Profile name to be used when console should be started.
+     */
+    private static final String CONSOLE_PROFILE = "tui";
     /**
      * Debug options file argument name.
      */
@@ -127,7 +119,7 @@ public class EquinoxPlatformBuilder
      * @param bundleContext a bundle context
      * @param version       supported version
      */
-    public EquinoxPlatformBuilder( final BundleContext bundleContext, final String version )
+    public EquinoxPlatformBuilderF380(final BundleContext bundleContext, final String version)
     {
         NullArgumentException.validateNotNull( bundleContext, "Bundle context" );
         NullArgumentException.validateNotNull( version, "Version" );
@@ -138,7 +130,7 @@ public class EquinoxPlatformBuilder
     /**
      * Creates a config.ini file under the working directory/equinox directory.
      *
-     * @see PlatformBuilder
+     * @see org.ops4j.pax.runner.platform.PlatformBuilder
      *      #prepare(org.ops4j.pax.runner.platform.PlatformContext)
      */
     public void prepare( final PlatformContext context )
@@ -467,7 +459,7 @@ public class EquinoxPlatformBuilder
     }
 
     /**
-     * @see PlatformBuilder#getMainClassName()
+     * @see org.ops4j.pax.runner.platform.PlatformBuilder#getMainClassName()
      */
     public String getMainClassName()
     {
@@ -475,7 +467,7 @@ public class EquinoxPlatformBuilder
     }
 
     /**
-     * @see PlatformBuilder
+     * @see org.ops4j.pax.runner.platform.PlatformBuilder
      *      #getArguments(org.ops4j.pax.runner.platform.PlatformContext)
      */
     public String[] getArguments( final PlatformContext context )
@@ -508,7 +500,7 @@ public class EquinoxPlatformBuilder
     /**
      * return snull as there are no additional virtual machien arguments.
      *
-     * @see PlatformBuilder#getVMOptions(PlatformContext)
+     * @see org.ops4j.pax.runner.platform.PlatformBuilder#getVMOptions(org.ops4j.pax.runner.platform.PlatformContext)
      */
     public String[] getVMOptions( final PlatformContext context )
     {
@@ -542,12 +534,20 @@ public class EquinoxPlatformBuilder
     /**
      * Return null as there is no profile required by equinox.
      *
-     * @see PlatformBuilder
+     * @see org.ops4j.pax.runner.platform.PlatformBuilder
      *      #getRequiredProfile(org.ops4j.pax.runner.platform.PlatformContext)
      */
     public String getRequiredProfile( final PlatformContext context )
     {
-        return null;
+        final Boolean console = context.getConfiguration().startConsole();
+        if( console == null || !console )
+        {
+            return null;
+        }
+        else
+        {
+            return CONSOLE_PROFILE;
+        }
     }
 
     /**
@@ -559,7 +559,7 @@ public class EquinoxPlatformBuilder
     }
 
     /**
-     * @see PlatformBuilder#getProviderName()
+     * @see org.ops4j.pax.runner.platform.PlatformBuilder#getProviderName()
      */
     public String getProviderName()
     {
@@ -567,7 +567,7 @@ public class EquinoxPlatformBuilder
     }
 
     /**
-     * @see PlatformBuilder#getProviderVersion()
+     * @see org.ops4j.pax.runner.platform.PlatformBuilder#getProviderVersion()
      */
     public String getProviderVersion()
     {

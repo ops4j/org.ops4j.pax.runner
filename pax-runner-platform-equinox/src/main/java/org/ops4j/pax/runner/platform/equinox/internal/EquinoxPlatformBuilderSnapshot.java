@@ -17,12 +17,13 @@
  */
 package org.ops4j.pax.runner.platform.equinox.internal;
 
+import org.ops4j.net.URLUtils;
+import org.ops4j.pax.runner.platform.Configuration;
+import org.osgi.framework.BundleContext;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import org.osgi.framework.BundleContext;
-import org.ops4j.net.URLUtils;
-import org.ops4j.pax.runner.platform.Configuration;
 
 /**
  * Platform builder for the snapshot (nightly build) Equinox.
@@ -31,7 +32,7 @@ import org.ops4j.pax.runner.platform.Configuration;
  * @since 0.18.0, March 05, 2009
  */
 public class EquinoxPlatformBuilderSnapshot
-    extends EquinoxPlatformBuilder
+    extends EquinoxPlatformBuilderF380
 {
 
     /**
