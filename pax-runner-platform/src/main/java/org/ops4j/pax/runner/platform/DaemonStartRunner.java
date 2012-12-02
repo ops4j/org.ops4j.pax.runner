@@ -94,12 +94,12 @@ public class DaemonStartRunner implements StoppableJavaRunner {
                     File file = new File(workingDir, DaemonCommons.SHUTDOWN_FILE);
                     if (file.exists()) {
                         file.delete();
-                        stopAwait();
+                        DaemonStartRunner.this.stop(workingDir);
                     }
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
-                        stopAwait();
+                        DaemonStartRunner.this.stop(workingDir);
                     }
                 }
                 LOG.trace("Finished awaiting...");

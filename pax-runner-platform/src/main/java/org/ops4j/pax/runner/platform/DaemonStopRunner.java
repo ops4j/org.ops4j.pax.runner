@@ -38,7 +38,7 @@ public class DaemonStopRunner implements JavaRunner {
             do {
                 LOG.info("Pax Runner Daemon: Shutdown in progress...");
                 try {
-                    Thread.sleep(1000 * 2);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     // ignore
                 }
