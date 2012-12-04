@@ -43,7 +43,7 @@ public class FelixPlatformBuilderF160
      * {@inheritDoc}
      */
     @Override
-    String getFrameworkStratLevelPropertyName()
+    protected String getFrameworkStartLevelPropertyName()
     {
         return "org.osgi.framework.startlevel.beginning";
     }
