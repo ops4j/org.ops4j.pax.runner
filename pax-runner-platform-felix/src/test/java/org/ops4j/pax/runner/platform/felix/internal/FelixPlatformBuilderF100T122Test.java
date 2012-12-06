@@ -20,6 +20,7 @@ package org.ops4j.pax.runner.platform.felix.internal;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -150,21 +151,27 @@ public class FelixPlatformBuilderF100T122Test
     {
         final Properties props = new Properties();
         props.setProperty( "p1", "v1" );
-        props.setProperty( "p2", "v2" );
+        props.setProperty( "p2", "v 2" );
+        props.setProperty( "p3", "\"v3\"" );
         m_platformContext.setProperties( props );
 
         replay( m_bundleContext );
+        String[] expected = new String[]{
+            "-Dfelix.config.properties="
+            + m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "/felix/config.ini" ) ),
+            "-Dfelix.cache.dir="
+            + m_platformContext.getFilePathStrategy().normalizeAsPath( new File( m_workDir, "felix/cache" ) ),
+            "-Dp1=v1",
+            "-Dp2=\"v 2\"",
+            "-Dp3=\"\\\"v3\\\"\"",
+        };
+        Arrays.sort( expected );
+        String[] actual = new FelixPlatformBuilderF100T122( m_bundleContext, "version" ).getVMOptions( m_platformContext );
+        Arrays.sort( actual );
         assertArrayEquals(
             "System options",
-            new String[]{
-                "-Dfelix.config.properties="
-                + m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "/felix/config.ini" ) ),
-                "-Dfelix.cache.dir="
-                + m_platformContext.getFilePathStrategy().normalizeAsPath( new File( m_workDir, "felix/cache" ) ),
-                "-Dp2=v2",
-                "-Dp1=v1"
-            },
-            new FelixPlatformBuilderF100T122( m_bundleContext, "version" ).getVMOptions( m_platformContext )
+            expected,
+            actual
         );
         verify( m_bundleContext );
     }
