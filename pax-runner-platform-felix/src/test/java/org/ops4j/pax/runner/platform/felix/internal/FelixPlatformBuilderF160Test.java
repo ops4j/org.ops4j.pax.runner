@@ -135,6 +135,21 @@ public class FelixPlatformBuilderF160Test
     }
 
     @Test
+    public void getRequiredProfilesWithDefaultProfile()
+    {
+        expect( m_configuration.getFrameworkProfile() ).andReturn( "runner" );
+        expect( m_configuration.startConsole() ).andReturn( true );
+
+        replay( m_bundleContext, m_configuration );
+        assertEquals(
+            "Required profiles",
+            "tui",
+            new FelixPlatformBuilderF160( m_bundleContext, "version" ).getRequiredProfile( m_platformContext )
+        );
+        verify( m_bundleContext, m_configuration );
+    }
+
+    @Test
     public void getArguments()
     {
         assertNull( "Arguments is not not null",

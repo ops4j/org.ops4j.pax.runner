@@ -382,7 +382,7 @@ public abstract class FelixPlatformBuilder
     public String getRequiredProfile( final PlatformContext context )
     {
         final String profile = context.getConfiguration().getFrameworkProfile();
-        if ( profile != null )
+        if ( profile != null && !"runner".equals(profile))
         {
             return profile;
         }
