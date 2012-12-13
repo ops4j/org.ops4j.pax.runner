@@ -255,7 +255,7 @@ public class FelixPlatformBuilderF160Test
         m_platformContext.setExecutionEnvironment( "EE-1,EE-2" );
         m_platformContext.setSystemPackages( "sys.package.one,sys.package.two" );
         Properties properties = new Properties();
-        properties.setProperty( "myProperty", "myValue" );
+        properties.setProperty( "myProperty", "my Value" );
         m_platformContext.setProperties( properties );
 
         expect( m_configuration.getBootDelegation() ).andReturn( null );
