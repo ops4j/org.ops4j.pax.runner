@@ -1,1 +1,1 @@
-http://www.knopflerfish.org/releases/2.2.0/osgi/jars/frameworkcommands/frameworkcommands-2.0.5.jar
+mvn:http://www.knopflerfish.org/maven2@id=kf-maven!org.knopflerfish.bundle/frameworkcommands-IMPL/2.0.5

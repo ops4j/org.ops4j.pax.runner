@@ -1,1 +1,1 @@
-http://www.knopflerfish.org/releases/3.3.0/osgi/jars/cm/cm_api-3.0.4.jar
+mvn:http://www.knopflerfish.org/maven2@id=kf-maven!org.knopflerfish.bundle/cm-API/3.0.4

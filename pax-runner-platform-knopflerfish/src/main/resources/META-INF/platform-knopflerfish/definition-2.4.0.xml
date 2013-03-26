@@ -1,7 +1,7 @@
 <platform>
 
-  <name>Knopflerfish 2.3.3</name>
-  <system>link:classpath:runner-links/org.knopflerfish.framework-2.3.3.link</system>
+  <name>Knopflerfish 2.4.0</name>
+  <system>link:classpath:runner-links/org.knopflerfish.framework-2.4.0.link</system>
 
   <profile name="minimal" default="true"/>
 
@@ -16,7 +16,7 @@
     </bundle>
     <bundle>
       <name>Knopflerfish Console</name>
-      <url>link:classpath:runner-links/org.knopflerfish.console-2.0.1.link</url>
+      <url>link:classpath:runner-links/org.knopflerfish.console-all-2.0.1.link</url>
     </bundle>
     <bundle>
       <name>Knopflerfish Console TTY</name>

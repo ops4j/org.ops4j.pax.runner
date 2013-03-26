@@ -1,1 +1,1 @@
-http://www.knopflerfish.org/releases/3.3.0/osgi/jars/frameworkcommands/frameworkcommands-3.0.4.jar
+mvn:http://www.knopflerfish.org/maven2@id=kf-maven!org.knopflerfish.bundle/frameworkcommands-IMPL/3.0.4

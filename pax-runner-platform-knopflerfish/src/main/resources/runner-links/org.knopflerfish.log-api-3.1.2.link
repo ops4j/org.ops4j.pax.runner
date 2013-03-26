@@ -1,1 +1,1 @@
-http://www.knopflerfish.org/releases/3.3.0/osgi/jars/log/log_api-3.1.2.jar
+mvn:http://www.knopflerfish.org/maven2@id=kf-maven!org.knopflerfish/log-API/3.1.2

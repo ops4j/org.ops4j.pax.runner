@@ -1,1 +1,1 @@
-http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/equinox/drops/R-3.7.2-201202080800/org.eclipse.osgi_3.7.2.v20120110-1415.jar
+mvn:org.eclipse.birt.runtime/org.eclipse.osgi/3.7.2.v20120110-1415

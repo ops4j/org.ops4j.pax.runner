@@ -1,1 +1,1 @@
-http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/equinox/drops/R-3.8-201206081400/org.eclipse.equinox.console_1.0.0.v20120522-1841.jar
+mvn:http://repository.springsource.com/maven/bundles/external@id=ss-maven!org.eclipse.osgi/org.eclipse.equinox.console/1.0.0.v20120430-1356

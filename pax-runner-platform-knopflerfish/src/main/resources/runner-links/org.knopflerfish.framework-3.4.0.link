@@ -1,1 +1,1 @@
-http://www.knopflerfish.org/releases/3.4.0/osgi/framework.jar
+mvn:http://www.knopflerfish.org/maven2@id=kf-maven!org.knopflerfish/framework/5.2.4
