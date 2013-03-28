@@ -237,43 +237,33 @@ public class PlatformImpl
                                      final Configuration configuration,
                                      final PlatformContext context )
     {
-        final StringBuilder prepend = new StringBuilder();
-        final StringBuilder append = new StringBuilder();
+        List<String> prepend = new ArrayList<String>();
+        List<String> append = new ArrayList<String>();
 
         for ( LocalSystemFile ref : systemFiles )
         {
             if ( ref.getSystemFileReference().shouldPrepend() )
             {
-                if ( prepend.length() != 0 )
-                {
-                    prepend.append( File.pathSeparator );
-                }
-                prepend.append( context.getFilePathStrategy().normalizeAsPath( ref.getFile() ) );
+                prepend.add(context.getFilePathStrategy().normalizeAsPath(ref.getFile()));
             }
             else
             {
-                if ( append.length() != 0 )
-                {
-                    append.append( File.pathSeparator );
-                }
-                append.append( context.getFilePathStrategy().normalizeAsPath( ref.getFile() ) );
+                append.add(context.getFilePathStrategy().normalizeAsPath(ref.getFile()));
             }
         }
-        if ( prepend.length() != 0 )
-        {
-            prepend.append( File.pathSeparator );
-        }
-        if ( append.length() != 0 )
-        {
-            append.insert( 0, File.pathSeparator );
-        }
-        final StringBuilder classPath = new StringBuilder();
-        classPath.append( prepend );
-        classPath.append( context.getFilePathStrategy().normalizeAsPath( systemFile ) );
-        classPath.append( append );
-        classPath.append( configuration.getClasspath() );
 
-        return classPath.toString().split( File.pathSeparator );
+        final List<String> classPath = new ArrayList<String>();
+        classPath.addAll(prepend);
+        classPath.add(context.getFilePathStrategy().normalizeAsPath(systemFile));
+        if (context.getAdditionalClasspath() != null) {
+            classPath.addAll(Arrays.asList(context.getAdditionalClasspath()));
+        }
+        classPath.addAll(append);
+        if (configuration.getClasspath() != null && !configuration.getClasspath().isEmpty()) {
+            classPath.addAll(Arrays.asList(configuration.getClasspath().split( File.pathSeparator )));
+        }
+
+        return classPath.toArray(new String[classPath.size()]);
     }
 
     /**

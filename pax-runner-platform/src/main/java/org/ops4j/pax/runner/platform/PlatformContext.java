@@ -131,4 +131,7 @@ public interface PlatformContext
      */
     FilePathStrategy getFilePathStrategy();
 
+    String[] getAdditionalClasspath();
+
+    void setAdditionalClasspath(String[] additionalClasspath);
 }

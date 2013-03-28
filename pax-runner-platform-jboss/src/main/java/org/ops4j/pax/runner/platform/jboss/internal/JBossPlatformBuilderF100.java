@@ -9,6 +9,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
@@ -84,6 +85,12 @@ public class JBossPlatformBuilderF100
             // make sure that the cache file exists
             //new File( configDirectory, CACHE_DIRECTORY ).mkdirs();
             // create the configuration file
+
+            context.setAdditionalClasspath(new String[]{
+                    context.getFilePathStrategy().normalizeAsPath(
+                            new File(workingDirectory, CONFIG_DIRECTORY))
+            });
+
             final File configFile = new File(configDirectory, CONFIG_INI);
             configFile.createNewFile();
             LOGGER.debug("Create JBoss configuration ini file [" + configFile + "]");
@@ -130,7 +137,7 @@ public class JBossPlatformBuilderF100
                     writer.append("#############################");
                     writer.append(" Client bundles to install");
                     writer.append("#############################");
-                    // todo
+                    appendBundles( writer, bundles, context );
                 }
             }
             // user system properties
@@ -154,6 +161,60 @@ public class JBossPlatformBuilderF100
                     throw new PlatformException("Could not create knopflerfish configuration file", e);
                 }
             }
+        }
+    }
+
+    /**
+     * Writes bundles to configuration file.
+     *
+     * @param writer            a property writer
+     * @param bundles           bundles to write
+     * @param context           platform context
+     *
+     * @throws java.net.MalformedURLException re-thrown from getting the file url
+     * @throws org.ops4j.pax.runner.platform.PlatformException
+     *                                        if one of the bundles does not have a file
+     */
+    private void appendBundles( final PropertiesWriter writer,
+                                final List<BundleReference> bundles,
+                                final PlatformContext context )
+        throws MalformedURLException, PlatformException
+    {
+        StringBuilder installBundles = new StringBuilder();
+        StringBuilder startBundles = new StringBuilder();
+        for( BundleReference reference : bundles )
+        {
+            URL url = reference.getURL();
+            if( url == null )
+            {
+                throw new PlatformException( "The file from bundle to install cannot be null" );
+            }
+
+            final Boolean shouldStart = reference.shouldStart();
+            if( shouldStart != null && shouldStart )
+            {
+                if (startBundles.length() > 0) {
+                    startBundles.append(", \\\n");
+                }
+                // startBundles.append(context.getFilePathStrategy().normalizeAsUrl( url ));
+                // FIXME: to normalized form
+                startBundles.append(url.toString());
+            }
+            else
+            {
+                if (installBundles.length() > 0) {
+                    installBundles.append(", \\\n");
+                }
+                // installBundles.append(context.getFilePathStrategy().normalizeAsUrl( url ));
+                // FIXME: to normalized form
+                installBundles.append(url.toString());
+            }
+        }
+        if (installBundles.length() > 0) {
+            writer.append( "org.jboss.osgi.auto.install", "\\\n" + installBundles.toString() );
+        }
+        if (startBundles.length() > 0) {
+            writer.append( "org.jboss.osgi.auto.start", "\\\n" + startBundles.toString() );
         }
     }
 

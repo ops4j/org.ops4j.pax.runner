@@ -17,13 +17,14 @@
  */
 package org.ops4j.pax.runner.platform.internal;
 
-import java.io.File;
-import java.util.List;
-import java.util.Properties;
 import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.runner.platform.Configuration;
 import org.ops4j.pax.runner.platform.FilePathStrategy;
 import org.ops4j.pax.runner.platform.PlatformContext;
+
+import java.io.File;
+import java.util.List;
+import java.util.Properties;
 
 public class PlatformContextImpl
     implements PlatformContext
@@ -36,6 +37,7 @@ public class PlatformContextImpl
     private Configuration m_configuration;
     private String m_executionEnvironment;
     private FilePathStrategy m_filePathStrategy;
+    private String[] m_additionalClasspath;
 
     /**
      * {@inheritDoc}
@@ -147,6 +149,14 @@ public class PlatformContextImpl
     public void setFilePathStrategy( final FilePathStrategy filePathStrategy )
     {
         m_filePathStrategy = filePathStrategy;
+    }
+
+    public String[] getAdditionalClasspath() {
+        return m_additionalClasspath;
+    }
+
+    public void setAdditionalClasspath(String[] additionalClasspath) {
+        m_additionalClasspath = additionalClasspath;
     }
 
 }
