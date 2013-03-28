@@ -1,0 +1,70 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.ops4j.pax</groupId>
+    <artifactId>runner</artifactId>
+    <version>1.8.6-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <groupId>org.ops4j.pax.runner</groupId>
+  <artifactId>pax-runner-platform-jboss</artifactId>
+  <packaging>bundle</packaging>
+
+  <name>OPS4J Pax Runner - JBoss OSGi Platform Builder</name>
+  <description>
+    OPS4J Pax Runner - JBoss OSGi Builder. Creates Jboss OSGi specific artifacts.
+  </description>
+
+  <properties>
+    <bundle.symbolicName>org.ops4j.pax.runner.platform.jboss</bundle.symbolicName>
+    <bundle.namespace>org.ops4j.pax.runner.platform.jboss</bundle.namespace>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.ops4j.base</groupId>
+      <artifactId>ops4j-base-lang</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.base</groupId>
+      <artifactId>ops4j-base-io</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.base</groupId>
+      <artifactId>ops4j-base-net</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.base</groupId>
+      <artifactId>ops4j-base-util-collections</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.swissbox</groupId>
+      <artifactId>pax-swissbox-optional-jcl</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.runner</groupId>
+      <artifactId>pax-runner-commons</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.ops4j.pax.runner</groupId>
+      <artifactId>pax-runner-platform</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+</project>
