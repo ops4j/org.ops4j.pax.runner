@@ -142,12 +142,6 @@
     </dependency>
     <dependency>
       <groupId>org.ops4j.pax.url</groupId>
-      <artifactId>pax-url-maven-commons</artifactId>
-      <version>${dependency.url.version}</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.ops4j.pax.url</groupId>
       <artifactId>pax-url-reference</artifactId>
       <version>${dependency.url.version}</version>
       <optional>true</optional>
