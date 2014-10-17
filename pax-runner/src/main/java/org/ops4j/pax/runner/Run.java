@@ -32,6 +32,7 @@ import org.ops4j.pax.runner.osgi.RunnerBundle;
 import org.ops4j.pax.runner.osgi.RunnerBundleContext;
 import org.ops4j.pax.runner.osgi.RunnerStartLevel;
 import org.ops4j.pax.runner.platform.*;
+import org.ops4j.pax.runner.platform.BundleReference;
 import org.ops4j.pax.scanner.*;
 import org.osgi.framework.*;
 
