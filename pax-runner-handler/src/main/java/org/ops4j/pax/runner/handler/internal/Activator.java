@@ -114,10 +114,14 @@ public class Activator
                 if( streamHandler != null )
                 {
                     // TODO ensure that the protocol property is set and is a string array
-                    m_extender.register(
-                        (String[]) serviceReference.getProperty( URLConstants.URL_HANDLER_PROTOCOL ),
-                        streamHandler
-                    );
+                    Object protocol = serviceReference.getProperty(URLConstants.URL_HANDLER_PROTOCOL);
+                    String[] protocols;
+                    if (String.class.isInstance(protocol)) {
+                        protocols = new String[] { (String) protocol };
+                    } else {
+                        protocols = (String[]) protocol;
+                    }
+                    m_extender.register(protocols, streamHandler);
                 }
                 return streamHandler;
             }
