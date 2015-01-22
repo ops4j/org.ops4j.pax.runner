@@ -12,7 +12,8 @@ Private-Package:\
   META-INF.*; -split-package:=merge-first,\
   runner-links.*; -split-package:=merge-first,\
   templates.*; -split-package:=merge-first,\
-  org.*; -split-package:=merge-first
+  org.*; -split-package:=merge-first,\
+  shaded.*; -split-package:=merge-first
 
 Include-Resource:\
   @target/dependency/org.osgi.core.jar!/org/osgi/framework/*,\
