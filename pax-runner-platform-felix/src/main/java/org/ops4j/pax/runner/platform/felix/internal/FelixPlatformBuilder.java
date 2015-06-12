@@ -17,18 +17,34 @@
  */
 package org.ops4j.pax.runner.platform.felix.internal;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Properties;
+import java.util.jar.Attributes;
+import java.util.jar.JarFile;
+import java.util.jar.Manifest;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.lang.NullArgumentException;
-import org.ops4j.pax.runner.platform.*;
+import org.ops4j.pax.runner.platform.BundleReference;
+import org.ops4j.pax.runner.platform.Configuration;
+import org.ops4j.pax.runner.platform.PlatformBuilder;
+import org.ops4j.pax.runner.platform.PlatformContext;
+import org.ops4j.pax.runner.platform.PlatformException;
 import org.ops4j.util.collections.PropertiesWriter;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
-
-import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.*;
 
 /**
  * Platform builder for felix platform.
@@ -36,6 +52,11 @@ import java.util.*;
 public abstract class FelixPlatformBuilder
     implements PlatformBuilder
 {
+
+    /**
+     * Name of the Fragment-Host manifest attribute.
+     */
+    private static final Attributes.Name FRAGMENT_HOST = new Attributes.Name("Fragment-Host");
 
     /**
      * Logger.
@@ -255,7 +276,7 @@ public abstract class FelixPlatformBuilder
                 .append( "felix.auto" );
 
             final Boolean shouldStart = reference.shouldStart();
-            if( shouldStart != null && shouldStart )
+            if( shouldStart != null && shouldStart && !this.isFragment(reference) )
             {
                 propertyName.append( "." ).append( "start" );
             }
@@ -275,6 +296,34 @@ public abstract class FelixPlatformBuilder
             // PAXRUNNER-41
             // url of the file must be quoted otherwise will be considered as two separated files by Felix
             writer.append( propertyName.toString(), "\"" + context.getFilePathStrategy().normalizeAsUrl( url ) + "\"" );
+        }
+    }
+
+    /**
+     * Returns whether the bundle specified by the given reference is a fragment or not.
+     *
+     * @param reference BundleReference referencing the bundle to be inspected.
+     * @return boolean flag with value true when the specified bundle is a fragment, false when not.
+     * @throws PlatformException Thrown when the specified bundle is not valid.
+     */
+    private boolean isFragment(BundleReference reference) throws PlatformException {
+        return this.getBundleManifest(reference).getMainAttributes().containsKey(FRAGMENT_HOST);
+    }
+
+    /**
+     * Returns the manifest file of the bundle specified by the given reference.
+     *
+     * @param reference BundleReference referencing the bundle to be inspected.
+     * @return Manifest referencing the manifest extracted from the specified bundle.
+     * @throws PlatformException Thrown when the specified bundle is not valid.
+     */
+    private Manifest getBundleManifest(BundleReference reference) throws PlatformException {
+        URL url = reference.getURL();
+        try {
+            JarFile jar = new JarFile(url.getFile(), false);
+            return jar.getManifest();
+        } catch (IOException e) {
+            throw new PlatformException("[" + url + "] is not a valid bundle", e);
         }
     }
 
