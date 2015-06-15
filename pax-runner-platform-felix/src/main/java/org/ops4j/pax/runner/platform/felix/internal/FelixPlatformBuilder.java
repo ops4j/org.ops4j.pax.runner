@@ -30,9 +30,6 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
-import java.util.jar.Attributes;
-import java.util.jar.JarFile;
-import java.util.jar.Manifest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -52,7 +49,6 @@ import org.osgi.framework.Constants;
 public abstract class FelixPlatformBuilder
     implements PlatformBuilder
 {
-    public static final String SUPPRESS_FRAGMENT_START = "suppressFragmentStart";
     /**
      * Logger.
      */
@@ -94,6 +90,8 @@ public abstract class FelixPlatformBuilder
      */
     private final String m_version;
 
+    private BundleManifestInspector manifestInspector;
+
     /**
      * Create a new felix platform builder.
      *
@@ -106,6 +104,7 @@ public abstract class FelixPlatformBuilder
         NullArgumentException.validateNotNull( version, "Version" );
         m_bundleContext = bundleContext;
         m_version = version;
+        setManifestInspector(new BundleManifestInspectorImpl());
     }
 
     /**
@@ -297,32 +296,12 @@ public abstract class FelixPlatformBuilder
     /**
      * Returns whether the bundle specified by the given reference is a fragment or not.
      *
-     * To enable this behaviour, the 'preventFragmentStart' property must be set to true.
-     *
      * @param reference BundleReference referencing the bundle to be inspected.
      * @return boolean flag with value true when the specified bundle is a fragment, false when not.
      * @throws PlatformException Thrown when the specified bundle is not valid.
      */
     private boolean isFragment(BundleReference reference) throws PlatformException {
-        String suppressFragmentStart = this.m_bundleContext.getProperty(SUPPRESS_FRAGMENT_START);
-        return Boolean.parseBoolean(suppressFragmentStart) && this.getBundleManifest(reference).getMainAttributes().containsKey(new Attributes.Name(Constants.FRAGMENT_HOST));
-    }
-
-    /**
-     * Returns the manifest file of the bundle specified by the given reference.
-     *
-     * @param reference BundleReference referencing the bundle to be inspected.
-     * @return Manifest referencing the manifest extracted from the specified bundle.
-     * @throws PlatformException Thrown when the specified bundle is not valid.
-     */
-    private Manifest getBundleManifest(BundleReference reference) throws PlatformException {
-        URL url = reference.getURL();
-        try {
-            JarFile jar = new JarFile(url.getFile(), false);
-            return jar.getManifest();
-        } catch (IOException e) {
-            throw new PlatformException("[" + url + "] is not a valid bundle", e);
-        }
+        return manifestInspector.getFragmentHost(reference) != null;
     }
 
     /**
@@ -476,4 +455,7 @@ public abstract class FelixPlatformBuilder
      */
     protected abstract String getFrameworkStartLevelPropertyName();
 
+    protected void setManifestInspector(BundleManifestInspector manifestInspector) {
+        this.manifestInspector = manifestInspector;
+    }
 }
