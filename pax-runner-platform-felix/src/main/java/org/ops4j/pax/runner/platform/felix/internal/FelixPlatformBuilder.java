@@ -297,6 +297,8 @@ public abstract class FelixPlatformBuilder
     /**
      * Returns whether the bundle specified by the given reference is a fragment or not.
      *
+     * To enable this behaviour, the 'preventFragmentStart' property must be set to true.
+     *
      * @param reference BundleReference referencing the bundle to be inspected.
      * @return boolean flag with value true when the specified bundle is a fragment, false when not.
      * @throws PlatformException Thrown when the specified bundle is not valid.
@@ -315,7 +317,6 @@ public abstract class FelixPlatformBuilder
      */
     private Manifest getBundleManifest(BundleReference reference) throws PlatformException {
         URL url = reference.getURL();
-        System.out.println("url = " + url);
         try {
             JarFile jar = new JarFile(url.getFile(), false);
             return jar.getManifest();

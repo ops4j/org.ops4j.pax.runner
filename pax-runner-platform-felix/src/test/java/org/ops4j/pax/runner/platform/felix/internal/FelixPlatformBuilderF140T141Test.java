@@ -275,6 +275,13 @@ public class FelixPlatformBuilderF140T141Test
         expect( bundle4.getStartLevel() ).andReturn( null );
         expect( bundle4.shouldStart() ).andReturn( null );
 
+        // a fragment bundle that should not start
+        BundleReference bundle5 = createMock( BundleReference.class );
+        bundles.add(bundle5);
+        expect( bundle5.getURL() ).andReturn( FelixPlatformBuilderF160Test.class.getResource("/bundles/bundle5.jar" ) ).times(2);
+        expect( bundle5.getStartLevel() ).andReturn( 30 );
+        expect( bundle5.shouldStart() ).andReturn( true );
+
         m_platformContext.setBundles( bundles );
         m_platformContext.setExecutionEnvironment( "EE-1,EE-2" );
         m_platformContext.setSystemPackages( "sys.package.one,sys.package.two" );
@@ -287,14 +294,14 @@ public class FelixPlatformBuilderF140T141Test
         expect( m_configuration.getBundleStartLevel() ).andReturn( 20 ).times( 2 );
         expect( m_configuration.usePersistedState() ).andReturn( false );
 
-        expect( m_bundleContext.getProperty(FelixPlatformBuilder.PREVENT_FRAGMENT_START) ).andReturn( null ).times(2);
+        expect( m_bundleContext.getProperty(FelixPlatformBuilder.PREVENT_FRAGMENT_START) ).andReturn(null).times(2).andReturn("true");
 
         replay( m_bundleContext, m_configuration,
-                bundle1, bundle2, bundle3, bundle4
+                bundle1, bundle2, bundle3, bundle4, bundle5
         );
         new FelixPlatformBuilderF140T141( m_bundleContext, "version" ).prepare( m_platformContext );
         verify( m_bundleContext, m_configuration,
-                bundle1, bundle2, bundle3, bundle4
+                bundle1, bundle2, bundle3, bundle4, bundle5
         );
 
         Map<String, String> replacements = new HashMap<String, String>();
@@ -319,6 +326,10 @@ public class FelixPlatformBuilderF140T141Test
         replacements.put(
             "${bundle4.path}",
             m_platformContext.getFilePathStrategy().normalizeAsUrl( new File( m_workDir, "bundles/bundle4.jar" ) )
+        );
+        replacements.put(
+                "${bundle5.path}",
+                m_platformContext.getFilePathStrategy().normalizeAsUrl( FelixPlatformBuilderF160Test.class.getResource("/bundles/bundle5.jar" ) )
         );
 
         Utils.compareFiles(
