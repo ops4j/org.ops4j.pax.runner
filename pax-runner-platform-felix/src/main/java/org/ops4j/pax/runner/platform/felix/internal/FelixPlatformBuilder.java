@@ -52,12 +52,7 @@ import org.osgi.framework.Constants;
 public abstract class FelixPlatformBuilder
     implements PlatformBuilder
 {
-
-    /**
-     * Name of the Fragment-Host manifest attribute.
-     */
-    private static final Attributes.Name FRAGMENT_HOST = new Attributes.Name("Fragment-Host");
-
+    public static final String PREVENT_FRAGMENT_START = "preventFragmentStart";
     /**
      * Logger.
      */
@@ -307,7 +302,8 @@ public abstract class FelixPlatformBuilder
      * @throws PlatformException Thrown when the specified bundle is not valid.
      */
     private boolean isFragment(BundleReference reference) throws PlatformException {
-        return this.getBundleManifest(reference).getMainAttributes().containsKey(FRAGMENT_HOST);
+        String preventFragmentBundleStart = this.m_bundleContext.getProperty(PREVENT_FRAGMENT_START);
+        return Boolean.parseBoolean(preventFragmentBundleStart) && this.getBundleManifest(reference).getMainAttributes().containsKey(new Attributes.Name(Constants.FRAGMENT_HOST));
     }
 
     /**
@@ -319,6 +315,7 @@ public abstract class FelixPlatformBuilder
      */
     private Manifest getBundleManifest(BundleReference reference) throws PlatformException {
         URL url = reference.getURL();
+        System.out.println("url = " + url);
         try {
             JarFile jar = new JarFile(url.getFile(), false);
             return jar.getManifest();

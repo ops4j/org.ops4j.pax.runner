@@ -17,6 +17,25 @@
  */
 package org.ops4j.pax.runner.platform.felix.internal;
 
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,13 +47,6 @@ import org.ops4j.pax.runner.platform.PlatformException;
 import org.ops4j.pax.runner.platform.internal.PlatformContextImpl;
 import org.ops4j.pax.runner.platform.internal.RelativeFilePathStrategy;
 import org.osgi.framework.BundleContext;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
-
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
 
 public class FelixPlatformBuilderF100T122Test
 {
@@ -274,6 +286,8 @@ public class FelixPlatformBuilderF100T122Test
         expect( m_configuration.getBundleStartLevel() ).andReturn( 20 ).times( 2 );
         expect( m_configuration.getFrameworkProfile() ).andReturn( "myProfile" );
         expect( m_configuration.usePersistedState() ).andReturn( false );
+
+        expect( m_bundleContext.getProperty(FelixPlatformBuilder.PREVENT_FRAGMENT_START) ).andReturn( null ).times(2);
 
         replay( m_bundleContext, m_configuration,
                 bundle1, bundle2, bundle3, bundle4
