@@ -305,7 +305,6 @@ public abstract class FelixPlatformBuilder
      */
     private boolean isFragment(BundleReference reference) throws PlatformException {
         String suppressFragmentStart = this.m_bundleContext.getProperty(SUPPRESS_FRAGMENT_START);
-        LOGGER.info("Configuration for Fragment Bundle Start Suppression: " + suppressFragmentStart);
         return Boolean.parseBoolean(suppressFragmentStart) && this.getBundleManifest(reference).getMainAttributes().containsKey(new Attributes.Name(Constants.FRAGMENT_HOST));
     }
 
