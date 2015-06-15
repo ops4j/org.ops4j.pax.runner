@@ -52,7 +52,7 @@ import org.osgi.framework.Constants;
 public abstract class FelixPlatformBuilder
     implements PlatformBuilder
 {
-    public static final String PREVENT_FRAGMENT_START = "preventFragmentStart";
+    public static final String SUPPRESS_FRAGMENT_START = "suppressFragmentStart";
     /**
      * Logger.
      */
@@ -304,8 +304,9 @@ public abstract class FelixPlatformBuilder
      * @throws PlatformException Thrown when the specified bundle is not valid.
      */
     private boolean isFragment(BundleReference reference) throws PlatformException {
-        String preventFragmentBundleStart = this.m_bundleContext.getProperty(PREVENT_FRAGMENT_START);
-        return Boolean.parseBoolean(preventFragmentBundleStart) && this.getBundleManifest(reference).getMainAttributes().containsKey(new Attributes.Name(Constants.FRAGMENT_HOST));
+        String suppressFragmentStart = this.m_bundleContext.getProperty(SUPPRESS_FRAGMENT_START);
+        LOGGER.info("Configuration for Fragment Bundle Start Suppression: " + suppressFragmentStart);
+        return Boolean.parseBoolean(suppressFragmentStart) && this.getBundleManifest(reference).getMainAttributes().containsKey(new Attributes.Name(Constants.FRAGMENT_HOST));
     }
 
     /**

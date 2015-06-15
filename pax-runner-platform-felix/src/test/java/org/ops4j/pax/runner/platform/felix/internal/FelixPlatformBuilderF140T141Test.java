@@ -294,7 +294,7 @@ public class FelixPlatformBuilderF140T141Test
         expect( m_configuration.getBundleStartLevel() ).andReturn( 20 ).times( 2 );
         expect( m_configuration.usePersistedState() ).andReturn( false );
 
-        expect( m_bundleContext.getProperty(FelixPlatformBuilder.PREVENT_FRAGMENT_START) ).andReturn(null).times(2).andReturn("true");
+        expect( m_bundleContext.getProperty(FelixPlatformBuilder.SUPPRESS_FRAGMENT_START) ).andReturn(null).times(2).andReturn("true");
 
         replay( m_bundleContext, m_configuration,
                 bundle1, bundle2, bundle3, bundle4, bundle5
