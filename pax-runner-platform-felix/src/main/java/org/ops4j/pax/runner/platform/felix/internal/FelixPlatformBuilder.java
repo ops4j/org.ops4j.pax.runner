@@ -270,7 +270,7 @@ public abstract class FelixPlatformBuilder
                 .append( "felix.auto" );
 
             final Boolean shouldStart = reference.shouldStart();
-            if( shouldStart != null && shouldStart && !this.isFragment(reference) )
+            if( shouldStart != null && shouldStart )
             {
                 propertyName.append( "." ).append( "start" );
             }
