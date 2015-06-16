@@ -48,6 +48,9 @@ public class LocalBundleReference
      * The file corresponding to above bundle refrence. Cannot be null.
      */
     private final File m_file;
+    /**
+     * The result of evaluating the bundle being a fragment. Null when not yet evaluated.
+     */
     private Boolean m_fragment;
 
     /**
@@ -111,7 +114,7 @@ public class LocalBundleReference
         return m_fragment;
     }
 
-    public String getFragmentHost()  {
+    private String getFragmentHost()  {
         try {
             return this.getAttributeValue(Constants.FRAGMENT_HOST);
         } catch (PlatformException pe) {

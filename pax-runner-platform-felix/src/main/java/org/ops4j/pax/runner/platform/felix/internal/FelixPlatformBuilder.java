@@ -90,8 +90,6 @@ public abstract class FelixPlatformBuilder
      */
     private final String m_version;
 
-    private BundleManifestInspector manifestInspector;
-
     /**
      * Create a new felix platform builder.
      *
@@ -104,7 +102,6 @@ public abstract class FelixPlatformBuilder
         NullArgumentException.validateNotNull( version, "Version" );
         m_bundleContext = bundleContext;
         m_version = version;
-        setManifestInspector(new BundleManifestInspectorImpl());
     }
 
     /**
@@ -294,17 +291,6 @@ public abstract class FelixPlatformBuilder
     }
 
     /**
-     * Returns whether the bundle specified by the given reference is a fragment or not.
-     *
-     * @param reference BundleReference referencing the bundle to be inspected.
-     * @return boolean flag with value true when the specified bundle is a fragment, false when not.
-     * @throws PlatformException Thrown when the specified bundle is not valid.
-     */
-    private boolean isFragment(BundleReference reference) throws PlatformException {
-        return manifestInspector.getFragmentHost(reference) != null;
-    }
-
-    /**
      * Writes OPS4j header.
      *
      * @param writer a property writer
@@ -454,8 +440,4 @@ public abstract class FelixPlatformBuilder
      * @return property name
      */
     protected abstract String getFrameworkStartLevelPropertyName();
-
-    protected void setManifestInspector(BundleManifestInspector manifestInspector) {
-        this.manifestInspector = manifestInspector;
-    }
 }
