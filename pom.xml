@@ -317,7 +317,7 @@
                 <module>pax-runner-platform-equinox</module>
                 <module>pax-runner-platform-felix</module>
                 <module>pax-runner-platform-knopflerfish</module>
-                <module>pax-runner</module>
+                <module>paxn-runner</module>
                 <module>pax-runner-no-jcl</module>
                 <module>pax-runner-assembly</module>
                 <!-- <module>pax-runner-eclipse</module> -->

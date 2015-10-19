@@ -1,6 +1,6 @@
 <assembly>
   <id>jdk14</id>
-  <baseDirectory>pax-runner-${project.version}</baseDirectory>
+  <baseDirectory>paxn-runner-${project.version}</baseDirectory>
   <formats>
     <format>zip</format>
     <format>tar.gz</format>
@@ -17,7 +17,7 @@
     <dependencySet>
       <outputDirectory>bin</outputDirectory>
       <includes>
-        <include>org.ops4j.pax.runner:pax-runner:jar:jdk14</include>
+        <include>org.ops4j.pax.runner:paxn-runner:jar:jdk14</include>
       </includes>
     </dependencySet>
   </dependencySets>
