@@ -5,7 +5,7 @@ target
 *.project
 *.settings
 *.classpath
-paxn-runner/runner
+pax-runner/runner
 *.releaseBackup
 release.properties
 .idea

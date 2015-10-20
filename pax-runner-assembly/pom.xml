@@ -63,7 +63,7 @@
   <dependencies>
     <dependency>
       <groupId>org.ops4j.pax.runner</groupId>
-      <artifactId>paxn-runner</artifactId>
+      <artifactId>pax-runner</artifactId>
       <version>${project.version}</version>
       <type>jar</type>
     </dependency>
