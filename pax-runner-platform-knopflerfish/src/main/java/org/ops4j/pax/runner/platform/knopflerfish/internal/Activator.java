@@ -59,6 +59,7 @@ public final class Activator
             new KnopflerfishPlatformBuilderF300( bundleContext, "3.3.0" ),
             new KnopflerfishPlatformBuilderF300( bundleContext, "3.4.0" ),
             new KnopflerfishPlatformBuilderF300( bundleContext, "3.5.0" ),
+            new KnopflerfishPlatformBuilderF300( bundleContext, "5.2.0" ),
             new KnopflerfishPlatformBuilderSnapshot( bundleContext )
         };
     }
