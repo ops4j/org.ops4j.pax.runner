@@ -18,10 +18,17 @@
 package org.ops4j.pax.runner.platform.internal;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.jar.Attributes;
+import java.util.jar.JarFile;
+import java.util.jar.Manifest;
+
 import org.ops4j.lang.NullArgumentException;
 import org.ops4j.pax.runner.platform.BundleReference;
+import org.ops4j.pax.runner.platform.PlatformException;
+import org.osgi.framework.Constants;
 
 /**
  * A {@link BundleReference} pointing to a local downloaded file.
@@ -41,6 +48,10 @@ public class LocalBundleReference
      * The file corresponding to above bundle refrence. Cannot be null.
      */
     private final File m_file;
+    /**
+     * The result of evaluating the bundle being a fragment. Null when not yet evaluated.
+     */
+    private Boolean m_fragment;
 
     /**
      * Creates a new local bundle.
@@ -93,7 +104,42 @@ public class LocalBundleReference
      */
     public Boolean shouldStart()
     {
-        return m_bundleReference.shouldStart();
+        return m_bundleReference.shouldStart() && !this.isFragment();
+    }
+
+    private boolean isFragment() {
+        if (m_fragment == null) {
+            m_fragment = this.getFragmentHost() != null;
+        }
+        return m_fragment;
+    }
+
+    private String getFragmentHost()  {
+        try {
+            return this.getAttributeValue(Constants.FRAGMENT_HOST);
+        } catch (PlatformException pe) {
+            throw new RuntimeException(pe);
+        }
+    }
+
+    private String getAttributeValue(String attributeName) throws PlatformException {
+        Manifest manifest = this.getBundleManifest();
+        return manifest.getMainAttributes().getValue(new Attributes.Name(attributeName));
+    }
+
+    /**
+     * Returns the manifest file of the bundle specified by the given reference.
+     *
+     * @return Manifest referencing the manifest extracted from the specified bundle.
+     * @throws PlatformException Thrown when the specified bundle is not valid.
+     */
+    private Manifest getBundleManifest() throws PlatformException {
+        try {
+            JarFile jar = new JarFile(m_file, false);
+            return jar.getManifest();
+        } catch (IOException e) {
+            throw new PlatformException("[" + this.getURL() + "] is not a valid bundle", e);
+        }
     }
 
     /**

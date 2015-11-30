@@ -17,18 +17,31 @@
  */
 package org.ops4j.pax.runner.platform.felix.internal;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Properties;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.ops4j.lang.NullArgumentException;
-import org.ops4j.pax.runner.platform.*;
+import org.ops4j.pax.runner.platform.BundleReference;
+import org.ops4j.pax.runner.platform.Configuration;
+import org.ops4j.pax.runner.platform.PlatformBuilder;
+import org.ops4j.pax.runner.platform.PlatformContext;
+import org.ops4j.pax.runner.platform.PlatformException;
 import org.ops4j.util.collections.PropertiesWriter;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
-
-import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.*;
 
 /**
  * Platform builder for felix platform.
@@ -36,7 +49,6 @@ import java.util.*;
 public abstract class FelixPlatformBuilder
     implements PlatformBuilder
 {
-
     /**
      * Logger.
      */
@@ -428,5 +440,4 @@ public abstract class FelixPlatformBuilder
      * @return property name
      */
     protected abstract String getFrameworkStartLevelPropertyName();
-
 }
