@@ -8,3 +8,5 @@ target
 pax-runner/runner
 *.releaseBackup
 release.properties
+.idea
+
