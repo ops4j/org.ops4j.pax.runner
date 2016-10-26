@@ -58,9 +58,8 @@ public final class Activator
             new EquinoxPlatformBuilderF380( bundleContext, "3.8.1" ),
             new EquinoxPlatformBuilderF380( bundleContext, "3.8.2" ),
             new EquinoxPlatformBuilderF380( bundleContext, "3.9.1" ),
+            new EquinoxPlatformBuilderF380( bundleContext, "3.10.100" ),
             new EquinoxPlatformBuilderSnapshot( bundleContext )
         };
     }
-
 }
-
