@@ -136,7 +136,9 @@ public class LocalBundleReference
     private Manifest getBundleManifest() throws PlatformException {
         try {
             JarFile jar = new JarFile(m_file, false);
-            return jar.getManifest();
+            Manifest m = jar.getManifest();
+            jar.close();
+            return m;
         } catch (IOException e) {
             throw new PlatformException("[" + this.getURL() + "] is not a valid bundle", e);
         }
